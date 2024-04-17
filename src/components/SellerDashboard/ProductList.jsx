@@ -20,6 +20,10 @@ const ProductList = ({ handleOptionClick }) => {
         setCurrentPage(pageNumber);
     };
 
+    const productDetail = (index) => {
+        navigate(`/product-details/${index}`);
+    };
+
     //popup
     const [showPopup, setShowPopup] = useState(false);
     const handleAddAddress = (index) => {
@@ -219,7 +223,7 @@ const ProductList = ({ handleOptionClick }) => {
                                             <div>
                                                 {item.images.length > 0 && <img className='imgPro' src={item.images[0].url} alt={item.images[0].name} />}
                                             </div>
-                                            <div className="heading2" style={{ whiteSpace: 'nowrap' }}>{item.productName}</div>
+                                            <div className="heading2 download-btn" onClick={() => productDetail(index)} style={{ whiteSpace: 'nowrap' }}>{item.productName}</div>
                                             <div className="heading2">{item.category}</div>
                                             <div className="heading2">
                                                 <div className="flex" style={{ gap: '5px' }}>

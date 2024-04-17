@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import SailingIcon from '@mui/icons-material/Sailing';
+import axios from 'axios';
 
 const SellerAddress = () => {
 
@@ -15,8 +16,8 @@ const SellerAddress = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json');
-                const data = await response.json();
+                const response = await axios.get('https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json');
+                const data = response.data;
                 const uniqueCountries = [...new Set(data.map(city => city.country))];
                 setCountries(uniqueCountries);
             } catch (error) {
@@ -32,7 +33,7 @@ const SellerAddress = () => {
     //select country code from data 
     const [countriess, setCountriess] = useState([]);
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedCountry, setSelectedCountry] = useState('');
 
     useEffect(() => {
         const formattedCountries = allCountries.map(country => ({
@@ -44,24 +45,11 @@ const SellerAddress = () => {
         setCountriess(formattedCountries);
     }, []);
 
-    const handlesub = () => {
-        if (selectedCountry) {
-            console.log(`Phone number : ${selectedCountry.dialCode + phoneNumber}`);
-        } else {
-            console.log('Please select a country');
-        }
-    }
-
     const handleCountryChange = (event) => {
         const countryCode = event.target.value;
         const selected = countriess.find(country => country.iso2 === countryCode);
         setSelectedCountry(selected);
     }
-
-
-
-
-
 
 
     //popup form
@@ -114,7 +102,7 @@ const SellerAddress = () => {
         setPobox(addressToEdit.pobox);
         setPostCode(addressToEdit.postCode);
         setPhoneNumber(addressToEdit.phoneNumber);
-        setSelectedCountry(addressToEdit.selectedCountry.dialCode);
+        setSelectedCountry(countriess.find((country) => country.iso2 === addressToEdit.selectedCountry.iso2));
         setAirport(addressToEdit.airport);
         setSeaport(addressToEdit.seaport);
         setIsLocationChecked(addressToEdit.isLocationChecked);
@@ -136,7 +124,7 @@ const SellerAddress = () => {
         setPobox('');
         setPostCode('');
         setPhoneNumber('');
-        setSelectedCountry('');
+        setSelectedCountry(''); 
         setAirport('');
         setSeaport('');
         setIsLocationChecked('');
@@ -223,7 +211,8 @@ const SellerAddress = () => {
                                         <div className='descrip2'>Post code: {address.postCode}</div>
                                     </div>
                                     <div className="flex" style={{ gap: '20px' }}>
-                                        <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.selectedCountry.dialCode + address.phoneNumber}</div>
+                                       
+                                    <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.selectedCountry.dialCode + address.phoneNumber}</div>
                                         <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.airport}</div>
                                         <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.seaport}</div>
                                     </div>

@@ -221,10 +221,10 @@ const EditSingle = () => {
                 <Controller name="category" control={control} defaultValue={singleFormData.category || ''} render={({ field }) => (
                     <select className="box flex" {...field}>
                         <option value="">Select category</option>
-                        <option value="EAN">EAN</option>
-                        <option value="GTIN">GTIN</option>
-                        <option value="UPC">UPC</option>
-                        <option value="null">Product does not have barcode number</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Home">Home</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Baby center">Baby center</option>
                     </select>
                 )}
                 />

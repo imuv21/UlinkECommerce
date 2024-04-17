@@ -4,8 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Loader from './components/Loader/Loader';
 import { DivCountProvider } from './components/context/SuperContext';
 
-
-
+const Checkout = lazy(() => import('./pages/Cart/Checkout'));
+const Cart = lazy(() => import('./pages/Cart/Cart'));
 const  ProductDetails = lazy(() => import('./pages/Cart/ProductDetails'));
 const Header = lazy(() => import('./components/Header/Header'));
 const Signup = lazy(() => import('./pages/Signup'));
@@ -67,9 +67,9 @@ function App() {
             <Route path='/blaaa' element={<Layout><Blaaa /></Layout>}/>
 
 
-            <Route path='/product-details' element={<Layout><ProductDetails /></Layout>}/>
-            <Route path='/bla' element={<Layout><Bla /></Layout>}/>
-            <Route path='/bla' element={<Layout><Bla /></Layout>}/>
+            <Route path='/product-details/:index' element={<Layout><ProductDetails /></Layout>}/>
+            <Route path='/cart' element={<Layout><Cart /></Layout>}/>
+            <Route path='/checkout' element={<Layout><Checkout /></Layout>}/>
             <Route path='/bla' element={<Layout><Bla /></Layout>}/>
 
 
