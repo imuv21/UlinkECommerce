@@ -1,0 +1,82 @@
+.heading-2{
+    font-size: 25px;
+}
+.create-btn{
+    margin-right: 115px;
+    padding: 15px;
+    background-color:#FC904C ;
+    border: none;
+    border-radius: 5px;
+    width: 50%;
+    font-weight: 600;
+    color: #fff;
+}
+.justify-content-start{
+    margin: 20px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.boxes-width{
+    width: 20%;
+}
+.input-width{
+    width: 90%;
+}
+.status-width{
+    width: 20%;
+    margin-top: 20px;
+}
+.filter-margin{
+    margin-top: 20px;
+    background-color: #3770bf;
+    color: #fff;
+    border: none;
+}
+.boxes-width-2{
+    width: 100%;
+}
+.paragraph-3{
+    margin-top: 20px;
+    font-size: 15px;
+    border-bottom: 3px solid #FC904C;
+   
+}
+.calender{
+  margin-top: 20px;
+  border: 2px solid #3770bf;
+}
+.item-change{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 15%;
+    margin-left: 80px;
+}
+.change-btn{
+    font-size: 15px;
+    font-weight: 600px;
+}
+.rfq-message-show{
+    text-align: center;
+}
+.rfq-btns{
+   margin: 15px 690px;
+   border: none;
+   background-color: #FC904C;
+   color: #fff;
+   font-weight: 600;
+   padding: 10px;
+   width: 8%;
+   
+
+}
+.rfq-value{
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 600;
+}
+.rfq-icon{
+    margin-top: 20px;
+   width: 15%;
+}

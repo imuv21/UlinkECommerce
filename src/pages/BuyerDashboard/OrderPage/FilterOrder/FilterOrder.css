@@ -1,0 +1,64 @@
+.sidenav-container{
+    width: 22%;
+    border: 1px solid #dddddd;
+    margin-left: 5px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #F5F7FA;
+    
+}
+.user-filter{
+    padding: 30px;
+    margin-left: 10px;
+    font-size: 17px; 
+}
+.filter-items{
+    margin-left: 45px;
+}
+.user-subtitles{
+    font-size: 16px;
+    opacity: 0.7;
+}
+.boxes{
+ margin-top: 20px;
+ border: 1px solid black ;
+ outline: 1px solid blue;
+ width: 90%;
+background-color: #fff;
+}
+.search-icon{
+    font-size: 20px;  
+}
+.input-boxex{
+    padding: 5px;
+   font-size: 12px;
+   opacity: 0.8;
+   background-color: none;
+  
+}
+
+.user-subtitleses{
+    font-size: 16px;
+    opacity: 0.7;
+    margin-bottom: 10px;
+}
+.boxex-order{
+    margin-top: 20px;
+}
+.order-status{
+    width: 90%;
+    border: 1px solid black;
+    outline: 1px solid blue;
+}
+.clear-filter-btn{
+    width: 90%;
+    font-size: 12px;
+    background-color: var(--CodeTwo);
+    color: #fff;
+    outline: none;
+    border: none;
+}
+.clear-filter-btn:hover{
+    background: #468ff6;
+}
+

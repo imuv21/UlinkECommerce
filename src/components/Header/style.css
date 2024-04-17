@@ -1,0 +1,42 @@
+
+
+.icon-container {
+  position: relative;
+}
+
+.popup {
+  position: fixed;
+  width: 200px;
+  top: 45px; 
+  right: 240px; 
+  height: fit-content;
+  transform: translateX(-50%);
+  gap: var(--pad);
+  background-color: white;
+  border: var(--border);
+  padding: var(--pad);
+  border-radius: var(--br1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.icon-container:hover .popup {
+  opacity: 1;
+  bottom: 0;
+}
+
+.icon-container:hover .popup {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

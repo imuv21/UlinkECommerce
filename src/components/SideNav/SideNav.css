@@ -1,0 +1,81 @@
+/* SideNav */
+.sidenav {
+    width: 300px;
+    overflow-y: auto;
+}
+
+.accordion {
+    background-color: var(--themewebclr);
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: var(--trans);
+    border-bottom: var(--border);
+}
+
+.active,
+.accordion:hover {
+    background-color: #ccc;
+}
+
+.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.accordion:first-child:after {
+    content: none;
+}
+.accordion:nth-child(4):after {
+    content: none;
+}
+.accordion:nth-child(9):after {
+    content: none;
+}
+.accordion:nth-child(14):after {
+    content: none;
+}
+.accordion:nth-child(15):after {
+    content: none;
+}
+
+.panel {
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    width: 100%;
+}
+
+.option {
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    background-color: #eee;
+    cursor: pointer;
+    color: #444;
+    transition: var(--trans);
+    border-bottom: 1px solid white;
+}
+
+.option.selected {
+    background-color: #ccc;
+    color: white;
+}

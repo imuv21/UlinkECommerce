@@ -1,0 +1,111 @@
+
+import * as yup from 'yup';
+
+
+export const addSingleSchema = yup.object().shape({
+    
+    productName: yup.string().required('Product name is required').min(15, "Product name must be 15 characters or more"),
+    brandName: yup.string().required('Brand name is required'),
+    keyFeatures: yup.string().required('Key features are required'),
+    keyWords: yup.string().required('Key words are required'),
+    gender: yup.string().required('Gender is required'),
+    dgrGoods: yup.string().required('Dangerous goods are required'),
+    category: yup.string().required('Category goods are required'),
+
+    barcode: yup.string().required('Barcode type is required'),
+    barcodeNum: yup.string().test('barcodeValidation', 'Invalid barcode number', function (value) {
+        const barcodeType = this.parent.barcode; 
+        if (barcodeType === 'UPC') {
+            return (value && value.length === 12); 
+        } else if (barcodeType === 'EAN') {
+            return (value && (value.length === 8 || value.length === 13)); 
+        } else if (barcodeType === 'GTIN') {
+            return (value && (value.length === 8 || value.length === 12 || value.length === 13 || value.length === 14)); 
+        } else {
+            return true;
+        }
+    }).required('Barcode number is required'),
+
+
+    unitmeasure: yup.string().required('Unit measure type is required'),
+    sku: yup.number().typeError('SKU must be a number').positive('SKU must be a positive number').integer('SKU must be an integer').required('SKU is required'),
+    minOrderQuant: yup.number().typeError('Quantity must be a number').positive('Quantity must be a positive number').integer('Quantity must be an integer').required('Quantity is required')
+    .test( 'is-lower', 'Min order quantity must be lower than available quantity',
+        function(minOrderQuant) {
+            const availableQuantity = this.resolve(yup.ref('availableQuantity'));
+            return minOrderQuant < availableQuantity;
+        }
+    ),
+    unitPrice: yup.number().typeError('Unit price must be a number').positive('Unit price must be a positive number').integer('Unit price must be an integer').required('Unit price is required'),
+    salePrice: yup.number().typeError('Sale price must be a number').positive('Sale price must be a positive number').integer('Sale price must be an integer').required('Sale price is required')
+    .test(
+        'is-lower',
+        'Sale price must be lower than unit price',
+        function(salePrice) {
+            const unitPrice = this.resolve(yup.ref('unitPrice'));
+            return salePrice < unitPrice;
+        }
+    ),
+
+    cartonWgt: yup.number().typeError('Weight must be a number').positive('Weight must be a positive number').integer('Weight must be an integer').required('Weight is required'),
+    cartonWdh: yup.number().typeError('Width must be a number').positive('Width must be a positive number').integer('Width must be an integer').required('Width is required'),
+    cartonLgh: yup.number().typeError('Length must be a number').positive('Length must be a positive number').integer('Length must be an integer').required('Length is required'),
+    cartonHgt: yup.number().typeError('Height must be a number').positive('Height must be a positive number').integer('Height must be an integer').required('Height is required'),
+
+    availableQuantity: yup.number().typeError('Quantity must be a number').positive('Quantity must be a positive number').integer('Quantity must be an integer').required('Quantity is required').min(1, "Minimum order quantity is 1"),
+
+  
+
+    unitsPerCarton: yup.number().typeError('Units per carton must be a number').positive('Units per carton must be a positive number').integer('Units per carton must be an integer').required('Units per carton is required'),
+    size: yup.number().typeError('Size must be a number').positive('Size must be a positive number').integer('Size must be an integer').required('Size is required'),
+    avgLeadTime: yup.number().typeError('Lead time must be a number').positive('Lead time must be a positive number').integer('Lead time must be an integer').required('Lead time is required'),
+    TransportationMode: yup.string().required('Transportation mode is required'),
+    DimensionUnit: yup.string().required('Dimension unit is required'),
+
+    productWgt: yup.number().typeError('Weight must be a number').positive('Weight must be a positive number').integer('Weight must be an integer').required('Weight is required'),
+    productWdh: yup.number().typeError('Width must be a number').positive('Width must be a positive number').integer('Width must be an integer').required('Width is required'),
+    productLgh: yup.number().typeError('Length must be a number').positive('Length must be a positive number').integer('Length must be an integer').required('Length is required'),
+    productHgt: yup.number().typeError('Height must be a number').positive('Height must be a positive number').integer('Height must be an integer').required('Height is required'),
+
+    readytoship: yup.string().required('Ready to ship is required'),
+    buynow: yup.string().required('Buy now is required'),
+    temperature: yup.string().required('Temperature is required'),
+    StockLocation: yup.string().required('Stock Location is required'),
+    Availability: yup.string().required('Availability is required'),
+    PrivateLabel: yup.string().required('Private label is required'),
+    origin: yup.string().required('Origin is required'),
+});
+
+export const bankSchema = yup.object().shape({
+    bankName: yup.string().required('Bank name is required'),
+    bankLocation: yup.string().required('Bank location is required'),
+    iban: yup.string().required('International bank account number is required'),
+    accHolderName: yup.string().required('Account holder name is required'),
+    accNo: yup.string().required('Account number is required'),
+    swiftbic: yup.string().required('Swift/BIC code is required'),
+});
+
+export const signupSchema = yup.object().shape({
+    role: yup.string().required('Select a role first'),
+    name: yup.string().required('Name is required'),
+    email: yup.string().email('Invalid email').required('Email is required'),
+    password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters')
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'Password must contain at least one uppercase letter, one lowercase letter, and one number'),
+    confirmPass: yup.string().required('Confirm password is required').oneOf([yup.ref('password'), null], 'Password and confirm password must match'),
+});
+
+export const loginSchema = yup.object().shape({
+    role: yup.string().required('Select a role first'),
+    email: yup.string().email('Invalid email').required('Email is required'),
+    password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters')
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'Password must contain at least one uppercase letter, one lowercase letter, and one number'),
+    origin: yup.string().required('Origin is required'),
+});
+
+export const testSchema = yup.object().shape({
+
+    inputone: yup.string().required('Input one is required'),
+});
+
+
+

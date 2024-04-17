@@ -1,0 +1,66 @@
+/* Guidelines - accordion */
+
+.headMargin{
+    margin: 10px;
+    list-style: circle;
+}
+
+.accordion-guide {
+    background-color: var(--themewebclr);
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: var(--trans);
+    border-bottom: var(--border);
+}
+
+.active,
+.accordion-guide:hover {
+    background-color: #ccc;
+}
+
+.accordion-guide:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.panel-guide {
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    width: 100%;
+}
+
+.option {
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    background-color: #eee;
+    cursor: pointer;
+    color: #444;
+    transition: var(--trans);
+    border-bottom: 1px solid white;
+}
+
+.option.selected {
+    background-color: #ccc;
+    color: white;
+}
