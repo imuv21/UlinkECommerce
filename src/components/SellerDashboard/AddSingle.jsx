@@ -197,7 +197,6 @@ const AddSingle = () => {
                 </div>
 
 
-
                 <div className="heading3">Product identifiers</div>
                 <div className="heading2">Enter barcode type and number for improved search/visibility of your product.</div>
                 <Controller name="barcode" control={control} defaultValue="" render={({ field }) => (

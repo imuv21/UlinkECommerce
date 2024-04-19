@@ -197,7 +197,7 @@ const SellerAddress = () => {
                                 <div className="flexcol-start" style={{ gap: '20px' }}>
                                     <div className="flex" style={{ gap: '20px' }}>
                                         <div className="heading3">{address.address}</div>
-                                        {address.isLocationChecked && <div className='descrip warning-btn'>Location</div>}
+                                        {address.isLocationChecked && <div className='descrip warning-btn'>Shipping</div>}
                                         {address.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
                                         {address.isDefaultChecked && <div className='descrip warning-btn3'>Default</div>}
                                     </div>
@@ -264,10 +264,10 @@ const SellerAddress = () => {
                                 <div className="heading2">Address type:</div>
                                 <div className="flex" style={{ gap: '20px' }}>
                                     <div className="flex">
-                                        <input type="checkbox" checked={isLocationChecked} onChange={() => setIsLocationChecked(!isLocationChecked)} />&nbsp;&nbsp;<div className="heading2">Stock location</div>
+                                        <input type="checkbox" checked={isLocationChecked} onChange={() => setIsLocationChecked(!isLocationChecked)} />&nbsp;&nbsp;<div className="heading2">Shipping address</div>
                                     </div>
                                     <div className="flex">
-                                        <input type="checkbox" checked={isBillingChecked} onChange={() => setIsBillingChecked(!isBillingChecked)} />&nbsp;&nbsp;<div className="heading2">Billing</div>
+                                        <input type="checkbox" checked={isBillingChecked} onChange={() => setIsBillingChecked(!isBillingChecked)} />&nbsp;&nbsp;<div className="heading2">Billing address</div>
                                     </div>
                                     <div className="flex">
                                         <input type="checkbox" checked={isDefaultChecked} onChange={() => setIsDefaultChecked(!isDefaultChecked)} />&nbsp;&nbsp;<div className="heading2">Save as Default address</div>

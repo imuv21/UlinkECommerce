@@ -40,3 +40,26 @@
     transform: translateY(0);
   }
 }
+
+.carticon{
+  position: relative;
+  width: 50px;
+  cursor: pointer;
+}
+
+.cartcount{
+  background-color: var(--CodeOne);
+  color: white;
+  font-size: 10px;
+  position: absolute;
+  top: 0px;
+  left: 15px;
+  width: fit-content;
+  height: 15px;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

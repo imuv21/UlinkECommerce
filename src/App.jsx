@@ -3,10 +3,11 @@ import React, { Fragment, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Loader from './components/Loader/Loader';
 import { DivCountProvider } from './components/context/SuperContext';
+import { CartProvider } from './components/context/CartContext';
 
 const Checkout = lazy(() => import('./pages/Cart/Checkout'));
 const Cart = lazy(() => import('./pages/Cart/Cart'));
-const  ProductDetails = lazy(() => import('./pages/Cart/ProductDetails'));
+const ProductDetails = lazy(() => import('./pages/Cart/ProductDetails'));
 const Header = lazy(() => import('./components/Header/Header'));
 const Signup = lazy(() => import('./pages/Signup'));
 const Otp = lazy(() => import('./pages/Otp'));
@@ -41,7 +42,7 @@ function App() {
     <Fragment>
       <BrowserRouter>
 
-        <Suspense fallback={<Loader/>}>
+        <Suspense fallback={<Loader />}>
           <Routes>
             <Route path='/' element={<Layout><Home /></Layout>} />
             <Route path='/signup' element={<Signup />} />
@@ -63,14 +64,13 @@ function App() {
             <Route path='/prolist' element={<Layout><DivCountProvider><ProList /></DivCountProvider></Layout>} />
             <Route path='/media' element={<Layout><Media /></Layout>} />
             <Route path='/editproduct/:index' element={<Layout><DivCountProvider><EditProduct /></DivCountProvider></Layout>} />
-            <Route path='/bla' element={<Layout><Bla /></Layout>}/>
-            <Route path='/blaaa' element={<Layout><Blaaa /></Layout>}/>
+            <Route path='/bla' element={<Layout><Bla /></Layout>} />
+            <Route path='/blaaa' element={<Layout><Blaaa /></Layout>} />
 
 
-            <Route path='/product-details/:index' element={<Layout><ProductDetails /></Layout>}/>
-            <Route path='/cart' element={<Layout><Cart /></Layout>}/>
-            <Route path='/checkout' element={<Layout><Checkout /></Layout>}/>
-            <Route path='/bla' element={<Layout><Bla /></Layout>}/>
+            <Route path='/product-details/:index' element={<Layout><ProductDetails /></Layout>} />
+            <Route path='/cart' element={<Layout><Cart /></Layout>} />
+            <Route path='/checkout' element={<Layout><Checkout /></Layout>} />
 
 
             <Route path='/buyerdashboard' element={<Layout><BuyerDashboard /></Layout>} />
@@ -90,7 +90,9 @@ function App() {
 const Layout = ({ children }) => {
   return (
     <div>
-      <Header />
+      <CartProvider>
+        <Header />
+      </CartProvider>
       {children}
       <Footer />
     </div>

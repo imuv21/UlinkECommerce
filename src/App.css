@@ -11,7 +11,8 @@
   --bg: radial-gradient(circle at 20% 0%, rgba(49, 210, 255, 0.30) 1%, transparent 40%), radial-gradient(circle at 80% 0%, rgba(49, 210, 255, 0.30) 1%, transparent 40%);
   --pad: 10px;
   --trans: all 0.4s ease-in-out;
-  --CodeOne: #FC904C;
+  --CodeOne: #fc7927;
+  --CodeOneHover: #ff9857;
   --CodeTwo: #3770bf;
   --CodeTwoHover: #468ff6;
   --CodeThree: #f9f8f8;
@@ -831,6 +832,17 @@ button:focus {
   background-color: var(--CodeTwoHover);
 }
 
+.btn2 {
+  border: none;
+  background-color: var(--CodeOne);
+  color: var(--bgClr);
+  transition: var(--trans);
+}
+
+.btn2:hover {
+  background-color: var(--CodeOneHover);
+}
+
 .svg {
   width: 25px;
   height: 25px;
@@ -973,20 +985,20 @@ button:focus {
 }
 
 .warning-btn {
-  background-color: #FFECCC;
+  background-color: rgb(189, 255, 194);
   border-radius: 15px;
   padding: 3px 10px;
 }
 
 .warning-btn2 {
-  background-color: rgb(48, 196, 255);
+  background-color: rgb(185, 235, 255);
   border-radius: 15px;
   gap: 5px;
   padding: 1px 10px;
 }
 
 .warning-btn3 {
-  background-color: rgb(189, 255, 194);
+  background-color: rgb(219, 219, 219);
   border-radius: 15px;
   gap: 5px;
   padding: 1px 10px;
@@ -1863,6 +1875,15 @@ button:focus {
 .remove:hover {
   background-color: rgb(255, 112, 112);
   color: var(--bgClr);
+}
+
+.captext{
+  text-transform: capitalize;
+}
+
+.caplist{
+  text-transform: lowercase;
+  list-style: circle;
 }
 
  /* Checkout styling  */

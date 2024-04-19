@@ -7,11 +7,6 @@ import ReturnIcon from '../../assets/return.png';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import ProDetail from '../../assets/proDetail.png';
 import Box from '../../assets/boxx.png';
-import Img1 from '../../assets/jpg-slider/1.jpg';
-import Img2 from '../../assets/jpg-slider/2.jpg';
-import Img3 from '../../assets/jpg-slider/3.jpg';
-import Img4 from '../../assets/jpg-slider/4.jpg';
-import Img5 from '../../assets/jpg-slider/5.jpg';
 import './cart.css';
 import { useParams } from 'react-router-dom';
 
@@ -19,26 +14,41 @@ const ProductDetails = () => {
 
     const { index } = useParams();
     const [product, setProduct] = useState(null);
+
     useEffect(() => {
         const savedSingleFormData = JSON.parse(localStorage.getItem('singleFormData')) || [];
         const selectedProduct = savedSingleFormData[parseInt(index)];
-        setProduct(selectedProduct);
+        if (selectedProduct) {
+            setProduct({
+                ...selectedProduct,
+                images: selectedProduct.images || [] 
+            });
+        }
     }, [index]);
 
-    //plus-minus
-    const [value, setValue] = useState(1);
-    const incrementValue = () => {
-        setValue(prevValue => prevValue + 1);
-    };
-    const decrementValue = () => {
-        setValue(prevValue => (prevValue > 1 ? prevValue - 1 : 1));
-    };
 
-    const handleInputChange = (e) => {
-        const newValue = parseInt(e.target.value);
-        setValue(newValue >= 1 ? newValue : 1);
+    const [cart, setCart] = useState([]);
+    const [cartText, setCartText] = useState(0); 
+    const addToCart = () => {
+        if (!product) return;
+        const savedCart = JSON.parse(localStorage.getItem('cart'));
+        const existingCart = Array.isArray(savedCart) ? savedCart : [];
+        const existingProductIndex = existingCart.findIndex(item => item.product.sku === product.sku);
+        const newCart = [...existingCart];
+        if (existingProductIndex !== -1) {
+            newCart[existingProductIndex].quantity += parseInt(value);
+        } else { 
+            newCart.push({
+                product: product,
+                quantity: parseInt(value)
+            });
+        }
+        setCart(newCart);
+        localStorage.setItem('cart', JSON.stringify(newCart));
+        setCartText(newCart.length);
     };
-
+    
+   
 
     //accordion-panel
     const [activeIndex, setActiveIndex] = useState(null);
@@ -46,12 +56,57 @@ const ProductDetails = () => {
         setActiveIndex(activeIndex === index ? null : index);
     };
 
+     //plus-minus
+     const [moq, setMoq] = useState(1);
+     const [value, setValue] = useState(moq.toString());
+     const incrementValue = () => {
+         setValue(prevValue =>  (parseInt(prevValue) + 1).toString());
+     };
+     const decrementValue = () => {
+         setValue(prevValue => Math.max(parseInt(prevValue) - 1, moq).toString()); 
+     };
+ 
+     const handleInputChange = (e) => {
+         const newValue = parseInt(e.target.value);
+         setValue(newValue >= moq ? newValue.toString() : moq.toString());
+     };
+
 
     //img-change-slider
-    const [selectedImage, setSelectedImage] = useState(Img1);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [salep, setSalep] = useState();
+    const [unitp, setUnitp] = useState();
+    const [discountPercentage, setDiscountPercentage] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(salep);
+    useEffect(() => {
+        if (product && product.images && product.images.length > 0) {
+            setSelectedImage(product.images[0].url);
+        }
+        if (product && product.minOrderQuant) {
+            setMoq(product.minOrderQuant);
+            setValue(product.minOrderQuant.toString());
+        }
+        if (product && product.salePrice && product.unitPrice) {
+            setSalep(product.salePrice);
+            setUnitp(product.unitPrice);
+        }
+    }, [product]);
+
+    useEffect(() => {
+        if (salep && unitp) {
+            const discount = ((unitp - salep) / unitp) * 100;
+            setDiscountPercentage(discount.toFixed(2));
+        }
+        if (value && salep) {
+            const Tprice = parseFloat(salep) * parseInt(value);
+            setTotalPrice(Tprice);
+        }
+    }, [salep, unitp, value]);
+
     const handleImageClick = (image) => {
         setSelectedImage(image);
     };
+
 
 
     return (
@@ -59,7 +114,7 @@ const ProductDetails = () => {
             {product ? (
                 <Fragment>
                     <div className="flex wh">
-                        <div className="heading2 wh">{product.category}</div>
+                        <div className="heading2 wh captext">{product.category}</div>
                     </div>
 
                     <div className="pdcont">
@@ -69,31 +124,31 @@ const ProductDetails = () => {
                                     <img src={selectedImage} alt="Big Image" />
                                 </div>
                                 <div className="flex" style={{ gap: '10px' }}>
-                                    <div className="small-image" onClick={() => handleImageClick(Img1)}>
-                                        <img src={Img1} alt="Small Image 1" />
+                                    <div className="small-image" onClick={() => handleImageClick(product.images[0].url)}>
+                                        {product.images[0] && <img src={product.images[0].url} alt={product.images[0].name} />}
                                     </div>
-                                    <div className="small-image" onClick={() => handleImageClick(Img2)}>
-                                        <img src={Img2} alt="Small Image 2" />
+                                    <div className="small-image" onClick={() => handleImageClick(product.images[1].url)}>
+                                        {product.images[1] && <img src={product.images[1].url} alt={product.images[1].name} />}
                                     </div>
-                                    <div className="small-image" onClick={() => handleImageClick(Img3)}>
-                                        <img src={Img3} alt="Small Image 3" />
+                                    <div className="small-image" onClick={() => handleImageClick(product.images[2].url)}>
+                                        {product.images[2] && <img src={product.images[2].url} alt={product.images[2].name} />}
                                     </div>
-                                    <div className="small-image" onClick={() => handleImageClick(Img4)}>
-                                        <img src={Img4} alt="Small Image 4" />
+                                    <div className="small-image" onClick={() => handleImageClick(product.images[3].url)}>
+                                        {product.images[3] && <img src={product.images[3].url} alt={product.images[3].name} />}
                                     </div>
-                                    <div className="small-image" onClick={() => handleImageClick(Img5)}>
-                                        <img src={Img5} alt="Small Image 5" />
+                                    <div className="small-image" onClick={() => handleImageClick(product.images[4].url)}>
+                                        {product.images[4] && <img src={product.images[4].url} alt={product.images[4].name} />}
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="pdcol_two">
-                            <div className="heading2 wh">Brand : <span className='hoverr'>{product.brandName}</span></div>
-                            <div className="heading wh">{product.productName}</div>
+                            <div className="heading2 wh captext">Brand : {product.brandName}</div>
+                            <div className="heading wh captext">{product.productName}</div>
                             <div className="sel-box" style={{ gap: '20px' }}>
                                 <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>
                                     <div className="flex" style={{ gap: '15px' }}>
-                                        <span className='descrip2' style={{ textDecoration: 'line-through' }}>AED {product.unitPrice}</span><span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>12% OFF</span>
+                                        <span className='descrip2' style={{ textDecoration: 'line-through' }}>AED {product.unitPrice}</span><span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{discountPercentage}% OFF</span>
                                     </div>
                                     <div className="flex" style={{ gap: '15px' }}>
                                         <span>AED</span><span style={{ fontWeight: 'bold', fontSize: '22px' }}>{product.salePrice}</span>
@@ -106,12 +161,12 @@ const ProductDetails = () => {
                             <div className="heading2 wh">We accept</div>
                             <div className="heading3 wh">About this item</div>
                             <ul style={{ marginLeft: '16px' }}>
-                                <li className='descrip2' style={{ listStyle: 'circle' }}>AirPods Pro (2nd generation) with USB-C deliver up to 2x more Active Noise Cancellation than the previous generation.</li>
-                                <li className='descrip2' style={{ listStyle: 'circle' }}>Conversation Awareness helps lower media volume and enhance the voices in front of you while you’re interacting with others. A single charge delivers up to 6 hours of battery life.</li>
-                                <li className='descrip2' style={{ listStyle: 'circle' }}>And Touch control lets you easily adjust volume with a swipe. The MagSafe Charging Case is a marvel on its own with Precision Finding, built-in speaker, and lanyard loop.</li>
-                                <li className='descrip2' style={{ listStyle: 'circle' }}>The upgraded H2 chip powers smarter noise cancellation and three-dimensional sound. Adaptive EQ tunes music to your ears in real time to deliver crisp, clean high notes and deep, rich bass in stunning clarity.</li>
-                                <li className='descrip2' style={{ listStyle: 'circle' }}>Active Noise Cancellation removes twice as much unwanted noise, so nothing interrupts your listening during a commute and when you need to focus.</li>
-                                <li className='descrip2' style={{ listStyle: 'circle' }}>Transparency mode reduces and adjusts down the intensity of loud noises at 48,000 times per second, so you can comfortably hear the world around you.</li>
+                                <li className='descrip2 caplist'>AirPods Pro (2nd generation) with USB-C deliver up to 2x more Active Noise Cancellation than the previous generation.</li>
+                                <li className='descrip2 caplist'>Conversation Awareness helps lower media volume and enhance the voices in front of you while you’re interacting with others. A single charge delivers up to 6 hours of battery life.</li>
+                                <li className='descrip2 caplist'>And Touch control lets you easily adjust volume with a swipe. The MagSafe Charging Case is a marvel on its own with Precision Finding, built-in speaker, and lanyard loop.</li>
+                                <li className='descrip2 caplist'>The upgraded H2 chip powers smarter noise cancellation and three-dimensional sound. Adaptive EQ tunes music to your ears in real time to deliver crisp, clean high notes and deep, rich bass in stunning clarity.</li>
+                                <li className='descrip2 caplist'>Active Noise Cancellation removes twice as much unwanted noise, so nothing interrupts your listening during a commute and when you need to focus.</li>
+                                <li className='descrip2 caplist'>Transparency mode reduces and adjusts down the intensity of loud noises at 48,000 times per second, so you can comfortably hear the world around you.</li>
                             </ul>
 
                             <div className="flexcol wh">
@@ -120,12 +175,12 @@ const ProductDetails = () => {
                                 </div>
                                 <div className="panel-pd" style={{ maxHeight: activeIndex === 1 ? '300px' : '0' }}>
                                     <div className="flexcol wh" style={{ padding: '10px', alignItems: 'start' }}>
-                                        <div className="descrip2" >Brand: {product.brandName}</div>
-                                        <div className="descrip2" >Country of origin: {product.origin}</div>
-                                        <div className="descrip2">Storage temperature:{product.temperature}</div>
-                                        <div className="descrip2">Unit size: {product.size} piece</div>
-                                        <div className="descrip2">Number of packs in one carton: {product.unitsPerCarton}</div>
-                                        <div className="descrip2">Min. Order Quantity: {product.minOrderQuant} piece</div>
+                                        <div className="descrip2 captext" >Brand: {product.brandName}</div>
+                                        <div className="descrip2 captext" >Country of origin: {product.origin}</div>
+                                        <div className="descrip2 captext">Storage temperature:{product.temperature}</div>
+                                        <div className="descrip2 captext">Unit size: {product.size}</div>
+                                        <div className="descrip2 captext">Number of packs in one carton: {product.unitsPerCarton}</div>
+                                        <div className="descrip2 captext">Min. Order Quantity: {product.minOrderQuant}</div>
                                     </div>
                                 </div>
 
@@ -134,8 +189,8 @@ const ProductDetails = () => {
                                 </div>
                                 <div className="panel-pd" style={{ maxHeight: activeIndex === 2 ? '300px' : '0' }}>
                                     <div className="flexcol wh" style={{ padding: '10px', alignItems: 'start' }}>
-                                        <div className="descrip2" >Carton dimensions (LWH): {product.cartonLgh} {product.cartonLghUnit} x 3.05 cm x 6.33 cm</div>
-                                        <div className="descrip2" >Carton weight: 240g</div>
+                                        <div className="descrip2 captext" >Carton dimensions (LWH): {product.cartonLgh} {product.cartonLghUnit} x {product.cartonWdh} {product.cartonWdhUnit} x {product.cartonHgt} {product.cartonHgtUnit}</div>
+                                        <div className="descrip2 captext" >Carton weight: {product.cartonWgt} {product.cartonWgtUnit} </div>
                                     </div>
                                 </div>
                             </div>
@@ -145,20 +200,20 @@ const ProductDetails = () => {
                                 <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>
                                     <div className="heading3">Order quantity</div>
                                     <div className="plus-minus">
-                                        <div style={{ cursor: 'pointer' }}><AddCircleOutlineIcon onClick={incrementValue} /></div>
-                                        <input className='pminput' type="number" value={value} onChange={handleInputChange} />
                                         <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={decrementValue} /></div>
+                                        <input className='pminput' type="number" value={value} onChange={handleInputChange} />
+                                        <div style={{ cursor: 'pointer' }}><AddCircleOutlineIcon onClick={incrementValue} /></div>
                                     </div>
-                                    <div className="descrip2">Minimum order quantity is 1 piece</div>
+                                    <div className="descrip2">Minimum order quantity : {product.minOrderQuant}</div>
                                 </div>
 
                                 <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
                                     <div className="heading2"><span>Total Price Incl. VAT</span></div>
-                                    <div className="heading2"><span>1,786.68 AED</span></div>
+                                    <div className="heading2"><span>{totalPrice} AED</span></div>
                                 </div>
 
                                 <div className="flexcol wh" style={{ gap: '10px' }}>
-                                    <button className='btn addtocart flex'><AddShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Add to cart</div></button>
+                                    <button className='btn2 addtocart flex' onClick={addToCart}><AddShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Add to cart</div></button>
                                     <button className='btn addtocart flex'><div className="heading2">Negotiate with seller</div></button>
                                 </div>
                             </div>
@@ -208,18 +263,18 @@ const ProductDetails = () => {
                                 <div>Technical specification sheet available by request</div>
                                 <div>Average battery life</div>
                                 <div>Connectivity type</div>
-                                <div>Dangerous goods</div>
                                 <div>Operating system</div>
                                 <div>Port type</div>
+                                <div>Dangerous goods</div>
                             </div>
                             <div className="over-field">
-                                <div>IP-190920230555</div>
-                                <div>No</div>
-                                <div>Up to 6 hours of listening time with a single charge</div>
-                                <div>Wireless</div>
-                                <div>No</div>
-                                <div>iOS</div>
-                                <div>MagSafe Charging Case (USB‑C)</div>
+                                <div className='captext'>{product.sku}</div>
+                                <div className='captext'>No</div>
+                                <div className='captext'>Up to 6 hours of listening time with a single charge</div>
+                                <div className='captext'>Wireless</div>
+                                <div className='captext'>iOS</div>
+                                <div className='captext'>MagSafe Charging Case (USB‑C)</div>
+                                <div className='captext'>{product.dgrGoods}</div>
                             </div>
                         </div>
                         <div className="overview_one">
@@ -233,13 +288,13 @@ const ProductDetails = () => {
                                 <div>Item dimensions unit</div>
                             </div>
                             <div className="over-field">
-                                <div>White</div>
-                                <div>6</div>
-                                <div>3</div>
-                                <div>6</div>
-                                <div>240</div>
-                                <div>g</div>
-                                <div>cm</div>
+                                <div className='captext'>{product.variantColor}</div>
+                                <div className='captext'>{product.productLgh}</div>
+                                <div className='captext'>{product.productWdh}</div>
+                                <div className='captext'>{product.productHgt}</div>
+                                <div className='captext'>{product.productWgt}</div>
+                                <div className='captext'>{product.productWgtUnit}</div>
+                                <div className='captext'>{product.DimensionUnit}</div>
                             </div>
                         </div>
                     </div>
@@ -248,8 +303,8 @@ const ProductDetails = () => {
                         <div className="heading wh">Product description</div>
                     </div>
 
-                    <div className="descrip2 flex wh">
-                        Print all your business documents quickly and efficiently and match the performance of your HP Color LaserJet Pro with Original HP Toner cartridges with JetIntelligence. Rely on HP quality and reliability for impressive printing results. Get more value from your cartridge Be confident you’re getting more from your cartridge.1 Original HP Toner cartridges with Jet Intelligence deliver cost-effective high-yield options and enhanced efficiency with dependable tracking of toner levels, Print at high speeds – without sacrificing quality, Produce top-quality documents, at speeds your printer was built to achieve.
+                    <div className="descrip2 flexstart captext wh">
+                        {product.addInfo}
                     </div>
                 </Fragment>
             ) : (
