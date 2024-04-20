@@ -1,0 +1,40 @@
+.border-5{
+    border: 2px solid #dddddd;
+   width: 85.5%;
+   margin:  10px auto;
+   background-color: #eaebef;
+}
+.table-container{
+    margin-left: 17px;
+}
+.table-containers{
+    width: 100%;
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    grid-template-columns: repeat(4 ,1fr);
+    border: 1px solid #adabab;
+}
+.table-containers-data{
+    width: 100%;
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    background: #fdfbfb;
+}
+.rvw{
+    width: 94%;
+}
+.size{
+    font-size: 20px;
+}
+.vor{
+    border-bottom: 2px solid rgb(226, 148, 148);
+}
+.rfq-imgs{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+     object-fit: contain; 
+}

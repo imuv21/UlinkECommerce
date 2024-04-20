@@ -3,9 +3,8 @@
     padding: 0;
     box-sizing: border-box;
   }
-  
   .userDashboard {
-    margin-top: 120px;
+    margin-top: 100px;
     padding: 10px;
   }
   .user-title {
@@ -34,8 +33,8 @@
     align-items: center;
     justify-content: start;
     aspect-ratio: 10/3;
+    width: 95%;
   }
-  
   .order-icon {
     font-size: 25px;
     margin-left: 10px;
@@ -49,7 +48,6 @@
     margin-left: 40px;
   }
   .order-info {
-   
     text-align: start;
     font-size: 12px;
     opacity: 0.6;
@@ -58,51 +56,43 @@
     margin-top: 5px;
   }
 
-  .recommeded-container {
-    display: flex;
-    padding: 10px;
-  }
-  
-  .company-detail {
-    display: flex;
-  }
-  .select-items-value {
-    margin-left: 80px;
-    padding: 7px;
-    border: 1px solid gray;
-  }
-  .box-container-product-show {
-    border: 1px solid gray;
-    width: 87.5%;
-    margin: auto 87px;
-  }
-  
-  .recommended-img {
-    width: 60%;
-    object-fit: contain;
-    border: 1px solid gray;
-    padding: 10px;
-    aspect-ratio: 5/4;
-  }
-  .recommended-container-img {
-    margin: 10px 50px;
-    border: 1;
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    object-fit: cover;
-    gap: 1rem;
-  }
-  .recommended-img-title {
-    font-size: 15px;
-  
-    font-weight: 600;
-  }
-  .category-price{
+  /* Tablet View */
+ @media(min-width: 768px) and (max-width: 1000px){
+  .dashboards {
+    padding: 5px;
+    aspect-ratio: 10/5;
+    width: 100%;
     font-size: 12px;
-    font-weight: 300;
-
   }
-  .recommended-product-image-container {
-    object-fit: contain;
+  .order-infos {
+    font-size: 10px;
   }
-  
+  .orders-title {
+    font-size: 13px; 
+  }
+  .containt-title {
+    text-align: start;
+    margin-left: 20px;
+  }
+ }
+ /* laptop */
+ @media(min-width: 1000px)and (max-width: 1300px){
+  .dashboards {
+    padding: 5px;
+    aspect-ratio: 10/4;
+    width: 100%;
+    font-size: 12px;
+  }
+ }
+ /* Mobile View  */
+ @media(min-width: 320px) and (max-width: 768px){
+  .dashboard-containers {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+   
+  }
+  .dashboards {
+    aspect-ratio: 10/1;
+    width: 100vh;
+  }
+ } 

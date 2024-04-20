@@ -39,8 +39,7 @@
 .paragraph-3{
     margin-top: 20px;
     font-size: 15px;
-    border-bottom: 3px solid #FC904C;
-   
+  border-bottom: 3px solid #FC904C;  
 }
 .calender{
   margin-top: 20px;
@@ -68,8 +67,6 @@
    font-weight: 600;
    padding: 10px;
    width: 8%;
-   
-
 }
 .rfq-value{
     margin-top: 20px;
@@ -79,4 +76,54 @@
 .rfq-icon{
     margin-top: 20px;
    width: 15%;
+}
+.mr-right{
+    margin-right: 100px;
+}
+.table-containers-head{
+    font-size: 15px;
+    font-weight: 600;
+    width: 88%;
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    grid-template-columns: repeat(7 ,1fr);
+    border: 1px solid #4397c1;
+    background-color: #3770bf;
+    margin-left: 82px;  
+}
+.table-containers-heads{
+    width: 88%;
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    grid-template-columns: repeat(7 ,1fr);
+    border: 1px solid #adabab;
+    margin-left: 82px;  
+}
+.img-flex{
+    display: flex;
+    width: 100%;
+}
+.img-data{
+    border: 1px solid rgb(56, 55, 55);
+    padding: 10px;
+    width: 110px;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+  
+}
+.product-name{
+    width: 100%;
+    margin-right: 100px;
+}
+.data-width{
+   
+   margin-left: -20px;
+   
+}
+.image-width{
+    width: 20px;
+    height: 20px;
 }

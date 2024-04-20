@@ -67,7 +67,6 @@ const SellerAddress = () => {
     const [seaport, setSeaport] = useState('');
     const [isLocationChecked, setIsLocationChecked] = useState(false);
     const [isBillingChecked, setIsBillingChecked] = useState(false);
-    const [isDefaultChecked, setIsDefaultChecked] = useState(false);
     const [addressList, setAddressList] = useState(JSON.parse(localStorage.getItem('addresses')) || []);
 
     const handleAddAddress = () => {
@@ -87,7 +86,6 @@ const SellerAddress = () => {
         setSeaport('');
         setIsLocationChecked('');
         setIsBillingChecked('');
-        setIsDefaultChecked('');
     };
 
     const handleEditAddress = (index) => {
@@ -107,7 +105,6 @@ const SellerAddress = () => {
         setSeaport(addressToEdit.seaport);
         setIsLocationChecked(addressToEdit.isLocationChecked);
         setIsBillingChecked(addressToEdit.isBillingChecked);
-        setIsDefaultChecked(addressToEdit.isDefaultChecked);
         setShowPopup(true);
         setEditMode(true);
     };
@@ -124,16 +121,15 @@ const SellerAddress = () => {
         setPobox('');
         setPostCode('');
         setPhoneNumber('');
-        setSelectedCountry(''); 
+        setSelectedCountry('');
         setAirport('');
         setSeaport('');
         setIsLocationChecked('');
         setIsBillingChecked('');
-        setIsDefaultChecked('');
     };
 
     const handleSubmit = () => {
-        const newAddress = { address, selectedOrigin, city, area, street, office, pobox, postCode, phoneNumber, selectedCountry, airport, seaport, isLocationChecked, isBillingChecked, isDefaultChecked };
+        const newAddress = { address, selectedOrigin, city, area, street, office, pobox, postCode, phoneNumber, selectedCountry, airport, seaport, isLocationChecked, isBillingChecked };
         if (editMode) {
             const updatedAddressList = [...addressList];
             updatedAddressList[editIndex] = newAddress;
@@ -160,7 +156,6 @@ const SellerAddress = () => {
         setSeaport('');
         setIsLocationChecked('');
         setIsBillingChecked('');
-        setIsDefaultChecked('');
     };
 
     const handleDeleteAddress = (index) => {
@@ -199,7 +194,6 @@ const SellerAddress = () => {
                                         <div className="heading3">{address.address}</div>
                                         {address.isLocationChecked && <div className='descrip warning-btn'>Shipping</div>}
                                         {address.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
-                                        {address.isDefaultChecked && <div className='descrip warning-btn3'>Default</div>}
                                     </div>
                                     <div className="flex" style={{ gap: '10px' }}>
                                         <div className='descrip2'>{address.selectedOrigin}</div>
@@ -211,8 +205,7 @@ const SellerAddress = () => {
                                         <div className='descrip2'>Post code: {address.postCode}</div>
                                     </div>
                                     <div className="flex" style={{ gap: '20px' }}>
-                                       
-                                    <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.selectedCountry.dialCode + address.phoneNumber}</div>
+                                        <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.selectedCountry.dialCode + address.phoneNumber}</div>
                                         <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.airport}</div>
                                         <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.seaport}</div>
                                     </div>
@@ -268,9 +261,6 @@ const SellerAddress = () => {
                                     </div>
                                     <div className="flex">
                                         <input type="checkbox" checked={isBillingChecked} onChange={() => setIsBillingChecked(!isBillingChecked)} />&nbsp;&nbsp;<div className="heading2">Billing address</div>
-                                    </div>
-                                    <div className="flex">
-                                        <input type="checkbox" checked={isDefaultChecked} onChange={() => setIsDefaultChecked(!isDefaultChecked)} />&nbsp;&nbsp;<div className="heading2">Save as Default address</div>
                                     </div>
                                 </div>
 

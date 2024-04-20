@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import './BuyerMessage.css'
 import { TiMessages } from "react-icons/ti";
-
 const BuyerMessage = () => {
   return (
     <Fragment>
@@ -22,17 +21,14 @@ const BuyerMessage = () => {
             <button className='btn-2'>RFQ</button>
          </div>
          <div className='boxes inp'>
-          
             <input  className='inpurt-boxex' type='number'  placeholder='Search by order number' />
             </div>
           </div>
-          
           <div className='border-4'>
            <div className='content'>
            <TiMessages className='message-icon'/>
            <p className='paragraph-1'>You don’t have any messages. When buyers send you messages, you can view them here.</p>
            </div>
-
           </div>
         </div>
        </div>

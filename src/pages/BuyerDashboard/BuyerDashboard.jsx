@@ -12,45 +12,15 @@ import { CiWallet } from "react-icons/ci";
 import {Link} from 'react-router-dom'
 
 const BuyerDashboard = () => {
-  const [products, setProducts] = useState("");
-  const [results, setResults] = useState([]);
-  const handleChange = (category) => {
-    // logic
-
-    if (category === "All Product") {
-      setResults(products);
-    } else {
-      const filterResults = products.filter(
-        (value) => value.category === category
-      );
-
-      setResults(filterResults);
-    }
-   
-  };
-
-  useEffect(() => {
-    const fetchApiData = async () => {
-      try {
-        const response = await fetch("https://fakestoreapi.com/products");
-        const data = await response.json();
-        setProducts(data);
-        setResults(data)
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchApiData();
-  }, []);
-
   return (
     <Fragment>
+   
       <div className="userDashboard">
         <h1 className="user-title">Hi, Vipin Kumar</h1>
         <p className="user-subtitle">Vipin Kumar</p>
       </div>
       <div className="dashboard-containers">
-       <Link to="/OrderPage">
+       <Link to="/order-page">
        <div className="dashboards">
           <div className="order-contant">
             <BsBox className="order-icon" />
@@ -59,14 +29,14 @@ const BuyerDashboard = () => {
             <h4 className="orders-title">Order</h4>
             <div className="order-info">
               <p className="order-infos">
-                View your order details, manage and track current orders, and
+                View your order details, manage and track current orders,
                 explore international shipping & logistics.
               </p>
             </div>
           </div>
         </div> 
        </Link>
-        <Link to ="/buyermessage">
+        <Link to ="/buyer-message">
         <div className="dashboards">
           <div className="order-contant">
             <RiMessage2Line className="order-icon" />
@@ -128,6 +98,7 @@ const BuyerDashboard = () => {
             </div>
           </div>
         </div>
+        <Link to='/buyer-address'>
         <div className="dashboards">
           <div className="order-contant">
             <IoLocationOutline className="order-icon" />
@@ -141,6 +112,8 @@ const BuyerDashboard = () => {
             </div>
           </div>
         </div>
+        </Link>
+        <Link to='/acess-management'>
         <div className="dashboards">
           <div className="order-contant">
             <PiUsersThreeLight className="order-icon" />
@@ -155,6 +128,8 @@ const BuyerDashboard = () => {
             </div>
           </div>
         </div>
+        </Link>
+        <Link to='/payment'>
         <div className="dashboards">
           <div className="order-contant">
             <CiWallet className="order-icon" />
@@ -168,48 +143,7 @@ const BuyerDashboard = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="recommeded-container">
-        <div className="company-detail">
-          <h2 className="user-title">Recommended Product</h2>
-          <select
-            onChange={(e) => handleChange(e.target.value)}
-            name=""
-            className="select-items-value"
-          >
-          <option className="select-value" value='All Product'>
-            All Product
-          </option>
-            <option className="select-value" value="electronics">
-              Electronics
-            </option>
-            <option className="select-value" value="men's clothing">
-              Men's Cloting
-            </option>
-            <option className="select-value" value="jewelery">
-              Jewelery
-            </option>
-          </select>
-        </div>
-      </div>
-      <div className="box-container-product-show">
-        {products && (
-          <div className="recommended-container-img">
-            {results.map((value, id) => {
-              return (
-                <div className="show-result-data" key={id}>
-                  <div className="recommended-product-image-container">
-                    <img className="recommended-img" src={value.image} alt="" />
-                  </div>
-                  <div className="recommended-img-title">
-                    <h3 className="recommended-img-title">{value.category}</h3>
-                    <p className="category-price">Price:{value.price}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+       </Link>
       </div>
     </Fragment>
   );
