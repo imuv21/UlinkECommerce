@@ -1,9 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDivCount } from '../context/SuperContext';
+
 
 const ProList = () => {
-  const { divCount } = useDivCount();
   const [formData, setFormData] = useState([]);
   const navigate = useNavigate();
   const [clickedIndex, setClickedIndex] = useState(null);
@@ -38,6 +37,18 @@ const ProList = () => {
     setShowPopup(false);
   };
 
+
+  const renderBulletPoints = (bulletPoints) => {
+    const bulletPointArray = bulletPoints.split('.').filter(point => point.trim() !== '');
+    return (
+      <ul>
+        {bulletPointArray.map((point, index) => (
+          <li key={index}>{point.trim()}.</li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <div className='flexcol wh mt home'>
       {formData.length === 0 ? (
@@ -45,15 +56,10 @@ const ProList = () => {
       ) : (
         formData.map((item, index) => (
           <div key={index}>
-            <p onClick={() => handleAddAddress(index)}>Name: {item.inputone}</p>
-            <p>Input two: {item.inputtwo}</p>
-            {[...Array(divCount)].map((_, index) => (
-              <Fragment key={index}>
-                <p>q: {item[`quantity_${index}`]}</p>
-                <p>p: {item[`price_${index}`]}</p>
-                <p>sp: {item[`salePrice_${index}`]}</p>
-              </Fragment>
-            ))}
+            { item.inputone && <p onClick={() => handleAddAddress(index)}>Apple: {item.inputone}</p>}
+            { item.inputtwo && <p>Orange: {item.inputtwo}</p>}
+            { item.bulletPoints && renderBulletPoints(item.bulletPoints)}
+            {item.path.length > 15 ? `${item.path.substring(0, 15)}...` : item.path}
             <button onClick={() => handleEdit(index)}>Edit</button>
             <button onClick={() => handleDelete(index)}>Delete</button>
           </div>

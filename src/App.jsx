@@ -46,8 +46,6 @@ const Cart = lazy(() => import('./pages/Cart/Cart'));
 
 
 //Other
-const Bla = lazy(() => import("./components/Translator/Bla"));
-const Blaaa = lazy(() => import("./components/Translator/Blaaa"));
 const AddressComponent = lazy(() => import("./components/Translator/AddressComponent"));
 const Image = lazy(() => import('./components/Image'));
 const Translator = lazy(() => import('./components/Translator/Translator'));
@@ -55,6 +53,7 @@ const AddProduct = lazy(() => import("./components/Translator/AddProduct"));
 const EditProduct = lazy(() => import("./components/Translator/EditProduct"));
 const ProList = lazy(() => import("./components/Translator/ProList"));
 const Media = lazy(() => import("./components/Translator/Media"));
+const Blabla = lazy(() => import('./components/Translator/Blabla'));
 
 
 
@@ -89,10 +88,9 @@ function App() {
 
 
             {/* other */}
-            <Route path='/bla' element={<Layout><Bla /></Layout>} />
-            <Route path='/blaaa' element={<Layout><Blaaa /></Layout>} />
             <Route path='/test-address' element={<Layout><AddressComponent /></Layout>} />
             <Route path='/img' element={<Layout><Image /></Layout>} />
+            <Route path='/blabla' element={<Layout><Blabla /></Layout>} />
             <Route path='/trans' element={<Layout><Translator /></Layout>} />
             <Route path='/addproduct' element={<Layout><DivCountProvider><AddProduct /></DivCountProvider></Layout>} />
             <Route path='/editproduct/:index' element={<Layout><DivCountProvider><EditProduct /></DivCountProvider></Layout>} />

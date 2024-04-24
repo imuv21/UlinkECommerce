@@ -1,241 +1,321 @@
-import React, { Fragment, useState } from 'react'
-import './Payment.css'
-import { LiaCcVisa } from "react-icons/lia";
-import { RiMastercardFill } from "react-icons/ri";
-import { SiAmericanexpress } from "react-icons/si";
-import { RxCross2 } from "react-icons/rx";
-import { LiaEditSolid } from "react-icons/lia";
-import { AiOutlineDelete } from "react-icons/ai";
+import React, { useState, Fragment } from 'react';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 const Payment = () => {
-    const [cardOption, setCardOption] = useState(false)
-    const [cardDetail, setCardDetail] = useState(false)
-    const [editCard, setEditCard] = useState(false)
-    const [open, setOpen] = useState(false)
-    const [cardData, setCardData] = useState({
-        cardname: '',
-        cardnumber: '',
-        expdate: '',
-    })
-    const handleCardChange = (e) => {
-        const { name, value } = e.target
-        setCardData({
-            ...cardData,
-            [name]: value
-        })
+
+    const [subCurrentPage, setsubCurrentPage] = useState(1);
+    const handleSubPageChange = (subPageNumber) => {
+        setsubCurrentPage(subPageNumber);
+    };
+
+
+    //cards
+    //popup form
+    const [showPopupCard, setShowPopupCard] = useState(false);
+    const [editModeCard, setEditModeCard] = useState(false);
+    const [editIndexCard, setEditIndexCard] = useState(null);
+    const [cardNumber, setCardNumber] = useState('');
+    //cardnumber
+    const handlecardnum = (event) => {
+        let value = event.target.value;
+        value = value.replace(/\D/g, '');
+        setCardNumber(value);
     }
-    const handleEdit = () => {
-        setEditCard(true)
-    }
-    const handleCancelEdit = () => {
-        setEditCard(false)
-        console.log(setEditCard(false))
-    }
-    const handleSaveCard = () => {
-        setCardData(cardData)
-        setEditCard(false)
-    }
-    const handleAddCard = (e) => {
-        e.preventDefault()
-        setCardOption(cardData)
-        setCardDetail(true)
-        setOpen(false)
-    }
-    const handleCardSubmit = (e) => {
-        e.preventDefault()
-    }
-    const handleCrossEdit = () => {
-        setEditCard(false)
-    }
-    const handleOpenCart = () => {
-        setOpen(true)
-    }
-    const handleCross = () => {
-        setOpen(false)
-    }
-    const handleCancel = () => {
-        setOpen(false)
-    }
+    const [expiryDate, setExpiryDate] = useState('');
+    //mmyy
+    const handleslash = (event) => {
+        let value = event.target.value;
+        value = value.replace(/\D/g, '');
+        if (value.length > 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2);
+        }
+        setExpiryDate(value);
+    };
+    const [fullName, setFullName] = useState('');
+    const [cardList, setCardList] = useState(JSON.parse(localStorage.getItem('cards')) || []);
+
+    const handleAddCard = () => {
+        setShowPopupCard(true);
+        setEditModeCard(false);
+        setCardNumber('');
+        setExpiryDate('');
+        setFullName('');
+    };
+    const handleEditCard = (index) => {
+        const cardToEdit = cardList[index];
+        setEditIndexCard(index);
+        setCardNumber(cardToEdit.cardNumber);
+        setExpiryDate(cardToEdit.expiryDate);
+        setFullName(cardToEdit.fullName);
+        setShowPopupCard(true);
+        setEditModeCard(true);
+    };
+    const handleCloseCard = () => {
+        setShowPopupCard(false);
+        setEditModeCard(false);
+        setCardNumber('');
+        setExpiryDate('');
+        setFullName('');
+    };
+    const handleSubmitCard = () => {
+        const newCard = { cardNumber, expiryDate, fullName };
+        if (editModeCard) {
+            const updatedCardList = [...cardList];
+            updatedCardList[editIndexCard] = newCard;
+            setCardList(updatedCardList);
+            localStorage.setItem('cards', JSON.stringify(updatedCardList));
+        } else {
+            const updatedCardList = [...cardList, newCard];
+            setCardList(updatedCardList);
+            localStorage.setItem('cards', JSON.stringify(updatedCardList));
+        }
+        setShowPopupCard(false);
+        setEditModeCard(false);
+        setCardNumber('');
+        setExpiryDate('');
+        setFullName('');
+    };
+    const handleDeleteCard = (index) => {
+        const updatedCardList = [...cardList];
+        updatedCardList.splice(index, 1);
+        setCardList(updatedCardList);
+        localStorage.setItem('cards', JSON.stringify(updatedCardList));
+    };
+
+
+    
+
+
+
+    //banks
+    //popup form
+    const [showPopupBank, setShowPopupBank] = useState(false);
+    const [editModeBank, setEditModeBank] = useState(false);
+    const [editIndexBank, setEditIndexBank] = useState(null);
+    const [bankName, setBankName] = useState('');
+    const [accountHolderName, setAccountHolderName] = useState('');
+    const [accountNumber, setAccountNumber] = useState('');
+    const [ifscCode, setIfscCode] = useState('');
+    const [branchName, setBranchName] = useState('');
+    const [swiftCode, setSwiftCode] = useState('');
+    const [bankList, setBankList] = useState(JSON.parse(localStorage.getItem('banks')) || []);
+
+    const handleAddBank = () => {
+        setShowPopupBank(true);
+        setEditModeBank(false);
+        setBankName('');
+        setAccountHolderName('');
+        setAccountNumber('');
+        setIfscCode('');
+        setBranchName('');
+        setSwiftCode('');
+    };
+    const handleEditBank = (index) => {
+        const bankToEdit = bankList[index];
+        setEditIndexBank(index);
+        setBankName(bankToEdit.bankName);
+        setAccountHolderName(bankToEdit.accountHolderName);
+        setAccountNumber(bankToEdit.accountNumber);
+        setIfscCode(bankToEdit.ifscCode);
+        setBranchName(bankToEdit.branchName);
+        setSwiftCode(bankToEdit.swiftCode);
+        setShowPopupBank(true);
+        setEditModeBank(true);
+    };
+    const handleCloseBank = () => {
+        setShowPopupBank(false);
+        setEditModeBank(false);
+        setBankName('');
+        setAccountHolderName('');
+        setAccountNumber('');
+        setIfscCode('');
+        setBranchName('');
+        setSwiftCode('');
+    };
+    const handleSubmitBank = () => {
+        const newBank = { bankName, accountHolderName, accountNumber, ifscCode, branchName, swiftCode };
+        if (editModeBank) {
+            const updatedBankList = [...bankList];
+            updatedBankList[editIndexBank] = newBank;
+            setBankList(updatedBankList);
+            localStorage.setItem('banks', JSON.stringify(updatedBankList));
+        } else {
+            const updatedBankList = [...bankList, newBank];
+            setBankList(updatedBankList);
+            localStorage.setItem('banks', JSON.stringify(updatedBankList));
+        }
+        setShowPopupBank(false);
+        setEditModeBank(false);
+        setBankName('');
+        setAccountHolderName('');
+        setAccountNumber('');
+        setIfscCode('');
+        setBranchName('');
+        setSwiftCode('');
+    };
+    const handleDeleteBank = (index) => {
+        const updatedBankList = [...bankList];
+        updatedBankList.splice(index, 1);
+        setBankList(updatedBankList);
+        localStorage.setItem('banks', JSON.stringify(updatedBankList));
+    };
+
+
+
     return (
-        <Fragment>
-            {/* Open card detail */}
-            {open && (
-                <div className='background-Changer'>
-                    <div className='card-methode'>
-                        <div className='card-infos-bank'>
-                            <div className='card-title'>
-                                <h3 className=" card-title-tittles">Add a Debit or Credit Card</h3>
-                            </div>
-                            <div className='card-title'>
-                                <RxCross2 className='cross-icon' onClick={handleCross} />
-                            </div>
+        <div className="flexcol wh product-detail">
+            <div className="flex wh">
+                <div className="heading2 wh captext">My Account / Payment Management</div>
+            </div>
+            <div className="flex wh">
+                <div className="heading wh">Payment Management</div>
+            </div>
+
+            <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
+                <button onClick={() => handleSubPageChange(1)} className={subCurrentPage === 1 ? 'toggle-active btn-toggle box2 flex' : 'btn-toggle box2 flex'}><div className="heading2">Cards</div></button>
+                <button onClick={() => handleSubPageChange(2)} className={subCurrentPage === 2 ? 'toggle-active btn-toggle box2 flex' : 'btn-toggle box2 flex'}><div className="heading2">Back accounts</div></button>
+                <button onClick={() => handleSubPageChange(3)} className={subCurrentPage === 3 ? 'toggle-active btn-toggle box2 flex' : 'btn-toggle box2 flex'}><div className="heading2">UPIs</div></button>
+            </div>
+
+
+            {subCurrentPage === 1 && (
+                <div className='flexcol wh' style={{ gap: '20px' }}>
+                    <div className="productlist3">
+                        <div className="flexcol" style={{ gap: '20px' }}>
+                            <div className="heading wh">My Cards</div>
+                            <div className="heading2 wh">Add your cards here. You can select your card by which you want to pay on the checkout page.</div>
                         </div>
-                        <form onSubmit={handleCardSubmit}>
-                            <div className='card-inputs-filed'>
-                                <div className='card-inputs'>
-                                    <label >Full name on card</label>
-                                    <input type='text' name='cardname' className='card-input-value' placeholder='Full name on card' value={cardData.cardname} onChange={handleCardChange} />
-                                </div>
-                                <div className='card-inputses'>
-                                    <label >Card number</label>
-                                    <input type='number' name='cardnumber' className='card-input-value' placeholder='Card number' value={cardData.cardnumber} onChange={handleCardChange} />
-                                </div>
-                            </div>
-                            <div className='card-inputs change-input-width'>
-                                <label >Exipiry Date</label>
-                                <input type='text' name='expdate' className='card-input-value' placeholder='MM/YY' value={cardData.expdate} onChange={handleCardChange} />
-                            </div>
-                            <div className='add-card-btn'>
-                                <button className='add-bank-btn' onClick={handleCancel}>Cancel</button>
-                                <button type='submit' className='add-bank-btns' onClick={handleAddCard}>Add Card</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
-            {editCard && (
-                <div className='background-Changer'>
-                    <div className='card-methode'>
-                        <div className='card-infos-bank'>
-                            <div className='card-title'>
-                                <h3 className=" card-title-tittles">Add a Debit or Credit Card</h3>
-                            </div>
-                            <div className='card-title'>
-                                <RxCross2 className='cross-icon' onClick={handleCrossEdit} />
-                            </div>
-                        </div>
-                        <form onSubmit={handleCardSubmit}>
-                            <div className='card-inputs-filed'>
-                                <div className='card-inputs'>
-                                    <label >Full name on card</label>
-                                    <input type='text' name='cardname' className='card-input-value' placeholder='Full name on card' value={cardData.cardname} onChange={handleCardChange} />
-                                </div>
-                                <div className='card-inputses'>
-                                    <label >Card number</label>
-                                    <input type='number' name='cardnumber' className='card-input-value' placeholder='Card number' value={cardData.cardnumber} onChange={handleCardChange} />
-                                </div>
-                            </div>
-                            <div className='add-card-btn'>
-                                <button className='add-bank-btn' onClick={handleCancelEdit}>Cancel</button>
-                                <button type='submit' className='add-bank-btns' onClick={handleSaveCard}>Save Card</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
-            <div className='mt positon'>
-                <div className='userDashboard'>
-                    <h1 className='user-titles pay-title heading-3'>Payment Management</h1>
-                </div>
-                <div className='more-rule'>
-                    <p className='roles-text  pay-note'><span>Note:</span> The selected payment option will be set as your default method </p>
-                </div>
-                <div className='border-1 border-p'>
-                    <div className='pay-options'>
-                        <div className='note bank-detail top-bar '>
-                            {/* <FaRegCircle className='warnings' /> */}
-                            <input type='radio' />
-                            <p className='paragraph-4'> Pay With Card</p>
-                        </div>
-                        <div className=' pay-option-item '>
-                            <LiaCcVisa />
-                            <RiMastercardFill />
-                            <SiAmericanexpress />
+                        <div className="flexcol" style={{ gap: '20px' }}>
+                            <button onClick={handleAddCard} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Add New Card</div></button>
                         </div>
                     </div>
-                    {cardDetail && (
-                        <div>
-                            <div className='border-1  bor-1 box-container-border'>
-                                <div className='card-table'>
-                                    <div className='table-1'>Card Number</div>
-                                    <div className='table-1'>Name on Card</div>
-                                    <div className='table-1'>Expires</div>
-                                    <div className='table-1'>Action</div>
-                                </div>
-                            </div>
-                            <div className='border-1 bor-1'>
-                                <div className='card-details-table'>
-                                    <div className='table-1'>{cardData.cardnumber}</div>
-                                    <div className='table-1'>{cardData.cardname}</div>
-                                    <div className='table-1'>{cardData.expdate}</div>
-                                    <div className='table-1'>
-                                        <LiaEditSolid onClick={handleEdit} className='edit-icon' />
-                                        <AiOutlineDelete className='delete-icon' />
+                    <div className="productlist2">
+                        {cardList.length === 0 ? (
+                            <div className="heading3">You have no cards.</div>
+                        ) : (
+                            <Fragment>
+                                {cardList.map((card, index) => (
+                                    <div className="productlist4" key={index}>
+                                        <div className="flexcol-start" style={{ gap: '20px' }}>
+                                            <div className="flex" style={{ gap: '10px' }}>
+                                                <div className='descrip2'>{card.cardNumber}</div>
+                                                <div className='descrip2'>{card.expiryDate}</div>
+                                                <div className='descrip2'>{card.fullName}</div>
+                                            </div>
+                                        </div>
+                                        <div className="flexcol" style={{ gap: '20px' }}>
+                                            <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditCard(index)} />
+                                            <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteCard(index)} />
+                                        </div>
+                                    </div>
+                                ))}
+                            </Fragment>
+                        )}
+                    </div>
+                    {showPopupCard && (
+                        <div className='popup-parent'>
+                            <form className='popup-child'>
+                                <div className="popupform">
+                                    <div className="heading wh">Add New Card</div>
+                                    <div className="heading2">Enter card number</div>
+                                    <input type="text" placeholder='0000 0000 0000 0000' className="box flex" maxLength={16} value={cardNumber} onChange={handlecardnum} />
+                                    <div className="heading2">Enter expiry date</div>
+                                    <input type="text" placeholder="MM/YY" className="box flex" maxLength={5} value={expiryDate} onChange={handleslash} />
+                                    <div className="heading2">Enter full name (same as on the card)</div>
+                                    <input type="text" placeholder='Enter full name' className="box flex" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                                    <div className="flex" style={{ gap: '20px' }}>
+                                        <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleSubmitCard}><div className="heading2">Save</div></button>
+                                        <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleCloseCard}><div className="heading2">Cancel</div></button>
                                     </div>
                                 </div>
-                            </div>
-                            <div className='border-1 bor-1'>
-                                <div className='card-details-table'>
-                                    <div className='table-1'>{cardData.cardnumber}</div>
-                                    <div className='table-1'>{cardData.cardname}</div>
-                                    <div className='table-1'>{cardData.expdate}</div>
-                                    <div className='table-1'>
-                                        <LiaEditSolid onClick={handleEdit} className='edit-icon' />
-                                        <AiOutlineDelete className='delete-icon' />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='border-1 bor-1'>
-                                <div className='card-details-table'>
-                                    <div className='table-1'>{cardData.cardnumber}</div>
-                                    <div className='table-1'>{cardData.cardname}</div>
-                                    <div className='table-1'>{cardData.expdate}</div>
-                                    <div className='table-1'>
-                                        <LiaEditSolid onClick={handleEdit} className='edit-icon' />
-                                        <AiOutlineDelete className='delete-icon' />
-                                    </div>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     )}
-                    <>
-                        <button className='create-btn  debit-card-button ' onClick={handleOpenCart}>ADD DEBIT CARD OR CREDIT CARD</button>
-                    </>
                 </div>
-                <div className='border-1  border-top'>
-                    <div className='bank-detail'>
-                        <div className='note bank-detail '>
-                            {/* <FaRegCircle className='warnings' /> */}
-                            <input type='radio' />
-                            <p className='paragraph-4'> Bank Transfer Default</p>
+            )}
+
+            {subCurrentPage === 2 && (
+                <div className='flexcol wh' style={{ gap: '20px' }}>
+                    <div className="productlist3">
+                        <div className="flexcol" style={{ gap: '20px' }}>
+                            <div className="heading wh">Bank Details</div>
+                            <div className="heading2 wh">Add your bank accounts here. You can select your account by which you want to pay on the checkout page.</div>
                         </div>
-                        <div className='pay-note info-detail' >
-                            <p className='info-details'>If you are choosing to pay by Bank Transfer to Tradeling, please ensure your funds are sent to Tradeling to allow sufficient time for your funds to reach Tradeling and for Tradeling to pay the Seller.</p>
-                            <div className='data-display  bank-data-display'>
-                                <div className='name-show bank-name-show'>
-                                    <h4 className="orders-title">Account Name:</h4>
-                                    <p>Blink Technologies FZCO</p>
-                                </div>
-                                <div className='name-show bank-name-show'>
-                                    <h4 className="orders-title">IBAN: </h4>
-                                    <p>
-                                        AE750260001015656080004</p>
-                                </div>
-                                <div className='name-show bank-name-show'>
-                                    <h4 className="orders-title">BANK NAME:  </h4>
-                                    <p>
-                                        Emirates NBD Bank (PJSC)</p>
-                                </div>
-                                <div className='name-show bank-name-show'>
-                                    <h4 className="orders-title">SWIFT CODE:  </h4>
-                                    <p>
-                                        EBILAEAD</p>
-                                </div>
-                            </div>
+                        <div className="flexcol" style={{ gap: '20px' }}>
+                            <button onClick={handleAddBank} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Add New Account</div></button>
                         </div>
                     </div>
-                </div>
-                <div className='border-1 border-top bor-pad'>
-                    <div className='note bank-detail '>
-                        {/* <FaRegCircle className='warnings' /> */}
-                        <input type='radio' />
-                        <p className='paragraph-4'>Cash On Delivery</p>
+                    <div className="productlist2">
+                        {cardList.length === 0 ? (
+                            <div className="heading3">There are no bank accounts.</div>
+                        ) : (
+                            <Fragment>
+                                {bankList.map((bank, index) => (
+                                    <div className="productlist4" key={index}>
+                                        <div className="flexcol-start" style={{ gap: '20px' }}>
+                                            <div className="flex" style={{ gap: '10px' }}>
+                                                <div className='descrip2'>{bank.bankName}</div>
+                                                <div className='descrip2'>{bank.accountHolderName}</div>
+                                                <div className='descrip2'>{bank.accountNumber}</div>
+                                            </div>
+                                            <div className="flex" style={{ gap: '10px' }}>
+                                                <div className='descrip2'>{bank.ifscCode}</div>
+                                                <div className='descrip2'>{bank.branchName}</div>
+                                                <div className='descrip2'>{bank.swiftCode}</div>
+                                            </div>
+                                        </div>
+                                        <div className="flexcol" style={{ gap: '20px' }}>
+                                            <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditBank(index)} />
+                                            <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteBank(index)} />
+                                        </div>
+                                    </div>
+                                ))}
+                            </Fragment>
+                        )}
                     </div>
-                    <div className='pay-note info-detail  margin-bottom'>
-                        <p className='info-details'>If you are choosing to pay by Bank Transfer to Tradeling, please ensure your funds are sent to Tradeling to allow sufficient time for your funds to reach Tradeling and for Tradeling to pay the Seller.</p>
+                    {showPopupBank && (
+                        <div className='popup-parent'>
+                            <form className='popup-child'>
+                                <div className="popupform">
+                                    <div className="heading wh">Add New Bank Account</div>
+                                    <input type="text" placeholder='Enter bank name' className="box flex" value={bankName} onChange={(e) => setBankName(e.target.value)} />
+                                    <input type="text" placeholder='Enter account holder name' className="box flex" value={accountHolderName} onChange={(e) => setAccountHolderName(e.target.value)} />
+                                    <input type="text" placeholder='Enter account number' className="box flex" value={accountNumber} onChange={(e) => setAccountNumber(e.target.value)} />
+
+                                    <input type="text" placeholder='Enter IFSC code' className="box flex" value={ifscCode} onChange={(e) => setIfscCode(e.target.value)} />
+                                    <input type="text" placeholder='Enter branch name' className="box flex" value={branchName} onChange={(e) => setBranchName(e.target.value)} />
+                                    <input type="text" placeholder='Enter swift code' className="box flex" value={swiftCode} onChange={(e) => setSwiftCode(e.target.value)} />
+                                    <div className="flex" style={{ gap: '20px' }}>
+                                        <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleSubmitBank}><div className="heading2">Save</div></button>
+                                        <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleCloseBank}><div className="heading2">Cancel</div></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {subCurrentPage === 3 && (
+                <div className="productlist2">
+                    <div className="heading">Download imagebla lbaate</div>
+                    <div className="descrip2">Click download button to download images upload template</div>
+                    <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Download Images</div></button>
+                    <div className="heading">Upload image templates</div>
+                    <div className="descrip2">When you have your templates filled out, click the button below to upload the products.</div>
+                    <div className="flex wh" style={{ justifyContent: 'space-between' }}>
+                        <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Upload</div></button>
+                        <div className="flex" style={{ gap: '20px' }}>
+                            <button className='btn box2 flex' style={{ width: 'fit-content' }}><div className="heading2">Reset</div></button>
+                            <button className='btn box2 flex' style={{ width: 'fit-content' }}><div className="heading2">Save</div></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </Fragment>
+            )}
+
+        </div>
     )
 }
+
 export default Payment

@@ -189,7 +189,7 @@ const SellerAddress = () => {
                     <Fragment>
                         {addressList.map((address, index) => (
                             <div className="productlist4" key={index}>
-                                <div className="flexcol-start" style={{ gap: '20px' }}>
+                                <div className="flexcol-start" style={{ gap: '10px' }}>
                                     <div className="flex" style={{ gap: '20px' }}>
                                         <div className="heading3">{address.address}</div>
                                         {address.isLocationChecked && <div className='descrip warning-btn'>Shipping</div>}
@@ -198,10 +198,12 @@ const SellerAddress = () => {
                                     <div className="flex" style={{ gap: '10px' }}>
                                         <div className='descrip2'>{address.selectedOrigin}</div>
                                         <div className='descrip2'>{address.city}</div>
-                                        <div className='descrip2'>{address.area}</div>
-                                        <div className='descrip2'>{address.street}</div>
-                                        <div className='descrip2'>{address.office}</div>
-                                        <div className='descrip2'>Pobox: {address.pobox}</div>
+                                        <div className='descrip2'>Area: {address.area.length > 15 ? `${address.area.substring(0, 15)}...` : address.area}</div>
+                                        <div className='descrip2'>Street: {address.street} {address.street.length > 15 ? `${address.street.substring(0, 15)}...` : address.street}</div>
+                                    </div>    
+                                    <div className="flex" style={{ gap: '10px' }}>
+                                        <div className='descrip2'>Building/Office: {address.office.length > 15 ? `${address.office.substring(0, 15)}...` : address.office}</div>
+                                        <div className='descrip2'>Pobox: {address.pobox}</div> 
                                         <div className='descrip2'>Post code: {address.postCode}</div>
                                     </div>
                                     <div className="flex" style={{ gap: '20px' }}>

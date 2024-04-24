@@ -46,10 +46,10 @@
     height: auto;
     margin: 0 auto;
     transition: all 0.35s ease;
-    background: var(--bgClr);
+    background: white;
  
     &.on-scroll {
-       background: var(--bgClr);
+       background: white;
        box-shadow: var(--shadow-medium);
     }
  }
@@ -122,7 +122,7 @@
        padding: 0.65rem 1.5rem;
        border-radius: 3rem;
        text-transform: capitalize;
-       color: var(--bgClr);
+       color: white;
        background-color: var(--CodeTwo);
        box-shadow: var(--shadow-medium);
        transition: all 0.3s ease-in-out;

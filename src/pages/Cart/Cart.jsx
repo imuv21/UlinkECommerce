@@ -74,7 +74,7 @@ const Cart = () => {
           ) : (
             <Fragment>
               {Object.values(cart).map((item, index) => (
-                <div className='cart' key={index}>
+                <div className='cart webdiv' key={index}>
                   <div className="cartImg">
                     {cart[index].images && cart[index].images.length > 0 && (
                       <img src={cart[index].images[0].url} alt={cart[index].product.productName} />
@@ -98,7 +98,7 @@ const Cart = () => {
                   
                   <div className="cartPrice">
                     <div className="heading2">Total : AED {cart[index].quantity * cart[index].product.salePrice}</div>
-                    <div className="plus-minus" style={{ width: '150px' }}>
+                    <div className="plus-minus webdiv" style={{ width: '150px' }}>
                       <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={() => decrementValue(index)} /></div>
                       <input className='pminput' type="number" value={cart[index].quantity} onChange={(e) => handleInputChange(e, index)} />
                       <div style={{ cursor: 'pointer' }}><AddCircleOutlineIcon onClick={() => incrementValue(index)} /></div>

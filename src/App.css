@@ -5,9 +5,6 @@
   --font: 'Roboto', sans-serif;
   --fosi: clamp(24px, 4vw, 40px);
   --defontsize: 13px;
-  --bgClr: white;
-  --bgClr-2: #eeeeee;
-  --textClr: black;
   --bg: radial-gradient(circle at 20% 0%, rgba(49, 210, 255, 0.30) 1%, transparent 40%), radial-gradient(circle at 80% 0%, rgba(49, 210, 255, 0.30) 1%, transparent 40%);
   --pad: 10px;
   --trans: all 0.4s ease-in-out;
@@ -16,6 +13,7 @@
   --CodeTwo: #3770bf;
   --CodeTwoHover: #468ff6;
   --CodeThree: #f9f8f8;
+  --bgClr-2: #eeeeee;
   --border: 1px solid #dddddd;
   --br1: 6px;
   --br2: 3px;
@@ -36,7 +34,7 @@ body {
 }
 
 a {
-  color: var(--textClr);
+  color: black;
   text-decoration: none;
   font-family: var(--font);
   border-radius: 0px;
@@ -56,12 +54,12 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--textClr);
+  color: black;
   font-family: var(--font);
 }
 
 p {
-  color: var(--textClr);
+  color: black;
   font-size: var(--defontsize);
   font-family: var(--font);
 }
@@ -127,6 +125,12 @@ button:focus {
   outline: 1px solid orange;
 }
 
+.webdiv{
+  border-radius: var(--br1);
+  border: var(--border);
+  background-color: white;
+}
+
 .flexcol-start {
   display: flex;
   align-items: start;
@@ -139,6 +143,20 @@ button:focus {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.flexcol-end{
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  flex-direction: column;
+}
+
+.flex-end{
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  flex-direction: row;
 }
 
 .flex {
@@ -208,7 +226,7 @@ button:focus {
   padding: 10px 0px;
   width: fit-content;
   border: none;
-  background-color: var(--bgClr);
+  background-color: white;
   cursor: pointer;
   transition: var(--trans);
 }
@@ -283,7 +301,7 @@ button:focus {
   padding: 10px 0px;
   width: fit-content;
   border: none;
-  background-color: var(--bgClr);
+  background-color: white;
   cursor: pointer;
   transition: var(--trans);
 }
@@ -315,7 +333,7 @@ button:focus {
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  gap: 20px;
+  gap: 10px;
   text-decoration: none;
   color: rgb(48, 48, 48);
   transition: all 0.5s;
@@ -323,18 +341,11 @@ button:focus {
   border-radius: var(--br1);
 }
 
-.title-limit {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 150px;
-}
-
 .background-image {
   width: 100%;
   display: block;
-  aspect-ratio: 4/2;
-  object-fit: contain;
+  aspect-ratio: 4/2.5;
+  object-fit: fill;
 }
 
 .icon-image {
@@ -345,34 +356,17 @@ button:focus {
   max-width: 20%;
 }
 
-.productCard .stars {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  font-size: 13px;
-  line-height: 20px;
-  font-weight: normal;
-}
-
 .productCard .discp {
   font-size: 14px;
   font-weight: bolder;
 }
 
-.productCard .discp:nth-child(3) {
+.productCard .discp:nth-child(2) {
   color: gray;
 }
 
 .productCard .discp:nth-child(4) {
   color: limegreen;
-}
-
-.productCard .discp:nth-child(5) {
-  background-color: rgb(255, 108, 108);
-  color: white;
-  padding: 5px;
-  font-size: 10px;
-  border-radius: var(--br2);
 }
 
 .productCard:hover {
@@ -560,7 +554,7 @@ button:focus {
 
 .toggle-active {
   background-color: var(--CodeTwo);
-  color: var(--bgClr);
+  color: white;
 }
 
 .toggle-active:hover {
@@ -574,7 +568,7 @@ button:focus {
   text-align: center;
   border: var(--border);
   border-radius: var(--br1);
-  background-color: var(--bgClr);
+  background-color: white;
 }
 
 .download-btn {
@@ -824,7 +818,7 @@ button:focus {
 .btn {
   border: none;
   background-color: var(--CodeTwo);
-  color: var(--bgClr);
+  color: white;
   transition: var(--trans);
 }
 
@@ -835,7 +829,7 @@ button:focus {
 .btn2 {
   border: none;
   background-color: var(--CodeOne);
-  color: var(--bgClr);
+  color: white;
   transition: var(--trans);
 }
 
@@ -1118,7 +1112,7 @@ button:focus {
 /* product list */
 .productflex {
   gap: 30px;
-  background-color: var(--bgClr);
+  background-color: white;
   border-radius: var(--br1);
   border: var(--border);
   display: flex;
@@ -1146,7 +1140,7 @@ button:focus {
 
 .productlist {
   gap: 30px;
-  background-color: var(--bgClr);
+  background-color: white;
   border-radius: var(--br1);
   border: var(--border);
   width: 100%;
@@ -1159,7 +1153,7 @@ button:focus {
 
 .productlist5 {
   gap: 0px;
-  background-color: var(--bgClr);
+  background-color: white;
   border-radius: var(--br1);
   border: var(--border);
   width: 100%;
@@ -1172,7 +1166,7 @@ button:focus {
 
 .productlist3 {
   gap: 20px;
-  background-color: var(--bgClr);
+  background-color: white;
   border-radius: var(--br1);
   border: var(--border);
   width: 100%;
@@ -1198,7 +1192,7 @@ button:focus {
 
 .productlist2 {
   gap: 20px;
-  background-color: var(--bgClr);
+  background-color: white;
   border-radius: var(--br1);
   border: var(--border);
   width: 100%;
@@ -1217,7 +1211,7 @@ button:focus {
   width: fit-content;
   border: 1px solid var(--CodeTwo);
   background-color: var(--CodeTwo);
-  color: var(--bgClr);
+  color: white;
   transition: var(--trans);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
   padding: 5px 20px;
@@ -1225,7 +1219,7 @@ button:focus {
 }
 
 .upBtns:hover {
-  background-color: var(--bgClr);
+  background-color: white;
   color: var(--CodeTwo);
 }
 
@@ -1240,7 +1234,7 @@ button:focus {
   width: fit-content;
   border: none;
   background-color: var(--CodeTwo);
-  color: var(--bgClr);
+  color: white;
   transition: var(--trans);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
   padding: 8px 20px;
@@ -1652,6 +1646,13 @@ button:focus {
 /* cart styling */
 /* Product details styling */
 
+.bullet-points{
+  width: 100%;
+}
+.bullet-points li{
+  margin-left: 20px;
+}
+
 .product-detail {
   padding: 100px 120px 60px 120px;
   gap: 30px;
@@ -1665,9 +1666,6 @@ button:focus {
 }
 
 .plus-minus {
-  border-radius: var(--br1);
-  border: var(--border);
-  background-color: white;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -1822,9 +1820,6 @@ button:focus {
 }
 
 .cart{
-  border-radius: var(--br1);
-  border: var(--border);
-  background-color: white;
   width: 100%;
   gap: 10px;
   display: flex;
@@ -1866,7 +1861,7 @@ button:focus {
   border: 1px solid rgb(255, 112, 112);
   transition: var(--trans);
   color: rgb(255, 112, 112);
-  background-color: var(--bgClr);
+  background-color: white;
   padding: 2px 10px;
   width: 150px;
   gap: 10px;
@@ -1875,7 +1870,7 @@ button:focus {
 
 .remove:hover {
   background-color: rgb(255, 112, 112);
-  color: var(--bgClr);
+  color: white;
 }
 
 .captext{
@@ -1890,9 +1885,6 @@ button:focus {
  /* Checkout styling  */
  
  .checkout{
-  border-radius: var(--br1);
-  border: var(--border);
-  background-color: white;
   width: 100%;
   gap: 20px;
   display: flex;
@@ -1918,14 +1910,18 @@ button:focus {
   border: 1px solid var(--CodeOne);
   transition: var(--trans);
   color: var(--CodeOne);
-  background-color: var(--bgClr);
+  background-color: white;
   padding: 5px 10px;
   width: 150px;
   gap: 10px;
   border-radius: var(--br2);
 }
 
-.payment-btn:hover {
+.payment-active {
   background-color: var(--CodeOne);
-  color: var(--bgClr);
+  color: white;
 }
+
+
+/* payment-styling */
+

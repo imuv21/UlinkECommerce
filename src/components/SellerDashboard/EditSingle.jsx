@@ -26,6 +26,10 @@ const EditSingle = () => {
     const [isDragging, setIsDragging] = useState(false);
     const [fileInputValue, setFileInputValue] = useState('');
 
+    const [selectedSupOption, setSelectedSupOption] = useState("");
+    const [marketingValue, setMarketingValue] = useState("");
+    const [categoryPath, setCategoryPath] = useState("");
+
 
     useEffect(() => {
         const savedSingleFormData = JSON.parse(localStorage.getItem('singleFormData'));
@@ -33,7 +37,7 @@ const EditSingle = () => {
             setSingleFormData(savedSingleFormData[index]);
 
             setValue('productName', savedSingleFormData[index].productName);
-            setValue('category', savedSingleFormData[index].category);
+            setValue('bulletPoints', savedSingleFormData[index].bulletPoints);
             setValue('brandName', savedSingleFormData[index].brandName);
             setValue('keyFeatures', savedSingleFormData[index].keyFeatures);
             setValue('keyWords', savedSingleFormData[index].keyWords);
@@ -41,7 +45,6 @@ const EditSingle = () => {
 
             setValue('variantColor', savedSingleFormData[index].variantColor);
             setValue('variantSize', savedSingleFormData[index].variantSize);
-            setValue('Colors', savedSingleFormData[index].Colors);
             setValue('gender', savedSingleFormData[index].gender);
             setValue('dgrGoods', savedSingleFormData[index].dgrGoods);
 
@@ -92,6 +95,10 @@ const EditSingle = () => {
             setValue('unitPrice', savedSingleFormData[index].unitPrice);
             setValue('minOrderQuant', savedSingleFormData[index].minOrderQuant);
 
+            setMarketingValue(savedSingleFormData[index].marketingValue);
+            setCategoryPath(savedSingleFormData[index].categoryPath);
+            setSelectedSupOption(savedSingleFormData[index].selectedSupOption);
+
             setImages(savedSingleFormData[index].images || []);
         }
     }, [index, setValue, setImages]);
@@ -111,7 +118,7 @@ const EditSingle = () => {
         data.images = imageUrls;
         const updatedSingleFormData = JSON.parse(localStorage.getItem('singleFormData'));
         if (updatedSingleFormData && updatedSingleFormData[index]) {
-            const updatedSingleData = { ...data, images };
+            const updatedSingleData = { ...data, images, selectedSupOption, marketingValue, categoryPath };
             updatedSingleFormData[index] = updatedSingleData;
             localStorage.setItem('singleFormData', JSON.stringify(updatedSingleFormData));
             navigate('/seller-dash', { state: { updatedSingleData } });
@@ -218,16 +225,9 @@ const EditSingle = () => {
 
             <form className="productlist2" onSubmit={handleSubmit(onSubmit)}>
                 <div className="heading3">Basic information</div>
-                <Controller name="category" control={control} defaultValue={singleFormData.category || ''} render={({ field }) => (
-                    <select className="box flex" {...field}>
-                        <option value="">Select category</option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="Home">Home</option>
-                        <option value="Fashion">Fashion</option>
-                        <option value="Baby center">Baby center</option>
-                    </select>
-                )}
-                />
+                <Controller name="bulletPoints" control={control} defaultValue={singleFormData.bulletPoints || ''} render={({ field }) => <input className="box flex" placeholder='Enter something about the product...' {...field} />} />
+                {errors.bulletPoints && <div className='error'>{errors.bulletPoints?.message}</div>}
+
                 <Controller name="productName" control={control} defaultValue={singleFormData.productName || ''} render={({ field }) => <input className="box flex" placeholder='Enter product name' {...field} />} />
                 {errors.productName && <div className='error'>{errors.productName?.message}</div>}
                 <Controller name="brandName" control={control} defaultValue={singleFormData.brandName || ''} render={({ field }) => <input className="box flex" placeholder='Enter brand name' {...field} />} />
@@ -237,11 +237,16 @@ const EditSingle = () => {
                 <Controller name="keyWords" control={control} defaultValue={singleFormData.keyWords || ''} render={({ field }) => <input className="box flex" placeholder="Enter keywords separated by comma" {...field} />} />
                 {errors.keyWords && <div className='error'>{errors.keyWords?.message}</div>}
 
-                <div className="heading3">Variant information</div>
-                <div className="flex-start wh" style={{ gap: '10px' }}>
-                    <Controller name="variantColor" control={control} defaultValue={singleFormData.variantColor || ''} render={({ field }) => <input className="box flex" placeholder='Enter product color' {...field} />} />
-                    <Controller name="variantSize" control={control} defaultValue={singleFormData.variantSize || ''} render={({ field }) => <input className="box flex" placeholder='Enter product size' {...field} />} />
-                </div>
+
+                {selectedSupOption === "apple" && (
+                    <>
+                        <div className="heading3">Variant information</div>
+                        <div className="flex-start wh" style={{ gap: '10px' }}>
+                            <Controller name="variantColor" control={control} defaultValue={singleFormData.variantColor || ''} render={({ field }) => <input className="box flex" placeholder='Enter product color' {...field} />} />
+                            <Controller name="variantSize" control={control} defaultValue={singleFormData.variantSize || ''} render={({ field }) => <input className="box flex" placeholder='Enter product size' {...field} />} />
+                        </div>
+                    </>
+                )}
 
                 <div className="heading3">Description</div>
                 <Controller name="addInfo" control={control} defaultValue={singleFormData.addInfo || ''} render={({ field }) => <textarea className="box flex" rows={10} placeholder="Enter any additional information for the product" {...field}></textarea>} />
@@ -660,15 +665,7 @@ const EditSingle = () => {
 
                 <div className="heading3">Additional details</div>
                 <Controller name="ean" control={control} defaultValue={singleFormData.ean || ''} render={({ field }) => <input className="box flex" placeholder='Enter EAN (European article number)' {...field} />} />
-            
-                <Controller name="Colors" control={control} defaultValue={singleFormData.Colors || ''} render={({ field }) => (
-                    <select className="box flex" {...field}>
-                        <option value="">Select color</option>
-                        <option value="yes">In stock</option>
-                        <option value="no">Out of stock</option>
-                    </select>
-                )}
-                />
+
                 {errors.Colors && <div className='error'>{errors.Colors?.message}</div>}
                 <Controller name="itemModelNumber" control={control} defaultValue={singleFormData.itemModelNumber || ''} render={({ field }) => <input className="box flex" placeholder='Enter item model number' {...field} />} />
                 <Controller name="gender" control={control} defaultValue={singleFormData.gender || ''} render={({ field }) => (

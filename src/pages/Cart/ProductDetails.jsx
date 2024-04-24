@@ -21,14 +21,14 @@ const ProductDetails = () => {
         if (selectedProduct) {
             setProduct({
                 ...selectedProduct,
-                images: selectedProduct.images || [] 
+                images: selectedProduct.images || []
             });
         }
     }, [index]);
 
 
     const [cart, setCart] = useState([]);
-    const [cartText, setCartText] = useState(0); 
+    const [cartText, setCartText] = useState(0);
     const addToCart = () => {
         if (!product) return;
         const savedCart = JSON.parse(localStorage.getItem('cart'));
@@ -37,7 +37,7 @@ const ProductDetails = () => {
         const newCart = [...existingCart];
         if (existingProductIndex !== -1) {
             newCart[existingProductIndex].quantity += parseInt(value);
-        } else { 
+        } else {
             newCart.push({
                 product: product,
                 quantity: parseInt(value)
@@ -47,8 +47,8 @@ const ProductDetails = () => {
         localStorage.setItem('cart', JSON.stringify(newCart));
         setCartText(newCart.length);
     };
-    
-   
+
+
 
     //accordion-panel
     const [activeIndex, setActiveIndex] = useState(null);
@@ -56,20 +56,20 @@ const ProductDetails = () => {
         setActiveIndex(activeIndex === index ? null : index);
     };
 
-     //plus-minus
-     const [moq, setMoq] = useState(1);
-     const [value, setValue] = useState(moq.toString());
-     const incrementValue = () => {
-         setValue(prevValue =>  (parseInt(prevValue) + 1).toString());
-     };
-     const decrementValue = () => {
-         setValue(prevValue => Math.max(parseInt(prevValue) - 1, moq).toString()); 
-     };
- 
-     const handleInputChange = (e) => {
-         const newValue = parseInt(e.target.value);
-         setValue(newValue >= moq ? newValue.toString() : moq.toString());
-     };
+    //plus-minus
+    const [moq, setMoq] = useState(1);
+    const [value, setValue] = useState(moq.toString());
+    const incrementValue = () => {
+        setValue(prevValue => (parseInt(prevValue) + 1).toString());
+    };
+    const decrementValue = () => {
+        setValue(prevValue => Math.max(parseInt(prevValue) - 1, moq).toString());
+    };
+
+    const handleInputChange = (e) => {
+        const newValue = parseInt(e.target.value);
+        setValue(newValue >= moq ? newValue.toString() : moq.toString());
+    };
 
 
     //img-change-slider
@@ -109,12 +109,26 @@ const ProductDetails = () => {
 
 
 
+    //bullet-points
+    const renderBulletPoints = (bulletPoints) => {
+        const bulletPointArray = bulletPoints.split('.').filter(point => point.trim() !== '');
+        return (
+            <ul className='bullet-points'>
+                {bulletPointArray.map((point, index) => (
+                    <li className='descrip2 caplist' key={index}>{point.trim()}.</li>
+                ))}
+            </ul>
+        );
+    };
+
+
+
     return (
         <div className="flexcol wh product-detail">
             {product ? (
                 <Fragment>
                     <div className="flex wh">
-                        <div className="heading2 wh captext">{product.category}</div>
+                        <div className="heading2 wh captext">{product.categoryPath}</div>
                     </div>
 
                     <div className="pdcont">
@@ -125,19 +139,19 @@ const ProductDetails = () => {
                                 </div>
                                 <div className="flex" style={{ gap: '10px' }}>
                                     <div className="small-image" onClick={() => handleImageClick(product.images[0].url)}>
-                                        {product.images[0] && <img src={product.images[0].url} alt={product.images[0].name} />}
+                                        {product.images[0] && <img src={product.images[0].url} alt="Img1" />}
                                     </div>
                                     <div className="small-image" onClick={() => handleImageClick(product.images[1].url)}>
-                                        {product.images[1] && <img src={product.images[1].url} alt={product.images[1].name} />}
+                                        {product.images[1] && <img src={product.images[1].url} alt="Img2" />}
                                     </div>
                                     <div className="small-image" onClick={() => handleImageClick(product.images[2].url)}>
-                                        {product.images[2] && <img src={product.images[2].url} alt={product.images[2].name} />}
+                                        {product.images[2] && <img src={product.images[2].url} alt="Img3" />}
                                     </div>
                                     <div className="small-image" onClick={() => handleImageClick(product.images[3].url)}>
-                                        {product.images[3] && <img src={product.images[3].url} alt={product.images[3].name} />}
+                                        {product.images[3] && <img src={product.images[3].url} alt="Img4" />}
                                     </div>
                                     <div className="small-image" onClick={() => handleImageClick(product.images[4].url)}>
-                                        {product.images[4] && <img src={product.images[4].url} alt={product.images[4].name} />}
+                                        {product.images[4] && <img src={product.images[4].url} alt="Img5" />}
                                     </div>
                                 </div>
                             </div>
@@ -160,15 +174,7 @@ const ProductDetails = () => {
                             </div>
                             <div className="heading2 wh">We accept</div>
                             <div className="heading3 wh">About this item</div>
-                            <ul style={{ marginLeft: '16px' }}>
-                                <li className='descrip2 caplist'>AirPods Pro (2nd generation) with USB-C deliver up to 2x more Active Noise Cancellation than the previous generation.</li>
-                                <li className='descrip2 caplist'>Conversation Awareness helps lower media volume and enhance the voices in front of you while you’re interacting with others. A single charge delivers up to 6 hours of battery life.</li>
-                                <li className='descrip2 caplist'>And Touch control lets you easily adjust volume with a swipe. The MagSafe Charging Case is a marvel on its own with Precision Finding, built-in speaker, and lanyard loop.</li>
-                                <li className='descrip2 caplist'>The upgraded H2 chip powers smarter noise cancellation and three-dimensional sound. Adaptive EQ tunes music to your ears in real time to deliver crisp, clean high notes and deep, rich bass in stunning clarity.</li>
-                                <li className='descrip2 caplist'>Active Noise Cancellation removes twice as much unwanted noise, so nothing interrupts your listening during a commute and when you need to focus.</li>
-                                <li className='descrip2 caplist'>Transparency mode reduces and adjusts down the intensity of loud noises at 48,000 times per second, so you can comfortably hear the world around you.</li>
-                            </ul>
-
+                            { product.bulletPoints && renderBulletPoints(product.bulletPoints)}
                             <div className="flexcol wh">
                                 <div className={`accordion-pd ${activeIndex === 1 ? 'active' : ''}`} onClick={() => toggleProductAccordion(1)}>
                                     <div className="heading3 flex"><img src={ProDetail} className='img-big' alt="" />&nbsp;&nbsp;Product details</div>

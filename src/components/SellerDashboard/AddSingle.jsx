@@ -2,17 +2,17 @@ import React, { Fragment, useEffect, useState, useRef } from 'react'
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addSingleSchema } from '../Schemas/validationSchema';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
+import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../Schemas/cate';
 
 const schema = yupResolver(addSingleSchema);
 
 const AddSingle = () => {
 
     //drag and drop
+    const navigate = useNavigate();
     const [images, setImages] = useState([]);
     const [isDragging, setIsDragging] = useState(false);
     const [fileInputValue, setFileInputValue] = useState('');
@@ -86,6 +86,70 @@ const AddSingle = () => {
     };
 
 
+    //categoryyyyy
+    const [selectedSupOption, setSelectedSupOption] = useState('');
+    const [selectedSubOption, setSelectedSubOption] = useState('');
+    const [selectedMiniSubOption, setSelectedMiniSubOption] = useState('');
+    const [selectedMicroSubOption, setSelectedMicroSubOption] = useState('');
+    const [isSecondSelectEnabled, setIsSecondSelectEnabled] = useState(false);
+    const [isThirdSelectEnabled, setIsThirdSelectEnabled] = useState(false);
+    const [isFourthSelectEnabled, setIsFourthSelectEnabled] = useState(false);
+    const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    useEffect(() => {
+        setIsSubmitEnabled(selectedSupOption && selectedSubOption && selectedMiniSubOption && selectedMicroSubOption);
+    }, [selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption]);
+
+
+    const handleSupOptionChange = (event) => {
+        const selectedOption = event.target.value;
+        setSelectedSupOption(selectedOption);
+        setIsSecondSelectEnabled(true);
+        setIsThirdSelectEnabled(false);
+        setIsFourthSelectEnabled(false);
+        setSelectedSubOption('');
+        setSelectedMiniSubOption('');
+        setSelectedMicroSubOption('');
+    };
+    const handleSubOptionChange = (event) => {
+        const selectedOption = event.target.value;
+        setSelectedSubOption(selectedOption);
+        setIsThirdSelectEnabled(true);
+        setIsFourthSelectEnabled(false);
+        setSelectedMiniSubOption('');
+        setSelectedMicroSubOption('');
+    };
+    const handleMiniSubOptionChange = (event) => {
+        const selectedOption = event.target.value;
+        setSelectedMiniSubOption(selectedOption);
+        setIsFourthSelectEnabled(true);
+        setSelectedMicroSubOption('');
+    };
+    const handleMicroSubOptionChange = (event) => {
+        const selectedOption = event.target.value;
+        setSelectedMicroSubOption(selectedOption);
+    };
+    const getMarginValue = () => {
+        switch (selectedSupOption) {
+            case "apple":
+                return 0.05;
+            case "orange":
+                return 0.03;
+            case "banana":
+                return 0.1;
+            default:
+                return 0;
+        }
+    };
+    const marketingValue = getMarginValue();
+    const categoryPath = `${selectedSupOption}/${selectedSubOption}/${selectedMiniSubOption}/${selectedMicroSubOption}`;
+
+
+
+
+
+
     //form validation
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
     const onSubmit = data => {
@@ -101,16 +165,17 @@ const AddSingle = () => {
             };
         });
         data.images = imageUrls;
+        const updatedData = { ...data, selectedSupOption, marketingValue, categoryPath };
         const savedSingleFormData = JSON.parse(localStorage.getItem('singleFormData')) || [];
-        const updatedSingleFormData = [...savedSingleFormData, data];
+        const updatedSingleFormData = [...savedSingleFormData, updatedData];
         localStorage.setItem('singleFormData', JSON.stringify(updatedSingleFormData));
-        console.log(data);
+        console.log(updatedData);
+        navigate('/');
     };
     const [singleFormData, setSingleFormData] = useState({});
     const handleChange = (e) => {
         setSingleFormData({ ...singleFormData, [e.target.name]: e.target.value });
     };
-
 
     //focus
     const scrollRef = useRef(null);
@@ -127,17 +192,40 @@ const AddSingle = () => {
 
             <form className="productlist2" onSubmit={handleSubmit(onSubmit)}>
                 <div className="heading3">Basic information</div>
-                <Controller name="category" control={control} defaultValue="" render={({ field }) => (
-                    <select className="box flex" value={singleFormData.category || ''} onChange={handleChange} {...field}>
+                <Controller name="bulletPoints" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.bulletPoints || ''} onChange={handleChange} className="box flex" placeholder='Enter something about the product...' {...field} />} />
+                {errors.bulletPoints && <div className='error'>{errors.bulletPoints?.message}</div>}
+
+                <div className="flex-start wh" style={{ gap: '10px' }}>
+                    <select onChange={handleSupOptionChange} disabled={isSecondSelectEnabled}>
                         <option value="">Select category</option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="Home">Home</option>
-                        <option value="Fashion">Fashion</option>
-                        <option value="Baby center">Baby center</option>
+                        {supOptions.map((option, index) => (
+                            <option key={index} value={option}>{option}</option>
+                        ))}
                     </select>
-                )}
-                />
-                {errors.category && <div className='error'>{errors.category?.message}</div>}
+                    <select onChange={handleSubOptionChange} disabled={!isSecondSelectEnabled || isThirdSelectEnabled}>
+                        <option value="">Select sub category</option>
+                        {subOptions[selectedSupOption] && subOptions[selectedSupOption].map((option, index) => (
+                            <option key={index} value={option}>{option}</option>
+                        ))}
+                    </select>
+                    <select onChange={handleMiniSubOptionChange} disabled={!isThirdSelectEnabled || isFourthSelectEnabled}>
+                        <option value="">Select an option</option>
+                        {miniSubOptions[selectedSubOption] && miniSubOptions[selectedSubOption].map((option, index) => (
+                            <option key={index} value={option}>{option}</option>
+                        ))}
+                    </select>
+                    <select onChange={handleMicroSubOptionChange} disabled={!isFourthSelectEnabled || !!selectedMicroSubOption}>
+                        <option value="">Select sub option</option>
+                        {microSubOptions[selectedMiniSubOption] && microSubOptions[selectedMiniSubOption].map((option, index) => (
+                            <option key={index} value={option}>{option}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="flex-start wh" style={{ gap: '10px' }}>
+                    <div className="error">{errorMessage ? errorMessage : isSubmitEnabled ? `Selected path: ${categoryPath}` : 'Please make all selections'}</div>
+                    {selectedSupOption && (<div className='error'>Margin value: {marketingValue}</div>)}
+                </div>
+
                 <Controller name="productName" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.productName || ''} onChange={handleChange} className="box flex" placeholder='Enter product name' {...field} />} />
                 {errors.productName && <div className='error'>{errors.productName?.message}</div>}
                 <Controller name="brandName" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.brandName || ''} onChange={handleChange} className="box flex" placeholder='Enter brand name' {...field} />} />
@@ -147,11 +235,17 @@ const AddSingle = () => {
                 <Controller name="keyWords" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.keyWords || ''} onChange={handleChange} className="box flex" placeholder="Enter keywords separated by comma" {...field} />} />
                 {errors.keyWords && <div className='error'>{errors.keyWords?.message}</div>}
 
-                <div className="heading3">Variant information</div>
-                <div className="flex-start wh" style={{ gap: '10px' }}>
-                    <Controller name="variantColor" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.variantColor || ''} onChange={handleChange} className="box flex" placeholder='Enter product color' {...field} />} />
-                    <Controller name="variantSize" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.variantSize || ''} onChange={handleChange} className="box flex" placeholder='Enter product size' {...field} />} />
-                </div>
+
+                {selectedSupOption === "apple" && (
+                    <>
+                        <div className="heading3">Variant information</div>
+                        <div className="flex-start wh" style={{ gap: '10px' }}>
+                            <Controller name="variantColor" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.variantColor || ''} onChange={handleChange} className="box flex" placeholder='Enter product color' {...field} />} />
+                            <Controller name="variantSize" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.variantSize || ''} onChange={handleChange} className="box flex" placeholder='Enter product size' {...field} />} />
+                        </div>
+                    </>
+                )}
+
 
                 <div className="heading3">Description</div>
                 <Controller name="addInfo" control={control} defaultValue="" render={({ field }) => <textarea value={singleFormData.addInfo || ''} onChange={handleChange} className="box flex" rows={10} placeholder="Enter any additional information for the product" {...field}></textarea>} />
@@ -222,7 +316,7 @@ const AddSingle = () => {
                     <div className="flex wh">
                         <Controller name="size" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.size || ''} onChange={handleChange} className="box flex" placeholder='Enter size' {...field} />} />
                         <Controller name="sizeUnit" control={control} defaultValue="" render={({ field }) => (
-                            <select className=""  value={singleFormData.sizeUnit || ''} onChange={handleChange} {...field}>
+                            <select className="" value={singleFormData.sizeUnit || ''} onChange={handleChange} {...field}>
                                 <option value="">Select unit</option>
                                 <option value="kg">KG</option>
                                 <option value="lb">LB</option>
@@ -564,15 +658,7 @@ const AddSingle = () => {
 
                 <div className="heading3">Additional details</div>
                 <Controller name="ean" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.ean || ''} onChange={handleChange} className="box flex" placeholder='Enter EAN (European article number)' {...field} />} />
-            
-                <Controller name="Colors" control={control} defaultValue="" render={({ field }) => (
-                    <select className="box flex" value={singleFormData.Colors || ''} onChange={handleChange} {...field}>
-                        <option value="">Select color</option>
-                        <option value="yes">In stock</option>
-                        <option value="no">Out of stock</option>
-                    </select>
-                )}
-                />
+
                 <Controller name="itemModelNumber" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.itemModelNumber || ''} onChange={handleChange} className="box flex" placeholder='Enter item model number' {...field} />} />
                 <Controller name="gender" control={control} defaultValue="" render={({ field }) => (
                     <select className="box flex" value={singleFormData.gender || ''} onChange={handleChange} {...field}>
@@ -626,7 +712,7 @@ const AddSingle = () => {
 
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                     <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Save Draft</div></button>
-                    <button className='btn box2 flex' onClick={uploadImages} type='submit' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Send for Review</div></button>
+                    <button className='btn box2 flex' onClick={uploadImages} disabled={!isSubmitEnabled} type='submit' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Send for Review</div></button>
                 </div>
             </form>
         </div>

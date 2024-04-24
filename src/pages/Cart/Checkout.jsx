@@ -3,9 +3,18 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import SailingIcon from '@mui/icons-material/Sailing';
 import PaymentIcon from '@mui/icons-material/Payment';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 const Checkout = () => {
 
+  const [subCurrentPage, setsubCurrentPage] = useState(1);
+  const handleSubPageChange = (subPageNumber) => {
+    setsubCurrentPage(subPageNumber);
+  };
+
+
+  //billing and shipping addresss
   const [addresses, setAddresses] = useState([]);
   const [billingAddresses, setBillingAddresses] = useState([]);
   const [shippingAddresses, setShippingAddresses] = useState([]);
@@ -55,6 +64,51 @@ const Checkout = () => {
     }
   }, [selectedShippingAddress]);
 
+
+  //cards 
+  const [cards, setCards] = useState([]);
+  const [selectedCard, setSelectedCard] = useState({});
+  const retrieveCards = () => {
+    const storedCards = localStorage.getItem('cards');
+    if (storedCards) {
+      setCards(JSON.parse(storedCards));
+    }
+  };
+  useEffect(() => {
+    retrieveCards();
+  }, []);
+  const handleCardChange = (event) => {
+    const selectedCardData = cards.find(
+      (card) => card.fullName === event.target.value
+    );
+    setSelectedCard(selectedCardData);
+  };
+
+
+   //banks 
+   const [banks, setBanks] = useState([]);
+   const [selectedBank, setSelectedBank] = useState({});
+   const retrieveBanks = () => {
+     const storedBanks = localStorage.getItem('banks');
+     if (storedBanks) {
+       setBanks(JSON.parse(storedBanks));
+     }
+   };
+   useEffect(() => {
+     retrieveBanks();
+   }, []);
+   const handleBankChange = (event) => {
+     const selectedBankData = banks.find(
+       (bank) => bank.accountHolderName === event.target.value
+     );
+     setSelectedBank(selectedBankData);
+   };
+
+
+
+
+
+
   const scrollRef = useRef(null);
   useEffect(() => {
     if (scrollRef.current) {
@@ -69,7 +123,7 @@ const Checkout = () => {
       </div>
       <div className="cart_cont wh">
         <div className="cartcol_one" tabIndex={0} ref={scrollRef}>
-          <div className="checkout">
+          <div className="webdiv checkout">
             <div className="heading wh">Your addresses</div>
             <div className="heading3 wh">Shipping address</div>
             <select className='coupon' value={selectedShippingAddress.address} onChange={handleAddressShippingChange}>
@@ -135,13 +189,73 @@ const Checkout = () => {
             )}
           </div>
 
-          <div className="checkout">
+          <div className="checkout webdiv">
             <div className="heading wh">Choose a payment method</div>
-            <div className="flex-start wh" style={{gap: '20px'}}>
-              <button className='payment-btn'>Card</button> <button className='payment-btn'>Net banking</button>
-              <button className='payment-btn'>UPI</button> <button className='payment-btn'>Cash on delivery</button>
+            <div className="flex-start wh" style={{ gap: '20px' }}>
+              <button onClick={() => handleSubPageChange(1)} className={subCurrentPage === 1 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Card</div></button>
+              <button onClick={() => handleSubPageChange(2)} className={subCurrentPage === 2 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Net banking</div></button>
+              <button onClick={() => handleSubPageChange(3)} className={subCurrentPage === 3 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">UPI</div></button>
             </div>
           </div>
+
+          {subCurrentPage === 1 && (
+            <div className="checkout webdiv">
+              <div className="heading3 wh">Cards</div>
+              <select className='coupon' value={selectedCard.address} onChange={handleCardChange}>
+                <option value=''>Select a card</option>
+                {cards.map((card, index) => (
+                  <option key={index} value={card.fullName}>
+                    {card.fullName}
+                  </option>
+                ))}
+              </select>
+              {selectedCard.fullName && (
+                <div className='flex-start wh' style={{gap: '20px'}}>
+                  <CreditCardIcon style={{ width: '17px', color: 'gray' }} />
+                  <div className='descrip2'>{selectedCard.fullName}</div>
+                  <div className="descrip2">{selectedCard.cardNumber}</div>
+                  <div className="descrip2">{selectedCard.expiryDate}</div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {subCurrentPage === 2 && (
+            <div className="checkout webdiv">
+              <div className="heading3 wh">Bank accounts</div>
+              <select className='coupon' value={selectedBank.address} onChange={handleBankChange}>
+                <option value=''>Select an account</option>
+                {banks.map((bank, index) => (
+                  <option key={index} value={bank.accountHolderName}>
+                    {bank.accountHolderName}
+                  </option>
+                ))}
+              </select>
+              {selectedBank.accountHolderName && (
+                <div className='flex-start wh' style={{gap: '20px'}} >
+                  <AccountBalanceIcon style={{ width: '17px', color: 'gray' }} />
+                  <div className='descrip2'>{selectedBank.accountHolderName}</div>
+                  <div className="descrip2">{selectedBank.accountNumber}</div>
+                  <div className="descrip2">{selectedBank.bankName}</div>
+
+                  <div className="descrip2">{selectedBank.branchName}</div>
+                  <div className="descrip2">{selectedBank.ifscCode}</div>
+                  <div className="descrip2">{selectedBank.swiftCode}</div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {subCurrentPage === 3 && (
+            <div className="checkout webdiv">
+              <div className="heading3 wh">Billing address</div>
+              <select className='coupon' >
+                <option value=''>Select billing address</option>
+                <option>value</option>
+              </select>
+            </div>
+          )}
+
         </div>
         <div className="cartcol_two">
           <div className="sel-box" style={{ gap: '10px' }}>
@@ -170,7 +284,7 @@ const Checkout = () => {
               <div className="heading2"><span>AED 6,361.08</span></div>
             </div>
             <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
-              <button className='btn addtocart flex'><PaymentIcon style={{ width: '15px' }} /><div className="heading2">Make payment</div></button>
+              <button className='btn addtocart flex'><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>
             </div>
           </div>
         </div>
