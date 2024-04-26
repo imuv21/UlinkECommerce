@@ -21,7 +21,7 @@ const Blabla = () => {
     <div className='home flexcol mt'>
       <h1>List of Data</h1>
       <ul>
-        {data.map(item => (
+        {data.map((item, index )=> (
           <li key={item.productId}>{item.productName}</li> 
         ))}
       </ul>

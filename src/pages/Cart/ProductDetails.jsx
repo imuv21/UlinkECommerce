@@ -133,7 +133,7 @@ const ProductDetails = () => {
 
                     <div className="pdcont">
                         <div className="pdcol_one">
-                            <div className="sel-box" style={{ gap: '20px' }}>
+                            <div className="sel-box" style={{ gap: '20px', height: '400px', justifyContent: 'space-between' }}>
                                 <div className="big-image">
                                     <img src={selectedImage} alt="Big Image" />
                                 </div>

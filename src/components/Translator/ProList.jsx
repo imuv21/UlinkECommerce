@@ -49,6 +49,20 @@ const ProList = () => {
     );
   };
 
+  const formatBytes = (bytes, decimals = 2) => {
+    console.log("bytes:", bytes);
+    if (typeof bytes !== 'number' || isNaN(bytes)) {
+        console.log("Invalid size");
+        return 'Invalid size';
+    }
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+};
+
   return (
     <div className='flexcol wh mt home'>
       {formData.length === 0 ? (
@@ -56,10 +70,13 @@ const ProList = () => {
       ) : (
         formData.map((item, index) => (
           <div key={index}>
+            {item.images.length > 0 && <img className='imgPro' src={item.images[0].url} alt={item.images[0].name} />}
+            {item.productName.length > 15 ? `${item.productName.substring(0, 15)}...` : item.productName}
+            {<div>{item.images[0].name}, {formatBytes(item.images[0].size)}, {item.images[0].uploadDate}</div>}
             { item.inputone && <p onClick={() => handleAddAddress(index)}>Apple: {item.inputone}</p>}
             { item.inputtwo && <p>Orange: {item.inputtwo}</p>}
             { item.bulletPoints && renderBulletPoints(item.bulletPoints)}
-            {item.path.length > 15 ? `${item.path.substring(0, 15)}...` : item.path}
+            {/* {item.path.length > 15 ? `${item.path.substring(0, 15)}...` : item.path} */}
             <button onClick={() => handleEdit(index)}>Edit</button>
             <button onClick={() => handleDelete(index)}>Delete</button>
           </div>

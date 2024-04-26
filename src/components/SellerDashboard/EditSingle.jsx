@@ -45,14 +45,12 @@ const EditSingle = () => {
 
             setValue('variantColor', savedSingleFormData[index].variantColor);
             setValue('variantSize', savedSingleFormData[index].variantSize);
-            setValue('gender', savedSingleFormData[index].gender);
             setValue('dgrGoods', savedSingleFormData[index].dgrGoods);
 
             setValue('barcode', savedSingleFormData[index].barcode);
             setValue('barcodeNum', savedSingleFormData[index].barcodeNum);
             setValue('unitmeasure', savedSingleFormData[index].unitmeasure);
             setValue('sku', savedSingleFormData[index].sku);
-            setValue('itemModelNumber', savedSingleFormData[index].itemModelNumber);
 
             setValue('cartonWgt', savedSingleFormData[index].cartonWgt);
             setValue('cartonWgtUnit', savedSingleFormData[index].cartonWgtUnit);
@@ -81,7 +79,6 @@ const EditSingle = () => {
             setValue('buynow', savedSingleFormData[index].buynow);
             setValue('incoterm', savedSingleFormData[index].incoterm);
             setValue('addInfo', savedSingleFormData[index].addInfo);
-            setValue('lensType', savedSingleFormData[index].lensType);
 
             setValue('temperature', savedSingleFormData[index].temperature);
             setValue('StockLocation', savedSingleFormData[index].StockLocation);
@@ -89,8 +86,7 @@ const EditSingle = () => {
             setValue('PrivateLabel', savedSingleFormData[index].PrivateLabel);
             setValue('origin', savedSingleFormData[index].origin);
 
-            setValue('htsCode', savedSingleFormData[index].htsCode);
-            setValue('material', savedSingleFormData[index].material);
+            setValue('hsnCode', savedSingleFormData[index].hsnCode);
             setValue('salePrice', savedSingleFormData[index].salePrice);
             setValue('unitPrice', savedSingleFormData[index].unitPrice);
             setValue('minOrderQuant', savedSingleFormData[index].minOrderQuant);
@@ -225,7 +221,7 @@ const EditSingle = () => {
 
             <form className="productlist2" onSubmit={handleSubmit(onSubmit)}>
                 <div className="heading3">Basic information</div>
-                <Controller name="bulletPoints" control={control} defaultValue={singleFormData.bulletPoints || ''} render={({ field }) => <input className="box flex" placeholder='Enter something about the product...' {...field} />} />
+                <Controller name="bulletPoints" control={control} defaultValue={singleFormData.bulletPoints || ''} render={({ field }) => <input className="box flex" placeholder='Enter bullet points (separated by full stop)...' {...field} />} />
                 {errors.bulletPoints && <div className='error'>{errors.bulletPoints?.message}</div>}
 
                 <Controller name="productName" control={control} defaultValue={singleFormData.productName || ''} render={({ field }) => <input className="box flex" placeholder='Enter product name' {...field} />} />
@@ -234,7 +230,7 @@ const EditSingle = () => {
                 {errors.brandName && <div className='error'>{errors.brandName?.message}</div>}
                 <Controller name="keyFeatures" control={control} defaultValue={singleFormData.keyFeatures || ''} render={({ field }) => <input className="box flex" placeholder='Enter key features' {...field} />} />
                 {errors.keyFeatures && <div className='error'>{errors.keyFeatures?.message}</div>}
-                <Controller name="keyWords" control={control} defaultValue={singleFormData.keyWords || ''} render={({ field }) => <input className="box flex" placeholder="Enter keywords separated by comma" {...field} />} />
+                <Controller name="keyWords" control={control} defaultValue={singleFormData.keyWords || ''} render={({ field }) => <input className="box flex" placeholder="Enter keywords (separated by comma)..." {...field} />} />
                 {errors.keyWords && <div className='error'>{errors.keyWords?.message}</div>}
 
 
@@ -249,7 +245,7 @@ const EditSingle = () => {
                 )}
 
                 <div className="heading3">Description</div>
-                <Controller name="addInfo" control={control} defaultValue={singleFormData.addInfo || ''} render={({ field }) => <textarea className="box flex" rows={10} placeholder="Enter any additional information for the product" {...field}></textarea>} />
+                <Controller name="addInfo" control={control} defaultValue={singleFormData.addInfo || ''} render={({ field }) => <textarea className="box flex" rows={10} placeholder="Enter description..." {...field}></textarea>} />
 
 
                 <div className="heading3">Images and videos</div>
@@ -314,37 +310,37 @@ const EditSingle = () => {
 
 
                 <div className="heading3">Packaging</div>
+                <Controller name="unitsPerCarton" control={control} defaultValue={singleFormData.unitsPerCarton || ''} render={({ field }) => <input className="box flex" placeholder='Enter units per carton' {...field} />} />
+                {errors.unitsPerCarton && <div className='error'>{errors.unitsPerCarton?.message}</div>}
+
                 <div className="flex wh" style={{ gap: '20px' }}>
-                    <Controller name="unitsPerCarton" control={control} defaultValue={singleFormData.unitsPerCarton || ''} render={({ field }) => <input className="box flex" placeholder='Enter units per carton' {...field} />} />
-                    <div className="flex wh">
-                        <Controller name="size" control={control} defaultValue={singleFormData.size || ''} render={({ field }) => <input className="box flex" placeholder='Enter size' {...field} />} />
-                        <Controller name="sizeUnit" control={control} defaultValue={singleFormData.sizeUnit || ''} render={({ field }) => (
-                            <select className="" {...field} >
-                                <option value="">Select unit</option>
-                                <option value="kg">KG</option>
-                                <option value="lb">LB</option>
-                                <option value="gr">GR</option>
-                                <option value="lt">LT</option>
-                                <option value="cl">CL</option>
-                                <option value="ml">ML</option>
-                                <option value="gal">Gal</option>
-                                <option value="fl-oz">Fl Oz</option>
-                                <option value="carton">Carton</option>
-                                <option value="packet">Packet</option>
-                                <option value="box">Box</option>
-                                <option value="pack">Pack</option>
-                            </select>
-                        )}
-                        />
-                    </div>
+                    <Controller name="size" control={control} defaultValue={singleFormData.size || ''} render={({ field }) => <input className="box flex" placeholder='Enter size' {...field} />} />
+                    <Controller name="sizeUnit" control={control} defaultValue={singleFormData.sizeUnit || ''} render={({ field }) => (
+                        <select className="" {...field} >
+                            <option value="">Select unit</option>
+                            <option value="kg">KG</option>
+                            <option value="lb">LB</option>
+                            <option value="gr">GR</option>
+                            <option value="lt">LT</option>
+                            <option value="cl">CL</option>
+                            <option value="ml">ML</option>
+                            <option value="gal">Gal</option>
+                            <option value="floz">Fl Oz</option>
+                            <option value="carton">Carton</option>
+                            <option value="packet">Packet</option>
+                            <option value="box">Box</option>
+                            <option value="pack">Pack</option>
+                        </select>
+                    )}
+                    />
                 </div>
-                {(errors.unitsPerCarton || errors.size) &&
+                {(errors.size || errors.sizeUnit) &&
                     <div className="flex wh">
-                        <div className="flex wh">
-                            <div className='error'>{errors.unitsPerCarton?.message}</div>
-                        </div>
                         <div className="flex wh">
                             <div className='error'>{errors.size?.message}</div>
+                        </div>
+                        <div className="flex wh" style={{ justifyContent: 'space-around' }}>
+                            <div className='error'>{errors.sizeUnit?.message}</div>
                         </div>
                     </div>
                 }
@@ -378,83 +374,9 @@ const EditSingle = () => {
                 <div className="heading3">Carton dimensions & weight</div>
                 <div className="heading2">Enter the dimensions and weight of the carton to help calculate shipping rate. These measurements are for the product's shipping container.</div>
                 <div className="flex wh" style={{ gap: '20px' }}>
-                    <div className="flex wh">
-                        <Controller name="cartonWgt" control={control} defaultValue={singleFormData.cartonWgt || ''} render={({ field }) => <input className="box flex" placeholder='Enter carton weight' {...field} />} />
-                        <Controller name="cartonWgtUnit" control={control} defaultValue={singleFormData.cartonWgtUnit || ''} render={({ field }) =>
-                            <select className=""  {...field} >
-                                <option value="">Select unit</option>
-                                <option value="kg">KG</option>
-                                <option value="g">G</option>
-                                <option value="mg">MG</option>
-                                <option value="lbs">LBS</option>
-                            </select>
-                        } />
-                    </div>
-                    <div className="flex wh">
-                        <Controller name="cartonLgh" control={control} defaultValue={singleFormData.cartonLgh || ''} render={({ field }) => <input className="box flex" placeholder='Enter carton length' {...field} />} />
-                        <Controller name="cartonLghUnit" control={control} defaultValue={singleFormData.cartonLghUnit || ''} render={({ field }) =>
-                            <select className=""  {...field} >
-                                <option value="">Select unit</option>
-                                <option value="cm">CM</option>
-                                <option value="m">M</option>
-                                <option value="in">IN</option>
-                            </select>
-                        } />
-                    </div>
-                </div>
-                {(errors.cartonWgt || errors.cartonLgh) &&
-                    <div className="flex wh">
-                        <div className="flex wh">
-                            <div className='error'>{errors.cartonWgt?.message}</div>
-                        </div>
-                        <div className="flex wh">
-                            <div className='error'>{errors.cartonLgh?.message}</div>
-                        </div>
-                    </div>
-                }
-                <div className="flex wh" style={{ gap: '20px' }}>
-                    <div className="flex wh">
-                        <Controller name="cartonHgt" control={control} defaultValue={singleFormData.cartonHgt || ''} render={({ field }) => <input className="box flex" placeholder='Enter carton height' {...field} />} />
-                        <Controller name="cartonHgtUnit" control={control} defaultValue={singleFormData.cartonHgtUnit || ''} render={({ field }) =>
-                            <select className="" {...field} >
-                                <option value="">Select unit</option>
-                                <option value="cm">CM</option>
-                                <option value="m">M</option>
-                                <option value="in">IN</option>
-                            </select>
-                        } />
-
-                    </div>
-                    <div className="flex wh">
-                        <Controller name="cartonWdh" control={control} defaultValue={singleFormData.cartonWdh || ''} render={({ field }) => <input className="box flex" placeholder='Enter carton width' {...field} />} />
-                        <Controller name="cartonWdhUnit" control={control} defaultValue={singleFormData.cartonWdhUnit || ''} render={({ field }) =>
-                            <select className="" {...field} >
-                                <option value="">Select unit</option>
-                                <option value="cm">CM</option>
-                                <option value="m">M</option>
-                                <option value="in">IN</option>
-                            </select>
-                        } />
-                    </div>
-                </div>
-                {(errors.cartonHgt || errors.cartonWdh) &&
-                    <div className="flex wh">
-                        <div className="flex wh">
-                            <div className='error'>{errors.cartonHgt?.message}</div>
-                        </div>
-                        <div className="flex wh">
-                            <div className='error'>{errors.cartonWdh?.message}</div>
-                        </div>
-                    </div>
-                }
-
-
-                <div className="heading3">Product dimensions & weight</div>
-                <div className="heading2">These attributes provide information about the product's dimensions and weight.</div>
-                <div className="flex wh" style={{ gap: '20px' }}>
-                    <Controller name="productWgt" control={control} defaultValue={singleFormData.productWgt || ''} render={({ field }) => <input className="box flex" placeholder='Enter product weight' {...field} />} />
-                    <Controller name="productWgtUnit" control={control} defaultValue={singleFormData.productWgtUnit || ''} render={({ field }) =>
-                        <select className=""  {...field} >
+                    <Controller name="cartonWgt" control={control} defaultValue={singleFormData.cartonWgt || ''} render={({ field }) => <input className="box flex" placeholder='Enter carton weight' {...field} />} />
+                    <Controller name="cartonWgtUnit" control={control} defaultValue={singleFormData.cartonWgtUnit || ''} render={({ field }) =>
+                        <select className="box flex"  {...field} >
                             <option value="">Select unit</option>
                             <option value="kg">KG</option>
                             <option value="g">G</option>
@@ -463,7 +385,104 @@ const EditSingle = () => {
                         </select>
                     } />
                 </div>
-                {errors.productWgt && <div className='error'>{errors.productWgt?.message}</div>}
+                {(errors.cartonWgt || errors.cartonWgtUnit) &&
+                    <div className="flex wh">
+                        <div className="flex wh">
+                            <div className='error'>{errors.cartonWgt?.message}</div>
+                        </div>
+                        <div className="flex wh">
+                            <div className='error'>{errors.cartonWgtUnit?.message}</div>
+                        </div>
+                    </div>
+                }
+                <div className="flex wh" style={{ gap: '20px' }}>
+                    <Controller name="cartonLgh" control={control} defaultValue={singleFormData.cartonLgh || ''} render={({ field }) => <input className="box flex" placeholder='Enter carton length' {...field} />} />
+                    <Controller name="cartonLghUnit" control={control} defaultValue={singleFormData.cartonLghUnit || ''} render={({ field }) =>
+                        <select className="box flex"  {...field} >
+                            <option value="">Select unit</option>
+                            <option value="cm">CM</option>
+                            <option value="m">M</option>
+                            <option value="in">IN</option>
+                        </select>
+                    } />
+                </div>
+                {(errors.cartonLgh || errors.cartonLghUnit) &&
+                    <div className="flex wh">
+                        <div className="flex wh">
+                            <div className='error'>{errors.cartonLgh?.message}</div>
+                        </div>
+                        <div className="flex wh">
+                            <div className='error'>{errors.cartonLghUnit?.message}</div>
+                        </div>
+                    </div>
+                }
+                <div className="flex wh" style={{ gap: '20px' }}>
+                    <Controller name="cartonHgt" control={control} defaultValue={singleFormData.cartonHgt || ''} render={({ field }) => <input className="box flex" placeholder='Enter carton height' {...field} />} />
+                    <Controller name="cartonHgtUnit" control={control} defaultValue={singleFormData.cartonHgtUnit || ''} render={({ field }) =>
+                        <select className="box flex" {...field} >
+                            <option value="">Select unit</option>
+                            <option value="cm">CM</option>
+                            <option value="m">M</option>
+                            <option value="in">IN</option>
+                        </select>
+                    } />
+                </div>
+                {(errors.cartonHgt || errors.cartonHgtUnit) &&
+                    <div className="flex wh">
+                        <div className="flex wh">
+                            <div className='error'>{errors.cartonHgt?.message}</div>
+                        </div>
+                        <div className="flex wh">
+                            <div className='error'>{errors.cartonHgtUnit?.message}</div>
+                        </div>
+                    </div>
+                }
+                <div className="flex wh" style={{ gap: '20px' }}>
+                    <Controller name="cartonWdh" control={control} defaultValue={singleFormData.cartonWdh || ''} render={({ field }) => <input className="box flex" placeholder='Enter carton width' {...field} />} />
+                    <Controller name="cartonWdhUnit" control={control} defaultValue={singleFormData.cartonWdhUnit || ''} render={({ field }) =>
+                        <select className="box flex" {...field} >
+                            <option value="">Select unit</option>
+                            <option value="cm">CM</option>
+                            <option value="m">M</option>
+                            <option value="in">IN</option>
+                        </select>
+                    } />
+                </div>
+                {(errors.cartonWdh || errors.cartonWdhUnit) &&
+                    <div className="flex wh">
+                        <div className="flex wh">
+                            <div className='error'>{errors.cartonWdh?.message}</div>
+                        </div>
+                        <div className="flex wh">
+                            <div className='error'>{errors.cartonWdhUnit?.message}</div>
+                        </div>
+                    </div>
+                }
+
+                <div className="heading3">Product dimensions & weight</div>
+                <div className="heading2">These attributes provide information about the product's dimensions and weight.</div>
+                <div className="flex wh" style={{ gap: '20px' }}>
+                    <Controller name="productWgt" control={control} defaultValue={singleFormData.productWgt || ''} render={({ field }) => <input className="box flex" placeholder='Enter product weight' {...field} />} />
+                    <Controller name="productWgtUnit" control={control} defaultValue={singleFormData.productWgtUnit || ''} render={({ field }) =>
+                        <select className="box flex"  {...field} >
+                            <option value="">Select unit</option>
+                            <option value="kg">KG</option>
+                            <option value="g">G</option>
+                            <option value="mg">MG</option>
+                            <option value="lbs">LBS</option>
+                        </select>
+                    } />
+                </div>
+                {(errors.productWgt || errors.productWgtUnit) &&
+                    <div className="flex wh">
+                        <div className="flex wh">
+                            <div className='error'>{errors.productWgt?.message}</div>
+                        </div>
+                        <div className="flex wh">
+                            <div className='error'>{errors.productWgtUnit?.message}</div>
+                        </div>
+                    </div>
+                }
                 <div className="flex wh" style={{ gap: '20px' }}>
                     <Controller name="productLgh" control={control} defaultValue={singleFormData.productLgh || ''} render={({ field }) => <input className="box flex" placeholder='Enter product length' {...field} />} />
                     <Controller name="productHgt" control={control} defaultValue={singleFormData.productHgt || ''} render={({ field }) => <input className="box flex" placeholder='Enter product height' {...field} />} />
@@ -513,7 +532,7 @@ const EditSingle = () => {
                         <option value="cl">CL</option>
                         <option value="ml">ML</option>
                         <option value="gal">Gal</option>
-                        <option value="fl-oz">Fl Oz</option>
+                        <option value="floz">Fl Oz</option>
                         <option value="carton">Carton</option>
                         <option value="packet">Packet</option>
                         <option value="box">Box</option>
@@ -573,30 +592,21 @@ const EditSingle = () => {
                     />
                     <Controller name="buynow" control={control} defaultValue={singleFormData.buynow || ''} render={({ field }) => (
                         <select className="box flex" {...field}>
-                            <option value="">Can it be bought?</option>
+                            <option value="">Can it be bought using checkout?</option>
                             <option value="yes">Yes</option>
                             <option value="no">No</option>
                         </select>
                     )}
                     />
                 </div>
-                {(errors.readytoship || errors.buynow) &&
-                    <div className="flex wh">
-                        <div className="flex wh">
-                            <div className='error'>{errors.readytoship?.message}</div>
-                        </div>
-                        <div className="flex wh">
-                            <div className='error'>{errors.buynow?.message}</div>
-                        </div>
-                    </div>
-                }
+
 
                 <div className="flex wh" style={{ gap: '20px' }}>
                     <Controller name="Availability" control={control} defaultValue={singleFormData.Availability || ''} render={({ field }) => (
                         <select className="box flex"  {...field}>
                             <option value="">Availability</option>
-                            <option value="yes">In stock</option>
-                            <option value="no">Out of stock</option>
+                            <option value="instock">In stock</option>
+                            <option value="outofstock">Out of stock</option>
                         </select>
                     )}
                     />
@@ -609,25 +619,14 @@ const EditSingle = () => {
                     )}
                     />
                 </div>
-                {(errors.Availability || errors.PrivateLabel) &&
-                    <div className="flex wh">
-                        <div className="flex wh">
-                            <div className='error'>{errors.Availability?.message}</div>
-                        </div>
-                        <div className="flex wh">
-                            <div className='error'>{errors.PrivateLabel?.message}</div>
-                        </div>
-                    </div>
-                }
 
                 <div className="flex wh" style={{ gap: '20px' }}>
-                    <Controller name="temperature" control={control} defaultValue={singleFormData.temperature || ''} render={({ field }) => (
-                        <select className="box flex"  {...field}>
-                            <option value="">Storage temperature</option>
-                            <option value="dry">Dry (min 28C, max NA)</option>
-                            <option value="chilled">Chilled (min 2C, max 8C)</option>
-                            <option value="frozen">Frozen (min -5C, max -5C)</option>
-                            <option value="roomtemperature">Room temperature (min 15C, max 25C)</option>
+                    <Controller name="origin" defaultValue={singleFormData.origin || ''} value={selectedOrigin} onChange={originSelectChange} control={control} render={({ field }) => (
+                        <select className="box flex"  {...field} >
+                            <option value="">Country of Origin</option>
+                            {countries.map((country) => (
+                                <option key={uuidv4()} value={country}>{country}</option>
+                            ))}
                         </select>
                     )}
                     />
@@ -641,43 +640,19 @@ const EditSingle = () => {
                     )}
                     />
                 </div>
-                {(errors.temperature || errors.StockLocation) &&
+                {(errors.origin || errors.StockLocation) &&
                     <div className="flex wh">
                         <div className="flex wh">
-                            <div className='error'>{errors.temperature?.message}</div>
+                            <div className='error'>{errors.origin?.message}</div>
                         </div>
                         <div className="flex wh">
                             <div className='error'>{errors.StockLocation?.message}</div>
                         </div>
                     </div>
                 }
-                <Controller name="origin" defaultValue={singleFormData.origin || ''} value={selectedOrigin} onChange={originSelectChange} control={control} render={({ field }) => (
-                    <select className="box flex"  {...field} >
-                        <option value="">Origin</option>
-                        {countries.map((country) => (
-                            <option key={uuidv4()} value={country}>{country}</option>
-                        ))}
-                    </select>
-                )}
-                />
-                {errors.origin && <div className='error'>{errors.origin?.message}</div>}
-
-
+                
                 <div className="heading3">Additional details</div>
                 <Controller name="ean" control={control} defaultValue={singleFormData.ean || ''} render={({ field }) => <input className="box flex" placeholder='Enter EAN (European article number)' {...field} />} />
-
-                {errors.Colors && <div className='error'>{errors.Colors?.message}</div>}
-                <Controller name="itemModelNumber" control={control} defaultValue={singleFormData.itemModelNumber || ''} render={({ field }) => <input className="box flex" placeholder='Enter item model number' {...field} />} />
-                <Controller name="gender" control={control} defaultValue={singleFormData.gender || ''} render={({ field }) => (
-                    <select className="box flex" {...field}>
-                        <option value="">Select gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="unisex">Unisex</option>
-                    </select>
-                )}
-                />
-                {errors.gender && <div className='error'>{errors.gender?.message}</div>}
                 <Controller name="dgrGoods" control={control} defaultValue={singleFormData.dgrGoods || ''} render={({ field }) => (
                     <select className="box flex" {...field}>
                         <option value="">Dangerous goods</option>
@@ -703,23 +678,22 @@ const EditSingle = () => {
                         <option value="ExWorks">ExWorks</option>
                     </select>
                 } />
+                <Controller name="hsnCode" control={control} defaultValue={singleFormData.hsnCode || ''} render={({ field }) => <input className="box flex" placeholder='Enter HSN code' {...field} />} />
 
-                <Controller name="lensType" control={control} defaultValue={singleFormData.lensType || ''} render={({ field }) =>
-                    <select className="box flex" {...field}>
-                        <option value="">Select lens type</option>
-                        <option value="pola">Polarized</option>
-                        <option value="nonpola">Non polarized</option>
+                <Controller name="temperature" control={control} defaultValue={singleFormData.temperature || ''} render={({ field }) => (
+                    <select className="box flex"  {...field}>
+                        <option value="">Storage temperature</option>
+                        <option value="dry">Dry (min 28C, max NA)</option>
+                        <option value="chilled">Chilled (min 2C, max 8C)</option>
+                        <option value="frozen">Frozen (min -5C, max -5C)</option>
+                        <option value="roomtemperature">Room temperature (min 15C, max 25C)</option>
                     </select>
-                } />
-
-
-                <Controller name="htsCode" control={control} defaultValue={singleFormData.htsCode || ''} render={({ field }) => <input className="box flex" placeholder='Enter HTS code' {...field} />} />
-                <Controller name="material" control={control} defaultValue={singleFormData.material || ''} render={({ field }) => <input className="box flex" placeholder='Enter product material' {...field} />} />
-
-
+                )}
+                />
+                {errors.temperature && <div className='error'>{errors.temperature?.message}</div>}
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                     <button className='btn box2 flex' onClick={handleCancel} style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Cancel</div></button>
-                    <button className='btn box2 flex' onClick={uploadImages} type='submit' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Send for Review</div></button>
+                    <button className='btn box2 flex' onClick={uploadImages} type='submit' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Update</div></button>
                 </div>
             </form>
         </div>

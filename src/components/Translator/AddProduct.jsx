@@ -3,6 +3,8 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { testSchema } from '../Schemas/validationSchema';
 import { useNavigate } from 'react-router-dom';
+import UploadIcon from '@mui/icons-material/Upload';
+import * as XLSX from 'xlsx';
 import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../Schemas/cate';
 
 const schema = yupResolver(testSchema);
@@ -16,6 +18,16 @@ const AddProduct = () => {
     const onSubmit = (data) => {
         const currentTime = new Date();
         data.time = currentTime.toLocaleString();
+        const imageUrls = images.map(image => {
+            const imageSize = image.size || 0;
+            return {
+                url: image.url,
+                name: image.name,
+                size: imageSize,
+                uploadDate: currentTime.toLocaleString()
+            };
+        });
+        data.images = imageUrls;
         const updatedData = { ...data, selectedSupOption, margin, path };
         const savedFormData = JSON.parse(localStorage.getItem('formData')) || [];
         const updatedFormData = [...savedFormData, updatedData];
@@ -28,6 +40,9 @@ const AddProduct = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+
+
+    
     //categoryyyy
     const [selectedSupOption, setSelectedSupOption] = useState('');
     const [selectedSubOption, setSelectedSubOption] = useState('');
@@ -38,10 +53,12 @@ const AddProduct = () => {
     const [isFourthSelectEnabled, setIsFourthSelectEnabled] = useState(false);
     const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [margin, setMargin] = useState(0);
+    const [path, setPath] = useState('');
 
     useEffect(() => {
-        setIsSubmitEnabled(selectedSupOption && selectedSubOption && selectedMiniSubOption && selectedMicroSubOption);
-    }, [selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption]);
+        setIsSubmitEnabled(selectedSupOption && selectedSubOption && selectedMiniSubOption && selectedMicroSubOption && margin !== 0 && path !== '');
+    }, [selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption, margin, path]);
 
 
     const handleSupOptionChange = (event) => {
@@ -53,6 +70,7 @@ const AddProduct = () => {
         setSelectedSubOption('');
         setSelectedMiniSubOption('');
         setSelectedMicroSubOption('');
+        setMargin(getMarginValue(selectedOption));
     };
     const handleSubOptionChange = (event) => {
         const selectedOption = event.target.value;
@@ -61,19 +79,22 @@ const AddProduct = () => {
         setIsFourthSelectEnabled(false);
         setSelectedMiniSubOption('');
         setSelectedMicroSubOption('');
+        setPath(`${selectedSupOption}/${selectedOption}`);
     };
     const handleMiniSubOptionChange = (event) => {
         const selectedOption = event.target.value;
         setSelectedMiniSubOption(selectedOption);
         setIsFourthSelectEnabled(true);
         setSelectedMicroSubOption('');
+        setPath(`${selectedSupOption}/${selectedSubOption}/${selectedOption}`);
     };
     const handleMicroSubOptionChange = (event) => {
         const selectedOption = event.target.value;
         setSelectedMicroSubOption(selectedOption);
+        setPath(`${selectedSupOption}/${selectedSubOption}/${selectedMiniSubOption}/${selectedOption}`);
     };
-    const getMarginValue = () => {
-        switch (selectedSupOption) {
+    const getMarginValue = (option) => {
+        switch (option) {
             case "apple":
                 return 0.05;
             case "orange":
@@ -84,8 +105,88 @@ const AddProduct = () => {
                 return 0;
         }
     };
-    const margin = getMarginValue();
-    const path = `${selectedSupOption}/${selectedSubOption}/${selectedMiniSubOption}/${selectedMicroSubOption}`;
+
+    //upload excel
+    const [jsonData, setJsonData] = useState([]);
+    const handleUpload = (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+                const currentTime = new Date();
+                const jsonDataWithTime = jsonData.map(item => {
+                    const images = [];
+
+                    if (item.imageUrl && item.imageName) {
+                        images.push({ url: item.imageUrl, name: item.imageName });
+                    }
+
+                    for (let i = 2; i <= 5; i++) {
+                        const imageUrlKey = `imageUrl${i}`;
+                        const imageNameKey = `imageName${i}`;
+
+                        if (item[imageUrlKey] && item[imageNameKey]) {
+                            images.push({
+                                url: item[imageUrlKey],
+                                name: item[imageNameKey],
+                            });
+                        }
+                    }
+
+                    return {
+                        ...item,
+                        time: currentTime.toLocaleString(),
+                        images: images.length > 0 ? images : [],
+                        margin: margin, 
+                        path: path, 
+                        selectedSupOption: selectedSupOption
+                    };
+                });
+
+                setJsonData(jsonDataWithTime);
+                const savedSingleFormData = JSON.parse(localStorage.getItem('formData')) || [];
+                const updatedSingleFormData = [...savedSingleFormData, ...jsonDataWithTime];
+                localStorage.setItem('formData', JSON.stringify(updatedSingleFormData));
+            };
+
+            reader.readAsArrayBuffer(file);
+        } else {
+            alert('Please select a file.');
+        }
+    };
+
+    //download button
+    const handleDownload = () => {
+        let filename = '';
+        switch (selectedSupOption) {
+            case "apple":
+                filename = "Ulink-template-grocery.xlsx";
+                break;
+            case "orange":
+                filename = "Ulinkit-template-common.xlsx";
+                break;
+            case "banana":
+                filename = "Ulink-template-grocery.xlsx";
+                break;
+            default:
+                filename = "Ulinkit-template-common.xlsx";
+        }
+    
+        const link = document.createElement('a');
+        link.href = `/src/assets/Template/${filename}`; 
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+    
 
 
 
@@ -142,6 +243,13 @@ const AddProduct = () => {
                     {errorMessage ? errorMessage : isSubmitEnabled ? `Selected path: ${path}` : 'Please make all selections'}
                     {selectedSupOption && (<p>Margin value: {margin}</p>)}
                 </div>
+
+                 <button disabled={!isSubmitEnabled} onClick={handleDownload}>Download Template</button>
+
+                <input type="file" id="fileInput" style={{ display: 'none' }} disabled={!isSubmitEnabled} onChange={handleUpload} />
+                <label htmlFor="fileInput" className='upBtns'>
+                    Upload template&nbsp;&nbsp;<UploadIcon />
+                </label>
 
                 <button type="submit" disabled={!isSubmitEnabled}>Submit</button>
             </form>

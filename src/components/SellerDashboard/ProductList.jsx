@@ -226,7 +226,7 @@ const ProductList = ({ handleOptionClick }) => {
                                             <div className="heading2 download-btn" onClick={() => productDetail(index)} style={{ whiteSpace: 'nowrap' }}>
                                                 {item.productName.length > 15 ? `${item.productName.substring(0, 15)}...` : item.productName}
                                             </div>
-                                            <div className="heading2">{item.categoryPath.length > 15 ? `${item.categoryPath.substring(0, 15)}...` : item.categoryPath}</div>
+                                            {/* <div className="heading2">{item.categoryPath.length > 15 ? `${item.categoryPath.substring(0, 15)}...` : item.categoryPath}</div> */}
                                             <div className="heading2">
                                                 <div className="flex" style={{ gap: '5px' }}>
                                                     <span style={{ textDecoration: 'line-through', color: 'gray' }}>{item.unitPrice}₹</span>-<span style={{ fontWeight: 'bold' }}>{item.salePrice}₹</span>
