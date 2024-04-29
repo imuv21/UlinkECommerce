@@ -25,7 +25,7 @@ const SellerForm = () => {
 
             <div className="flex login-cont wh">
                 <div className="flex wh">
-                    <img src={bgImage} className='bgdiv' alt="" />
+                    <img src={bgImage} className='bgdiv' alt="bgImage" />
                 </div>
 
                 <div className="signupcont">
