@@ -100,6 +100,11 @@ const UploadProducts = ({ handleOptionClick }) => {
                 const data = new Uint8Array(e.target.result);
                 const workbook = XLSX.read(data, { type: 'array' });
                 const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+                const range = XLSX.utils.decode_range(sheet['!ref']);
+                range.s.r = 1; // Set starting row to 2rd row
+                sheet['!ref'] = XLSX.utils.encode_range(range);
+
                 const jsonData = XLSX.utils.sheet_to_json(sheet);
                 const currentTime = new Date();
                 const jsonDataWithTime = jsonData.map(item => {
@@ -220,7 +225,7 @@ const UploadProducts = ({ handleOptionClick }) => {
                         <div className="heading2">
                             Upload the template here.
                         </div>
-                        <input type="file" id="fileInput" style={{ display: 'none' }} disabled={!isSubmitEnabled} onChange={handleUpload} />
+                        <input type="file" id="fileInput" style={{ display: 'none' }}  onChange={handleUpload} />
                         <label htmlFor="fileInput" className='upBtns'>
                             Upload template&nbsp;&nbsp;<UploadIcon />
                         </label>

@@ -42,7 +42,7 @@ const AddProduct = () => {
 
 
 
-    
+
     //categoryyyy
     const [selectedSupOption, setSelectedSupOption] = useState('');
     const [selectedSubOption, setSelectedSubOption] = useState('');
@@ -117,7 +117,12 @@ const AddProduct = () => {
             reader.onload = function (e) {
                 const data = new Uint8Array(e.target.result);
                 const workbook = XLSX.read(data, { type: 'array' });
+
                 const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+                const range = XLSX.utils.decode_range(sheet['!ref']);
+                range.s.r = 1; // Set starting row to 2rd row
+                sheet['!ref'] = XLSX.utils.encode_range(range);
                 const jsonData = XLSX.utils.sheet_to_json(sheet);
 
                 const currentTime = new Date();
@@ -144,8 +149,8 @@ const AddProduct = () => {
                         ...item,
                         time: currentTime.toLocaleString(),
                         images: images.length > 0 ? images : [],
-                        margin: margin, 
-                        path: path, 
+                        margin: margin,
+                        path: path,
                         selectedSupOption: selectedSupOption
                     };
                 });
@@ -178,15 +183,15 @@ const AddProduct = () => {
             default:
                 filename = "Ulinkit-template-common.xlsx";
         }
-    
+
         const link = document.createElement('a');
-        link.href = `/src/assets/Template/${filename}`; 
+        link.href = `/src/assets/Template/${filename}`;
         link.setAttribute('download', filename);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
     };
-    
+
 
 
 
@@ -244,9 +249,9 @@ const AddProduct = () => {
                     {selectedSupOption && (<p>Margin value: {margin}</p>)}
                 </div>
 
-                 <button disabled={!isSubmitEnabled} onClick={handleDownload}>Download Template</button>
+                <button disabled={!isSubmitEnabled} onClick={handleDownload}>Download Template</button>
 
-                <input type="file" id="fileInput" style={{ display: 'none' }} disabled={!isSubmitEnabled} onChange={handleUpload} />
+                <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleUpload} />
                 <label htmlFor="fileInput" className='upBtns'>
                     Upload template&nbsp;&nbsp;<UploadIcon />
                 </label>
