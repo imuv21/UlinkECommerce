@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import bgImage from '../assets/bgImage.png';
+
 
 const SellerForm = () => {
 
@@ -25,7 +25,7 @@ const SellerForm = () => {
 
             <div className="flex login-cont wh">
                 <div className="flex wh">
-                    <img src={bgImage} className='bgdiv' alt="bgImage" />
+         
                 </div>
 
                 <div className="signupcont">
