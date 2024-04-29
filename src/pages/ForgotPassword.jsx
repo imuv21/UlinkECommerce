@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import bgImage from '../assets/bgImage.png';
+import bg from '../assets/bg.png';
 
 const ForgotPassword = () => {
 
@@ -15,7 +15,7 @@ const ForgotPassword = () => {
     <Fragment>
             <div className="flex login-cont wh">
                 <div className="flex wh">
-                    <img src={bgImage} className='bgdiv' alt="" />
+                    <img src={bg} className='bgdiv' alt="" />
                 </div>
 
                 <div className="signupcont">
