@@ -220,23 +220,23 @@ const microSubOptions = {
   Coffee: ["ArabicCoffee", "CapsulesAndPods"], 
   FitnessDrinks: ["ProteinDrinks", "ShotsAndBoosters"], 
 
-  Chocolate: ["ChocolateBars"], 
-  CookiesAndBiscuits: [],
+  Chocolate: ["ChocolateBars", "ChocolateCandies"], 
+  CookiesAndBiscuits: ["Biscuits", "Cookies"],
 
-  Butter: [], 
-  Cheese: [], 
+  Butter: ["ButterBlocks", "ButterRolls"], 
+  Cheese: ["BlueCheese", "Cheddar"], 
 
-  FrozenFishAndSeafood: [], 
-  FrozenFruitsAndVegetables: [],
+  FrozenFishAndSeafood: ["FrozenFish", "FrozenSeafood"], 
+  FrozenFruitsAndVegetables: ["FrozenFruits", "FrozenVegetables"],
 
-  FreshFruits: [], 
-  FreshVegetables: [],
+  FreshFruits: ["ApplesAndPears", "ApricotsAndPlums"], 
+  FreshVegetables: ["BeansAndPeas", "EdiblePlantStem"],
 
-  FishAndSeafood: [], 
-  Meat: [], 
+  FishAndSeafood: ["Fish", "Seafood"], 
+  Meat: ["Beef", "Camel"], 
 
   BakingDecorations: [], 
-  BakingIngredients: [],
+  BakingIngredients: [], 
 
   BabyBath: [], 
   BabyHealthCareAndGrooming: [],
