@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signupSchema } from '../components/Schemas/validationSchema';
 import { useNavigate } from 'react-router-dom';
-
+import bg from '../assets/bg.png';
 
 const schema = yupResolver(signupSchema);
 const Signup = () => {
@@ -24,7 +24,7 @@ const Signup = () => {
         <Fragment>
             <div className="flex login-cont wh">
                 <div className="flex wh">
-                    {/* <img src={bg} className='bgdiv' alt="bg" /> */}
+                    <img src={bg} className='bgdiv' alt="bg" />
                 </div>
 
                 <div className="signupcont">
