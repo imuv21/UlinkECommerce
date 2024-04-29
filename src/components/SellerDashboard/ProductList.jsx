@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
-import empty from '../../assets/box-empty-icon.png';
-import demo from '../../assets/jpg-slider/11.jpg';
+import empty from '../../assets/empty.png';
+import demo from '../../assets/demo.jpg';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 

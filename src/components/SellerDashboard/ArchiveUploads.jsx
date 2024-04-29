@@ -3,7 +3,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import AdsClickIcon from '@mui/icons-material/AdsClick';
-import empty from '../../assets/box-empty-icon.png'
+import empty from '../../assets/empty.png';
 
 const ArchiveUploads = ({ handleOptionClick }) => {
 

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Logo from '../../assets/logo.png';
+import logo from '../../assets/logo.png';
 import SearchIcon from '@mui/icons-material/Search';
 import ReactFlagsSelect from "react-flags-select";
 import { useCart } from '../context/CartContext';
@@ -128,7 +128,7 @@ const Header = () => {
   return (
     <header className="header" id="header">
       <nav className="navbar container">
-        <a href="/" className="brand"><img src={Logo} alt="logo" /></a>
+        <a href="/" className="brand"><img src={logo} alt="logo" /></a>
         <div className="burger" id="burger">
           <span className="burger-line"></span>
           <span className="burger-line"></span>

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, Fragment } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import bgimage from '../assets/bgImage.png';
+import bgImage from '../assets/bgImage.png';
 
 const Otp = () => {
 
@@ -54,7 +54,7 @@ const Otp = () => {
 
             <div className="flex login-cont wh">
                 <div className="flex wh">
-                    <img src={bgimage} className='bgdiv' alt="" />
+                    <img src={bgImage} className='bgdiv' alt="" />
                 </div>
 
                 <div className="signupcont">

@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import banner from '../../assets/jpg-slider/7.jpg';
+import banner from '../../assets/banner.jpg';
 import './Guidelines.css';
 import { v4 as uuidv4 } from 'uuid';
 

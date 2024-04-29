@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Logo2 from '../assets/logo2.png';
+import logo2 from '../assets/logo2.png';
 import { v4 as uuidv4 } from 'uuid';
 
 const CommissionStructure = () => {
@@ -89,7 +89,7 @@ const CommissionStructure = () => {
                         <button className='btn box flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Register now</div></button>
                     </div>
                     <div className="flexcol">
-                        <img className='commission-logo' src={Logo2} alt="logo" />
+                        <img className='commission-logo' src={logo2} alt="logo" />
                     </div>
                 </div>
                 <div className="flexcol wh commission-box" style={{ gap: '10px', backgroundColor: 'white' }}>

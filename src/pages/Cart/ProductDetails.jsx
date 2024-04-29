@@ -3,10 +3,10 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FlightIcon from '@mui/icons-material/Flight';
-import ReturnIcon from '../../assets/return.png';
+import returned from '../../assets/returned.png';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import ProDetail from '../../assets/proDetail.png';
-import Box from '../../assets/boxx.png';
+import proDetail from '../../assets/proDetail.png';
+import boxx from '../../assets/boxx.png';
 import './cart.css';
 import { useParams } from 'react-router-dom';
 
@@ -177,7 +177,7 @@ const ProductDetails = () => {
                             { product.bulletPoints && renderBulletPoints(product.bulletPoints)}
                             <div className="flexcol wh">
                                 <div className={`accordion-pd ${activeIndex === 1 ? 'active' : ''}`} onClick={() => toggleProductAccordion(1)}>
-                                    <div className="heading3 flex"><img src={ProDetail} className='img-big' alt="" />&nbsp;&nbsp;Product details</div>
+                                    <div className="heading3 flex"><img src={proDetail} className='img-big' alt="" />&nbsp;&nbsp;Product details</div>
                                 </div>
                                 <div className="panel-pd" style={{ maxHeight: activeIndex === 1 ? '300px' : '0' }}>
                                     <div className="flexcol wh" style={{ padding: '10px', alignItems: 'start' }}>
@@ -191,7 +191,7 @@ const ProductDetails = () => {
                                 </div>
 
                                 <div className={`accordion-pd ${activeIndex === 2 ? 'active' : ''}`} onClick={() => toggleProductAccordion(2)}>
-                                    <div className="heading3 flex"><img src={Box} className='img-big' alt="" />&nbsp;&nbsp;Stock dimensions</div>
+                                    <div className="heading3 flex"><img src={boxx} className='img-big' alt="" />&nbsp;&nbsp;Stock dimensions</div>
                                 </div>
                                 <div className="panel-pd" style={{ maxHeight: activeIndex === 2 ? '300px' : '0' }}>
                                     <div className="flexcol wh" style={{ padding: '10px', alignItems: 'start' }}>
@@ -234,7 +234,7 @@ const ProductDetails = () => {
                                         <div className="heading2"><span>Ex Works</span></div>
                                     </div>
                                     <div className="flexcol wh bbottom" style={{ alignItems: 'start', padding: '10px 0px' }}>
-                                        <div className="heading2 flex" style={{ gap: '5px' }}><img src={ReturnIcon} className='img' /><span>Returns</span></div>
+                                        <div className="heading2 flex" style={{ gap: '5px' }}><img src={returned} className='img' /><span>Returns</span></div>
                                         <div className="descrip2"><a className='hoverr'>Read seller's return policy</a></div>
                                     </div>
 

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import logo from '../../assets/logo.png';
-import img1 from '../../assets/c93363df3f2a26342e57291eb33ee9ac.webp';
-import img2 from '../../assets/ad48c7415a06b1d44f4f53527acbe828.webp';
-import img3 from '../../assets/72b3f0be1178aeb107e5d23d8a684d25.webp';
-import img4 from '../../assets/6c8bc9b5a6dac50956fb9b7b5b6d432b.webp';
-import img5 from '../../assets/5b6667d30e3fac2cc1631a86d6db0be0.webp';
+import img1 from '../../assets/img1.webp';
+import img2 from '../../assets/img2.webp';
+import img3 from '../../assets/img3.webp';
+import img4 from '../../assets/img4.webp';
+import img5 from '../../assets/img5.webp';
 import { v4 as uuidv4 } from 'uuid';
 
 
