@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../components/Schemas/validationSchema';
 import { useNavigate } from 'react-router-dom';
-import bgImage from '../assets/bgImage.png';
+import bg from '../assets/bg.png';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -50,7 +50,7 @@ const Login = () => {
         <Fragment>
             <div className="flex login-cont wh">
                 <div className="flex wh">
-                    <img src={bgImage} className='bgdiv' alt="" />
+                    <img src={bg} className='bgdiv' alt="bg" />
                 </div>
 
                 <div className="signupcont">
