@@ -256,7 +256,7 @@ const SellerHome = () => {
                         </div>
                         <div className="flexcol score wh">
                             <div className="descrip2">
-                                Collection of educational resources and training materials to empower Tradeling sellers with the needed knowledge and skills.
+                                Collection of educational resources and training materials to empower Ulink sellers with the needed knowledge and skills.
                             </div>
                             <button className='btn box flex' type='submit'><div className="heading2">GO TO ACADEMY</div></button>
                         </div>

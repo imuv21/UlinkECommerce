@@ -231,7 +231,7 @@ const BecomeASeller = () => {
             <div className="flexcol wh home" style={{ gap: '60px' }}>
                 <div className="perfect-grid2">
                     <div>
-                        <img src="https://c8n.tradeling.com/img/plain/cms/rs:auto:600::0/f:webp/q:95/Side_Image_7988f4c16b.png" alt="img" />
+                        {/* <img src="https://c8n.tradeling.com/img/plain/cms/rs:auto:600::0/f:webp/q:95/Side_Image_7988f4c16b.png" alt="img" /> */}
                     </div>
                     <div className='flexcol-start' style={{ gap: '30px' }}>
                         <div className="heading5">How it works</div>
@@ -307,7 +307,7 @@ const BecomeASeller = () => {
                         </div>
                     </div>
                     <div className=''>
-                        <img src="https://c8n.tradeling.com/img/plain/cms/rs:auto:600::0/f:webp/q:95/Internaitionalseller_1_b0f81f64e3.png" alt="img" />
+                        {/* <img src="https://c8n.tradeling.com/img/plain/cms/rs:auto:600::0/f:webp/q:95/Internaitionalseller_1_b0f81f64e3.png" alt="img" /> */}
                     </div>
                 </div>
 

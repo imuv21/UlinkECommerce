@@ -107,7 +107,7 @@ const CommissionStructure = () => {
                     <div className="flex wh" style={{ justifyContent: 'space-between', marginTop: '30px' }}>
                         <div className="fee heading2">STANDARD FEE %</div>
                     </div>
-                    <div className="heading3 wh">Sell on Tradeling</div>
+                    <div className="heading3 wh">Sell on Ulink</div>
                     <div className="heading3 wh">Use all the features that will save you time and money, whilst increasing your sales:</div>
                     <div className="heading2 wh list">Get access to the market with 500+ million business people</div>
                     <div className="heading2 wh list">Make sales at set prices, or allow buyers to negotiate directly with you</div>

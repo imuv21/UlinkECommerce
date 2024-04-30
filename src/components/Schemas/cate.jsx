@@ -235,232 +235,231 @@ const microSubOptions = {
   FishAndSeafood: ["Fish", "Seafood"], 
   Meat: ["Beef", "Camel"], 
 
-  BakingDecorations: [], 
-  BakingIngredients: [], 
+  BakingDecorations: ["BakingCoatings", "BakingFillings"], 
+  BakingIngredients: ["BakingMix", "BakingPowderAndSoda"], 
 
-  BabyBath: [], 
-  BabyHealthCareAndGrooming: [],
+  BabyBath: ["BabyBathAccessories", "BabyBathSeatsAndStands"], 
+  BabyHealthCareAndGrooming: ["BabyCombsAndBrushes", "BabyCottonPadsAndBuds"],
 
-  BabyClothing: [], 
-  BabyClothingAccessories: [],
+  BabyClothing: ["BabyCapsBeaniesAndScarfs", "BabyClothingSets"], 
+  BabyClothingAccessories: ["BabyBellyWarmers", "BabyHairAccessories"],
 
-  BabyDiapers: [], 
-  ChangingPads: [],
+  BabyDiapers: ["DisposableBabyDiapers", "ReusableBabyDiapers"], 
+  ChangingPads: ["ChangingPadsAndMats", "WaterproofSheets"],
 
-  BabyFeeding: [], 
-  BabyFood: [],
+  BabyFeeding: ["BabyCups", "BabyFeeders"], 
+  BabyFood: ["BabyCerealsAndMeals", "BabyFormula"],
 
-  Activity: [], 
-  ChairsAndSeats: [],
+  Activity: ["BabyBouncersAndSwings", "BabyGymsAndPlaymats"], 
+  ChairsAndSeats: ["HighchairsAndFeedingBoosters", "ToddlerChairsAndSofas"],
 
-  BabyBeddings: [], 
-  BabyFurniture: [],
+  BabyBeddings: ["BabyBlanketsAndSwaddles", "BabyComforterSets"], 
+  BabyFurniture: ["BabyDrawersAndShelves", "BabyMattresses"],
 
-  MakeupToolsAndAccessories: [], 
-  NailCareTools: [], 
+  MakeupToolsAndAccessories: ["BlottingPaper", "EyebrowRazors"], 
+  NailCareTools: ["CallusRemover", "ElectricNailDrills"], 
 
-  Perfumes: [],
+  Perfumes: ["BodySpraysAndMists", "FragranceGiftSets"],
 
-  BodyArt: [], 
-  BodyMakeup: [], 
+  BodyArt: ["TattooStencils", "TattooTools"], 
+  BodyMakeup: ["BodyBronzers", "BodyConcealers"], 
 
-  NailArt: [], 
-  NailCareProducts: [],
+  NailArt: ["FalseNailsAdhesives", "NailArtTemplates"], 
+  NailCareProducts: ["CuticleRemover", "NailPolish"],
 
-  EyeCare: [], 
-  FaceCare: [],
+  EyeCare: ["EyeCreamsAndGel", "EyeMakeupRemovers"], 
+  FaceCare: ["FaceCareSets", "FaceCreamsAndMoisturizers"],
 
-  CleaningAppliances: [], 
-  CoffeeAndEspressoMachines: [],
+  CleaningAppliances: ["ElectricDeepCleaners", "ElectricFloorCleaners"], 
+  CoffeeAndEspressoMachines: ["CoffeeBeanGrinders", "CoffeeMachines"],
 
-  BarFurniture: [], 
-  HairSalonFurniture: [],
+  BarFurniture: ["BarChairsAndStools", "BarTables"], 
+  HairSalonFurniture: ["HairdressingChairs", "NailCareChairs"], 
 
-  BBQAndGrills: [], 
-  GardenDecor: [],
+  BBQAndGrills: ["BBQAccessories", "BBQCleaningTools"], 
+  GardenDecor: ["ArchesAndArbors", "CobblesAndPebbles"],
 
-  ArtworkAndFrames: [], 
-  Clocks: [],
+  ArtworkAndFrames: ["ArtCards", "Mosaics"], 
+  Clocks: ["FloorClocks", "SpecialtyClocks"], 
    
-  Bedrooms: [], 
-  DiningRooms: [],
+  Bedrooms: ["BedBases", "BedroomSets"], 
+  DiningRooms: ["DiningChairs", "DiningTableSets"], 
 
-  Bedding: [],
-  CarpetsAndRugs: [],
+  Bedding: ["BedSheets", "BedSkirts"],
+  CarpetsAndRugs: ["Carpets", "Doormats"],
 
-  BathroomAccessories: [], 
-  CleaningSupplies: [],
+  BathroomAccessories: ["BathMats", "BathTowels"], 
+  CleaningSupplies: ["AirFresheners", "BathroomCleaners"],
 
-  Bakeware: [], 
-  CoffeeAndTeaTools: [],
+  Bakeware: ["BakewareSets", "BakingAndPastryTools"], 
+  CoffeeAndTeaTools: ["CoffeeFilters", "CoffeePots"],
 
-  Printers3D: [],
+  Printers3D: ["Printers3D"],
 
-  AgriculturalMachineryParts: [],
-  AgriculturalSprayer: [],
+  AgriculturalMachineryParts: ["AgriculturalMachineryParts"],
+  AgriculturalSprayer: ["AgriculturalSprayer"],
 
-  ApparelAndTextileMachineryParts: [], 
-  ApparelMachinery: [],
+  ApparelAndTextileMachineryParts: ["ApparelMachineParts", "CapMakingMachineParts"], 
+  ApparelMachinery: ["ButtonMakingMachines", "ButtonholeMachines"],
 
-  ChemicalMachineryAndEquipment: [], 
-  CosmeticsProductionEquipment: [],
+  ChemicalMachineryAndEquipment: ["3DBlu-rayPlayer", "ChemicalMachineParts"], 
+  CosmeticsProductionEquipment: ["CosmeticsProductionEquipment"],
 
-  AirCleaningEquipment: [],
-  CleaningEquipmentParts: [],
+  AirCleaningEquipment: ["AirCleaningEquipmentParts", "AirShower"],
+  CleaningEquipmentParts: ["CleaningEquipmentParts"],
 
-  AbrasiveMachines: [], 
-  BuildingMaterialMachinery: [],
+  AbrasiveMachines: ["AbrasiveMachines"], 
+  BuildingMaterialMachinery: ["BoardMakingMachinery", "BrickMakingMachinery"],
 
-  BakingEquipment: [], 
-  BeanProductProcessingMachinery: [],
+  BakingEquipment: ["BakingOven", "BreadMakingMachine"], 
+  BeanProductProcessingMachinery: ["BeanProductProcessingMachinery"], 
 
-  AuxiliaryPackagingMachines: [],
-  BlisterPackahingMachines: [],
+  AuxiliaryPackagingMachines: ["AuxiliaryPackagingMachines"],
+  BlisterPackahingMachines: ["BlisterPackahingMachines"],
 
-  FoamCuttingMachine: [], 
-  FoamMachinery: [],
+  FoamCuttingMachine: ["FoamCuttingMachine"], 
+  FoamMachinery: ["FoamMachinery"],
 
-  ArtAndCraftPaper: [], 
-  ArtAndCraftSets: [],
+  ArtAndCraftPaper: ["ArtAndCraftPaper"], 
+  ArtAndCraftSets: ["ArtAndCraftSets"],
 
-  BoardAccessories: [], 
-  BulletinBoards: [],
+  BoardAccessories: ["BoardAccessories"], 
+  BulletinBoards: ["BulletinBoards"],
 
-  BookReaders: [],
-  ChildrensBooks: [],
+  BookReaders: ["BookReaders"],
+  ChildrensBooks: ["ActivityBooksAndGames", "AnimalsAndPets"],
 
-  BinsAndBaskets: [], 
-  BusinessCardsAndOrganizers: [],
+  BinsAndBaskets: ["BinsAndBaskets"], 
+  BusinessCardsAndOrganizers: ["BusinessCardsAndOrganizers"],
 
-  DividersAndBookmarks: [], 
-  DocumentBagsAndDisplayBooks: [],
+  DividersAndBookmarks: ["DividersAndBookmarks"], 
+  DocumentBagsAndDisplayBooks: ["DocumentBagsAndDisplayBooks"],
 
-  Batteries: [], 
-  BinderClipsAndPins: [],
+  Batteries: ["Batteries"], 
+  BinderClipsAndPins: ["BinderClipsAndPins"],
 
-  CabinetsAndDrawerUnits: [], 
-  ChairsAndSeating: [],
+  CabinetsAndDrawerUnits: ["Bookcases", "Cabinets"], 
+  ChairsAndSeating: ["ChairMatsAndAccessories", "DeskChairs"],
 
-  AttendanceMachines: [],
-  BindingMachines: [],
+  AttendanceMachines: ["AttendanceMachines"],
+  BindingMachines: ["BindingMachines"],
  
-  GiftBagsBoxesAndWraps: [],
-  PackagingPaperAndWraps: [],
+  GiftBagsBoxesAndWraps: ["GiftBagsBoxesAndWraps"],
+  PackagingPaperAndWraps: ["PackagingPaperAndWraps"],
 
-  AddressLabels: [],
-  BarcodeLabels: [],
+  AddressLabels: ["AddressLabels"],
+  BarcodeLabels: ["BarcodeLabels"],
 
-  ColorPaper: [], 
-  CopyPaper: [],
+  ColorPaper: ["ColorPaper"], 
+  CopyPaper: ["CopyPaper"],
 
-  DuctTapes: [],
-  GluesAndAdhesives: [],
+  DuctTapes: ["DuctTapes"],
+  GluesAndAdhesives: ["GluesAndAdhesives"],
 
-  InkCartridges: [],
-  TonersCartridges: [],
+  InkCartridges: ["InkCartridges"],
+  TonersCartridges: ["TonersCartridges"],
 
-  CorrectionPensAndFluids: [],
-  GeometryAndScienceSupplies: [],
+  CorrectionPensAndFluids: ["CorrectionPensAndFluids"],
+  GeometryAndScienceSupplies: ["GeometryAndScienceSupplies"],
 
-  AddressAndAccountingBooks: [], 
-  CalendarJournalAndDiaries: [],
+  AddressAndAccountingBooks: ["AddressAndAccountingBooks"], 
+  CalendarJournalAndDiaries: ["CalendarJournalAndDiaries"],
 
-  HairAccessories: [],
-  HairCare: [],
+  HairAccessories: ["HairClips", "HairPins"],
+  HairCare: ["BeardCare", "Conditioner"],
 
-  BathAndBody: [],
-  HairSalonDisposables: [], 
+  BathAndBody: ["BathAccessories", "BodyCreamsLotionsAndMoisturizers"],
+  HairSalonDisposables: ["DisposableAccessories", "DisposableBedRolls"], 
 
-  HairStylingTools: [], 
-  ShavingAndHairRemovalTools: [],
+  HairStylingTools: ["CurlingIrons", "ElectricHairBrushes"], 
+  ShavingAndHairRemovalTools: ["ElectricHairRemovalDevices"],
 
-  AnimalFeedsAndSupplements: [],
+  AnimalFeedsAndSupplements: ["AnimalFeedsAndSupplements"],
 
-  CleaningSupplies: [], 
-  CollarsAndLeashes: [],
+  CleaningSupplies: ["CleaningSupplies"], 
+  CollarsAndLeashes: ["CollarsAndLeashes"],
 
-  Chews: [],
-  DryFoods: [], 
+  Chews: ["Chews"],
+  DryFoods: ["DryFoods"], 
 
-  Aquariums: [],  
-  Beds: [],
+  Aquariums: ["Aquariums"],  
+  Beds: ["Beds"],
   
-  ExerciseMachines: [],  
-  FitnessAccessories: [],
+  ExerciseMachines: ["EllipticalTrainers", "ExerciseBikes"],  
+  FitnessAccessories: ["BalanceBoard", "Blocks"],
 
-  BallGames: [],  
-  BikePartsAndTools: [],
+  BallGames: ["AmericanFootball", "BaseballAndSoftball"],  
+  BikePartsAndTools: ["BikeAirPumps", "BikeBasketsAndBags"],   
 
-  WaterSportShoes: [],
+  WaterSportShoes: ["WaterSportShoes"],
 
-  WaterSportsAndActivities: [],
+  WaterSportsAndActivities: ["WaterSportsAndActivities"],
 
-  AdventCalendars: [],  
-  CraftSets: [],
+  AdventCalendars: ["AdventCalendars"],  
+  CraftSets: ["BeadAccessoriesSets", "CandlesMakingSets"],  
 
-  BabyGymsAndPlaymats: [],  
-  BabyToys: [],
+  BabyGymsAndPlaymats: ["MusicAndLightPlaymats", "PianoPlaymats"],  
+  BabyToys: ["Rattles", "SoftToys"],
 
-  RemoteControlToys: [],
+  RemoteControlToys: ["RemoteControlAirplanesHelicopters", "RemoteControlAnimals"],
 
-  BuildingBlocks: [],  
-  BuildingToys: [],
+  BuildingBlocks: ["FoamBlocks", "LegoAndBricks"],  
+  BuildingToys: ["ModelBuildingToys"],
 
-  DollhousesAndAccessories: [],  
-  Dolls: [],
+  DollhousesAndAccessories: ["DollAccessories", "DollStrollers"],  
+  Dolls: ["BabyDolls", "FashionDolls"],
 
-  LanguageAndLiteracy: [],  
-  MathAndCountToys: [],
+  LanguageAndLiteracy: ["AlphabetFlashcards", "KidsLaptops"],  
+  MathAndCountToys: ["MagneticNumbers", "MathLearningBooks"],
 
-  SoundAndLightToys: [],
+  SoundAndLightToys: ["DancingToys", "MusicalInstruments"],
 
-  FidgetToys: [],
-  SquishyToys: [],
+  FidgetToys: ["FidgetToys"],
+  SquishyToys: ["SquishyToys"],
 
-  BeachToys: [], 
-  BikesScootersAndRideOns: [],
+  BeachToys: ["BeachBalls", "Kites"], 
+  BikesScootersAndRideOns: ["Bicycles", "Helmets"],
 
-  AnimalAndActionFigures: [], 
-  VehicleToys: [],
+  AnimalAndActionFigures: ["ActionFigures", "AnimalFigures"], 
+  VehicleToys: ["Bikes", "Buses"],
 
-  DressingUpAndCostumes: [],
-  PretendPlay: [],
+  DressingUpAndCostumes: ["Accessories", "Costumes"],
+  PretendPlay: ["BeautyPlaysets", "DoctorPlaysets"],
 
-  Games: [],
-  Puzzles: [],
+  Games: ["BoardGames", "CardGames"],
+  Puzzles: ["Puzzles3D", "BrainTeasers"],
 
-  BathroomAndKitchenAccessories: [],
-  SinksVanitiesAndCabinets: [],
+  BathroomAndKitchenAccessories: ["BathroomRacksAndHolders", "DrainStrainersPlugsAndCovers"],
+  SinksVanitiesAndCabinets: ["BathroomCabinets", "BathroomMirrors"],
 
-  BuildingBoards: [], 
-  BuildingGlassAndAccessories: [],
+  BuildingBoards: ["AluminumBoards", "Cementboards"], 
+  BuildingGlassAndAccessories: ["ClearGlass", "CurtainWallAccessories"],
 
+  DoorAndWindowHardware: ["DoorAndWindowRollerWheels", "DoorFrames"], 
+  Doors: ["AutomaticDoors", "FoldingDoors"],
 
-  DoorAndWindowHardware: [], 
-  Doors: [],
+  CablesWiresAndAccessories: ["CableClipsTiesAndWraps", "CableConduitsAndTrunks"], 
+  FusesAndCircuitBreakers: ["ElectricalCircuitBreakers", "ElectricalCircuitBreakers"],
 
-  CablesWiresAndAccessories: [], 
-  FusesAndCircuitBreakers: [],
+  AdhesivesAndFillers: ["CaulkAndSealant", "Glue"], 
+  PaintAndCoating: ["AutomotivePaintAndCoating", "DecorativePaintAndCoating"], 
 
-  AdhesivesAndFillers: [], 
-  PaintAndCoating: [],
+  IndoorLighting: ["BathroomLighting", "CeilingLights"],
+  OutdoorLighting: ["CampingLights", "DeckLights"],
 
-  IndoorLighting: [],
-  OutdoorLighting: [],
+  Alarms: ["AlarmSystems", "GlassBreakDetectors"], 
+  ChildSafety: ["AntiSlipsANdUnderlays", "CabinetLocksAndStraps"],
 
-  Alarms: [], 
-  ChildSafety: [],
+  DimensionalAndLevelMeasurement: ["Calipers", "Micrometers"],
+  ElectricalMeasurement: ["CurrentAndVoltageMeters", "EMFMeters"],
 
-  DimensionalAndLevelMeasurement: [],
-  ElectricalMeasurement: [],
+  Fasteners: ["Bolts", "Nuts"], 
+  FurnitureHardware: ["CasterAndRollerWheels", "Dampers"],
 
-  Fasteners: [], 
-  FurnitureHardware: [],
-
-  sweetgray: [],
-  sourgray: [],
-  sweetpink: [],
-  sourpink: [],
+  sweetgray: ["optiona", "optionb"],
+  sourgray: ["optionc", "optiond"],
+  sweetpink: ["optione", "optionf"],
+  sourpink: ["optiong", "optionh"],
 };
 
 

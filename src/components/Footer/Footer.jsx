@@ -22,7 +22,7 @@ const Footer = () => {
           <div className="item-list">
             <Link className="itemLink">Start selling</Link>
             <Link className="itemLink">Webinar & EBooks</Link>
-            <Link className="itemLink">Tradeling Logistics</Link>
+            <Link className="itemLink">Ulink Logistics</Link>
             <Link className="itemLink">Product listing policy</Link>
           </div>
         </div>
@@ -45,7 +45,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="footer">
-          <h3 className="footer-title">Tradeling Services</h3>
+          <h3 className="footer-title">Ulink Services</h3>
           <div className="item-list">
             <Link className="itemLink">Buy-back Program</Link>
             <Link className="itemLink">Terms and Conditions</Link>

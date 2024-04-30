@@ -132,11 +132,27 @@ const AddSingle = () => {
     };
     const getMarginValue = () => {
         switch (selectedSupOption) {
-            case "apple":
+            case "Groceries":
+                return 0.02;
+            case "ConsumerElectronics":
+                return 0.025;
+            case "FashionAndAccessories":
+                return 0.1;
+            case "AutoParts":
                 return 0.05;
-            case "orange":
-                return 0.03;
-            case "banana":
+            case "FoodAndBeverages":
+                return 0.02;
+            case "BabyCenter":
+                return 0.05;
+            case "BeautyAndFragrances":
+                return 0.1;
+            case "FashionAndAccessories":
+                return 0.1;
+            case "FashionAndAccessories":
+                return 0.1;
+            case "FashionAndAccessories":
+                return 0.1;
+            case "FashionAndAccessories":
                 return 0.1;
             default:
                 return 0;
