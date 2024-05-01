@@ -1,13 +1,13 @@
 
 
-const supOptions = ["Groceries", "ConsumerElectronics", "FashionAndAccessories", "AutoParts", "FoodAndBeverages", "BabyCenter", "BeautyAndFragrances", "HomeGardenAndFurniture", "MachineryAndEquipment", "OfficeAndStationery", "PersonalCare", "PetAndAnimalCare", "SportsAndFitness", "Toys", "ToolsAndHomeImprovement", "Electrical"];
+const supOptions = [ "ConsumerElectronics", "FashionAndAccessories", "Automotive", "FoodAndBeverages", "BabyCenter", "BeautyAndFragrances", "HomeGardenAndFurniture", "MachineryAndEquipment", "OfficeAndStationery", "PersonalCare", "PetAndAnimalCare", "SportsAndFitness", "Toys", "ToolsAndHomeImprovement" ];
 
 
 const subOptions = {
-  Groceries: ["red", "green"],
+
   ConsumerElectronics: ["AudioAndStudio", "CamerasAndCamcorders", "ComputersAndAccessories", "ElectricalAndElectronicAccessories", "GamingAndConsoles", "MobilePhonesAndTablets", "MusicalInstruments", "ProjectorsAndAccessories", "SmartHomeSolutions", "TelephonesAndCommunication", "TelevisionsAndStreamingDevices", "Wearables"],
   FashionAndAccessories: ["Bags", "Clothing", "Eyewear", "Footwear", "WatchesAndJewelry"],
-  AutoParts: ["yellow", "black"],
+  Automotive: ["AutomotiveCareAndCleaning", "AutomotivePartsAndAccessories", "GarageAndWorkshop", "OilsAndFluids", "RecoveryAndOffRoadAccessories", "WheelsTiresAndAccessories" ],
   FoodAndBeverages: ["BakeryAndPastry", "Beverages", "Confectionery", "DairyAndEggs", "FrozenFood", "FruitAndVegetables", "MeatPoultryAndFish", "Pantry"],
   BabyCenter: ["BabyCare", "BabyClothingAndFootwear", "BabyDiapering", "BabyFeedingAndNursing", "BabyGear", "BabyNursery"],
   BeautyAndFragrances: ["BeautyTools", "Fragrances", "Makeup", "Nails", "Skincare"],
@@ -19,13 +19,11 @@ const subOptions = {
   SportsAndFitness: ["FitnessAndTraining", "SportsAndOutdoorActivities", "WaterSportShoes", "WaterSportsAndActivities"],
   Toys: ["ArtsAndCrafts", "BabyToddlerToys", "BatteryOperatedToys", "ConstructionToys", "DollsAndDollhouses", "LearningAndEducational", "MusicalToys", "NoveltyToys", "OutdoorAndPlayground", "PlayFiguresAndVehicles", "PretendPlayAndCostumes", "PuzzlesAndGames"],
   ToolsAndHomeImprovement: ["BathroomAndKitchen", "Construction", "DoorsAndWindows", "ElectricalSupplies", "HomeImprovement", "Lighting", "SafetyAndSecurity", "TestMeasureAndInspect", "ToolsAndHardware"],
-  Electrical: ["gray", "pink"],
+
 };
 
 
 const miniSubOptions = {
-  red: ["sweetred", "sourred"],
-  green: ["sweetgreen", "sourgreen"],
 
   AudioAndStudio: ["AmplifiersAndSpeakers", "AudioAndVideoAccessories", "HeadphonesAndHeadsets", "MediaPlayers", "Radio", "RecordingAndStudioEquipment"],
   CamerasAndCamcorders: ["Camcorders", "CameraAccessories"],
@@ -46,8 +44,12 @@ const miniSubOptions = {
   Footwear: ["KidsShoes", "Shoes"], 
   WatchesAndJewelry: ["JewelryAndAccessories", "Watches"],
 
-  yellow: ["sweetyellow", "souryellow"],
-  black: ["sweetblack", "sourblack"],
+  AutomotiveCareAndCleaning: ["AutomotiveCleaningTools", "ExteriorCare"],
+  AutomotivePartsAndAccessories: ["ATVUTVPartsAndAccessories", "AviationPartsAndAccessories"],
+  GarageAndWorkshop: ["RepairEquipment"],
+  OilsAndFluids: ["FluidFlushes", "GreasesAndLubricants"],
+  RecoveryAndOffRoadAccessories: ["EmergencyTools", "TowingAndWinches"],
+  WheelsTiresAndAccessories: ["CommercialWheelsAndTires", "MotorcycleScooterWheelsAndTires"],
 
   BakeryAndPastry: ["BreadAndWraps", "Pastry"],
   Beverages: ["Coffee", "FitnessDrinks"], 
@@ -143,16 +145,10 @@ const miniSubOptions = {
   TestMeasureAndInspect: ["DimensionalAndLevelMeasurement", "ElectricalMeasurement"], 
   ToolsAndHardware: ["Fasteners", "FurnitureHardware"],
   
-  gray: ["sweetgray", "sourgray"],
-  pink: ["sweetpink", "sourpink"],
 };
 
 
 const microSubOptions = {
-  sweetred: ["one", "two"],
-  sourred: ["three", "four"],
-  sweetgreen: ["five", "six"],
-  sourgreen: ["seven", "eight"],
 
   AmplifiersAndSpeakers: ["Amplifiers", "Boomboxes", "CeilingSpeakers", "ComputerSpeakers", "FloorStandSpeakers", "Loudspeakers", "MonitorSpeakers", "OutdoorSpeakers", "PortableSpeakers", "SoundbarSpeakers", "Subwoofers", "WallMountSpeakers"],
   AudioAndVideoAccessories: ["AudioAndVideoSplitters", "AudioConverters"],
@@ -209,10 +205,17 @@ const microSubOptions = {
   JewelryAndAccessories: ["Anklets", "Bracelets"], 
   Watches: ["AnalogWatches", "DigitalWatches"],
 
-  sweetyellow: ["seventeen", "eighteen"],
-  souryellow: ["nineteen", "twenty"],
-  sweetblack: ["twentyone", "twentytwo"],
-  sourblack: ["twentythree", "twentyfour"],
+  AutomotiveCleaningTools: ["Applicators", "CleaningToolsAndKits"],
+  ExteriorCare: ["AutomotiveGlassCare", "AutomotivePolishesAndWaxes"],
+  ATVUTVPartsAndAccessories: ["ATVUTVAccessories", "ATVUTVParts"],
+  AviationPartsAndAccessories: ["AviationAccessories", "AviationParts"],
+  RepairEquipment: ["BodyRepairTools", "CreepersAndRollerSeats"],
+  FluidFlushes: ["AutomaticTransmissionFluids", "BrakeFluids"],
+  GreasesAndLubricants: ["GreaseAdditives", "Greases"],
+  EmergencyTools: ["CarEmergencyEquipment", "JerryCans"],
+  TowingAndWinches: ["HitchHooks", "HitchMounts"],
+  CommercialWheelsAndTires: ["RVTires", "RVWheels"],
+  MotorcycleScooterWheelsAndTires: ["MotorcycleTires", "MotorcycleWheels"],
 
   BreadAndWraps: ["BunsAndRolls", "Flatbread"],
   Pastry: ["CakesAndMuffins", "KaakAndBreadsticks"],
@@ -456,10 +459,6 @@ const microSubOptions = {
   Fasteners: ["Bolts", "Nuts"], 
   FurnitureHardware: ["CasterAndRollerWheels", "Dampers"],
 
-  sweetgray: ["optiona", "optionb"],
-  sourgray: ["optionc", "optiond"],
-  sweetpink: ["optione", "optionf"],
-  sourpink: ["optiong", "optionh"],
 };
 
 

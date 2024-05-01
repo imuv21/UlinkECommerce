@@ -132,28 +132,36 @@ const AddSingle = () => {
     };
     const getMarginValue = () => {
         switch (selectedSupOption) {
-            case "Groceries":
-                return 0.02;
+          
             case "ConsumerElectronics":
-                return 0.025;
+                return 2.5;
             case "FashionAndAccessories":
-                return 0.1;
-            case "AutoParts":
-                return 0.05;
+                return 10;
+            case "Automotive":
+                return 5;
             case "FoodAndBeverages":
-                return 0.02;
+                return 2;
             case "BabyCenter":
-                return 0.05;
+                return 5;
             case "BeautyAndFragrances":
-                return 0.1;
-            case "FashionAndAccessories":
-                return 0.1;
-            case "FashionAndAccessories":
-                return 0.1;
-            case "FashionAndAccessories":
-                return 0.1;
-            case "FashionAndAccessories":
-                return 0.1;
+                return 2.5;
+            case "HomeGardenAndFurniture":
+                return 5;
+            case "MachineryAndEquipment":
+                return 5;
+            case "OfficeAndStationery":
+                return 3;
+            case "PersonalCare":
+                return 3;
+            case "PetAndAnimalCare":
+                return 5;
+            case "SportsAndFitness":
+                return 5;
+            case "Toys":
+                return 5;
+            case "ToolsAndHomeImprovement":
+                return 5;
+
             default:
                 return 0;
         }
@@ -208,39 +216,40 @@ const AddSingle = () => {
 
             <form className="productlist2" onSubmit={handleSubmit(onSubmit)}>
                 <div className="heading3">Basic information</div>
-                <Controller name="bulletPoints" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.bulletPoints || ''} onChange={handleChange} className="box flex" placeholder='Enter bullet points (separated by full stop)...' {...field} />} />
-                {errors.bulletPoints && <div className='error'>{errors.bulletPoints?.message}</div>}
 
                 <div className="flex-start wh" style={{ gap: '10px' }}>
-                    <select onChange={handleSupOptionChange} disabled={isSecondSelectEnabled}>
+                    <select onChange={handleSupOptionChange} disabled={isSecondSelectEnabled} className="box flex">
                         <option value="">Select category</option>
                         {supOptions.map((option, index) => (
-                            <option key={index} value={option}>{option}</option>
+                            <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                         ))}
                     </select>
-                    <select onChange={handleSubOptionChange} disabled={!isSecondSelectEnabled || isThirdSelectEnabled}>
+                    <select onChange={handleSubOptionChange} disabled={!isSecondSelectEnabled || isThirdSelectEnabled} className="box flex">
                         <option value="">Select sub category</option>
                         {subOptions[selectedSupOption] && subOptions[selectedSupOption].map((option, index) => (
-                            <option key={index} value={option}>{option}</option>
+                            <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                         ))}
                     </select>
-                    <select onChange={handleMiniSubOptionChange} disabled={!isThirdSelectEnabled || isFourthSelectEnabled}>
+                    <select onChange={handleMiniSubOptionChange} disabled={!isThirdSelectEnabled || isFourthSelectEnabled} className="box flex">
                         <option value="">Select an option</option>
                         {miniSubOptions[selectedSubOption] && miniSubOptions[selectedSubOption].map((option, index) => (
-                            <option key={index} value={option}>{option}</option>
+                            <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                         ))}
                     </select>
-                    <select onChange={handleMicroSubOptionChange} disabled={!isFourthSelectEnabled || !!selectedMicroSubOption}>
+                    <select onChange={handleMicroSubOptionChange} disabled={!isFourthSelectEnabled || !!selectedMicroSubOption} className="box flex">
                         <option value="">Select sub option</option>
                         {microSubOptions[selectedMiniSubOption] && microSubOptions[selectedMiniSubOption].map((option, index) => (
-                            <option key={index} value={option}>{option}</option>
+                            <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                         ))}
                     </select>
                 </div>
                 <div className="flex-start wh" style={{ gap: '10px' }}>
-                    <div className="error">{errorMessage ? errorMessage : isSubmitEnabled ? `Selected path: ${categoryPath}` : 'Please make all selections'}</div>
-                    {selectedSupOption && (<div className='error'>Margin value: {marketingValue}</div>)}
+                    <div className="greenerror">{errorMessage ? errorMessage : isSubmitEnabled ? `Selected path: ${categoryPath}` : 'Please make all selections'}</div>
+                    {selectedSupOption && (<div className='greenerror'>Margin value: {marketingValue}%</div>)}
                 </div>
+
+                <Controller name="bulletPoints" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.bulletPoints || ''} onChange={handleChange} className="box flex" placeholder='Enter bullet points (separated by full stop)...' {...field} />} />
+                {errors.bulletPoints && <div className='error'>{errors.bulletPoints?.message}</div>}
 
                 <Controller name="productName" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.productName || ''} onChange={handleChange} className="box flex" placeholder='Enter product name' {...field} />} />
                 {errors.productName && <div className='error'>{errors.productName?.message}</div>}
@@ -251,17 +260,11 @@ const AddSingle = () => {
                 <Controller name="keyWords" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.keyWords || ''} onChange={handleChange} className="box flex" placeholder="Enter keywords (separated by comma)..." {...field} />} />
                 {errors.keyWords && <div className='error'>{errors.keyWords?.message}</div>}
 
-
-                {selectedSupOption === "apple" && (
-                    <>
-                        <div className="heading3">Variant information</div>
-                        <div className="flex-start wh" style={{ gap: '10px' }}>
-                            <Controller name="variantColor" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.variantColor || ''} onChange={handleChange} className="box flex" placeholder='Enter product color' {...field} />} />
-                            <Controller name="variantSize" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.variantSize || ''} onChange={handleChange} className="box flex" placeholder='Enter product size' {...field} />} />
-                        </div>
-                    </>
-                )}
-
+                <div className="heading3">Variant information</div>
+                <div className="flex-start wh" style={{ gap: '10px' }}>
+                    <Controller name="variantColor" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.variantColor || ''} onChange={handleChange} className="box flex" placeholder='Enter product color' {...field} />} />
+                    <Controller name="variantSize" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.variantSize || ''} onChange={handleChange} className="box flex" placeholder='Enter product size' {...field} />} />
+                </div>
 
                 <div className="heading3">Description</div>
                 <Controller name="addInfo" control={control} defaultValue="" render={({ field }) => <textarea value={singleFormData.addInfo || ''} onChange={handleChange} className="box flex" rows={10} placeholder="Enter description..." {...field}></textarea>} />
@@ -706,6 +709,10 @@ const AddSingle = () => {
                 )}
                 />
                 {errors.temperature && <div className='error'>{errors.temperature?.message}</div>}
+
+                {selectedSupOption === "FoodAndBeverages" && (
+                    <Controller name="shelflife" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.shelflife || ''} onChange={handleChange} className="box flex" placeholder='Enter shelf life (days)' {...field} />} />
+                )}
 
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                     <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Save Draft</div></button>

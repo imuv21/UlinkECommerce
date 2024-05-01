@@ -81,12 +81,13 @@ const ProductList = ({ handleOptionClick }) => {
     // Calculate Ulink Fee
     const calculateUlinkFee = () => {
         const salePrice = parseFloat(selectedItem.salePrice);
+        const marketingValue = parseFloat(selectedItem.marketingValue);
         const quantity = 1;
 
         if (isNaN(salePrice)) {
             return 'N/A';
         }
-        const ulinkFee = 0.05 * salePrice * quantity;
+        const ulinkFee = (marketingValue/100) * salePrice * quantity;
         return `${ulinkFee.toFixed(2)}₹`;
     };
 
@@ -139,10 +140,13 @@ const ProductList = ({ handleOptionClick }) => {
                                     <div className="heading2">Ulinkit Fee</div><div className='bbox'>{calculateUlinkFee()}</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Taxes on fees</div><div className='bbox'>{tax}₹</div>
+                                    <div className="heading2">Taxes on Fee</div><div className='bbox'>{tax}₹</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Cost per unit</div><div className='bbox'>{calculateCostPerUnit(selectedItem)}</div>
+                                    <div className="heading2">Marketing Fee</div><div className='bbox'>{selectedItem.marketingValue}%</div>
+                                </div>
+                                <div className="popboxdivs">
+                                    <div className="heading2">Cost Per Unit</div><div className='bbox'>{calculateCostPerUnit(selectedItem)}</div>
                                 </div>
 
                                 <div className="flex" style={{ gap: '20px' }}>
@@ -226,7 +230,7 @@ const ProductList = ({ handleOptionClick }) => {
                                             <div className="heading2 download-btn" onClick={() => productDetail(index)} style={{ whiteSpace: 'nowrap' }}>
                                                 {item.productName.length > 15 ? `${item.productName.substring(0, 15)}...` : item.productName}
                                             </div>
-                                            {/* <div className="heading2">{item.categoryPath.length > 15 ? `${item.categoryPath.substring(0, 15)}...` : item.categoryPath}</div> */}
+                                            <div className="heading2">{item.categoryPath.length > 15 ? `${item.categoryPath.substring(0, 15)}...` : item.categoryPath}</div>
                                             <div className="heading2">
                                                 <div className="flex" style={{ gap: '5px' }}>
                                                     <span style={{ textDecoration: 'line-through', color: 'gray' }}>{item.unitPrice}₹</span>-<span style={{ fontWeight: 'bold' }}>{item.salePrice}₹</span>

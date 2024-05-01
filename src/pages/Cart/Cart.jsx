@@ -76,9 +76,7 @@ const Cart = () => {
               {Object.values(cart).map((item, index) => (
                 <div className='cart webdiv' key={index}>
                   <div className="cartImg">
-                    {cart[index].images && cart[index].images.length > 0 && (
-                      <img src={cart[index].images[0].url} alt={cart[index].product.productName} />
-                    )}
+                    {item.images && item.images.length > 0 && <img src={item.images[0].url} alt={item.images[0].name} />}
                   </div>
                   <div className="cartDetail">
                     <div className="heading2">

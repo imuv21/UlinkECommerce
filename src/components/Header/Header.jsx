@@ -11,7 +11,7 @@ import { useCart } from '../context/CartContext';
 
 const Header = () => {
 
-  
+
   const navigate = useNavigate();
 
   const login = () => {
@@ -94,20 +94,21 @@ const Header = () => {
   const numCharacters = carttext;
   let width;
   let height;
-  if (numCharacters === 1){
+  if (numCharacters >= 0 && numCharacters <= 9) {
     width = 15;
     height = 15;
-  } else if (numCharacters === 2){
+  } else if (numCharacters >= 10 && numCharacters <= 99) {
     width = 20;
     height = 17;
-  } else if (numCharacters === 3){
+  } else if (numCharacters >= 100 && numCharacters <= 999) {
     width = 25;
     height = 20;
   } else {
     width = 35;
     height = 20;
   }
-  
+
+
   const cartcount = {
     width: `${width}px`,
     height: `${height}px`,

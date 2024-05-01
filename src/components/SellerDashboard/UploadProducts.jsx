@@ -76,12 +76,36 @@ const UploadProducts = ({ handleOptionClick }) => {
     };
     const getMarginValue = (option) => {
         switch (option) {
-            case "apple":
-                return 0.05;
-            case "orange":
-                return 0.03;
-            case "banana":
-                return 0.1;
+           
+            case "ConsumerElectronics":
+                return 2.5;
+            case "FashionAndAccessories":
+                return 10;
+            case "Automotive":
+                return 5;
+            case "FoodAndBeverages":
+                return 2;
+            case "BabyCenter":
+                return 5;
+            case "BeautyAndFragrances":
+                return 2.5;
+            case "HomeGardenAndFurniture":
+                return 5;
+            case "MachineryAndEquipment":
+                return 5;
+            case "OfficeAndStationery":
+                return 3;
+            case "PersonalCare":
+                return 3;
+            case "PetAndAnimalCare":
+                return 5;
+            case "SportsAndFitness":
+                return 5;
+            case "Toys":
+                return 5;
+            case "ToolsAndHomeImprovement":
+                return 5;
+           
             default:
                 return 0;
         }
@@ -147,15 +171,50 @@ const UploadProducts = ({ handleOptionClick }) => {
     const handleDownload = () => {
         let filename = '';
         switch (selectedSupOption) {
-            case "apple":
-                filename = "Ulink-template-grocery.xlsx";
-                break;
-            case "orange":
+         
+            case "ConsumerElectronics":
                 filename = "Ulinkit-template-common.xlsx";
                 break;
-            case "banana":
+            case "FashionAndAccessories":
+                filename = "Ulinkit-template-common.xlsx";
+                break;
+            case "Automotive":
+                filename = "Ulinkit-template-common.xlsx";
+                break;
+            case "FoodAndBeverages":
                 filename = "Ulink-template-grocery.xlsx";
                 break;
+            case "BabyCenter":
+                filename = "Ulinkit-template-common.xlsx";
+                break;
+            case "BeautyAndFragrances":
+                filename = "Ulinkit-template-common.xlsx";
+                break;
+            case "HomeGardenAndFurniture":
+                filename = "Ulinkit-template-common.xlsx";
+                break;
+            case "MachineryAndEquipment":
+                filename = "Ulinkit-template-common.xlsx";
+                break;
+            case "OfficeAndStationery":
+                filename = "Ulinkit-template-common.xlsx";
+                break;
+            case "PersonalCare":
+                filename = "Ulinkit-template-common.xlsx";
+                break;
+            case "PetAndAnimalCare":
+                filename = "Ulinkit-template-common.xlsx";
+                break;
+            case "SportsAndFitness":
+                filename = "Ulinkit-template-common.xlsx";
+                break;
+            case "Toys":
+                filename = "Ulinkit-template-common.xlsx";
+                break;
+            case "ToolsAndHomeImprovement":
+                filename = "Ulinkit-template-common.xlsx";
+                break;
+          
             default:
                 filename = "Ulinkit-template-common.xlsx";
         }
@@ -186,31 +245,33 @@ const UploadProducts = ({ handleOptionClick }) => {
                             <select onChange={handleSupOptionChange} disabled={isSecondSelectEnabled}>
                                 <option value="">Select an option</option>
                                 {supOptions.map((option, index) => (
-                                    <option key={index} value={option}>{option}</option>
+                                    <option key={index} value={option}>
+                                        {option.length > 15 ? `${option.substring(0, 15)}...` : option}
+                                    </option>
                                 ))}
                             </select>
                             <select onChange={handleSubOptionChange} disabled={!isSecondSelectEnabled || isThirdSelectEnabled}>
                                 <option value="">Select a sub option</option>
                                 {subOptions[selectedSupOption] && subOptions[selectedSupOption].map((option, index) => (
-                                    <option key={index} value={option}>{option}</option>
+                                    <option key={index} value={option}> {option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                                 ))}
                             </select>
                             <select onChange={handleMiniSubOptionChange} disabled={!isThirdSelectEnabled || isFourthSelectEnabled}>
                                 <option value="">Select minisub option</option>
                                 {miniSubOptions[selectedSubOption] && miniSubOptions[selectedSubOption].map((option, index) => (
-                                    <option key={index} value={option}>{option}</option>
+                                    <option key={index} value={option}> {option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                                 ))}
                             </select>
                             <select onChange={handleMicroSubOptionChange} disabled={!isFourthSelectEnabled || !!selectedMicroSubOption}>
                                 <option value="">Select micro-sub option</option>
                                 {microSubOptions[selectedMiniSubOption] && microSubOptions[selectedMiniSubOption].map((option, index) => (
-                                    <option key={index} value={option}>{option}</option>
+                                    <option key={index} value={option}> {option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                                 ))}
                             </select>
                         </div>
-                        <div className='flex'>
-                            {errorMessage ? errorMessage : isSubmitEnabled ? `Selected path: ${categoryPath}` : 'Please make all selections'}
-                            {selectedSupOption && (<p>Marketing value: {marketingValue}</p>)}
+                        <div className='flexcol-start' style={{ fontSize: '11px', gap: '5px', color: 'green' }}>
+                            <div>{errorMessage ? errorMessage : isSubmitEnabled ? `Selected path: ${categoryPath}` : 'Please make all selections'}</div>
+                            <div>{selectedSupOption && `Marketing value: ${marketingValue}%`}</div>
                         </div>
                     </div>
                     <div className="sel-box2">
@@ -218,14 +279,14 @@ const UploadProducts = ({ handleOptionClick }) => {
                         <div className="heading2">
                             Download and fill this template.
                         </div>
-                        <button  disabled={!isSubmitEnabled} onClick={handleDownload} className='upBtns' >Download template&nbsp;&nbsp;<DownloadIcon /></button>
+                        <button disabled={!isSubmitEnabled} onClick={handleDownload} className='upBtns' >Download template&nbsp;&nbsp;<DownloadIcon /></button>
                     </div>
                     <div className="sel-box2">
                         <div className="heading3">3. Upload template</div>
                         <div className="heading2">
                             Upload the template here.
                         </div>
-                        <input type="file" id="fileInput" style={{ display: 'none' }}  onChange={handleUpload} />
+                        <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleUpload} />
                         <label htmlFor="fileInput" className='upBtns'>
                             Upload template&nbsp;&nbsp;<UploadIcon />
                         </label>

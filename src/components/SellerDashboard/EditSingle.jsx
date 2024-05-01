@@ -2,8 +2,6 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addSingleSchema } from '../Schemas/validationSchema';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useParams, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
@@ -90,6 +88,8 @@ const EditSingle = () => {
             setValue('salePrice', savedSingleFormData[index].salePrice);
             setValue('unitPrice', savedSingleFormData[index].unitPrice);
             setValue('minOrderQuant', savedSingleFormData[index].minOrderQuant);
+
+            setValue('shelflife', savedSingleFormData[index].shelflife);
 
             setMarketingValue(savedSingleFormData[index].marketingValue);
             setCategoryPath(savedSingleFormData[index].categoryPath);
@@ -234,15 +234,13 @@ const EditSingle = () => {
                 {errors.keyWords && <div className='error'>{errors.keyWords?.message}</div>}
 
 
-                {selectedSupOption === "apple" && (
-                    <>
-                        <div className="heading3">Variant information</div>
-                        <div className="flex-start wh" style={{ gap: '10px' }}>
-                            <Controller name="variantColor" control={control} defaultValue={singleFormData.variantColor || ''} render={({ field }) => <input className="box flex" placeholder='Enter product color' {...field} />} />
-                            <Controller name="variantSize" control={control} defaultValue={singleFormData.variantSize || ''} render={({ field }) => <input className="box flex" placeholder='Enter product size' {...field} />} />
-                        </div>
-                    </>
-                )}
+
+                <div className="heading3">Variant information</div>
+                <div className="flex-start wh" style={{ gap: '10px' }}>
+                    <Controller name="variantColor" control={control} defaultValue={singleFormData.variantColor || ''} render={({ field }) => <input className="box flex" placeholder='Enter product color' {...field} />} />
+                    <Controller name="variantSize" control={control} defaultValue={singleFormData.variantSize || ''} render={({ field }) => <input className="box flex" placeholder='Enter product size' {...field} />} />
+                </div>
+
 
                 <div className="heading3">Description</div>
                 <Controller name="addInfo" control={control} defaultValue={singleFormData.addInfo || ''} render={({ field }) => <textarea className="box flex" rows={10} placeholder="Enter description..." {...field}></textarea>} />
@@ -316,7 +314,7 @@ const EditSingle = () => {
                 <div className="flex wh" style={{ gap: '20px' }}>
                     <Controller name="size" control={control} defaultValue={singleFormData.size || ''} render={({ field }) => <input className="box flex" placeholder='Enter size' {...field} />} />
                     <Controller name="sizeUnit" control={control} defaultValue={singleFormData.sizeUnit || ''} render={({ field }) => (
-                        <select className="" {...field} >
+                        <select className="box flex" {...field} >
                             <option value="">Select unit</option>
                             <option value="kg">KG</option>
                             <option value="lb">LB</option>
@@ -650,7 +648,7 @@ const EditSingle = () => {
                         </div>
                     </div>
                 }
-                
+
                 <div className="heading3">Additional details</div>
                 <Controller name="ean" control={control} defaultValue={singleFormData.ean || ''} render={({ field }) => <input className="box flex" placeholder='Enter EAN (European article number)' {...field} />} />
                 <Controller name="dgrGoods" control={control} defaultValue={singleFormData.dgrGoods || ''} render={({ field }) => (
@@ -691,6 +689,11 @@ const EditSingle = () => {
                 )}
                 />
                 {errors.temperature && <div className='error'>{errors.temperature?.message}</div>}
+
+
+                {selectedSupOption === "FoodAndBeverages" && (
+                    <Controller name="shelflife" control={control} defaultValue={singleFormData.shelflife || ''} render={({ field }) => <input className="box flex" placeholder='Enter shelf life (days)' {...field} />} />
+                )}
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                     <button className='btn box2 flex' onClick={handleCancel} style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Cancel</div></button>
                     <button className='btn box2 flex' onClick={uploadImages} type='submit' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Update</div></button>
