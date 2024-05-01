@@ -10,7 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DownloadIcon from '@mui/icons-material/Download';
 import PageviewIcon from '@mui/icons-material/Pageview';
-import three from '../assets/jpg-slider/3.jpg';
+import three from '../assets/jpg-slider/bb.webp';
 import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import Amazon_Global_Selling_Logo from '../assets/Amazon_Global_Selling_Logo.png';
 import dpworld from '../assets/dpworld.png';
