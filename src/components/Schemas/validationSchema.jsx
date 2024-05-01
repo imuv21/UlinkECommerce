@@ -88,16 +88,19 @@ export const signupSchema = yup.object().shape({
     role: yup.string().required('Select a role first'),
     name: yup.string().required('Name is required'),
     email: yup.string().email('Invalid email').required('Email is required'),
-    password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters')
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'Password must contain at least one uppercase letter, one lowercase letter, and one number'),
+    password: yup.string().required('Password is required')
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/, 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
     confirmPass: yup.string().required('Confirm password is required').oneOf([yup.ref('password'), null], 'Password and confirm password must match'),
 });
 
 export const loginSchema = yup.object().shape({
     role: yup.string().required('Select a role first'),
     email: yup.string().email('Invalid email').required('Email is required'),
-    password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters')
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, 'Password must contain at least one uppercase letter, one lowercase letter, and one number'),
+
+    password: yup.string().required('Password is required')
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/, 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
     origin: yup.string().required('Origin is required'),
 });
 
