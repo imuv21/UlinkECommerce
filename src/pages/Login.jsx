@@ -79,16 +79,6 @@ const Login = () => {
                             <Controller name="password" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter your password' {...field} />} />
                             {errors.password && <div className='error'>{errors.password.message}</div>}
 
-                            <Controller name="origin" value={selectedOrigin} onChange={originSelectChange} control={control} defaultValue="" render={({ field }) => (
-                                <select className="box flex" {...field} >
-                                    <option value="">Origin</option>
-                                    {countries.map((country) => (
-                                        <option key={uuidv4()} value={country}>{country}</option>
-                                    ))}
-                                </select>
-                            )}
-                            />
-                            {errors.origin && <div className='error'>{errors.origin?.message}</div>}
 
                             <button className='btn box flex' type='submit' ><div className="heading2">Log in</div></button>
                             <div className="descrip">By registering you agree to the user Terms & Conditions and Privacy Policy</div>

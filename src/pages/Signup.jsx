@@ -3,10 +3,18 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signupSchema } from '../components/Schemas/validationSchema';
 import { useNavigate } from 'react-router-dom';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import bg from '../assets/bg.png';
 
 const schema = yupResolver(signupSchema);
 const Signup = () => {
+
+    //password hide and show
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
 
     const [userData, setUserData] = useState({});
     const navigate = useNavigate();
@@ -73,7 +81,10 @@ const Signup = () => {
 
                             <Controller name="email" control={control} defaultValue="" render={({ field }) => <input value={userData.email || ''} onChange={handleChange} className="box flex" placeholder='Enter your email' {...field} />} />
                             {errors.email && <div className='error'>{errors.email.message}</div>}
-                            <Controller name="password" control={control} defaultValue="" render={({ field }) => <input value={userData.password || ''} onChange={handleChange} className="box flex" placeholder='Enter your password' {...field} />} />
+                            <Controller name="password" control={control} defaultValue="" render={({ field }) => <input type={passwordVisible ? "text" : "password"} value={userData.password || ''} onChange={handleChange} className="box flex" placeholder='Enter your password' {...field} />} />
+                            <span style={{width: '20px'}} onClick={togglePasswordVisibility}>
+                                {passwordVisible ? <VisibilityIcon />  : <VisibilityOffIcon /> }
+                            </span>
                             {errors.password && <div className='error'>{errors.password.message}</div>}
                             <Controller name="confirmPass" control={control} defaultValue="" render={({ field }) => <input value={userData.confirmPass || ''} onChange={handleChange} className="box flex" placeholder='Enter password again' {...field} />} />
                             {errors.confirmPass && <div className='error'>{errors.confirmPass.message}</div>}
