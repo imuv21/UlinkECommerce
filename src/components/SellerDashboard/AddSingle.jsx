@@ -61,6 +61,7 @@ const AddSingle = () => {
         console.log("images: ", images);
     };
 
+
     //select country form api
     const [countries, setCountries] = useState([]);
     const [selectedOrigin, setSelectedOrigin] = useState('');
@@ -100,7 +101,6 @@ const AddSingle = () => {
     useEffect(() => {
         setIsSubmitEnabled(selectedSupOption && selectedSubOption && selectedMiniSubOption && selectedMicroSubOption);
     }, [selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption]);
-
 
     const handleSupOptionChange = (event) => {
         const selectedOption = event.target.value;
@@ -171,9 +171,6 @@ const AddSingle = () => {
 
 
 
-
-
-
     //form validation
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
     const onSubmit = data => {
@@ -201,6 +198,7 @@ const AddSingle = () => {
         setSingleFormData({ ...singleFormData, [e.target.name]: e.target.value });
     };
 
+    
     //focus
     const scrollRef = useRef(null);
     useEffect(() => {

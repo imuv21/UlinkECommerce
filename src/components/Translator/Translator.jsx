@@ -1,113 +1,112 @@
-import React, { useState, useEffect } from 'react';
-import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../Schemas/cate';
+import React, { useRef, useState, useEffect, Fragment } from 'react';
+import { useNavigate } from 'react-router-dom';
+import bg from '../assets/bg.png';
 
+const Otp = () => {
+    const navigate = useNavigate();
 
-const Translator = () => {
+    const sellerForm = otp => {
+        console.log("OTP:", otp);
+        navigate('/seller-form');
+    };
 
-  const [selectedSupOption, setSelectedSupOption] = useState('');
-  const [selectedSubOption, setSelectedSubOption] = useState('');
-  const [selectedMiniSubOption, setSelectedMiniSubOption] = useState('');
-  const [selectedMicroSubOption, setSelectedMicroSubOption] = useState('');
-  const [isSecondSelectEnabled, setIsSecondSelectEnabled] = useState(false);
-  const [isThirdSelectEnabled, setIsThirdSelectEnabled] = useState(false);
-  const [isFourthSelectEnabled, setIsFourthSelectEnabled] = useState(false);
-  const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+    const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
+    const otpInputs = useRef([]);
 
-  useEffect(() => {
-    setIsSubmitEnabled(selectedSupOption && selectedSubOption && selectedMiniSubOption && selectedMicroSubOption);
-  }, [selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption]);
+    const focusNextInput = currentIndex => {
+        if (currentIndex < otpInputs.current.length - 1) {
+            otpInputs.current[currentIndex + 1].focus();
+        } else {
+            sellerForm(otpDigits.join(''));
+        }
+    };
 
+    const handleInputChange = (index, newValue) => {
+        const newOtpDigits = [...otpDigits];
+        newOtpDigits[index] = newValue;
+        setOtpDigits(newOtpDigits);
+        if (newValue !== '' && index < otpDigits.length - 1) {
+            focusNextInput(index);
+        }
+        if (index === otpDigits.length - 1 && newValue !== '') {
+            sellerForm(otpDigits.join('') + newValue);
+        }
+    };
 
-  const handleSupOptionChange = (event) => {
-    const selectedOption = event.target.value;
-    setSelectedSupOption(selectedOption);
-    setIsSecondSelectEnabled(true);
-    setIsThirdSelectEnabled(false);
-    setIsFourthSelectEnabled(false);
-    setSelectedSubOption('');
-    setSelectedMiniSubOption('');
-    setSelectedMicroSubOption('');
-  };
-  const handleSubOptionChange = (event) => {
-    const selectedOption = event.target.value;
-    setSelectedSubOption(selectedOption);
-    setIsThirdSelectEnabled(true);
-    setIsFourthSelectEnabled(false);
-    setSelectedMiniSubOption('');
-    setSelectedMicroSubOption('');
-  };
-  const handleMiniSubOptionChange = (event) => {
-    const selectedOption = event.target.value;
-    setSelectedMiniSubOption(selectedOption);
-    setIsFourthSelectEnabled(true);
-    setSelectedMicroSubOption('');
-  };
-  const handleMicroSubOptionChange = (event) => {
-    const selectedOption = event.target.value;
-    setSelectedMicroSubOption(selectedOption);
-  };
-  const getMarginValue = () => {
-    switch (selectedSupOption) {
-      case "apple":
-        return 0.05;
-      case "orange":
-        return 0.03;
-      case "banana":
-        return 0.1;
-      default:
-        return 0;
-    }
-  };
-  const margin = getMarginValue();
-  const path = `${selectedSupOption}/${selectedSubOption}/${selectedMiniSubOption}/${selectedMicroSubOption}`;
+    const handleKeyDown = (e, index) => {
+        if (e.key === 'Backspace' && e.target.value === '') {
+            e.preventDefault();
+            if (index > 0) {
+                otpInputs.current[index - 1].focus();
+            }
+        } else if (/^\d$/.test(e.key)) {
+            e.preventDefault();
+            handleInputChange(index, e.key);
+            focusNextInput(index);
+        }
+    };
 
-  return (
-    <div className='home felxcol mt'>
+    useEffect(() => {
+        otpInputs.current[0].focus(); // Set focus on the first input when component mounts
+    }, []);
 
-      <select onChange={handleSupOptionChange} disabled={isSecondSelectEnabled}>
-        <option value="">Select an option</option>
-        {supOptions.map((option, index) => (
-          <option key={index} value={option}>{option}</option>
-        ))}
-      </select>
-      <select onChange={handleSubOptionChange} disabled={!isSecondSelectEnabled || isThirdSelectEnabled}>
-        <option value="">Select a sub option</option>
-        {subOptions[selectedSupOption] && subOptions[selectedSupOption].map((option, index) => (
-          <option key={index} value={option}>{option}</option>
-        ))}
-      </select>
-      <select onChange={handleMiniSubOptionChange} disabled={!isThirdSelectEnabled || isFourthSelectEnabled}>
-        <option value="">Select minisub option</option>
-        {miniSubOptions[selectedSubOption] && miniSubOptions[selectedSubOption].map((option, index) => (
-          <option key={index} value={option}>{option}</option>
-        ))}
-      </select>
-      <select onChange={handleMicroSubOptionChange} disabled={!isFourthSelectEnabled  || !!selectedMicroSubOption}>
-        <option value="">Select micro-sub option</option>
-        {microSubOptions[selectedMiniSubOption] && microSubOptions[selectedMiniSubOption].map((option, index) => (
-          <option key={index} value={option}>{option}</option>
-        ))}
-      </select>
-      {selectedSupOption === "apple" && (
-        <input type="text" placeholder='enter apple...' />
-      )}
-      {selectedSupOption === "orange" && (
-        <input type="text" placeholder='enter orange...' />
-      )}
-      {selectedSupOption === "banana" && (
-        <input type="text" placeholder='enter banana...' />
-      )}
+    // Time
+    const [timeLeft, setTimeLeft] = useState(60);
+    const [timerRunning, setTimerRunning] = useState(true);
 
-      <div>
-        {errorMessage ? errorMessage : isSubmitEnabled ? `Selected path: ${path}` : 'Please make all selections'}
-        {selectedSupOption && ( <p>Margin value: {margin}</p> )}
-      </div>
+    useEffect(() => {
+        if (timerRunning) {
+            const timerInterval = setInterval(() => {
+                setTimeLeft(prevTime => prevTime - 1);
+            }, 1000);
 
-      <button type="submit" disabled={!isSubmitEnabled}>Submit</button>
+            return () => clearInterval(timerInterval);
+        }
+    }, [timerRunning]);
 
-    </div>
-  );
+    useEffect(() => {
+        if (timeLeft === 0) {
+            setTimerRunning(false);
+        }
+    }, [timeLeft]);
+
+    const handleResendClick = () => {
+        setTimeLeft(60);
+        setTimerRunning(true);
+    };
+
+    return (
+        <Fragment>
+            <div className="flex login-cont wh">
+                <div className="flex wh">
+                    <img src={bg} className='bgdiv' alt="" />
+                </div>
+
+                <div className="signupcont">
+                    <div className='flexcol cover'>
+                        <div className="heading tcenter">Verify your email</div>
+                        <div className="heading2 tcenter">We have sent the OTP to user@gmail.com <br /> Click on the link in the email or enter the OTP to verify your email.</div>
+                        <div className="flex gap">
+                            {otpDigits.map((digit, index) => (
+                                <input
+                                    key={index}
+                                    ref={el => (otpInputs.current[index] = el)}
+                                    className='box tcenter otpbox'
+                                    maxLength={1}
+                                    value={digit}
+                                    onChange={e => handleInputChange(index, e.target.value)}
+                                    onKeyDown={e => handleKeyDown(e, index)}
+                                />
+                            ))}
+                        </div>
+                        <button className='resend' disabled={timerRunning} onClick={handleResendClick}>
+                            {timerRunning ? `Resend OTP in ${timeLeft}` : "Resend OTP"}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </Fragment>
+    );
 };
 
-export default Translator;
+export default Otp;

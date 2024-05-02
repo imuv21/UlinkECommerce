@@ -1,0 +1,88 @@
+.dateexpire{
+    margin-left: 10px;
+}
+.shipping-detail{
+
+    width: 50%;
+    margin: 10px;
+     height: 200px;
+     background: #fff;
+     border-radius: 5px;
+}
+.quotes{
+  font-weight: 600;
+  border: 1px solid #fff;
+  border-radius: 12px;
+  background-color: #927070;
+  color: #fff;
+  padding: 5px;
+}
+.table-containers-show-data{
+  width: 100%;
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  grid-template-columns: repeat(5 ,1fr);
+  border: 1px solid #adabab;
+}
+.bg{
+  background-color: #3770bf;
+}
+.bor-1{
+  height: auto;
+   width: 85%;
+   margin-left: 100px;
+   border-radius: 5px;   
+}
+.border-p{
+  padding: 10px;
+  height: auto;
+}
+.user-title {
+  font-size: 20px;
+  margin-left: 87px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+.heading-2{
+  opacity: 1;
+}
+.ml-left{
+  margin-left: 10px;
+}
+.size{
+  font-size: 20px;
+}
+.flex-space-beetwen{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;   
+}
+.border-5{
+  border: 2px solid #dddddd;
+ width: 85.5%;
+ margin:  10px auto;
+ background-color: #eaebef;
+}
+.img-flex{
+  display: flex;
+  width: 100%;
+}
+.rfq-imgs{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+   object-fit: contain; 
+}
+.add{
+  margin-top: 30px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 10px;
+
+}
+.mt-top{
+  margin-top: 10px;
+}

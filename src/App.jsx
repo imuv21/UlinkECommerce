@@ -7,19 +7,19 @@ import { CartProvider } from './components/context/CartContext';
 
 
 //buyer dashboard
-// const BuyerDashboard = lazy(() => import('./pages/BuyerDashboard/BuyerDashboard'));
-// const BuyerMessage = lazy(() => import('./pages/BuyerDashboard/BuyerMassage/BuyerMessage'));
-// const Rfq = lazy(() => import('./pages/BuyerDashboard/Rfq/Rfq'));
-// const MyProfile = lazy(() => import('./pages/BuyerDashboard/MyProfile/MyProfile'));
-// const Address = lazy(() => import('./pages/BuyerDashboard/Address/Address'));
-// const AcessManagement = lazy(() => import('./pages/BuyerDashboard/AcessManagement/AcessManagement'));
+const BuyerDashboard = lazy(() => import('./pages/BuyerDashboard/BuyerDashboard'));
+const BuyerMessage = lazy(() => import('./pages/BuyerDashboard/BuyerMassage/BuyerMessage'));
+const Rfq = lazy(() => import('./pages/BuyerDashboard/Rfq/Rfq'));
+const MyProfile = lazy(() => import('./pages/BuyerDashboard/MyProfile/MyProfile'));
+const Address = lazy(() => import('./pages/BuyerDashboard/Address/Address'));
+const AcessManagement = lazy(() => import('./pages/BuyerDashboard/AcessManagement/AcessManagement'));
 const Payment = lazy(() => import('./pages/BuyerDashboard/Payment/Payment'));
-// const Roles = lazy(() => import('./pages/BuyerDashboard/Roles/Roles'));
-// const CreateRfq = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/CreateRfq'));
-// const ReviewConfirm = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/ReviewConfirm/ReviewConfirm'));
-// const RfqDetail = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/RfqDetail/RfqDetail'));
-// const OrderPage = lazy(() => import('./pages/BuyerDashboard/OrderPage/OrderPage'));
-// const ViewDetail = lazy(() => import('./pages/BuyerDashboard/OrderPage/ViewDetail/ViewDetail'));
+const Roles = lazy(() => import('./pages/BuyerDashboard/Roles/Roles'));
+const CreateRfq = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/CreateRfq'));
+const ReviewConfirm = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/ReviewConfirm/ReviewConfirm'));
+const RfqDetail = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/RfqDetail/RfqDetail'));
+const OrderPage = lazy(() => import('./pages/BuyerDashboard/OrderPage/OrderPage'));
+const ViewDetail = lazy(() => import('./pages/BuyerDashboard/OrderPage/ViewDetail/ViewDetail'));
 
 
 //seller dashboard
@@ -99,19 +99,19 @@ function App() {
 
 
              {/* Buyer dashboard */}
-            {/* <Route path='/buyer-dashboard' element={<Layout><BuyerDashboard /></Layout>} />
+            <Route path='/buyer-dashboard' element={<Layout><BuyerDashboard /></Layout>} />
             <Route path='/buyer-message' element={<Layout><BuyerMessage /></Layout>} />
             <Route path='/rfq' element={<Layout><Rfq /></Layout>} />
             <Route path='/myprofile' element={<Layout><MyProfile /></Layout>} />
             <Route path='/buyer-address' element={<Layout><Address /></Layout>} />
-            <Route path='/access-management' element={<Layout><AcessManagement /></Layout>} /> */}
+            <Route path='/access-management' element={<Layout><AcessManagement /></Layout>} />
             <Route path='/payment' element={<Layout><Payment /></Layout>} />
-            {/* <Route path='/roles' element={<Layout><Roles /></Layout>} />
+            <Route path='/roles' element={<Layout><Roles /></Layout>} />
             <Route path='/createrfq' element={<Layout><CreateRfq /></Layout>} />
             <Route path='/review-confirm' element={<Layout><ReviewConfirm /></Layout>} />
             <Route path='/rfq-detail' element={<Layout><RfqDetail /></Layout>} />
             <Route path='/order-page' element={<Layout><OrderPage /></Layout>} />
-            <Route path='/view-detail' element={<Layout><ViewDetail /></Layout>} /> */}
+            <Route path='/view-detail' element={<Layout><ViewDetail /></Layout>} />
 
           </Routes>
         </Suspense>

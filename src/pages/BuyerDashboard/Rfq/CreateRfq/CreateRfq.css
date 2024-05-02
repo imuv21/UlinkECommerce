@@ -1,0 +1,263 @@
+.ml-rule{
+    margin-left: 10px;
+}
+.dounload{
+    display: flex;
+}
+.upload{
+    display: flex;  
+}
+.d{
+    color: #fff;
+    font-family: 600;
+}
+.card-table-du{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px;   
+}
+.font-size{
+    font-size: 22px;
+    font-weight: 600;
+}
+.noteses{
+    width: 100%;
+    margin-left: 0px;
+}
+.crete-rfq-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.quantity{
+    display: flex;
+}
+.upload-icon{
+   margin-top: 30px;
+   font-size: 30px;
+   width: 5%;
+   border-radius: 5px;
+}
+.input-width-change{
+    width: 25%; 
+}
+.add{
+    margin-top: 30px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 10px;
+
+}
+.ml-left{
+    margin-left: 10px;
+}
+.c-s-c{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.mr-left{
+    margin-left: 0px;
+    margin-bottom: 10px;
+}
+.mt-top{
+    margin-top: 10px;
+}
+.ml-left{
+    margin-left: 10px;
+}
+.date{
+    width:100% ; 
+}
+.file-upload{
+    display: flex;
+    align-items: center;
+    border: 2px solid #919191;
+    width: 50%;
+    padding: 10px;
+    cursor: pointer; 
+}
+.file-choose{
+    padding: 10px;
+    width: 100%;
+}
+.cancel{
+    width: 10%;
+   padding: 10px;
+   font-weight: 600;
+}
+
+.upload-quote{
+    margin-top: -5px;
+    margin-left: 10px;
+}
+.file-width{
+    width: 100%;
+}
+.pointer{
+    cursor: pointer;
+}
+.submitbtn{
+    width: 100%;
+}
+.rfq-img{
+   width: 50px;
+   height: 50px;
+    border: 1px solid gray;
+    object-fit: contain;
+    margin-top: 30px; 
+}
+.heading-3{
+    margin-left: 80px;
+}
+.background-Changer{
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+  backdrop-filter: blur(3px);
+   background: #74737380; 
+}
+.invite-more{
+    border: 1px solid black;
+    width: 35%; 
+    height: auto;
+   padding: 15px;
+  background-color: #fff;
+    margin: auto;
+    margin-top: 150px;
+    border-radius: 5px;
+}
+.card-infos-bank{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;  
+}
+.card-title{
+    font-size: 14px;
+     
+}
+.cross-icon{  
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.info-details{
+    font-size: 14px; 
+}
+.invite-quote{
+    margin-top: 35px;
+    line-height: 1.2rem;
+    opacity: 0.8;
+    font-size: 12px;
+}
+.border-p{
+    padding: 10px;
+    height: auto;
+}
+
+.add-card-btn{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 15px;
+}
+.add-bank-btn{
+    margin: 5px;
+    border-radius: 2px;
+    padding: 10px;
+   margin-top: 10px;
+    width: 25%;
+    border: 2px solid #FC904C;
+   background: none;
+}
+
+.add-bank-btns{
+    margin: 5px;
+    border-radius: 2px;
+    padding: 10px;
+   margin-top: 10px;
+    width: 25%;
+    background-color: #3770bf;
+    border: 2px solid #3770bf;
+  color: #fff;
+}
+.userDashboard {
+    margin-top: 120px;
+    padding: 10px;
+}
+.bor-1{
+    height: auto;
+     width: 85%;
+     margin-left: 100px;
+     border-radius: 5px;  
+    }
+  
+
+
+.roles-text{
+    margin: auto 100px;
+    padding: 20px;
+    font-size: 15px;
+}
+.pay-note{
+    margin-left: 70px;
+    color: gray;
+}
+.border-1{
+    border: 1px solid #dddddd;
+     margin: auto 85px;   
+ }
+ .card-table{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid black;
+    background: #3770bf;
+    color: #fff; 
+}
+.table-1{
+    width: 100%;  
+}
+.card-input-value{
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 3px;
+    /* opacity: 0.8; */
+    margin-top: 10px;
+}
+.selectCountry{
+    width: 100%;
+    margin-top: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.paragraph-4{
+    font-weight: 600;
+}
+.card-inputs-filed{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 10px;  
+}
+.card-inputs{
+    width: 50%;
+}
+.subcanc{
+    width: 100%;
+}
+.btn-cancel{
+    width: 10%;
+}

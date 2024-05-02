@@ -1,0 +1,78 @@
+.paragraph-5{
+    margin-left: 90px;
+    width: 60%;
+    font-size: 15px;
+    margin-top: 15px;
+    opacity: 0.5;
+}
+.another-border{
+    border: 1px solid rgb(172, 170, 170);
+    width: 80%;
+    margin-left: 90px;
+    height: auto;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.management{
+    margin-left: 0px;
+    padding: 15px;
+}
+.true{
+    width: 16px;
+}
+.wrong{
+    width: 16px;
+}
+.management-border{
+    margin-left: 10px;
+}
+.userDashboard {
+    margin-top: 120px;
+    padding: 10px;
+  }
+
+  .pay-title{ 
+    font-size: 30px;  
+}
+.border-1{
+    border: 1px solid #dddddd;
+     margin: auto 85px;   
+ }
+ 
+ .bor-1{
+    height: auto;
+     width: 85%;
+     margin-left: 100px;
+     border-radius: 5px;  
+    }
+    .card-table{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+        border-bottom: 1px solid black;
+        background: #3770bf;
+        color: #fff; 
+    }
+    .table-1{
+        width: 100%;  
+    }
+    .card-details-table{ 
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        margin: 10px;
+    }
+    .user-title {
+        font-size: 20px;
+        margin-left: 87px;
+        font-weight: 600;
+        opacity: 0.8;
+      }
+      
+
+.rules-left{
+    margin-left: 90px;
+}

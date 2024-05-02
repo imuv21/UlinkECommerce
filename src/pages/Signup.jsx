@@ -1,4 +1,4 @@
-import React, { Fragment, } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signupSchema } from '../components/Schemas/validationSchema';
@@ -8,14 +8,19 @@ import bg from '../assets/bg.png';
 const schema = yupResolver(signupSchema);
 const Signup = () => {
 
+    const [userData, setUserData] = useState({});
     const navigate = useNavigate();
     const login = () => {
         navigate('/login');
     }
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
-    const onSubmit = data => {
-        console.log(data);
+    const onSubmit = (formData) => {
+        const updatedUserData = { ...userData, ...formData };
+        localStorage.setItem('userData', JSON.stringify(updatedUserData));
         navigate('/otp');
+    };
+    const handleChange = (e) => {
+        setUserData({ ...userData, [e.target.name]: e.target.value });
     };
 
 
@@ -40,7 +45,7 @@ const Signup = () => {
 
                         <form className="flexcol gap" onSubmit={handleSubmit(onSubmit)}>
                             <Controller name="role" control={control} defaultValue="" render={({ field }) => (
-                                <select className="box flex" {...field}>
+                                <select className="box flex" value={userData.role || ''} onChange={handleChange} {...field}>
                                     <option value="">Register as a...</option>
                                     <option value="buyer">Buyer</option>
                                     <option value="seller">Seller</option>
@@ -49,13 +54,28 @@ const Signup = () => {
                             />
                             {errors.role && <div className='error'>{errors.role.message}</div>}
 
-                            <Controller name="name" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter your name' {...field} />} />
-                            {errors.name && <div className='error'>{errors.name.message}</div>}
-                            <Controller name="email" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter your email' {...field} />} />
+                            <div className="flex wh" style={{ gap: '30px' }}>
+                                <Controller name="firstName" control={control} defaultValue="" render={({ field }) => <input value={userData.firstName || ''} onChange={handleChange} className="box flex" placeholder='Enter your first name' {...field} />} />
+                                <Controller name="lastName" control={control} defaultValue="" render={({ field }) => <input value={userData.lastName || ''} onChange={handleChange} className="box flex" placeholder='Enter your last name' {...field} />} />
+                            </div>
+
+                            {(errors.firstName || errors.lastName) &&
+                                <div className="flex wh">
+                                    <div className="flex wh">
+                                        <div className='error'>{errors.firstName?.message}</div>
+                                    </div>
+                                    <div className="flex wh" style={{ justifyContent: 'space-around' }}>
+                                        <div className='error'>{errors.lastName?.message}</div>
+                                    </div>
+                                </div>
+                            }
+
+
+                            <Controller name="email" control={control} defaultValue="" render={({ field }) => <input value={userData.email || ''} onChange={handleChange} className="box flex" placeholder='Enter your email' {...field} />} />
                             {errors.email && <div className='error'>{errors.email.message}</div>}
-                            <Controller name="password" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter your password' {...field} />} />
+                            <Controller name="password" control={control} defaultValue="" render={({ field }) => <input value={userData.password || ''} onChange={handleChange} className="box flex" placeholder='Enter your password' {...field} />} />
                             {errors.password && <div className='error'>{errors.password.message}</div>}
-                            <Controller name="confirmPass" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter password again' {...field} />} />
+                            <Controller name="confirmPass" control={control} defaultValue="" render={({ field }) => <input value={userData.confirmPass || ''} onChange={handleChange} className="box flex" placeholder='Enter password again' {...field} />} />
                             {errors.confirmPass && <div className='error'>{errors.confirmPass.message}</div>}
 
                             <button className='btn box flex' type='submit'><div className="heading2">Continue</div></button>

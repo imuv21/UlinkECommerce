@@ -1,0 +1,336 @@
+.order-statuses{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 80px;
+    font-size: 17px;
+    color: gray;
+}
+.shipping-id{
+    margin-top: 50px;
+    margin-left: 100px;
+    border-bottom: 1px solid gray ;
+    padding:10px;
+    width: 85%;
+}
+.list-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.item-list-1{
+    display: flex;
+    align-items: center;  
+}
+.list-item-status{
+    border: 1px solid gray;
+    background-color: #fff; 
+    margin-left: 100px;
+}
+.width-1{
+    width: 20%;
+}
+.item-lists{
+    display: flex;
+    align-items: center; 
+    width: 20%; 
+}
+.total-order{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-size: 20px;
+}
+.total{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-right: 300px;   
+}
+.ShipBill{
+ display: flex;
+ align-items: center;
+ justify-content: space-evenly;
+ margin-top: 20px; 
+ margin-left: 100px; 
+}
+.shippingAddress{
+    border: 1px solid gray;
+    width: 50%;
+    height: 25%;
+    padding: 10px;
+    border-radius: 2px;
+    background-color: #fff;
+}
+.BillingAddress{
+    border: 1px solid gray;
+    width: 50%;
+    height: 25%;
+    padding: 10px;
+    margin-left: 10px;
+    border-radius: 2px;
+    background-color: #fff;
+}
+.mr-top{
+    margin-top: 20px;
+}
+.shippingAddresses{
+  width: 100%;
+  margin-left: 30px;
+}
+.d-flex{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.right{
+    margin-right: 120px;
+}
+.table{
+   border-bottom: 1px solid gray;
+}
+.card-methodes{
+    border: 1px solid black;
+    width: 55%;
+    height: 620px;
+   padding: 15px;
+  background-color: #fff;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 5px;
+    overflow-y: scroll;
+}
+.logo-main-img{
+    width: 120px;
+}
+.dashed{
+    border-bottom-style: dashed;
+    width: 90%;
+    margin-left: 30px;
+}
+.pt{
+    margin-top: -15px;
+}
+.invoice-border{
+    border: 1px solid gray;
+    width: 90%;
+    margin-left: 30px;
+  height: 600;
+}
+.invoice-flex{
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+}
+table {
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 30px;
+}
+th, td {
+    border: 1px solid gray;
+    text-align: left;
+    padding: 8px;
+    font-size: 12px;
+}
+th {
+    background-color: #faf7f7;
+}
+.bold{
+    font-size: 12px;
+    font-weight: 600;
+}
+.flex-ends{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 90%;
+    margin-left: 20px;  
+}
+.sharing-info{
+    width: 90%;
+    margin-left: 30px;
+    line-height: 1.5rem;
+    word-spacing: 0.5;
+}
+.mt-top-2{
+    margin-top: 25px;
+}
+.font{
+    font-size: 18px;
+}
+.background-Changer{
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+  backdrop-filter: blur(3px);
+   background: #74737380; 
+}
+.card-infos-bank{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;  
+}
+.card-title{
+    font-size: 14px;
+     
+}
+.cross-icon{  
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.dis{
+    margin: 20px;
+    margin-left: 30px;
+}
+.paragraph-6{
+    margin-top: 50px;
+     font-size: 15px;
+}
+.p-1{
+    margin-top: 5px;
+    font-size: 15px;
+    font-weight: 600;
+}
+.paragraph-4{
+    font-weight: 600;
+}
+.mr-left{
+    margin-left: 0px;
+    margin-bottom: 10px;
+}
+.mt-top{
+    margin-top: 10px;
+}
+.add-card-btn{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 15px;
+}
+
+.add-bank-btns{
+    margin: 5px;
+    border-radius: 2px;
+    padding: 10px;
+   margin-top: 10px;
+    width: 25%;
+    background-color: #3770bf;
+    border: 2px solid #3770bf;
+  color: #fff;
+}
+span{
+    margin-left: 10px;
+   
+    font-weight: 600;
+    border-bottom: #FC904C;
+}
+
+.flex-space-beetwen{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;   
+}
+
+.heading-2{
+    opacity: 1;
+}
+.user-title {
+    font-size: 20px;
+    margin-left: 87px;
+    font-weight: 600;
+    opacity: 0.8;
+  }
+  .ml-left{
+    margin-left: 10px;
+}
+.quotes{
+    font-weight: 600;
+    border: 1px solid #fff;
+    border-radius: 12px;
+    background-color: #927070;
+    color: #fff;
+    padding: 5px;
+  }
+  .btn-change{
+    font-size: 13px;
+    width: 70%;
+    padding: 10px;
+   color: #fff;
+   border: 2px solid  #FC904C;
+}
+.create-btn{
+    margin-right: 115px;
+    padding: 15px;
+    background-color:#FC904C ;
+    border: none;
+    border-radius: 5px;
+    width: 50%;
+    font-weight: 600;
+    color: #fff;
+}
+.dounload-invoice-btn{
+    width: 50%;
+    padding: 5px;
+}
+.bor-1{
+    height: auto;
+     width: 85%;
+     margin-left: 100px;
+     border-radius: 5px;   
+}
+.first-dis{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  
+}
+.dis{
+    margin: 20px;
+    margin-left: 30px;
+}
+.dise{
+    font-weight: 600;
+    margin-top: -20px;
+    padding: 15px;
+    margin-left: 15px;
+    margin-right: 7px;
+}
+.rfq-image{
+    width: 50px;
+
+}
+.mr-right{
+    margin-right: 100px;
+}
+.title-opacity{
+    opacity: 1;
+}
+.cancel{
+    width: 10%;
+   padding: 10px;
+   font-weight: 600;
+}
+@media print {
+  .cross-icon{
+    display: none;
+  }
+  header,footer{
+    display: none;
+  }
+  .card-methodes{
+    overflow-y: visible;
+    width: 100%;
+    margin-top: -20px;
+    border: none;
+  }
+  .add-bank-btns{
+    display: none;
+  }
+}

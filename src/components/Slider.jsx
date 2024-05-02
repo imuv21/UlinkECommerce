@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const Slider = () => {
 
-  const delay = 2500;
+  const delay = 4000;
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef(null);
   const isPaused = useRef(false);

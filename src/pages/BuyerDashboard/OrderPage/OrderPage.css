@@ -1,0 +1,139 @@
+.filter-Option{
+   display: flex;
+  justify-content: start;
+}
+.bor-1{
+    height: auto;
+     width: 85%;
+     margin-left: 100px;
+     border-radius: 5px;   
+}
+.filter-border-1{
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 25%;
+    height: 25%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 20px;
+}
+.paragraph-6{
+    margin-top: 50px;
+     font-size: 15px;
+}
+.filter-option-boxex{
+    width: 100%;
+    background-color: #fefefe;
+    border: 1px solid gray;
+    margin-top: 10px;
+}
+.clear{
+    background-color: #3770bf;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff; 
+}
+.clear:hover{
+    background-color: #468ff6;
+}
+.filter-border-3{  
+    overflow-y: scroll;
+    height: 450px;
+    margin-left: 10px;
+    width: 85%
+    
+}
+.order-status{
+    display: flex;
+    justify-content: space-between;  
+}
+.first-dis{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  
+}
+.dis{
+    margin: 20px;
+    margin-left: 30px;
+}
+.dise{
+    font-weight: 600;
+    margin-top: -20px;
+    padding: 15px;
+    margin-left: 15px;
+    margin-right: 7px;
+}
+.rfq-image{
+    border: none;
+    width: 35px;
+    height: 35px;
+    margin-left: 20px;
+    border-radius: 50%;
+}
+.disce{
+    border: 1px solid gray;
+    padding: 10px;
+    margin-right: 7px;
+    background-color: #3770bf;
+    color: #fff;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+.disce:hover{
+    background-color: #468ff6;
+
+}
+.filter-border-2{
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.previous-btn{
+    border-radius: 50%;
+    background-color: #3770bf;
+    padding: 7px;
+    width: 45px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff; 
+}
+.previous{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    margin-top: 10px;
+}
+.previous-icon{
+ font-size: 20px;
+ margin-right: 20px;
+ cursor: pointer;
+}
+.next-icon{
+    font-size: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+/*  media query */
+@media(max-width: 768px){
+    .filter-Option{
+        width: 100%;
+        display: inline;
+     }
+     .filter-border-1{
+       width: 100%;
+    }
+    .filter-border-3{  
+       width: 100%;
+       margin-left: 0px;
+    }
+    .disce{
+        width: 100%;
+        font-size: 12px;
+    }
+}
+.img-flex{
+    display: flex;
+    width: 100%;
+  }

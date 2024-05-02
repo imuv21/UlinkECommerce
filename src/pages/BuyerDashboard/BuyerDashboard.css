@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .userDashboard {
+    margin-top: 120px;
+    padding: 10px;
+  }
+  .user-title {
+    font-size: 20px;
+    margin-left: 87px;
+    font-weight: 600;
+    opacity: 0.8;
+  }
+  .user-subtitle {
+    margin-left: 87px;
+    opacity: 0.9;
+  }
+  .dashboard-containers {
+    border-radius: 6px;
+    padding: 15px;
+    margin: auto 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .dashboards {
+    padding: 20px;
+    border: 1px solid black;
+    border-color: darkgray;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    aspect-ratio: 10/3;
+    width: 95%;
+  }
+  .order-icon {
+    font-size: 25px;
+    margin-left: 10px;
+  }
+  .orders-title {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .containt-title {
+    text-align: start;
+    margin-left: 40px;
+  }
+  .order-info {
+    text-align: start;
+    font-size: 12px;
+    opacity: 0.6;
+  }
+  .order-infos{
+    margin-top: 5px;
+  }
+
+  /* Tablet View */
+ @media(min-width: 768px) and (max-width: 1000px){
+  .dashboards {
+    padding: 5px;
+    aspect-ratio: 10/5;
+    width: 100%;
+    font-size: 12px;
+  }
+  .order-infos {
+    font-size: 10px;
+  }
+  .orders-title {
+    font-size: 13px; 
+  }
+  .containt-title {
+    text-align: start;
+    margin-left: 20px;
+  }
+ }
+ /* laptop */
+ @media(min-width: 1000px)and (max-width: 1300px){
+  .dashboards {
+    padding: 5px;
+    aspect-ratio: 10/4;
+    width: 100%;
+    font-size: 12px;
+  }
+ }
+ /* Mobile View  */
+ @media(min-width: 320px) and (max-width: 768px){
+  .dashboard-containers {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+   
+  }
+  .dashboards {
+    aspect-ratio: 10/1;
+    width: 100vh;
+  }
+ } 

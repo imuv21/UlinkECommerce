@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import logo2 from '../assets/logo2.png';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
+
 
 const CommissionStructure = () => {
 
@@ -78,6 +80,11 @@ const CommissionStructure = () => {
 
     ]
 
+    const navigate = useNavigate();
+    const signup = () => {
+        navigate('/signup');
+    }
+
 
     return (
         <Fragment>
@@ -86,7 +93,7 @@ const CommissionStructure = () => {
                     <div className="flexcol-start wh" style={{ gap: '20px' }}>
                         <div className="heading4 wh">Ulink's commission structure</div>
                         <div className="descrip2 wh" style={{ color: 'white' }}>At Ulink you can register for free, and you will only ever pay a small commission on actual sales. No hidden fees. It's simple: your success is our success!</div>
-                        <button className='btn box flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Register now</div></button>
+                        <button onClick={signup} className='btn box flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Register now</div></button>
                     </div>
                     <div className="flexcol">
                         <img className='commission-logo' src={logo2} alt="logo" />

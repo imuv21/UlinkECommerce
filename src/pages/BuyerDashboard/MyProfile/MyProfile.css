@@ -1,0 +1,261 @@
+.btn-change{
+    font-size: 13px;
+    width: 70%;
+    padding: 10px;
+   color: #fff;
+   border: 2px solid  #FC904C;
+}
+.heading-2{
+    opacity: 1;
+}
+.title-size{
+    font-size: 25px;
+}
+
+.heading-4{
+    margin-left: 40px;
+    margin-top: 20px;
+    font-size: 20px;
+}
+.flex-space-beetwen{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;   
+}
+.border-1{
+    border: 1px solid #dddddd;
+     margin: auto 85px;   
+ }
+.heading-3{
+    margin-left: 80px;
+}
+.create-btn{
+    margin-right: 115px;
+    padding: 15px;
+    background-color:#FC904C ;
+    border: none;
+    border-radius: 5px;
+    width: 50%;
+    font-weight: 600;
+    color: #fff;
+}
+.bor-1{
+    height: auto;
+     width: 85%;
+     margin-left: 100px;
+     border-radius: 5px;   
+}
+.profile-filter{
+ margin-left: 5px;
+}
+#firstname{
+    width: 35%;
+    margin-top: 10px;
+    border: 1px solid black;
+}
+#lastname{
+    width: 35%;
+    margin-top: 10px;
+    border: 1px solid black;
+}
+#number{
+    margin-left: 5px;
+    width: 17%;
+    margin-top: 10px;
+    border: 1px solid black;
+}
+#number{
+    margin-left: 5px;
+    width: 17;
+    margin-top: 10px;
+    border: 1px solid black;
+}
+#language{
+    width: 35%;
+    border: 1px solid black;
+    margin-top: 10px;
+}
+.form-section{
+    margin: 10px;
+}
+.first-name{
+   margin-left: 25px;
+   font-size: 12px;
+  /* padding: 5px; */
+}
+.save-cancel{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-left: 25px;
+    width: 30%;
+    margin-top: 10px; 
+}
+.name-show{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 20%;
+    padding: 10px;
+    margin-left: 30px;  
+}
+.Edit-button{
+    margin-left: 50px;
+    margin-bottom: 10px;
+}
+.note{
+    display: flex;
+    margin-left: 60px;
+    border: 2px solid rgb(240, 109, 38);
+    width: 70%;
+    margin-top: 20px;
+    padding: 20px;
+    color: rgb(241, 98, 82);
+    background: #eddbb3;
+    margin: 10px;
+}
+.warnings{
+    font-size: 17px;
+}
+.button-grp{
+    display: flex;
+    align-items: center;
+    margin: 10px;
+   width: 50%;
+   padding: 10px;
+}
+.space-between{
+    margin-left: 20px;
+    padding: 10px;
+    width: 100%;
+    background-color: #3770bf;
+    color: #fff;
+}
+.update-email{
+   
+   position: fixed;
+ background: #fff;
+ margin: 100px 400px;
+ width: 700px;
+   height: auto;
+ border: 2px solid #FC904C;
+  
+}
+.background-Changer{
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+  backdrop-filter: blur(3px);
+   background: #74737380; 
+}
+.invite-more{
+    border: 1px solid black;
+    width: 35%; 
+    height: auto;
+   padding: 15px;
+  background-color: #fff;
+    margin: auto;
+    margin-top: 150px;
+    border-radius: 5px;
+}
+.invite-user{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #dddddd; 
+}
+.card-title{
+    font-size: 14px;
+     
+}
+.info-details{
+    font-size: 14px; 
+}
+.invite-quote{
+    margin-top: 35px;
+    line-height: 1.2rem;
+    opacity: 0.8;
+    font-size: 12px;
+}
+.invite-email{
+    margin-top: 20px;
+    width: 100%;
+}
+.width-input{
+    width: 100%;
+}
+.send-email{
+    margin-top: 20px;
+    width: 90%;
+    border: 2px solid #FC904C ;
+    border-radius: 5px;
+    font-size: 15px;  
+}
+/* mobile and tablet view */
+@media (max-width: 768px){
+    #firstname{
+        width: 100%   
+    }
+    #lastname{
+        width: 100%; 
+    }
+    #number{
+      width: 100%;
+    }
+    #language{
+        width: 100%
+    }
+    .save-cancel{ 
+        width: 60%;  
+    }
+    .note{
+       width: 90%;
+       margin-left: 20px;
+       padding: 5px;
+    }
+    .card-input-values{
+        margin-top: -5px;
+    }
+    .button-grp{
+       width: 95%;
+       margin-left: 0px;
+    }
+    .name-show{  
+       width: 95%;
+       font-size: 17px;   
+    }
+    .Edit-button{
+       width: 80%;
+    }
+    .btn-change{
+       display: none;
+    }
+}
+@media(min-width: 768px)and (max-width: 1024px){
+    .btn-change{
+        width: 70%;
+      margin-left: 90px;
+     }
+     .name-show{  
+        width: 80%;
+        font-size: 17px;   
+     }
+     .Edit-button{
+        width: 30%;
+     }
+}
+@media(min-width: 1024px)and (max-width: 1400px){
+    .btn-change{
+     width: 50%;
+      margin-left: 90px;
+     }
+     .name-show{  
+        width: 60%;
+        font-size: 17px;   
+     }
+}

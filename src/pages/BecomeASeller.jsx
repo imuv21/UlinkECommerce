@@ -10,11 +10,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DownloadIcon from '@mui/icons-material/Download';
 import PageviewIcon from '@mui/icons-material/Pageview';
-import three from '../assets/jpg-slider/bb.webp';
+import three from '../assets/jpg-slider/voltas-logo-vector.png';
 import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import Amazon_Global_Selling_Logo from '../assets/Amazon_Global_Selling_Logo.png';
 import dpworld from '../assets/dpworld.png';
 import amazon from '../assets/amazon.png';
+import ulinkposter from '../assets/comp.png';
 import './Cart/cart.css';
 
 
@@ -307,7 +308,7 @@ const BecomeASeller = () => {
                         </div>
                     </div>
                     <div className=''>
-                        <img src="https://c8n.tradeling.com/img/plain/cms/rs:auto:600::0/f:webp/q:95/Internaitionalseller_1_b0f81f64e3.png" alt="img" />
+                        <img src={ulinkposter} alt="img" />
                     </div>
                 </div>
 

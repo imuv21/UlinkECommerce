@@ -1,0 +1,71 @@
+.address-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.edit-button{
+    margin-right: 20px;   
+}
+.edit-button-change{
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 15px;
+    font-weight: 600;
+}
+.address-items{
+    display: flex;
+    align-items: center;
+   padding: 20px; 
+}
+.p-1{
+    margin-top: 5px;
+    font-size: 15px;
+    font-weight: 600;
+}
+.p-2{
+    margin-left: 30px;
+    border-radius: 7px ;
+    background-color: rgb(226, 211, 197);
+    text-align: center;
+    padding: 5px;
+    width: 20%;
+    font-weight: 600; 
+    cursor: pointer;  
+}
+.p-3{
+    margin-left: 15px;
+    border-radius: 7px ;
+    background-color: rgb(166, 183, 183);
+    text-align: center;
+    padding: 5px;
+    width: 20%;
+    font-weight: 600;
+    cursor: pointer;
+}
+#inputboxcontainers{
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid black;
+}
+.selectCountry{
+    width: 100%;
+    margin-top: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.background-Changer{
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+  backdrop-filter: blur(3px);
+   background: #74737380; 
+}
+.sv-cancel{
+  width: 90%;  
+}
