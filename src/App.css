@@ -1627,8 +1627,8 @@ button:focus {
   width: 100%;
   aspect-ratio: 4/3;
   border-radius: 16px !important;
-  object-fit: cover;
-  object-position: top center;
+  object-fit: fill;
+  object-position: center center;
 }
 
 .slider-inf::before {
