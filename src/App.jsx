@@ -2,7 +2,6 @@ import './App.css';
 import React, { Fragment, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Loader from './components/Loader/Loader';
-import { DivCountProvider } from './components/context/SuperContext';
 import { CartProvider } from './components/context/CartContext';
 
 
@@ -45,14 +44,9 @@ const Cart = lazy(() => import('./pages/Cart/Cart'));
 
 
 //Other
-const AddressComponent = lazy(() => import("./components/Translator/AddressComponent"));
 const Image = lazy(() => import('./components/Image'));
 const Translator = lazy(() => import('./components/Translator/Translator'));
-const AddProduct = lazy(() => import("./components/Translator/AddProduct"));
-const EditProduct = lazy(() => import("./components/Translator/EditProduct"));
-const ProList = lazy(() => import("./components/Translator/ProList"));
-const Media = lazy(() => import("./components/Translator/Media"));
-const Blabla = lazy(() => import('./components/Translator/Blabla'));
+
 
 
 
@@ -87,14 +81,10 @@ function App() {
 
 
             {/* other */}
-            <Route path='/test-address' element={<Layout><AddressComponent /></Layout>} />
             <Route path='/img' element={<Layout><Image /></Layout>} />
-            <Route path='/blabla' element={<Layout><Blabla /></Layout>} />
             <Route path='/trans' element={<Layout><Translator /></Layout>} />
-            <Route path='/addproduct' element={<Layout><DivCountProvider><AddProduct /></DivCountProvider></Layout>} />
-            <Route path='/editproduct/:index' element={<Layout><DivCountProvider><EditProduct /></DivCountProvider></Layout>} />
-            <Route path='/prolist' element={<Layout><DivCountProvider><ProList /></DivCountProvider></Layout>} />
-            <Route path='/test-media' element={<Layout><Media /></Layout>} />
+         
+          
 
 
              {/* Buyer dashboard */}
