@@ -11,7 +11,6 @@ const BuyerDashboard = lazy(() => import('./pages/BuyerDashboard/BuyerDashboard'
 const BuyerMessage = lazy(() => import('./pages/BuyerDashboard/BuyerMassage/BuyerMessage'));
 const Rfq = lazy(() => import('./pages/BuyerDashboard/Rfq/Rfq'));
 const MyProfile = lazy(() => import('./pages/BuyerDashboard/MyProfile/MyProfile'));
-const Address = lazy(() => import('./pages/BuyerDashboard/Address/Address'));
 const AcessManagement = lazy(() => import('./pages/BuyerDashboard/AcessManagement/AcessManagement'));
 const Payment = lazy(() => import('./pages/BuyerDashboard/Payment/Payment'));
 const Roles = lazy(() => import('./pages/BuyerDashboard/Roles/Roles'));
@@ -103,7 +102,6 @@ function App() {
             <Route path='/buyer-message' element={<Layout><BuyerMessage /></Layout>} />
             <Route path='/rfq' element={<Layout><Rfq /></Layout>} />
             <Route path='/myprofile' element={<Layout><MyProfile /></Layout>} />
-            <Route path='/buyer-address' element={<Layout><Address /></Layout>} />
             <Route path='/access-management' element={<Layout><AcessManagement /></Layout>} />
             <Route path='/payment' element={<Layout><Payment /></Layout>} />
             <Route path='/roles' element={<Layout><Roles /></Layout>} />

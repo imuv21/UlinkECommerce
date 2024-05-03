@@ -15,8 +15,6 @@ const Otp = () => {
     const focusNextInput = currentIndex => {
         if (currentIndex < otpInputs.current.length - 1) {
             otpInputs.current[currentIndex + 1].focus();
-        } else {
-            sellerForm(otpDigits.join(''));
         }
     };
 
@@ -27,8 +25,10 @@ const Otp = () => {
         if (newValue !== '' && index < otpDigits.length - 1) {
             focusNextInput(index);
         }
-        if (index === otpDigits.length - 1 && newValue !== '') {
-            sellerForm(otpDigits.join('') + newValue);
+        const isOtpComplete = newOtpDigits.every(digit => digit !== '');
+
+        if (isOtpComplete) {
+            sellerForm(newOtpDigits.join(''));
         }
     };
 
@@ -101,7 +101,6 @@ const Otp = () => {
                             ))}
 
                         </div>
-                        {/* <button onClick={() => sellerForm(otpDigits.join(''))} className='btn box flex' type='submit'><div className="heading2">Continue</div></button> */}
                         <button className='resend' disabled={timerRunning} onClick={handleResendClick}>
                             {timerRunning ? `Resend OTP in ${timeLeft}` : "Resend OTP"}
                         </button>

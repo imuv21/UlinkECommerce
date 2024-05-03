@@ -101,7 +101,6 @@ export const loginSchema = yup.object().shape({
     password: yup.string().required('Password is required')
         .min(8, 'Password must be at least 8 characters')
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/, 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
-    origin: yup.string().required('Origin is required'),
 });
 
 export const sellerSchema = yup.object().shape({

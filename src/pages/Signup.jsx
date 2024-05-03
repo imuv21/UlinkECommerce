@@ -12,8 +12,12 @@ const Signup = () => {
 
     //password hide and show
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const [conPasswordVisible, setConPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
+    };
+    const toggleConPasswordVisibility = () => {
+        setConPasswordVisible(!conPasswordVisible);
     };
 
     const [userData, setUserData] = useState({});
@@ -81,17 +85,28 @@ const Signup = () => {
 
                             <Controller name="email" control={control} defaultValue="" render={({ field }) => <input value={userData.email || ''} onChange={handleChange} className="box flex" placeholder='Enter your email' {...field} />} />
                             {errors.email && <div className='error'>{errors.email.message}</div>}
-                            <Controller name="password" control={control} defaultValue="" render={({ field }) => <input type={passwordVisible ? "text" : "password"} value={userData.password || ''} onChange={handleChange} className="box flex" placeholder='Enter your password' {...field} />} />
-                            <span style={{width: '20px'}} onClick={togglePasswordVisibility}>
-                                {passwordVisible ? <VisibilityIcon />  : <VisibilityOffIcon /> }
-                            </span>
+
+                            <div className="search-input">
+                                <Controller name="password" control={control} defaultValue="" render={({ field }) => <input type={passwordVisible ? "text" : "password"} value={userData.password || ''} onChange={handleChange} className="box flex" placeholder='Enter your password' {...field} />} />
+                                <span onClick={togglePasswordVisibility}>
+                                    {passwordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                </span>
+                            </div>
                             {errors.password && <div className='error'>{errors.password.message}</div>}
-                            <Controller name="confirmPass" control={control} defaultValue="" render={({ field }) => <input value={userData.confirmPass || ''} onChange={handleChange} className="box flex" placeholder='Enter password again' {...field} />} />
+
+                            <div className="search-input">
+                                <Controller name="confirmPass" control={control} defaultValue="" render={({ field }) => <input type={conPasswordVisible ? "text" : "password"} value={userData.confirmPass || ''} onChange={handleChange} className="box flex" placeholder='Enter password again' {...field} />} />
+                                <span onClick={toggleConPasswordVisibility}>
+                                    {conPasswordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                </span>
+                            </div>
                             {errors.confirmPass && <div className='error'>{errors.confirmPass.message}</div>}
 
                             <button className='btn box flex' type='submit'><div className="heading2">Continue</div></button>
                             <div className="descrip">By registering you agree to the user Terms & Conditions and Privacy Policy</div>
                             <div className="heading2" style={{ color: 'var(--btnClr)' }}>Already have an account? <span className='hoverr' onClick={login}>Click here</span></div>
+
+
                         </form>
 
                     </div>

@@ -72,6 +72,7 @@ input {
   border-radius: 0px;
   font-size: var(--defontsize);
   padding: var(--pad);
+  cursor: text;
 }
 
 textarea,
@@ -784,7 +785,6 @@ button:focus {
   width: 100%;
   gap: 10px;
   border-radius: var(--br2);
-  cursor: pointer;
 }
 
 .box2 {
@@ -793,7 +793,6 @@ button:focus {
   width: 100%;
   gap: 10px;
   border-radius: var(--br2);
-  cursor: pointer;
 }
 
 .box3 {
@@ -801,7 +800,6 @@ button:focus {
   width: fit-content;
   gap: 10px;
   border-radius: var(--br2);
-  cursor: pointer;
 }
 
 .tcenter {
@@ -1936,6 +1934,39 @@ button:focus {
   background-color: var(--CodeOne);
   color: white;
 }
+
+
+
+
+/* sign up password styling */
+.search-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-input input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex: 1;
+}
+
+.search-input span {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.search-input span .MuiSvgIcon-root {
+  width: 18px;
+  height: 18px;
+  color: gray;
+}
+
 
 
 /* payment-styling */

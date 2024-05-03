@@ -1,14 +1,20 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../components/Schemas/validationSchema';
 import { useNavigate } from 'react-router-dom';
 import bg from '../assets/bg.png';
-import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const schema = yupResolver(loginSchema);
 const Login = () => {
+
+    //password hide and show
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
 
     const navigate = useNavigate();
     const signup = () => {
@@ -17,31 +23,14 @@ const Login = () => {
     const forgotPass = () => {
         navigate('/forgot-password');
     }
+
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
     const onSubmit = data => {
         console.log(data);
         navigate('/seller-dash');
     };
 
-    //select country form api
-    const [countries, setCountries] = useState([]);
-    const [selectedOrigin, setSelectedOrigin] = useState('');
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json');
-                const data = response.data;
-                const uniqueCountries = [...new Set(data.map(city => city.country))];
-                setCountries(uniqueCountries);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-        fetchData();
-    }, []);
-    const originSelectChange = (event) => {
-        setSelectedOrigin(event.target.value);
-    };
+   
 
 
 
@@ -76,7 +65,14 @@ const Login = () => {
                             {errors.role && <div className='error'>{errors.role.message}</div>}
                             <Controller name="email" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter your email' {...field} />} />
                             {errors.email && <div className='error'>{errors.email.message}</div>}
-                            <Controller name="password" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter your password' {...field} />} />
+
+                            <div className="search-input">
+                                <Controller name="password" control={control} defaultValue="" render={({ field }) => <input type={passwordVisible ? "text" : "password"} className="box flex" placeholder='Enter your password' {...field} />} />
+                                <span onClick={togglePasswordVisibility}>
+                                    {passwordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                </span>
+                            </div>
+
                             {errors.password && <div className='error'>{errors.password.message}</div>}
 
 
