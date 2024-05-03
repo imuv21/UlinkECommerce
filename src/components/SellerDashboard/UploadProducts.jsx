@@ -6,12 +6,16 @@ import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import * as XLSX from 'xlsx';
 import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../Schemas/cate';
 import { Helmet } from 'react-helmet-async';
-
+import { useNavigate } from 'react-router-dom';
 const UploadProducts = ({ handleOptionClick }) => {
-
 
     const threeClick = () => {
         handleOptionClick('OptionThree');
+    };
+
+    const navigate = useNavigate();
+    const learnMore = () => {
+        navigate('/guidelines');
     };
 
     const scrollRef = useRef(null);
@@ -162,6 +166,8 @@ const UploadProducts = ({ handleOptionClick }) => {
                 localStorage.setItem('singleFormData', JSON.stringify(updatedSingleFormData));
             };
             reader.readAsArrayBuffer(file);
+            alert('File uploaded successfully!');
+            threeClick();
         } else {
             alert('Please select a file.');
         }
@@ -246,7 +252,7 @@ const UploadProducts = ({ handleOptionClick }) => {
                             After selecting categories, please download and fill the template below.
                         </div>
                         <div className="flex">
-                            <select onChange={handleSupOptionChange} disabled={isSecondSelectEnabled}>
+                            <select onChange={handleSupOptionChange} >
                                 <option value="">Select an option</option>
                                 {supOptions.map((option, index) => (
                                     <option key={index} value={option}>
@@ -254,19 +260,19 @@ const UploadProducts = ({ handleOptionClick }) => {
                                     </option>
                                 ))}
                             </select>
-                            <select onChange={handleSubOptionChange} disabled={!isSecondSelectEnabled || isThirdSelectEnabled}>
+                            <select onChange={handleSubOptionChange} >
                                 <option value="">Select a sub option</option>
                                 {subOptions[selectedSupOption] && subOptions[selectedSupOption].map((option, index) => (
                                     <option key={index} value={option}> {option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                                 ))}
                             </select>
-                            <select onChange={handleMiniSubOptionChange} disabled={!isThirdSelectEnabled || isFourthSelectEnabled}>
+                            <select onChange={handleMiniSubOptionChange} >
                                 <option value="">Select minisub option</option>
                                 {miniSubOptions[selectedSubOption] && miniSubOptions[selectedSubOption].map((option, index) => (
                                     <option key={index} value={option}> {option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                                 ))}
                             </select>
-                            <select onChange={handleMicroSubOptionChange} disabled={!isFourthSelectEnabled || !!selectedMicroSubOption}>
+                            <select onChange={handleMicroSubOptionChange} >
                                 <option value="">Select micro-sub option</option>
                                 {microSubOptions[selectedMiniSubOption] && microSubOptions[selectedMiniSubOption].map((option, index) => (
                                     <option key={index} value={option}> {option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
@@ -290,7 +296,7 @@ const UploadProducts = ({ handleOptionClick }) => {
                         <div className="heading2">
                             Upload the template here.
                         </div>
-                        <input type="file" id="fileInput" style={{ display: 'none' }} onChange={handleUpload} />
+                        <input type="file" id="fileInput" disabled={!isSubmitEnabled} style={{ display: 'none' }} onChange={handleUpload} />
                         <label htmlFor="fileInput" className='upBtns'>
                             Upload template&nbsp;&nbsp;<UploadIcon />
                         </label>
@@ -303,7 +309,7 @@ const UploadProducts = ({ handleOptionClick }) => {
                         <div className="heading2">
                             Learn how to upload your products and media in bulk by using a template.
                         </div>
-                        <div className='download-btn'>Learn more</div>
+                        <div className='download-btn' onClick={learnMore}>Learn more</div>
                     </div>
                 </div>
             </div>

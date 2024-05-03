@@ -15,20 +15,16 @@ const EditSingle = () => {
     //edit and validation
     const { index } = useParams();
     const navigate = useNavigate();
-
     const { handleSubmit, control, formState: { errors }, setValue } = useForm({
         resolver: schema,
     });
-
     const [singleFormData, setSingleFormData] = useState({});
     const [images, setImages] = useState([]);
     const [isDragging, setIsDragging] = useState(false);
     const [fileInputValue, setFileInputValue] = useState('');
-
     const [selectedSupOption, setSelectedSupOption] = useState("");
     const [marketingValue, setMarketingValue] = useState("");
     const [categoryPath, setCategoryPath] = useState("");
-
 
     useEffect(() => {
         const savedSingleFormData = JSON.parse(localStorage.getItem('singleFormData'));
@@ -99,7 +95,6 @@ const EditSingle = () => {
             setImages(savedSingleFormData[index].images || []);
         }
     }, [index, setValue, setImages]);
-
     const onSubmit = (data) => {
         const currentTime = new Date();
         data.time = currentTime.toLocaleString();
@@ -122,7 +117,6 @@ const EditSingle = () => {
         }
         console.log(data);
     };
-
     const handleCancel = () => {
         navigate('/seller-dash');
     };
@@ -158,32 +152,72 @@ const EditSingle = () => {
         document.getElementById('file-input').click();
     };
 
+
+    // const onFileSelect = (event) => {
+    //     const files = event.target.files;
+    //     if (files.length === 0) return;
+    //     for (let i = 0; i < files.length; i++) {
+    //         const file = files[i]; 
+    //         if (file) {
+    //             if (file.type.split('/')[0] === 'image') {
+                    
+    //                 const reader = new FileReader();
+    //                 reader.onload = (e) => {
+    //                     setImages((prevImages) => [
+    //                         ...prevImages,
+    //                         {
+    //                             name: file.name, 
+    //                             url: e.target.result,
+    //                             size: file.size,
+    //                         },
+    //                     ]);
+    //                 };
+    //                 reader.readAsDataURL(file);
+    //             }
+    //         }
+    //     }
+    //     setFileInputValue(''); 
+    // };
+
+
+
+
     const onFileSelect = (event) => {
         const files = event.target.files;
-        console.log('Selected files:', files);
         if (files.length === 0) return;
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i]; // Store the current file in a variable
-            if (file) {
-                console.log('File name:', file.name);
-                if (file.type.split('/')[0] === 'image') {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        setImages((prevImages) => [
-                            ...prevImages,
-                            {
-                                name: file.name, // Use the stored file variable here
-                                url: e.target.result,
-                                size: file.size,
-                            },
-                        ]);
-                    };
-                    reader.readAsDataURL(file);
-                }
+        const totalImages = images.length;
+        const remainingSlots = 5 - totalImages;
+        if (remainingSlots <= 0) {
+            alert("You've already selected the maximum allowed images (5).");
+            return;
+        }
+        for (let i = 0; i < Math.min(remainingSlots, files.length); i++) {
+            const file = files[i];
+            if (file.type.split('/')[0] === 'image') {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    setImages((prevImages) => [
+                        ...prevImages,
+                        {
+                            name: file.name,
+                            url: e.target.result,
+                            size: file.size,
+                        },
+                    ]);
+                };
+                reader.readAsDataURL(file);
             }
         }
-        setFileInputValue(''); // Reset file input value
+        setFileInputValue('');
     };
+    
+
+
+
+
+
+
+
 
     const deleteImage = (index) => {
         setImages((prevImages) => {
@@ -195,7 +229,6 @@ const EditSingle = () => {
             return prevImages;
         });
     };
-
     const onDragOver = (event) => {
         event.preventDefault();
         setIsDragging(true);
@@ -266,7 +299,7 @@ const EditSingle = () => {
                             <Fragment>
                                 Drag & Drop image here or {" "}
                                 <span className="select-dd" role="button" onClick={selectFiles}>
-                                    Browse
+                                    {images.length > 0 ? 'Change' : 'Select'} Images
                                 </span>
                             </Fragment>
                         )}
@@ -281,10 +314,10 @@ const EditSingle = () => {
                         />
                     </div>
                     <div className="container-dd">
-                        {images.map((url, index) => (
+                        {images.map((imgs, index) => (
                             <div className="image-dd" key={index}>
                                 <span className="delete-dd" onClick={() => deleteImage(index)}>&times;</span>
-                                <img src={url} alt={`Image ${index}`} />
+                                <img src={imgs.url} alt={imgs.name} />
                             </div>
                         ))}
                     </div>

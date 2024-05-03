@@ -20,24 +20,72 @@ const AddSingle = () => {
     const selectFiles = () => {
         document.getElementById('file-input').click();
     };
+
+    
+
+    // const onFileSelect = (event) => {
+    //     const files = event.target.files;
+    //     if (files.length === 0) return;
+    //     for (let i = 0; i < files.length; i++) {
+    //         const file = files[i];
+    //         if (file.type.split('/')[0] === 'image') {
+                
+    //             const reader = new FileReader();
+    //             reader.onload = (e) => {
+    //                 setImages((prevImages) => [
+    //                     ...prevImages,
+    //                     {
+    //                         name: file.name,
+    //                         url: e.target.result,
+    //                         size: file.size,
+    //                     },
+    //                 ]);
+    //             };
+    //             reader.readAsDataURL(file);
+    //         }
+    //     }
+    //     setFileInputValue('');
+    // };
+    
+
+
+
     const onFileSelect = (event) => {
         const files = event.target.files;
         if (files.length === 0) return;
-        for (let i = 0; i < files.length; i++) {
-            if (files[i].type.split('/')[0] !== 'image') continue;
-            if (!images.some((e) => e.name === files[i].name)) {
-                setImages((prevImages) => [
-                    ...prevImages,
-                    {
-                        name: files[i].name,
-                        url: URL.createObjectURL(files[i]),
-                        size: files[i].size,
-                    },
-                ]);
+        const totalImages = images.length;
+        const remainingSlots = 5 - totalImages;
+        if (remainingSlots <= 0) {
+            alert("You've already selected the maximum allowed images (5).");
+            return;
+        }
+        for (let i = 0; i < Math.min(remainingSlots, files.length); i++) {
+            const file = files[i];
+            if (file.type.split('/')[0] === 'image') {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    setImages((prevImages) => [
+                        ...prevImages,
+                        {
+                            name: file.name,
+                            url: e.target.result,
+                            size: file.size,
+                        },
+                    ]);
+                };
+                reader.readAsDataURL(file);
             }
         }
-        setFileInputValue(''); // Reset file input value
+        setFileInputValue('');
     };
+    
+
+
+
+
+
+
+
     const deleteImage = (index) => {
         setImages((prevImages) => {
             return prevImages.filter((_, i) => i !== index);
@@ -187,7 +235,7 @@ const AddSingle = () => {
             };
         });
         data.images = imageUrls;
-        const updatedData = { ...data, selectedSupOption, marketingValue, categoryPath };
+        const updatedData = { ...data, images, selectedSupOption, marketingValue, categoryPath };
         const savedSingleFormData = JSON.parse(localStorage.getItem('singleFormData')) || [];
         const updatedSingleFormData = [...savedSingleFormData, updatedData];
         localStorage.setItem('singleFormData', JSON.stringify(updatedSingleFormData));
@@ -220,25 +268,25 @@ const AddSingle = () => {
                 <div className="heading3">Basic information</div>
 
                 <div className="flex-start wh" style={{ gap: '10px' }}>
-                    <select onChange={handleSupOptionChange} disabled={isSecondSelectEnabled} className="box flex">
+                    <select onChange={handleSupOptionChange}  className="box flex">
                         <option value="">Select category</option>
                         {supOptions.map((option, index) => (
                             <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                         ))}
                     </select>
-                    <select onChange={handleSubOptionChange} disabled={!isSecondSelectEnabled || isThirdSelectEnabled} className="box flex">
+                    <select onChange={handleSubOptionChange}  className="box flex">
                         <option value="">Select sub category</option>
                         {subOptions[selectedSupOption] && subOptions[selectedSupOption].map((option, index) => (
                             <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                         ))}
                     </select>
-                    <select onChange={handleMiniSubOptionChange} disabled={!isThirdSelectEnabled || isFourthSelectEnabled} className="box flex">
+                    <select onChange={handleMiniSubOptionChange}  className="box flex">
                         <option value="">Select an option</option>
                         {miniSubOptions[selectedSubOption] && miniSubOptions[selectedSubOption].map((option, index) => (
                             <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                         ))}
                     </select>
-                    <select onChange={handleMicroSubOptionChange} disabled={!isFourthSelectEnabled || !!selectedMicroSubOption} className="box flex">
+                    <select onChange={handleMicroSubOptionChange}  className="box flex">
                         <option value="">Select sub option</option>
                         {microSubOptions[selectedMiniSubOption] && microSubOptions[selectedMiniSubOption].map((option, index) => (
                             <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
@@ -279,6 +327,7 @@ const AddSingle = () => {
                     Allowed file extensions are (png, bmp, jpeg, and jpg)
                     and allowed video extensions are (mp4, mpeg and webp).
                 </div>
+
                 <div className="card-dd">
                     <div className="drag-area-dd" onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}>
                         {isDragging ? (
