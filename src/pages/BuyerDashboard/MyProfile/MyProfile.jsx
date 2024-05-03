@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { RxCross2 } from 'react-icons/rx';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Helmet } from 'react-helmet-async';
+
 const MyProfile = () => {
   const [openPassword, setOpenPassword] = useState(false)
   const [openNumber, setOpenNumber] = useState(false)
@@ -100,7 +102,7 @@ const MyProfile = () => {
     if (formData.firstname === '' || formData.lastname === '' || formData.countrycode === '' || formData.number === '' || formData.language === "") {
       toast.error('Please all field are requiered')
     }
-    else{
+    else {
       toast.success("Successfully You Submitted the form")
     }
     e.preventDefault()
@@ -113,6 +115,9 @@ const MyProfile = () => {
   }
   return (
     <>
+      <Helmet>
+        <title>My Profile</title>
+      </Helmet>
       {/* Email Container */}
       <div className='show-container-update-Email'>
         {openEmail && (
@@ -129,7 +134,7 @@ const MyProfile = () => {
               <div className=''> <p className='info-details invite-quote'>Enter an up to date email address so we can verify it.</p></div>
               <div className=' invite-email'>
                 <label >Enter Email</label><br></br>
-                <input type='email' name='cardemail' className='card-input-value width-input' placeholder='Enter email'  value={changeEmail} onChange={(e) => setChangeEmail(e.target.value)} />
+                <input type='email' name='cardemail' className='card-input-value width-input' placeholder='Enter email' value={changeEmail} onChange={(e) => setChangeEmail(e.target.value)} />
               </div>
               <button onClick={handleContinueEmail} type='submit' className='clear-filter-btn space-between  send-email'>Continue</button><br></br>
             </div>
@@ -152,7 +157,7 @@ const MyProfile = () => {
               <div className=''> <p className='info-details invite-quote'>Enter an up to date mobile number.</p></div>
               <div className=' invite-email'>
                 <label >Enter Mobile Number</label><br></br>
-                <input type='number' name='cardemail' className='card-input-value width-input' placeholder='+91 **********'  value={updateNumber} onChange={(e)=> setUpdateNumber(e.target.value)}/>
+                <input type='number' name='cardemail' className='card-input-value width-input' placeholder='+91 **********' value={updateNumber} onChange={(e) => setUpdateNumber(e.target.value)} />
 
               </div>
               <button onClick={handleContinueNumber} type='submit' className='clear-filter-btn space-between  send-email'>Continue</button><br></br>
@@ -188,7 +193,7 @@ const MyProfile = () => {
           <div className='message-titles-heading1'>
             <h1 className='user-title  heading-2 heading-3 title-size'>My Profile</h1>
           </div>
-         
+
         </div>
         <div className='border-1 bor-1'>
           <h1 className='  heading-2  heading-4'> My Profile</h1>
@@ -226,7 +231,7 @@ const MyProfile = () => {
                   <option value='Hindi'>China</option>
                 </select>
               </div>
-              <br></br> 
+              <br></br>
               <div className='save-cancel ' >
                 <button type='submit' className='clear-filter-btn space-between'>Save</button><br></br>
                 <button className='clear-filter-btn  space-between'>Cancel</button>
@@ -280,7 +285,7 @@ const MyProfile = () => {
           </div>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
       {/* Security info */}
     </>
   )

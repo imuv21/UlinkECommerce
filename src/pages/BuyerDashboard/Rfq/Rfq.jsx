@@ -6,7 +6,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Document from '../../../assets/document-icon.png'
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+
 const Rfq = () => {
     const [active, setActive] = useState(false)
     const [rfqDataShow, setRfqDataShow] = useState(true)
@@ -93,6 +95,9 @@ const Rfq = () => {
     };
     return (
         <Fragment>
+            <Helmet>
+                <title>Requests For Quotations</title>
+            </Helmet>
             <div className='mt buyer-message'>
                 <div className='flex-space-beetwen'>
                     <div className='message-titles-heading1'>

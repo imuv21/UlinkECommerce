@@ -3,6 +3,7 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { Helmet } from 'react-helmet-async';
 
 const Cart = () => {
 
@@ -27,7 +28,7 @@ const Cart = () => {
     setCart(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
-  
+
   const decrementValue = (index) => {
     const updatedCart = { ...cart };
     const minOrderQuant = updatedCart[index].product.minOrderQuant;
@@ -64,6 +65,9 @@ const Cart = () => {
 
   return (
     <div className="flexcol wh cart_page">
+      <Helmet>
+        <title>Cart</title>
+      </Helmet>
       <div className="flex wh">
         <div className="heading wh">My Cart ({Object.values(cart).length})</div>
       </div>
@@ -93,7 +97,7 @@ const Cart = () => {
                     </div>
                   </div>
 
-                  
+
                   <div className="cartPrice">
                     <div className="heading2">Total : AED {cart[index].quantity * cart[index].product.salePrice}</div>
                     <div className="plus-minus webdiv" style={{ width: '150px' }}>

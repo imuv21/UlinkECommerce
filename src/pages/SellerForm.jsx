@@ -7,6 +7,7 @@ import { allCountries } from '../components/Schemas/countryCodes';
 import { sellerSchema } from '../components/Schemas/validationSchema';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import { Helmet } from 'react-helmet-async';
 
 const schema = yupResolver(sellerSchema);
 
@@ -89,7 +90,9 @@ const SellerForm = () => {
 
     return (
         <Fragment>
-
+            <Helmet>
+                <title>Create your seller profile</title>
+            </Helmet>
             <div className="flex login-cont wh">
                 <div className="flex wh">
                     <img src={bg} className='bgdiv' alt="bg" />

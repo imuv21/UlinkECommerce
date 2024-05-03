@@ -4,7 +4,7 @@ import empty from '../../../assets/empty.png';
 import demo from '../../../assets/demo.jpg';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import { Helmet } from 'react-helmet-async';
 
 const SellerOrder = () => {
 
@@ -22,6 +22,9 @@ const SellerOrder = () => {
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
+             <Helmet>
+                <title>Orders</title>
+            </Helmet>
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading">My Orders</div>
             </div>

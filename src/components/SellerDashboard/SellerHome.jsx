@@ -6,6 +6,7 @@ import img3 from '../../assets/img3.webp';
 import img4 from '../../assets/img4.webp';
 import img5 from '../../assets/img5.webp';
 import { v4 as uuidv4 } from 'uuid';
+import { Helmet } from 'react-helmet-async';
 
 
 const SellerHome = () => {
@@ -158,6 +159,9 @@ const SellerHome = () => {
 
     return (
         <div className='flexcol seller-home-cont' style={{gap:'20px'}}>
+            <Helmet>
+                <title>Seller Dashboard</title>
+            </Helmet>
             <div className="heading">Hi Uttam, Welcome Back!</div>
 
             <div className="flex seller-home">

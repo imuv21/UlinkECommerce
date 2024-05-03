@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Helmet } from 'react-helmet-async';
 
 const Payment = () => {
 
@@ -165,6 +166,9 @@ const Payment = () => {
 
     return (
         <div className="flexcol wh product-detail">
+            <Helmet>
+                <title>Payment Management</title>
+            </Helmet>
             <div className="flex wh">
                 <div className="heading2 wh captext">My Account / Payment Management</div>
             </div>

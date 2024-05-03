@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './ViewDetail.css'
 import logo from '../../../../assets/logo.png'
 import { SlPrinter } from "react-icons/sl";
+import { Helmet } from 'react-helmet-async';
+
 const ViewDetail = () => {
   const [invoices, setInvoices] = useState(false)
   const handleOrderCancel = (e) => {
@@ -22,6 +24,9 @@ const ViewDetail = () => {
   }
   return (
     <>
+      <Helmet>
+        <title>Order Detail</title>
+      </Helmet>
       {invoices && (
         <div className='background-Changer'>
           <div className='card-methodes'>
@@ -71,37 +76,37 @@ const ViewDetail = () => {
             </div>
             <div className='table-data mt-top'>
               <table>
-               <tbody>
-                <tr>
-                  <th className='paragraph-4'>Quantity</th>
-                  <th className='paragraph-4'>Product Detail</th>
-                  <th className='paragraph-4'>Unit Price</th>
-                  <th className='paragraph-4'>Order Total</th>
-                </tr>
-                <tr>
-                  <td >1</td>
-                  <td >Pusht Organic Pulses - Chana Dal, 1Kg,<br></br>
-                    <span className='mr-left'>SKU:</span> POCDW1KG_N <br></br>
-                    <span className='mr-left'>ASIN:</span> 5445446454 <br></br>
-                    <span className='mr-left'>CONDITION:</span> New <br></br>
-                    <span className='mr-left'>Order Item ID:</span>  37472045082922 <br></br>
-                  </td>
-                  <td>$215</td>
-                  <td>
-                    <div className='invoice-flex'>
-                      <div className='border-bottom'>
-                        <p className='bold'>Item Subtotal</p>
-                        <p className='mt-top bold'>Tax</p>
-                        <p className='mt-top bold'>Item Total</p>
+                <tbody>
+                  <tr>
+                    <th className='paragraph-4'>Quantity</th>
+                    <th className='paragraph-4'>Product Detail</th>
+                    <th className='paragraph-4'>Unit Price</th>
+                    <th className='paragraph-4'>Order Total</th>
+                  </tr>
+                  <tr>
+                    <td >1</td>
+                    <td >Pusht Organic Pulses - Chana Dal, 1Kg,<br></br>
+                      <span className='mr-left'>SKU:</span> POCDW1KG_N <br></br>
+                      <span className='mr-left'>ASIN:</span> 5445446454 <br></br>
+                      <span className='mr-left'>CONDITION:</span> New <br></br>
+                      <span className='mr-left'>Order Item ID:</span>  37472045082922 <br></br>
+                    </td>
+                    <td>$215</td>
+                    <td>
+                      <div className='invoice-flex'>
+                        <div className='border-bottom'>
+                          <p className='bold'>Item Subtotal</p>
+                          <p className='mt-top bold'>Tax</p>
+                          <p className='mt-top bold'>Item Total</p>
+                        </div>
+                        <div>
+                          <p className='bold'> $215</p>
+                          <p className='mt-top bold'> $0.54</p>
+                          <p className='mt-top bold'> $215.00</p>
+                        </div>
                       </div>
-                      <div>
-                        <p className='bold'> $215</p>
-                        <p className='mt-top bold'> $0.54</p>
-                        <p className='mt-top bold'> $215.00</p>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>

@@ -17,6 +17,8 @@ import dpworld from '../assets/dpworld.png';
 import amazon from '../assets/amazon.png';
 import ulinkposter from '../assets/comp.png';
 import './Cart/cart.css';
+import { Helmet } from 'react-helmet-async';
+
 
 
 const BecomeASeller = () => {
@@ -191,6 +193,11 @@ const BecomeASeller = () => {
 
     return (
         <Fragment>
+            <Helmet>
+                <title>Become A Seller</title>
+                <meta name="Sell more! Unlock the global market." content="Easily sell to the all over the globe without opening a local office. Tens of thousands of verified wholesale buyers are only a few clicks away." />
+            </Helmet>
+
             <div className="svg-bg">
                 <div className="svg-content flexcol-start" style={{ gap: '20px' }}>
                     <div className="heading4">Sell more! Unlock the global market.</div>

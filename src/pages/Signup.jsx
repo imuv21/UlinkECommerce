@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import bg from '../assets/bg.png';
+import { Helmet } from 'react-helmet-async';
 
 const schema = yupResolver(signupSchema);
 const Signup = () => {
@@ -40,6 +41,9 @@ const Signup = () => {
     return (
         <Fragment>
             <div className="flex login-cont wh">
+            <Helmet>
+                <title>Create Your Account</title>
+            </Helmet>
                 <div className="flex wh">
                     <img src={bg} className='bgdiv' alt="bg" />
                 </div>

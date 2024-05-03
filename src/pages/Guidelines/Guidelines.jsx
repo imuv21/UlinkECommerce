@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import banner from '../../assets/banner.jpg';
 import './Guidelines.css';
 import { v4 as uuidv4 } from 'uuid';
+import { Helmet } from 'react-helmet-async';
 
 const Guidelines = () => {
 
@@ -179,6 +180,9 @@ const Guidelines = () => {
 
     return (
         <Fragment>
+            <Helmet>
+                <title>Guidelines for seller</title>
+            </Helmet>
             <div className="guide-banner-cont">
                 <img className='guideBanner' src={banner} alt="banner" />
                 <div className="responsive-text">

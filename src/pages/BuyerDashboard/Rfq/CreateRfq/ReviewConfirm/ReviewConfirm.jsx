@@ -1,7 +1,9 @@
 import React, { Fragment, useEffect } from 'react'
 import './ReviewConfirm.css'
 import { useLocation } from 'react-router-dom'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+
 const ReviewConfirm = () => {
     const location = useLocation()
     const {addproduct, shippingData, updateadditonalDetail, getCountry, selectedState, cities} = location.state;
@@ -23,6 +25,9 @@ const ReviewConfirm = () => {
     //  save data from the local storege
     return (
         <div>
+            <Helmet>
+                <title>Review And Confirm RFQ Details</title>
+            </Helmet>
             <Fragment>
                 <div className='mt'>
                     <div className='border-5 border-p'>

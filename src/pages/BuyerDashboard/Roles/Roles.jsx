@@ -1,12 +1,16 @@
 import React, { Fragment } from 'react'
 import True from '../../../assets/true.png'
 import Wrong from '../../../assets/wrong.png'
-import './Roles.css'
+import './Roles.css';
+import { Helmet } from 'react-helmet-async';
 
 
 const Roles = () => {
     return (
         <Fragment>
+            <Helmet>
+                <title>Rules And Permissions</title>
+            </Helmet>
             <div className='mt'>
                 <div className='userDashboard'>
                     <h1 className='user-titles pay-title rules-left'>Rules and Permissions</h1>

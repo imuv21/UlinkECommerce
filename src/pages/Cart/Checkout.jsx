@@ -5,6 +5,7 @@ import SailingIcon from '@mui/icons-material/Sailing';
 import PaymentIcon from '@mui/icons-material/Payment';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import { Helmet } from 'react-helmet-async';
 
 const Checkout = () => {
 
@@ -85,24 +86,24 @@ const Checkout = () => {
   };
 
 
-   //banks 
-   const [banks, setBanks] = useState([]);
-   const [selectedBank, setSelectedBank] = useState({});
-   const retrieveBanks = () => {
-     const storedBanks = localStorage.getItem('banks');
-     if (storedBanks) {
-       setBanks(JSON.parse(storedBanks));
-     }
-   };
-   useEffect(() => {
-     retrieveBanks();
-   }, []);
-   const handleBankChange = (event) => {
-     const selectedBankData = banks.find(
-       (bank) => bank.accountHolderName === event.target.value
-     );
-     setSelectedBank(selectedBankData);
-   };
+  //banks 
+  const [banks, setBanks] = useState([]);
+  const [selectedBank, setSelectedBank] = useState({});
+  const retrieveBanks = () => {
+    const storedBanks = localStorage.getItem('banks');
+    if (storedBanks) {
+      setBanks(JSON.parse(storedBanks));
+    }
+  };
+  useEffect(() => {
+    retrieveBanks();
+  }, []);
+  const handleBankChange = (event) => {
+    const selectedBankData = banks.find(
+      (bank) => bank.accountHolderName === event.target.value
+    );
+    setSelectedBank(selectedBankData);
+  };
 
 
 
@@ -118,6 +119,9 @@ const Checkout = () => {
 
   return (
     <div className="flexcol wh cart_page">
+      <Helmet>
+        <title>Checkout</title>
+      </Helmet>
       <div className="flex wh">
         <div className="heading wh">Checkout</div>
       </div>
@@ -210,7 +214,7 @@ const Checkout = () => {
                 ))}
               </select>
               {selectedCard.fullName && (
-                <div className='flex-start wh' style={{gap: '20px'}}>
+                <div className='flex-start wh' style={{ gap: '20px' }}>
                   <CreditCardIcon style={{ width: '17px', color: 'gray' }} />
                   <div className='descrip2'>{selectedCard.fullName}</div>
                   <div className="descrip2">{selectedCard.cardNumber}</div>
@@ -232,7 +236,7 @@ const Checkout = () => {
                 ))}
               </select>
               {selectedBank.accountHolderName && (
-                <div className='flex-start wh' style={{gap: '20px'}} >
+                <div className='flex-start wh' style={{ gap: '20px' }} >
                   <AccountBalanceIcon style={{ width: '17px', color: 'gray' }} />
                   <div className='descrip2'>{selectedBank.accountHolderName}</div>
                   <div className="descrip2">{selectedBank.accountNumber}</div>

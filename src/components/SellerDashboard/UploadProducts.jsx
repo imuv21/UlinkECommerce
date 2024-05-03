@@ -5,6 +5,7 @@ import UploadIcon from '@mui/icons-material/Upload';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import * as XLSX from 'xlsx';
 import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../Schemas/cate';
+import { Helmet } from 'react-helmet-async';
 
 const UploadProducts = ({ handleOptionClick }) => {
 
@@ -232,6 +233,9 @@ const UploadProducts = ({ handleOptionClick }) => {
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
+            <Helmet>
+                <title>Upload Products</title>
+            </Helmet>
             <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={threeClick} />&nbsp;&nbsp;Upload Products</div>
             <div className="flex seller-home">
                 <div className="flexcol shone">

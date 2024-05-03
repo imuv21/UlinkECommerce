@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import './AcessManagement.css'
-
+import { Helmet } from 'react-helmet-async';
 import { FcInfo } from "react-icons/fc";
 import { Link } from 'react-router-dom';
 import { RxCross2 } from 'react-icons/rx';
@@ -23,7 +23,9 @@ const AcessManagement = () => {
     }
     return (
         <Fragment>
-           
+           <Helmet>
+                <title>Access Management</title>
+            </Helmet>
             <div>
                 {inviteBox && (
                     <div className='background-Changer'>

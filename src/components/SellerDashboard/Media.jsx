@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import empty from '../../assets/empty.png';
 import DownloadIcon from '@mui/icons-material/Download';
+import { Helmet } from 'react-helmet-async';
 
 const Media = () => {
 
@@ -51,6 +52,9 @@ const Media = () => {
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '30px' }}>
+            <Helmet>
+                <title>Media</title>
+            </Helmet>
             <div className="heading">Media</div>
             <div className="descrip2">Use the upload center to upload/edit product and images</div>
             <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>

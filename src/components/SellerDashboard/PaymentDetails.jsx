@@ -5,6 +5,7 @@ import { bankSchema } from '../Schemas/validationSchema';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 const schema = yupResolver(bankSchema);
 
@@ -50,6 +51,9 @@ const PaymentDetails = ({ handleOptionClick }) => {
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
+             <Helmet>
+                <title>Add A Bank Account</title>
+            </Helmet>
             <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={Click13} />&nbsp;&nbsp;Add a new account</div>
             <form onSubmit={handleSubmit(onSubmit)} className="productlist2">
                 <div className="heading3 wh">Account information</div>

@@ -5,6 +5,7 @@ import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const AddMulti = ( {handleOptionClick} ) => {
 
@@ -35,6 +36,9 @@ const AddMulti = ( {handleOptionClick} ) => {
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}   tabIndex={0} ref={scrollRef}>
+            <Helmet>
+                <title>Add Multiple Products</title>
+            </Helmet>
             <div className="heading">Add Multiple Products</div>
             <div className="descrip2">Use the upload center to upload/edit products and images</div>
 

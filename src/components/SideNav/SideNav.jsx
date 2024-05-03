@@ -22,14 +22,10 @@ const SideNav = () => {
         setSelectedOp(op);
     };
 
-
-
     const [activeIndex, setActiveIndex] = useState(null);
     const toggleAccordion = (index) => {
         setActiveIndex(activeIndex === index ? null : index);
     };
-
-
 
     const [selectedOption, setSelectedOption] = useState('OptionOne');
     useEffect(() => {

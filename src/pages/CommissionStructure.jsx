@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import logo2 from '../assets/logo2.png';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 
 const CommissionStructure = () => {
@@ -88,6 +89,9 @@ const CommissionStructure = () => {
 
     return (
         <Fragment>
+            <Helmet>
+                <title>Ulink's Commission Structure</title>
+            </Helmet>
             <div className="flexcol wh home commission">
                 <div className="flex wh">
                     <div className="flexcol-start wh" style={{ gap: '20px' }}>

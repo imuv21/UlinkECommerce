@@ -9,6 +9,7 @@ import proDetail from '../../assets/proDetail.png';
 import boxx from '../../assets/boxx.png';
 import './cart.css';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const ProductDetails = () => {
 
@@ -125,6 +126,9 @@ const ProductDetails = () => {
 
     return (
         <div className="flexcol wh product-detail">
+            <Helmet>
+                <title>Product Details</title>
+            </Helmet>
             {product ? (
                 <Fragment>
                     <div className="flex wh">

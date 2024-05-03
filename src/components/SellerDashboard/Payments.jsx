@@ -1,5 +1,6 @@
 import React from 'react'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import { Helmet } from 'react-helmet-async';
 
 const Payments = ({handleOptionClick}) => {
 
@@ -19,6 +20,9 @@ const Payments = ({handleOptionClick}) => {
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
+             <Helmet>
+                <title>Payment Details</title>
+            </Helmet>
             <div className="heading flex">Payment Details</div>
 
             <div className="productlist3">

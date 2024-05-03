@@ -1,8 +1,12 @@
 import React from 'react'
+import { Helmet } from 'react-helmet-async';
 
 const Shipping = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
+            <Helmet>
+                <title>Shipping Preferences</title>
+            </Helmet>
             <div className="heading">Shipping Preferences</div>
 
             <div className="productlist2" style={{ gap: '35px' }}>

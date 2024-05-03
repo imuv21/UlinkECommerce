@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, Fragment } from 'react'
 import { useNavigate } from 'react-router-dom';
 import bg from '../assets/bg.png';
+import { Helmet } from 'react-helmet-async';
 
 const Otp = () => {
 
@@ -76,7 +77,9 @@ const Otp = () => {
 
     return (
         <Fragment>
-
+            <Helmet>
+                <title>Verify Your Email</title>
+            </Helmet>
             <div className="flex login-cont wh">
                 <div className="flex wh">
                     <img src={bg} className='bgdiv' alt="" />

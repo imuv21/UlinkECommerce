@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import './RfqDetail.css'
+import './RfqDetail.css';
+import { Helmet } from 'react-helmet-async';
 
 const RfqDetail = () => {
     const [reviewConfirmData, setReviewConfirmData] = useState(null)
@@ -18,6 +19,9 @@ const RfqDetail = () => {
     }
     return (
         <div className='mt'>
+            <Helmet>
+                <title>RFQ Details</title>
+            </Helmet>
             <div className=' bor-1 border-p'>
                 <div className='border-p'>
                     <h1 className='user-title  heading-2 ml-left  size'>RFQ Details</h1>

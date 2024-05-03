@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../Schemas/cate';
+import { Helmet } from 'react-helmet-async';
 
 const schema = yupResolver(addSingleSchema);
 
@@ -209,6 +210,9 @@ const AddSingle = () => {
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }} tabIndex={0} ref={scrollRef} >
+            <Helmet>
+                <title>Add Single Product</title>
+            </Helmet>
             <div className="heading">Add New Products</div>
             <div className="descrip2">Fill out the form below to add a new product to your product list</div>
 

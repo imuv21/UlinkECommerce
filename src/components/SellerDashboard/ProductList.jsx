@@ -5,6 +5,7 @@ import empty from '../../assets/empty.png';
 import demo from '../../assets/demo.jpg';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Helmet } from 'react-helmet-async';
 
 const ProductList = ({ handleOptionClick }) => {
 
@@ -108,6 +109,9 @@ const ProductList = ({ handleOptionClick }) => {
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
+            <Helmet>
+                <title>Products List</title>
+            </Helmet>
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading">Products List</div>
                 <button onClick={twoClick} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Add Single Product</div></button>

@@ -6,16 +6,15 @@ import { useNavigate } from 'react-router-dom';
 import bg from '../assets/bg.png';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
+import { Helmet } from 'react-helmet-async';
 const schema = yupResolver(loginSchema);
-const Login = () => {
 
+const Login = () => {
     //password hide and show
     const [passwordVisible, setPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
-
     const navigate = useNavigate();
     const signup = () => {
         navigate('/signup');
@@ -23,21 +22,18 @@ const Login = () => {
     const forgotPass = () => {
         navigate('/forgot-password');
     }
-
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
     const onSubmit = data => {
         console.log(data);
         navigate('/seller-dash');
     };
 
-   
-
-
-
-
     return (
         <Fragment>
             <div className="flex login-cont wh">
+            <Helmet>
+                <title>Login To Your Account</title>
+            </Helmet>
                 <div className="flex wh">
                     <img src={bg} className='bgdiv' alt="bg" />
                 </div>

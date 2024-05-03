@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './OrderPage.css'
 import { CiFilter } from "react-icons/ci";
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+
 const OrderPage = () => {
     const [filterData, setFilterData] = useState({
         orderNumber: '',
@@ -33,8 +35,11 @@ const OrderPage = () => {
     }
     return (
         <div className='mt position bor-1'>
+             <Helmet>
+                <title>Orders</title>
+            </Helmet>
             <div className='userDashboard'>
-                <h1 className='user-titles pay-title '>Order</h1>
+                <h1 className='user-titles pay-title '>Orders</h1>
             </div>
             <div className='filter-Option '>
                 <div className='filter-border-1'>

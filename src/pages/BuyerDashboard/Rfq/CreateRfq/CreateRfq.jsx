@@ -8,7 +8,9 @@ import { VscFile } from "react-icons/vsc";
 import axios from 'axios';
 import { RxCross2 } from 'react-icons/rx';
 import * as XLSX from 'xlsx';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+
 const CreateRfq = () => {
     const [open, setOpen] = useState(false)
     const [addproduct, setAddProduct] = useState([{  pname: '', qty: '', unit: '', targetprice: '', price: '', tprice: "", img: '' }])
@@ -166,6 +168,9 @@ const CreateRfq = () => {
     }
     return (
         <>
+           <Helmet>
+                <title>Create A New RFQ</title>
+            </Helmet>
             {uploadFile && (
                 <div className='background-Changer'>
                     <div className='invite-more'>

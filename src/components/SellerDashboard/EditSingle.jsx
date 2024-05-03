@@ -5,6 +5,7 @@ import { addSingleSchema } from '../Schemas/validationSchema';
 import { useParams, useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 
 const schema = yupResolver(addSingleSchema);
@@ -217,6 +218,9 @@ const EditSingle = () => {
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}  >
+            <Helmet>
+                <title>Edit The Product</title>
+            </Helmet>
             <div className="heading">Edit Product</div>
 
             <form className="productlist2" onSubmit={handleSubmit(onSubmit)}>

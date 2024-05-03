@@ -4,6 +4,7 @@ import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import UploadIcon from '@mui/icons-material/Upload';
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
+import { Helmet } from 'react-helmet-async';
 
 const EditProducts = ({ handleOptionClick }) => {
 
@@ -20,6 +21,9 @@ const EditProducts = ({ handleOptionClick }) => {
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
+            <Helmet>
+                <title>Edit Multiple Products</title>
+            </Helmet>
             <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={threeClick} />&nbsp;&nbsp;Edit Products</div>
             <div className="flex seller-home">
                 <div className="flexcol shone">

@@ -1,18 +1,22 @@
 import React, { Fragment, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import bg from '../assets/bg.png';
+import { Helmet } from 'react-helmet-async';
 
 const ForgotPassword = () => {
 
     const navigate = useNavigate();
     const resetPassword = () => {
-        alert('Please open your email and click on the verification link.')
+        alert(`Please open your email "${email}" and click on the verification link.`)
         navigate('/reset-password');
     }
     const [email, setEmail] = useState('');
 
-  return (
-    <Fragment>
+    return (
+        <Fragment>
+            <Helmet>
+                <title>Forgot Your Password?</title>
+            </Helmet>
             <div className="flex login-cont wh">
                 <div className="flex wh">
                     <img src={bg} className='bgdiv' alt="" />
@@ -31,7 +35,7 @@ const ForgotPassword = () => {
             </div>
 
         </Fragment>
-  )
+    )
 }
 
 export default ForgotPassword

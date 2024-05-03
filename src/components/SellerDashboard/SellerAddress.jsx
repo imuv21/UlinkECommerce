@@ -7,6 +7,7 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import SailingIcon from '@mui/icons-material/Sailing';
 import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 
 const SellerAddress = () => {
 
@@ -172,6 +173,9 @@ const SellerAddress = () => {
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
+            <Helmet>
+                <title>My Addresses</title>
+            </Helmet>
             <div className="productlist3">
                 <div className="flexcol" style={{ gap: '20px' }}>
                     <div className="heading wh">My Addresses</div>
