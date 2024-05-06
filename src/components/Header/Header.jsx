@@ -1,95 +1,42 @@
-import './header.css';
 import './style.css';
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, Fragment } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import logo from '../../assets/logo.png';
+import ListIcon from '@mui/icons-material/List';
 import SearchIcon from '@mui/icons-material/Search';
-import ReactFlagsSelect from "react-flags-select";
-import { useCart } from '../context/CartContext';
+import Drawer from '@mui/material/Drawer';
+import { useCart, useUserType } from '../context/CartContext';
+import logo from '../../assets/logo2.png';
+
+import HomeIcon from '@mui/icons-material/Home';
+import AllInboxIcon from '@mui/icons-material/AllInbox';
+import SendIcon from '@mui/icons-material/Send';
+import SendTimeExtensionIcon from '@mui/icons-material/SendTimeExtension';
+
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import MessageIcon from '@mui/icons-material/Message';
+import StorefrontIcon from '@mui/icons-material/Storefront';
 
 const Header = () => {
 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const [isClicked, setIsClicked] = useState(false);
+  const handleClick = () => {
+    setIsClicked(prevState => !prevState);
+  };
 
   const navigate = useNavigate();
-
-  const login = () => {
-    navigate('/login');
-  };
-  const signup = () => {
-    navigate('/signup');
-  };
-  const cartpage = () => {
+  const tocart = () => {
     navigate('/cart');
-  };
-  const becomeaseller = () => {
-    navigate('/become-a-seller');
-  };
-  const [isHovered, setIsHovered] = useState(false);
+  }
 
-  const [selected, setSelected] = useState("");
-  const [keyword, setKeyword] = useState("");
-  const searchSubmitHandler = (e) => {
-    e.preventDefault();
-    if (keyword.trim()) {
-      navigate(`/products/${keyword}`);
-    } else {
-      navigate("/products");
-    }
-  };
-
-  useEffect(() => {
-    const navbarMenu = document.getElementById("menu");
-    const burgerMenu = document.getElementById("burger");
-    const headerMenu = document.getElementById("header");
-
-    const handleBurgerClick = () => {
-      burgerMenu.classList.toggle("is-active");
-      navbarMenu.classList.toggle("is-active");
-    };
-
-    const handleLinkClick = () => {
-      burgerMenu.classList.remove("is-active");
-      navbarMenu.classList.remove("is-active");
-    };
-
-    const handleScroll = () => {
-      if (window.scrollY >= 85) {
-        headerMenu.classList.add("on-scroll");
-      } else {
-        headerMenu.classList.remove("on-scroll");
-      }
-    };
-
-    const handleResize = () => {
-      if (window.innerWidth > 768 && navbarMenu.classList.contains("is-active")) {
-        navbarMenu.classList.remove("is-active");
-      }
-    };
-
-    burgerMenu.addEventListener("click", handleBurgerClick);
-
-    document.querySelectorAll(".menu-link").forEach((link) => {
-      link.addEventListener("click", handleLinkClick);
-    });
-
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      burgerMenu.removeEventListener("click", handleBurgerClick);
-      document.querySelectorAll(".menu-link").forEach((link) => {
-        link.removeEventListener("click", handleLinkClick);
-      });
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-
+  const { userType } = useUserType();
   const { cart } = useCart();
-
   const carttext = Object.values(cart).length;
   const numCharacters = carttext;
   let width;
@@ -107,7 +54,6 @@ const Header = () => {
     width = 35;
     height = 20;
   }
-
 
   const cartcount = {
     width: `${width}px`,
@@ -127,42 +73,88 @@ const Header = () => {
 
 
   return (
-    <header className="header" id="header">
-      <nav className="navbar container">
-        <a href="/" className="brand"><img src={logo} alt="logo" /></a>
-        <div className="burger" id="burger">
-          <span className="burger-line"></span>
-          <span className="burger-line"></span>
-          <span className="burger-line"></span>
-        </div>
-        <form className='searchBox' onSubmit={searchSubmitHandler}>
-          <ReactFlagsSelect id="select-contry" selected={selected} onSelect={(selected) => setSelected(selected)} placeholder="Select Country " searchable searchPlaceholder="Search countries" />{" "}
-          <input type='text' className='searchinput' placeholder='Search Here...' onChange={(e) => setKeyword(e.target.value)} />
-          <button type='submit' className='searchbtn'><SearchIcon /></button>
-        </form>
-        <div className="menu" id="menu">
-          <ul className="menu-inner">
+    <Fragment>
+      <div className='header'>
+        <div className="flex head-start">
+          <div className='header-burger' onClick={toggleMobileMenu} >
+            <ListIcon />
+          </div>
 
-            <li className="menu-item icon-container" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-              <a href="/" className="menu-link"> <AccountCircleIcon /></a>
-              {isHovered && (
-                <div className="popup flexcol">
-                  <button onClick={login} className='btn box flex' style={{ bgColor: 'var(--CodeOne)' }} type='submit'><div className="heading2">Log in</div></button>
-                  <button onClick={signup} className='btn box flex' type='submit'><div className="heading2">Sign up</div></button>
+          <Link to="/"><img src={logo} alt="Logo" className='logo' /></Link>
+        </div>
+
+        <div className="search-input2">
+          <input type='text' placeholder='Search here...' />
+          <span>
+            <SearchIcon />
+          </span>
+        </div>
+
+        <div className="flex head-start">
+          <div className="header-nav">
+            <Link to="/profile">Profile</Link>
+            <Link to="/cart">Cart</Link>
+            <Link to="/about-us">About Us</Link>
+          </div>
+
+          <div className={`icon-container ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
+            <AccountCircleIcon />
+            {isClicked && (
+              <div className="popup">
+                <div className='popupbox'>
+                  <div className="username">Uttam verma</div>
+                  <div className="warning-btn3">{userType === 'buyer' ? 'Verify Your Mobile' : 'Unverified Seller'}</div>
                 </div>
-              )}
-            </li>
 
-            <li className="menu-item carticon" onClick={cartpage}>
-              <a className="menu-link"><ShoppingCartIcon /></a>
+                <div className='popupbox'>
+                  {userType === 'buyer' && (<div className="pop-options"><HomeIcon />Buyer Center</div>)}
+                  {userType === 'seller' && (<div className="pop-options"> <DashboardIcon />Dashboard</div>)}
+                  <div className="pop-options"> <AllInboxIcon /> Orders </div>
+                  {userType === 'seller' && (<div className="pop-options"> <MessageIcon /> Messages </div>)}
+                  <div className="pop-options"> <SendTimeExtensionIcon /> RFQ Marketplace </div>
+                  <div className="pop-options"> <SendIcon />{userType === 'buyer' ? 'Create RFQ' : 'Manage Quotes'}</div>
+                  {userType === 'seller' && (<div className="pop-options"> <StorefrontIcon />Product Catalogue</div>)}
+                </div>
+
+                <div className='popupbox'>
+                  <div className="subpop-options">My Profile</div>
+                  <div className="subpop-options">My Company Profile</div>
+                  {userType === 'buyer' && (<div className="subpop-options">Payment Management</div>)}
+                  <div className="subpop-options">Access Management</div>
+                  {userType === 'buyer' && (<div className="subpop-options">Addresses</div>)}
+                  {userType === 'seller' && (<div className="subpop-options">Saved Products</div>)}
+                </div>
+
+                <div className="popupbox">
+                  <div className="subpop-options">Log out</div>
+                </div>
+
+                <div className='popupbox'>
+                  <Link to="/login" className='btn box flex' ><div className="heading2">Log in</div></Link>
+                  <Link to="/signup" className='btn box flex'><div className="heading2">Sign up</div></Link>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {userType === 'buyer' && (
+            <div style={{ position: 'relative', cursor: 'pointer' }} onClick={tocart}>
+              <ShoppingCartIcon />
               <div style={cartcount}>{carttext}</div>
-            </li>
-
-          </ul>
+            </div>
+          )}
         </div>
-        <a onClick={becomeaseller} className="menu-block">Become a seller</a>
-      </nav>
-    </header>
+      </div>
+
+
+      <Drawer anchor="left" open={mobileMenuOpen} onClose={toggleMobileMenu}>
+        <div className='drawer' onClick={toggleMobileMenu} onKeyDown={toggleMobileMenu}>
+          <Link to="/profile">Profile dfhtrhtrhrthjtrjhrtjt</Link>
+          <Link to="/cart">Cart</Link>
+          <Link to="/about-us">About Us</Link>
+        </div>
+      </Drawer>
+    </Fragment>
   );
 };
 

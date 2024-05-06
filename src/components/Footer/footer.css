@@ -1,22 +1,26 @@
 /* Footer  */
 
-.footer-section {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
+
+.supContFooter {
     width: 100%;
-    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px 20px 20px 20px;
     background-color: var(--CodeTwo);
-    padding: 40px 10px 10px 10px;
+}
+
+.footer-section {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(1, auto);
+    gap: 20px;
 }
 
 .footer {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    width: 220px;
 }
 
 .item-list {
@@ -42,32 +46,157 @@
     width: fit-content;
 }
 
-.send-massage {
-    padding: 20px 10px 40px 10px;
-    background-color: var(--CodeTwo);
-}
-
-.message {
-    padding: var(--pad);
-    width: 50%;
-}
-
-.send {
-    padding: 9.5px;
-    background: var(--CodeOne);
-    border: 1px solid var(--CodeOne);
-    color: #fff;
-    white-space: nowrap;
-    transition: var(--trans);
-}
-.send:hover{
-    background: var(--CodeTwo);
+.footer-title2 {
     color: var(--CodeOne);
+    font-size: 17px;
+    width: fit-content;
+}
+
+.number {
+    font-size: 15px;
+    color: white;
+}
+
+.whtext {
+    color: #45BF88;
+    font-size: 12px;
+}
+
+.footer-nav {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fsecone {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 15px;
+}
+
+.supfsectwo {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+}
+
+.fsectwo {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.fsectwo .MuiSvgIcon-root {
+    width: 30px;
+    height: 30px;
+    aspect-ratio: 1/1;
+    object-fit: contain;
+    color: white;
+}
+
+.footerfooter {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    gap: 20px;
+}
+
+.ffone {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 33%;
+    gap: 10px;
+    text-align: center;
+}
+
+.ffone img {
+    width: 25px;
+    height: 20px;
+    filter: drop-shadow(1px 1px 2px black);
+}
+
+.fftwo a {
+    color: white;
+}
+
+.ffone a {
+    color: white;
+}
+
+.fftwo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 34%;
+    gap: 10px;
+    text-align: center;
+}
+
+.subscribe {
+    gap: 20px;
+    width: 100%
+}
+
+
+
+
+
+@media screen and (max-width: 966px) {
+    .footer-nav {
+        flex-direction: column;
+    }
+
+    .supfsectwo,
+    .fsecone,
+    .fsectwo {
+        width: 100%;
+    }
+
 }
 
 @media screen and (max-width: 800px) {
-
     .footer-section {
-       
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, auto);
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .footerfooter {
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+    }
+    .ffone,
+    .fftwo {
+        width: 100%;
+    }
+    .subscribe {
+        width: 100%
+    }
+}
+
+@media screen and (max-width: 440px) {
+    .footer-section {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, auto);
+    }
+    .supfsectwo {
+        flex-direction: column;
+        gap: 20px;
     }
 }

@@ -2,7 +2,8 @@ import './App.css';
 import React, { Fragment, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Loader from './components/Loader/Loader';
-import { CartProvider } from './components/context/CartContext';
+import Layout from './components/Layout';
+import { UserTypeProvider } from './components/context/CartContext';
 
 
 //buyer dashboard
@@ -30,8 +31,6 @@ const ProductDetails = lazy(() => import('./pages/Cart/ProductDetails'));
 
 
 //public
-const Header = lazy(() => import('./components/Header/Header'));
-const Footer = lazy(() => import('./components/Footer/Footer'));
 const Home = lazy(() => import("./pages/Home"));
 const Signup = lazy(() => import('./pages/Signup'));
 const Login = lazy(() => import('./pages/Login'));
@@ -61,17 +60,17 @@ function App() {
 
             {/* public */}
             <Route path='/' element={<Layout><Home /></Layout>} />
-            <Route path='/signup' element={<Signup />} />
-            <Route path='/login' element={<Login />} />
+            
+            <Route path='/signup' element={<UserTypeProvider><Signup /></UserTypeProvider>} />
+            <Route path='/login' element={<UserTypeProvider><Login /></UserTypeProvider>} />
             <Route path='/otp' element={<Otp />} />
             <Route path='/forgot-password' element={<ForgotPassword />} />
             <Route path='/reset-password' element={<ResetPassword />} />
             <Route path='/guidelines' element={<Layout><Guidelines /></Layout>} />
-            <Route path='/cart' element={<Layout><Cart /></Layout>} />
-            <Route path='/checkout' element={<Layout><Checkout /></Layout>} />
+            
 
 
-             {/* Seller dashboard */}
+            {/* Seller dashboard */}
             <Route path='/seller-form' element={<SellerForm />} />
             <Route path='/become-a-seller' element={<Layout><BecomeASeller /></Layout>} />
             <Route path='/commission-structure' element={<Layout><CommissionStructure /></Layout>} />
@@ -82,12 +81,12 @@ function App() {
 
             {/* other */}
             <Route path='/img' element={<Layout><Image /></Layout>} />
-            <Route path='/trans' element={<Layout><Translator /></Layout>} />
-         
-          
+            <Route path='/trans' element={<Translator />} />
 
 
-             {/* Buyer dashboard */}
+
+
+            {/* Buyer dashboard */}
             <Route path='/buyer-dashboard' element={<Layout><BuyerDashboard /></Layout>} />
             <Route path='/buyer-message' element={<Layout><BuyerMessage /></Layout>} />
             <Route path='/rfq' element={<Layout><Rfq /></Layout>} />
@@ -100,24 +99,14 @@ function App() {
             <Route path='/rfq-detail' element={<Layout><RfqDetail /></Layout>} />
             <Route path='/order-page' element={<Layout><OrderPage /></Layout>} />
             <Route path='/view-detail' element={<Layout><ViewDetail /></Layout>} />
+            <Route path='/cart' element={<Layout><Cart /></Layout>} />
+            <Route path='/checkout' element={<Layout><Checkout /></Layout>} />
 
           </Routes>
         </Suspense>
       </BrowserRouter>
     </Fragment>
   )
-}
-
-const Layout = ({ children }) => {
-  return (
-    <div>
-      <CartProvider>
-        <Header />
-      </CartProvider>
-      {children}
-      <Footer />
-    </div>
-  );
 };
 
 export default App

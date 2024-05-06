@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import bg from '../assets/bg.png';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { allCountries } from '../components/Schemas/countryCodes';
 import { sellerSchema } from '../components/Schemas/validationSchema';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
@@ -14,10 +13,7 @@ const schema = yupResolver(sellerSchema);
 const SellerForm = () => {
 
     const navigate = useNavigate();
-    const [isChecked, setIsChecked] = useState(false);
-    const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-    };
+    
 
     const [sellerData, setSellerData] = useState({});
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
@@ -27,7 +23,6 @@ const SellerForm = () => {
         navigate('/seller-dash');
     };
     const handleChange = (e) => {
-        //setSellerData({ ...sellerData, [e.target.name]: e.target.value });
         const { name, value } = e.target;
         if (name === "countryCode" || name === "countryCode2") {
             const selectedCountry = ccode.find(country => country.iso2 === value);
@@ -38,29 +33,7 @@ const SellerForm = () => {
     };
 
 
-    //select country code from data 
-    const [ccode, setCcode] = useState([]);
-    const [selectedCountry, setSelectedCountry] = useState('');
-    const [selectedCountryTwo, setSelectedCountryTwo] = useState('');
-    useEffect(() => {
-        const formattedCountries = allCountries.map(country => ({
-            name: country[0],
-            iso2: country[1],
-            dialCode: country[2]
-        }));
-
-        setCcode(formattedCountries);
-    }, []);
-    const handleCountryChange = (event) => {
-        const countryCode = event.target.value;
-        const selected = ccode.find(country => country.iso2 === countryCode);
-        setSelectedCountry(selected);
-    }
-    const handleCountryChangeTwo = (event) => {
-        const countryCode = event.target.value;
-        const selected = ccode.find(country => country.iso2 === countryCode);
-        setSelectedCountryTwo(selected);
-    }
+    
 
 
 
@@ -102,58 +75,7 @@ const SellerForm = () => {
                     <form className='flexcol cover' onSubmit={handleSubmit(onSubmit)}>
                         <div className="heading">Create your seller profile</div>
 
-                        <div className="flex wh" style={{ gap: '30px' }}>
-                            <Controller name="countryCode" value={selectedCountry} onChange={handleCountryChange} control={control} defaultValue="" render={({ field }) => (
-                                <select className="box flex" value={sellerData.countryCode || ''} onChange={handleChange} {...field}>
-                                    <option value="">Country code</option>
-                                    {ccode.map(country => (
-                                        <option key={country.iso2} value={country.dialCode}>
-                                            {`${country.name} (+${country.dialCode})`}
-                                        </option>
-                                    ))}
-                                </select>
-                            )}
-                            />
-                            <Controller name="number" control={control} defaultValue="" render={({ field }) => <input value={sellerData.number || ''} onChange={handleChange} className="box flex" placeholder='Enter your phone number' {...field} />} />
-                        </div>
-                        {(errors.countryCode || errors.number) &&
-                            <div className="flex wh">
-                                <div className="flex wh">
-                                    <div className='error'>{errors.countryCode?.message}</div>
-                                </div>
-                                <div className="flex wh" style={{ justifyContent: 'space-around' }}>
-                                    <div className='error'>{errors.number?.message}</div>
-                                </div>
-                            </div>
-                        }
-                        <div className="flex" style={{ width: '100%', gap: '10px', justifyContent: 'start' }}>
-                            <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} /><div className="heading2">My whatsapp number is different</div>
-                        </div>
-                        {isChecked && (
-                            <div className='flex wh' style={{ gap: '30px' }}>
-                                <Controller name="countryCode2" value={selectedCountryTwo} onChange={handleCountryChangeTwo} control={control} defaultValue="" render={({ field }) => (
-                                    <select className="box flex" value={sellerData.countryCode2 || ''} onChange={handleChange}  {...field}>
-                                        <option value="">Country code</option>
-                                        {ccode.map(country => (
-                                            <option key={country.iso2} value={country.dialCode}>
-                                                {`${country.name} (+${country.dialCode})`}
-                                            </option>
-                                        ))}
-                                    </select>
-                                )}
-                                />
-                                <Controller name="whatsappNum" control={control} defaultValue="" render={({ field }) => <input value={sellerData.whatsappNum || ''} onChange={handleChange} className="box flex" placeholder='Enter your whatsapp number' {...field} />} />
-                            </div>
-                        )}
-                        {isChecked && (errors.whatsappNum) &&
-                            <div className="flex wh">
-                                <div className="flex wh">
-                                </div>
-                                <div className="flex wh" style={{ justifyContent: 'space-around' }}>
-                                    <div className='error'>{errors.whatsappNum?.message}</div>
-                                </div>
-                            </div>
-                        }
+                        
                         <Controller name="companyName" control={control} defaultValue="" render={({ field }) => <input value={sellerData.companyName || ''} onChange={handleChange} className="box flex" placeholder='Enter company name' {...field} />} />
                         {errors.companyName && <div className='error'>{errors.companyName.message}</div>}
                         <Controller name="countryOperation" value={selectedOp} onChange={operationSelectChange} control={control} defaultValue="" render={({ field }) => (

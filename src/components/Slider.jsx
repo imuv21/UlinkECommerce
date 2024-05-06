@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const Slider = () => {
 
-  const delay = 4000;
+  const delay = 2000;
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef(null);
   const isPaused = useRef(false);
@@ -32,6 +32,9 @@ const Slider = () => {
       prevIndex === Object.keys(imagess).length - 1 ? 0 : prevIndex + 1
     );
   }
+
+  
+  
 
   useEffect(() => {
     const importImages = async () => {

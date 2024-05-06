@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signupSchema } from '../components/Schemas/validationSchema';
@@ -7,6 +7,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import bg from '../assets/bg.png';
 import { Helmet } from 'react-helmet-async';
+import { allCountries } from '../components/Schemas/countryCodes';
 
 const schema = yupResolver(signupSchema);
 const Signup = () => {
@@ -19,6 +20,11 @@ const Signup = () => {
     };
     const toggleConPasswordVisibility = () => {
         setConPasswordVisible(!conPasswordVisible);
+    };
+
+    const [isChecked, setIsChecked] = useState(false);
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
     };
 
     const [userData, setUserData] = useState({});
@@ -38,12 +44,37 @@ const Signup = () => {
 
 
 
+    //select country code from data 
+    const [ccode, setCcode] = useState([]);
+    const [selectedCountry, setSelectedCountry] = useState('');
+    const [selectedCountryTwo, setSelectedCountryTwo] = useState('');
+    useEffect(() => {
+        const formattedCountries = allCountries.map(country => ({
+            name: country[0],
+            iso2: country[1],
+            dialCode: country[2]
+        }));
+
+        setCcode(formattedCountries);
+    }, []);
+    const handleCountryChange = (event) => {
+        const countryCode = event.target.value;
+        const selected = ccode.find(country => country.iso2 === countryCode);
+        setSelectedCountry(selected);
+    }
+    const handleCountryChangeTwo = (event) => {
+        const countryCode = event.target.value;
+        const selected = ccode.find(country => country.iso2 === countryCode);
+        setSelectedCountryTwo(selected);
+    }
+
+
     return (
         <Fragment>
             <div className="flex login-cont wh">
-            <Helmet>
-                <title>Create Your Account</title>
-            </Helmet>
+                <Helmet>
+                    <title>Create Your Account</title>
+                </Helmet>
                 <div className="flex wh">
                     <img src={bg} className='bgdiv' alt="bg" />
                 </div>
@@ -89,6 +120,70 @@ const Signup = () => {
 
                             <Controller name="email" control={control} defaultValue="" render={({ field }) => <input value={userData.email || ''} onChange={handleChange} className="box flex" placeholder='Enter your email' {...field} />} />
                             {errors.email && <div className='error'>{errors.email.message}</div>}
+
+
+
+
+
+                            <div className="flex wh" style={{ gap: '30px' }}>
+                                <Controller name="countryCode" value={selectedCountry} onChange={handleCountryChange} control={control} defaultValue="" render={({ field }) => (
+                                    <select className="box flex" value={userData.countryCode || ''} onChange={handleChange} {...field}>
+                                        <option value="">Country code</option>
+                                        {ccode.map(country => (
+                                            <option key={country.iso2} value={country.dialCode}>
+                                                {`${country.name} (+${country.dialCode})`}
+                                            </option>
+                                        ))}
+                                    </select>
+                                )}
+                                />
+                                <Controller name="number" control={control} defaultValue="" render={({ field }) => <input value={userData.number || ''} onChange={handleChange} className="box flex" placeholder='Enter your phone number' {...field} />} />
+                            </div>
+                            {(errors.countryCode || errors.number) &&
+                                <div className="flex wh">
+                                    <div className="flex wh">
+                                        <div className='error'>{errors.countryCode?.message}</div>
+                                    </div>
+                                    <div className="flex wh" style={{ justifyContent: 'space-around' }}>
+                                        <div className='error'>{errors.number?.message}</div>
+                                    </div>
+                                </div>
+                            }
+                            <div className="flex" style={{ width: '100%', gap: '10px', justifyContent: 'start' }}>
+                                <input type="checkbox" style={{cursor: 'pointer'}} checked={isChecked} onChange={handleCheckboxChange} /><div className="heading2">My whatsapp number is different</div>
+                            </div>
+                            {isChecked && (
+                                <div className='flex wh' style={{ gap: '30px' }}>
+                                    <Controller name="countryCode2" value={selectedCountryTwo} onChange={handleCountryChangeTwo} control={control} defaultValue="" render={({ field }) => (
+                                        <select className="box flex" value={userData.countryCode2 || ''} onChange={handleChange}  {...field}>
+                                            <option value="">Country code</option>
+                                            {ccode.map(country => (
+                                                <option key={country.iso2} value={country.dialCode}>
+                                                    {`${country.name} (+${country.dialCode})`}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    )}
+                                    />
+                                    <Controller name="whatsappNum" control={control} defaultValue="" render={({ field }) => <input value={userData.whatsappNum || ''} onChange={handleChange} className="box flex" placeholder='Enter your whatsapp number' {...field} />} />
+                                </div>
+                            )}
+                            {isChecked && (errors.whatsappNum) &&
+                                <div className="flex wh">
+                                    <div className="flex wh">
+                                    </div>
+                                    <div className="flex wh" style={{ justifyContent: 'space-around' }}>
+                                        <div className='error'>{errors.whatsappNum?.message}</div>
+                                    </div>
+                                </div>
+                            }
+
+
+
+
+
+
+
 
                             <div className="search-input">
                                 <Controller name="password" control={control} defaultValue="" render={({ field }) => <input type={passwordVisible ? "text" : "password"} value={userData.password || ''} onChange={handleChange} className="box flex" placeholder='Enter your password' {...field} />} />

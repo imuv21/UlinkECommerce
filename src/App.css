@@ -843,6 +843,11 @@ button:focus {
   height: 25px;
 }
 
+.svg2 {
+  width: 100px;
+  height: 100px;
+}
+
 .img {
   width: 15px;
   aspect-ratio: 3/2;
@@ -1093,10 +1098,10 @@ button:focus {
   gap: 20px;
 }
 
-.logo {
+/* .logo {
   object-fit: contain;
   width: 100%;
-}
+} */
 
 .product-image {
   aspect-ratio: 1/1.3;
@@ -1513,7 +1518,7 @@ button:focus {
 /* banner slider styling */
 /* slider */
 .slideshow {
-  margin: 68px auto 0 auto;
+  margin: 0 auto 0 auto;
   overflow: hidden;
   max-width: 100%;
 }
@@ -1591,30 +1596,30 @@ button:focus {
 
 .slide_track-inf {
   display: flex;
-  width: calc(250px * 28);
+  width: calc(180px * 22);
   animation: scroll 70s linear infinite;
-  /* 18 items so 18 and 250px slide width*/
+  /* 22 items so 22 and 180px slide width*/
 }
 
 .slide_track-inf:hover {
   animation-play-state: paused;
 }
 
-/* 18 items so 9 and 250px slide width */
+/* 22 items so 11 and 180px slide width */
 @keyframes scroll {
   0% {
     transform: translateX(0);
   }
 
   100% {
-    transform: translateX(calc(-250px * 14));
+    transform: translateX(calc(-180px * 11));
 
   }
 }
 
 .slide-inf {
-  height: 200px;
-  width: 250px;
+  height: 130px;
+  width: 180px;
   display: flex;
   align-items: center;
   padding: 0px 10px;

@@ -7,6 +7,8 @@ import bg from '../assets/bg.png';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Helmet } from 'react-helmet-async';
+import { useUserType } from '../components/context/CartContext';
+
 const schema = yupResolver(loginSchema);
 
 const Login = () => {
@@ -16,16 +18,24 @@ const Login = () => {
         setPasswordVisible(!passwordVisible);
     };
     const navigate = useNavigate();
+    const { setUserType } = useUserType();
     const signup = () => {
         navigate('/signup');
     }
     const forgotPass = () => {
         navigate('/forgot-password');
     }
+    const [loggedUser, setLoggedUser] = useState({});
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
-    const onSubmit = data => {
-        console.log(data);
-        navigate('/seller-dash');
+    const onSubmit = (formData) => {
+        const updatedLoggedUser = { ...loggedUser, ...formData };
+        localStorage.setItem('loggedUser', JSON.stringify(updatedLoggedUser));
+        localStorage.setItem('userType', JSON.stringify(formData.role));
+        setUserType(formData.role);
+        navigate('/');
+    };
+    const handleChange = (e) => {
+        setLoggedUser({ ...loggedUser, [e.target.name]: e.target.value });
     };
 
     return (
@@ -51,7 +61,7 @@ const Login = () => {
 
                         <form className="flexcol gap" onSubmit={handleSubmit(onSubmit)}>
                             <Controller name="role" control={control} defaultValue="" render={({ field }) => (
-                                <select className="box flex" {...field}>
+                                <select className="box flex" value={loggedUser.role || ''} onChange={handleChange} {...field}>
                                     <option value="">Register as a...</option>
                                     <option value="buyer">Buyer</option>
                                     <option value="seller">Seller</option>
@@ -59,11 +69,11 @@ const Login = () => {
                             )}
                             />
                             {errors.role && <div className='error'>{errors.role.message}</div>}
-                            <Controller name="email" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter your email' {...field} />} />
+                            <Controller name="email" control={control} defaultValue="" render={({ field }) => <input value={loggedUser.email || ''} onChange={handleChange} className="box flex" placeholder='Enter your email' {...field} />} />
                             {errors.email && <div className='error'>{errors.email.message}</div>}
 
                             <div className="search-input">
-                                <Controller name="password" control={control} defaultValue="" render={({ field }) => <input type={passwordVisible ? "text" : "password"} className="box flex" placeholder='Enter your password' {...field} />} />
+                                <Controller name="password" control={control} defaultValue="" render={({ field }) => <input value={loggedUser.password || ''} onChange={handleChange} type={passwordVisible ? "text" : "password"} className="box flex" placeholder='Enter your password' {...field} />} />
                                 <span onClick={togglePasswordVisibility}>
                                     {passwordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
                                 </span>

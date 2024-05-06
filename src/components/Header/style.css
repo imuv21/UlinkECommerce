@@ -1,32 +1,56 @@
 
-
 .icon-container {
   position: relative;
+  cursor: pointer;
 }
 
 .popup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   width: 200px;
-  top: 45px; 
-  right: 240px; 
+  top: 45px;
+  right: 10px;
   height: fit-content;
-  transform: translateX(-50%);
-  gap: var(--pad);
+  transform: translateX(-70%);
+  gap: 10px;
   background-color: white;
   border: var(--border);
-  padding: var(--pad);
+  padding: 20px 12px 10px 12px;
   border-radius: var(--br1);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   opacity: 0;
   transition: opacity 0.3s, transform 0.3s;
+  z-index: 1;
 }
 
-.icon-container:hover .popup {
+.popupbox{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(200, 200, 200);
+}
+
+.popupbox:last-child{
+  padding-bottom: none;
+  border-bottom: none;
+}
+
+.icon-container .popup {
+  opacity: 0;
+  bottom: -10px;
+  transition: opacity 0.3s ease, bottom 0.3s ease;
+}
+
+.icon-container.clicked .popup {
   opacity: 1;
   bottom: 0;
-}
-
-.icon-container:hover .popup {
   animation: fadeIn 0.3s ease forwards;
 }
 
@@ -35,31 +59,170 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.carticon{
+.search-input2 {
   position: relative;
-  width: 50px;
+  display: flex;
+  align-items: center;
+  width: 50%;
+}
+
+.search-input2 input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 22px;
+  width: 100%;
+}
+
+.search-input2 span {
+  position: absolute;
+  right: 10px;
+  top: 70%;
+  transform: translateY(-70%);
   cursor: pointer;
 }
 
-.cartcount{
-  background-color: var(--CodeOne);
-  color: white;
-  font-size: 10px;
-  position: absolute;
-  top: 0px;
-  left: 15px;
+.search-input2 span .MuiSvgIcon-root {
+  width: 22px;
+  height: 22px;
+  color: gray;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 65px;
+  padding: 10px 20px;
+  gap: 20px;
+  background-color: rgb(109, 185, 255);
+}
+
+.head-end, .head-start {
+  gap: 20px;
+}
+
+.logo {
+  width: 100px;
+}
+
+.header-nav {
   width: fit-content;
-  height: 15px;
-  padding: 5px;
-  border-radius: 50%;
+  gap: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
 }
 
+.header-burger {
+  display: none;
+}
+
+.header-burger .MuiSvgIcon-root {
+  width: 30px;
+  height: 30px;
+  color: white;
+}
+
+.drawer {
+  width: 100%;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.username{
+  font-size: 13px;
+  font-weight: bolder;
+  text-transform: capitalize;
+}
+
+.warning-btn3 {
+  background-color: rgb(255, 171, 135);
+  border-radius: 15px;
+  font-size: 12px;
+  padding: 3px 10px;
+}
+
+.pop-options{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 15px;
+  color: rgb(116, 116, 116);
+  transition: var(--trans);
+}
+
+.pop-options:hover{
+  color: black;
+}
+
+.pop-options .MuiSvgIcon-root{
+  width: 20px;
+  height: 20px;
+  color: rgb(116, 116, 116);
+  transition: var(--trans);
+}
+
+.pop-options .MuiSvgIcon-root:hover{
+  color: black;
+}
+
+.subpop-options{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  color: gray;
+  transition: var(--trans);
+}
+
+.subpop-options:hover{
+  color: black;
+}
+
+
+
+@media screen and (max-width: 600px) {
+  .header {
+    gap: 10px;
+  }
+
+  .head-end, .head-start {
+    gap: 10px;
+  }
+
+  .header-burger {
+    display: block;
+  }
+
+  .header-nav {
+    display: none;
+  }
+
+  .logo {
+    width: 70px;
+  }
+
+  .search-input2 {
+    width: 100%;
+  }
+
+  .search-input2 input {
+    padding: 8px 10px;
+    border-radius: 16px;
+  }
+}
