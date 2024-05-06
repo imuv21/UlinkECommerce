@@ -30,7 +30,7 @@ const BecomeASeller = () => {
 
     const navigate = useNavigate();
     const become = () => {
-        navigate('/signup');
+        navigate('/seller-form');
     }
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -211,7 +211,7 @@ const BecomeASeller = () => {
                 </div>
             </div>
 
-            <div className="flexcol wh home">
+            <div className="flexcol wh home-alt">
                 <div className="heading5" style={{ textAlign: 'center', width: '80%', color: 'var(--CodeTwo)' }}>Trade with confidence: We are backed by the Indian Government and strategically located in India (Delhi).</div>
                 <div className="perfect-grid">
                     <div className='flexcol' style={{ gap: '20px' }}>
@@ -237,7 +237,7 @@ const BecomeASeller = () => {
                 </div>
             </div>
 
-            <div className="flexcol wh home" style={{ gap: '60px' }}>
+            <div className="flexcol wh home-alt2">
                 <div className="perfect-grid2">
                     <div>
                         <img src="https://c8n.tradeling.com/img/plain/cms/rs:auto:600::0/f:webp/q:95/Side_Image_7988f4c16b.png" alt="img" />
@@ -300,7 +300,7 @@ const BecomeASeller = () => {
                 </div>
             </div>
 
-            <div className="flexcol wh home" style={{ gap: '60px', backgroundColor: 'var(--bgClr)' }}>
+            <div className="flexcol wh home-alt" style={{  backgroundColor: 'var(--bgClr)' }}>
                 <div className="perfect-grid2">
                     <div className='flexcol' style={{ gap: '30px', alignItems: 'start' }}>
                         <div className="heading5">International sellers, we help you!</div>
@@ -319,7 +319,7 @@ const BecomeASeller = () => {
                     </div>
                 </div>
 
-                <div className="flexcol wh" style={{ gap: '20px' }}>
+                <div className="flexcol wh" style={{ gap: '10px' }}>
                     <div className="heading5">Our International trade partners</div>
                     <div className="descrip3">Our trade partners gets exclusive benefits.</div>
                     <div className="perfect-grid2 trade">
@@ -331,7 +331,7 @@ const BecomeASeller = () => {
                 </div>
             </div>
 
-            <div className="flexcol wh home" style={{ gap: '60px' }}>
+            <div className="flexcol wh home-alt">
                 <div className="flexcol wh" style={{ gap: '20px' }}>
                     <div className="heading5">Success stories</div>
                 </div>
@@ -357,7 +357,7 @@ const BecomeASeller = () => {
                 </div>
             </div>
 
-            <div className="flexcol wh home" style={{ gap: '60px', backgroundColor: 'var(--bgClr)' }}>
+            <div className="flexcol wh home-alt" style={{ backgroundColor: 'var(--bgClr)' }}>
                 <div className="flexcol wh" style={{ gap: '20px' }}>
                     <div className="heading5">Frequently asked questions</div>
                 </div>

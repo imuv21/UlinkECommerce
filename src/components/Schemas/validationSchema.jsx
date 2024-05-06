@@ -103,6 +103,7 @@ export const signupSchema = yup.object().shape({
         .min(8, 'Password must be at least 8 characters')
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/, 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
     confirmPass: yup.string().required('Confirm password is required').oneOf([yup.ref('password'), null], 'Password and confirm password must match'),
+    country: yup.string().required('Country is required'),
 });
 
 export const loginSchema = yup.object().shape({
@@ -121,7 +122,6 @@ export const resetPasswordSchema = yup.object().shape({
 });
 
 export const sellerSchema = yup.object().shape({
-    
     companyName: yup.string().required('Enter company name'),
     countryOperation: yup.string().required('Country of operation is required'),
 });

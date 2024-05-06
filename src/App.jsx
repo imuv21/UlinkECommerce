@@ -63,7 +63,7 @@ function App() {
             
             <Route path='/signup' element={<UserTypeProvider><Signup /></UserTypeProvider>} />
             <Route path='/login' element={<UserTypeProvider><Login /></UserTypeProvider>} />
-            <Route path='/otp' element={<Otp />} />
+            <Route path='/verify-email' element={<Otp />} />
             <Route path='/forgot-password' element={<ForgotPassword />} />
             <Route path='/reset-password' element={<ResetPassword />} />
             <Route path='/guidelines' element={<Layout><Guidelines /></Layout>} />
@@ -74,7 +74,7 @@ function App() {
             <Route path='/seller-form' element={<SellerForm />} />
             <Route path='/become-a-seller' element={<Layout><BecomeASeller /></Layout>} />
             <Route path='/commission-structure' element={<Layout><CommissionStructure /></Layout>} />
-            <Route path='/seller-dash' element={<Layout><SideNav /></Layout>} />
+            <Route path='/buyer-dashboard' element={<Layout><SideNav /></Layout>} />
             <Route path='/editsingle/:index' element={<Layout><EditSingle /></Layout>} />
             <Route path='/product-details/:index' element={<Layout><ProductDetails /></Layout>} />
 

@@ -75,11 +75,11 @@ const Header = () => {
   return (
     <Fragment>
       <div className='header'>
+
         <div className="flex head-start">
           <div className='header-burger' onClick={toggleMobileMenu} >
             <ListIcon />
           </div>
-
           <Link to="/"><img src={logo} alt="Logo" className='logo' /></Link>
         </div>
 
@@ -92,9 +92,8 @@ const Header = () => {
 
         <div className="flex head-start">
           <div className="header-nav">
-            <Link to="/profile">Profile</Link>
-            <Link to="/cart">Cart</Link>
-            <Link to="/about-us">About Us</Link>
+             <Link to="/">Home</Link>
+            {userType === 'buyer' && (<Link to="/become-a-seller">Become A Seller</Link>)}
           </div>
 
           <div className={`icon-container ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
@@ -107,7 +106,7 @@ const Header = () => {
                 </div>
 
                 <div className='popupbox'>
-                  {userType === 'buyer' && (<div className="pop-options"><HomeIcon />Buyer Center</div>)}
+                  {userType === 'buyer' && (<Link to={'/buyer-dashboard'} className="pop-options"><HomeIcon />Buyer Center</Link>)}
                   {userType === 'seller' && (<div className="pop-options"> <DashboardIcon />Dashboard</div>)}
                   <div className="pop-options"> <AllInboxIcon /> Orders </div>
                   {userType === 'seller' && (<div className="pop-options"> <MessageIcon /> Messages </div>)}
@@ -144,6 +143,7 @@ const Header = () => {
             </div>
           )}
         </div>
+        
       </div>
 
 

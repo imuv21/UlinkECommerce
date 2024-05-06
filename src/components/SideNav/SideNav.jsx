@@ -74,7 +74,7 @@ const SideNav = () => {
 
     return (
         <Fragment>
-            <div className='flex seller-dash mt'>
+            <div className='flex seller-dash'>
                 <div className='flexcol sidenav'>
 
                     <button className={`accordion ${activeIndex === 1 ? 'active' : ''}`} onClick={() => { handleOptionClick('OptionOne'); toggleAccordion(1) }}>

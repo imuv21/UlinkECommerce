@@ -8,7 +8,7 @@ const Otp = () => {
     const navigate = useNavigate();
     const sellerForm = (otp) => {
         console.log("OTP:", otp);
-        navigate('/seller-form');
+        navigate('/');
     }
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
     // Focus management

@@ -20,7 +20,7 @@ const SellerForm = () => {
     const onSubmit = (formData) => {
         const updatedSellerData = { ...sellerData, ...formData };
         localStorage.setItem('sellerData', JSON.stringify(updatedSellerData));
-        navigate('/seller-dash');
+        navigate('/');
     };
     const handleChange = (e) => {
         const { name, value } = e.target;

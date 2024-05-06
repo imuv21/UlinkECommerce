@@ -8,6 +8,8 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import bg from '../assets/bg.png';
 import { Helmet } from 'react-helmet-async';
 import { allCountries } from '../components/Schemas/countryCodes';
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 const schema = yupResolver(signupSchema);
 const Signup = () => {
@@ -36,7 +38,8 @@ const Signup = () => {
     const onSubmit = (formData) => {
         const updatedUserData = { ...userData, ...formData };
         localStorage.setItem('userData', JSON.stringify(updatedUserData));
-        navigate('/otp');
+        navigate('/verify-email');
+        // navigate('/seller-form');
     };
     const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -68,6 +71,30 @@ const Signup = () => {
         setSelectedCountryTwo(selected);
     }
 
+
+
+
+    //select country form api
+    const [coperation, setCoperation] = useState([]);
+    const [selectedOp, setSelectedOp] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json');
+                const data = response.data;
+                const uniqueCountries = [...new Set(data.map(city => city.country))];
+                setCoperation(uniqueCountries);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const operationSelectChange = (event) => {
+        setSelectedOp(event.target.value);
+    };
 
     return (
         <Fragment>
@@ -150,7 +177,7 @@ const Signup = () => {
                                 </div>
                             }
                             <div className="flex" style={{ width: '100%', gap: '10px', justifyContent: 'start' }}>
-                                <input type="checkbox" style={{cursor: 'pointer'}} checked={isChecked} onChange={handleCheckboxChange} /><div className="heading2">My whatsapp number is different</div>
+                                <input type="checkbox" style={{ cursor: 'pointer' }} checked={isChecked} onChange={handleCheckboxChange} /><div className="heading2">My whatsapp number is different</div>
                             </div>
                             {isChecked && (
                                 <div className='flex wh' style={{ gap: '30px' }}>
@@ -200,6 +227,17 @@ const Signup = () => {
                                 </span>
                             </div>
                             {errors.confirmPass && <div className='error'>{errors.confirmPass.message}</div>}
+
+                            <Controller name="country" value={selectedOp} onChange={operationSelectChange} control={control} defaultValue="" render={({ field }) => (
+                                <select className="box flex" value={userData.country || ''} onChange={handleChange}  {...field} >
+                                    <option value="">Choose your country</option>
+                                    {coperation.map((country) => (
+                                        <option key={uuidv4()} value={country}>{country}</option>
+                                    ))}
+                                </select>
+                            )}
+                            />
+                            {errors.country && <div className='error'>{errors.country.message}</div>}
 
                             <button className='btn box flex' type='submit'><div className="heading2">Continue</div></button>
                             <div className="descrip">By registering you agree to the user Terms & Conditions and Privacy Policy</div>

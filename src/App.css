@@ -324,6 +324,16 @@ button:focus {
   gap: 30px;
 }
 
+.home-alt{
+  padding: 30px 20px;
+  gap: 30px;
+}
+
+.home-alt2{
+  padding: 20px;
+  gap: 0px;
+}
+
 
 
 /* product card */
@@ -476,12 +486,11 @@ button:focus {
   align-items: start;
   justify-content: center;
   width: 100%;
-  padding: 280px 120px 20px 120px;
+  padding: 50px 120px 0px 120px;
   gap: 20px;
-  margin-top: -150px;
   position: relative;
   background-image: url('./assets/wave-haikei.svg');
-  background-position: center;
+  background-position: 50% calc(100% - (-150px));
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -518,7 +527,7 @@ button:focus {
   width: 100%;
   display: grid;
   gap: 30px;
-  padding: 20px;
+  padding: 10px;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
@@ -633,7 +642,6 @@ button:focus {
 
 /* commission-structure */
 .commission {
-  margin-top: 65px;
   background: url('./assets/awesome.svg');
   background-position: top;
   background-repeat: no-repeat;
@@ -1666,7 +1674,7 @@ button:focus {
 }
 
 .product-detail {
-  padding: 100px 120px 60px 120px;
+  padding: 40px 120px 40px 120px;
   gap: 30px;
 }
 
@@ -1796,7 +1804,7 @@ button:focus {
 
  /* Cart styling */
  .cart_page{
-  padding: 100px 120px 60px 120px;
+  padding: 40px 120px 40px 120px;
   gap: 30px;
   height: 100vh;
  }
