@@ -92,12 +92,12 @@ const Header = () => {
 
         <div className="flex head-start">
           <div className="header-nav">
-             <Link to="/">Home</Link>
-            {userType === 'buyer' && (<Link to="/become-a-seller">Become A Seller</Link>)}
+             <Link to="/" className='header-btns'>Home</Link>
+            {userType === 'buyer' && (<Link to="/become-a-seller" className='header-btns'>Become A Seller</Link>)}
           </div>
 
           <div className={`icon-container ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
-            <AccountCircleIcon />
+            <AccountCircleIcon style={{color: 'white',  filter: "drop-shadow(2px 2px 2px black)"}} />
             {isClicked && (
               <div className="popup">
                 <div className='popupbox'>
@@ -138,7 +138,7 @@ const Header = () => {
 
           {userType === 'buyer' && (
             <div style={{ position: 'relative', cursor: 'pointer' }} onClick={tocart}>
-              <ShoppingCartIcon />
+              <ShoppingCartIcon style={{color: 'white', filter: "drop-shadow(2px 2px 2px black)"}} />
               <div style={cartcount}>{carttext}</div>
             </div>
           )}

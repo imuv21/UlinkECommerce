@@ -14,27 +14,61 @@ const FilterPage = () => {
     //product api
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
+    const [sortBy, setSortBy] = useState('low');
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('https://fakestoreapi.com/products');
-                setProducts(response.data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchData();
-    }, []);
+        if (products.length === 0) {
+            const fetchData = async () => {
+                try {
+                    const response = await axios.get('https://fakestoreapi.com/products');
+                    setProducts(response.data);
+                } catch (error) {
+                    console.log(error);
+                }
+            };
+            fetchData();
+        }
+    }, [products]);
 
-    // filter products based on price range
+
+
+    // filter products based on price range and short products
     useEffect(() => {
         const filtered = products.filter(product => {
             const productPrice = parseFloat(product.price);
             return productPrice >= price[0] && productPrice <= price[1];
         });
-        setFilteredProducts(filtered);
-    }, [price, products]);
 
+        let sortedProducts = [...filtered];
+        switch (sortBy) {
+            case 'newest':
+                sortedProducts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                break;
+            case 'oldest':
+                sortedProducts.sort((a, b) => new Date(a.date) - new Date(b.date));
+                break;
+            case 'high':
+                sortedProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+                break;
+            case 'low':
+                sortedProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+                break;
+            // case 'relevance': // Implement relevance sorting if needed
+            //     // Implement relevance sorting logic
+            //     break;
+            default:
+                break;
+        }
+        setFilteredProducts(sortedProducts);
+    }, [products, price, sortBy]);
+
+    const handleSortChange = (event) => {
+        setSortBy(event.target.value);
+    };
+
+
+
+
+    //TruncateText
     const truncateText = (text, maxLength) => {
         if (text.length <= maxLength) {
             return text;
@@ -97,12 +131,12 @@ const FilterPage = () => {
                         <div className="heading2 wh">Healthy Snacks (21 Products)</div>
                         <div className="flex" style={{ gap: '20px' }}>
                             <div className="heading2" style={{ whiteSpace: 'nowrap' }}>Short By</div>
-                            <select name="shortby" className='selectshort'>
+                            <select name="shortby" className='selectshort' value={sortBy} onChange={handleSortChange}>
                                 <option value="newest">Newest</option>
                                 <option value="oldest">Oldest</option>
                                 <option value="high">Price : High to Low</option>
                                 <option value="low">Price : Low to High</option>
-                                <option value="relevance">Relevance</option>
+                                {/* <option value="relevance">Relevance</option> */}
                             </select>
                         </div>
                     </div>

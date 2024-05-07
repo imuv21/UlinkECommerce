@@ -78,6 +78,7 @@
   border: 1px solid #ccc;
   border-radius: 22px;
   width: 100%;
+  filter: drop-shadow(2px 2px 2px black);
 }
 
 .search-input2 span {
@@ -99,10 +100,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 65px;
+  height: 75px;
   padding: 10px 20px;
   gap: 20px;
-  background-color: rgb(109, 185, 255);
+  background-color: #004c6f;
 }
 
 .head-end, .head-start {
@@ -110,7 +111,8 @@
 }
 
 .logo {
-  width: 100px;
+  width: 120px;
+  filter: drop-shadow(2px 2px 2px black);
 }
 
 .header-nav {
@@ -192,6 +194,18 @@
 
 .subpop-options:hover{
   color: black;
+}
+
+.header-btns{
+  width: fit-content;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--br2);
+  background-color: var(--CodeTwo);
+  color: white;
+  filter: drop-shadow(2px 2px 2px black);
 }
 
 
