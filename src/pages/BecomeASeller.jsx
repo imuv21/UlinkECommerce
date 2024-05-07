@@ -15,6 +15,7 @@ import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import Amazon_Global_Selling_Logo from '../assets/Amazon_Global_Selling_Logo.png';
 import dpworld from '../assets/dpworld.png';
 import amazon from '../assets/amazon.png';
+import howitworks from '../assets/howitworks.png';
 import ulinkposter from '../assets/comp.png';
 import './Cart/cart.css';
 import { Helmet } from 'react-helmet-async';
@@ -237,10 +238,10 @@ const BecomeASeller = () => {
                 </div>
             </div>
 
-            <div className="flexcol wh home-alt2">
+            <div className="flexcol wh home-alt">
                 <div className="perfect-grid2">
-                    <div>
-                        <img src="https://c8n.tradeling.com/img/plain/cms/rs:auto:600::0/f:webp/q:95/Side_Image_7988f4c16b.png" alt="img" />
+                    <div className='ulink-img'>
+                        <img src={howitworks} alt="img" />
                     </div>
                     <div className='flexcol-start' style={{ gap: '30px' }}>
                         <div className="heading5">How it works</div>
@@ -314,7 +315,7 @@ const BecomeASeller = () => {
                             <CheckCircleIcon style={{ color: 'var(--CodeTwo)' }} />We offer Exporter of Record services, if you do not have an export licence.
                         </div>
                     </div>
-                    <div className=''>
+                    <div className='ulink-img'>
                         <img src={ulinkposter} alt="img" />
                     </div>
                 </div>

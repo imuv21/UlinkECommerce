@@ -28,6 +28,9 @@ const CommissionStructure = lazy(() => import('./pages/CommissionStructure'));
 const SideNav = lazy(() => import('./components/SideNav/SideNav'));
 const EditSingle = lazy(() => import("./components/SellerDashboard/EditSingle"));
 const ProductDetails = lazy(() => import('./pages/Cart/ProductDetails'));
+const SellerOrder = lazy(() => import('./components/SellerDashboard/SellerOrder/SellerOrder'));
+
+
 
 
 //public
@@ -40,7 +43,8 @@ const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 const Guidelines = lazy(() => import('./pages/Guidelines/Guidelines'));
 const Checkout = lazy(() => import('./pages/Cart/Checkout'));
 const Cart = lazy(() => import('./pages/Cart/Cart'));
-
+const FilterPage = lazy(() => import('./pages/FilterPage'));
+const CategoryPages = lazy(() => import('./pages/CategoryPages'));
 
 //Other
 const Image = lazy(() => import('./components/Image'));
@@ -60,23 +64,28 @@ function App() {
 
             {/* public */}
             <Route path='/' element={<Layout><Home /></Layout>} />
-            
+
             <Route path='/signup' element={<UserTypeProvider><Signup /></UserTypeProvider>} />
             <Route path='/login' element={<UserTypeProvider><Login /></UserTypeProvider>} />
-            <Route path='/verify-email' element={<Otp />} />
+            <Route path='/verify-email' element={<UserTypeProvider><Otp /></UserTypeProvider>} />
             <Route path='/forgot-password' element={<ForgotPassword />} />
             <Route path='/reset-password' element={<ResetPassword />} />
             <Route path='/guidelines' element={<Layout><Guidelines /></Layout>} />
-            
+            <Route path='/product-details/:index' element={<Layout><ProductDetails /></Layout>} />
+            <Route path='/search-results' element={<Layout><FilterPage /></Layout>} />
+            <Route path= '/category-pages/:category' element={<Layout><CategoryPages /></Layout>} />
+
 
 
             {/* Seller dashboard */}
-            <Route path='/seller-form' element={<SellerForm />} />
+            <Route path='/seller-form' element={<UserTypeProvider><SellerForm /></UserTypeProvider>} />
             <Route path='/become-a-seller' element={<Layout><BecomeASeller /></Layout>} />
             <Route path='/commission-structure' element={<Layout><CommissionStructure /></Layout>} />
-            <Route path='/buyer-dashboard' element={<Layout><SideNav /></Layout>} />
+            <Route path="/seller-dashboard" element={<Layout><SideNav /></Layout>} />
             <Route path='/editsingle/:index' element={<Layout><EditSingle /></Layout>} />
-            <Route path='/product-details/:index' element={<Layout><ProductDetails /></Layout>} />
+            <Route path="/seller-order" element={<Layout><SellerOrder /></Layout>} />
+           
+
 
 
             {/* other */}

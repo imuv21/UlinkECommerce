@@ -13,9 +13,11 @@ import PaymentDetails from '../SellerDashboard/PaymentDetails';
 import SellerAddress from '../SellerDashboard/SellerAddress';
 import Shipping from '../SellerDashboard/Shipping';
 import SellerOrder from '../SellerDashboard/SellerOrder/SellerOrder';
+import { useNavigate } from 'react-router-dom';
 
 const SideNav = () => {
 
+    const navigate = useNavigate();
 
     const [selectedOp, setSelectedOp] = useState(null);
     const handleOpClick = (op) => {
@@ -43,28 +45,40 @@ const SideNav = () => {
             case 'OptionOne':
                 return <SellerHome />;
             case 'OptionTwo':
+             
                 return <AddSingle />;
             case 'OptionThree':
+               
                 return <AddMulti handleOptionClick={handleOptionClick} />;
             case 'OptionFour':
+                
                 return <ProductList handleOptionClick={handleOptionClick} />;
             case 'OptionFive':
+         
                 return <Media />;
             case 'OptionSix':
+              
                 return <UploadProducts handleOptionClick={handleOptionClick} />;
             case 'OptionSeven':
+             
                 return <EditProducts handleOptionClick={handleOptionClick} />;
             case 'OptionEight':
+            
                 return <ArchiveUploads handleOptionClick={handleOptionClick} />;
             case 'Option13':
+              
                 return <Payments handleOptionClick={handleOptionClick} />;
             case 'Option14':
+              
                 return <PaymentDetails handleOptionClick={handleOptionClick} />;
             case 'Option15':
+             
                 return <SellerAddress />;
             case 'Option16':
+            
                 return <Shipping />;
             case 'Option17':
+            
                 return <SellerOrder />;
             default:
                 return <SellerHome />;

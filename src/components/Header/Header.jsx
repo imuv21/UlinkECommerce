@@ -107,8 +107,8 @@ const Header = () => {
 
                 <div className='popupbox'>
                   {userType === 'buyer' && (<Link to={'/buyer-dashboard'} className="pop-options"><HomeIcon />Buyer Center</Link>)}
-                  {userType === 'seller' && (<div className="pop-options"> <DashboardIcon />Dashboard</div>)}
-                  <div className="pop-options"> <AllInboxIcon /> Orders </div>
+                  {userType === 'seller' && (<Link to={'/seller-dashboard'} className="pop-options"> <DashboardIcon />Dashboard</Link>)}
+                  <Link to={userType === 'seller' ? '/seller-order' : '/order-page'} className="pop-options"> <AllInboxIcon /> Orders </Link>
                   {userType === 'seller' && (<div className="pop-options"> <MessageIcon /> Messages </div>)}
                   <div className="pop-options"> <SendTimeExtensionIcon /> RFQ Marketplace </div>
                   <div className="pop-options"> <SendIcon />{userType === 'buyer' ? 'Create RFQ' : 'Manage Quotes'}</div>

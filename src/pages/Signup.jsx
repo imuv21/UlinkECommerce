@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet-async';
 import { allCountries } from '../components/Schemas/countryCodes';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { useUserType } from '../components/context/CartContext';
 
 const schema = yupResolver(signupSchema);
 const Signup = () => {
@@ -23,27 +24,36 @@ const Signup = () => {
     const toggleConPasswordVisibility = () => {
         setConPasswordVisible(!conPasswordVisible);
     };
-
     const [isChecked, setIsChecked] = useState(false);
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
 
+
+
+
+
+
     const [userData, setUserData] = useState({});
+    const { setUserType } = useUserType();
     const navigate = useNavigate();
     const login = () => {
         navigate('/login');
     }
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
-    const onSubmit = (formData) => {
-        const updatedUserData = { ...userData, ...formData };
-        localStorage.setItem('userData', JSON.stringify(updatedUserData));
-        navigate('/verify-email');
-        // navigate('/seller-form');
+    const onSubmit = async (formData) => {
+        
+            const updatedUserData = { ...userData, ...formData };
+            localStorage.setItem('userData', JSON.stringify(updatedUserData));
+            localStorage.setItem('userType', JSON.stringify(formData.role));
+            setUserType(formData.role);
+            navigate('/verify-email');
+
     };
     const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
     };
+
 
 
 
@@ -77,7 +87,6 @@ const Signup = () => {
     //select country form api
     const [coperation, setCoperation] = useState([]);
     const [selectedOp, setSelectedOp] = useState('');
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -91,10 +100,10 @@ const Signup = () => {
         };
         fetchData();
     }, []);
-
     const operationSelectChange = (event) => {
         setSelectedOp(event.target.value);
     };
+    
 
     return (
         <Fragment>
@@ -204,12 +213,6 @@ const Signup = () => {
                                     </div>
                                 </div>
                             }
-
-
-
-
-
-
 
 
                             <div className="search-input">

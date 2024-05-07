@@ -2,13 +2,19 @@ import React, { useRef, useState, useEffect, Fragment } from 'react'
 import { useNavigate } from 'react-router-dom';
 import bg from '../assets/bg.png';
 import { Helmet } from 'react-helmet-async';
+import { useUserType } from '../components/context/CartContext';
 
 const Otp = () => {
 
+    const { userType } = useUserType();
     const navigate = useNavigate();
     const sellerForm = (otp) => {
         console.log("OTP:", otp);
-        navigate('/');
+        if(userType === 'seller'){
+            navigate('/seller-form');
+        } else{
+            navigate('/');
+        }
     }
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
     // Focus management

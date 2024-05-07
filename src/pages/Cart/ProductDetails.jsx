@@ -10,12 +10,16 @@ import boxx from '../../assets/boxx.png';
 import './cart.css';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useUserType } from '../../components/context/CartContext';
+import InfoIcon from '@mui/icons-material/Info';
 
 const ProductDetails = () => {
 
+    const { userType } = useUserType();
+
+
     const { index } = useParams();
     const [product, setProduct] = useState(null);
-
     useEffect(() => {
         const savedSingleFormData = JSON.parse(localStorage.getItem('singleFormData')) || [];
         const selectedProduct = savedSingleFormData[parseInt(index)];
@@ -66,7 +70,6 @@ const ProductDetails = () => {
     const decrementValue = () => {
         setValue(prevValue => Math.max(parseInt(prevValue) - 1, moq).toString());
     };
-
     const handleInputChange = (e) => {
         const newValue = parseInt(e.target.value);
         setValue(newValue >= moq ? newValue.toString() : moq.toString());
@@ -107,7 +110,6 @@ const ProductDetails = () => {
     const handleImageClick = (image) => {
         setSelectedImage(image);
     };
-
 
 
     //bullet-points
@@ -178,7 +180,7 @@ const ProductDetails = () => {
                             </div>
                             <div className="heading2 wh">We accept</div>
                             <div className="heading3 wh">About this item</div>
-                            { product.bulletPoints && renderBulletPoints(product.bulletPoints)}
+                            {product.bulletPoints && renderBulletPoints(product.bulletPoints)}
                             <div className="flexcol wh">
                                 <div className={`accordion-pd ${activeIndex === 1 ? 'active' : ''}`} onClick={() => toggleProductAccordion(1)}>
                                     <div className="heading3 flex"><img src={proDetail} className='img-big' alt="" />&nbsp;&nbsp;Product details</div>
@@ -223,8 +225,13 @@ const ProductDetails = () => {
                                 </div>
 
                                 <div className="flexcol wh" style={{ gap: '10px' }}>
-                                    <button className='btn2 addtocart flex' onClick={addToCart}><AddShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Add to cart</div></button>
-                                    <button className='btn addtocart flex'><div className="heading2">Negotiate with seller</div></button>
+                                    {userType === 'seller' && (<div className="descrip2 flex" style={{gap:'10px'}}><InfoIcon style={{color: 'gray'}} />To purchase products, please log in using your Buyer account.</div>)}
+                                    {userType === 'buyer' && (
+                                        <Fragment>
+                                            <button className='btn2 addtocart flex' onClick={addToCart}><AddShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Add to cart</div></button>
+                                            <button className='btn addtocart flex'><div className="heading2">Negotiate with seller</div></button>
+                                        </Fragment>
+                                    )}
                                 </div>
                             </div>
                             <div className="sel-box" style={{ gap: '20px' }}>

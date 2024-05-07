@@ -14,7 +14,6 @@ const SellerForm = () => {
 
     const navigate = useNavigate();
     
-
     const [sellerData, setSellerData] = useState({});
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
     const onSubmit = (formData) => {
