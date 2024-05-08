@@ -1227,6 +1227,15 @@ button:focus {
   padding: 20px;
 }
 
+.fragment{
+  gap: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 /* add multiple product -- upload products  */
 .upBtns {
   display: flex;

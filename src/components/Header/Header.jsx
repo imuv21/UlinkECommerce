@@ -18,6 +18,10 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import MessageIcon from '@mui/icons-material/Message';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import DepartureBoardIcon from '@mui/icons-material/DepartureBoard';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+
 const Header = () => {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -144,6 +148,29 @@ const Header = () => {
           )}
         </div>
         
+      </div>
+      <div className="sub-header">
+        <div className="sup-header-option">
+          <div className="heading3">All Categories</div>
+          <div className="heading2">Consumer Electronics</div>
+          <div className="heading2">Office & Stationery</div>
+          <div className="heading2">Food & Beverages</div>
+          <div className="heading2">Personal Care</div>
+        </div>
+        <div className="sup-header-option">
+          <div className="sub-header-option">
+            <LocalOfferIcon /> <div className="heading3">Deals</div>
+          </div>
+          <div className="sub-header-option">
+            <DepartureBoardIcon /> <div className="heading3">Express</div>
+          </div>
+          <div className="sub-header-option">
+            <SendIcon /> <div className="heading3">RFQ Marketplace</div>
+          </div>
+          <div className="sub-header-option">
+            <BusinessCenterIcon /> <div className="heading3">Enterprise</div>
+          </div>
+        </div>
       </div>
 
 

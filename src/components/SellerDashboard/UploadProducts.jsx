@@ -186,10 +186,10 @@ const UploadProducts = ({ handleOptionClick }) => {
                 filename = "Ulinkit-template-common.xlsx";
                 break;
             case "Automotive":
-                filename = "Ulinkit-template-common.xlsx";
+                filename = "Automotive.xlsx";
                 break;
             case "FoodAndBeverages":
-                filename = "Ulink-template-grocery.xlsx";
+                filename = "FoodAndBeverages.xlsx";
                 break;
             case "BabyCenter":
                 filename = "Ulinkit-template-common.xlsx";

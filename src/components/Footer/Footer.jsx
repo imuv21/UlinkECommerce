@@ -92,7 +92,7 @@ const Footer = () => {
               <div className="flex" style={{ gap: '20px' }}>
                 <img src={whatsapp} style={{ width: '30px' }} alt="whatsapp" />
                 <div className="flexcol" style={{ gap: '2px' }}>
-                  <div className="number">+91 9475326732</div>
+                  <div className="number">+91 8750518844</div>
                   <div className="whtext">Chat On WhatsApp</div>
                 </div>
               </div>

@@ -87,6 +87,11 @@ const EditSingle = () => {
             setValue('minOrderQuant', savedSingleFormData[index].minOrderQuant);
 
             setValue('shelflife', savedSingleFormData[index].shelflife);
+            setValue('ingredients', savedSingleFormData[index].ingredients);
+
+            setValue('color', savedSingleFormData[index].color);
+            setValue('imodelNum', savedSingleFormData[index].imodelNum);
+            setValue('packType', savedSingleFormData[index].packType);
 
             setMarketingValue(savedSingleFormData[index].marketingValue);
             setCategoryPath(savedSingleFormData[index].categoryPath);
@@ -152,36 +157,6 @@ const EditSingle = () => {
         document.getElementById('file-input').click();
     };
 
-
-    // const onFileSelect = (event) => {
-    //     const files = event.target.files;
-    //     if (files.length === 0) return;
-    //     for (let i = 0; i < files.length; i++) {
-    //         const file = files[i]; 
-    //         if (file) {
-    //             if (file.type.split('/')[0] === 'image') {
-                    
-    //                 const reader = new FileReader();
-    //                 reader.onload = (e) => {
-    //                     setImages((prevImages) => [
-    //                         ...prevImages,
-    //                         {
-    //                             name: file.name, 
-    //                             url: e.target.result,
-    //                             size: file.size,
-    //                         },
-    //                     ]);
-    //                 };
-    //                 reader.readAsDataURL(file);
-    //             }
-    //         }
-    //     }
-    //     setFileInputValue(''); 
-    // };
-
-
-
-
     const onFileSelect = (event) => {
         const files = event.target.files;
         if (files.length === 0) return;
@@ -210,14 +185,6 @@ const EditSingle = () => {
         }
         setFileInputValue('');
     };
-    
-
-
-
-
-
-
-
 
     const deleteImage = (index) => {
         setImages((prevImages) => {
@@ -729,8 +696,37 @@ const EditSingle = () => {
 
 
                 {selectedSupOption === "FoodAndBeverages" && (
-                    <Controller name="shelflife" control={control} defaultValue={singleFormData.shelflife || ''} render={({ field }) => <input className="box flex" placeholder='Enter shelf life (days)' {...field} />} />
+                    <div className="fragment">
+                        <Controller name="shelflife" control={control} defaultValue={singleFormData.shelflife || ''} render={({ field }) => <input className="box flex" placeholder='Enter shelf life (days)' {...field} />} />
+                        <Controller name="ingredients" control={control} defaultValue={singleFormData.ingredients || ''} render={({ field }) => <input className="box flex" placeholder='Enter ingredients' {...field} />} />
+                    </div>
                 )}
+                {selectedSupOption === "Automotive" && (
+                    <div className="fragment">
+                        <Controller name="color" control={control} defaultValue={singleFormData.color || ''} render={({ field }) => (
+                            <select className="box flex"  {...field}>
+                                <option value="">Select color</option>
+                                <option value="red">Red</option>
+                                <option value="orange">Orange</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="green">Green</option>
+                                <option value="blue">Blue</option>
+                                <option value="purple">Purple</option>
+                                <option value="pink">Pink</option>
+                                <option value="silver">Silver</option>
+                                <option value="gold">Gold</option>
+                                <option value="black">Black</option>
+                                <option value="white">White</option>
+                                <option value="grey">Grey</option>
+                                <option value="brown">Brown</option>
+                            </select>
+                        )}
+                        />
+                        <Controller name="imodelNum" control={control} defaultValue={singleFormData.imodelNum || ''} render={({ field }) => <input className="box flex" placeholder='Enter item model number' {...field} />} />
+                        <Controller name="packType" control={control} defaultValue={singleFormData.packType || ''} render={({ field }) => <input className="box flex" placeholder='Enter packaging type' {...field} />} />
+                    </div>
+                )}
+
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                     <button className='btn box2 flex' onClick={handleCancel} style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Cancel</div></button>
                     <button className='btn box2 flex' onClick={uploadImages} type='submit' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Update</div></button>

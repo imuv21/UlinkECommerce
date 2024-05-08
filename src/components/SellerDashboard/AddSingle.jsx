@@ -21,35 +21,6 @@ const AddSingle = () => {
         document.getElementById('file-input').click();
     };
 
-    
-
-    // const onFileSelect = (event) => {
-    //     const files = event.target.files;
-    //     if (files.length === 0) return;
-    //     for (let i = 0; i < files.length; i++) {
-    //         const file = files[i];
-    //         if (file.type.split('/')[0] === 'image') {
-                
-    //             const reader = new FileReader();
-    //             reader.onload = (e) => {
-    //                 setImages((prevImages) => [
-    //                     ...prevImages,
-    //                     {
-    //                         name: file.name,
-    //                         url: e.target.result,
-    //                         size: file.size,
-    //                     },
-    //                 ]);
-    //             };
-    //             reader.readAsDataURL(file);
-    //         }
-    //     }
-    //     setFileInputValue('');
-    // };
-    
-
-
-
     const onFileSelect = (event) => {
         const files = event.target.files;
         if (files.length === 0) return;
@@ -78,13 +49,6 @@ const AddSingle = () => {
         }
         setFileInputValue('');
     };
-    
-
-
-
-
-
-
 
     const deleteImage = (index) => {
         setImages((prevImages) => {
@@ -181,7 +145,7 @@ const AddSingle = () => {
     };
     const getMarginValue = () => {
         switch (selectedSupOption) {
-          
+
             case "ConsumerElectronics":
                 return 2.5;
             case "FashionAndAccessories":
@@ -247,7 +211,7 @@ const AddSingle = () => {
         setSingleFormData({ ...singleFormData, [e.target.name]: e.target.value });
     };
 
-    
+
     //focus
     const scrollRef = useRef(null);
     useEffect(() => {
@@ -268,25 +232,25 @@ const AddSingle = () => {
                 <div className="heading3">Basic information</div>
 
                 <div className="flex-start wh" style={{ gap: '10px' }}>
-                    <select onChange={handleSupOptionChange}  className="box flex">
+                    <select onChange={handleSupOptionChange} className="box flex">
                         <option value="">Select category</option>
                         {supOptions.map((option, index) => (
                             <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                         ))}
                     </select>
-                    <select onChange={handleSubOptionChange}  className="box flex">
+                    <select onChange={handleSubOptionChange} className="box flex">
                         <option value="">Select sub category</option>
                         {subOptions[selectedSupOption] && subOptions[selectedSupOption].map((option, index) => (
                             <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                         ))}
                     </select>
-                    <select onChange={handleMiniSubOptionChange}  className="box flex">
+                    <select onChange={handleMiniSubOptionChange} className="box flex">
                         <option value="">Select an option</option>
                         {miniSubOptions[selectedSubOption] && miniSubOptions[selectedSubOption].map((option, index) => (
                             <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
                         ))}
                     </select>
-                    <select onChange={handleMicroSubOptionChange}  className="box flex">
+                    <select onChange={handleMicroSubOptionChange} className="box flex">
                         <option value="">Select sub option</option>
                         {microSubOptions[selectedMiniSubOption] && microSubOptions[selectedMiniSubOption].map((option, index) => (
                             <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
@@ -762,7 +726,35 @@ const AddSingle = () => {
                 {errors.temperature && <div className='error'>{errors.temperature?.message}</div>}
 
                 {selectedSupOption === "FoodAndBeverages" && (
-                    <Controller name="shelflife" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.shelflife || ''} onChange={handleChange} className="box flex" placeholder='Enter shelf life (days)' {...field} />} />
+                    <div className="fragment">
+                        <Controller name="shelflife" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.shelflife || ''} onChange={handleChange} className="box flex" placeholder='Enter shelf life (days)' {...field} />} />
+                        <Controller name="ingredients" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.ingredients || ''} onChange={handleChange} className="box flex" placeholder='Enter ingredients' {...field} />} />
+                    </div>
+                )}
+                {selectedSupOption === "Automotive" && (
+                    <div className="fragment">
+                        <Controller name="color" control={control} defaultValue="" render={({ field }) => (
+                            <select className="box flex" value={singleFormData.color || ''} onChange={handleChange}  {...field}>
+                                <option value="">Select color</option>
+                                <option value="red">Red</option>
+                                <option value="orange">Orange</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="green">Green</option>
+                                <option value="blue">Blue</option>
+                                <option value="purple">Purple</option>
+                                <option value="pink">Pink</option>
+                                <option value="silver">Silver</option>
+                                <option value="gold">Gold</option>
+                                <option value="black">Black</option>
+                                <option value="white">White</option>
+                                <option value="grey">Grey</option>
+                                <option value="brown">Brown</option>
+                            </select>
+                        )}
+                        />
+                        <Controller name="imodelNum" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.imodelNum || ''} onChange={handleChange} className="box flex" placeholder='Enter item model number' {...field} />} />
+                        <Controller name="packType" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.packType || ''} onChange={handleChange} className="box flex" placeholder='Enter packaging type' {...field} />} />
+                    </div>
                 )}
 
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
