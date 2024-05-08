@@ -8,6 +8,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Drawer from '@mui/material/Drawer';
 import { useCart, useUserType } from '../context/CartContext';
 import logo from '../../assets/logo2.png';
+import ReactFlagsSelect from "react-flags-select";
 
 import HomeIcon from '@mui/icons-material/Home';
 import AllInboxIcon from '@mui/icons-material/AllInbox';
@@ -22,7 +23,10 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import DepartureBoardIcon from '@mui/icons-material/DepartureBoard';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 
+
 const Header = () => {
+
+  const [selected, setSelected] = useState("");
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const toggleMobileMenu = () => {
@@ -87,6 +91,8 @@ const Header = () => {
           <Link to="/"><img src={logo} alt="Logo" className='logo' /></Link>
         </div>
 
+        <ReactFlagsSelect id="select-contry"  selected={selected} onSelect={(selected) => setSelected(selected)} placeholder="Select Country " searchable searchPlaceholder="Search countries" />{" "}
+
         <div className="search-input2">
           <input type='text' placeholder='Search here...' />
           <span>
@@ -95,13 +101,10 @@ const Header = () => {
         </div>
 
         <div className="flex head-start">
-          <div className="header-nav">
-             <Link to="/" className='header-btns'>Home</Link>
-            {userType === 'buyer' && (<Link to="/become-a-seller" className='header-btns'>Become A Seller</Link>)}
-          </div>
+          
 
           <div className={`icon-container ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
-            <AccountCircleIcon style={{color: 'white',  filter: "drop-shadow(2px 2px 2px black)"}} />
+            <AccountCircleIcon style={{color: 'black'}} />
             {isClicked && (
               <div className="popup">
                 <div className='popupbox'>
@@ -142,7 +145,7 @@ const Header = () => {
 
           {userType === 'buyer' && (
             <div style={{ position: 'relative', cursor: 'pointer' }} onClick={tocart}>
-              <ShoppingCartIcon style={{color: 'white', filter: "drop-shadow(2px 2px 2px black)"}} />
+              <ShoppingCartIcon style={{color: 'black'}} />
               <div style={cartcount}>{carttext}</div>
             </div>
           )}
@@ -151,25 +154,26 @@ const Header = () => {
       </div>
       <div className="sub-header">
         <div className="sup-header-option">
-          <div className="heading3">All Categories</div>
-          <div className="heading2">Consumer Electronics</div>
-          <div className="heading2">Office & Stationery</div>
-          <div className="heading2">Food & Beverages</div>
-          <div className="heading2">Personal Care</div>
+          <div className="sub-heading3">All Categories</div>
+          <div className="sub-heading2">Consumer Electronics</div>
+          <div className="sub-heading2">Office & Stationery</div>
+          <div className="sub-heading2">Food & Beverages</div>
+          <div className="sub-heading2">Personal Care</div>
         </div>
         <div className="sup-header-option">
           <div className="sub-header-option">
-            <LocalOfferIcon /> <div className="heading3">Deals</div>
+            <LocalOfferIcon /> <div className="sub-heading3">Deals</div>
           </div>
           <div className="sub-header-option">
-            <DepartureBoardIcon /> <div className="heading3">Express</div>
+            <DepartureBoardIcon /> <div className="sub-heading3">Express</div>
           </div>
           <div className="sub-header-option">
-            <SendIcon /> <div className="heading3">RFQ Marketplace</div>
+            <SendIcon /> <div className="sub-heading3">RFQ Marketplace</div>
           </div>
           <div className="sub-header-option">
-            <BusinessCenterIcon /> <div className="heading3">Enterprise</div>
+            <BusinessCenterIcon /> <div className="sub-heading3">Enterprise</div>
           </div>
+          {userType === 'buyer' && (<Link to="/become-a-seller" className='header-btns'>Become A Seller</Link>)}
         </div>
       </div>
 
