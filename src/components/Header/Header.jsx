@@ -26,7 +26,7 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 
 const Header = () => {
 
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState("IN");
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const toggleMobileMenu = () => {
