@@ -105,7 +105,7 @@ const Header = () => {
             {isClicked && (
               <div className="popup">
                 <div className='popupbox'>
-                  <div className="username">Uttam verma</div>
+                  <div className="username">Username</div>
                   <div className="warning-btn3">{userType === 'buyer' ? 'Verify Your Mobile' : 'Unverified Seller'}</div>
                 </div>
 
