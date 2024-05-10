@@ -40,19 +40,36 @@ const Signup = () => {
     const login = () => {
         navigate('/login');
     }
+
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
     const onSubmit = async (formData) => {
-        
-            const updatedUserData = { ...userData, ...formData };
-            localStorage.setItem('userData', JSON.stringify(updatedUserData));
-            localStorage.setItem('userType', JSON.stringify(formData.role));
-            setUserType(formData.role);
-            navigate('/verify-email');
 
+        const updatedUserData = { ...userData, ...formData };
+        localStorage.setItem('userData', JSON.stringify(updatedUserData));
+        localStorage.setItem('userType', JSON.stringify(formData.role));
+        setUserType(formData.role);
+
+        try {
+            const response = await axios.post('http://localhost:8000/api/v1/user/signup', updatedUserData);
+            console.log('Signup successful:', response.data);
+            navigate('/verify-email');
+        } catch (error) {
+            console.error('Signup failed:', error);
+        }
     };
     const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
     };
+
+
+    //connecting api http://localhost:8000/api/v1/user/signup
+
+
+
+
+
+
+
 
 
 
@@ -103,7 +120,7 @@ const Signup = () => {
     const operationSelectChange = (event) => {
         setSelectedOp(event.target.value);
     };
-    
+
 
     return (
         <Fragment>

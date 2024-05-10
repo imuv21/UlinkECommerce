@@ -1,35 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import Loader from './Loader/Loader';
 import Sliders from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import './Translator.css';
 
+// brand logo image here
+import Apple from '../assets/BrandName/apple2.png';
+import HP from '../assets/BrandName/hplogo.png';
+import LG from '../assets/BrandName/lglogo.png';
+import MI from '../assets/BrandName/milogo2.png';
+import Motorola from '../assets/BrandName/motorolalogo.png';
+import Sumsung from '../assets/BrandName/samsunglogo.png';
+import Tamron from '../assets/BrandName/tamronlogo.png';
+import Voltas from '../assets/BrandName/voltaslogo.png';
 
-const Translator = () => {
+const BrandCarousel = () => {
 
-    const [productShow, setProductShow] = useState([]);
+    const [slides, setSlides] = useState([]);
 
+    //form data handling
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('https://fakestoreapi.com/products');
-                const jsonData = await response.json();
-                setProductShow(jsonData);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchData();
+        const savedSingleFormData = JSON.parse(localStorage.getItem('singleFormData')) || [];
+        setSlides(savedSingleFormData.map(item => ({ ...item, images: item.images || [] })));
     }, []);
-
-    const truncateText = (text, maxLength) => {
-        if (text.length <= maxLength) {
-            return text;
-        }
-        return text.slice(0, maxLength) + '...';
-    };
 
     const NextArrow = (props) => {
         const { style, onClick } = props;
@@ -53,7 +49,7 @@ const Translator = () => {
         dots: false,
         infinite: false,
         speed: 400,
-        slidesToShow: 7,
+        slidesToShow: 6,
         slidesToScroll: 2,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
@@ -61,7 +57,7 @@ const Translator = () => {
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: 6,
                     slidesToScroll: 1,
                 },
             },
@@ -75,23 +71,26 @@ const Translator = () => {
         ],
     };
 
+    const brands = [
+        { id: 1, image: Apple },
+        { id: 2, image: HP },
+        { id: 3, image: LG },
+        { id: 4, image: MI },
+        { id: 5, image: Motorola },
+        { id: 6, image: Sumsung },
+        { id: 7, image: Tamron },
+        { id: 8, image: Voltas }
+    ]
+
+
     return (
+
         <div className="product-slider-cont">
             <Sliders {...settings}>
-                {productShow.map((product, id) => (
-                    <div className='show-img-detail-sup' key={id}>
+                {brands.map((brand, index) => (
+                    <div className='show-img-detail-sup' key={uuidv4()}>
                         <div className="show-img-detail-sub">
-                            <img className='product-img-size' src={product.image} alt='img' />
-                            <div className='product-detail-info'>
-                                <p className='product-title'>{truncateText(product.title, 20)} </p>
-                                <p className='product-price'>AED {product.price}/ piece incl value</p>
-                                <div className='flex' style={{ gap: '10px' }}>
-                                    <p className='product-discount'>AED 7.35</p>
-                                    <span className='discount-percentage'>50% Off</span>
-                                </div>
-                                <p className='product-quantity'>Unit per carton: 1</p>
-                                <p className='product-quantity'>Min Order: 1 peace</p>
-                            </div>
+                            <img className="product-img-size" src={brand.image} alt={`brand ${index}`} />
                         </div>
                     </div>
                 ))}
@@ -100,33 +99,4 @@ const Translator = () => {
     );
 };
 
-export default Translator;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default BrandCarousel;

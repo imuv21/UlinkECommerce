@@ -91,20 +91,22 @@ const Header = () => {
           <Link to="/"><img src={logo} alt="Logo" className='logo' /></Link>
         </div>
 
-        <ReactFlagsSelect id="select-contry"  selected={selected} onSelect={(selected) => setSelected(selected)} placeholder="Select Country " searchable searchPlaceholder="Search countries" />{" "}
-
-        <div className="search-input2">
-          <input type='text' placeholder='Search here...' />
-          <span>
-            <SearchIcon />
-          </span>
+        <div className="flex wh" style={{gap: '20px'}}>
+          <ReactFlagsSelect id="select-contry" selected={selected} onSelect={(selected) => setSelected(selected)} placeholder="Select Country " searchable searchPlaceholder="Search countries" />{" "}
+          <div className="search-input2">
+            <input type='text' placeholder='Search here...' />
+            <span>
+              <SearchIcon />
+            </span>
+          </div>
         </div>
 
+
         <div className="flex head-start">
-          
+
 
           <div className={`icon-container ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
-            <AccountCircleIcon style={{color: 'black'}} />
+            <AccountCircleIcon style={{ color: 'black' }} />
             {isClicked && (
               <div className="popup">
                 <div className='popupbox'>
@@ -145,12 +147,12 @@ const Header = () => {
 
           {userType === 'buyer' && (
             <div style={{ position: 'relative', cursor: 'pointer' }} onClick={tocart}>
-              <ShoppingCartIcon style={{color: 'black'}} />
+              <ShoppingCartIcon style={{ color: 'black' }} />
               <div style={cartcount}>{carttext}</div>
             </div>
           )}
         </div>
-        
+
       </div>
       <div className="sub-header">
         <div className="sup-header-option">

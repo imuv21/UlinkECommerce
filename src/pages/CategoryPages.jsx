@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
-import TopDeals from '../assets/fashion&beautydi.png';
-import ElecronicsDeals from '../assets/electronicdiscount.png';
-import Discount from '../assets/trandingdiscountagain.png';
-import Electronic from '../assets/electronicoffer-remove.png';
-import Stationary from '../assets/OfficeStationary-remove.png';
-import FoodBeverage from '../assets/fmg-removebg-preview.png';
-import PersonalCare from '../assets/personalCare3.png';
-import HomeKitchen from '../assets/Homeapliance.png';
-import BeautyProduct from '../assets/beauty-cosmetic-products-removebg-preview.png';
-import Fashion from '../assets/fashion.png';
-import { Helmet } from 'react-helmet-async';
+import React, { Fragment, lazy, Suspense, useEffect, useState } from 'react';
+import Loader from '../components/Loader/Loader';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import { useParams } from 'react-router-dom'
+import ImageImport from '../components/Schemas/ImageImport';
+
+const Carousel = lazy(() => import('../components/Carousel'));
+const BrandCarousel = lazy(() => import('../components/BrandCarousel'));
+
 const CategoryPages = () => {
   const { category } = useParams()
-  const [productShow, setProductShow] = useState()
+  const [productShow, setProductShow] = useState([])
+  //  Brand Object create
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,76 +28,116 @@ const CategoryPages = () => {
     }
     fetchData()
   }, [category])
-
   const truncateText = (text, maxLength) => {
     if (text.length <= maxLength) {
       return text;
     }
     return text.slice(0, maxLength) + '...';
   }
+  const NextArrow = (props) => {
+    const { style, onClick } = props;
+    return (
+      <div style={{ ...style, position: 'absolute', top: '50%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '999', right: '0%' }} onClick={onClick}>
+        <ChevronRightIcon />
+      </div>
+    );
+  };
+  const PrevArrow = (props) => {
+    const { style, onClick } = props;
+    return (
+      <div style={{ ...style, position: 'absolute', top: '50%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '999' }} onClick={onClick}>
+        <ChevronLeftIcon />
+      </div>
+    );
+  };
+  const settings = {
+    dots: false,
+    infinite: false,
+    speed: 400,
+    slidesToShow: 7,
+    slidesToScroll: 2,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+  //  
   //  conditionaly render the page 
   const renderPage = () => {
-    
     switch (category) {
       case 'trending':
         return (
           <div className='discount-pages' >
             <div className='banner-page'>
-              <img className='banner-width' src={Discount} ></img>
+              <img className='banner-width' src={ImageImport.Discount} ></img>
             </div>
             <div className='best-deals-product'>
               <div className='best-deals'>
-                <img className='top-deal-1' src={TopDeals}></img>
+                <img className='top-deal-1' src={ImageImport.TopDeals}></img>
               </div>
               <div className='best-deals'>
-                <img className='top-deal-1' src={ElecronicsDeals}></img>
+                <img className='top-deal-1' src={ImageImport.ElecronicsDeals}></img>
               </div>
             </div>
             <div className='all-offers-deals'>
               <div className='offer-1'>
-                <img className='offer-img-width' src={Electronic}></img>
+                <img className='offer-img-width' src={ImageImport.Electronic}></img>
                 <div className=''>
                   <h4 className='offer-title'>Electronic Acceseries</h4>
                 </div>
               </div>
               <div className='offer-1'>
-                <img className='offer-img-width' src={Stationary}></img>
+                <img className='offer-img-width' src={ImageImport.Stationary}></img>
                 <div className=''>
                   <h4 className='offer-title'>Office Stationary</h4>
                 </div>
               </div>
               <div className='offer-1'>
-                <img className='offer-img-width' src={FoodBeverage}></img>
+                <img className='offer-img-width' src={ImageImport.FoodBeverage}></img>
                 <div className=''>
                   <h4 className='offer-title'>Food & Beverages</h4>
                 </div>
               </div>
               <div className='offer-1'>
-                <img className='offer-img-width' src={PersonalCare}></img>
+                <img className='offer-img-width' src={ImageImport.PersonalCare}></img>
                 <div className=''>
                   <h4 className='offer-title'>Personal Care</h4>
                 </div>
               </div>
               <div className='offer-1'>
-                <img className='offer-img-width' src={HomeKitchen}></img>
+                <img className='offer-img-width' src={ImageImport.HomeKitchen}></img>
                 <div className=''>
                   <h4 className='offer-title'>Home & Kitchen</h4>
                 </div>
               </div>
               <div className='offer-1'>
-                <img className='offer-img-width' src={BeautyProduct}></img>
+                <img className='offer-img-width' src={ImageImport.BeautyProduct}></img>
                 <div className=''>
                   <h4 className='offer-title'>Beauty & Cosmetic</h4>
                 </div>
               </div>
               <div className='offer-1'>
-                <img className='offer-img-width' src={Fashion}></img>
+                <img className='offer-img-width' src={ImageImport.Fashion}></img>
                 <div className=''>
                   <h4 className='offer-title'>Fashion Acceseries</h4>
                 </div>
               </div>
               <div className='offer-1'>
-                <img className='offer-img-width' src={Electronic}></img>
+                <img className='offer-img-width' src={ImageImport.Electronic}></img>
                 <div className=''>
                   <h4 className='offer-title'>Electronic Acceseries</h4>
                 </div>
@@ -110,7 +151,7 @@ const CategoryPages = () => {
                 <h4 className='show-all-product'>Show All</h4>
               </div>
             </div>
-            <div className='show-all '>
+            <div className='show-all'>
               {productShow && (
                 productShow.map((product, id) => {
                   return (
@@ -135,10 +176,129 @@ const CategoryPages = () => {
             </div>
           </div>
         );
-      case 'electronics':
+      // Electronics Category page
+      case 'electronic':
         return (
-          <div className='electronics-page'>
-            <h1>Hello this is the electronics page</h1>
+          <div className='discount-pages' >
+            <div className='banner-page'>
+              <img className='banner-width' src={ImageImport.RealmiBanner} ></img>
+            </div>
+            <div className='best-deals-product'>
+              <div className='best-deals'>
+                <img className='top-deal-1' src={ImageImport.Boat}></img>
+              </div>
+              <div className='best-deals'>
+                <img className='top-deal-1' src={ImageImport.Sumsung}></img>
+              </div>
+            </div>
+            <div className='best-deals-product'>
+              <div className=''>
+                <h3>Browse By Category</h3>
+              </div>
+            </div>
+            <div className='category-sections'>
+              <div className='category-container'>
+
+                <div className='category-image'>
+                  <img className='img-aspect' src={ImageImport.Mobile} alt='Trending Product'></img>
+                  <div className='category-img-title'>
+                    <p className='category-img-titles category-sizes'>Mobile Phone</p>
+                  </div>
+                </div>
+                <div className='category-image  '>
+                  <img className='img-aspect' src={ImageImport.Camera} alt='Consumer Electronic'></img>
+                  <div className='category-img-title'>
+                    <p className='category-img-titles category-sizes'>Camera </p>
+                  </div>
+                </div>
+                <div className='category-image'>
+                  <img className='img-aspect' src={ImageImport.HeadPhone} alt='Office Stationary'></img>
+                  <div className='category-img-title'>
+                    <p className='category-img-titles category-sizes'>Audio & Studio</p>
+                  </div>
+                </div>
+                <div className='category-image'>
+                  <img className='img-aspect' src={ImageImport.Game} alt='Food & Beverages'></img>
+                  <div className='category-img-title'>
+                    <p className='category-img-titles category-sizes'>Gaming</p>
+                  </div>
+                </div>
+                <div className='category-image'>
+                  <img className='img-aspect' src={ImageImport.Laptop} alt='Health & Beauty'></img>
+                  <div className='category-img-title'>
+                    <p className='category-img-titles category-sizes'>Laptop</p>
+                  </div>
+                </div>
+                <div className='category-image'>
+                  <img className='img-aspect' src={ImageImport.Powerbank} alt='Home & Kitchen'></img>
+                  <div className='category-img-title'>
+                    <p className='category-img-titles category-sizes'>Powerbank</p>
+                  </div>
+                </div>
+                <div className='category-image'>
+                  <img className='img-aspect' src={ImageImport.Router} alt='Beauty & Fragrences'></img>
+                  <div className='category-img-title'>
+                    <p className='category-img-titles category-sizes'>Network</p>
+                  </div>
+                </div>
+                <div className='category-image'>
+                  <img className='img-aspect' src={ImageImport.TV} alt='Fashion & Acceseries'></img>
+                  <div className='category-img-title'>
+                    <p className='category-img-titles category-sizes'>Television</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <img className='banner-width' src={ImageImport.Tclbanner} ></img>
+
+            <div className="product-slider-cont product-width">
+              <Carousel />
+            </div>
+
+            <img className='banner-width' src={ImageImport.Sumsungbanner} ></img>
+
+            <div className='best-deals-product'>
+              <div className=''>
+                <h3>Shop By Brand</h3>
+              </div>
+
+              <div className=''>
+                <h4 className='show-all-product'>Show All</h4>
+              </div>
+            </div>
+            <div className="product-slider-cont product-width">
+              <BrandCarousel />
+            </div>
+            <div className='banner-page'>
+              <img className='banner-width' src={ImageImport.MobileBanner} ></img>
+            </div>
+            <div className='best-deals-product'>
+              <div className='flex'>
+                <h3>Next Day Delivery</h3>
+                <p className='item-count'>({productShow.length} Items)</p>
+              </div>
+
+              <div className=''>
+                <h4 className='show-all-product'>Show All</h4>
+              </div>
+            </div>
+            <div className="product-slider-cont product-width">
+              <Carousel />
+            </div>
+            <div className='best-deals-product'>
+              <div className='flex'>
+                <h3>Best Selling Mobile Acceseries</h3>
+                <p className='item-count'>({productShow.length} Items)</p>
+              </div>
+
+              <div className=''>
+                <h4 className='show-all-product'>Show All</h4>
+              </div>
+            </div>
+            <div className="product-slider-cont product-width">
+              <Carousel />
+            </div>
           </div>
         );
       case 'stationary':
@@ -169,10 +329,9 @@ const CategoryPages = () => {
   }
   return (
     <>
-    <Helmet>
-      <title>Category</title>
-    </Helmet>
-      {renderPage()}
+      <Suspense fallback={<Loader />}>
+        {renderPage()}
+      </Suspense>
     </>
   )
 }

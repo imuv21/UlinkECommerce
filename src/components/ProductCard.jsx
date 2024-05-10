@@ -7,17 +7,18 @@ const ProductCard = ({ name, id, img, unitPrice, salePrice }) => {
 
 
   return (
-    <a className='productCard' href={`/product-details/${id}`}>
-      <div className="img-icon-img">
-        <img className='background-image' src={img} alt='img'/>
+    <a className="show-img-detail-sub" href={`/product-details/${id}`}>
+      <img className='product-img-size' src={img} alt='img' />
+      <div className='product-detail-info'>
+        <p className='product-title'>{name.length > 20 ? `${name.substring(0, 20)}...` : name}</p>
+        <p className='product-price'>${salePrice}/ piece incl value</p>
+        <div className='flex' style={{ gap: '10px' }}>
+          <p className='product-discount'>${unitPrice}</p>
+          <span className='discount-percentage'>{discountPercentage.toFixed(2)}% OFF</span>
+        </div>
+        <p className='product-quantity'>Unit per carton: 1</p>
+        <p className='product-quantity'>Min Order: 1 peace</p>
       </div>
-      <div className="flexcol" style={{ gap: '5px', alignItems: 'start' }}>
-        <div className='discp' style={{textTransform:'capitalize'}}>{name.length > 20 ? `${name.substring(0, 20)}...` : name}</div>
-        <div className='discp' style={{textDecoration: 'line-through'}}>Unit Price: ${unitPrice}</div>
-        <div className='discp'>Sale Price: ${salePrice}</div>
-        <div className='discp'>{discountPercentage.toFixed(2)}% OFF</div>
-      </div>
-      <button className='btn addtocart flex'><div className="heading2">View Product</div></button>
     </a>
   )
 };

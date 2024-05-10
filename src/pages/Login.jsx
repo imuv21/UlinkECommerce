@@ -8,10 +8,12 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Helmet } from 'react-helmet-async';
 import { useUserType } from '../components/context/CartContext';
+import axios from 'axios';
 
 const schema = yupResolver(loginSchema);
 
 const Login = () => {
+
     //password hide and show
     const [passwordVisible, setPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => {
@@ -25,14 +27,23 @@ const Login = () => {
     const forgotPass = () => {
         navigate('/forgot-password');
     }
+
+
     const [loggedUser, setLoggedUser] = useState({});
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
-    const onSubmit = (formData) => {
+    const onSubmit = async (formData) => {
         const updatedLoggedUser = { ...loggedUser, ...formData };
         localStorage.setItem('loggedUser', JSON.stringify(updatedLoggedUser));
         localStorage.setItem('userType', JSON.stringify(formData.role));
         setUserType(formData.role);
-        navigate('/');
+
+        try {
+            const response = await axios.post('http://localhost:8000/api/v1/user/login', updatedLoggedUser);
+            console.log('Login successful:', response.data);
+            navigate('/');
+        } catch (error) {
+            console.error('Login failed:', error);
+        }
     };
     const handleChange = (e) => {
         setLoggedUser({ ...loggedUser, [e.target.name]: e.target.value });
@@ -69,11 +80,11 @@ const Login = () => {
                             )}
                             />
                             {errors.role && <div className='error'>{errors.role.message}</div>}
-                            <Controller name="email" control={control} defaultValue="" render={({ field }) => <input value={loggedUser.email || ''} onChange={handleChange} className="box flex" placeholder='Enter your email' {...field} />} />
+                            <Controller name="email" control={control} defaultValue="" render={({ field }) => <input value={loggedUser.email || ''} onChange={handleChange} className="box flex" placeholder='Enter your email' autoComplete="username" {...field} />} />
                             {errors.email && <div className='error'>{errors.email.message}</div>}
 
                             <div className="search-input">
-                                <Controller name="password" control={control} defaultValue="" render={({ field }) => <input value={loggedUser.password || ''} onChange={handleChange} type={passwordVisible ? "text" : "password"} className="box flex" placeholder='Enter your password' {...field} />} />
+                                <Controller name="password" control={control} defaultValue="" render={({ field }) => <input value={loggedUser.password || ''} onChange={handleChange} type={passwordVisible ? "text" : "password"} className="box flex" placeholder='Enter your password' autoComplete="current-password" {...field} />} />
                                 <span onClick={togglePasswordVisibility}>
                                     {passwordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
                                 </span>

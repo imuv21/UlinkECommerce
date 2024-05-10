@@ -81,10 +81,9 @@
 }
 
 .select-country{
-  padding: 10px;
   border: 1px solid #004c6f;
   border-radius: 6px;
-  width: 100%;
+  width: 20%;
 }
 
 .search-input2 span {

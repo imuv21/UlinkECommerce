@@ -342,18 +342,20 @@ const BecomeASeller = () => {
                             <img src={three} alt="photo" />
                         </div>
                         <div className="italic">
-                            Ulink is helping us bring healthy foods to a global plateform. We are reaching more customers and making more sales, at no additional cost.
+                            
+U-link IT US aims for the highest levels of quality, and they do this by paying close attention to every little thing. They do their best to meet the needs of the growing market.
                         </div>
-                        <div className="descrip">Henry Haddad, General Manager, Kosmonte Foods</div>
+                        <div className="descrip"> Tamron, General Manager, Dubai</div>
                     </div>
                     <div className='flexcol' style={{ gap: '20px' }}>
                         <div className="photo">
                             <img src={three} alt="photo" />
                         </div>
                         <div className="italic">
-                            Having our products listed on Ulink definitely makes sense. All of our products are available online for potential customers to see and get in touch with us directly.
+                           
+They have long held the opinion that an internet business needs to be expertly represented in order to exist, and U-link IT US provides just that.
                         </div>
-                        <div className="descrip">Elie Moussi, Sales Manager, BRF – Federal Foods</div>
+                        <div className="descrip"> Asante General Trading, Dubai</div>
                     </div>
                 </div>
             </div>

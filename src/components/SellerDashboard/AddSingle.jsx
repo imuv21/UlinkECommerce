@@ -725,37 +725,155 @@ const AddSingle = () => {
                 />
                 {errors.temperature && <div className='error'>{errors.temperature?.message}</div>}
 
+                <Controller name="imodelNum" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.imodelNum || ''} onChange={handleChange} className="box flex" placeholder='Enter item model number' {...field} />} />
+
+                <Controller name="color" control={control} defaultValue="" render={({ field }) => (
+                    <select className="box flex" value={singleFormData.color || ''} onChange={handleChange}  {...field}>
+                        <option value="">Select color</option>
+                        <option value="red">Red</option>
+                        <option value="orange">Orange</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="green">Green</option>
+                        <option value="blue">Blue</option>
+                        <option value="purple">Purple</option>
+                        <option value="pink">Pink</option>
+                        <option value="silver">Silver</option>
+                        <option value="gold">Gold</option>
+                        <option value="black">Black</option>
+                        <option value="white">White</option>
+                        <option value="grey">Grey</option>
+                        <option value="brown">Brown</option>
+                    </select>
+                )}
+                />
+
+                <Controller name="gender" control={control} defaultValue="" render={({ field }) => (
+                    <select className="box flex" value={singleFormData.gender || ''} onChange={handleChange}  {...field}>
+                        <option value="">Select gender</option>
+                        <option value="boys">Boys</option>
+                        <option value="girls">Girls</option>
+                        <option value="unisex">Unisex</option>
+                    </select>
+                )}
+                />
+
+
+
+
+
+
                 {selectedSupOption === "FoodAndBeverages" && (
-                    <div className="fragment">
-                        <Controller name="shelflife" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.shelflife || ''} onChange={handleChange} className="box flex" placeholder='Enter shelf life (days)' {...field} />} />
-                        <Controller name="ingredients" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.ingredients || ''} onChange={handleChange} className="box flex" placeholder='Enter ingredients' {...field} />} />
-                    </div>
+                    <Controller name="shelflife" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.shelflife || ''} onChange={handleChange} className="box flex" placeholder='Enter shelf life (days)' {...field} />} />
+                )}
+                {(selectedSupOption === "FoodAndBeverages" || selectedSupOption === "BeautyAndFragrances") && (
+                    <Controller name="ingredients" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.ingredients || ''} onChange={handleChange} className="box flex" placeholder='Enter ingredients' {...field} />} />
                 )}
                 {selectedSupOption === "Automotive" && (
+                    <Controller name="packType" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.packType || ''} onChange={handleChange} className="box flex" placeholder='Enter packaging type' {...field} />} />
+                )}
+                {(selectedSupOption === "BabyCenter" || selectedSupOption === "BeautyAndFragrances" || selectedSupOption === "OfficeAndStationery") && (
+                    <Controller name="instructions" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.instructions || ''} onChange={handleChange} className="box flex" placeholder='Enter instructions/safety warnings' {...field} />} />
+                )}
+                {
+                    (selectedSupOption === "BabyCenter" || selectedSupOption === "FashionAndAccessories" || selectedSupOption === "HomeGardenAndFurniture" || selectedSupOption === "OfficeAndStationery") && (
+                        <Controller name="material" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.material || ''} onChange={handleChange} className="box flex" placeholder='Enter material' {...field} />} />
+                    )
+                }
+                {(selectedSupOption === "ConsumerElectronics" || selectedSupOption === "MachineryAndEquipment") && (
                     <div className="fragment">
-                        <Controller name="color" control={control} defaultValue="" render={({ field }) => (
-                            <select className="box flex" value={singleFormData.color || ''} onChange={handleChange}  {...field}>
-                                <option value="">Select color</option>
-                                <option value="red">Red</option>
-                                <option value="orange">Orange</option>
-                                <option value="yellow">Yellow</option>
-                                <option value="green">Green</option>
-                                <option value="blue">Blue</option>
-                                <option value="purple">Purple</option>
-                                <option value="pink">Pink</option>
-                                <option value="silver">Silver</option>
-                                <option value="gold">Gold</option>
-                                <option value="black">Black</option>
-                                <option value="white">White</option>
-                                <option value="grey">Grey</option>
-                                <option value="brown">Brown</option>
+                        <Controller name="portType" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.portType || ''} onChange={handleChange} className="box flex" placeholder='Enter port type' {...field} />} />
+                        <Controller name="connectvityType" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.connectvityType || ''} onChange={handleChange} className="box flex" placeholder='Enter connectvity type' {...field} />} />
+                        <Controller name="avgBatteryLife" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.avgBatteryLife || ''} onChange={handleChange} className="box flex" type='number' placeholder='Enter average battery life (In hours)' {...field} />} />
+                        <Controller name="compatibility" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.compatibility || ''} onChange={handleChange} className="box flex" placeholder='Enter compatibility' {...field} />} />
+                        <Controller name="memoryStorage" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.memoryStorage || ''} onChange={handleChange} className="box flex" placeholder='Enter memory storage' {...field} />} />
+                        <Controller name="version" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.version || ''} onChange={handleChange} className="box flex" placeholder='Enter version' {...field} />} />
+                        <Controller name="opSystem" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.opSystem || ''} onChange={handleChange} className="box flex" placeholder='Enter operating system' {...field} />} />
+                        <Controller name="screenSize" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.screenSize || ''} onChange={handleChange} className="box flex" placeholder='Enter screen size' {...field} />} />
+                        <Controller name="ram" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.ram || ''} onChange={handleChange} className="box flex" placeholder='Enter RAM' {...field} />} />
+                        <Controller name="specifications" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.specifications || ''} onChange={handleChange} className="box flex" placeholder='Enter additional specifications' {...field} />} />
+                    </div>
+                )}
+                {selectedSupOption === "FashionAndAccessories" && (
+                    <div className="fragment">
+                        <Controller name="lensType" control={control} defaultValue="" render={({ field }) => (
+                            <select className="box flex" value={singleFormData.lensType || ''} onChange={handleChange}  {...field}>
+                                <option value="">Select lens type</option>
+                                <option value="polarized">Polarized</option>
+                                <option value="nonPolarized">Non-polarized</option>
                             </select>
                         )}
                         />
-                        <Controller name="imodelNum" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.imodelNum || ''} onChange={handleChange} className="box flex" placeholder='Enter item model number' {...field} />} />
-                        <Controller name="packType" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.packType || ''} onChange={handleChange} className="box flex" placeholder='Enter packaging type' {...field} />} />
+                        <Controller name="fitSize" control={control} defaultValue="" render={({ field }) => (
+                            <select className="box flex" value={singleFormData.fitSize || ''} onChange={handleChange}  {...field}>
+                                <option value="">Select size</option>
+                                <option value="xl">XS</option>
+                                <option value="s">S</option>
+                                <option value="m">M</option>
+                                <option value="l">L</option>
+                                <option value="xl">XL</option>
+                                <option value="2xl">2XL</option>
+                                <option value="3xl">3XL</option>
+                                <option value="4xl">4XL</option>
+                                <option value="5xl">5XL</option>
+                                <option value="oneSize">One size</option>
+                            </select>
+                        )}
+                        />
                     </div>
                 )}
+                {(selectedSupOption === "BeautyAndFragrances" || selectedSupOption === "PersonalCare") && (
+                    <div className="fragment">
+                        <Controller name="form" control={control} defaultValue="" render={({ field }) => (
+                            <select className="box flex" value={singleFormData.form || ''} onChange={handleChange}  {...field}>
+                                <option value="">Select form</option>
+                                <option value="liquid">Liquid</option>
+                                <option value="powder">Powder</option>
+                                <option value="spray">Spray</option>
+                                <option value="solid">Solid</option>
+                            </select>
+                        )}
+                        />
+                        <Controller name="skinType" control={control} defaultValue="" render={({ field }) => (
+                            <select className="box flex" value={singleFormData.skinType || ''} onChange={handleChange}  {...field}>
+                                <option value="">Select skin type</option>
+                                <option value="combination">Combination</option>
+                                <option value="normal">Normal</option>
+                                <option value="dry">Dry</option>
+                                <option value="sensitive">Sensitive</option>
+                                <option value="oily">Oily</option>
+                                <option value="allSkinTypes">All skin types</option>
+                            </select>
+                        )}
+                        />
+                    </div>
+                )}
+                {(selectedSupOption === "HomeGardenAndFurniture" || selectedSupOption === "MachineryAndEquipment") && (
+                    <div className="fragment">
+                        <Controller name="voltage" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.voltage || ''} onChange={handleChange} type='number' className="box flex" placeholder='Enter voltage (in volts)' {...field} />} />
+                        <Controller name="powerPlugType" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.powerPlugType || ''} onChange={handleChange} className="box flex" placeholder='Enter power plug type' {...field} />} />
+                    </div>
+                )}
+                {selectedSupOption === "MachineryAndEquipment" && (
+                    <div className="fragment">
+                        <Controller name="power" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.power || ''} onChange={handleChange} type='number' className="box flex" placeholder='Enter power (in kilowatts kW)' {...field} />} />
+                        <Controller name="condition" control={control} defaultValue="" render={({ field }) => (
+                            <select className="box flex" value={singleFormData.condition || ''} onChange={handleChange}  {...field}>
+                                <option value="">Select condition</option>
+                                <option value="new">New</option>
+                                <option value="used">Used</option>
+                                <option value="refurbished">Refurbished</option>
+                            </select>
+                        )}
+                        />
+                    </div>
+                )}
+                {selectedSupOption === "OfficeAndStationery" && (
+                    <Controller name="pattern" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.pattern || ''} onChange={handleChange} className="box flex" placeholder='Enter pattern' {...field} />} />
+                )}
+
+
+
+
 
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                     <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Save Draft</div></button>

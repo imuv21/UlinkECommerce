@@ -145,11 +145,11 @@ const FilterPage = () => {
                         {
                             filteredProducts.map((product, id) => (
                                 <div className='show-img-detail' key={id}>
-                                    <img className='product-img-size' src={product.image} style={{ background: 'none' }} />
+                                    <img className='product-img-size' src={product.image} alt='img' />
                                     <div className='product-detail-info'>
                                         <p className='product-title'>{truncateText(product.title, 20)} </p>
                                         <p className='product-price'>AED {product.price}/ piece incl value</p>
-                                        <div className='discount'>
+                                        <div className='flex' style={{gap: '10px'}}>
                                             <p className='product-discount'>AED 7.35</p>
                                             <span className='discount-percentage'>50% Off</span>
                                         </div>
