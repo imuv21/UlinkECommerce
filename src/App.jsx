@@ -30,8 +30,6 @@ const ProductDetails = lazy(() => import('./pages/Cart/ProductDetails'));
 const SellerOrder = lazy(() => import('./components/SellerDashboard/SellerOrder/SellerOrder'));
 
 
-
-
 //public
 const Home = lazy(() => import("./pages/Home"));
 const Signup = lazy(() => import('./pages/Signup'));
@@ -44,6 +42,8 @@ const Checkout = lazy(() => import('./pages/Cart/Checkout'));
 const Cart = lazy(() => import('./pages/Cart/Cart'));
 const FilterPage = lazy(() => import('./pages/FilterPage'));
 const CategoryPages = lazy(() => import('./pages/CategoryPages'));
+
+
 
 //Other
 const Image = lazy(() => import('./components/Image'));
@@ -85,12 +85,9 @@ function App() {
 
 
 
-
             {/* other */}
             <Route path='/img' element={<Image />} />
             <Route path='/trans' element={<Translator />} />
-
-
 
 
             {/* Buyer dashboard */}
