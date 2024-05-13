@@ -51,7 +51,6 @@ const Signup = () => {
 
         const updatedUserData = { ...userData, ...formData };
         localStorage.setItem('userData', JSON.stringify(updatedUserData));
-        localStorage.setItem('userType', JSON.stringify(formData.role));
 
         try {
             const response = await axios.post('http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/register', updatedUserData);

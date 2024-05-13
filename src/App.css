@@ -778,6 +778,38 @@ button:focus {
   border-radius: var(--br2);
 }
 
+.loginbtn {
+  background-color: none;
+  border: 1px solid var(--CodeOne);
+  color: var(--CodeOne);
+  border-radius: var(--br2);
+  transition: var(--trans);
+  padding: 10px;
+  white-space: nowrap;
+}
+
+.loginbtn:hover {
+  background-color: var(--CodeOneHover);
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+
+.signupbtn {
+  background-color: none;
+  border: 1px solid var(--CodeTwo);
+  color: var(--CodeTwo);
+  border-radius: var(--br2);
+  transition: var(--trans);
+  padding: 10px;
+  white-space: nowrap;
+}
+
+.signupbtn:hover {
+  background-color: var(--CodeTwoHover);
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+
 .btn {
   border: none;
   background-color: var(--CodeTwo);

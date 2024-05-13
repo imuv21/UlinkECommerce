@@ -9,7 +9,6 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Helmet } from 'react-helmet-async';
 import animation from "../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
-// import { useUserType } from '../components/context/CartContext';
 import axios from 'axios';
 
 const schema = yupResolver(loginSchema);
@@ -36,8 +35,6 @@ const Login = () => {
     const onSubmit = async (formData) => {
         const updatedLoggedUser = { ...loggedUser, ...formData };
         // localStorage.setItem('loggedUser', JSON.stringify(updatedLoggedUser));
-        // localStorage.setItem('userType', JSON.stringify(formData.role));
-        // setUserType(formData.role);
 
         try {
             const response = await axios.post('http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/Login', updatedLoggedUser);

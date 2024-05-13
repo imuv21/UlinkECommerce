@@ -120,7 +120,7 @@ const Header = () => {
     <Fragment>
       <div className="offer">
         <h4>Save up to 20% OFF on your first 10 orders.</h4> <div className="coupn">ULINKITFIRST20</div>
-       </div>
+      </div>
       <div className='header'>
 
         <div className="flex head-start">
@@ -147,52 +147,58 @@ const Header = () => {
             <div className='heading2' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}> {userData.name}</div>
           )}
 
+          { userData === null && (
+            <div className="flex" style={{ gap: '20px' }}>
+              <Link to="/login" className='loginbtn'><div className="heading2">Log in</div></Link>
+              <Link to="/signup" className='signupbtn'><div className="heading2">Register</div></Link>
+            </div>
+          )}
 
-          <div className={`icon-container ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
-            <AccountCircleIcon style={{ color: 'black' }} />
-            {isClicked && (
-              <div className="popup">
-                <div className='popupbox'>
-                  {/* {userData && (
-                    <div className="username">
-                      {userData.user.firstName} {userData.user.lastName}
-                    </div>
-                  )} */}
-                  <div className="warning-btn3">{userType === 'buyer' ? 'Verify Your Mobile' : 'Unverified Seller'}</div>
+
+          { userData &&  (userData.role === 'Buyer' || userData.role === 'seller') && (
+            <div className={`icon-container ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
+              <AccountCircleIcon style={{ color: 'black' }} />
+              {isClicked && (
+                <div className="popup">
+                  <div className='popupbox'>
+                    {userData && (
+                      <div className="username">
+                        {userData.name}
+                      </div>
+                    )}
+                    <div className="warning-btn3">{userData.role === 'Buyer' ? 'Verify Your Mobile' : 'Unverified Seller'}</div>
+                  </div>
+
+                  <div className='popupbox'>
+                    {userData.role === 'Buyer' && (<Link to={'/buyer-dashboard'} className="pop-options"><HomeIcon />Buyer Center</Link>)}
+                    {userData.role === 'seller' && (<Link to={'/seller-dashboard'} className="pop-options"> <DashboardIcon />Dashboard</Link>)}
+                    <Link to={userData.role === 'seller' ? '/seller-order' : '/order-page'} className="pop-options"> <AllInboxIcon /> Orders </Link>
+                    {userData.role === 'seller' && (<div className="pop-options"> <MessageIcon /> Messages </div>)}
+                    <div className="pop-options"> <SendTimeExtensionIcon /> RFQ Marketplace </div>
+                    <div className="pop-options"> <SendIcon />{userData.role === 'Buyer' ? 'Create RFQ' : 'Manage Quotes'}</div>
+                    {userData.role === 'seller' && (<div className="pop-options"> <StorefrontIcon />Product Catalogue</div>)}
+                  </div>
+
+                  <div className='popupbox'>
+                    <div className="subpop-options">My Profile</div>
+                    <div className="subpop-options">My Company Profile</div>
+                    {userData.role === 'Buyer' && (<div className="subpop-options">Payment Management</div>)}
+                    <div className="subpop-options">Access Management</div>
+                    {userData.role === 'Buyer' && (<div className="subpop-options">Addresses</div>)}
+                    {userData.role === 'seller' && (<div className="subpop-options">Saved Products</div>)}
+                  </div>
+
+                  <div className="popupbox">
+                    <div className="subpop-options" onClick={handleLogout}>Log out</div>
+                  </div>
+
                 </div>
+              )}
+            </div>
+          )}
 
-                <div className='popupbox'>
-                  {userType === 'buyer' && (<Link to={'/buyer-dashboard'} className="pop-options"><HomeIcon />Buyer Center</Link>)}
-                  {userType === 'seller' && (<Link to={'/seller-dashboard'} className="pop-options"> <DashboardIcon />Dashboard</Link>)}
-                  <Link to={userType === 'seller' ? '/seller-order' : '/order-page'} className="pop-options"> <AllInboxIcon /> Orders </Link>
-                  {userType === 'seller' && (<div className="pop-options"> <MessageIcon /> Messages </div>)}
-                  <div className="pop-options"> <SendTimeExtensionIcon /> RFQ Marketplace </div>
-                  <div className="pop-options"> <SendIcon />{userType === 'buyer' ? 'Create RFQ' : 'Manage Quotes'}</div>
-                  {userType === 'seller' && (<div className="pop-options"> <StorefrontIcon />Product Catalogue</div>)}
-                </div>
 
-                <div className='popupbox'>
-                  <div className="subpop-options">My Profile</div>
-                  <div className="subpop-options">My Company Profile</div>
-                  {userType === 'buyer' && (<div className="subpop-options">Payment Management</div>)}
-                  <div className="subpop-options">Access Management</div>
-                  {userType === 'buyer' && (<div className="subpop-options">Addresses</div>)}
-                  {userType === 'seller' && (<div className="subpop-options">Saved Products</div>)}
-                </div>
-
-                <div className="popupbox">
-                  <div className="subpop-options" onClick={handleLogout}>Log out</div>
-                </div>
-
-                <div className='popupbox'>
-                  <Link to="/login" className='btn box flex' ><div className="heading2">Log in</div></Link>
-                  <Link to="/signup" className='btn box flex'><div className="heading2">Sign up</div></Link>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {userType === 'buyer' && (
+          {userData && userData.role === 'Buyer' && (
             <div style={{ position: 'relative', cursor: 'pointer' }} onClick={tocart}>
               <ShoppingCartIcon style={{ color: 'black' }} />
               <div style={cartcount}>{carttext}</div>
@@ -222,7 +228,7 @@ const Header = () => {
           <div className="sub-header-option">
             <BusinessCenterIcon /> <div className="sub-heading3">Enterprise</div>
           </div>
-          {userType === 'buyer' && (<Link to="/become-a-seller" className='header-btns'>Become A Seller/Buyer</Link>)}
+          { userData &&  (userData.role === 'Buyer') && (<Link to="/become-a-seller" className='header-btns'>Become A Seller</Link>)}
         </div>
       </div>
 

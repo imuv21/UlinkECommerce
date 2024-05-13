@@ -8,9 +8,24 @@ import logo from '../assets/logo2.png';
 const Otp = () => {
 
     const navigate = useNavigate();
+
+    //getting data from local storage (backend)
+  const [userData, setUserData] = useState(null);
+  useEffect(() => {
+    const storedUserData = localStorage.getItem('loggedUser');
+    if (storedUserData) {
+      const parsedUserData = JSON.parse(storedUserData);
+      setUserData(parsedUserData);
+    }
+  }, []);
+
     const sellerForm = (otp) => {
         console.log("OTP:", otp);
-        navigate('/');
+        if(userData && userData.role === 'seller'){
+            navigate('/seller-form');
+        } else{
+            navigate('/');
+        }
     }
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
     // Focus management
