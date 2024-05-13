@@ -87,7 +87,6 @@ const EditSingle = () => {
             setValue('minOrderQuant', savedSingleFormData[index].minOrderQuant);
 
 
-
             setValue('shelflife', savedSingleFormData[index].shelflife);
             setValue('ingredients', savedSingleFormData[index].ingredients);
 
@@ -122,15 +121,13 @@ const EditSingle = () => {
             setValue('power', savedSingleFormData[index].power);
             setValue('condition', savedSingleFormData[index].condition);
 
-            
+            setValue('pattern', savedSingleFormData[index].pattern);
 
-            
+            setValue('flavor', savedSingleFormData[index].flavor);
+            setValue('petSize', savedSingleFormData[index].petSize);
+            setValue('ageRange', savedSingleFormData[index].ageRange);
 
-
-
-
-
-
+            setValue('powerSource', savedSingleFormData[index].powerSource);
 
 
             setMarketingValue(savedSingleFormData[index].marketingValue);
@@ -780,10 +777,10 @@ const EditSingle = () => {
                 {selectedSupOption === "Automotive" && (
                     <Controller name="packType" control={control} defaultValue={singleFormData.packType || ''} render={({ field }) => <input className="box flex" placeholder='Enter packaging type' {...field} />} />
                 )}
-                {(selectedSupOption === "BabyCenter" || selectedSupOption === "BeautyAndFragrances" || selectedSupOption === "OfficeAndStationery") && (
+                {(selectedSupOption === "BabyCenter" || selectedSupOption === "BeautyAndFragrances" || selectedSupOption === "OfficeAndStationery" || selectedSupOption === "ToolsAndHomeImprovement") && (
                     <Controller name="instructions" control={control} defaultValue={singleFormData.instructions || ''} render={({ field }) => <input className="box flex" placeholder='Enter any safety warnings' {...field} />} />
                 )}
-                {(selectedSupOption === "BabyCenter" || selectedSupOption === "FashionAndAccessories" || selectedSupOption === "HomeGardenAndFurniture" || selectedSupOption === "OfficeAndStationery") && (
+                {(selectedSupOption === "BabyCenter" || selectedSupOption === "FashionAndAccessories" || selectedSupOption === "HomeGardenAndFurniture" || selectedSupOption === "OfficeAndStationery" || selectedSupOption === "SportsAndFitness" || selectedSupOption === "ToolsAndHomeImprovement") && (
                     <Controller name="material" control={control} defaultValue={singleFormData.material || ''} render={({ field }) => <input className="box flex" placeholder='Enter material' {...field} />} />
                 )}
                 {(selectedSupOption === "ConsumerElectronics" || selectedSupOption === "MachineryAndEquipment") && (
@@ -854,15 +851,34 @@ const EditSingle = () => {
                         />
                     </div>
                 )}
-                {(selectedSupOption === "HomeGardenAndFurniture" || selectedSupOption === "MachineryAndEquipment") && (
+                {(selectedSupOption === "HomeGardenAndFurniture" || selectedSupOption === "MachineryAndEquipment" || selectedSupOption === "SportsAndFitness" || selectedSupOption === "ToolsAndHomeImprovement" || selectedSupOption === "Toys") && (
                     <div className="fragment">
                         <Controller name="voltage" control={control} defaultValue={singleFormData.voltage || ''} render={({ field }) => <input  type='number' className="box flex" placeholder='Enter voltage (in volts)' {...field} />} />
-                        <Controller name="powerPlugType" control={control} defaultValue={singleFormData.powerPlugType || ''} render={({ field }) => <input  className="box flex" placeholder='Enter power plug type' {...field} />} />
+                        <Controller name="power" control={control} defaultValue={singleFormData.power || ''} render={({ field }) => <input  type='number' className="box flex" placeholder='Enter power (in kilowatts kW)' {...field} />} />
+                        <Controller name="powerPlugType" control={control} defaultValue={singleFormData.powerPlugType || ''} render={({ field }) => (
+                            <select className="box flex"  {...field}>
+                                <option value="">Select power plug type</option>
+                                <option value="a">Type A</option>
+                                <option value="b">Type B</option>
+                                <option value="c">Type C</option>
+                                <option value="d">Type D</option>
+                                <option value="e">Type E</option>
+                                <option value="f">Type F</option>
+                                <option value="g">Type G</option>
+                                <option value="h">Type H</option>
+                                <option value="i">Type I</option>
+                                <option value="j">Type J</option>
+                                <option value="k">Type K</option>
+                                <option value="l">Type L</option>
+                                <option value="m">Type M</option>
+                                <option value="n">Type N</option>
+                            </select>
+                        )}
+                        />
                     </div>
                 )}
                 {selectedSupOption === "MachineryAndEquipment" && (
                     <div className="fragment">
-                        <Controller name="power" control={control} defaultValue={singleFormData.power || ''} render={({ field }) => <input  type='number' className="box flex" placeholder='Enter power (in kilowatts kW)' {...field} />} />
                         <Controller name="condition" control={control} defaultValue={singleFormData.condition || ''} render={({ field }) => (
                             <select className="box flex"  {...field}>
                                 <option value="">Select condition</option>
@@ -875,26 +891,44 @@ const EditSingle = () => {
                     </div>
                 )}
                 {selectedSupOption === "OfficeAndStationery" && (
-                    <Controller name="pattern" control={control} defaultValue={singleFormData.pattern || ''}render={({ field }) => <input className="box flex" placeholder='Enter pattern' {...field} />} />
+                    <Controller name="pattern" control={control} defaultValue={singleFormData.pattern || ''} render={({ field }) => <input className="box flex" placeholder='Enter pattern' {...field} />} />
                 )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                {selectedSupOption === "PetAndAnimalCare" && (
+                    <div className="fragment">
+                        <Controller name="flavor" control={control} defaultValue={singleFormData.flavor || ''} render={({ field }) => <input className="box flex" placeholder='Enter flavor' {...field} />} />
+                        <Controller name="petSize" control={control} defaultValue={singleFormData.petSize || ''} render={({ field }) => (
+                            <select className="box flex"  {...field}>
+                                <option value="">Select pet size</option>
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                                <option value="giant">Giant</option>
+                            </select>
+                        )}
+                        />
+                        <Controller name="ageRange" control={control} defaultValue={singleFormData.ageRange || ''} render={({ field }) => (
+                            <select className="box flex" {...field}>
+                                <option value="">Select age range</option>
+                                <option value="junior">Junior</option>
+                                <option value="adult">Adult</option>
+                                <option value="senior">Senior</option>
+                                <option value="geriatric">Geriatric</option>
+                            </select>
+                        )}
+                        />
+                    </div>
+                )}
+                {selectedSupOption === "ToolsAndHomeImprovement" && (
+                    <Controller name="powerSource" control={control} defaultValue={singleFormData.powerSource || ''} render={({ field }) => (
+                        <select className="box flex" {...field}>
+                            <option value="">Select age range</option>
+                            <option value="corded">Corded</option>
+                            <option value="cordless">Cordless</option>
+                            <option value="batteryManual">Battery/Manual</option>
+                        </select>
+                    )}
+                    />
+                )}
 
 
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>

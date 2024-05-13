@@ -56,8 +56,8 @@ const Signup = () => {
         try {
             const response = await axios.post('http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/register', updatedUserData);
             console.log('Signup successful:', response.data);
-            // navigate('/verify-email');
-            alert('Signup successful. We have sent a verification link to your email. Please verify your account.');
+            navigate('/verify-email');
+            // alert('Signup successful. We have sent a verification link to your email. Please verify your account.');
         } catch (error) {
             console.error('Signup failed:', error);
         }

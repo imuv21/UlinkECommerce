@@ -771,11 +771,11 @@ const AddSingle = () => {
                 {selectedSupOption === "Automotive" && (
                     <Controller name="packType" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.packType || ''} onChange={handleChange} className="box flex" placeholder='Enter packaging type' {...field} />} />
                 )}
-                {(selectedSupOption === "BabyCenter" || selectedSupOption === "BeautyAndFragrances" || selectedSupOption === "OfficeAndStationery") && (
+                {(selectedSupOption === "BabyCenter" || selectedSupOption === "BeautyAndFragrances" || selectedSupOption === "OfficeAndStationery" || selectedSupOption === "ToolsAndHomeImprovement") && (
                     <Controller name="instructions" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.instructions || ''} onChange={handleChange} className="box flex" placeholder='Enter instructions/safety warnings' {...field} />} />
                 )}
                 {
-                    (selectedSupOption === "BabyCenter" || selectedSupOption === "FashionAndAccessories" || selectedSupOption === "HomeGardenAndFurniture" || selectedSupOption === "OfficeAndStationery") && (
+                    (selectedSupOption === "BabyCenter" || selectedSupOption === "FashionAndAccessories" || selectedSupOption === "HomeGardenAndFurniture" || selectedSupOption === "OfficeAndStationery" || selectedSupOption === "SportsAndFitness" || selectedSupOption === "ToolsAndHomeImprovement") && (
                         <Controller name="material" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.material || ''} onChange={handleChange} className="box flex" placeholder='Enter material' {...field} />} />
                     )
                 }
@@ -847,15 +847,34 @@ const AddSingle = () => {
                         />
                     </div>
                 )}
-                {(selectedSupOption === "HomeGardenAndFurniture" || selectedSupOption === "MachineryAndEquipment") && (
+                {(selectedSupOption === "HomeGardenAndFurniture" || selectedSupOption === "MachineryAndEquipment" || selectedSupOption === "SportsAndFitness" || selectedSupOption === "ToolsAndHomeImprovement" || selectedSupOption === "Toys") && (
                     <div className="fragment">
                         <Controller name="voltage" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.voltage || ''} onChange={handleChange} type='number' className="box flex" placeholder='Enter voltage (in volts)' {...field} />} />
-                        <Controller name="powerPlugType" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.powerPlugType || ''} onChange={handleChange} className="box flex" placeholder='Enter power plug type' {...field} />} />
+                        <Controller name="power" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.power || ''} onChange={handleChange} type='number' className="box flex" placeholder='Enter power (in kilowatts kW)' {...field} />} />
+                        <Controller name="powerPlugType" control={control} defaultValue="" render={({ field }) => (
+                            <select className="box flex" value={singleFormData.powerPlugType || ''} onChange={handleChange}  {...field}>
+                                <option value="">Select power plug type</option>
+                                <option value="a">Type A</option>
+                                <option value="b">Type B</option>
+                                <option value="c">Type C</option>
+                                <option value="d">Type D</option>
+                                <option value="e">Type E</option>
+                                <option value="f">Type F</option>
+                                <option value="g">Type G</option>
+                                <option value="h">Type H</option>
+                                <option value="i">Type I</option>
+                                <option value="j">Type J</option>
+                                <option value="k">Type K</option>
+                                <option value="l">Type L</option>
+                                <option value="m">Type M</option>
+                                <option value="n">Type N</option>
+                            </select>
+                        )}
+                        />
                     </div>
                 )}
                 {selectedSupOption === "MachineryAndEquipment" && (
                     <div className="fragment">
-                        <Controller name="power" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.power || ''} onChange={handleChange} type='number' className="box flex" placeholder='Enter power (in kilowatts kW)' {...field} />} />
                         <Controller name="condition" control={control} defaultValue="" render={({ field }) => (
                             <select className="box flex" value={singleFormData.condition || ''} onChange={handleChange}  {...field}>
                                 <option value="">Select condition</option>
@@ -872,30 +891,40 @@ const AddSingle = () => {
                 )}
                 {selectedSupOption === "PetAndAnimalCare" && (
                     <div className="fragment">
-                        <Controller name="portType" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.portType || ''} onChange={handleChange} className="box flex" placeholder='Enter port type' {...field} />} />
-                        <Controller name="condition" control={control} defaultValue="" render={({ field }) => (
-                            <select className="box flex" value={singleFormData.condition || ''} onChange={handleChange}  {...field}>
-                                <option value="">Select condition</option>
-                                <option value="new">New</option>
-                                <option value="used">Used</option>
-                                <option value="refurbished">Refurbished</option>
+                        <Controller name="flavor" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.flavor || ''} onChange={handleChange} className="box flex" placeholder='Enter flavor' {...field} />} />
+                        <Controller name="petSize" control={control} defaultValue="" render={({ field }) => (
+                            <select className="box flex" value={singleFormData.petSize || ''} onChange={handleChange}  {...field}>
+                                <option value="">Select pet size</option>
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                                <option value="giant">Giant</option>
                             </select>
                         )}
                         />
-                        <Controller name="condition" control={control} defaultValue="" render={({ field }) => (
-                            <select className="box flex" value={singleFormData.condition || ''} onChange={handleChange}  {...field}>
-                                <option value="">Select condition</option>
-                                <option value="new">New</option>
-                                <option value="used">Used</option>
-                                <option value="refurbished">Refurbished</option>
+                        <Controller name="ageRange" control={control} defaultValue="" render={({ field }) => (
+                            <select className="box flex" value={singleFormData.ageRange || ''} onChange={handleChange}  {...field}>
+                                <option value="">Select age range</option>
+                                <option value="junior">Junior</option>
+                                <option value="adult">Adult</option>
+                                <option value="senior">Senior</option>
+                                <option value="geriatric">Geriatric</option>
                             </select>
                         )}
                         />
                     </div>
                 )}
-
-
-
+                {selectedSupOption === "ToolsAndHomeImprovement" && (
+                    <Controller name="powerSource" control={control} defaultValue="" render={({ field }) => (
+                        <select className="box flex" value={singleFormData.powerSource || ''} onChange={handleChange}  {...field}>
+                            <option value="">Select age range</option>
+                            <option value="corded">Corded</option>
+                            <option value="cordless">Cordless</option>
+                            <option value="batteryManual">Battery/Manual</option>
+                        </select>
+                    )}
+                    />
+                )}
 
 
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>

@@ -222,7 +222,7 @@ const Header = () => {
           <div className="sub-header-option">
             <BusinessCenterIcon /> <div className="sub-heading3">Enterprise</div>
           </div>
-          {userType === 'buyer' && (<Link to="/become-a-seller" className='header-btns'>Become A Seller</Link>)}
+          {userType === 'buyer' && (<Link to="/become-a-seller" className='header-btns'>Become A Seller/Buyer</Link>)}
         </div>
       </div>
 
