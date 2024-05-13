@@ -408,6 +408,22 @@ button:focus {
   background-size: cover;
 }
 
+.svg-bg-signup{
+  position: absolute;
+  top: 40%;
+  left: 70%;
+}
+
+.logo-signup{
+  position: absolute;
+  top: 5%;
+  left: 3%;
+}
+.logo-signup img{
+  width: 160px;
+  filter: drop-shadow(3px 3px 3px black);
+}
+
 .svg-content {
   width: 100%;
 }
@@ -689,9 +705,16 @@ button:focus {
 }
 
 .login-cont {
-  justify-content: space-between;
-  gap: 50px;
-  padding: 50px;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  background-image: url('../src/assets/bg-svg.svg');
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .bgdiv {
@@ -702,10 +725,16 @@ button:focus {
 }
 
 .signupcont {
+  background: var(--CodeThree);
   padding: 30px;
-  width: 60%;
+  width: 40%;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+}
+
+.signupform{
+  height: 550px;
+  overflow-y: auto;
 }
 
 .otpbox:focus {

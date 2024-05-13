@@ -1,9 +1,8 @@
 import './App.css';
-import React, { Fragment, lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Loader from './components/Loader/Loader';
 import Layout from './components/Layout';
-import { UserTypeProvider } from './components/context/CartContext';
 
 
 //buyer dashboard
@@ -53,68 +52,67 @@ const Translator = lazy(() => import('./components/Translator/Translator'));
 
 
 
-
 function App() {
-  return (
-    <Fragment>
-      <BrowserRouter>
 
-        <Suspense fallback={<Loader />}>
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<Loader />}>
+        <Layout>
           <Routes>
 
             {/* public */}
-            <Route path='/' element={<Layout><Home /></Layout>} />
+            <Route path='/' element={<Home />} />
 
-            <Route path='/signup' element={<UserTypeProvider><Signup /></UserTypeProvider>} />
-            <Route path='/login' element={<UserTypeProvider><Login /></UserTypeProvider>} />
-            <Route path='/verify-email' element={<UserTypeProvider><Otp /></UserTypeProvider>} />
+            <Route path='/signup' element={<Signup />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/verify-email' element={<Otp />} />
             <Route path='/forgot-password' element={<ForgotPassword />} />
             <Route path='/reset-password' element={<ResetPassword />} />
-            <Route path='/guidelines' element={<Layout><Guidelines /></Layout>} />
-            <Route path='/product-details/:index' element={<Layout><ProductDetails /></Layout>} />
-            <Route path='/search-results' element={<Layout><FilterPage /></Layout>} />
-            <Route path= '/category-pages/:category' element={<Layout><CategoryPages /></Layout>} />
+            <Route path='/guidelines' element={<Guidelines />} />
+            <Route path='/product-details/:index' element={<ProductDetails />} />
+            <Route path='/search-results' element={<FilterPage />} />
+            <Route path='/category-pages/:category' element={<CategoryPages />} />
 
 
 
             {/* Seller dashboard */}
-            <Route path='/seller-form' element={<UserTypeProvider><SellerForm /></UserTypeProvider>} />
-            <Route path='/become-a-seller' element={<Layout><BecomeASeller /></Layout>} />
-            <Route path='/commission-structure' element={<Layout><CommissionStructure /></Layout>} />
-            <Route path="/seller-dashboard" element={<Layout><SideNav /></Layout>} />
-            <Route path='/editsingle/:index' element={<Layout><EditSingle /></Layout>} />
-            <Route path="/seller-order" element={<Layout><SellerOrder /></Layout>} />
-           
+            <Route path='/seller-form' element={<SellerForm />} />
+            <Route path='/become-a-seller' element={<BecomeASeller />} />
+            <Route path='/commission-structure' element={<CommissionStructure />} />
+            <Route path="/seller-dashboard" element={<SideNav />} />
+            <Route path='/editsingle/:index' element={<EditSingle />} />
+            <Route path="/seller-order" element={<SellerOrder />} />
+
 
 
 
             {/* other */}
-            <Route path='/img' element={<Layout><Image /></Layout>} />
+            <Route path='/img' element={<Image />} />
             <Route path='/trans' element={<Translator />} />
 
 
 
 
             {/* Buyer dashboard */}
-            <Route path='/buyer-dashboard' element={<Layout><BuyerDashboard /></Layout>} />
-            <Route path='/buyer-message' element={<Layout><BuyerMessage /></Layout>} />
-            <Route path='/rfq' element={<Layout><Rfq /></Layout>} />
-            <Route path='/myprofile' element={<Layout><MyProfile /></Layout>} />
-            <Route path='/access-management' element={<Layout><AcessManagement /></Layout>} />
-            <Route path='/payment' element={<Layout><Payment /></Layout>} />
-            <Route path='/roles' element={<Layout><Roles /></Layout>} />
-            <Route path='/createrfq' element={<Layout><CreateRfq /></Layout>} />
-            <Route path='/review-confirm' element={<Layout><ReviewConfirm /></Layout>} />
-            <Route path='/rfq-detail' element={<Layout><RfqDetail /></Layout>} />
-            <Route path='/order-page' element={<Layout><OrderPage /></Layout>} />
-            <Route path='/view-detail' element={<Layout><ViewDetail /></Layout>} />
-            <Route path='/cart' element={<Layout><Cart /></Layout>} />
-            <Route path='/checkout' element={<Layout><Checkout /></Layout>} />
+            <Route path='/buyer-dashboard' element={<BuyerDashboard />} />
+            <Route path='/buyer-message' element={<BuyerMessage />} />
+            <Route path='/rfq' element={<Rfq />} />
+            <Route path='/myprofile' element={<MyProfile />} />
+            <Route path='/access-management' element={<AcessManagement />} />
+            <Route path='/payment' element={<Payment />} />
+            <Route path='/roles' element={<Roles />} />
+            <Route path='/createrfq' element={<CreateRfq />} />
+            <Route path='/review-confirm' element={<ReviewConfirm />} />
+            <Route path='/rfq-detail' element={<RfqDetail />} />
+            <Route path='/order-page' element={<OrderPage />} />
+            <Route path='/view-detail' element={<ViewDetail />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='/checkout' element={<Checkout />} />
 
           </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </Fragment>
+        </Layout>
+      </Suspense>
+    </BrowserRouter>
   )
 };
 

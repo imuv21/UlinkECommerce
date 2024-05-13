@@ -1,5 +1,5 @@
 import './style.css';
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -7,6 +7,7 @@ import ListIcon from '@mui/icons-material/List';
 import SearchIcon from '@mui/icons-material/Search';
 import Drawer from '@mui/material/Drawer';
 import { useCart, useUserType } from '../context/CartContext';
+import axios from 'axios';
 import logo from '../../assets/logo2.png';
 import ReactFlagsSelect from "react-flags-select";
 
@@ -22,6 +23,7 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import DepartureBoardIcon from '@mui/icons-material/DepartureBoard';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+
 
 
 const Header = () => {
@@ -80,8 +82,45 @@ const Header = () => {
   };
 
 
+
+
+  //getting data from local storage (backend)
+  const [userData, setUserData] = useState(null);
+  useEffect(() => {
+    const storedUserData = localStorage.getItem('loggedUser');
+    if (storedUserData) {
+      const parsedUserData = JSON.parse(storedUserData);
+      setUserData(parsedUserData);
+    }
+  }, []);
+
+
+
+  //logout
+  const handleLogout = async () => {
+
+    try {
+      const response = await axios.post('http://localhost:8000/api/v1/user/logout', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json'
+        }
+      });
+      const message = response.message;
+      alert(message);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+    localStorage.removeItem('token');
+    localStorage.removeItem('loggedUser');
+  };
+
+
   return (
     <Fragment>
+      <div className="offer">
+        <h4>Save up to 20% OFF on your first 10 orders.</h4> <div className="coupn">ULINKITFIRST20</div>
+       </div>
       <div className='header'>
 
         <div className="flex head-start">
@@ -91,7 +130,7 @@ const Header = () => {
           <Link to="/"><img src={logo} alt="Logo" className='logo' /></Link>
         </div>
 
-        <div className="flex wh" style={{gap: '20px'}}>
+        <div className="flex wh" style={{ gap: '20px' }}>
           <ReactFlagsSelect id="select-contry" selected={selected} onSelect={(selected) => setSelected(selected)} placeholder="Select Country " searchable searchPlaceholder="Search countries" />{" "}
           <div className="search-input2">
             <input type='text' placeholder='Search here...' />
@@ -104,13 +143,21 @@ const Header = () => {
 
         <div className="flex head-start">
 
+          {userData && (
+            <div className='heading2' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}>Hi {userData.name}</div>
+          )}
+
 
           <div className={`icon-container ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
             <AccountCircleIcon style={{ color: 'black' }} />
             {isClicked && (
               <div className="popup">
                 <div className='popupbox'>
-                  <div className="username">Username</div>
+                  {/* {userData && (
+                    <div className="username">
+                      {userData.user.firstName} {userData.user.lastName}
+                    </div>
+                  )} */}
                   <div className="warning-btn3">{userType === 'buyer' ? 'Verify Your Mobile' : 'Unverified Seller'}</div>
                 </div>
 
@@ -134,7 +181,7 @@ const Header = () => {
                 </div>
 
                 <div className="popupbox">
-                  <div className="subpop-options">Log out</div>
+                  <div className="subpop-options" onClick={handleLogout}>Log out</div>
                 </div>
 
                 <div className='popupbox'>

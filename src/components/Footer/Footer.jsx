@@ -89,7 +89,7 @@ const Footer = () => {
           <div className="supfsectwo">
             <div className="fsectwo">
               <h3 className="footer-title2">Connect With Us</h3>
-              <div className="flex" style={{ gap: '20px' }}>
+              <div className="flex" style={{ gap: '10px' }}>
                 <img src={whatsapp} style={{ width: '30px' }} alt="whatsapp" />
                 <div className="flexcol" style={{ gap: '2px' }}>
                   <div className="number">+91 8750518844</div>

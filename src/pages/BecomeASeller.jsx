@@ -39,6 +39,8 @@ const BecomeASeller = () => {
         setCurrentPage(pageNumber);
     };
 
+
+    //json lottie animation
     const options = {
         animationData: groovyWalkAnimation,
         loop: true,

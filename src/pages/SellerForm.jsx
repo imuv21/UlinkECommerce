@@ -1,11 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import bg from '../assets/bg.png';
+import animation from "../assets/json/animation-signup.json";
+import { useLottie } from "lottie-react";
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { sellerSchema } from '../components/Schemas/validationSchema';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import logo from '../assets/logo2.png';
 import { Helmet } from 'react-helmet-async';
 
 const schema = yupResolver(sellerSchema);
@@ -59,23 +61,30 @@ const SellerForm = () => {
     };
 
 
+    //json lottie animation
+    const options = {
+        animationData: animation,
+        loop: true,
+    };
+    const { View } = useLottie(options);
+
+
 
     return (
         <Fragment>
             <Helmet>
                 <title>Create your seller profile</title>
             </Helmet>
-            <div className="flex login-cont wh">
-                <div className="flex wh">
-                    <img src={bg} className='bgdiv' alt="bg" />
-                </div>
+            <div className="login-cont">
+
+                 <Link to='/' className="logo-signup">
+                    <img src={logo} alt="logo" />
+                 </Link>
 
                 <div className="signupcont">
                     <form className='flexcol cover' onSubmit={handleSubmit(onSubmit)}>
                         <div className="heading">Create your seller profile</div>
-
-                        
-                        <Controller name="companyName" control={control} defaultValue="" render={({ field }) => <input value={sellerData.companyName || ''} onChange={handleChange} className="box flex" placeholder='Enter company name' {...field} />} />
+                        <Controller name="companyName" control={control} defaultValue="" render={({ field }) => <input value={sellerData.companyName || ''} onChange={handleChange} autoComplete="off" className="box flex" placeholder='Enter company name' {...field} />} />
                         {errors.companyName && <div className='error'>{errors.companyName.message}</div>}
                         <Controller name="countryOperation" value={selectedOp} onChange={operationSelectChange} control={control} defaultValue="" render={({ field }) => (
                             <select className="box flex" value={sellerData.countryOperation || ''} onChange={handleChange}  {...field} >
@@ -89,11 +98,16 @@ const SellerForm = () => {
                         {errors.countryOperation && <div className='error'>{errors.countryOperation.message}</div>}
                         <button className='btn box flex' type='submit'><div className="heading2">Continue</div></button>
                         <div className="descrip">By registering you agree to the user <Link>Terms & Conditions</Link> and <Link>Privacy Policy</Link></div>
-
                     </form>
                 </div>
-            </div>
 
+                <div className="svg-bg-signup">
+                    <div style={{ width: '80%' }}>
+                        {View}
+                    </div>
+                </div>
+
+            </div>
         </Fragment>
     )
 }

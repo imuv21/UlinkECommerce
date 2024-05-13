@@ -11,7 +11,7 @@
   justify-content: center;
   position: fixed;
   width: 230px;
-  top: 45px;
+  top: 95px;
   right: 10px;
   height: fit-content;
   transform: translateX(-70%);
@@ -105,7 +105,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 75px;
+  height: 70px;
   padding: 10px 20px;
   gap: 20px;
   background-color: white;
@@ -121,6 +121,21 @@
   padding: 10px 20px;
   gap: 20px;
   background-color: #004c6f;
+}
+.coupn{
+  padding: 1px 5px;
+  background-color: var(--CodeOne);
+  filter: drop-shadow(2px 2px 2px gray);
+}
+.offer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 10px 20px;
+  gap: 20px;
+  background-color: #ffd490;
 }
 /* hsl(199, 100%, 88%) */
 .sup-header-option{

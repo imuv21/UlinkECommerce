@@ -1,20 +1,16 @@
 import React, { useRef, useState, useEffect, Fragment } from 'react'
-import { useNavigate } from 'react-router-dom';
-import bg from '../assets/bg.png';
+import { Link, useNavigate } from 'react-router-dom';
+import animation from "../assets/json/animation-signup.json";
+import { useLottie } from "lottie-react";
 import { Helmet } from 'react-helmet-async';
-import { useUserType } from '../components/context/CartContext';
+import logo from '../assets/logo2.png';
 
 const Otp = () => {
 
-    const { userType } = useUserType();
     const navigate = useNavigate();
     const sellerForm = (otp) => {
         console.log("OTP:", otp);
-        if(userType === 'seller'){
-            navigate('/seller-form');
-        } else{
-            navigate('/');
-        }
+        navigate('/');
     }
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
     // Focus management
@@ -56,6 +52,12 @@ const Otp = () => {
     }, []);
 
 
+    //json lottie animation
+    const options = {
+        animationData: animation,
+        loop: true,
+    };
+    const { View } = useLottie(options);
 
 
 
@@ -86,10 +88,11 @@ const Otp = () => {
             <Helmet>
                 <title>Verify Your Email</title>
             </Helmet>
-            <div className="flex login-cont wh">
-                <div className="flex wh">
-                    <img src={bg} className='bgdiv' alt="" />
-                </div>
+            <div className="login-cont">
+
+                <Link to='/' className="logo-signup">
+                    <img src={logo} alt="logo" />
+                </Link>
 
                 <div className="signupcont">
                     <div className='flexcol cover'>
@@ -97,7 +100,7 @@ const Otp = () => {
                         <div className="heading2 tcenter">We have sent the OTP to user@gmail.com <br /> Click on the link in the email or enter the OTP to verify your email.</div>
                         <div className="flex gap">
 
-                            { otpDigits.map((digit, index) => (
+                            {otpDigits.map((digit, index) => (
                                 <input
                                     key={index}
                                     ref={el => (otpInputs.current[index] = el)}
@@ -115,6 +118,13 @@ const Otp = () => {
                         </button>
                     </div>
                 </div>
+
+                <div className="svg-bg-signup">
+                    <div style={{ width: '80%' }}>
+                        {View}
+                    </div>
+                </div>
+
             </div>
 
 

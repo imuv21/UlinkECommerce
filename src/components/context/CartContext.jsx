@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 
-//create context
+
+//Cart context
 const CartContext = createContext();
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState({});
@@ -14,11 +15,11 @@ const CartProvider = ({ children }) => {
 const useCart = () => useContext(CartContext);
 
 
-// Another context
+
+// User type context
 const UserTypeContext = createContext();
 const UserTypeProvider = ({ children }) => {
   const [userType, setUserType] = useState(null);
-
   useEffect(() => {
     const userTypeFromStorage = localStorage.getItem('userType');
     if (userTypeFromStorage) {
@@ -41,5 +42,21 @@ const useUserType = () => {
 
 
 
+//Auth context 
+const AuthContext = createContext();
+const AuthProvider = ({ children }) => {
+    const [token, setToken] = useState('');
+    return (
+        <AuthContext.Provider value={{ token, setToken }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+const useAuth = () => useContext(AuthContext);
 
-export { CartProvider, useCart, UserTypeProvider, useUserType }
+
+
+
+
+
+export { CartProvider, useCart, UserTypeProvider, useUserType, AuthProvider, useAuth };

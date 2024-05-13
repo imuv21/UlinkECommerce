@@ -1,12 +1,14 @@
 import React, { Fragment, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resetPasswordSchema } from '../components/Schemas/validationSchema';
-import bg from '../assets/bg.png';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '../assets/logo2.png';
 import { Helmet } from 'react-helmet-async';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import animation from "../assets/json/animation-signup.json";
+import { useLottie } from "lottie-react";
 const schema = yupResolver(resetPasswordSchema);
 const ResetPassword = () => {
 
@@ -23,6 +25,14 @@ const ResetPassword = () => {
     };
 
 
+    //json lottie animation
+    const options = {
+        animationData: animation,
+        loop: true,
+    };
+    const { View } = useLottie(options);
+
+
 
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
     const onSubmit = (formData) => {
@@ -36,10 +46,12 @@ const ResetPassword = () => {
             <Helmet>
                 <title>Reset Your Password</title>
             </Helmet>
-            <div className="flex login-cont wh">
-                <div className="flex wh">
-                    <img src={bg} className='bgdiv' alt="" />
-                </div>
+            <div className="login-cont">
+
+                <Link to='/' className="logo-signup">
+                    <img src={logo} alt="logo" />
+                </Link>
+
                 <div className="signupcont">
                     <div className='flexcol cover'>
                         <div className="heading">Reset your password</div>
@@ -63,6 +75,13 @@ const ResetPassword = () => {
                         </form>
                     </div>
                 </div>
+
+                <div className="svg-bg-signup">
+                    <div style={{ width: '80%' }}>
+                        {View}
+                    </div>
+                </div>
+
             </div>
         </Fragment>
     )

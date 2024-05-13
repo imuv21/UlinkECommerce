@@ -870,6 +870,29 @@ const AddSingle = () => {
                 {selectedSupOption === "OfficeAndStationery" && (
                     <Controller name="pattern" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.pattern || ''} onChange={handleChange} className="box flex" placeholder='Enter pattern' {...field} />} />
                 )}
+                {selectedSupOption === "PetAndAnimalCare" && (
+                    <div className="fragment">
+                        <Controller name="portType" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.portType || ''} onChange={handleChange} className="box flex" placeholder='Enter port type' {...field} />} />
+                        <Controller name="condition" control={control} defaultValue="" render={({ field }) => (
+                            <select className="box flex" value={singleFormData.condition || ''} onChange={handleChange}  {...field}>
+                                <option value="">Select condition</option>
+                                <option value="new">New</option>
+                                <option value="used">Used</option>
+                                <option value="refurbished">Refurbished</option>
+                            </select>
+                        )}
+                        />
+                        <Controller name="condition" control={control} defaultValue="" render={({ field }) => (
+                            <select className="box flex" value={singleFormData.condition || ''} onChange={handleChange}  {...field}>
+                                <option value="">Select condition</option>
+                                <option value="new">New</option>
+                                <option value="used">Used</option>
+                                <option value="refurbished">Refurbished</option>
+                            </select>
+                        )}
+                        />
+                    </div>
+                )}
 
 
 

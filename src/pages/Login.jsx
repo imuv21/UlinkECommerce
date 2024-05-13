@@ -2,12 +2,14 @@ import React, { Fragment, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../components/Schemas/validationSchema';
-import { useNavigate } from 'react-router-dom';
-import bg from '../assets/bg.png';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '../assets/logo2.png';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Helmet } from 'react-helmet-async';
-import { useUserType } from '../components/context/CartContext';
+import animation from "../assets/json/animation-signup.json";
+import { useLottie } from "lottie-react";
+// import { useUserType } from '../components/context/CartContext';
 import axios from 'axios';
 
 const schema = yupResolver(loginSchema);
@@ -20,7 +22,7 @@ const Login = () => {
         setPasswordVisible(!passwordVisible);
     };
     const navigate = useNavigate();
-    const { setUserType } = useUserType();
+    // const { setUserType } = useUserType();
     const signup = () => {
         navigate('/signup');
     }
@@ -33,13 +35,17 @@ const Login = () => {
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
     const onSubmit = async (formData) => {
         const updatedLoggedUser = { ...loggedUser, ...formData };
-        localStorage.setItem('loggedUser', JSON.stringify(updatedLoggedUser));
-        localStorage.setItem('userType', JSON.stringify(formData.role));
-        setUserType(formData.role);
+        // localStorage.setItem('loggedUser', JSON.stringify(updatedLoggedUser));
+        // localStorage.setItem('userType', JSON.stringify(formData.role));
+        // setUserType(formData.role);
 
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/user/login', updatedLoggedUser);
+            const response = await axios.post('http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/Login', updatedLoggedUser);
             console.log('Login successful:', response.data);
+            const token = response.data.token;
+            const user = response.data;
+            localStorage.setItem('loggedUser', JSON.stringify(user));
+            localStorage.setItem('token', token);
             navigate('/');
         } catch (error) {
             console.error('Login failed:', error);
@@ -49,15 +55,23 @@ const Login = () => {
         setLoggedUser({ ...loggedUser, [e.target.name]: e.target.value });
     };
 
+     //json lottie animation
+     const options = {
+        animationData: animation,
+        loop: true,
+    };
+    const { View } = useLottie(options);
+
     return (
         <Fragment>
-            <div className="flex login-cont wh">
             <Helmet>
                 <title>Login To Your Account</title>
             </Helmet>
-                <div className="flex wh">
-                    <img src={bg} className='bgdiv' alt="bg" />
-                </div>
+            <div className="login-cont">
+
+                <Link to='/' className="logo-signup">
+                    <img src={logo} alt="logo" />
+                </Link>
 
                 <div className="signupcont">
                     <div className='flexcol cover'>
@@ -80,8 +94,8 @@ const Login = () => {
                             )}
                             />
                             {errors.role && <div className='error'>{errors.role.message}</div>}
-                            <Controller name="email" control={control} defaultValue="" render={({ field }) => <input value={loggedUser.email || ''} onChange={handleChange} className="box flex" placeholder='Enter your email' autoComplete="username" {...field} />} />
-                            {errors.email && <div className='error'>{errors.email.message}</div>}
+                            <Controller name="username" control={control} defaultValue="" render={({ field }) => <input value={loggedUser.username || ''} onChange={handleChange} className="box flex" placeholder='Enter your email' autoComplete="email" {...field} />} />
+                            {errors.email && <div className='error'>{errors.username.message}</div>}
 
                             <div className="search-input">
                                 <Controller name="password" control={control} defaultValue="" render={({ field }) => <input value={loggedUser.password || ''} onChange={handleChange} type={passwordVisible ? "text" : "password"} className="box flex" placeholder='Enter your password' autoComplete="current-password" {...field} />} />
@@ -101,6 +115,13 @@ const Login = () => {
 
                     </div>
                 </div>
+
+                <div className="svg-bg-signup">
+                    <div style={{ width: '80%' }}>
+                        {View}
+                    </div>
+                </div>
+
             </div>
 
         </Fragment>

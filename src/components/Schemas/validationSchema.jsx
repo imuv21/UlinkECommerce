@@ -85,17 +85,17 @@ export const bankSchema = yup.object().shape({
 });
 
 export const signupSchema = yup.object().shape({
-    firstName: yup.string().required('Enter your first name'),
-    lastName: yup.string().required('Enter your last name'),
+    firstname: yup.string().required('Enter your first name'),
+    lastname: yup.string().required('Enter your last name'),
     role: yup.string().required('Select a role first'),
     email: yup.string().email('Invalid email').required('Email is required'),
-    number: yup.string()
+    mobile: yup.string()
         .matches(/^\d+$/, { message: 'Phone number must contain only digits' })
         .min(5, 'Phone number must be at least 5 digits')
         .max(15, 'Phone number must be at most 15 digits')
         .required('Phone number is required'),
     countryCode: yup.string().required('Country code is required'),
-    whatsappNum: yup.string()
+    whatsaapNumber: yup.string()
         .matches(/^\d+$/, { message: 'Whatsapp number must contain only digits' })
         .min(5, 'Whatsapp number must be at least 5 digits')
         .max(15, 'Whatsapp number must be at most 15 digits'),
@@ -108,7 +108,7 @@ export const signupSchema = yup.object().shape({
 
 export const loginSchema = yup.object().shape({
     role: yup.string().required('Select a role first'),
-    email: yup.string().email('Invalid email').required('Email is required'),
+    username: yup.string().email('Invalid email').required('Email is required'),
     password: yup.string().required('Password is required')
         .min(8, 'Password must be at least 8 characters')
         .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z\d!@#$%^&*]{8,}$/, 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
