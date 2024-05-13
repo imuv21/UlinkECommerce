@@ -144,7 +144,7 @@ const Header = () => {
         <div className="flex head-start">
 
           {userData && (
-            <div className='heading2' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}>Hi {userData.name}</div>
+            <div className='heading2' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}> {userData.name}</div>
           )}
 
 
