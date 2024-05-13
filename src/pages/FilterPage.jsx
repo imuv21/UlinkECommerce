@@ -64,10 +64,6 @@ const FilterPage = () => {
     const handleSortChange = (event) => {
         setSortBy(event.target.value);
     };
-
-
-
-
     //TruncateText
     const truncateText = (text, maxLength) => {
         if (text.length <= maxLength) {
@@ -75,10 +71,7 @@ const FilterPage = () => {
         }
         return text.slice(0, maxLength) + '...';
     }
-
-
-
-    return (
+ return (
         <div className="flexcol wh product-detail">
             <Helmet>
                 <title>Search Results</title>
@@ -128,7 +121,7 @@ const FilterPage = () => {
                 </div>
                 <div className="fptwo">
                     <div className="shortby">
-                        <div className="heading2 wh">Healthy Snacks (21 Products)</div>
+                        <div className="heading2 wh">Healthy Snacks ( {filteredProducts.length } Items)</div>
                         <div className="flex" style={{ gap: '20px' }}>
                             <div className="heading2" style={{ whiteSpace: 'nowrap' }}>Short By</div>
                             <select name="shortby" className='selectshort' value={sortBy} onChange={handleSortChange}>

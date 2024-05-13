@@ -1,6 +1,6 @@
 // Top Discount Images
 
-import TopDeals from '../../assets/trending/fashion&beautydi.png';
+import FashionBeauty from '../../assets/trending/fashion&beautydi.png';
 import ElecronicsDeals from '../../assets/trending/electronicdiscount.png';
 import Discount from '../../assets/trending/trandingdiscountagain.png';
 import Electronic from '../../assets/trending/electronicoffer-remove.png';
@@ -26,13 +26,29 @@ import Sumsung from '../../assets/Electronics/samsungbanner.png';
 import Tclbanner from '../../assets/Electronics/tclbanner1.png';
 import Sumsungbanner from '../../assets/Electronics/samsungbanner1.png';
 import MobileBanner from '../../assets/Electronics/mobilebanner2.png'
+import OldItemBanner from '../../assets/Electronics/Refurbished.banner.png'
 
-// Brand Images
+// Stationary Images Here
+import StationaryBanner from '../../assets/Stationary/camlinbanner.png';
+import Printer from '../../assets/Stationary/PrintingScanner-removebg-preview.png';
+import Paper   from '../../assets/Stationary/Printing-Paper-removebg-preview.png';
+import TonorsLnk from '../../assets/Stationary/Tonors_lnk-removebg-preview.png';
+import OfficeInsrument from '../../assets/Stationary/One-Stop-Office-removebg-preview.png';
+import  GeneralSuppliers from '../../assets/Stationary/generalsupliers.png';
+import  Tapes from '../../assets/Stationary/tapesGlu.png';
+import  Writing from '../../assets/Stationary/writinginstruments.png';
+import Files from  '../../assets/Stationary/filesandfolders.png';
+import Art from '../../assets/Stationary/artandcraft.png';
+import Desk from '../../assets/Stationary/desknecessary.png';
+import Slider1 from  '../../assets/Stationary/bannerhp.png';
+import Board from '../../assets/Stationary/boardpng.png';
+import WritingMaterial from '../../assets/Stationary/writingmaterial.png';
+
 
 
 
 const ImageImport =  {
-    TopDeals,
+    FashionBeauty,
     ElecronicsDeals,
     Discount,
     Electronic,
@@ -57,6 +73,23 @@ const ImageImport =  {
     Tclbanner,
     Sumsungbanner,
     MobileBanner,
+    OldItemBanner,
+
+  //Stationary image
+    Printer,
+    Paper,
+    TonorsLnk,
+    OfficeInsrument,
+    StationaryBanner,
+    GeneralSuppliers,
+    Tapes,
+    Writing,
+    Files,
+    Art,
+    Desk,
+    Slider1,
+    Board,
+    WritingMaterial,
 
 
    

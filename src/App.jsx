@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Loader from './components/Loader/Loader';
 import Layout from './components/Layout';
 import { UserTypeProvider } from './components/context/CartContext';
+import OldItem from './pages/OldItem';
 
 
 //buyer dashboard
@@ -31,8 +32,6 @@ const ProductDetails = lazy(() => import('./pages/Cart/ProductDetails'));
 const SellerOrder = lazy(() => import('./components/SellerDashboard/SellerOrder/SellerOrder'));
 
 
-
-
 //public
 const Home = lazy(() => import("./pages/Home"));
 const Signup = lazy(() => import('./pages/Signup'));
@@ -46,12 +45,11 @@ const Cart = lazy(() => import('./pages/Cart/Cart'));
 const FilterPage = lazy(() => import('./pages/FilterPage'));
 const CategoryPages = lazy(() => import('./pages/CategoryPages'));
 
+
+
 //Other
 const Image = lazy(() => import('./components/Image'));
 const Translator = lazy(() => import('./components/Translator/Translator'));
-
-
-
 
 
 function App() {
@@ -64,7 +62,6 @@ function App() {
 
             {/* public */}
             <Route path='/' element={<Layout><Home /></Layout>} />
-
             <Route path='/signup' element={<UserTypeProvider><Signup /></UserTypeProvider>} />
             <Route path='/login' element={<UserTypeProvider><Login /></UserTypeProvider>} />
             <Route path='/verify-email' element={<UserTypeProvider><Otp /></UserTypeProvider>} />
@@ -74,6 +71,8 @@ function App() {
             <Route path='/product-details/:index' element={<Layout><ProductDetails /></Layout>} />
             <Route path='/search-results' element={<Layout><FilterPage /></Layout>} />
             <Route path= '/category-pages/:category' element={<Layout><CategoryPages /></Layout>} />
+            <Route path='/old-item' element={ <Layout> <OldItem /></Layout>} />
+          
 
 
 
@@ -87,12 +86,9 @@ function App() {
            
 
 
-
             {/* other */}
             <Route path='/img' element={<Layout><Image /></Layout>} />
             <Route path='/trans' element={<Translator />} />
-
-
 
 
             {/* Buyer dashboard */}

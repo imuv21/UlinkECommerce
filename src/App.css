@@ -2011,27 +2011,6 @@ button:focus {
   width: 100%;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Category home page */
 .category-section {
   width: 100%;
@@ -2064,7 +2043,7 @@ button:focus {
 .category-container {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  gap: 2rem;
+  gap: 4rem;
 }
 
 .category-img-title {
@@ -2077,14 +2056,15 @@ button:focus {
   justify-content: center;
 }
 
-
 /* category page  */
 
 .banner-width {
   width: 100%;
   height: 360px;
 }
-
+.banner-page{
+  width: 100%;
+}
 .discount-pages {
   padding: 0px 20px 60px 20px;
   display: flex;
@@ -2094,7 +2074,6 @@ button:focus {
   width: 100%;
   gap: 15px;
 }
-
 .best-deals{
   width: 50%;
 }
@@ -2131,7 +2110,9 @@ button:focus {
   border-radius: 10px;
   background-color: #d4d8e0;
   border: 2px solid rgb(235, 179, 128);
+  cursor: pointer;
 }
+
 
 .offer-1:hover {
   background: #f1f4f6;
@@ -2140,6 +2121,7 @@ button:focus {
 
 .offer-title {
   color: #252627;
+ 
 }
 
 .show-all-product:hover {
@@ -2230,4 +2212,19 @@ button:focus {
   margin-left: 10px;
   margin-top: 4px;
   font-size: 17px;
+}
+
+/* stationary  */
+
+.printer{
+  background-color: #5887c9;
+}
+.tonorlnk{
+  background: linear-gradient(#e66465, #9198e5);
+}
+.paper{
+  background-color: yellowgreen;
+}
+.office{
+  background-color:rgb(227, 179, 48) ;
 }

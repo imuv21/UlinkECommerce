@@ -14,8 +14,6 @@ import { Link } from 'react-router-dom';
 import Refurbish from '../assets/Refurbished.png';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-
-
 const NextArrow = (props) => {
   const { style, onClick } = props;
   return (
@@ -42,7 +40,7 @@ const CategorySection = () => {
     { name: 'Home & Kitchen', image: Kitchen, link: '/category-pages/kitchen' },
     { name: 'Beauty & Fragrences', image: Buety, link: '/category-pages/buety' },
     { name: 'Fashion & Acceseries', image: Fashion, link: '/category-pages/fashion' },
-    { name: 'Refurbish Accesories', image: Refurbish, link: '/category-pages/refurbish' },
+    { name: 'Refurbished', image: Refurbish, link: '/category-pages/refurbish' },
   ];
   const settings = {
     dots: false,
