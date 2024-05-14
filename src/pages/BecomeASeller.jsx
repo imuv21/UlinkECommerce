@@ -31,9 +31,6 @@ const BecomeASeller = () => {
 
     const navigate = useNavigate();
     const seller = () => {
-        navigate('/seller-form');
-    }
-    const buyer = () => {
         navigate('/signup');
     }
 
@@ -208,10 +205,7 @@ const BecomeASeller = () => {
                 <div className="svg-content flexcol-start" style={{ gap: '20px' }}>
                     <div className="heading4">Sell more! Unlock the global market.</div>
                     <div className="heading" style={{ color: 'white', fontWeight: '400' }}>Easily sell to the all over the globe without opening a local office. Tens of thousands of verified wholesale buyers are only a few clicks away.</div>
-                    <div className="flex-start wh" style={{ gap: '20px'}}>
-                       <button onClick={seller} className='btn box flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Register as a Seller</div></button>
-                       <button onClick={buyer} className='btn box flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Register as a Buyer</div></button>
-                    </div>
+                    <button onClick={seller} className='btn box flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Register as a Seller</div></button>
                     
                 </div>
                 <div className="svg-content flex">

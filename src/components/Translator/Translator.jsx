@@ -1,132 +1,127 @@
-import React, { useEffect, useState } from 'react';
-import Sliders from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import './Translator.css';
-
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const Translator = () => {
+  const [category, setCategory] = useState('');
+  const [subCategories, setSubCategories] = useState([]);
+  const [newSubCategory, setNewSubCategory] = useState('');
+  const [backeEndCat, setBackendCat] = useState([]);
+  const[inputCat,setInputCat]=useState('');
 
-    const [productShow, setProductShow] = useState([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('https://fakestoreapi.com/products');
-                const jsonData = await response.json();
-                setProductShow(jsonData);
-            } catch (error) {
-                console.log(error);
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value.toUpperCase());
+  };
+
+  const handleCategoryChange2 = (e) => {
+    setInputCat(e.target.value.toUpperCase());
+  };
+  const handleNewSubCategoryChange = (e) => {
+    setNewSubCategory(e.target.value.toUpperCase());
+  };
+
+  const handleAddSubCategory = () => {
+    if (newSubCategory.trim() !== '') {
+      setSubCategories([...subCategories, newSubCategory]);
+      setNewSubCategory('');
+    }
+  };
+
+  const handleAPIRequest = async () => {
+
+const data={
+    categoryName: category,
+    subCategoryNames:subCategories
+
+}
+
+    try{
+        const response=await axios.post('http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/add-category',data);
+       setCategory('');
+       setSubCategories([]);
+        alert(response.data);
+
+
+    }catch(e){
+        console.log(e);
+    }
+    // You can make your API call here with the category and subCategories data
+    console.log('Category:', category);
+    console.log('Subcategories:', subCategories);
+  };
+
+  const handleGetCategory = async () => {
+    
+
+        try{
+            let response;
+            if(inputCat!==''){
+              //fetch the subcategroy of given input category
+                 response=await axios.get(`http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/get-category?categoryName=${inputCat}`);
+
             }
-        };
-        fetchData();
-    }, []);
+            else{
+              //fetch all the parent category
+                 response=await axios.get(`http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/get-category`);
 
-    const truncateText = (text, maxLength) => {
-        if (text.length <= maxLength) {
-            return text;
+            }
+          console.log(response);
+            if(response.data){
+            setBackendCat(response.data);
+           }
+    
+    
+        }catch(e){
+            console.log(e);
         }
-        return text.slice(0, maxLength) + '...';
-    };
+        // You can make your API call here with the category and subCategories data
+        console.log('Category:', category);
+        console.log('Subcategories:', subCategories);
+      };
 
-    const NextArrow = (props) => {
-        const { style, onClick } = props;
-        return (
-            <div style={{ ...style, position: 'absolute', top: '50%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '999', right: '0%' }} onClick={onClick}>
-                <ChevronRightIcon />
+  return (
+    <div style={{display:'flex',marginTop:'100px',boarder:'2px solid black'}}>
+      <div style={{display:'flex',position:'relative',padding:'50px',marginRight:'20%'}}>
+        <div style={{position:'relative',padding:'50px',border:'2px solid black'}}>
+          <h5 className="card-title">Category Component</h5>
+          <div className="mb-3">
+            <label htmlFor="category" className="form-label">Category:</label>
+            <input type="text" className="form-control" id="category" value={category} onChange={handleCategoryChange} />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="newSubCategory" className="form-label">Add Subcategory:</label>
+            <div className="input-group">
+              <input type="text" className="form-control" id="newSubCategory" value={newSubCategory} onChange={handleNewSubCategoryChange} />
+              <button className="btn btn-outline-primary" type="button" onClick={handleAddSubCategory}>Add</button>
             </div>
-        );
-    };
-
-    const PrevArrow = (props) => {
-        const { style, onClick } = props;
-        return (
-            <div style={{ ...style, position: 'absolute', top: '50%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '999' }} onClick={onClick}>
-                <ChevronLeftIcon />
-            </div>
-        );
-    };
-
-    const settings = {
-        dots: false,
-        infinite: false,
-        speed: 400,
-        slidesToShow: 7,
-        slidesToScroll: 2,
-        nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow />,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
-    };
-
-    return (
-        <div className="product-slider-cont">
-            <Sliders {...settings}>
-                {productShow.map((product, id) => (
-                    <div className='show-img-detail-sup' key={id}>
-                        <div className="show-img-detail-sub">
-                            <img className='product-img-size' src={product.image} alt='img' />
-                            <div className='product-detail-info'>
-                                <p className='product-title'>{truncateText(product.title, 20)} </p>
-                                <p className='product-price'>AED {product.price}/ piece incl value</p>
-                                <div className='flex' style={{ gap: '10px' }}>
-                                    <p className='product-discount'>AED 7.35</p>
-                                    <span className='discount-percentage'>50% Off</span>
-                                </div>
-                                <p className='product-quantity'>Unit per carton: 1</p>
-                                <p className='product-quantity'>Min Order: 1 peace</p>
-                            </div>
-                        </div>
-                    </div>
-                ))}
-            </Sliders>
+          </div>
+          <div>
+            <h5>Subcategories:</h5>
+            <ul className="list-group">
+              {subCategories.map((subCategory, index) => (
+                <li key={index} className="list-group-item">{subCategory}</li>
+              ))}
+            </ul>
+          </div>
+          <button className="btn btn-primary mt-3" onClick={handleAPIRequest}>Create category API</button>
+          <div className="mb-3">
+            <label htmlFor="inputCat" className="form-label">Category:</label>
+            <input type="text" className="form-control" id="category" value={inputCat} onChange={handleCategoryChange2} />
+            <button className="btn btn-primary mt-3" onClick={handleGetCategory}>Get category API</button>
+            <div>
+            <h5>category:{inputCat}</h5>  
+            <h5>Subcategories:</h5>
+            <ul className="list-group">
+              {backeEndCat.map((subCategory, index) => (
+                <li key={index} className="list-group-item">{subCategory}</li>
+              ))}
+            </ul>
+          </div>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Translator;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

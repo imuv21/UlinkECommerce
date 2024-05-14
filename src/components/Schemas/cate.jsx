@@ -22,7 +22,6 @@ const subOptions = {
 
 };
 
-
 const miniSubOptions = {
 
   AudioAndStudio: ["AmplifiersAndSpeakers", "AudioAndVideoAccessories", "HeadphonesAndHeadsets", "MediaPlayers", "Radio", "RecordingAndStudioEquipment"],
@@ -146,7 +145,6 @@ const miniSubOptions = {
   ToolsAndHardware: ["Fasteners", "FurnitureHardware"],
   
 };
-
 
 const microSubOptions = {
 

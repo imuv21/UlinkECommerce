@@ -416,11 +416,20 @@ button:focus {
 
 .logo-signup{
   position: absolute;
-  top: 5%;
-  left: 3%;
+  top: 3%;
+  left: 45%;
 }
 .logo-signup img{
   width: 160px;
+  filter: drop-shadow(3px 3px 3px black);
+}
+.logo-otpform{
+  position: absolute;
+  top: 10%;
+  left: 44%;
+}
+.logo-otpform img{
+  width: 200px;
   filter: drop-shadow(3px 3px 3px black);
 }
 
@@ -725,6 +734,7 @@ button:focus {
 }
 
 .signupcont {
+  margin-top: 20px;
   background: var(--CodeThree);
   padding: 30px;
   width: 40%;
@@ -733,7 +743,7 @@ button:focus {
 }
 
 .signupform{
-  height: 550px;
+  height: 480px;
   overflow-y: auto;
 }
 
@@ -777,6 +787,10 @@ button:focus {
   background-color: white;
   border-radius: var(--br2);
 }
+.LoginRegister{
+  cursor: pointer;
+  white-space: nowrap;
+}
 
 .loginbtn {
   background-color: none;
@@ -786,6 +800,8 @@ button:focus {
   transition: var(--trans);
   padding: 10px;
   white-space: nowrap;
+  width: 100%;
+  text-align: center;
 }
 
 .loginbtn:hover {
@@ -795,20 +811,21 @@ button:focus {
 }
 
 .signupbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 5px;
+  text-align: center;
+  width: 100%;
   background-color: none;
-  border: 1px solid var(--CodeTwo);
+  border: none;
   color: var(--CodeTwo);
-  border-radius: var(--br2);
   transition: var(--trans);
   padding: 10px;
   white-space: nowrap;
 }
 
-.signupbtn:hover {
-  background-color: var(--CodeTwoHover);
-  color: white;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
-}
 
 .btn {
   border: none;

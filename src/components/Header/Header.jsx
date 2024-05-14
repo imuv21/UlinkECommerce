@@ -40,6 +40,16 @@ const Header = () => {
     setIsClicked(prevState => !prevState);
   };
 
+  const [isClickedTwo, setIsClickedTwo] = useState(false);
+  const handleClickTwo = () => {
+    setIsClickedTwo(prevState => !prevState);
+  };
+
+
+
+
+
+
   const navigate = useNavigate();
   const tocart = () => {
     navigate('/cart');
@@ -85,12 +95,12 @@ const Header = () => {
 
 
   //getting data from local storage (backend)
-  const [userData, setUserData] = useState(null);
+  const [loggedUser, setLoggedUser] = useState(null);
   useEffect(() => {
     const storedUserData = localStorage.getItem('loggedUser');
     if (storedUserData) {
       const parsedUserData = JSON.parse(storedUserData);
-      setUserData(parsedUserData);
+      setLoggedUser(parsedUserData);
     }
   }, []);
 
@@ -113,6 +123,8 @@ const Header = () => {
     }
     localStorage.removeItem('token');
     localStorage.removeItem('loggedUser');
+    localStorage.removeItem('userData');
+    localStorage.removeItem('sellerData');
   };
 
 
@@ -143,49 +155,62 @@ const Header = () => {
 
         <div className="flex head-start">
 
-          {userData && (
-            <div className='heading2' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}> {userData.name}</div>
+          {loggedUser && (
+            <div className='heading2' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}> {loggedUser.name}</div>
           )}
 
-          { userData === null && (
-            <div className="flex" style={{ gap: '20px' }}>
-              <Link to="/login" className='loginbtn'><div className="heading2">Log in</div></Link>
-              <Link to="/signup" className='signupbtn'><div className="heading2">Register</div></Link>
+          {loggedUser === null && (
+            <div className={`icon-container ${isClickedTwo ? 'clicked' : ''}`} onClick={handleClickTwo}>
+              <div className="flex" style={{gap: '10px'}}>
+                  <AccountCircleIcon style={{ color: 'black' }} />
+                  <div className='LoginRegister'>Login / Register</div>
+              </div>
+              {isClickedTwo && (
+                <div className="popup">
+                  <div className='popupbox'>
+                    <Link to="/login" className='loginbtn'><div className="heading2">Log in</div></Link>
+                    <Link to="/signup" className='signupbtn'><div className="heading2">Register</div><div className='descrip'>It only takes 30 seconds</div></Link>
+                  </div>
+                  <div className="popupbox">
+                    <div className="descrip">Help & Contact</div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
 
-          { userData &&  (userData.role === 'Buyer' || userData.role === 'seller') && (
+          {loggedUser && (loggedUser.role === 'Buyer' || loggedUser.role === 'Seller') && (
             <div className={`icon-container ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
               <AccountCircleIcon style={{ color: 'black' }} />
               {isClicked && (
                 <div className="popup">
                   <div className='popupbox'>
-                    {userData && (
+                    {loggedUser && (
                       <div className="username">
-                        {userData.name}
+                        {loggedUser.name}
                       </div>
                     )}
-                    <div className="warning-btn3">{userData.role === 'Buyer' ? 'Verify Your Mobile' : 'Unverified Seller'}</div>
+                    <div className="warning-btn3">{loggedUser.role === 'Buyer' ? 'Verify Your Mobile' : 'Unverified Seller'}</div>
                   </div>
 
                   <div className='popupbox'>
-                    {userData.role === 'Buyer' && (<Link to={'/buyer-dashboard'} className="pop-options"><HomeIcon />Buyer Center</Link>)}
-                    {userData.role === 'seller' && (<Link to={'/seller-dashboard'} className="pop-options"> <DashboardIcon />Dashboard</Link>)}
-                    <Link to={userData.role === 'seller' ? '/seller-order' : '/order-page'} className="pop-options"> <AllInboxIcon /> Orders </Link>
-                    {userData.role === 'seller' && (<div className="pop-options"> <MessageIcon /> Messages </div>)}
+                    {loggedUser.role === 'Buyer' && (<Link to={'/buyer-dashboard'} className="pop-options"><HomeIcon />Buyer Center</Link>)}
+                    {loggedUser.role === 'Seller' && (<Link to={'/seller-dashboard'} className="pop-options"> <DashboardIcon />Dashboard</Link>)}
+                    <Link to={loggedUser.role === 'Seller' ? '/seller-order' : '/order-page'} className="pop-options"> <AllInboxIcon /> Orders </Link>
+                    {loggedUser.role === 'Seller' && (<div className="pop-options"> <MessageIcon /> Messages </div>)}
                     <div className="pop-options"> <SendTimeExtensionIcon /> RFQ Marketplace </div>
-                    <div className="pop-options"> <SendIcon />{userData.role === 'Buyer' ? 'Create RFQ' : 'Manage Quotes'}</div>
-                    {userData.role === 'seller' && (<div className="pop-options"> <StorefrontIcon />Product Catalogue</div>)}
+                    <div className="pop-options"> <SendIcon />{loggedUser.role === 'Buyer' ? 'Create RFQ' : 'Manage Quotes'}</div>
+                    {loggedUser.role === 'Seller' && (<div className="pop-options"> <StorefrontIcon />Product Catalogue</div>)}
                   </div>
 
                   <div className='popupbox'>
                     <div className="subpop-options">My Profile</div>
                     <div className="subpop-options">My Company Profile</div>
-                    {userData.role === 'Buyer' && (<div className="subpop-options">Payment Management</div>)}
+                    {loggedUser.role === 'Buyer' && (<div className="subpop-options">Payment Management</div>)}
                     <div className="subpop-options">Access Management</div>
-                    {userData.role === 'Buyer' && (<div className="subpop-options">Addresses</div>)}
-                    {userData.role === 'seller' && (<div className="subpop-options">Saved Products</div>)}
+                    {loggedUser.role === 'Buyer' && (<div className="subpop-options">Addresses</div>)}
+                    {loggedUser.role === 'Seller' && (<div className="subpop-options">Saved Products</div>)}
                   </div>
 
                   <div className="popupbox">
@@ -198,7 +223,7 @@ const Header = () => {
           )}
 
 
-          {userData && userData.role === 'Buyer' && (
+          {loggedUser && loggedUser.role === 'Buyer' && (
             <div style={{ position: 'relative', cursor: 'pointer' }} onClick={tocart}>
               <ShoppingCartIcon style={{ color: 'black' }} />
               <div style={cartcount}>{carttext}</div>
@@ -228,7 +253,9 @@ const Header = () => {
           <div className="sub-header-option">
             <BusinessCenterIcon /> <div className="sub-heading3">Enterprise</div>
           </div>
-          { userData &&  (userData.role === 'Buyer') && (<Link to="/become-a-seller" className='header-btns'>Become A Seller</Link>)}
+          {(loggedUser === null || (loggedUser && loggedUser.role !== 'Seller')) && (
+            <Link to="/become-a-seller" className='header-btns'>Become A Seller</Link>
+          )}
         </div>
       </div>
 

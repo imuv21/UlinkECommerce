@@ -21,7 +21,7 @@ const SellerForm = () => {
     const onSubmit = (formData) => {
         const updatedSellerData = { ...sellerData, ...formData };
         localStorage.setItem('sellerData', JSON.stringify(updatedSellerData));
-        navigate('/signup');
+        navigate('/login');
     };
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -77,7 +77,7 @@ const SellerForm = () => {
             </Helmet>
             <div className="login-cont">
 
-                 <Link to='/' className="logo-signup">
+                 <Link to='/' className="logo-otpform">
                     <img src={logo} alt="logo" />
                  </Link>
 

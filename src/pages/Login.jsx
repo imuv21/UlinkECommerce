@@ -34,7 +34,6 @@ const Login = () => {
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
     const onSubmit = async (formData) => {
         const updatedLoggedUser = { ...loggedUser, ...formData };
-        // localStorage.setItem('loggedUser', JSON.stringify(updatedLoggedUser));
 
         try {
             const response = await axios.post('http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/Login', updatedLoggedUser);

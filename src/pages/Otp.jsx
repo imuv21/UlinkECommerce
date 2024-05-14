@@ -9,10 +9,10 @@ const Otp = () => {
 
     const navigate = useNavigate();
 
-    //getting data from local storage (backend)
+    //getting data from local storage
   const [userData, setUserData] = useState(null);
   useEffect(() => {
-    const storedUserData = localStorage.getItem('loggedUser');
+    const storedUserData = localStorage.getItem('userData');
     if (storedUserData) {
       const parsedUserData = JSON.parse(storedUserData);
       setUserData(parsedUserData);
@@ -21,10 +21,11 @@ const Otp = () => {
 
     const sellerForm = (otp) => {
         console.log("OTP:", otp);
+        console.log(userData.role);
         if(userData && userData.role === 'seller'){
             navigate('/seller-form');
         } else{
-            navigate('/');
+            navigate('/login');
         }
     }
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
@@ -105,7 +106,7 @@ const Otp = () => {
             </Helmet>
             <div className="login-cont">
 
-                <Link to='/' className="logo-signup">
+                <Link to='/' className="logo-otpform">
                     <img src={logo} alt="logo" />
                 </Link>
 
