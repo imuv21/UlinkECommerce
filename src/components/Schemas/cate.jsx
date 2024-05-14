@@ -25,7 +25,7 @@ const subOptions = {
 const miniSubOptions = {
 
   AudioAndStudio: ["AmplifiersAndSpeakers", "AudioAndVideoAccessories", "HeadphonesAndHeadsets", "MediaPlayers", "Radio", "RecordingAndStudioEquipment"],
-  CamerasAndCamcorders: ["Camcorders", "CameraAccessories"],
+  CamerasAndCamcorders: ["Camcorders", "CameraAccessories", "DigitalCameras", "InstantAndFilmCameras", "SecurityCamerasAndDrones", "WebcamsAndAccessories"],
   ComputersAndAccessories: ["ComputerAndLaptopComponents", "ComputerAccessories"],
   ElectricalAndElectronicAccessories: ["Adapters", "CablesAndConnectors"],
   GamingAndConsoles: ["GamingAccessories", "GamingConsoles"],
@@ -149,17 +149,21 @@ const miniSubOptions = {
 const microSubOptions = {
 
   AmplifiersAndSpeakers: ["Amplifiers", "Boomboxes", "CeilingSpeakers", "ComputerSpeakers", "FloorStandSpeakers", "Loudspeakers", "MonitorSpeakers", "OutdoorSpeakers", "PortableSpeakers", "SoundbarSpeakers", "Subwoofers", "WallMountSpeakers"],
-  AudioAndVideoAccessories: ["AudioAndVideoSplitters", "AudioConverters"],
-  HeadphonesAndHeadsets: ["HeadphoneAccessories", "Headphones"],
-  MediaPlayers: ["BluRayPlayers", "CDPlayersAndRecorders"],
+  AudioAndVideoAccessories: ["AudioAndVideoSplitters", "AudioConverters", "AudioFiltersAndEqualizers", "AudioInterfaces", "AudioMixers", "MountsAndHolders", "SpeakerMountsAndStands", "VideoConverters", "VideoSwitchers"],
+  HeadphonesAndHeadsets: ["HeadphoneAccessories", "Headphones", "Headsets", "WirelessEarbuds"],
+  MediaPlayers: ["BluRayPlayers", "CDPlayersAndRecorders", "DVDPlayersAndRecorders", "MP3AndMP4Players", "StereoSystems", "TurntablesAndRecordPlayers"],
   Radio: ["AnalogRadios", "ClockRadios", "DigitalRadios"],
   RecordingAndStudioEquipment: ["KaraokeSystems", "MicrophoneCovers", "MicrophoneFilters", "Microphones", "VoiceRecorders"],
 
-  Camcorders: ["DVDCamcorders", "FlashMemoryCamcorders"], 
-  CameraAccessories: ["AccessoriesSets", "CameraBagsCoversAndCases"],
+  Camcorders: ["DVDCamcorders", "FlashMemoryCamcorders", "HDDCamcorders", "Mini-DVCamcorders"], 
+  CameraAccessories: ["AccessoriesSets", "CameraBagsCoversAndCases", "CameraChargersAndBatteries", "CameraFilms", "CameraFiltersAndProtectors", "CameraLenses", "CameraStrapsHolders", "ClapperBoards", "DigitalPhotoFrames", "FlashesAndLighting", "Gimbals", "LensCapsAndHoods", "LensCleaningKits", "Sliders", "StudioBackgrounds", "TripodAndMonopodAccessories", "TripodsAndMonopods"],
+  DigitalCameras: ["360-DegreeCameras", "Action Cameras", "CompactDigitalCameras", "DSLRCameras", "MirrorlessCameras"],
+  InstantAndFilmCameras: ["FilmCameras", "InstantCameras"],
+  SecurityCamerasAndDrones: ["BinocularsAndTelescopes", "Drones", "SecurityCameras", "SurveillanceSystems"],
+  WebcamsAndAccessories: ["WebcamCovers", "Webcams"],
 
   ComputerAndLaptopComponents: ["CPUsAndProcessors", "ComputerFans"], 
-  ComputerAccessories: ["CDsAndDVDsCases", "CardReadersAndWriters" ],
+  ComputerAccessories: ["CDsAndDVDsCases", "CardReadersAndWriters" ], 
 
   Adapters: ["CableAdapters", "PowerAdapters"], 
   CablesAndConnectors: ["AUXCables", "AudioCables"],

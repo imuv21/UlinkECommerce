@@ -54,10 +54,14 @@ const Signup = () => {
 
         try {
             const response = await axios.post('http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/register', updatedUserData);
-            console.log('Signup successful:', response.data);
+            // alert('Signup successful:', response.data);
+            const email = userData.email;
+            const otpResponse = await axios.post(`http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/sendVerificationOtp?email=${email}`);
+            alert('OTP sent successfully:', otpResponse.data);
             navigate('/verify-email');
         } catch (error) {
-            console.error('Signup failed:', error);
+            alert('Signup failed:', error, userData.email);
+            console.log(error);
         }
     };
     const handleChange = (e) => {

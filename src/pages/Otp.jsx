@@ -19,15 +19,37 @@ const Otp = () => {
     }
   }, []);
 
-    const sellerForm = (otp) => {
-        console.log("OTP:", otp);
-        console.log(userData.role);
-        if(userData && userData.role === 'seller'){
+
+  const verifyOtp = async (otp, username) => {
+    try {
+        const response = await axios.post(`http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/verifyOtp?otp=${otp}&username=${username}`);
+        console.log('OTP verification successful:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('OTP verification failed:', error);
+        throw error;
+    }
+};
+
+const sellerForm = async (otp) => {
+
+    const email = userData.email;
+    console.log("OTP:", otp);
+    console.log("Email:", email);
+
+    try {
+        const verificationResponse = await verifyOtp(otp, email);
+        alert('OTP verified:', verificationResponse);
+
+        if (userData && userData.role === 'seller') {
             navigate('/seller-form');
-        } else{
+        } else {
             navigate('/login');
         }
+    } catch (error) {
+        alert('Failed to verify OTP:', error);
     }
+};
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
     // Focus management
     const otpInputs = useRef([]);
