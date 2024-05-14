@@ -28,7 +28,7 @@ const ForgotPassword = () => {
             </Helmet>
             <div className="login-cont">
 
-                <Link to='/' className="logo-signup">
+                <Link to='/' className="logo-otpform">
                     <img src={logo} alt="logo" />
                 </Link>
 
