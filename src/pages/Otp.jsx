@@ -4,6 +4,7 @@ import animation from "../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
 import { Helmet } from 'react-helmet-async';
 import logo from '../assets/logo2.png';
+import axios from 'axios';
 
 const Otp = () => {
 
@@ -20,26 +21,23 @@ const Otp = () => {
   }, []);
 
 
-  const verifyOtp = async (otp, username) => {
+  const verifyOtp = async (otp, username, role) => {
     try {
-        const response = await axios.post(`http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/verifyOtp?otp=${otp}&username=${username}`);
-        console.log('OTP verification successful:', response.data);
+        const response = await axios.post(`http://ulinkit.eu-north-1.elasticbeanstalk.com/api/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
+        alert(`Response : ${response.data.message} And Email : ${username}`);
         return response.data;
     } catch (error) {
         console.error('OTP verification failed:', error);
-        throw error;
+        throw error; 
     }
 };
 
 const sellerForm = async (otp) => {
-
     const email = userData.email;
-    console.log("OTP:", otp);
-    console.log("Email:", email);
+    const role = userData.role;
 
     try {
-        const verificationResponse = await verifyOtp(otp, email);
-        alert('OTP verified:', verificationResponse);
+        const verificationResponse = await verifyOtp(otp, email, role);
 
         if (userData && userData.role === 'seller') {
             navigate('/seller-form');
@@ -47,9 +45,11 @@ const sellerForm = async (otp) => {
             navigate('/login');
         }
     } catch (error) {
-        alert('Failed to verify OTP:', error);
+        alert('Failed to verify OTP: ' + error.message);
     }
 };
+
+
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
     // Focus management
     const otpInputs = useRef([]);

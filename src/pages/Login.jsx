@@ -36,8 +36,8 @@ const Login = () => {
         const updatedLoggedUser = { ...loggedUser, ...formData };
 
         try {
-            const response = await axios.post('http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/Login', updatedLoggedUser);
-            console.log('Login successful:', response.data);
+            const response = await axios.post('http://ulinkit.eu-north-1.elasticbeanstalk.com/api/Login', updatedLoggedUser);
+            alert('Login successful:', response.data);
             const token = response.data.token;
             const user = response.data;
             localStorage.setItem('loggedUser', JSON.stringify(user));

@@ -48,28 +48,21 @@ const Signup = () => {
 
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
     const onSubmit = async (formData) => {
-
         const updatedUserData = { ...userData, ...formData };
         localStorage.setItem('userData', JSON.stringify(updatedUserData));
-
         try {
-            const response = await axios.post('http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/register', updatedUserData);
-            // alert('Signup successful:', response.data);
-            const email = userData.email;
-            const otpResponse = await axios.post(`http://ulinkitapplication-test-env.eba-cek38m8c.eu-north-1.elasticbeanstalk.com/api/sendVerificationOtp?email=${email}`);
-            alert('OTP sent successfully:', otpResponse.data);
+            const response = await axios.post('http://ulinkit.eu-north-1.elasticbeanstalk.com/api/register', updatedUserData);
+            alert(`Signup successful: ${response.data}`);
             navigate('/verify-email');
-        } catch (error) {
-            alert('Signup failed:', error, userData.email);
-            console.log(error);
+            
+        } catch (registerError) {
+            const registerErrorMessage = registerError.response ? registerError.response.data : registerError.message;
+            alert(`Signup failed: ${registerErrorMessage}, Email: ${updatedUserData.email}`);
         }
     };
     const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
     };
-
-
-    //connecting api http://localhost:8000/api/v1/user/signup
 
 
 
