@@ -11,43 +11,43 @@ const Otp = () => {
     const navigate = useNavigate();
 
     //getting data from local storage
-  const [userData, setUserData] = useState(null);
-  useEffect(() => {
-    const storedUserData = localStorage.getItem('userData');
-    if (storedUserData) {
-      const parsedUserData = JSON.parse(storedUserData);
-      setUserData(parsedUserData);
-    }
-  }, []);
-
-
-  const verifyOtp = async (otp, username, role) => {
-    try {
-        const response = await axios.post(`https://ulinkit.eu-north-1.elasticbeanstalk.com/api/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
-        alert(`Response : ${response.data.message} And Email : ${username}`);
-        return response.data;
-    } catch (error) {
-        console.error('OTP verification failed:', error);
-        throw error; 
-    }
-};
-
-const sellerForm = async (otp) => {
-    const email = userData.email;
-    const role = userData.role;
-
-    try {
-        const verificationResponse = await verifyOtp(otp, email, role);
-
-        if (userData && userData.role === 'seller') {
-            navigate('/seller-form');
-        } else {
-            navigate('/login');
+    const [userData, setUserData] = useState(null);
+    useEffect(() => {
+        const storedUserData = localStorage.getItem('userData');
+        if (storedUserData) {
+            const parsedUserData = JSON.parse(storedUserData);
+            setUserData(parsedUserData);
         }
-    } catch (error) {
-        alert('Failed to verify OTP: ' + error.message);
-    }
-};
+    }, []);
+
+
+    const verifyOtp = async (otp, username, role) => {
+        try {
+            const response = await axios.post(`http://ulinkit.eu-north-1.elasticbeanstalk.com/api/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
+            alert(`Response : ${response.data.message} And Email : ${username}`);
+            return response.data;
+        } catch (error) {
+            console.error('OTP verification failed:', error);
+            throw error;
+        }
+    };
+
+    const sellerForm = async (otp) => {
+        const email = userData.email;
+        const role = userData.role;
+
+        try {
+            const verificationResponse = await verifyOtp(otp, email, role);
+
+            if (userData && userData.role === 'seller') {
+                navigate('/seller-form');
+            } else {
+                navigate('/login');
+            }
+        } catch (error) {
+            alert('Failed to verify OTP: ' + error.message);
+        }
+    };
 
 
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));

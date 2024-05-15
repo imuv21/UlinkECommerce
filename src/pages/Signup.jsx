@@ -51,13 +51,14 @@ const Signup = () => {
         const updatedUserData = { ...userData, ...formData };
         localStorage.setItem('userData', JSON.stringify(updatedUserData));
         try {
-            const response = await axios.post('https://ulinkit.eu-north-1.elasticbeanstalk.com/api/register', updatedUserData);
-            alert(`Signup successful: ${response.data}`);
+            const response = await axios.post('http://ulinkit.eu-north-1.elasticbeanstalk.com/api/register', updatedUserData);
+            alert(`Signup successful.`);
+            console.log(`Signup successful: ${response.data}`);
             navigate('/verify-email');
             
         } catch (registerError) {
             const registerErrorMessage = registerError.response ? registerError.response.data : registerError.message;
-            alert(`Signup failed: ${registerErrorMessage}, Email: ${updatedUserData.email}`);
+            console.log(`Signup failed: ${registerErrorMessage}, Email: ${updatedUserData.email}`);
         }
     };
     const handleChange = (e) => {
