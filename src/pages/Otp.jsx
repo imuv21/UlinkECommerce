@@ -23,7 +23,7 @@ const Otp = () => {
 
   const verifyOtp = async (otp, username, role) => {
     try {
-        const response = await axios.post(`http://ulinkit.eu-north-1.elasticbeanstalk.com/api/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
+        const response = await axios.post(`https://ulinkit.eu-north-1.elasticbeanstalk.com/api/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
         alert(`Response : ${response.data.message} And Email : ${username}`);
         return response.data;
     } catch (error) {

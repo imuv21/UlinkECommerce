@@ -51,7 +51,7 @@ const Signup = () => {
         const updatedUserData = { ...userData, ...formData };
         localStorage.setItem('userData', JSON.stringify(updatedUserData));
         try {
-            const response = await axios.post('http://ulinkit.eu-north-1.elasticbeanstalk.com/api/register', updatedUserData);
+            const response = await axios.post('https://ulinkit.eu-north-1.elasticbeanstalk.com/api/register', updatedUserData);
             alert(`Signup successful: ${response.data}`);
             navigate('/verify-email');
             
