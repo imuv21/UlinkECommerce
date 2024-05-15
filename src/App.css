@@ -414,20 +414,9 @@ button:focus {
   left: 70%;
 }
 
-.logo-signup{
-  position: absolute;
-  top: 3%;
-  left: 45%;
-}
-.logo-signup img{
-  width: 160px;
-  filter: drop-shadow(3px 3px 3px black);
-}
-.logo-otpform{
-  position: absolute;
-  top: 18%;
-  left: 43%;
-}
+/* .logo-otpform{
+  outline: 1px solid red;
+} */
 .logo-otpform img{
   width: 200px;
   filter: drop-shadow(3px 3px 3px black);
@@ -718,8 +707,10 @@ button:focus {
   width: 100%;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center; 
+  gap: 30px;
   background-image: url('../src/assets/bg-svg.svg');
   background-size: 100%;
   background-position: center;
@@ -734,7 +725,6 @@ button:focus {
 }
 
 .signupcont {
-  margin-top: 20px;
   background: var(--CodeThree);
   padding: 30px;
   width: 40%;
@@ -961,6 +951,19 @@ button:focus {
 
 .shtwo:focus {
   outline: none;
+}
+
+.profile-sel-box {
+  border-radius: var(--br1);
+  border: var(--border);
+  background-color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 25px;
+  padding: 15px;
 }
 
 .sel-box {
@@ -1699,6 +1702,15 @@ button:focus {
   align-items: start;
   justify-content: center;
   gap: 30px;
+  width: 100%;
+}
+.procont {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
 }
 
 .plus-minus {
@@ -1734,6 +1746,15 @@ button:focus {
   justify-content: center;
   flex-direction: column;
   width: 25%;
+  gap: 30px;
+}
+
+.procol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
   gap: 30px;
 }
 
@@ -2306,3 +2327,7 @@ button:focus {
 .office{
   background-color:rgb(227, 179, 48) ;
 }
+
+
+
+  /* seller profile page  */

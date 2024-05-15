@@ -29,6 +29,10 @@ const EditSingle = lazy(() => import("./components/SellerDashboard/EditSingle"))
 const ProductDetails = lazy(() => import('./pages/Cart/ProductDetails'));
 const SellerOrder = lazy(() => import('./components/SellerDashboard/SellerOrder/SellerOrder'));
 
+//Both seller and buyer
+const Profile = lazy(() => import('./pages/Profile'));
+const UpdateEmail = lazy(() => import('./pages/UpdateEmail'));
+
 
 //public
 const Home = lazy(() => import("./pages/Home"));
@@ -82,6 +86,10 @@ function App() {
             <Route path="/seller-dashboard" element={<SideNav />} />
             <Route path='/editsingle/:index' element={<EditSingle />} />
             <Route path="/seller-order" element={<SellerOrder />} />
+
+            {/* Both seller and buyer */}
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/update-email" element={<UpdateEmail />} />
 
 
 

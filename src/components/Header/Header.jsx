@@ -205,7 +205,7 @@ const Header = () => {
                   </div>
 
                   <div className='popupbox'>
-                    <div className="subpop-options">My Profile</div>
+                    <Link to={'/profile'} className="subpop-options">My Profile</Link>
                     <div className="subpop-options">My Company Profile</div>
                     {loggedUser.role === 'Buyer' && (<div className="subpop-options">Payment Management</div>)}
                     <div className="subpop-options">Access Management</div>

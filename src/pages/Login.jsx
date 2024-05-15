@@ -37,7 +37,7 @@ const Login = () => {
 
         try {
             const response = await axios.post('http://ulinkit.eu-north-1.elasticbeanstalk.com/api/Login', updatedLoggedUser);
-            alert(`Login successful: ${response.message}`);
+            alert(`Login successful!`);
             const token = response.data.token;
             const user = response.data;
             localStorage.setItem('loggedUser', JSON.stringify(user));
@@ -65,7 +65,7 @@ const Login = () => {
             </Helmet>
             <div className="login-cont">
 
-                <Link to='/' className="logo-signup">
+                <Link to='/' className="logo-otpform">
                     <img src={logo} alt="logo" />
                 </Link>
 

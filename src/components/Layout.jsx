@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 const Layout = ({ children }) => {
 
     const location = useLocation();
-    if (location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/forgot-password' || location.pathname === '/reset-password' || location.pathname === '/verify-email' || location.pathname === '/seller-form') {
+    if (location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/forgot-password' || location.pathname === '/reset-password' || location.pathname === '/verify-email' || location.pathname === '/seller-form' || location.pathname === '/update-email' || location.pathname === '/update-number' || location.pathname === '/update-password') {
         return <>{children}</>;
     }
 

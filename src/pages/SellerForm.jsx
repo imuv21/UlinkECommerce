@@ -15,14 +15,40 @@ const schema = yupResolver(sellerSchema);
 const SellerForm = () => {
 
     const navigate = useNavigate();
+
+    //getting data from local storage
+    const [userData, setUserData] = useState(null);
+    useEffect(() => {
+        const storedUserData = localStorage.getItem('userData');
+        if (storedUserData) {
+            const parsedUserData = JSON.parse(storedUserData);
+            setUserData(parsedUserData);
+        }
+    }, []);
+
+
     
     const [sellerData, setSellerData] = useState({});
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
-    const onSubmit = (formData) => {
+
+    const onSubmit = async (formData) => {
+        const username = userData.email;
+        const password = userData.password;
         const updatedSellerData = { ...sellerData, ...formData };
         localStorage.setItem('sellerData', JSON.stringify(updatedSellerData));
-        navigate('/login');
+        try {
+            const response = await axios.post(`http://ulinkit.eu-north-1.elasticbeanstalk.com/api/update-seller-details?username=${username}&password=${password}`, updatedSellerData);
+            alert(`Congrats! You have become a seller. Please login into your account.`);
+            console.log(`Seller data : ${response.data}`);
+            navigate('/login');
+            
+        } catch (error) {
+            alert(`Error : ${error}`);
+            console.log(`Error : ${error}`);
+        }
     };
+
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (name === "countryCode" || name === "countryCode2") {
@@ -84,10 +110,10 @@ const SellerForm = () => {
                 <div className="signupcont">
                     <form className='flexcol cover' onSubmit={handleSubmit(onSubmit)}>
                         <div className="heading">Create your seller profile</div>
-                        <Controller name="companyName" control={control} defaultValue="" render={({ field }) => <input value={sellerData.companyName || ''} onChange={handleChange} autoComplete="off" className="box flex" placeholder='Enter company name' {...field} />} />
-                        {errors.companyName && <div className='error'>{errors.companyName.message}</div>}
-                        <Controller name="countryOperation" value={selectedOp} onChange={operationSelectChange} control={control} defaultValue="" render={({ field }) => (
-                            <select className="box flex" value={sellerData.countryOperation || ''} onChange={handleChange}  {...field} >
+                        <Controller name="companyname" control={control} defaultValue="" render={({ field }) => <input value={sellerData.companyname || ''} onChange={handleChange} autoComplete="off" className="box flex" placeholder='Enter company name' {...field} />} />
+                        {errors.companyname && <div className='error'>{errors.companyname.message}</div>}
+                        <Controller name="countryOfoperation" value={selectedOp} onChange={operationSelectChange} control={control} defaultValue="" render={({ field }) => (
+                            <select className="box flex" value={sellerData.countryOfoperation || ''} onChange={handleChange}  {...field} >
                                 <option value="">Country of operation</option>
                                 {coperation.map((country) => (
                                     <option key={uuidv4()} value={country}>{country}</option>
@@ -95,7 +121,7 @@ const SellerForm = () => {
                             </select>
                         )}
                         />
-                        {errors.countryOperation && <div className='error'>{errors.countryOperation.message}</div>}
+                        {errors.countryOfoperation && <div className='error'>{errors.countryOfoperation.message}</div>}
                         <button className='btn box flex' type='submit'><div className="heading2">Continue</div></button>
                         <div className="descrip">By registering you agree to the user <Link>Terms & Conditions</Link> and <Link>Privacy Policy</Link></div>
                     </form>

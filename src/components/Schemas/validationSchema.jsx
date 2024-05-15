@@ -122,8 +122,8 @@ export const resetPasswordSchema = yup.object().shape({
 });
 
 export const sellerSchema = yup.object().shape({
-    companyName: yup.string().required('Enter company name'),
-    countryOperation: yup.string().required('Country of operation is required'),
+    companyname: yup.string().required('Enter company name'),
+    countryOfoperation: yup.string().required('Country of operation is required'),
 });
 
 
