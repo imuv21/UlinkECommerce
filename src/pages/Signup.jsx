@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import animation from "../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const schema = yupResolver(signupSchema);
 const Signup = () => {
@@ -51,7 +52,7 @@ const Signup = () => {
         const updatedUserData = { ...userData, ...formData };
         localStorage.setItem('userData', JSON.stringify(updatedUserData));
         try {
-            const response = await axios.post('http://ulinkit.eu-north-1.elasticbeanstalk.com/api/register', updatedUserData);
+            const response = await axios.post(`${BASE_URL}/api/register`, updatedUserData);
             alert(`Signup successful.`);
             console.log(`Signup successful: ${response.data}`);
             navigate('/verify-email');

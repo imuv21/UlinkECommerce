@@ -19,6 +19,7 @@ const Footer = () => {
   return (
 
     <Fragment>
+      
       <div className="supContFooter">
         <div className="footer-section">
           <div className="footer">
@@ -63,7 +64,7 @@ const Footer = () => {
               <Link className="itemLink">Buy-back Program</Link>
               <Link className="itemLink">Terms and Conditions</Link>
               <Link className="itemLink">Return and refund policy</Link>
-              <Link className="itemLink">Payment Methode</Link>
+              <Link className="itemLink">Payment Method</Link>
             </div>
           </div>
           <div className="footer">
@@ -72,7 +73,7 @@ const Footer = () => {
               <Link className="itemLink">Enterprises</Link>
               <Link className="itemLink">Terms and Conditions</Link>
               <Link className="itemLink">Return and refund policy</Link>
-              <Link className="itemLink">Payment Methode</Link>
+              <Link className="itemLink">Payment Method</Link>
             </div>
           </div>
         </div>
@@ -127,7 +128,6 @@ const Footer = () => {
             <Link>© 2024 ulinkit.com. All rights reserved. Ulink outsourcing - Delhi, Uttam Nagar, Building 9W, 2nd floor</Link>
           </div>
         </div>
-
       </div>
 
     </Fragment>

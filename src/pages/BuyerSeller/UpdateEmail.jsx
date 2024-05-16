@@ -1,15 +1,15 @@
 import React, { Fragment, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/logo2.png';
+import logo from '../../assets/logo2.png';
 import { Helmet } from 'react-helmet-async';
-import animation from "../assets/json/animation-signup.json";
+import animation from "../../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
 
 const ForgotPassword = () => {
 
     const navigate = useNavigate();
-    const resetPassword = () => {
-        navigate('/verify-email');
+    const updateEmail = () => {
+        navigate('/verify-update-email');
     }
     const [email, setEmail] = useState('');
 
@@ -36,7 +36,7 @@ const ForgotPassword = () => {
                         <div className="heading">Update Email Address</div>
                         <div className="flexcol gap">
                             <input type='email' className="box flex" placeholder='Enter a new email' autoComplete='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-                            <button className='btn box flex' onClick={resetPassword} type='submit'><div className="heading2">Send verification link</div></button>
+                            <button className='btn box flex' onClick={updateEmail} type='submit'><div className="heading2">Send OTP</div></button>
                             <Link to={'/profile'} className=' box flex'><div className="heading2" style={{color: 'gray'}}>Cancel</div></Link>
                             <div className="descrip">We will send an OTP to your email</div>
                         </div>

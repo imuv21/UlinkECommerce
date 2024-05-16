@@ -10,6 +10,7 @@ import { Helmet } from 'react-helmet-async';
 import animation from "../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
 import axios from 'axios';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const schema = yupResolver(loginSchema);
 
@@ -36,7 +37,7 @@ const Login = () => {
         const updatedLoggedUser = { ...loggedUser, ...formData };
 
         try {
-            const response = await axios.post('http://ulinkit.eu-north-1.elasticbeanstalk.com/api/Login', updatedLoggedUser);
+            const response = await axios.post(`${BASE_URL}/api/Login`, updatedLoggedUser);
             alert(`Login successful!`);
             const token = response.data.token;
             const user = response.data;

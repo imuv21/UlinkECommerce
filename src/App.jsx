@@ -30,8 +30,11 @@ const ProductDetails = lazy(() => import('./pages/Cart/ProductDetails'));
 const SellerOrder = lazy(() => import('./components/SellerDashboard/SellerOrder/SellerOrder'));
 
 //Both seller and buyer
-const Profile = lazy(() => import('./pages/Profile'));
-const UpdateEmail = lazy(() => import('./pages/UpdateEmail'));
+const Profile = lazy(() => import('./pages/BuyerSeller/Profile'));
+const UpdateEmail = lazy(() => import('./pages/BuyerSeller/UpdateEmail'));
+const OtpEmail = lazy(() => import('./pages/BuyerSeller/OtpEmail'));
+const UpdateNumber = lazy(() => import('./pages/BuyerSeller/UpdateNumber'));
+const OtpNumber = lazy(() => import('./pages/BuyerSeller/OtpNumber'));
 
 
 //public
@@ -90,6 +93,9 @@ function App() {
             {/* Both seller and buyer */}
             <Route path="/profile" element={<Profile />} />
             <Route path="/update-email" element={<UpdateEmail />} />
+            <Route path="/verify-update-email" element={<OtpEmail />} />
+            <Route path="/update-number" element={<UpdateNumber />} />
+            <Route path="/verify-update-number" element={<OtpNumber />} />
 
 
 

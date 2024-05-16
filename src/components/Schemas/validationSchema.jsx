@@ -126,5 +126,16 @@ export const sellerSchema = yup.object().shape({
     countryOfoperation: yup.string().required('Country of operation is required'),
 });
 
+export const updateNumberSchema = yup.object().shape({
+    mobile: yup.string()
+        .matches(/^\d+$/, { message: 'Phone number must contain only digits' })
+        .min(5, 'Phone number must be at least 5 digits')
+        .max(15, 'Phone number must be at most 15 digits')
+        .required('Phone number is required'),
+    countryCode: yup.string().required('Country code is required'),
+});
+
+
+
 
 

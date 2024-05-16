@@ -9,6 +9,7 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import logo from '../assets/logo2.png';
 import { Helmet } from 'react-helmet-async';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const schema = yupResolver(sellerSchema);
 
@@ -37,7 +38,7 @@ const SellerForm = () => {
         const updatedSellerData = { ...sellerData, ...formData };
         localStorage.setItem('sellerData', JSON.stringify(updatedSellerData));
         try {
-            const response = await axios.post(`http://ulinkit.eu-north-1.elasticbeanstalk.com/api/update-seller-details?username=${username}&password=${password}`, updatedSellerData);
+            const response = await axios.post(`${BASE_URL}/api/update-seller-details?username=${username}&password=${password}`, updatedSellerData);
             alert(`Congrats! You have become a seller. Please login into your account.`);
             console.log(`Seller data : ${response.data}`);
             navigate('/login');

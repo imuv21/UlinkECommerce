@@ -1,13 +1,12 @@
 import React, { useRef, useState, useEffect, Fragment } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import animation from "../assets/json/animation-signup.json";
+import animation from "../../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
 import { Helmet } from 'react-helmet-async';
-import logo from '../assets/logo2.png';
+import logo from '../../assets/logo2.png';
 import axios from 'axios';
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-const Otp = () => {
+const OtpEmail = () => {
 
     const navigate = useNavigate();
 
@@ -21,10 +20,9 @@ const Otp = () => {
         }
     }, []);
 
-
     const verifyOtp = async (otp, username, role) => {
         try {
-            const response = await axios.post(`${BASE_URL}/api/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
+            const response = await axios.post(`http://ulinkit.eu-north-1.elasticbeanstalk.com/api/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
             alert(`Response : ${response.data.message} And Email : ${username}`);
             return response.data;
         } catch (error) {
@@ -49,7 +47,6 @@ const Otp = () => {
             alert('Failed to verify OTP: ' + error.message);
         }
     };
-
 
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
     // Focus management
@@ -125,7 +122,7 @@ const Otp = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Verify Your Email</title>
+                <title>Verify Your Number</title>
             </Helmet>
             <div className="login-cont">
 
@@ -135,8 +132,8 @@ const Otp = () => {
 
                 <div className="signupcont">
                     <div className='flexcol cover'>
-                        <div className="heading tcenter">Verify your email</div>
-                        <div className="heading2 tcenter">We have sent the OTP to user@gmail.com <br />Enter the OTP to verify your email.</div>
+                        <div className="heading tcenter">Verify your number</div>
+                        <div className="heading2 tcenter">We have sent the OTP to 435787547387 <br />Enter the OTP to verify your number.</div>
                         <div className="flex gap">
 
                             {otpDigits.map((digit, index) => (
@@ -171,4 +168,4 @@ const Otp = () => {
     )
 }
 
-export default Otp
+export default OtpEmail

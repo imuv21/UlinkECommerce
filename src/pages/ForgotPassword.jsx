@@ -37,7 +37,7 @@ const ForgotPassword = () => {
                         <div className="heading">Forgot your password?</div>
                         <div className="flexcol gap">
                             <input type='email' className="box flex" placeholder='Enter your email' autoComplete='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-                            <button className='btn box flex' onClick={resetPassword} type='submit'><div className="heading2">Send verification link</div></button>
+                            <button className='btn box flex' onClick={resetPassword} type='submit'><div className="heading2">Send OTP</div></button>
                             <div className="descrip">We will send an OTP to your email</div>
                         </div>
                     </div>

@@ -17,10 +17,10 @@ const AddSingle = () => {
     const [images, setImages] = useState([]);
     const [isDragging, setIsDragging] = useState(false);
     const [fileInputValue, setFileInputValue] = useState('');
+
     const selectFiles = () => {
         document.getElementById('file-input').click();
     };
-
     const onFileSelect = (event) => {
         const files = event.target.files;
         if (files.length === 0) return;
@@ -49,7 +49,6 @@ const AddSingle = () => {
         }
         setFileInputValue('');
     };
-
     const deleteImage = (index) => {
         setImages((prevImages) => {
             return prevImages.filter((_, i) => i !== index);
@@ -199,7 +198,7 @@ const AddSingle = () => {
             };
         });
         data.images = imageUrls;
-        const updatedData = { ...data, images, selectedSupOption, marketingValue, categoryPath };
+        const updatedData = { ...data, images, selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption, marketingValue, categoryPath };
         const savedSingleFormData = JSON.parse(localStorage.getItem('singleFormData')) || [];
         const updatedSingleFormData = [...savedSingleFormData, updatedData];
         localStorage.setItem('singleFormData', JSON.stringify(updatedSingleFormData));
