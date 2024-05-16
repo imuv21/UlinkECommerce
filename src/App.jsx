@@ -35,7 +35,8 @@ const UpdateEmail = lazy(() => import('./pages/BuyerSeller/UpdateEmail'));
 const OtpEmail = lazy(() => import('./pages/BuyerSeller/OtpEmail'));
 const UpdateNumber = lazy(() => import('./pages/BuyerSeller/UpdateNumber'));
 const OtpNumber = lazy(() => import('./pages/BuyerSeller/OtpNumber'));
-
+const OtpPassword = lazy(() => import('./pages/BuyerSeller/OtpPassword'));
+const UpdatePassword = lazy(() => import('./pages/BuyerSeller/UpdatePassword'));
 
 //public
 const Home = lazy(() => import("./pages/Home"));
@@ -96,6 +97,8 @@ function App() {
             <Route path="/verify-update-email" element={<OtpEmail />} />
             <Route path="/update-number" element={<UpdateNumber />} />
             <Route path="/verify-update-number" element={<OtpNumber />} />
+            <Route path="/verify-update-password" element={<OtpPassword />} />
+            <Route path="/update-password" element={<UpdatePassword />} />
 
 
 

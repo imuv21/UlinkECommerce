@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import logo from '../../assets/logo.png';
 import img1 from '../../assets/img1.webp';
 import img2 from '../../assets/img2.webp';
@@ -157,12 +157,26 @@ const SellerHome = () => {
     }, []);
 
 
+    //getting data from local storage (backend)
+    const [loggedUser, setLoggedUser] = useState(null);
+    useEffect(() => {
+        const storedUserData = localStorage.getItem('loggedUser');
+        if (storedUserData) {
+            const parsedUserData = JSON.parse(storedUserData);
+            setLoggedUser(parsedUserData);
+        }
+    }, []);
+
+
     return (
-        <div className='flexcol seller-home-cont' style={{gap:'20px'}}>
+        <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
                 <title>Seller Dashboard</title>
             </Helmet>
-            <div className="heading">Hi Uttam, Welcome Back!</div>
+
+            {loggedUser && (
+                <div className="heading">Hi {loggedUser.name}, Welcome to Ulinkit!</div>
+            )}
 
             <div className="flex seller-home">
                 <div className="flexcol shone">
@@ -244,7 +258,9 @@ const SellerHome = () => {
                                 <div className="flex profile">UV</div>
                             </div>
                             <div className="flexcol" style={{ alignItems: 'start', width: '100%' }}>
-                                <div className="heading3 name">Uttam Verma</div>
+                                {loggedUser && (
+                                    <div className="heading3 name">{loggedUser.name}</div>
+                                )}
                                 <div className="descrip warning-btn">Pending Verification</div>
                             </div>
                         </div>

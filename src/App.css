@@ -2025,6 +2025,12 @@ button:focus {
   color: gray;
 }
 
+.unupublished .MuiSvgIcon-root{
+  width: 17px;
+  height: 17px;
+  color: orange;
+}
+
 
 
 /* filter - page styling */

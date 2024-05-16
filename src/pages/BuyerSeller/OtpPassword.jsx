@@ -9,6 +9,9 @@ import axios from 'axios';
 const OtpEmail = () => {
 
     const navigate = useNavigate();
+    const updatePassword = () => {
+        navigate('/update-password');
+    }
 
     //getting data from local storage
     const [userData, setUserData] = useState(null);
@@ -133,7 +136,7 @@ const OtpEmail = () => {
                 <div className="signupcont">
                     <div className='flexcol cover'>
                         <div className="heading tcenter">Verify your email</div>
-                        <div className="heading2 tcenter">We have sent the OTP to example@gmail.com <br />Enter the OTP to verify your email.</div>
+                        <div className="heading2 tcenter">We have sent the OTP to example@gmail.com <br />Enter the OTP to change the password.</div>
                         <div className="flex gap">
 
                             {otpDigits.map((digit, index) => (
@@ -149,9 +152,8 @@ const OtpEmail = () => {
                             ))}
 
                         </div>
-                        <button className='resend' disabled={timerRunning} onClick={handleResendClick}>
-                            {timerRunning ? `Resend OTP in ${timeLeft}` : "Resend OTP"}
-                        </button>
+                        <button className='btn box flex' onClick={updatePassword} type='submit'><div className="heading2">Continue</div></button>
+                        <Link to={'/profile'} className=' box flex'><div className="heading2" style={{color: 'gray'}}>Cancel</div></Link>
                     </div>
                 </div>
 
@@ -162,7 +164,6 @@ const OtpEmail = () => {
                 </div>
 
             </div>
-
 
         </Fragment>
     )
