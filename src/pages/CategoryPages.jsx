@@ -8,11 +8,35 @@ import { useNavigate, useParams } from 'react-router-dom'
 import ImageImport from '../components/Schemas/ImageImport';
 const Carousel = lazy(() => import('../components/Carousel'));
 const BrandCarousel = lazy(() => import('../components/BrandCarousel'));
+import Sliders from 'react-slick';
 
 const CategoryPages = () => {
   const navigate = useNavigate()
   const { category } = useParams()
   const [productShow, setProductShow] = useState([])
+//  Electronic Object Image
+  const sliderItems = [
+    { image: ImageImport.Mobile, title: 'Mobile Phone' },
+    { image: ImageImport.Camera, title: 'Camera' },
+    { image: ImageImport.HeadPhone, title: 'Audio & Studio' },
+    { image: ImageImport.Game, title: 'Gaming' },
+    { image: ImageImport.Laptop, title: 'Laptop' },
+    { image: ImageImport.Powerbank, title: 'Powerbank' },
+    { image: ImageImport.Router, title: 'Network' },
+    { image: ImageImport.TV, title: 'Television' }
+  ];
+  //  Stationary Object Image
+  const stationaryItems = [
+    { image: ImageImport.GeneralSuppliers, name: 'General Suppliers' },
+    { image: ImageImport.Files, name: 'Files & Folders' },
+    { image: ImageImport.Art, name: 'Art & Crafts' },
+    { image: ImageImport.Tapes, name: 'Tapes & Adhesives' },
+    { image: ImageImport.Writing, name: 'Writing Instruments' },
+    { image: ImageImport.Board, name: 'Boards & Easels' },
+    { image: ImageImport.Desk, name: 'Desk & Supplies' },
+    { image: ImageImport.WritingMaterial, name: 'Writing Material' }
+  ];
+
   //  Brand Object create
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +60,7 @@ const CategoryPages = () => {
   const NextArrow = (props) => {
     const { style, onClick } = props;
     return (
-      <div style={{ ...style, position: 'absolute', top: '50%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '999', right: '0%' }} onClick={onClick}>
+      <div style={{ ...style, position: 'absolute', top: '30%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '999', right: '0%' }} onClick={onClick}>
         <ChevronRightIcon />
       </div>
     );
@@ -44,7 +68,7 @@ const CategoryPages = () => {
   const PrevArrow = (props) => {
     const { style, onClick } = props;
     return (
-      <div style={{ ...style, position: 'absolute', top: '50%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '999' }} onClick={onClick}>
+      <div style={{ ...style, position: 'absolute', top: '30%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '999' }} onClick={onClick}>
         <ChevronLeftIcon />
       </div>
     );
@@ -61,17 +85,32 @@ const CategoryPages = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 5,
           slidesToScroll: 1,
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 768,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 4,
           slidesToScroll: 1,
         },
       },
+      {
+        breakpoint: 580,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      
+      {
+        breakpoint: 460,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      }
     ],
   };
   //  conditionaly render the page 
@@ -80,8 +119,7 @@ const CategoryPages = () => {
       navigate('/search-results')
     }
     const BannerCategory = () => {
-
-      navigate('/search-results')
+      navigate('/search-results?category= ' + category)
     }
     switch (category) {
       case 'trending':
@@ -172,6 +210,7 @@ const CategoryPages = () => {
                           </div>
                           <p className='product-quantity'>Unit per carton: 1</p>
                           <p className='product-quantity'>Min Order: 1 peace</p>
+                        
                         </div>
                       </div>
                     </div>
@@ -183,6 +222,7 @@ const CategoryPages = () => {
         );
       // Electronics Category page
       case 'electronic':
+        //  coditionly rend  the electronic category item
         return (
           <div className='discount-pages' >
             <div className='banner-page'>
@@ -201,58 +241,20 @@ const CategoryPages = () => {
                 <h3>Browse By Category</h3>
               </div>
             </div>
-            <div className='category-sections'>
-              <div className='category-container'>
-                <div className='category-image'>
-                  <img className='img-aspect' src={ImageImport.Mobile} alt='Trending Product'></img>
-                  <div className='category-img-title'>
-                    <p className='category-img-titles category-sizes'>Mobile Phone</p>
-                  </div>
-                </div>
-                <div className='category-image  '>
-                  <img className='img-aspect' src={ImageImport.Camera} alt='Consumer Electronic'></img>
-                  <div className='category-img-title'>
-                    <p className='category-img-titles category-sizes'>Camera </p>
-                  </div>
-                </div>
-                <div className='category-image'>
-                  <img className='img-aspect' src={ImageImport.HeadPhone} alt='Office Stationary'></img>
-                  <div className='category-img-title'>
-                    <p className='category-img-titles category-sizes'>Audio & Studio</p>
-                  </div>
-                </div>
-                <div className='category-image'>
-                  <img className='img-aspect' src={ImageImport.Game} alt='Food & Beverages'></img>
-                  <div className='category-img-title'>
-                    <p className='category-img-titles category-sizes'>Gaming</p>
-                  </div>
-                </div>
-                <div className='category-image'>
-                  <img className='img-aspect' src={ImageImport.Laptop} alt='Health & Beauty'></img>
-                  <div className='category-img-title'>
-                    <p className='category-img-titles category-sizes'>Laptop</p>
-                  </div>
-                </div>
-                <div className='category-image'>
-                  <img className='img-aspect' src={ImageImport.Powerbank} alt='Home & Kitchen'></img>
-                  <div className='category-img-title'>
-                    <p className='category-img-titles category-sizes'>Powerbank</p>
-                  </div>
-                </div>
-                <div className='category-image'>
-                  <img className='img-aspect' src={ImageImport.Router} alt='Beauty & Fragrences'></img>
-                  <div className='category-img-title'>
-                    <p className='category-img-titles category-sizes'>Network</p>
-                  </div>
-                </div>
-                <div className='category-image'>
-                  <img className='img-aspect' src={ImageImport.TV} alt='Fashion & Acceseries'></img>
-                  <div className='category-img-title'>
-                    <p className='category-img-titles category-sizes'>Television</p>
-                  </div>
-                </div>
+            <div className='category-section'>
+      <Sliders {...settings}>
+        {sliderItems.map((category, index) => (
+           <div  key={index} className='category-image'>
+            <div className="category-image-sub">
+              <img className='img-aspect' src={category.image} alt={category.name}></img>
+              <div className='cate-title'>
+                <p className='category-img-title'>{category.title}</p>
               </div>
             </div>
+          </div>
+        ))}
+      </Sliders>
+    </div>
             <img className='banner-width' src={ImageImport.Tclbanner} ></img>
             <div className="product-slider-cont product-width">
               <Carousel />
@@ -341,57 +343,20 @@ const CategoryPages = () => {
                 <h3>Browse By Category</h3>
               </div>
             </div>
-
-            <div className='category-container'>
-              <div className='category-image'>
-                <img className='img-aspect' src={ImageImport.GeneralSuppliers} alt='Trending Product'></img>
-                <div className='category-img-title'>
-                  <p className='category-img-titles category-sizes'> General Supliers</p>
-                </div>
-              </div>
-              <div className='category-image  '>
-                <img className='img-aspect' src={ImageImport.Files} alt='Consumer Electronic'></img>
-                <div className='category-img-title'>
-                  <p className='category-img-titles category-sizes'>Files & Folders </p>
-                </div>
-              </div>
-              <div className='category-image'>
-                <img className='img-aspect' src={ImageImport.Art} alt='Office Stationary'></img>
-                <div className='category-img-title'>
-                  <p className='category-img-titles category-sizes'>Art & Crafts</p>
-                </div>
-              </div>
-              <div className='category-image'>
-                <img className='img-aspect' src={ImageImport.Tapes} alt='Food & Beverages'></img>
-                <div className='category-img-title'>
-                  <p className='category-img-titles category-sizes'>Tapes & Adhesives</p>
-                </div>
-              </div>
-              <div className='category-image'>
-                <img className='img-aspect' src={ImageImport.Writing} alt='Health & Beauty'></img>
-                <div className='category-img-title'>
-                  <p className='category-img-titles category-sizes'>Writing Instruments</p>
-                </div>
-              </div>
-              <div className='category-image'>
-                <img className='img-aspect' src={ImageImport.Board} alt='Home & Kitchen'></img>
-                <div className='category-img-title'>
-                  <p className='category-img-titles category-sizes'>Boards & Easels</p>
-                </div>
-              </div>
-              <div className='category-image'>
-                <img className='img-aspect' src={ImageImport.Desk} alt='Beauty & Fragrences'></img>
-                <div className='category-img-title'>
-                  <p className='category-img-titles category-sizes'>Desk & Suppl</p>
-                </div>
-              </div>
-              <div className='category-image'>
-                <img className='img-aspect' src={ImageImport.WritingMaterial} alt='Fashion & Acceseries'></img>
-                <div className='category-img-title'>
-                  <p className='category-img-titles category-sizes'>Writing Material</p>
-                </div>
+            <div className='category-section'>
+      <Sliders {...settings}>
+        {stationaryItems.map((category, index) => (
+           <div  key={index} className='category-image'>
+            <div className="category-image-sub">
+              <img className='img-aspect' src={category.image} alt={category.name}></img>
+              <div className='cate-title'>
+                <p className='category-img-title'>{category.title}</p>
               </div>
             </div>
+          </div>
+        ))}
+      </Sliders>
+    </div>
             <div className='best-deals-product'>
               <div className=''>
                 <h3>Shop By Brand</h3>
