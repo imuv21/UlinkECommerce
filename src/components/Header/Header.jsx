@@ -6,10 +6,11 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ListIcon from '@mui/icons-material/List';
 import SearchIcon from '@mui/icons-material/Search';
 import Drawer from '@mui/material/Drawer';
-import { useCart, useUserType } from '../context/CartContext';
+import { useCart } from '../context/CartContext';
 import axios from 'axios';
 import logo from '../../assets/logo2.png';
 import ReactFlagsSelect from "react-flags-select";
+import { useSelector } from 'react-redux';
 
 import HomeIcon from '@mui/icons-material/Home';
 import AllInboxIcon from '@mui/icons-material/AllInbox';
@@ -27,6 +28,9 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 
 
 const Header = () => {
+
+  const user = useSelector((state) => state.auth.user);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const [selected, setSelected] = useState("IN");
 
@@ -55,7 +59,6 @@ const Header = () => {
     navigate('/cart');
   }
 
-  const { userType } = useUserType();
   const { cart } = useCart();
   const carttext = Object.values(cart).length;
   const numCharacters = carttext;
@@ -92,20 +95,6 @@ const Header = () => {
   };
 
 
-
-
-  //getting data from local storage (backend)
-  const [loggedUser, setLoggedUser] = useState(null);
-  useEffect(() => {
-    const storedUserData = localStorage.getItem('loggedUser');
-    if (storedUserData) {
-      const parsedUserData = JSON.parse(storedUserData);
-      setLoggedUser(parsedUserData);
-    }
-  }, []);
-
-
-
   //logout
   const handleLogout = async () => {
 
@@ -133,8 +122,8 @@ const Header = () => {
       <div className="offer">
         <h4>Save up to 20% OFF on your first 10 orders.</h4> <div className="coupn">ULINKITFIRST20</div>
       </div>
-      <div className='header'>
 
+      <div className='header'>
         <div className="flex head-start">
           <div className='header-burger' onClick={toggleMobileMenu} >
             <ListIcon />
@@ -152,18 +141,15 @@ const Header = () => {
           </div>
         </div>
 
-
         <div className="flex head-start">
 
-          {loggedUser && (
-            <div className='heading2' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}> {loggedUser.name}</div>
-          )}
-
-          {loggedUser === null && (
+          {isAuthenticated ? (
+            <div className='heading2' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}>Hi {user.name} </div>
+          ) : (
             <div className={`icon-container ${isClickedTwo ? 'clicked' : ''}`} onClick={handleClickTwo}>
-              <div className="flex" style={{gap: '10px'}}>
-                  <AccountCircleIcon style={{ color: 'black' }} />
-                  <div className='LoginRegister'>Login / Register</div>
+              <div className="flex" style={{ gap: '10px' }}>
+                <AccountCircleIcon style={{ color: 'black' }} />
+                <div className='LoginRegister'>Login / Register</div>
               </div>
               {isClickedTwo && (
                 <div className="popup">
@@ -179,38 +165,37 @@ const Header = () => {
             </div>
           )}
 
-
-          {loggedUser && (loggedUser.role === 'Buyer' || loggedUser.role === 'Seller') && (
+          {isAuthenticated && (
             <div className={`icon-container ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
               <AccountCircleIcon style={{ color: 'black' }} />
               {isClicked && (
                 <div className="popup">
                   <div className='popupbox'>
-                    {loggedUser && (
-                      <div className="username">
-                        {loggedUser.name}
-                      </div>
-                    )}
-                    <div className="warning-btn3">{loggedUser.role === 'Buyer' ? 'Verify Your Mobile' : 'Unverified Seller'}</div>
+
+                    <div className="username">
+                      {user.name}
+                    </div>
+
+                    <div className="warning-btn3">{user.role === 'Buyer' ? 'Verify Your Mobile' : 'Unverified Seller'}</div>
                   </div>
 
                   <div className='popupbox'>
-                    {loggedUser.role === 'Buyer' && (<Link to={'/buyer-dashboard'} className="pop-options"><HomeIcon />Buyer Center</Link>)}
-                    {loggedUser.role === 'Seller' && (<Link to={'/seller-dashboard/add-single-product'} className="pop-options"> <DashboardIcon />Dashboard</Link>)}
-                    <Link to={loggedUser.role === 'Seller' ? '/seller-dashboard/seller-orders' : '/order-page'} className="pop-options"> <AllInboxIcon /> Orders </Link>
-                    {loggedUser.role === 'Seller' && (<div className="pop-options"> <MessageIcon /> Messages </div>)}
+                    {user.role === 'Buyer' && (<Link to={'/buyer-dashboard'} className="pop-options"><HomeIcon />Buyer Center</Link>)}
+                    {user.role === 'Seller' && (<Link to={'/seller-dashboard/add-single-product'} className="pop-options"> <DashboardIcon />Dashboard</Link>)}
+                    <Link to={user.role === 'Seller' ? '/seller-dashboard/seller-orders' : '/order-page'} className="pop-options"> <AllInboxIcon /> Orders </Link>
+                    {user.role === 'Seller' && (<div className="pop-options"> <MessageIcon /> Messages </div>)}
                     <div className="pop-options"> <SendTimeExtensionIcon /> RFQ Marketplace </div>
-                    <div className="pop-options"> <SendIcon />{loggedUser.role === 'Buyer' ? 'Create RFQ' : 'Manage Quotes'}</div>
-                    {loggedUser.role === 'Seller' && (<Link to="/seller-dashboard/product-list" className="pop-options"> <StorefrontIcon />Product Catalogue</Link>)}
+                    <div className="pop-options"> <SendIcon />{user.role === 'Buyer' ? 'Create RFQ' : 'Manage Quotes'}</div>
+                    {user.role === 'Seller' && (<Link to="/seller-dashboard/product-list" className="pop-options"> <StorefrontIcon />Product Catalogue</Link>)}
                   </div>
 
                   <div className='popupbox'>
                     <Link to={'/profile'} className="subpop-options">My Profile</Link>
                     <div className="subpop-options">My Company Profile</div>
-                    {loggedUser.role === 'Buyer' && (<div className="subpop-options">Payment Management</div>)}
+                    {user.role === 'Buyer' && (<div className="subpop-options">Payment Management</div>)}
                     <div className="subpop-options">Access Management</div>
-                    {loggedUser.role === 'Buyer' && (<div className="subpop-options">Addresses</div>)}
-                    {loggedUser.role === 'Seller' && (<div className="subpop-options">Saved Products</div>)}
+                    {user.role === 'Buyer' && (<div className="subpop-options">Addresses</div>)}
+                    {user.role === 'Seller' && (<div className="subpop-options">Saved Products</div>)}
                   </div>
 
                   <div className="popupbox">
@@ -223,15 +208,16 @@ const Header = () => {
           )}
 
 
-          {loggedUser && loggedUser.role === 'Buyer' && (
+          {isAuthenticated && user.role === 'Buyer' && (
             <div style={{ position: 'relative', cursor: 'pointer' }} onClick={tocart}>
               <ShoppingCartIcon style={{ color: 'black' }} />
               <div style={cartcount}>{carttext}</div>
             </div>
           )}
-        </div>
 
+        </div>
       </div>
+
       <div className="sub-header">
         <div className="sup-header-option">
           <div className="sub-heading3">All Categories</div>
@@ -253,12 +239,11 @@ const Header = () => {
           <div className="sub-header-option">
             <BusinessCenterIcon /> <div className="sub-heading3">Enterprise</div>
           </div>
-          {(loggedUser === null || (loggedUser && loggedUser.role !== 'Seller')) && (
+          {(isAuthenticated === false || (isAuthenticated && user.role !== 'Seller')) && (
             <Link to="/become-a-seller" className='header-btns'>Become A Seller</Link>
           )}
         </div>
       </div>
-
 
       <Drawer anchor="left" open={mobileMenuOpen} onClose={toggleMobileMenu}>
         <div className='drawer' onClick={toggleMobileMenu} onKeyDown={toggleMobileMenu}>
@@ -267,6 +252,7 @@ const Header = () => {
           <Link to="/about-us">About Us</Link>
         </div>
       </Drawer>
+
     </Fragment>
   );
 };

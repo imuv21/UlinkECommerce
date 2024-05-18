@@ -4,51 +4,43 @@ import animation from "../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
 import { Helmet } from 'react-helmet-async';
 import logo from '../assets/logo2.png';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { verifyOtp } from '../Redux/otpSlice';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Otp = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { status, error, success } = useSelector((state) => state.otp);
 
-    //getting data from local storage
-    const [userData, setUserData] = useState(null);
-    useEffect(() => {
-        const storedUserData = localStorage.getItem('userData');
-        if (storedUserData) {
-            const parsedUserData = JSON.parse(storedUserData);
-            setUserData(parsedUserData);
-        }
-    }, []);
+    // const verifyOtp = async (otp, username, role) => {
+    //     try {
+    //         const response = await axios.post(`${BASE_URL}/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
+    //         alert(`Response : ${response.data.message} And Email : ${username}`);
+    //         return response.data;
+    //     } catch (error) {
+    //         console.error('OTP verification failed:', error);
+    //         throw error;
+    //     }
+    // };
 
+    // const sellerForm = async (otp) => {
+    //     const email = userData.email;
+    //     const role = userData.role;
 
-    const verifyOtp = async (otp, username, role) => {
-        try {
-            const response = await axios.post(`${BASE_URL}/api/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
-            alert(`Response : ${response.data.message} And Email : ${username}`);
-            return response.data;
-        } catch (error) {
-            console.error('OTP verification failed:', error);
-            throw error;
-        }
-    };
+    //     try {
+    //         const verificationResponse = await verifyOtp(otp, email, role);
 
-    const sellerForm = async (otp) => {
-        const email = userData.email;
-        const role = userData.role;
-
-        try {
-            const verificationResponse = await verifyOtp(otp, email, role);
-
-            if (userData && userData.role === 'seller') {
-                navigate('/seller-form');
-            } else {
-                navigate('/login');
-            }
-        } catch (error) {
-            alert('Failed to verify OTP: ' + error.message);
-        }
-    };
+    //         if (userData && userData.role === 'Seller') {
+    //             navigate('/seller-form');
+    //         } else {
+    //             navigate('/login');
+    //         }
+    //     } catch (error) {
+    //         alert('Failed to verify OTP: ' + error.message);
+    //     }
+    // };
 
 
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
@@ -70,7 +62,9 @@ const Otp = () => {
         const isOtpComplete = newOtpDigits.every(digit => digit !== '');
 
         if (isOtpComplete) {
-            sellerForm(newOtpDigits.join(''));
+            // sellerForm(newOtpDigits.join(''));
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            dispatch(verifyOtp({ otp: newOtpDigits.join(''), username: userData.email, role: userData.role }));
         }
     };
 
@@ -87,8 +81,23 @@ const Otp = () => {
         }
     };
     useEffect(() => {
-        otpInputs.current[0].focus(); // Set focus on the first input when component mounts
+        otpInputs.current[0].focus(); 
     }, []);
+
+  //new useff
+    useEffect(() => {
+        if (status === 'succeeded') {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            alert('OTP verified successfully!');
+            if (userData && userData.role === 'Seller') {
+                navigate('/seller-form');
+            } else {
+                navigate('/login');
+            }
+        } else if (status === 'failed') {
+            alert('OTP verification failed: ' + error);
+        }
+    }, [status, error, navigate]);
 
 
     //json lottie animation

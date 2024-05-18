@@ -10,8 +10,10 @@ import { Helmet } from 'react-helmet-async';
 import animation from "../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
 import axios from 'axios';
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { useDispatch } from 'react-redux';
+import { loginSuccess, loginFailure } from '../Redux/AuthReducer';
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const schema = yupResolver(loginSchema);
 
 const Login = () => {
@@ -22,7 +24,7 @@ const Login = () => {
         setPasswordVisible(!passwordVisible);
     };
     const navigate = useNavigate();
-    // const { setUserType } = useUserType();
+    const dispatch = useDispatch();
     const signup = () => {
         navigate('/signup');
     }
@@ -37,15 +39,17 @@ const Login = () => {
         const updatedLoggedUser = { ...loggedUser, ...formData };
 
         try {
-            const response = await axios.post(`${BASE_URL}/api/Login`, updatedLoggedUser);
-            alert(`Login successful!`);
-            const token = response.data.token;
-            const user = response.data;
-            localStorage.setItem('loggedUser', JSON.stringify(user));
-            localStorage.setItem('token', token);
+            const response = await axios.post(`${BASE_URL}/Login`, updatedLoggedUser);
+            const { token, message, status, name, email, username, country, role } = response.data;
+            const user = { name, email, username, country, role };
+            dispatch(loginSuccess({ token, message, user }));
+            alert(`${status} : ${message}`);
             navigate('/');
         } catch (error) {
-            console.error('Login failed:', error);
+            const message = error.response?.data?.message || 'Login failed!';
+            const status = error.response?.data?.status || 'error';
+            dispatch(loginFailure({ message }));
+            alert(`${status} : ${message}`);
         }
     };
     const handleChange = (e) => {

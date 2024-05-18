@@ -663,6 +663,7 @@ button:focus {
 .heading {
   font-size: 22px;
   font-weight: 600;
+  text-transform: capitalize;
 }
 
 .heading2 {
@@ -1023,6 +1024,7 @@ button:focus {
 
 .name {
   padding: 5px;
+  text-transform: capitalize;
 }
 
 .score {

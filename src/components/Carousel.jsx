@@ -1,4 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../Redux/productSlice';
 import { v4 as uuidv4 } from 'uuid';
 import Loader from './Loader/Loader';
 const ProductCard = lazy(() => import('../components/ProductCard'));
@@ -7,16 +9,26 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import defaulImg from '../assets/Stationary/bannerhp.png';
 
 const Carousel = () => {
-   
-    const [slides, setSlides] = useState([]);
 
-     //form data handling
-     useEffect(() => {
-         const savedSingleFormData = JSON.parse(localStorage.getItem('singleFormData')) || [];
-         setSlides(savedSingleFormData.map(item => ({ ...item, images: item.images || [] })));
-     }, []);
+    const dispatch = useDispatch();
+    const { products, status, error } = useSelector((state) => state.products);
+
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchProducts());
+        }
+    }, [status, dispatch]);
+    if (status === 'loading') {
+        return <div>Loading...</div>;
+    }
+    if (status === 'failed') {
+        return <div>Error: {error}</div>;
+    }
+
+
 
      const NextArrow = (props) => {
         const { style, onClick } = props;
@@ -67,10 +79,10 @@ const Carousel = () => {
      
         <div className="product-slider-cont">
             <Sliders {...settings}>
-                {slides.map((item, index) => (
+                {products.map((product, index) => (
                     <div className='show-img-detail-sup' key={uuidv4()}>
-                        <Suspense fallback={<Loader />}>
-                            <ProductCard name={item.productName} id={index} img={item.images[0].url} unitPrice={item.unitPrice} salePrice={item.salePrice} />
+                        <Suspense fallback={<Loader />}>                                                   
+                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={index} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} salePrice={product.sellPrice} />
                         </Suspense>
                     </div>
                 ))}

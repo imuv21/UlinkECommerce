@@ -9,6 +9,8 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import logo from '../assets/logo2.png';
 import { Helmet } from 'react-helmet-async';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateSellerDetails } from '../Redux/sellerSlice';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const schema = yupResolver(sellerSchema);
@@ -16,6 +18,8 @@ const schema = yupResolver(sellerSchema);
 const SellerForm = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { status, error, success } = useSelector((state) => state.seller);
 
     //getting data from local storage
     const [userData, setUserData] = useState(null);
@@ -33,22 +37,13 @@ const SellerForm = () => {
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
 
     const onSubmit = async (formData) => {
+        const userData = JSON.parse(localStorage.getItem('userData'));
         const username = userData.email;
         const password = userData.password;
         const updatedSellerData = { ...sellerData, ...formData };
-        localStorage.setItem('sellerData', JSON.stringify(updatedSellerData));
-        try {
-            const response = await axios.post(`${BASE_URL}/api/update-seller-details?username=${username}&password=${password}`, updatedSellerData);
-            alert(`Congrats! You have become a seller. Please login into your account.`);
-            console.log(`Seller data : ${response.data}`);
-            navigate('/login');
-            
-        } catch (error) {
-            alert(`Error : ${error}`);
-            console.log(`Error : ${error}`);
-        }
+        
+        dispatch(updateSellerDetails({ username, password, sellerData: updatedSellerData }));
     };
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -59,6 +54,15 @@ const SellerForm = () => {
             setSellerData({ ...sellerData, [name]: value });
         }
     };
+
+    useEffect(() => {
+        if (status === 'succeeded') {
+            alert('Congrats! You have become a seller. Please login into your account.');
+            navigate('/login');
+        } else if (status === 'failed') {
+            alert('Failed to update seller details: ' + error);
+        }
+    }, [status, error, navigate]);
 
 
     

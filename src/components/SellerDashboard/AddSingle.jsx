@@ -195,7 +195,7 @@ const AddSingle = () => {
         try {
             const token = localStorage.getItem('token');
             const response = await axios.post(
-                `${BASE_URL}/api/AddProduct`, formData,
+                `${BASE_URL}/AddProduct`, formData,
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,

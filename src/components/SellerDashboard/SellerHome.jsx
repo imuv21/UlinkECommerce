@@ -7,9 +7,13 @@ import img4 from '../../assets/img4.webp';
 import img5 from '../../assets/img5.webp';
 import { v4 as uuidv4 } from 'uuid';
 import { Helmet } from 'react-helmet-async';
+import { useSelector } from 'react-redux';
 
 
 const SellerHome = () => {
+
+    const user = useSelector((state) => state.auth.user);
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
     const quickLinks = [
         {
@@ -174,8 +178,8 @@ const SellerHome = () => {
                 <title>Seller Dashboard</title>
             </Helmet>
 
-            {loggedUser && (
-                <div className="heading">Hi {loggedUser.name}, Welcome to Ulinkit!</div>
+            {isAuthenticated && (
+                <div className="heading">Hi {user.name}, Welcome to Ulinkit!</div>
             )}
 
             <div className="flex seller-home">
@@ -258,8 +262,8 @@ const SellerHome = () => {
                                 <div className="flex profile">UV</div>
                             </div>
                             <div className="flexcol" style={{ alignItems: 'start', width: '100%' }}>
-                                {loggedUser && (
-                                    <div className="heading3 name">{loggedUser.name}</div>
+                                {isAuthenticated && (
+                                    <div className="heading3 name">{user.name}</div>
                                 )}
                                 <div className="descrip warning-btn">Pending Verification</div>
                             </div>

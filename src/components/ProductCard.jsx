@@ -1,10 +1,9 @@
 import React from 'react';
 
 
-const ProductCard = ({ name, id, img, unitPrice, salePrice }) => {
+const ProductCard = ({ name, id, img, unitPrice, salePrice, moq }) => {
 
   const discountPercentage = ((unitPrice - salePrice) / unitPrice) * 100;
-
 
   return (
     <a className="show-img-detail-sub" href={`/product-details/${id}`}>
@@ -16,8 +15,7 @@ const ProductCard = ({ name, id, img, unitPrice, salePrice }) => {
           <p className='product-discount'>${unitPrice}</p>
           <span className='discount-percentage'>{discountPercentage.toFixed(2)}% OFF</span>
         </div>
-        <p className='product-quantity'>Unit per carton: 1</p>
-        <p className='product-quantity'>Min Order: 1 peace</p>
+        <p className='product-quantity'>Min Order: {moq} peace</p>
       </div>
     </a>
   )

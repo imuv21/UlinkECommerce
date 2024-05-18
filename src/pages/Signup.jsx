@@ -12,6 +12,8 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import animation from "../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
+import { useDispatch } from 'react-redux';
+import { signupSuccess, signupFailure } from '../Redux/AuthReducer';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const schema = yupResolver(signupSchema);
@@ -43,6 +45,7 @@ const Signup = () => {
 
     const [userData, setUserData] = useState({});
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const login = () => {
         navigate('/login');
     }
@@ -51,15 +54,22 @@ const Signup = () => {
     const onSubmit = async (formData) => {
         const updatedUserData = { ...userData, ...formData };
         localStorage.setItem('userData', JSON.stringify(updatedUserData));
+
         try {
-            const response = await axios.post(`${BASE_URL}/api/register`, updatedUserData);
-            alert(`Signup successful.`);
-            console.log(`Signup successful: ${response.data}`);
-            navigate('/verify-email');
-            
+            const response = await axios.post(`${BASE_URL}/register`, updatedUserData);
+            const { email, message, success } = response.data;
+
+            if (success) {
+                dispatch(signupSuccess({ email, message }));
+                alert(`Signup successful. ${message}`);
+                console.log(response.data);
+                navigate('/verify-email');
+            }
         } catch (registerError) {
-            const registerErrorMessage = registerError.response ? registerError.response.data : registerError.message;
-            console.log(`Signup failed: ${registerErrorMessage}, Email: ${updatedUserData.email}`);
+            const registerErrorMessage = registerError.response ? registerError.response.data.message : registerError.message;
+            dispatch(signupFailure({ message: registerErrorMessage }));
+            alert(`Signup failed: ${registerErrorMessage}, Email: ${formData.email}`);
+            console.log(`Signup failed: ${registerErrorMessage}, Email: ${formData.email}`);
         }
     };
     const handleChange = (e) => {
