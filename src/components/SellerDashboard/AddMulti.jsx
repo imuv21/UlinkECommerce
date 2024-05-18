@@ -4,24 +4,26 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import ArchiveIcon from '@mui/icons-material/Archive';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-const AddMulti = ( {handleOptionClick} ) => {
+const AddMulti = () => {
 
-
-    const sixClick = () => {
-        handleOptionClick('OptionSix');
-    };
-    const sevenClick = () => {
-        handleOptionClick('OptionSeven');
-    };
-    const eightClick = () => {
-        handleOptionClick('OptionEight');
-    };
 
     //propagation
     const navigate = useNavigate();
+    const upload = (event) => {
+        event.stopPropagation();
+        navigate('/seller-dashboard/upload-products-bulk');
+    };
+    const edit = (event) => {
+        event.stopPropagation();
+        navigate("/seller-dashboard/edit-products-bulk");
+    };
+    const archive = (event) => {
+        event.stopPropagation();
+        navigate("/seller-dashboard/archive-products");
+    };
     const learnMore = (event) => {
         event.stopPropagation();
         navigate('/guidelines');
@@ -34,6 +36,8 @@ const AddMulti = ( {handleOptionClick} ) => {
         }
     }, []);
 
+
+
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}   tabIndex={0} ref={scrollRef}>
             <Helmet>
@@ -43,7 +47,7 @@ const AddMulti = ( {handleOptionClick} ) => {
             <div className="descrip2">Use the upload center to upload/edit products and images</div>
 
             <div className="perfect-grid-flex">
-                <div className="productflex" onClick={sixClick} >
+                <div onClick={upload} className="productflex">
                     <div className="flexcol big-svg"><CloudUploadIcon /></div>
                     <div className="flexcol-start" style={{gap: '10px'}}>
                         <div className="heading3">Upload multiple products</div>
@@ -54,7 +58,7 @@ const AddMulti = ( {handleOptionClick} ) => {
                         </div>
                     </div>
                 </div>
-                <div className="productflex" onClick={sevenClick}>
+                <div onClick={edit} className="productflex">
                     <div className="flexcol big-svg"><EditNoteIcon /></div>
                     <div className="flexcol-start" style={{gap: '10px'}}>
                         <div className="heading3">Edit multiple products</div>
@@ -65,7 +69,7 @@ const AddMulti = ( {handleOptionClick} ) => {
                         </div>
                     </div>
                 </div>
-                <div className="productflex" onClick={eightClick}>
+                <div onClick={archive} className="productflex">
                     <div className="flexcol big-svg"><ArchiveIcon  /></div>
                     <div className="flexcol-start" style={{gap: '10px'}}>
                         <div className="heading3">Archive multiple products</div>
@@ -83,7 +87,7 @@ const AddMulti = ( {handleOptionClick} ) => {
                 <img src={empty} className='productlist-img' alt="empty box" />
                 <div className="heading">Upload your products</div>
                 <div className="descrip2">This is where you’ll upload your products and see the upload history</div>
-                <button className='btn box2 flex' onClick={sixClick} style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Start Your Upload</div></button>
+                <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Start Your Upload</div></button>
             </div>
         </div>
     )

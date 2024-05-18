@@ -7,15 +7,16 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Helmet } from 'react-helmet-async';
 
-const ProductList = ({ handleOptionClick }) => {
+const ProductList = () => {
+
+    const addsingle = () => {
+        navigate('/seller-dashboard/add-single-product');
+    }
 
     const [clickedIndex, setClickedIndex] = useState(null);
     const [selectedItem, setSelectedItem] = useState({});
     const tax = 10;
 
-    const twoClick = () => {
-        handleOptionClick('OptionTwo');
-    };
     const [currentPage, setCurrentPage] = useState(1);
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -114,7 +115,7 @@ const ProductList = ({ handleOptionClick }) => {
             </Helmet>
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading">Products List</div>
-                <button onClick={twoClick} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Add Single Product</div></button>
+                <button onClick={addsingle} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Add Single Product</div></button>
             </div>
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="descrip2">Find and manage your uploaded products here</div>

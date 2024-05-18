@@ -155,12 +155,12 @@ const EditSingle = () => {
             const updatedSingleData = { ...data, images, selectedSupOption, marketingValue, categoryPath };
             updatedSingleFormData[index] = updatedSingleData;
             localStorage.setItem('singleFormData', JSON.stringify(updatedSingleFormData));
-            navigate('/seller-dash', { state: { updatedSingleData } });
+            navigate('/seller-dashboard/product-list', { state: { updatedSingleData } });
         }
         console.log(data);
     };
     const handleCancel = () => {
-        navigate('/seller-dash');
+        navigate('/seller-dashboard/product-list');
     };
 
     //select country from api

@@ -13,7 +13,7 @@ const Profile = () => {
                 <title>My Profile</title>
             </Helmet>
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                <div className="heading5">My Profile</div> <div className='heading3'>Back</div>
+                <div className="heading5">My Profile</div> <Link to="/seller-dashboard/seller-home" className='heading3'>Back</Link>
             </div>
             <div className="procont">
                 <div className="profile-sel-box">

@@ -5,11 +5,17 @@ import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import UploadIcon from '@mui/icons-material/Upload';
 import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 
-const EditProducts = ({ handleOptionClick }) => {
+const EditProducts = () => {
 
-    const threeClick = () => {
-        handleOptionClick('OptionThree');
+    const back = () => {
+        navigate('/seller-dashboard/add-products-bulk');
+    };
+    const navigate = useNavigate();
+    const learnMore = (event) => {
+        event.stopPropagation();
+        navigate('/guidelines');
     };
 
     const scrollRef = useRef(null);
@@ -24,7 +30,7 @@ const EditProducts = ({ handleOptionClick }) => {
             <Helmet>
                 <title>Edit Multiple Products</title>
             </Helmet>
-            <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={threeClick} />&nbsp;&nbsp;Edit Products</div>
+            <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={back} />&nbsp;&nbsp;Edit Products</div>
             <div className="flex seller-home">
                 <div className="flexcol shone">
                     <div className="sel-box2">
@@ -76,7 +82,7 @@ const EditProducts = ({ handleOptionClick }) => {
                         <div className="heading2">
                             Learn how to update the existing products in bulk.
                         </div>
-                        <div className='download-btn'>Learn more</div>
+                        <div onClick={learnMore} className='download-btn'>Learn more</div>
                     </div>
                 </div>
             </div>

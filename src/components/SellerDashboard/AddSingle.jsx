@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../Schemas/cate';
 import { Helmet } from 'react-helmet-async';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const schema = yupResolver(addSingleSchema);
 
@@ -26,26 +27,12 @@ const AddSingle = () => {
         if (files.length === 0) return;
         const totalImages = images.length;
         const remainingSlots = 5 - totalImages;
-        if (remainingSlots <= 0) {
-            alert("You've already selected the maximum allowed images (5).");
-            return;
-        }
-        for (let i = 0; i < Math.min(remainingSlots, files.length); i++) {
-            const file = files[i];
-            if (file.type.split('/')[0] === 'image') {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    setImages((prevImages) => [
-                        ...prevImages,
-                        {
-                            name: file.name,
-                            url: e.target.result,
-                            size: file.size,
-                        },
-                    ]);
-                };
-                reader.readAsDataURL(file);
-            }
+        if (files.length > remainingSlots) {
+            alert("You can only select a maximum of 5 images. The excess files will be ignored.");
+            const selectedFiles = Array.from(files).slice(0, remainingSlots);
+            setImages([...images, ...selectedFiles]);
+        } else {
+            setImages([...images, ...files]);
         }
         setFileInputValue('');
     };
@@ -188,23 +175,40 @@ const AddSingle = () => {
     const onSubmit = data => {
         const currentTime = new Date();
         data.time = currentTime.toLocaleString();
-        const imageUrls = images.map(image => {
-            const imageSize = image.size || 0;
-            return {
-                url: image.url,
-                name: image.name,
-                size: imageSize,
-                uploadDate: currentTime.toLocaleString()
-            };
-        });
+
+        const imageUrls = images.map(image => image);
+
         data.images = imageUrls;
         const updatedData = { ...data, images, selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption, marketingValue, categoryPath };
         const savedSingleFormData = JSON.parse(localStorage.getItem('singleFormData')) || [];
         const updatedSingleFormData = [...savedSingleFormData, updatedData];
         localStorage.setItem('singleFormData', JSON.stringify(updatedSingleFormData));
         console.log(updatedData);
-        navigate('/');
+        const formData = new FormData();
+        formData.append("productData", JSON.stringify(updatedData));
+        for (let i = 0; i < images.length; i++) {
+            formData.append("productImage", images[i]);
+        }
+        handleProductApicall(formData);
     };
+    const handleProductApicall = async (formData) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.post(
+                `${BASE_URL}/api/AddProduct`, formData,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                }
+            );
+
+            console.log(response.data);
+            alert(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
     const [singleFormData, setSingleFormData] = useState({});
     const handleChange = (e) => {
         setSingleFormData({ ...singleFormData, [e.target.name]: e.target.value });

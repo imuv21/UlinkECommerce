@@ -1,104 +1,26 @@
-import React, { useState, Fragment, useEffect } from 'react';
+import React, { useState, Fragment } from 'react';
 import './SideNav.css';
-import SellerHome from '../SellerDashboard/SellerHome'
-import AddSingle from '../SellerDashboard/AddSingle'
-import AddMulti from '../SellerDashboard/AddMulti'
-import ProductList from '../SellerDashboard/ProductList'
-import Media from '../SellerDashboard/Media'
-import UploadProducts from '../SellerDashboard/UploadProducts';
-import EditProducts from '../SellerDashboard/EditProducts';
-import ArchiveUploads from '../SellerDashboard/ArchiveUploads';
-import Payments from '../SellerDashboard/Payments';
-import PaymentDetails from '../SellerDashboard/PaymentDetails';
-import SellerAddress from '../SellerDashboard/SellerAddress';
-import Shipping from '../SellerDashboard/Shipping';
-import SellerOrder from '../SellerDashboard/SellerOrder/SellerOrder';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const SideNav = () => {
-
-    const navigate = useNavigate();
-
-    const [selectedOp, setSelectedOp] = useState(null);
-    const handleOpClick = (op) => {
-        setSelectedOp(op);
-    };
 
     const [activeIndex, setActiveIndex] = useState(null);
     const toggleAccordion = (index) => {
         setActiveIndex(activeIndex === index ? null : index);
     };
 
-    const [selectedOption, setSelectedOption] = useState('OptionOne');
-    useEffect(() => {
-        const savedOption = localStorage.getItem('selectedOption');
-        if (savedOption) {
-            setSelectedOption(savedOption);
-        }
-    }, []);
-    const handleOptionClick = (option) => {
-        setSelectedOption(option);
-        localStorage.setItem('selectedOption', option);
-    };
-    const renderComponent = () => {
-        switch (selectedOption) {
-            case 'OptionOne':
-                return <SellerHome />;
-            case 'OptionTwo':
-             
-                return <AddSingle />;
-            case 'OptionThree':
-               
-                return <AddMulti handleOptionClick={handleOptionClick} />;
-            case 'OptionFour':
-                
-                return <ProductList handleOptionClick={handleOptionClick} />;
-            case 'OptionFive':
-         
-                return <Media />;
-            case 'OptionSix':
-              
-                return <UploadProducts handleOptionClick={handleOptionClick} />;
-            case 'OptionSeven':
-             
-                return <EditProducts handleOptionClick={handleOptionClick} />;
-            case 'OptionEight':
-            
-                return <ArchiveUploads handleOptionClick={handleOptionClick} />;
-            case 'Option13':
-              
-                return <Payments handleOptionClick={handleOptionClick} />;
-            case 'Option14':
-              
-                return <PaymentDetails handleOptionClick={handleOptionClick} />;
-            case 'Option15':
-             
-                return <SellerAddress />;
-            case 'Option16':
-            
-                return <Shipping />;
-            case 'Option17':
-            
-                return <SellerOrder />;
-            default:
-                return <SellerHome />;
-        }
-    };
-
-
     return (
         <Fragment>
             <div className='flex seller-dash'>
                 <div className='flexcol sidenav'>
-
-                    <button className={`accordion ${activeIndex === 1 ? 'active' : ''}`} onClick={() => { handleOptionClick('OptionOne'); toggleAccordion(1) }}>
-                        <div className='flex' style={{ gap: '20px' }}>
+                    <Link to="seller-home" className={`accordion ${activeIndex === 1 ? 'active' : ''}`} onClick={() => { toggleAccordion(1) }}>
+                        <div  className='flex' style={{ gap: '20px' }}>
                             <svg className='svg' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
                                 <path fillRule="evenodd" clipRule="evenodd" d="M10.762 2.763a1.749 1.749 0 0 1 2.475 0l6.707 6.707a2.75 2.75 0 0 1 .806 1.944V20a.75.75 0 0 1-.75.75h-5.5a.75.75 0 0 1-.75-.75v-4.5a1.75 1.75 0 1 0-3.5 0V20a.75.75 0 0 1-.75.75H4a.75.75 0 0 1-.75-.75v-8.586c0-.729.29-1.429.806-1.944l6.706-6.707Zm1.415 1.06a.249.249 0 0 0-.353 0L5.116 10.53a1.25 1.25 0 0 0-.366.883v7.836h4V15.5a3.25 3.25 0 1 1 6.5 0v3.75h4v-7.836c0-.33-.132-.649-.366-.883l-6.707-6.707Z" fill="currentColor"></path>
                             </svg>
                             <div className="heading2">Home</div>
                         </div>
-                    </button>
+                    </Link>
 
                     <button className={`accordion ${activeIndex === 2 ? 'active' : ''}`} onClick={() => toggleAccordion(2)}>
                         <div className='flex' style={{ gap: '20px' }}>
@@ -109,18 +31,18 @@ const SideNav = () => {
                         </div>
                     </button>
                     <div className="panel" style={{ maxHeight: activeIndex === 2 ? '300px' : '0' }}>
-                        <div className={`option ${selectedOp === 'addsingle' ? 'selected' : ''}`} onClick={() => { handleOptionClick('OptionTwo'); handleOpClick('addsingle') }} >Add single product</div>
-                        <div className={`option ${selectedOp === 'addmulti' ? 'selected' : ''}`} onClick={() => { handleOptionClick('OptionThree'); handleOpClick('addmulti') }} >Add multiple product</div>
-                        <div className={`option ${selectedOp === 'productlist' ? 'selected' : ''}`} onClick={() => { handleOptionClick('OptionFour'); handleOpClick('productlist') }} >Products list</div>
-                        <div className={`option ${selectedOp === 'media' ? 'selected' : ''}`} onClick={() => { handleOptionClick('OptionFive'); handleOpClick('media') }} >Media</div>
+                        <Link to="add-single-product" className="option">Add single product</Link>
+                        <Link to="add-products-bulk" className="option">Add multiple product</Link>
+                        <Link to="product-list" className="option">Products list</Link>
+                        <Link to="media" className="option">Media</Link>
                     </div>
 
-                    <button className={`accordion ${activeIndex === 3 ? 'active' : ''}`} onClick={() => { handleOptionClick('Option17'); toggleAccordion(3) }}>
+                    <Link to="seller-orders" className={`accordion ${activeIndex === 3 ? 'active' : ''}`} onClick={() => { handleOptionClick('Option17'); toggleAccordion(3) }}>
                         <div className='flex' style={{ gap: '20px' }}>
                             <svg className='svg' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"><path fillRule="evenodd" clipRule="evenodd" d="M2.62 6.58c-.238.412-.37.886-.37 1.379v8.082c0 .983.524 1.89 1.375 2.383l7 4.04c.851.491 1.9.491 2.75 0l7-4.04a2.749 2.749 0 0 0 1.375-2.382V7.959a2.75 2.75 0 0 0-1.375-2.382l-7-4.04a2.751 2.751 0 0 0-2.75 0L7.148 3.543a.75.75 0 0 0-.047.027L3.625 5.577A2.746 2.746 0 0 0 2.62 6.58Zm1.88.224 3-1.732 7.5 4.33-3 1.732-7.5-4.33ZM9 4.206l7.5 4.33 3-1.732-6.875-3.968a1.252 1.252 0 0 0-1.25 0L9 4.206Zm6.74 8.654v-2.153l-2.99 1.726v8.66l6.875-3.968a1.25 1.25 0 0 0 .625-1.083V8.103l-3.01 1.738v3.019a.75.75 0 0 1-1.5 0ZM3.75 8.103l7.5 4.33v8.66l-6.875-3.968a1.252 1.252 0 0 1-.625-1.084V8.103Zm2.626 6.488a.75.75 0 1 0-.752 1.298l3.04 1.76a.75.75 0 0 0 .752-1.298l-3.04-1.76Z" fill="currentColor"></path></svg>
                             <div className="heading2">Orders</div>
                         </div>
-                    </button>
+                    </Link>
 
                     <button className={`accordion ${activeIndex === 4 ? 'active' : ''}`} onClick={() => toggleAccordion(4)}>
                         <div className='flex' style={{ gap: '20px' }}>
@@ -129,10 +51,9 @@ const SideNav = () => {
                         </div>
                     </button>
                     <div className="panel" style={{ maxHeight: activeIndex === 4 ? '300px' : '0' }}>
-                        <div className="option" >Add single product</div>
-                        <div className="option" >Add multiple product</div>
-                        <div className="option" >Product list</div>
-                        <div className="option" >Media</div>
+                        <div className="option" >RFQ Lists</div>
+                        <div className="option" >RFQ Notifications</div>
+                        <div className="option" >Manage Quotes</div>
                     </div>
 
                     <button className={`accordion ${activeIndex === 5 ? 'active' : ''}`} onClick={() => toggleAccordion(5)}>
@@ -142,10 +63,8 @@ const SideNav = () => {
                         </div>
                     </button>
                     <div className="panel" style={{ maxHeight: activeIndex === 5 ? '300px' : '0' }}>
-                        <div className="option" >Option 1</div>
-                        <div className="option" >Option 2</div>
-                        <div className="option" >Option 3</div>
-                        <div className="option" >Option 4</div>
+                        <div className="option" >My Insights</div>
+                        <div className="option" >Product Insights</div>
                     </div>
 
                     <button className={`accordion ${activeIndex === 6 ? 'active' : ''}`} onClick={() => toggleAccordion(6)}>
@@ -162,10 +81,8 @@ const SideNav = () => {
                         </div>
                     </button>
                     <div className="panel" style={{ maxHeight: activeIndex === 7 ? '300px' : '0' }}>
-                        <div className="option" >Option 1</div>
-                        <div className="option" >Option 2</div>
-                        <div className="option" >Option 3</div>
-                        <div className="option" >Option 4</div>
+                        <div className="option" >Dashboard</div>
+                        <div className="option" >Create Promotions</div>
                     </div>
 
                     <button className={`accordion ${activeIndex === 8 ? 'active' : ''}`} onClick={() => toggleAccordion(8)}>
@@ -175,11 +92,11 @@ const SideNav = () => {
                         </div>
                     </button>
                     <div className="panel" style={{ maxHeight: activeIndex === 8 ? '300px' : '0' }}>
-                        <div className={`option ${selectedOp === 'companyprofile' ? 'selected' : ''}`} onClick={() => { handleOptionClick('Option9'); handleOpClick('companyprofile') }} >Company profile</div>
-                        <div className={`option ${selectedOp === 'myaccount' ? 'selected' : ''}`} onClick={() => { handleOptionClick('Option10'); handleOpClick('myaccount') }} >My account</div>
-                        <div className={`option ${selectedOp === 'shipping' ? 'selected' : ''}`} onClick={() => { handleOptionClick('Option16'); handleOpClick('shipping') }} >Shipping preferences</div>
-                        <div className={`option ${selectedOp === 'address' ? 'selected' : ''}`} onClick={() => { handleOptionClick('Option15'); handleOpClick('address') }} >My addresses</div>
-                        <div className={`option ${selectedOp === 'payment' ? 'selected' : ''}`} onClick={() => { handleOptionClick('Option13'); handleOpClick('payment') }} >Payments</div>
+                        <div className="option">Company profile</div>
+                        <Link to="/profile" className="option">My account</Link>
+                        <Link to="shipping-preferences" className="option">Shipping preferences</Link>
+                        <Link to="seller-address" className="option">My addresses</Link>
+                        <Link to="payments" className="option">Payments</Link>
                     </div>
 
                     <button className={`accordion ${activeIndex === 9 ? 'active' : ''}`} onClick={() => toggleAccordion(9)}>
@@ -195,11 +112,7 @@ const SideNav = () => {
                             <div className="heading2">Academy</div>
                         </div>
                     </button>
-
                 </div>
-
-                {renderComponent()}
-
             </div>
         </Fragment>
     );

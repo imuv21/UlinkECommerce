@@ -7,10 +7,10 @@ import * as XLSX from 'xlsx';
 import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../Schemas/cate';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
-const UploadProducts = ({ handleOptionClick }) => {
+const UploadProducts = () => {
 
-    const threeClick = () => {
-        handleOptionClick('OptionThree');
+    const back = () => {
+        navigate('/seller-dashboard/add-products-bulk');
     };
 
     const navigate = useNavigate();
@@ -242,7 +242,7 @@ const UploadProducts = ({ handleOptionClick }) => {
             <Helmet>
                 <title>Upload Products</title>
             </Helmet>
-            <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={threeClick} />&nbsp;&nbsp;Upload Products</div>
+            <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={back} />&nbsp;&nbsp;Upload Products</div>
             <div className="flex seller-home">
                 <div className="flexcol shone">
 

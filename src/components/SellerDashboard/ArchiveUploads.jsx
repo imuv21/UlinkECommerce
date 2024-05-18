@@ -5,11 +5,13 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import AdsClickIcon from '@mui/icons-material/AdsClick';
 import empty from '../../assets/empty.png';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 
-const ArchiveUploads = ({ handleOptionClick }) => {
+const ArchiveUploads = () => {
 
-    const threeClick = () => {
-        handleOptionClick('OptionThree');
+    const navigate = useNavigate();
+    const back = () => {
+        navigate('/seller-dashboard/add-products-bulk');
     };
     //toggle page
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +35,7 @@ const ArchiveUploads = ({ handleOptionClick }) => {
             <Helmet>
                 <title>Products Archive</title>
             </Helmet>
-            <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={threeClick} />&nbsp;&nbsp;Products Archival</div>
+            <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={back} />&nbsp;&nbsp;Products Archival</div>
             <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                 <button onClick={() => handlePageChange(1)} style={{ width: 'fit-content' }} className={currentPage === 1 ? 'toggle-active btn-toggle box2 flex' : 'btn-toggle box2 flex'}><div className="heading2">View upload product archives</div></button>
                 <button onClick={() => handlePageChange(2)} style={{ width: 'fit-content' }} className={currentPage === 2 ? 'toggle-active btn-toggle box2 flex' : 'btn-toggle box2 flex'}><div className="heading2">Update/Upload</div></button>

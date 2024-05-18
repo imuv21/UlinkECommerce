@@ -5,6 +5,7 @@ import Loader from './components/Loader/Loader';
 import Layout from './components/Layout';
 
 
+
 //buyer dashboard
 const BuyerDashboard = lazy(() => import('./pages/BuyerDashboard/BuyerDashboard'));
 const BuyerMessage = lazy(() => import('./pages/BuyerDashboard/BuyerMassage/BuyerMessage'));
@@ -24,10 +25,22 @@ const ViewDetail = lazy(() => import('./pages/BuyerDashboard/OrderPage/ViewDetai
 const SellerForm = lazy(() => import('./pages/SellerForm'));
 const BecomeASeller = lazy(() => import('./pages/BecomeASeller'));
 const CommissionStructure = lazy(() => import('./pages/CommissionStructure'));
-const SideNav = lazy(() => import('./components/SideNav/SideNav'));
+const Shipping = lazy(() => import('./components/SellerDashboard/Shipping'));
 const EditSingle = lazy(() => import("./components/SellerDashboard/EditSingle"));
 const ProductDetails = lazy(() => import('./pages/Cart/ProductDetails'));
 const SellerOrder = lazy(() => import('./components/SellerDashboard/SellerOrder/SellerOrder'));
+const SellerAddress = lazy(() => import('./components/SellerDashboard/SellerAddress'));
+const MainLayout = lazy(() => import('./components/SellerDashboard/MainLayout'));
+const ProductList = lazy(() => import( './components/SellerDashboard/ProductList'));
+const Media = lazy(() => import('./components/SellerDashboard/Media'));
+const SellerHome = lazy(() => import( './components/SellerDashboard/SellerHome'));
+const AddSingle = lazy(() => import('./components/SellerDashboard/AddSingle'));
+const AddMulti = lazy(() => import('./components/SellerDashboard/AddMulti'));
+const Payments = lazy(() => import('./components/SellerDashboard/Payments'));
+const UploadProducts = lazy(() => import('./components/SellerDashboard/UploadProducts'));
+const EditProducts = lazy(() => import('./components/SellerDashboard/EditProducts'));
+const ArchiveUploads = lazy(() => import('./components/SellerDashboard/ArchiveUploads'));
+
 
 //Both seller and buyer
 const Profile = lazy(() => import('./pages/BuyerSeller/Profile'));
@@ -37,6 +50,7 @@ const UpdateNumber = lazy(() => import('./pages/BuyerSeller/UpdateNumber'));
 const OtpNumber = lazy(() => import('./pages/BuyerSeller/OtpNumber'));
 const OtpPassword = lazy(() => import('./pages/BuyerSeller/OtpPassword'));
 const UpdatePassword = lazy(() => import('./pages/BuyerSeller/UpdatePassword'));
+
 
 //public
 const Home = lazy(() => import("./pages/Home"));
@@ -52,11 +66,9 @@ const FilterPage = lazy(() => import('./pages/FilterPage'));
 const CategoryPages = lazy(() => import('./pages/CategoryPages'));
 
 
-
 //Other
 const Image = lazy(() => import('./components/Image'));
 const Translator = lazy(() => import('./components/Translator/Translator'));
-
 
 
 
@@ -70,7 +82,6 @@ function App() {
 
             {/* public */}
             <Route path='/' element={<Home />} />
-
             <Route path='/signup' element={<Signup />} />
             <Route path='/login' element={<Login />} />
             <Route path='/verify-email' element={<Otp />} />
@@ -82,14 +93,28 @@ function App() {
             <Route path='/category-pages/:category' element={<CategoryPages />} />
 
 
-
             {/* Seller dashboard */}
             <Route path='/seller-form' element={<SellerForm />} />
             <Route path='/become-a-seller' element={<BecomeASeller />} />
             <Route path='/commission-structure' element={<CommissionStructure />} />
-            <Route path="/seller-dashboard" element={<SideNav />} />
             <Route path='/editsingle/:index' element={<EditSingle />} />
             <Route path="/seller-order" element={<SellerOrder />} />
+
+            <Route path="/seller-dashboard" element={<MainLayout />}>
+              <Route path="add-single-product" element={<AddSingle />} />
+              <Route path="add-products-bulk" element={<AddMulti />} />
+              <Route path="upload-products-bulk" element={<UploadProducts />} />
+              <Route path="edit-products-bulk" element={<EditProducts />} />
+              <Route path="archive-products" element={<ArchiveUploads />} />
+              <Route path="product-list" element={<ProductList />} />
+              <Route path="media" element={<Media />} />
+              <Route path="seller-home" element={<SellerHome />} />
+              <Route path="seller-orders" element={<SellerOrder />} />
+              <Route path="shipping-preferences" element={<Shipping />} />
+              <Route path="seller-address" element={<SellerAddress />} />
+              <Route path="payments" element={<Payments />} />
+            </Route>
+
 
             {/* Both seller and buyer */}
             <Route path="/profile" element={<Profile />} />
@@ -99,7 +124,6 @@ function App() {
             <Route path="/verify-update-number" element={<OtpNumber />} />
             <Route path="/verify-update-password" element={<OtpPassword />} />
             <Route path="/update-password" element={<UpdatePassword />} />
-
 
 
             {/* other */}

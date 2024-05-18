@@ -196,12 +196,12 @@ const Header = () => {
 
                   <div className='popupbox'>
                     {loggedUser.role === 'Buyer' && (<Link to={'/buyer-dashboard'} className="pop-options"><HomeIcon />Buyer Center</Link>)}
-                    {loggedUser.role === 'Seller' && (<Link to={'/seller-dashboard'} className="pop-options"> <DashboardIcon />Dashboard</Link>)}
-                    <Link to={loggedUser.role === 'Seller' ? '/seller-order' : '/order-page'} className="pop-options"> <AllInboxIcon /> Orders </Link>
+                    {loggedUser.role === 'Seller' && (<Link to={'/seller-dashboard/add-single-product'} className="pop-options"> <DashboardIcon />Dashboard</Link>)}
+                    <Link to={loggedUser.role === 'Seller' ? '/seller-dashboard/seller-orders' : '/order-page'} className="pop-options"> <AllInboxIcon /> Orders </Link>
                     {loggedUser.role === 'Seller' && (<div className="pop-options"> <MessageIcon /> Messages </div>)}
                     <div className="pop-options"> <SendTimeExtensionIcon /> RFQ Marketplace </div>
                     <div className="pop-options"> <SendIcon />{loggedUser.role === 'Buyer' ? 'Create RFQ' : 'Manage Quotes'}</div>
-                    {loggedUser.role === 'Seller' && (<div className="pop-options"> <StorefrontIcon />Product Catalogue</div>)}
+                    {loggedUser.role === 'Seller' && (<Link to="/seller-dashboard/product-list" className="pop-options"> <StorefrontIcon />Product Catalogue</Link>)}
                   </div>
 
                   <div className='popupbox'>
