@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { addSingleSchema } from '../Schemas/validationSchema';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../Schemas/cate';
 import { Helmet } from 'react-helmet-async';
@@ -12,6 +13,8 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 const schema = yupResolver(addSingleSchema);
 
 const AddSingle = () => {
+
+    
 
     //drag and drop
     const navigate = useNavigate();
@@ -192,8 +195,8 @@ const AddSingle = () => {
         handleProductApicall(formData);
     };
     const handleProductApicall = async (formData) => {
+        const token = useSelector((state) => state.auth.token);
         try {
-            const token = localStorage.getItem('token');
             const response = await axios.post(
                 `${BASE_URL}/AddProduct`, formData,
                 {
@@ -204,7 +207,7 @@ const AddSingle = () => {
             );
 
             console.log(response.data);
-            alert(response.data);
+            alert(`Product added successfully!`);
         } catch (error) {
             console.log(error);
         }

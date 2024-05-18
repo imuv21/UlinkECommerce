@@ -1,6 +1,9 @@
 import React, { Fragment, lazy, Suspense, useEffect, useState } from 'react';
 import Loader from '../components/Loader/Loader';
-import axios from 'axios';
+import Banner1  from '../assets/jpeg/4.jpeg';
+import DiscountCoupne from '../assets/jpeg/2.png';
+import Banners from '../assets/jpeg/7.png';
+
 const Slider = lazy(() => import('../components/Slider'));
 const InfSlider = lazy(() => import('../components/InfSlider'));
 const Carousel = lazy(() => import('../components/Carousel'));
@@ -43,8 +46,22 @@ const Home = () => {
           <CategorySection />
           <div className="heading3 wh">Top picks of the month (29 items)</div>
           <Carousel />
+          
           <div className="heading3 wh">Best deals (23 items)</div>
           <Carousel />
+          <div className='discount-pages'>
+           <img className='banner-width' src={Banner1}/>
+          </div>
+          <div className="heading3 wh">Top deals (25 items)</div>
+          <Carousel />
+          <div className='discount-pages'>
+           <img className='banner-width' src={DiscountCoupne}/>
+          </div>
+          <div className="heading3 wh">Best deals (7 items)</div>
+          <Carousel />
+          <div className='discount-pages'>
+           <img className='banner-width' src={Banners}/>
+          </div>
           <div className="heading3 wh">Top Brands</div>
           <InfSlider />
         </div>
