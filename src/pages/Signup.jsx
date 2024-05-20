@@ -53,16 +53,16 @@ const Signup = () => {
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
     const onSubmit = async (formData) => {
         const updatedUserData = { ...userData, ...formData };
-        localStorage.setItem('userData', JSON.stringify(updatedUserData));
 
         try {
             const response = await axios.post(`${BASE_URL}/register`, updatedUserData);
             const { email, message, success } = response.data;
 
             if (success) {
-                dispatch(signupSuccess({ email, message }));
+                dispatch(signupSuccess({ signupData: updatedUserData, email, message }));
                 alert(`Signup successful. ${message}`);
                 console.log(response.data);
+                console.log(updatedUserData);
                 navigate('/verify-email');
             }
         } catch (registerError) {
@@ -153,8 +153,8 @@ const Signup = () => {
                                 <Controller name="role" control={control} defaultValue="" render={({ field }) => (
                                     <select className="box flex" value={userData.role || ''} onChange={handleChange} {...field}>
                                         <option value="">Register as a...</option>
-                                        <option value="buyer">Buyer</option>
-                                        <option value="seller">Seller</option>
+                                        <option value="Buyer">Buyer</option>
+                                        <option value="Seller">Seller</option>
                                     </select>
                                 )}
                                 />

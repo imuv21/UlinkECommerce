@@ -83,13 +83,13 @@ const ProductList = () => {
     // Calculate Ulink Fee
     const calculateUlinkFee = () => {
         const salePrice = parseFloat(selectedItem.salePrice);
-        const marketingValue = parseFloat(selectedItem.marketingValue);
+        const commission = parseFloat(selectedItem.commission);
         const quantity = 1;
 
         if (isNaN(salePrice)) {
             return 'N/A';
         }
-        const ulinkFee = (marketingValue/100) * salePrice * quantity;
+        const ulinkFee = (commission/100) * salePrice * quantity;
         return `${ulinkFee.toFixed(2)}₹`;
     };
 
@@ -148,7 +148,7 @@ const ProductList = () => {
                                     <div className="heading2">Taxes on Fee</div><div className='bbox'>{tax}₹</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Marketing Fee</div><div className='bbox'>{selectedItem.marketingValue}%</div>
+                                    <div className="heading2">Marketing Fee</div><div className='bbox'>{selectedItem.commission}%</div>
                                 </div>
                                 <div className="popboxdivs">
                                     <div className="heading2">Cost Per Unit</div><div className='bbox'>{calculateCostPerUnit(selectedItem)}</div>

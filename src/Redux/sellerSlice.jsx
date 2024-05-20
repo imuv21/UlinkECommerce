@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
-const BASE_URL = 'https://api.ulinkit.com/api';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const updateSellerDetails = createAsyncThunk(
     'seller/updateSellerDetails',

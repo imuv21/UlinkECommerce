@@ -4,20 +4,19 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { addSingleSchema } from '../Schemas/validationSchema';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../../Redux/addProductSlice';
 import { useNavigate } from 'react-router-dom';
 import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../Schemas/cate';
 import { Helmet } from 'react-helmet-async';
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const schema = yupResolver(addSingleSchema);
 
 const AddSingle = () => {
 
-    
-
     //drag and drop
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [images, setImages] = useState([]);
     const [isDragging, setIsDragging] = useState(false);
     const [fileInputValue, setFileInputValue] = useState('');
@@ -25,19 +24,51 @@ const AddSingle = () => {
     const selectFiles = () => {
         document.getElementById('file-input').click();
     };
+    // const onFileSelect = (event) => {
+    //     const files = event.target.files;
+    //     if (files.length === 0) return;
+    //     const totalImages = images.length;
+    //     const remainingSlots = 5 - totalImages;
+    //     if (remainingSlots <= 0) {
+    //         alert("You've already selected the maximum allowed images (5).");
+    //         return;
+    //     }
+    //     for (let i = 0; i < Math.min(remainingSlots, files.length); i++) {
+    //         const file = files[i];
+    //         if (file.type.split('/')[0] === 'image') {
+    //             const reader = new FileReader();
+    //             reader.onload = (e) => {
+    //                 setImages((prevImages) => [
+    //                     ...prevImages,
+    //                     {
+    //                         name: file.name,
+    //                         url: e.target.result,
+    //                         size: file.size,
+    //                     },
+    //                 ]);
+    //             };
+    //             reader.readAsDataURL(file);
+    //         }
+    //     }
+    //     setFileInputValue('');
+    // };
     const onFileSelect = (event) => {
         const files = event.target.files;
         if (files.length === 0) return;
+    
         const totalImages = images.length;
         const remainingSlots = 5 - totalImages;
+    
         if (files.length > remainingSlots) {
             alert("You can only select a maximum of 5 images. The excess files will be ignored.");
+            // Select only the first 5 files
             const selectedFiles = Array.from(files).slice(0, remainingSlots);
             setImages([...images, ...selectedFiles]);
         } else {
             setImages([...images, ...files]);
         }
-        setFileInputValue('');
+    
+        setFileInputValue(''); // Reset file input value
     };
     const deleteImage = (index) => {
         setImages((prevImages) => {
@@ -168,50 +199,47 @@ const AddSingle = () => {
                 return 0;
         }
     };
-    const marketingValue = getMarginValue();
+    const commission = getMarginValue();
     const categoryPath = `${selectedSupOption}/${selectedSubOption}/${selectedMiniSubOption}/${selectedMicroSubOption}`;
-
 
 
     //form validation
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
-    const onSubmit = data => {
-        const currentTime = new Date();
-        data.time = currentTime.toLocaleString();
-
-        const imageUrls = images.map(image => image);
-
-        data.images = imageUrls;
-        const updatedData = { ...data, images, selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption, marketingValue, categoryPath };
-        const savedSingleFormData = JSON.parse(localStorage.getItem('singleFormData')) || [];
-        const updatedSingleFormData = [...savedSingleFormData, updatedData];
-        localStorage.setItem('singleFormData', JSON.stringify(updatedSingleFormData));
-        console.log(updatedData);
-        const formData = new FormData();
-        formData.append("productData", JSON.stringify(updatedData));
-        for (let i = 0; i < images.length; i++) {
-            formData.append("productImage", images[i]);
-        }
-        handleProductApicall(formData);
-    };
-    const handleProductApicall = async (formData) => {
-        const token = useSelector((state) => state.auth.token);
+    const onSubmit = async (data) => {
         try {
-            const response = await axios.post(
-                `${BASE_URL}/AddProduct`, formData,
-                {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    }
-                }
-            );
+            const currentTime = new Date();
+            const productImage = images.map(image => ({
+                imageUrl: image.url,
+                size: image.size || 0,
+                name: image.name,
+                uploadDate: currentTime.toLocaleString()
+            }));
+            const productData = {
+                ...data,
+                categoryPath,
+            };
+            const formData = new FormData();
+            formData.append('productData', JSON.stringify(productData));
+            // productImage.forEach((image, index) => {
+            //     formData.append(`productImage${index + 1}`, JSON.stringify(image));
+            // });
+            for (let i = 0; i < images.length; i++) {
+                formData.append("productImage", images[i]);
+            }
 
-            console.log(response.data);
-            alert(`Product added successfully!`);
+            const response = await dispatch(addProduct(formData));
+            if (response.type === 'product/addProduct/fulfilled') {
+                alert('Product added successfully!');
+                navigate('/');
+            } else {
+                console.log('Error in response:', response);
+            }
+
         } catch (error) {
             console.log(error);
         }
-    }
+    };
+
     const [singleFormData, setSingleFormData] = useState({});
     const handleChange = (e) => {
         setSingleFormData({ ...singleFormData, [e.target.name]: e.target.value });
@@ -265,7 +293,7 @@ const AddSingle = () => {
                 </div>
                 <div className="flex-start wh" style={{ gap: '10px' }}>
                     <div className="greenerror">{errorMessage ? errorMessage : isSubmitEnabled ? `Selected path: ${categoryPath}` : 'Please make all selections'}</div>
-                    {selectedSupOption && (<div className='greenerror'>Margin value: {marketingValue}%</div>)}
+                    {selectedSupOption && (<div className='greenerror'>Margin value: {commission}%</div>)}
                 </div>
 
                 <Controller name="bulletPoints" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.bulletPoints || ''} onChange={handleChange} className="box flex" placeholder='Enter bullet points (separated by full stop)...' {...field} />} />
@@ -387,8 +415,8 @@ const AddSingle = () => {
 
                 <div className="flex wh" style={{ gap: '20px' }}>
                     <Controller name="avgLeadTime" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.avgLeadTime || ''} onChange={handleChange} className="box flex" placeholder='Enter average lead time (days)' {...field} />} />
-                    <Controller name="TransportationMode" control={control} defaultValue="" render={({ field }) => (
-                        <select className="box flex" value={singleFormData.TransportationMode || ''} onChange={handleChange}  {...field}>
+                    <Controller name="transportationMode" control={control} defaultValue="" render={({ field }) => (
+                        <select className="box flex" value={singleFormData.transportationMode || ''} onChange={handleChange}  {...field}>
                             <option value="">Transportation mode</option>
                             <option value="regular">Regular</option>
                             <option value="food-ambient">Food ambient</option>
@@ -399,13 +427,13 @@ const AddSingle = () => {
                     )}
                     />
                 </div>
-                {(errors.avgLeadTime || errors.TransportationMode) &&
+                {(errors.avgLeadTime || errors.transportationMode) &&
                     <div className="flex wh">
                         <div className="flex wh">
                             <div className='error'>{errors.avgLeadTime?.message}</div>
                         </div>
                         <div className="flex wh">
-                            <div className='error'>{errors.TransportationMode?.message}</div>
+                            <div className='error'>{errors.transportationMode?.message}</div>
                         </div>
                     </div>
                 }
@@ -610,8 +638,8 @@ const AddSingle = () => {
                         <div className='pldiv'>
                             <div className="flex">
                                 <div className="heading2">AED</div>
-                                <Controller name="salePrice" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.salePrice || ''} onChange={handleChange} placeholder='Enter sale price' {...field} />} />
-                                {errors.salePrice && <div className='error'>{errors.salePrice?.message}</div>}
+                                <Controller name="sellPrice" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.sellPrice || ''} onChange={handleChange} placeholder='Enter sale price' {...field} />} />
+                                {errors.sellPrice && <div className='error'>{errors.sellPrice?.message}</div>}
                             </div>
                         </div>
                     </div>
@@ -639,8 +667,8 @@ const AddSingle = () => {
                 </div>
 
                 <div className="flex wh" style={{ gap: '20px' }}>
-                    <Controller name="Availability" control={control} defaultValue="" render={({ field }) => (
-                        <select className="box flex" value={singleFormData.Availability || ''} onChange={handleChange} {...field}>
+                    <Controller name="availability" control={control} defaultValue="" render={({ field }) => (
+                        <select className="box flex" value={singleFormData.availability || ''} onChange={handleChange} {...field}>
                             <option value="">Availability</option>
                             <option value="instock">In stock</option>
                             <option value="outofstock">Out of stock</option>
@@ -733,8 +761,8 @@ const AddSingle = () => {
 
                 <Controller name="imodelNum" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.imodelNum || ''} onChange={handleChange} className="box flex" placeholder='Enter item model number' {...field} />} />
 
-                <Controller name="color" control={control} defaultValue="" render={({ field }) => (
-                    <select className="box flex" value={singleFormData.color || ''} onChange={handleChange}  {...field}>
+                <Controller name="colors" control={control} defaultValue="" render={({ field }) => (
+                    <select className="box flex" value={singleFormData.colors || ''} onChange={handleChange}  {...field}>
                         <option value="">Select color</option>
                         <option value="red">Red</option>
                         <option value="orange">Orange</option>

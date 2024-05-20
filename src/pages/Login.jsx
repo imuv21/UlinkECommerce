@@ -89,8 +89,8 @@ const Login = () => {
                             <Controller name="role" control={control} defaultValue="" render={({ field }) => (
                                 <select className="box flex" value={loggedUser.role || ''} onChange={handleChange} {...field}>
                                     <option value="">Register as a...</option>
-                                    <option value="buyer">Buyer</option>
-                                    <option value="seller">Seller</option>
+                                    <option value="Buyer">Buyer</option>
+                                    <option value="Seller">Seller</option>
                                 </select>
                             )}
                             />

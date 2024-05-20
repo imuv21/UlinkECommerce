@@ -7,6 +7,7 @@ const initialState = {
     status: '',
     message: '',
     signupEmail: null,
+    signupData: null,
 };
 
 const authSlice = createSlice({
@@ -28,6 +29,7 @@ const authSlice = createSlice({
             state.message = action.payload.message;
         },
         signupSuccess(state, action) {
+            state.signupData = action.payload.signupData;
             state.signupEmail = action.payload.email;
             state.status = 'success';
             state.message = action.payload.message;

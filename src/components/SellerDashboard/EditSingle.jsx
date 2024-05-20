@@ -61,7 +61,7 @@ const EditSingle = () => {
             setValue('size', savedSingleFormData[index].size);
             setValue('sizeUnit', savedSingleFormData[index].sizeUnit);
             setValue('avgLeadTime', savedSingleFormData[index].avgLeadTime);
-            setValue('TransportationMode', savedSingleFormData[index].TransportationMode);
+            setValue('transportationMode', savedSingleFormData[index].transportationMode);
             setValue('DimensionUnit', savedSingleFormData[index].DimensionUnit);
 
             setValue('productWgt', savedSingleFormData[index].productWgt);
@@ -77,12 +77,12 @@ const EditSingle = () => {
 
             setValue('temperature', savedSingleFormData[index].temperature);
             setValue('StockLocation', savedSingleFormData[index].StockLocation);
-            setValue('Availability', savedSingleFormData[index].Availability);
+            setValue('availability', savedSingleFormData[index].availability);
             setValue('PrivateLabel', savedSingleFormData[index].PrivateLabel);
             setValue('origin', savedSingleFormData[index].origin);
 
             setValue('hsnCode', savedSingleFormData[index].hsnCode);
-            setValue('salePrice', savedSingleFormData[index].salePrice);
+            setValue('sellPrice', savedSingleFormData[index].sellPrice);
             setValue('unitPrice', savedSingleFormData[index].unitPrice);
             setValue('minOrderQuant', savedSingleFormData[index].minOrderQuant);
 
@@ -90,13 +90,13 @@ const EditSingle = () => {
             setValue('shelflife', savedSingleFormData[index].shelflife);
             setValue('ingredients', savedSingleFormData[index].ingredients);
 
-            setValue('color', savedSingleFormData[index].color);
+            setValue('colors', savedSingleFormData[index].colors);
             setValue('imodelNum', savedSingleFormData[index].imodelNum);
             setValue('packType', savedSingleFormData[index].packType);
 
-            setValue('material', savedSingleFormData[index].color);
-            setValue('safetyWarnings', savedSingleFormData[index].imodelNum);
-            setValue('gender', savedSingleFormData[index].packType);
+            setValue('material', savedSingleFormData[index].material);
+            setValue('safetyWarnings', savedSingleFormData[index].safetyWarnings);
+            setValue('gender', savedSingleFormData[index].gender);
 
             setValue('portType', savedSingleFormData[index].portType);
             setValue('connectvityType', savedSingleFormData[index].connectvityType);
@@ -386,7 +386,7 @@ const EditSingle = () => {
 
                 <div className="flex wh" style={{ gap: '20px' }}>
                     <Controller name="avgLeadTime" control={control} defaultValue={singleFormData.avgLeadTime || ''} render={({ field }) => <input className="box flex" placeholder='Enter average lead time (days)' {...field} />} />
-                    <Controller name="TransportationMode" control={control} defaultValue={singleFormData.TransportationMode || ''} render={({ field }) => (
+                    <Controller name="transportationMode" control={control} defaultValue={singleFormData.transportationMode || ''} render={({ field }) => (
                         <select className="box flex"  {...field}>
                             <option value="">Transportation mode</option>
                             <option value="regular">Regular</option>
@@ -398,13 +398,13 @@ const EditSingle = () => {
                     )}
                     />
                 </div>
-                {(errors.avgLeadTime || errors.TransportationMode) &&
+                {(errors.avgLeadTime || errors.transportationMode) &&
                     <div className="flex wh">
                         <div className="flex wh">
                             <div className='error'>{errors.avgLeadTime?.message}</div>
                         </div>
                         <div className="flex wh">
-                            <div className='error'>{errors.TransportationMode?.message}</div>
+                            <div className='error'>{errors.transportationMode?.message}</div>
                         </div>
                     </div>
                 }
@@ -610,8 +610,8 @@ const EditSingle = () => {
                         <div className='pldiv'>
                             <div className="flex">
                                 <div className="heading2">AED</div>
-                                <Controller name="salePrice" control={control} defaultValue={singleFormData.salePrice || ''} render={({ field }) => <input placeholder='Enter sale price' {...field} />} />
-                                {errors.salePrice && <div className='error'>{errors.salePrice?.message}</div>}
+                                <Controller name="sellPrice" control={control} defaultValue={singleFormData.sellPrice || ''} render={({ field }) => <input placeholder='Enter sale price' {...field} />} />
+                                {errors.sellPrice && <div className='error'>{errors.sellPrice?.message}</div>}
                             </div>
                         </div>
                     </div>
@@ -641,7 +641,7 @@ const EditSingle = () => {
 
 
                 <div className="flex wh" style={{ gap: '20px' }}>
-                    <Controller name="Availability" control={control} defaultValue={singleFormData.Availability || ''} render={({ field }) => (
+                    <Controller name="availability" control={control} defaultValue={singleFormData.availability || ''} render={({ field }) => (
                         <select className="box flex"  {...field}>
                             <option value="">Availability</option>
                             <option value="instock">In stock</option>
@@ -733,7 +733,7 @@ const EditSingle = () => {
 
                 <Controller name="imodelNum" control={control} defaultValue={singleFormData.imodelNum || ''} render={({ field }) => <input className="box flex" placeholder='Enter item model number' {...field} />} />
 
-                <Controller name="color" control={control} defaultValue={singleFormData.color || ''} render={({ field }) => (
+                <Controller name="colors" control={control} defaultValue={singleFormData.colors || ''} render={({ field }) => (
                     <select className="box flex"  {...field}>
                         <option value="">Select color</option>
                         <option value="red">Red</option>

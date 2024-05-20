@@ -7,7 +7,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../Schemas/cate';
 import { Helmet } from 'react-helmet-async';
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const schema = yupResolver(addSingleSchema);
 
@@ -22,7 +21,6 @@ const Translator = () => {
     document.getElementById('file-input').click();
   };
 
-  //changes in the file
   const onFileSelect = (event) => {
     const files = event.target.files;
     if (files.length === 0) return;
@@ -176,7 +174,7 @@ const Translator = () => {
   const categoryPath = `${selectedSupOption}/${selectedSubOption}/${selectedMiniSubOption}/${selectedMicroSubOption}`;
 
 
-  //changes in the file
+
   //form validation
   const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
   const onSubmit = data => {
@@ -192,29 +190,33 @@ const Translator = () => {
     const updatedSingleFormData = [...savedSingleFormData, updatedData];
     localStorage.setItem('singleFormData', JSON.stringify(updatedSingleFormData));
     console.log(updatedData);
-  
     const formData = new FormData();
+
     formData.append("productData", JSON.stringify(updatedData));
+
     for (let i = 0; i < images.length; i++) {
       formData.append("productImage", images[i]);
     }
+
     handleProductApicall(formData);
   };
+
   const handleProductApicall = async (formData) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MTYxODU3NTAsImV4cCI6MTcxNjE4OTM1MCwiUm9sZSI6IlNlbGxlciIsIkVtYWlsIjoidnJ1djIxQGdtYWlsLmNvbSIsIm5hbWUiOiJTYW5zYSBTdGFyayIsInVzZXJuYW1lIjoidnJ1djIxQGdtYWlsLmNvbSIsImNvdW50cnkiOiJBemVyYmFpamFuIn0.sD7ES7DIPfPWjL1V5tz84uveosIa3rhlg0UnI_qFuPmRpuOw7xFkMJYT8hMv4gUezsp_ZLGrrWldNjVFzpN1_Q;
       const response = await axios.post(
-        `${BASE_URL}/api/AddProduct`, formData,
+        `https://api.ulinkit.com/api/AddProduct`, formData,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
           }
         }
       );
-
       console.log(response.data);
+      alert('Product added successfully!');
     } catch (error) {
       console.log(error);
+      alert('Something went wrong!');
     }
   }
 

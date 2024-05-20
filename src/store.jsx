@@ -2,6 +2,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import AuthReducer from './Redux/AuthReducer';
 import productReducer from './Redux/productSlice';
+import addProductSlice from './Redux/addProductSlice';
 import otpReducer from './Redux/otpSlice';
 import sellerReducer from './Redux/sellerSlice';
 
@@ -11,6 +12,7 @@ const store = configureStore({
         products: productReducer,
         otp: otpReducer,
         seller: sellerReducer,
+        addproduct: addProductSlice,
     },
 });
 

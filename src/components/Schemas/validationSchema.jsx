@@ -35,13 +35,13 @@ export const addSingleSchema = yup.object().shape({
             }
         ),
     unitPrice: yup.number().typeError('Unit price must be a number').positive('Unit price must be a positive number').integer('Unit price must be an integer').required('Unit price is required'),
-    salePrice: yup.number().typeError('Sale price must be a number').positive('Sale price must be a positive number').integer('Sale price must be an integer').required('Sale price is required')
+    sellPrice: yup.number().typeError('Sale price must be a number').positive('Sale price must be a positive number').integer('Sale price must be an integer').required('Sale price is required')
         .test(
             'is-lower',
             'Sale price must be lower than unit price',
-            function (salePrice) {
+            function (sellPrice) {
                 const unitPrice = this.resolve(yup.ref('unitPrice'));
-                return salePrice < unitPrice;
+                return sellPrice < unitPrice;
             }
         ),
 
@@ -61,7 +61,7 @@ export const addSingleSchema = yup.object().shape({
     size: yup.number().typeError('Size must be a number').positive('Size must be a positive number').integer('Size must be an integer').required('Size is required'),
     sizeUnit: yup.string().required('Unit is required'),
     avgLeadTime: yup.number().typeError('Lead time must be a number').positive('Lead time must be a positive number').integer('Lead time must be an integer').required('Lead time is required'),
-    TransportationMode: yup.string().required('Transportation mode is required'),
+    transportationMode: yup.string().required('Transportation mode is required'),
     DimensionUnit: yup.string().required('Dimension unit is required'),
 
     productWgt: yup.number().typeError('Weight must be a number').positive('Weight must be a positive number').integer('Weight must be an integer').required('Weight is required'),

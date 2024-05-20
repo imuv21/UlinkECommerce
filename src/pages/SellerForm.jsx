@@ -20,26 +20,14 @@ const SellerForm = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { status, error, success } = useSelector((state) => state.seller);
+    const signupData = useSelector((state) => state.auth.signupData);
 
-    //getting data from local storage
-    const [userData, setUserData] = useState(null);
-    useEffect(() => {
-        const storedUserData = localStorage.getItem('userData');
-        if (storedUserData) {
-            const parsedUserData = JSON.parse(storedUserData);
-            setUserData(parsedUserData);
-        }
-    }, []);
-
-
-    
     const [sellerData, setSellerData] = useState({});
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
 
     const onSubmit = async (formData) => {
-        const userData = JSON.parse(localStorage.getItem('userData'));
-        const username = userData.email;
-        const password = userData.password;
+        const username = signupData.email;
+        const password = signupData.password;
         const updatedSellerData = { ...sellerData, ...formData };
         
         dispatch(updateSellerDetails({ username, password, sellerData: updatedSellerData }));

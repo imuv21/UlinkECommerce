@@ -13,37 +13,11 @@ const Otp = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { status, error, success } = useSelector((state) => state.otp);
-
-    // const verifyOtp = async (otp, username, role) => {
-    //     try {
-    //         const response = await axios.post(`${BASE_URL}/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
-    //         alert(`Response : ${response.data.message} And Email : ${username}`);
-    //         return response.data;
-    //     } catch (error) {
-    //         console.error('OTP verification failed:', error);
-    //         throw error;
-    //     }
-    // };
-
-    // const sellerForm = async (otp) => {
-    //     const email = userData.email;
-    //     const role = userData.role;
-
-    //     try {
-    //         const verificationResponse = await verifyOtp(otp, email, role);
-
-    //         if (userData && userData.role === 'Seller') {
-    //             navigate('/seller-form');
-    //         } else {
-    //             navigate('/login');
-    //         }
-    //     } catch (error) {
-    //         alert('Failed to verify OTP: ' + error.message);
-    //     }
-    // };
+    const signupData = useSelector((state) => state.auth.signupData);
 
 
-    const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
+    
+
     // Focus management
     const otpInputs = useRef([]);
     const focusNextInput = currentIndex => {
@@ -52,6 +26,8 @@ const Otp = () => {
         }
     };
 
+
+    const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
     const handleInputChange = (index, newValue) => {
         const newOtpDigits = [...otpDigits];
         newOtpDigits[index] = newValue;
@@ -62,9 +38,7 @@ const Otp = () => {
         const isOtpComplete = newOtpDigits.every(digit => digit !== '');
 
         if (isOtpComplete) {
-            // sellerForm(newOtpDigits.join(''));
-            const userData = JSON.parse(localStorage.getItem('userData'));
-            dispatch(verifyOtp({ otp: newOtpDigits.join(''), username: userData.email, role: userData.role }));
+            dispatch(verifyOtp({ otp: newOtpDigits.join(''), username: signupData.email, role: signupData.role, password: signupData.password }));
         }
     };
 
@@ -87,9 +61,8 @@ const Otp = () => {
   //new useff
     useEffect(() => {
         if (status === 'succeeded') {
-            const userData = JSON.parse(localStorage.getItem('userData'));
             alert('OTP verified successfully!');
-            if (userData && userData.role === 'Seller') {
+            if (signupData.role === 'Seller') {
                 navigate('/seller-form');
             } else {
                 navigate('/login');
