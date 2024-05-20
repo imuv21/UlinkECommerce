@@ -1,19 +1,24 @@
 
 import { configureStore } from '@reduxjs/toolkit';
-import AuthReducer from './Redux/AuthReducer';
-import productReducer from './Redux/productSlice';
-import addProductSlice from './Redux/addProductSlice';
-import otpReducer from './Redux/otpSlice';
-import sellerReducer from './Redux/sellerSlice';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import rootReducer from './Redux/rootReducer';
+
+const persistConfig = {
+    key: 'root',
+    storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
-    reducer: {
-        auth: AuthReducer,
-        products: productReducer,
-        otp: otpReducer,
-        seller: sellerReducer,
-        addproduct: addProductSlice,
-    },
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false, // Disable serializable check for the persisting feature
+        }),
 });
 
-export default store;
+const persistor = persistStore(store);
+
+export { store, persistor };

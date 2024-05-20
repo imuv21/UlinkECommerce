@@ -9,7 +9,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import defaulImg from '../assets/Stationary/bannerhp.png';
+import defaulImg from '../assets/Electronics/laptop.png';
 
 const Carousel = () => {
 

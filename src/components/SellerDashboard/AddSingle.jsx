@@ -230,7 +230,6 @@ const AddSingle = () => {
             const response = await dispatch(addProduct(formData));
             if (response.type === 'product/addProduct/fulfilled') {
                 alert('Product added successfully!');
-                navigate('/');
             } else {
                 console.log('Error in response:', response);
             }

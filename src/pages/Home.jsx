@@ -1,8 +1,9 @@
 import React, { Fragment, lazy, Suspense, useEffect, useState } from 'react';
 import Loader from '../components/Loader/Loader';
-import Banner1  from '../assets/jpeg/4.jpeg';
-import DiscountCoupne from '../assets/jpeg/2.png';
+import Banner1  from '../assets/jpeg/water.png';
+import DiscountCoupne from '../assets/jpeg/camera.png';
 import Banners from '../assets/jpeg/7.png';
+import summer from '../assets/jpeg/summer.png';
 
 const Slider = lazy(() => import('../components/Slider'));
 const InfSlider = lazy(() => import('../components/InfSlider'));
@@ -44,6 +45,9 @@ const Home = () => {
         <div className="flexcol wh home">
           <div className="heading3 wh">Categories</div>
           <CategorySection />
+          <div className='discount-pages'>
+           <img className='banner-width' src={summer}/>
+          </div>
           <div className="heading3 wh">Top picks of the month (29 items)</div>
           <Carousel />
           

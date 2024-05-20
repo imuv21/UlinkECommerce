@@ -1,40 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Slider } from '@mui/material';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../Redux/productSlice';
+import defaulImg from '../assets/Electronics/laptop.png';
 
 const FilterPage = () => {
 
+    const dispatch = useDispatch();
+    const { products, status, error } = useSelector((state) => state.products);
+
+    //pagination
+    const [page, setPage] = useState(0);
+    useEffect(() => {
+        dispatch(fetchProducts({ page }));
+    }, [dispatch, page]);
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
+    };
+
+
+
+
+
     // price
-    const [price, setPrice] = useState([0, 1000]);
+    const [price, setPrice] = useState([0, 4000]);
     const priceHandler = (event, newPrice) => {
         setPrice(newPrice);
     };
 
-    //product api
-    const [products, setProducts] = useState([]);
+    //filtered products
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [sortBy, setSortBy] = useState('low');
-    useEffect(() => {
-        if (products.length === 0) {
-            const fetchData = async () => {
-                try {
-                    const response = await axios.get('https://fakestoreapi.com/products');
-                    setProducts(response.data);
-                } catch (error) {
-                    console.log(error);
-                }
-            };
-            fetchData();
-        }
-    }, [products]);
-
-
 
     // filter products based on price range and short products
     useEffect(() => {
         const filtered = products.filter(product => {
-            const productPrice = parseFloat(product.price);
+            const productPrice = parseFloat(product.sellPrice);
             return productPrice >= price[0] && productPrice <= price[1];
         });
 
@@ -47,14 +49,11 @@ const FilterPage = () => {
                 sortedProducts.sort((a, b) => new Date(a.date) - new Date(b.date));
                 break;
             case 'high':
-                sortedProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+                sortedProducts.sort((a, b) => parseFloat(b.sellPrice) - parseFloat(a.sellPrice));
                 break;
             case 'low':
-                sortedProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+                sortedProducts.sort((a, b) => parseFloat(a.sellPrice) - parseFloat(b.sellPrice));
                 break;
-            // case 'relevance': // Implement relevance sorting if needed
-            //     // Implement relevance sorting logic
-            //     break;
             default:
                 break;
         }
@@ -64,6 +63,7 @@ const FilterPage = () => {
     const handleSortChange = (event) => {
         setSortBy(event.target.value);
     };
+
     //TruncateText
     const truncateText = (text, maxLength) => {
         if (text.length <= maxLength) {
@@ -71,7 +71,21 @@ const FilterPage = () => {
         }
         return text.slice(0, maxLength) + '...';
     }
- return (
+
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchProducts());
+        }
+    }, [status, dispatch]);
+    if (status === 'loading') {
+        return <div>Loading...</div>;
+    }
+    if (status === 'failed') {
+        return <div>Error: {error}</div>;
+    }
+
+
+    return (
         <div className="flexcol wh product-detail">
             <Helmet>
                 <title>Search Results</title>
@@ -83,7 +97,7 @@ const FilterPage = () => {
                 <div className="fpone">
                     <div className="filterbox">
                         <div className="heading2 wh">Price</div>
-                        <Slider value={price} onChange={priceHandler} valueLabelDisplay="auto" aria-labelledby='range-slide' min={0} max={1000} />
+                        <Slider value={price} onChange={priceHandler} valueLabelDisplay="auto" aria-labelledby='range-slide' min={0} max={4000} />
                         <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                             <div className="minmaxbox heading2"> {price[0]}</div> <div className="heading2">To</div> <div className="minmaxbox heading2"> {price[1]}</div>
                         </div>
@@ -121,7 +135,7 @@ const FilterPage = () => {
                 </div>
                 <div className="fptwo">
                     <div className="shortby">
-                        <div className="heading2 wh">Healthy Snacks ( {filteredProducts.length } Items)</div>
+                        <div className="heading2 wh">Healthy Snacks ( {filteredProducts.length} Items)</div>
                         <div className="flex" style={{ gap: '20px' }}>
                             <div className="heading2" style={{ whiteSpace: 'nowrap' }}>Short By</div>
                             <select name="shortby" className='selectshort' value={sortBy} onChange={handleSortChange}>
@@ -129,31 +143,37 @@ const FilterPage = () => {
                                 <option value="oldest">Oldest</option>
                                 <option value="high">Price : High to Low</option>
                                 <option value="low">Price : Low to High</option>
-                                {/* <option value="relevance">Relevance</option> */}
                             </select>
                         </div>
                     </div>
 
                     <div className="filteredProducts">
                         {
-                            filteredProducts.map((product, id) => (
-                                <div className='show-img-detail' key={id}>
-                                    <img className='product-img-size' src={product.image} alt='img' />
+                            filteredProducts.map((product, index) => (
+                                <div className='show-img-detail' key={index}>
+                                    <img className='product-img-size' src={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} alt='img' />
                                     <div className='product-detail-info'>
-                                        <p className='product-title'>{truncateText(product.title, 20)} </p>
+                                        <p className='product-title'>{truncateText(product.productName, 20)} </p>
                                         <p className='product-price'>AED {product.price}/ piece incl value</p>
-                                        <div className='flex' style={{gap: '10px'}}>
-                                            <p className='product-discount'>AED 7.35</p>
-                                            <span className='discount-percentage'>50% Off</span>
+                                        <div className='flex' style={{ gap: '10px' }}>
+                                            <p className='product-discount'>{product.unitPrice}</p>
+                                            <span className='discount-percentage'>{(((product.unitPrice - product.sellPrice) / product.unitPrice) * 100).toFixed(2)}% OFF</span>
                                         </div>
-                                        <p className='product-quantity'>Unit per carton: 1</p>
-                                        <p className='product-quantity'>Min Order: 1 peace</p>
+                                        <p className='product-quantity'>Min Order: {product.minOrderQuant} peace</p>
                                     </div>
                                 </div>
                             ))
                         }
                     </div>
                 </div>
+            </div>
+            <div className="flex" style={{ gap: '10px' }}>
+                <button className='btn box' style={{width: '100px'}} onClick={() => handlePageChange(page - 1)} disabled={page === 0}>
+                    Previous
+                </button>
+                <button className='btn box' style={{width: '100px'}} onClick={() => handlePageChange(page + 1)}>
+                    Next
+                </button>
             </div>
         </div>
     )
