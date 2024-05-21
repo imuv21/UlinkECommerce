@@ -18,6 +18,8 @@ export const addSingleSchema = yup.object().shape({
             return (value && value.length === 12);
         } else if (barcodeType === 'EAN') {
             return (value && (value.length === 8 || value.length === 13));
+        } else if (barcodeType === 'ASIN') {
+            return (value && value.length === 10);
         } else if (barcodeType === 'GTIN') {
             return (value && (value.length === 8 || value.length === 12 || value.length === 13 || value.length === 14));
         } else {

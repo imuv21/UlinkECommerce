@@ -44,10 +44,10 @@ const Profile = () => {
                         </div>
                         <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
                             <div className="flex unupublished" style={{ gap: '10px' }}>
-                                <div className="heading2">imuv21@gmail.com</div> <NewReleasesIcon />
+                                <div className="heading2">imuv21@gmail.com</div> <VerifiedIcon style={{color: 'rgb(0, 190, 0)'}} />
                             </div>
                             <div className="flex unupublished" style={{ gap: '10px' }}>
-                                <div className='heading2'>+91 1534534534523</div> <NewReleasesIcon />
+                                <div className='heading2'>+91 1534534534523</div> <NewReleasesIcon style={{color: 'rgb(255, 97, 73)'}} />
                             </div>
                         </div>
                     </div>

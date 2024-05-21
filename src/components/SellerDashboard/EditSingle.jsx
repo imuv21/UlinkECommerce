@@ -337,6 +337,7 @@ const EditSingle = () => {
                         <option value="EAN">EAN</option>
                         <option value="GTIN">GTIN</option>
                         <option value="UPC">UPC</option>
+                        <option value="ASIN">ASIN</option>
                         <option value="null">Product does not have barcode number</option>
                     </select>
                 )}

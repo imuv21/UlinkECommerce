@@ -20,7 +20,6 @@ const FilterPage = () => {
     };
 
 
-
     // price
     const [price, setPrice] = useState([0, 4000]);
     const priceHandler = (event, newPrice) => {
@@ -152,9 +151,9 @@ const FilterPage = () => {
                                     <img className='product-img-size' src={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} alt='img' />
                                     <div className='product-detail-info'>
                                         <p className='product-title'>{truncateText(product.productName, 20)} </p>
-                                        <p className='product-price'>AED {product.price}/ piece incl value</p>
+                                        <p className='product-price'>{product.currencySymbol}{product.sellPrice}/ piece incl value</p>
                                         <div className='flex' style={{ gap: '10px' }}>
-                                            <p className='product-discount'>{product.unitPrice}</p>
+                                            <p className='product-discount'>{product.currencySymbol}{product.unitPrice}</p>
                                             <span className='discount-percentage'>{(((product.unitPrice - product.sellPrice) / product.unitPrice) * 100).toFixed(2)}% OFF</span>
                                         </div>
                                         <p className='product-quantity'>Min Order: {product.minOrderQuant} peace</p>

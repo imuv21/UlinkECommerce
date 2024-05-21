@@ -4,7 +4,7 @@ import axios from 'axios';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const fetchProductDetail = createAsyncThunk('productDetail/fetchProductDetail', async (productId) => {
-    const response = await axios.get(`${BASE_URL}/api/product/${productId}`);
+    const response = await axios.get(`${BASE_URL}/product/${productId}`);
     return response.data;
 });
 

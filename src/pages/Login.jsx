@@ -88,7 +88,7 @@ const Login = () => {
                         <form className="flexcol gap" onSubmit={handleSubmit(onSubmit)}>
                             <Controller name="role" control={control} defaultValue="" render={({ field }) => (
                                 <select className="box flex" value={loggedUser.role || ''} onChange={handleChange} {...field}>
-                                    <option value="">Register as a...</option>
+                                    <option value="">Login as a...</option>
                                     <option value="Buyer">Buyer</option>
                                     <option value="Seller">Seller</option>
                                 </select>
