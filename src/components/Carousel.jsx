@@ -9,12 +9,18 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import defaulImg from '../assets/Electronics/laptop.png';
+import defaulImg from '../assets/default.jpg';
 
 const Carousel = () => {
 
     const dispatch = useDispatch();
     const { products, status, error } = useSelector((state) => state.products);
+
+    //pagination
+    const [page, setPage] = useState(2);
+    useEffect(() => {
+        dispatch(fetchProducts({ page }));
+    }, [dispatch, page]);
 
     useEffect(() => {
         if (status === 'idle') {
@@ -82,7 +88,7 @@ const Carousel = () => {
                 {products.map((product, index) => (
                     <div className='show-img-detail-sup' key={uuidv4()}>
                         <Suspense fallback={<Loader />}>                                                   
-                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={index} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} salePrice={product.sellPrice} />
+                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} salePrice={product.sellPrice} />
                         </Suspense>
                     </div>
                 ))}

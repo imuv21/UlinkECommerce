@@ -15,10 +15,11 @@ const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-            serializableCheck: false, // Disable serializable check for the persisting feature
+            serializableCheck: false, 
         }),
 });
 
 const persistor = persistStore(store);
 
 export { store, persistor };
+

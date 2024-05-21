@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Slider } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../Redux/productSlice';
-import defaulImg from '../assets/Electronics/laptop.png';
+import defaulImg from '../assets/default.jpg';
 
 const FilterPage = () => {
 
@@ -18,8 +18,6 @@ const FilterPage = () => {
     const handlePageChange = (newPage) => {
         setPage(newPage);
     };
-
-
 
 
 

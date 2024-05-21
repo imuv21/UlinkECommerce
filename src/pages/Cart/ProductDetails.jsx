@@ -8,28 +8,34 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import proDetail from '../../assets/proDetail.png';
 import boxx from '../../assets/boxx.png';
 import './cart.css';
+import defaulImg from '../../assets/default.jpg';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductDetail } from '../Redux/productDetailSlice';
 import { useParams } from 'react-router-dom';
+
 import { Helmet } from 'react-helmet-async';
-import { useUserType } from '../../components/context/CartContext';
 import InfoIcon from '@mui/icons-material/Info';
 
 const ProductDetails = () => {
 
-    const { userType } = useUserType();
 
-
-    const { index } = useParams();
-    const [product, setProduct] = useState(null);
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const { product, status, error } = useSelector((state) => state.productDetail);
     useEffect(() => {
-        const savedSingleFormData = JSON.parse(localStorage.getItem('singleFormData')) || [];
-        const selectedProduct = savedSingleFormData[parseInt(index)];
-        if (selectedProduct) {
-            setProduct({
-                ...selectedProduct,
-                images: selectedProduct.images || []
-            });
+        if (status === 'idle') {
+            dispatch(fetchProductDetail(id));
         }
-    }, [index]);
+    }, [id, status, dispatch]);
+    if (status === 'loading') {
+        return <Loader />;
+    }
+    if (status === 'failed') {
+        return <div>Error: {error}</div>;
+    }
+    if (!product) {
+        return null;
+    }
 
 
     const [cart, setCart] = useState([]);
@@ -52,8 +58,6 @@ const ProductDetails = () => {
         localStorage.setItem('cart', JSON.stringify(newCart));
         setCartText(newCart.length);
     };
-
-
 
     //accordion-panel
     const [activeIndex, setActiveIndex] = useState(null);
@@ -95,7 +99,6 @@ const ProductDetails = () => {
             setUnitp(product.unitPrice);
         }
     }, [product]);
-
     useEffect(() => {
         if (salep && unitp) {
             const discount = ((unitp - salep) / unitp) * 100;
@@ -106,11 +109,9 @@ const ProductDetails = () => {
             setTotalPrice(Tprice);
         }
     }, [salep, unitp, value]);
-
     const handleImageClick = (image) => {
         setSelectedImage(image);
     };
-
 
     //bullet-points
     const renderBulletPoints = (bulletPoints) => {
@@ -123,7 +124,6 @@ const ProductDetails = () => {
             </ul>
         );
     };
-
 
 
     return (
@@ -144,20 +144,20 @@ const ProductDetails = () => {
                                     <img src={selectedImage} alt="Big Image" />
                                 </div>
                                 <div className="flex" style={{ gap: '10px' }}>
-                                    <div className="small-image" onClick={() => handleImageClick(product.images[0].url)}>
-                                        {product.images[0] && <img src={product.images[0].url} alt="Img1" />}
+                                    <div className="small-image" onClick={() => handleImageClick(product.images[0].imageUrl)}>
+                                        <img src={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} alt={product.productName} />
                                     </div>
                                     <div className="small-image" onClick={() => handleImageClick(product.images[1].url)}>
-                                        {product.images[1] && <img src={product.images[1].url} alt="Img2" />}
+                                        <img src={product.images && product.images.length > 0 ? product.images[1].imageUrl : defaulImg} alt={product.productName} />
                                     </div>
                                     <div className="small-image" onClick={() => handleImageClick(product.images[2].url)}>
-                                        {product.images[2] && <img src={product.images[2].url} alt="Img3" />}
+                                        <img src={product.images && product.images.length > 0 ? product.images[1].imageUrl : defaulImg} alt={product.productName} />
                                     </div>
                                     <div className="small-image" onClick={() => handleImageClick(product.images[3].url)}>
-                                        {product.images[3] && <img src={product.images[3].url} alt="Img4" />}
+                                        <img src={product.images[3].url} alt={product.productName} />
                                     </div>
                                     <div className="small-image" onClick={() => handleImageClick(product.images[4].url)}>
-                                        {product.images[4] && <img src={product.images[4].url} alt="Img5" />}
+                                        <img src={product.images[4].url} alt={product.productName} />
                                     </div>
                                 </div>
                             </div>
@@ -225,7 +225,7 @@ const ProductDetails = () => {
                                 </div>
 
                                 <div className="flexcol wh" style={{ gap: '10px' }}>
-                                    {userType === 'seller' && (<div className="descrip2 flex" style={{gap:'10px'}}><InfoIcon style={{color: 'gray'}} />To purchase products, please log in using your Buyer account.</div>)}
+                                    {userType === 'seller' && (<div className="descrip2 flex" style={{ gap: '10px' }}><InfoIcon style={{ color: 'gray' }} />To purchase products, please log in using your Buyer account.</div>)}
                                     {userType === 'buyer' && (
                                         <Fragment>
                                             <button className='btn2 addtocart flex' onClick={addToCart}><AddShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Add to cart</div></button>

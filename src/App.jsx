@@ -88,7 +88,7 @@ function App() {
             <Route path='/forgot-password' element={<ForgotPassword />} />
             <Route path='/reset-password' element={<ResetPassword />} />
             <Route path='/guidelines' element={<Guidelines />} />
-            <Route path='/product-details/:index' element={<ProductDetails />} />
+            <Route path='/product-details/:id' element={<ProductDetails />} />
             <Route path='/search-results' element={<FilterPage />} />
             <Route path='/category-pages/:category' element={<CategoryPages />} />
 
