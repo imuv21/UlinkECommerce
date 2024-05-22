@@ -15,9 +15,6 @@ const Otp = () => {
     const { status, error, success } = useSelector((state) => state.otp);
     const signupData = useSelector((state) => state.auth.signupData);
 
-
-    
-
     // Focus management
     const otpInputs = useRef([]);
     const focusNextInput = currentIndex => {
@@ -25,7 +22,6 @@ const Otp = () => {
             otpInputs.current[currentIndex + 1].focus();
         }
     };
-
 
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
     const handleInputChange = (index, newValue) => {
@@ -118,7 +114,7 @@ const Otp = () => {
                 <div className="signupcont">
                     <div className='flexcol cover'>
                         <div className="heading tcenter">Verify your email</div>
-                        <div className="heading2 tcenter">We have sent the OTP to example@gmail.com <br />Enter the OTP to verify your email.</div>
+                        <div className="heading2 tcenter">We have sent the OTP to {signupData.email} <br />Enter the OTP to verify your email.</div>
                         <div className="flex gap">
 
                             {otpDigits.map((digit, index) => (

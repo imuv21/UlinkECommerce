@@ -334,6 +334,12 @@ button:focus {
   gap: 0px;
 }
 
+.home-alt3{
+  padding: 60px 80px;
+  gap: 20px;
+  align-items: start;
+}
+
 
 
 /* product card */

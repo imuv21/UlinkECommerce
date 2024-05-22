@@ -4,8 +4,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Loader from './components/Loader/Loader';
 import Layout from './components/Layout';
 
-
-
 //buyer dashboard
 const BuyerDashboard = lazy(() => import('./pages/BuyerDashboard/BuyerDashboard'));
 const BuyerMessage = lazy(() => import('./pages/BuyerDashboard/BuyerMassage/BuyerMessage'));
@@ -19,7 +17,6 @@ const ReviewConfirm = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/Re
 const RfqDetail = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/RfqDetail/RfqDetail'));
 const OrderPage = lazy(() => import('./pages/BuyerDashboard/OrderPage/OrderPage'));
 const ViewDetail = lazy(() => import('./pages/BuyerDashboard/OrderPage/ViewDetail/ViewDetail'));
-
 
 //seller dashboard
 const SellerForm = lazy(() => import('./pages/SellerForm'));
@@ -41,7 +38,6 @@ const UploadProducts = lazy(() => import('./components/SellerDashboard/UploadPro
 const EditProducts = lazy(() => import('./components/SellerDashboard/EditProducts'));
 const ArchiveUploads = lazy(() => import('./components/SellerDashboard/ArchiveUploads'));
 
-
 //Both seller and buyer
 const Profile = lazy(() => import('./pages/BuyerSeller/Profile'));
 const UpdateEmail = lazy(() => import('./pages/BuyerSeller/UpdateEmail'));
@@ -50,7 +46,6 @@ const UpdateNumber = lazy(() => import('./pages/BuyerSeller/UpdateNumber'));
 const OtpNumber = lazy(() => import('./pages/BuyerSeller/OtpNumber'));
 const OtpPassword = lazy(() => import('./pages/BuyerSeller/OtpPassword'));
 const UpdatePassword = lazy(() => import('./pages/BuyerSeller/UpdatePassword'));
-
 
 //public
 const Home = lazy(() => import("./pages/Home"));
@@ -64,7 +59,9 @@ const Checkout = lazy(() => import('./pages/Cart/Checkout'));
 const Cart = lazy(() => import('./pages/Cart/Cart'));
 const FilterPage = lazy(() => import('./pages/FilterPage'));
 const CategoryPages = lazy(() => import('./pages/CategoryPages'));
-
+const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const PolicyComponent = lazy(() => import('./pages/PolicyComponent'));
 
 //Other
 const Image = lazy(() => import('./components/Image'));
@@ -91,6 +88,9 @@ function App() {
             <Route path='/product-details/:id' element={<ProductDetails />} />
             <Route path='/search-results' element={<FilterPage />} />
             <Route path='/category-pages/:category' element={<CategoryPages />} />
+            <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
+            <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+            <Route path='/return-policy' element={<PolicyComponent />} />
 
 
             {/* Seller dashboard */}

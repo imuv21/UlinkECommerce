@@ -122,10 +122,10 @@ const Footer = () => {
           <div className="ffone">
             <Link to="/privacy-policy">Privacy policy</Link>
             <Link to="/terms-and-conditions">Terms and Conditions</Link>
-            <Link to="/return-and-refund-policy">Return and Refund policy</Link>
+            <Link to="/return-policy">Return and Refund policy</Link>
           </div>
           <div className="fftwo">
-            <Link>© 2024 ulinkit.com. All rights reserved. Ulink outsourcing - Delhi, Uttam Nagar, Building 9W, 2nd floor</Link>
+            <Link>© 2024 ulinkit.com. All rights reserved. U-Link outsourcing pvt. ltd. - Delhi, Uttam Nagar, Milap Nagar, School Road</Link>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { Fragment, lazy, Suspense, useEffect, useState } from 'react';
+import React, { Fragment, lazy, Suspense } from 'react';
 import Loader from '../components/Loader/Loader';
 import Banner1  from '../assets/jpeg/water.png';
 import DiscountCoupne from '../assets/jpeg/camera.png';
@@ -11,32 +11,6 @@ const Carousel = lazy(() => import('../components/Carousel'));
 const CategorySection = lazy(() => import('../components/CategorySection'));
 
 const Home = () => {
-
-  // Data coming from backend
-  // const [userData, setUserData] = useState(null);
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:8000/api/v1/user/loggeduser', {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           Accept: 'application/json'
-  //         }
-  //       });
-  //       const user = response.data;
-  //       setUserData(user);
-  //       localStorage.setItem('loggedUser', JSON.stringify(user));
-
-  //     } catch (error) {
-  //       console.error('Error fetching user data:', error);
-  //     }
-  //   };
-  //   fetchUserData();
-  // }, []);
-
-
-  
 
   return (
     <Fragment>
