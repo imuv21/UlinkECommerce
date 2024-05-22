@@ -10,6 +10,7 @@ import boxx from '../../assets/boxx.png';
 import './cart.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductDetail } from '../../Redux/productDetailSlice';
+import { addToCart } from '../../Redux/cartSlice';
 import { Helmet } from 'react-helmet-async';
 import InfoIcon from '@mui/icons-material/Info';
 import Loader from '../../components/Loader/Loader';
@@ -33,33 +34,25 @@ const ProductDetails = () => {
     }, [dispatch, id]);
 
 
-
-
-    const [cart, setCart] = useState([]);
-    const [cartText, setCartText] = useState(0);
-    const addToCart = () => {
+    // const [cart, setCart] = useState([]);
+    // const [cartText, setCartText] = useState(0);
+    const cartHandler = () => {
         if (!product) return;
-        const savedCart = JSON.parse(localStorage.getItem('cart'));
-        const existingCart = Array.isArray(savedCart) ? savedCart : [];
-        const existingProductIndex = existingCart.findIndex(item => item.product.sku === product.sku);
-        const newCart = [...existingCart];
-        if (existingProductIndex !== -1) {
-            newCart[existingProductIndex].quantity += parseInt(value);
-        } else {
-            newCart.push({
-                product: product,
-                quantity: parseInt(value)
-            });
-        }
-        setCart(newCart);
-        localStorage.setItem('cart', JSON.stringify(newCart));
-        setCartText(newCart.length);
-    };
-
-    //accordion-panel
-    const [activeIndex, setActiveIndex] = useState(null);
-    const toggleProductAccordion = (index) => {
-        setActiveIndex(activeIndex === index ? null : index);
+        dispatch(addToCart({ productId: id, quantity: value }));
+        alert(`${value} items added to cart successfully!`);
+        // const existingCart = Array.isArray(savedCart) ? savedCart : [];
+        // const existingProductIndex = existingCart.findIndex(item => item.product.sku === product.sku);
+        // const newCart = [...existingCart];
+        // if (existingProductIndex !== -1) {
+        //     newCart[existingProductIndex].quantity += parseInt(value);
+        // } else {
+        //     newCart.push({
+        //         product: product,
+        //         quantity: parseInt(value)
+        //     });
+        // }
+        // setCart(newCart);
+        // setCartText(newCart.length);
     };
 
     //plus-minus
@@ -77,7 +70,13 @@ const ProductDetails = () => {
     };
 
 
-    //img-change-slider
+    //accordion-panel
+    const [activeIndex, setActiveIndex] = useState(null);
+    const toggleProductAccordion = (index) => {
+        setActiveIndex(activeIndex === index ? null : index);
+    };
+
+    //img-change-slider moq discount
     const [selectedImage, setSelectedImage] = useState(null);
     const [salep, setSalep] = useState();
     const [unitp, setUnitp] = useState();
@@ -256,7 +255,7 @@ const ProductDetails = () => {
                                 {isAuthenticated && user.role === 'Seller' && (<div className="descrip2 flex" style={{ gap: '10px' }}><InfoIcon style={{ color: 'gray' }} />To purchase products, please log in using your Buyer account.</div>)}
                                 {isAuthenticated && user.role === 'Buyer' && (
                                     <Fragment>
-                                        <button className='btn2 addtocart flex' onClick={addToCart}><AddShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Add to cart</div></button>
+                                        <button className='btn2 addtocart flex' onClick={cartHandler}><AddShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Add to cart</div></button>
                                         <button className='btn addtocart flex'><div className="heading2">Negotiate with seller</div></button>
                                     </Fragment>
                                 )}
@@ -288,12 +287,12 @@ const ProductDetails = () => {
                         <div className="sel-box" style={{ gap: '20px' }}>
                             <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>
                                 <div className="heading3">Seller information</div>
-                                <div className="flex wh" style={{ justifyContent: 'space-between', }}>
+                                {/* <div className="flex wh" style={{ justifyContent: 'space-between', }}>
                                     <div className="descrip2">{product.seller.name}</div>
                                     {product.seller.isVerified ? (<div className="descrip warning-btn2 flex" style={{ color: 'green' }}><VerifiedIcon style={{ width: '15px' }} />Verified</div>)
                                         : (<div className="descrip warning-btn2 flex" style={{ color: 'orange' }}><NewReleasesIcon style={{ width: '15px' }} />Unverified</div>)}
                                     <div className="descrip2">{product.seller.countryOfoperation}</div>
-                                </div>
+                                </div> */}
                                 <div className="flex wh">
                                     <a className='hoverr wh'>More from this seller</a>
                                 </div>

@@ -179,7 +179,7 @@ const SellerHome = () => {
             </Helmet>
 
             {isAuthenticated && (
-                <div className="heading">Hi {user.name}, Welcome to Ulinkit!</div>
+                <div className="heading">Hi {user.firstname}, Welcome to Ulinkit!</div>
             )}
 
             <div className="flex seller-home">
@@ -263,7 +263,7 @@ const SellerHome = () => {
                             </div>
                             <div className="flexcol" style={{ alignItems: 'start', width: '100%' }}>
                                 {isAuthenticated && (
-                                    <div className="heading3 name">{user.name}</div>
+                                    <div className="heading3 name">{user.firstname} {user.lastname}</div>
                                 )}
                                 <div className="descrip warning-btn">Pending Verification</div>
                             </div>

@@ -61,15 +61,11 @@ const Signup = () => {
             if (success) {
                 dispatch(signupSuccess({ signupData: updatedUserData, email, message }));
                 alert(`Signup successful. ${message}`);
-                console.log(response.data);
-                console.log(updatedUserData);
                 navigate('/verify-email');
             }
-        } catch (registerError) {
-            const registerErrorMessage = registerError.response ? registerError.response.data.message : registerError.message;
-            dispatch(signupFailure({ message: registerErrorMessage }));
-            alert(`Signup failed: ${registerErrorMessage}, Email: ${formData.email}`);
-            console.log(`Signup failed: ${registerErrorMessage}, Email: ${formData.email}`);
+        } catch (error) {
+            dispatch(signupFailure({ message: error.response.data }));
+            alert(`Signup failed: ${error.response.data}, Email: ${formData.email}`);
         }
     };
     const handleChange = (e) => {

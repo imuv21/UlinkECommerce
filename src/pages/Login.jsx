@@ -40,8 +40,8 @@ const Login = () => {
 
         try {
             const response = await axios.post(`${BASE_URL}/Login`, updatedLoggedUser);
-            const { token, message, status, name, email, username, country, role } = response.data;
-            const user = { name, email, username, country, role };
+            const { firstname, lastname, token, message, status, useraddress, country, countryOfoperation, currency, currencySymbol, role } = response.data;
+            const user = { firstname, lastname, useraddress, countryOfoperation, currency, currencySymbol, country, role };
             dispatch(loginSuccess({ token, message, user }));
             alert(`${status} : ${message}`);
             navigate('/');

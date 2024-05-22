@@ -7,10 +7,12 @@ import ListIcon from '@mui/icons-material/List';
 import SearchIcon from '@mui/icons-material/Search';
 import Drawer from '@mui/material/Drawer';
 import { useCart } from '../context/CartContext';
-import axios from 'axios';
 import logo from '../../assets/logo2.png';
 import ReactFlagsSelect from "react-flags-select";
-import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../Redux/AuthReducer';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 import HomeIcon from '@mui/icons-material/Home';
 import AllInboxIcon from '@mui/icons-material/AllInbox';
@@ -29,11 +31,12 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 
 const Header = () => {
 
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const token = useSelector((state) => state.auth.token);
 
   const [selected, setSelected] = useState("IN");
-
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -48,11 +51,6 @@ const Header = () => {
   const handleClickTwo = () => {
     setIsClickedTwo(prevState => !prevState);
   };
-
-
-
-
-
 
   const navigate = useNavigate();
   const tocart = () => {
@@ -94,27 +92,26 @@ const Header = () => {
     justifyContent: ' center',
   };
 
-
   //logout
   const handleLogout = async () => {
-
     try {
-      const response = await axios.post('http://localhost:8000/api/v1/user/logout', {
+      const response = await axios.post(`${BASE_URL}/logout`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
           Accept: 'application/json'
         }
       });
-      const message = response.message;
-      alert(message);
+
+      if (response.status === 200) {
+        alert(response.data); 
+        dispatch(logout());
+      }
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      alert(error);
     }
-    localStorage.removeItem('token');
-    localStorage.removeItem('loggedUser');
-    localStorage.removeItem('userData');
-    localStorage.removeItem('sellerData');
   };
+
+
 
 
   return (
@@ -144,7 +141,7 @@ const Header = () => {
         <div className="flex head-start">
 
           {isAuthenticated ? (
-            <div className='heading2' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}>Hi {user.name} </div>
+            <div className='heading2' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}>Hi {user.firstname} </div>
           ) : (
             <div className={`icon-container ${isClickedTwo ? 'clicked' : ''}`} onClick={handleClickTwo}>
               <div className="flex" style={{ gap: '10px' }}>
@@ -173,7 +170,7 @@ const Header = () => {
                   <div className='popupbox'>
 
                     <div className="username">
-                      {user.name}
+                      {user.firstname} {user.lastname}
                     </div>
 
                     <div className="warning-btn3">{user.role === 'Buyer' ? 'Verify Your Mobile' : 'Unverified Seller'}</div>

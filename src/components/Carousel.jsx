@@ -17,7 +17,7 @@ const Carousel = () => {
     const { products, status, error } = useSelector((state) => state.products);
 
     //pagination
-    const [page, setPage] = useState(2);
+    const [page, setPage] = useState(0);
     useEffect(() => {
         dispatch(fetchProducts({ page }));
     }, [dispatch, page]);

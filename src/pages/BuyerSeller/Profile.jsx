@@ -5,8 +5,13 @@ import KeyIcon from '@mui/icons-material/Key';
 import { Link } from 'react-router-dom';
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Profile = () => {
+
+    const user = useSelector((state) => state.auth.user);
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
     return (
         <div className="flexcol wh product-detail">
             <Helmet>
@@ -15,49 +20,52 @@ const Profile = () => {
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading5">My Profile</div> <Link to="/seller-dashboard/seller-home" className='heading3'>Back</Link>
             </div>
-            <div className="procont">
-                <div className="profile-sel-box">
-                    <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><AccountCircleIcon /> <div className="heading3">My Profile</div></div>
-                    <div className="flex" style={{ gap: '20px', justifyContent: 'start', width: '30%' }}>
-                        <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
-                            <div className='heading2'>Name</div>
-                            <div className='heading2'>Whatsapp</div>
-                            <div className='heading2'>Language Preference</div>
-                        </div>
-                        <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
-                            <div className="heading2">John Snow</div>
-                            <div className='heading2'>+91 1534534534523</div>
-                            <div className='heading2'>English</div>
-                        </div>
-                    </div>
-                    <div className="flex wh" style={{ justifyContent: 'start' }}>
-                        <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }}>Edit</div>
-                    </div>
-                </div>
 
-                <div className="profile-sel-box">
-                    <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><KeyIcon /> <div className="heading3">Security</div></div>
-                    <div className="flex" style={{ gap: '20px', justifyContent: 'start', width: '30%' }}>
-                        <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
-                            <div className='heading2'>Email address</div>
-                            <div className='heading2'>Mobile number</div>
+            {isAuthenticated && (
+                <div className="procont">
+                    <div className="profile-sel-box">
+                        <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><AccountCircleIcon /> <div className="heading3">My Profile</div></div>
+                        <div className="flex" style={{ gap: '20px', justifyContent: 'start', width: '30%' }}>
+                            <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
+                                <div className='heading2'>Name</div>
+                                <div className='heading2'>Whatsapp</div>
+                                <div className='heading2'>Language Preference</div>
+                            </div>
+                            <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
+                                <div className="heading2">{user.firstname} {user.lastname}</div>
+                                <div className='heading2'>+91 1534534534523</div>
+                                <div className='heading2'>English</div>
+                            </div>
                         </div>
-                        <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
-                            <div className="flex unupublished" style={{ gap: '10px' }}>
-                                <div className="heading2">imuv21@gmail.com</div> <VerifiedIcon style={{color: 'rgb(0, 190, 0)'}} />
-                            </div>
-                            <div className="flex unupublished" style={{ gap: '10px' }}>
-                                <div className='heading2'>+91 1534534534523</div> <NewReleasesIcon style={{color: 'rgb(255, 97, 73)'}} />
-                            </div>
+                        <div className="flex wh" style={{ justifyContent: 'start' }}>
+                            <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }}>Edit</div>
                         </div>
                     </div>
-                    <div className="flex wh" style={{ justifyContent: 'start', gap: '15px' }}>
-                        <Link to={'/update-number'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update number</Link>
-                        <Link to={'/update-email'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update email</Link>
-                        <Link to={'/verify-update-password'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update password</Link>
+
+                    <div className="profile-sel-box">
+                        <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><KeyIcon /> <div className="heading3">Security</div></div>
+                        <div className="flex" style={{ gap: '20px', justifyContent: 'start', width: '30%' }}>
+                            <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
+                                <div className='heading2'>Email address</div>
+                                <div className='heading2'>Mobile number</div>
+                            </div>
+                            <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
+                                <div className="flex unupublished" style={{ gap: '10px' }}>
+                                    <div className="heading2">imuv21@gmail.com</div> <VerifiedIcon style={{ color: 'rgb(0, 190, 0)' }} />
+                                </div>
+                                <div className="flex unupublished" style={{ gap: '10px' }}>
+                                    <div className='heading2'>+91 1534534534523</div> <NewReleasesIcon style={{ color: 'rgb(255, 97, 73)' }} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex wh" style={{ justifyContent: 'start', gap: '15px' }}>
+                            <Link to={'/update-number'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update number</Link>
+                            <Link to={'/update-email'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update email</Link>
+                            <Link to={'/verify-update-password'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update password</Link>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
     )
 }

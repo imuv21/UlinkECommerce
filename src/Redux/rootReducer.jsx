@@ -6,6 +6,7 @@ import addProductSlice from './addProductSlice';
 import otpReducer from './otpSlice';
 import sellerReducer from './sellerSlice';
 import productDetailSlice from './productDetailSlice';
+import cartReducer from './cartSlice';
 
 const rootReducer = combineReducers({
   auth: AuthReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   seller: sellerReducer,
   addproduct: addProductSlice,
   productDetail: productDetailSlice,
+  cart: cartReducer,
 });
 
 export default rootReducer;
