@@ -76,8 +76,8 @@ const Cart = () => {
                       {item.itemName}
                     </div>
                     <div className="flex" style={{ gap: '15px' }}>
-                      <span className='descrip2' style={{ textDecoration: 'line-through' }}>AED {item.product.unitPrice}</span>
-                      <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{`${(((item.product.unitPrice - item.product.salePrice) / item.product.unitPrice) * 100).toFixed(0)}% OFF`}</span>
+                      <span className='descrip2' style={{ textDecoration: 'line-through' }}>AED {item.unitPrice}</span>
+                      <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{`${(((item.unitPrice - item.salePrice) / item.unitPrice) * 100).toFixed(0)}% OFF`}</span>
                       <span>AED</span><span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbol}{item.itemPrice.toFixed(2)}</span>
                     </div>
                     <div className="flexcol-start" style={{ gap: '3px' }}>

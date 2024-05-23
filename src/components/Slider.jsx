@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { slider } from './Schemas/images';
 
 const Slider = () => {
 
@@ -6,7 +7,6 @@ const Slider = () => {
   const [index, setIndex] = useState(0);
   const timeoutRef = useRef(null);
   const isPaused = useRef(false);
-  const [imagess, setImagess] = useState([]);
 
   const resetTimeout = () => {
     if (timeoutRef.current) {
@@ -29,25 +29,10 @@ const Slider = () => {
 
   const next = () => {
     setIndex((prevIndex) =>
-      prevIndex === Object.keys(imagess).length - 1 ? 0 : prevIndex + 1
+      prevIndex === slider.length - 1 ? 0 : prevIndex + 1
     );
   }
 
-  
-  
-
-  useEffect(() => {
-    const importImages = async () => {
-      const importedImages = {};
-      const imageContext = import.meta.glob('../assets/jpeg/*.{png,jpg,jpeg,svg,webp}');
-      for (const key in imageContext) {
-        const imageName = key.replace('../assets/jpeg/', '');
-        importedImages[imageName] = (await imageContext[key]()).default;
-      }
-      setImagess(importedImages);
-    };
-    importImages();
-  }, []);
 
   useEffect(() => {
     if (!isPaused.current) {
@@ -66,18 +51,18 @@ const Slider = () => {
   return (
     <div className="slideshow">
       <div className="slideshowSlider" style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }} >
-        {Object.keys(imagess).map((imageName, index) => (
+        {slider.map((imageName, index) => (
           <div className="slide" onMouseEnter={pause} onMouseLeave={play} key={index} style={{ backgroundColor: 'var(--CodeThree)' }} >
             <div className="slideflex">
               <div className="sftwo">
-                <img src={imagess[imageName]} alt={imageName} />
+                <img src={imageName} alt={`Slide ${index+1}`} />
               </div>
             </div>
           </div>
         ))}
       </div>
       <div className="slideshowDots">
-         {Object.keys(imagess).map((_, idx) => (
+         {slider.map((_, idx) => (
                 <div key={idx} className={`slideshowDot${index === idx ? " active1" : ""}`} onClick={() => { setIndex(idx); }}></div>
           ))}
       </div>

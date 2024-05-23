@@ -8,6 +8,7 @@ import sellerReducer from './sellerSlice';
 import productDetailSlice from './productDetailSlice';
 import cartReducer from './cartSlice';
 
+
 const rootReducer = combineReducers({
   auth: AuthReducer,
   products: productReducer,

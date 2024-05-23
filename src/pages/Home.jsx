@@ -1,9 +1,6 @@
 import React, { Fragment, lazy, Suspense } from 'react';
+import { slider } from '../components/Schemas/images';
 import Loader from '../components/Loader/Loader';
-import Banner1  from '../assets/jpeg/water.png';
-import DiscountCoupne from '../assets/jpeg/camera.png';
-import Banners from '../assets/jpeg/7.png';
-import summer from '../assets/jpeg/summer.png';
 
 const Slider = lazy(() => import('../components/Slider'));
 const InfSlider = lazy(() => import('../components/InfSlider'));
@@ -11,6 +8,11 @@ const Carousel = lazy(() => import('../components/Carousel'));
 const CategorySection = lazy(() => import('../components/CategorySection'));
 
 const Home = () => {
+
+  const Banner1 = slider[12];
+  const DiscountCoupne = slider[8];
+  const Banners = slider[7];
+  const summer = slider[11];
 
   return (
     <Fragment>
@@ -24,7 +26,6 @@ const Home = () => {
           </div>
           <div className="heading3 wh">Top picks of the month (29 items)</div>
           <Carousel />
-          
           <div className="heading3 wh">Best deals (23 items)</div>
           <Carousel />
           <div className='discount-pages'>

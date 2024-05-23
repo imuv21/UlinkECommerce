@@ -7,11 +7,11 @@ import ListIcon from '@mui/icons-material/List';
 import SearchIcon from '@mui/icons-material/Search';
 import Drawer from '@mui/material/Drawer';
 import { useCart } from '../context/CartContext';
-import logo from '../../assets/logo2.png';
 import ReactFlagsSelect from "react-flags-select";
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../Redux/AuthReducer';
+import { urls } from '../Schemas/images';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 import HomeIcon from '@mui/icons-material/Home';
@@ -35,6 +35,7 @@ const Header = () => {
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const token = useSelector((state) => state.auth.token);
+
 
   const [selected, setSelected] = useState("IN");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -104,6 +105,7 @@ const Header = () => {
 
       if (response.status === 200) {
         alert(response.data); 
+        localStorage.clear();
         dispatch(logout());
       }
     } catch (error) {
@@ -111,6 +113,9 @@ const Header = () => {
     }
   };
 
+
+  //images
+  const logo = urls[0];
 
 
 
