@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { slider } from './Schemas/images';
+import { urls, slider } from './Schemas/images';
+import LazyLoad from 'react-lazyload';
 
 const Slider = () => {
 
@@ -33,7 +34,6 @@ const Slider = () => {
     );
   }
 
-
   useEffect(() => {
     if (!isPaused.current) {
       resetTimeout();
@@ -46,7 +46,7 @@ const Slider = () => {
     };
   }, [index, isPaused]);
 
-
+  const defaultimg = urls[1];
 
   return (
     <div className="slideshow">
@@ -54,17 +54,17 @@ const Slider = () => {
         {slider.map((imageName, index) => (
           <div className="slide" onMouseEnter={pause} onMouseLeave={play} key={index} style={{ backgroundColor: 'var(--CodeThree)' }} >
             <div className="slideflex">
-              <div className="sftwo">
-                <img src={imageName} alt={`Slide ${index+1}`} />
-              </div>
+                <LazyLoad className="sftwo" offset={100} placeholder={<img src={defaultimg} alt="Loading..." />}>
+                  <img src={imageName} alt={`Slide ${index + 1}`} loading="lazy" />
+                </LazyLoad>
             </div>
           </div>
         ))}
       </div>
       <div className="slideshowDots">
-         {slider.map((_, idx) => (
-                <div key={idx} className={`slideshowDot${index === idx ? " active1" : ""}`} onClick={() => { setIndex(idx); }}></div>
-          ))}
+        {slider.map((_, idx) => (
+          <div key={idx} className={`slideshowDot${index === idx ? " active1" : ""}`} onClick={() => { setIndex(idx); }}></div>
+        ))}
       </div>
     </div>
   );

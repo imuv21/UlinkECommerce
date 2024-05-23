@@ -1,11 +1,9 @@
-import React, { Fragment, lazy, Suspense } from 'react';
+import React, { Fragment } from 'react';
 import { slider } from '../components/Schemas/images';
-import Loader from '../components/Loader/Loader';
-
-const Slider = lazy(() => import('../components/Slider'));
-const InfSlider = lazy(() => import('../components/InfSlider'));
-const Carousel = lazy(() => import('../components/Carousel'));
-const CategorySection = lazy(() => import('../components/CategorySection'));
+import Slider from '../components/Slider';
+import InfSlider from '../components/InfSlider';
+import CategorySection from '../components/CategorySection';
+import Carousel from '../components/Carousel';
 
 const Home = () => {
 
@@ -16,7 +14,7 @@ const Home = () => {
 
   return (
     <Fragment>
-      <Suspense fallback={<Loader />}>
+   
         <Slider />
         <div className="flexcol wh home">
           <div className="heading3 wh">Categories</div>
@@ -44,7 +42,7 @@ const Home = () => {
           <div className="heading3 wh">Top Brands</div>
           <InfSlider />
         </div>
-      </Suspense>
+    
     </Fragment>
   )
 }

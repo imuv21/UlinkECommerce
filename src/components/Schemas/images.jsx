@@ -2,7 +2,7 @@
 
 const urls = [
     "https://res.cloudinary.com/dey1tujp8/image/upload/v1716453212/Ulinkit/logo2_keirx0.png",
-    "https://www.example.com/image2.jpg",
+    "https://res.cloudinary.com/dey1tujp8/image/upload/v1716464881/Ulinkit/default_hgvhd5.jpg",
 ];
 
 const slider = [
