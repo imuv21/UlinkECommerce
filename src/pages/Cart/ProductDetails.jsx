@@ -111,7 +111,7 @@ const ProductDetails = () => {
 
     //bullet-points
     const renderBulletPoints = (bulletPoints) => {
-        const bulletPointArray = bulletPoints.split('.').filter(point => point.trim() !== '');
+        const bulletPointArray = bulletPoints.split('/').filter(point => point.trim() !== '');
         return (
             <ul className='bullet-points'>
                 {bulletPointArray.map((point, index) => (

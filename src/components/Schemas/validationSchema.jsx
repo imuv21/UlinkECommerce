@@ -47,14 +47,14 @@ export const addSingleSchema = yup.object().shape({
             }
         ),
 
-    cartonWgt: yup.number().typeError('Weight must be a number').positive('Weight must be a positive number').integer('Weight must be an integer').required('Weight is required'),
-    cartonWgtUnit: yup.string().required('Unit is required'),
-    cartonWdh: yup.number().typeError('Width must be a number').positive('Width must be a positive number').integer('Width must be an integer').required('Width is required'),
-    cartonWdhUnit: yup.string().required('Unit is required'),
-    cartonLgh: yup.number().typeError('Length must be a number').positive('Length must be a positive number').integer('Length must be an integer').required('Length is required'),
-    cartonLghUnit: yup.string().required('Unit is required'),
-    cartonHgt: yup.number().typeError('Height must be a number').positive('Height must be a positive number').integer('Height must be an integer').required('Height is required'),
-    cartonHgtUnit: yup.string().required('Unit is required'),
+    // cartonWgt: yup.number().typeError('Weight must be a number').positive('Weight must be a positive number').integer('Weight must be an integer').required('Weight is required'),
+    // cartonWgtUnit: yup.string().required('Unit is required'),
+    // cartonWdh: yup.number().typeError('Width must be a number').positive('Width must be a positive number').integer('Width must be an integer').required('Width is required'),
+    // cartonWdhUnit: yup.string().required('Unit is required'),
+    // cartonLgh: yup.number().typeError('Length must be a number').positive('Length must be a positive number').integer('Length must be an integer').required('Length is required'),
+    // cartonLghUnit: yup.string().required('Unit is required'),
+    // cartonHgt: yup.number().typeError('Height must be a number').positive('Height must be a positive number').integer('Height must be an integer').required('Height is required'),
+    // cartonHgtUnit: yup.string().required('Unit is required'),
 
 
     availableQuantity: yup.number().typeError('Quantity must be a number').positive('Quantity must be a positive number').integer('Quantity must be an integer').required('Quantity is required').min(1, "Minimum order quantity is 1"),
@@ -64,13 +64,13 @@ export const addSingleSchema = yup.object().shape({
     sizeUnit: yup.string().required('Unit is required'),
     avgLeadTime: yup.number().typeError('Lead time must be a number').positive('Lead time must be a positive number').integer('Lead time must be an integer').required('Lead time is required'),
     transportationMode: yup.string().required('Transportation mode is required'),
-    DimensionUnit: yup.string().required('Dimension unit is required'),
 
-    productWgt: yup.number().typeError('Weight must be a number').positive('Weight must be a positive number').integer('Weight must be an integer').required('Weight is required'),
-    productWgtUnit: yup.string().required('Unit is required'),
-    productWdh: yup.number().typeError('Width must be a number').positive('Width must be a positive number').integer('Width must be an integer').required('Width is required'),
-    productLgh: yup.number().typeError('Length must be a number').positive('Length must be a positive number').integer('Length must be an integer').required('Length is required'),
-    productHgt: yup.number().typeError('Height must be a number').positive('Height must be a positive number').integer('Height must be an integer').required('Height is required'),
+    // DimensionUnit: yup.string().required('Dimension unit is required'),
+    // productWgt: yup.number().typeError('Weight must be a number').positive('Weight must be a positive number').integer('Weight must be an integer').required('Weight is required'),
+    // productWgtUnit: yup.string().required('Unit is required'),
+    // productWdh: yup.number().typeError('Width must be a number').positive('Width must be a positive number').integer('Width must be an integer').required('Width is required'),
+    // productLgh: yup.number().typeError('Length must be a number').positive('Length must be a positive number').integer('Length must be an integer').required('Length is required'),
+    // productHgt: yup.number().typeError('Height must be a number').positive('Height must be a positive number').integer('Height must be an integer').required('Height is required'),
 
     temperature: yup.string().required('Temperature is required'),
     StockLocation: yup.string().required('Stock Location is required'),

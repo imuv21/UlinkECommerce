@@ -5,6 +5,9 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const initialState = {
     items: [],
+    totalAmount: 0,
+    currency: '',
+    currencySymbol: '',
     status: 'idle',
     error: null
 };
@@ -75,7 +78,10 @@ const cartSlice = createSlice({
             })
             .addCase(fetchCart.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.items = action.payload;
+                state.items = action.payload.cartItems;
+                state.totalAmount = action.payload.totalAmount;
+                state.currency = action.payload.currency;
+                state.currencySymbol = action.payload.currencySymbol;
             })
             .addCase(fetchCart.rejected, (state, action) => {
                 state.status = 'failed';

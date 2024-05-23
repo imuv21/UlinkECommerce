@@ -10,7 +10,7 @@ import { Helmet } from 'react-helmet-async';
 const Cart = () => {
 
   const dispatch = useDispatch();
-  const { items: cart, status, error } = useSelector((state) => state.cart);
+  const { items: cart, totalAmount, currencySymbol, status, error } = useSelector((state) => state.cart);
 
   useEffect(() => {
     dispatch(fetchCart());
@@ -24,43 +24,21 @@ const Cart = () => {
     return <div>Error: {error}</div>;
   }
 
-  const remove = (index) => {
-    const updatedCart = [...Object.values(cart)];
-    updatedCart.splice(index, 1);
-    setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
-  }
 
   //plus-minus
   const [value, setValue] = useState(1);
   const incrementValue = (index) => {
-    const updatedCart = { ...cart };
-    updatedCart[index].quantity += 1;
-    setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+ 
   };
 
   const decrementValue = (index) => {
-    const updatedCart = { ...cart };
-    const minOrderQuant = updatedCart[index].product.minOrderQuant;
-    updatedCart[index].quantity = Math.max(updatedCart[index].quantity - 1, minOrderQuant);
-    setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+   
   };
 
   const handleInputChange = (e, index) => {
-    const newValue = parseInt(e.target.value);
-    const updatedCart = { ...cart };
-    const minOrderQuant = updatedCart[index].product.minOrderQuant;
-    updatedCart[index].quantity = newValue >= minOrderQuant ? newValue : minOrderQuant;
-    setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+   
   };
 
-  const subtotal = cart.reduce((acc, item) => {
-    const productTotal = item.quantity * item.product.salePrice;
-    return acc + productTotal;
-  }, 0);
 
   const checkout = () => {
     window.location.href = '/checkout';
@@ -84,23 +62,23 @@ const Cart = () => {
       </div>
       <div className="cart_cont wh">
         <div className="cartcol_one" tabIndex={0} ref={scrollRef}>
-          {Object.keys(cart).length === 0 ? (
+        {cart.length === 0 ? (
             <p>Your cart is empty.</p>
           ) : (
             <Fragment>
-              {Object.values(cart).map((item, index) => (
+              {cart.map((item, index) => (
                 <div className='cart webdiv' key={index}>
                   <div className="cartImg">
-                    {item.images && item.images.length > 0 && <img src={item.images[0].url} alt={item.images[0].name} />}
+                    {/* {item.images && item.images.length > 0 && <img src={item.images[0].url} alt={item.images[0].name} />} */}
                   </div>
                   <div className="cartDetail">
                     <div className="heading2">
-                      {item.product.productName}
+                      {item.itemName}
                     </div>
                     <div className="flex" style={{ gap: '15px' }}>
                       <span className='descrip2' style={{ textDecoration: 'line-through' }}>AED {item.product.unitPrice}</span>
                       <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{`${(((item.product.unitPrice - item.product.salePrice) / item.product.unitPrice) * 100).toFixed(0)}% OFF`}</span>
-                      <span>AED</span><span style={{ fontWeight: 'bold', fontSize: '15px' }}>{item.product.salePrice}</span>
+                      <span>AED</span><span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbol}{item.itemPrice.toFixed(2)}</span>
                     </div>
                     <div className="flexcol-start" style={{ gap: '3px' }}>
                       <div className="descrip">Units per carton: {item.product.unitsPerCarton}</div>
