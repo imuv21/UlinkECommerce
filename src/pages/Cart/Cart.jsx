@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart } from '../../Redux/cartSlice';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -7,11 +9,20 @@ import { Helmet } from 'react-helmet-async';
 
 const Cart = () => {
 
-  const [cart, setCart] = useState({});
+  const dispatch = useDispatch();
+  const { items: cart, status, error } = useSelector((state) => state.cart);
+
   useEffect(() => {
-    const savedCart = JSON.parse(localStorage.getItem('cart')) || {};
-    setCart(savedCart);
-  }, []);
+    dispatch(fetchCart());
+  }, [dispatch]);
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
 
   const remove = (index) => {
     const updatedCart = [...Object.values(cart)];
@@ -46,8 +57,8 @@ const Cart = () => {
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
-  const subtotal = Object.keys(cart).reduce((acc, index) => {
-    const productTotal = cart[index].quantity * cart[index].product.salePrice;
+  const subtotal = cart.reduce((acc, item) => {
+    const productTotal = item.quantity * item.product.salePrice;
     return acc + productTotal;
   }, 0);
 

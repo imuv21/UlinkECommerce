@@ -1,5 +1,5 @@
 
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import "./BuyerDashboard.css";
 import { BsBox } from "react-icons/bs";
 import { RiMessage2Line } from "react-icons/ri";
@@ -11,16 +11,156 @@ import { PiUsersThreeLight } from "react-icons/pi";
 import { CiWallet } from "react-icons/ci";
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { FcDocument } from "react-icons/fc";
+import { RxCross2 } from "react-icons/rx";
+import { useNavigate } from "react-router-dom";
+import { AiOutlineProfile } from "react-icons/ai";
+
+
 
 const BuyerDashboard = () => {
+  const [inviteMore, setInviteMore] = useState(false);
+  const [userRole, setUserRole] = useState('')
+  const [sendEmail, setSendEmail] = useState('')
+  const [currentStep, setCurrentStep] = useState(1);
+  const steps = [
+    { id: 1, text: 'Register your account' },
+    { id: 2, text: 'Complete your business profile' },
+    { id: 3, text: 'Verify your email' },
+    { id: 4, text: 'Set up payment information' },
+  ];
+  const handleRadioChange = (stepId) => {
+    setCurrentStep(stepId);
+  };
+  const navigate = useNavigate()
+  const uploadDocument = () => {
+    navigate("/company-profile")
+  }
+  const CloseInviteUser = () => {
+    setInviteMore(false)
+  }
+  const inviteMoreUser = () => {
+    setInviteMore(true)
+  }
+  const handleUserRole = (e) => {
+    setUserRole(e.target.value)
+  }
+
+  //   Steps wise varification
+
+
   return (
     <Fragment>
       <Helmet>
         <title>Buyer Dashboard</title>
       </Helmet>
+      {/* invite usre */}
+      <div>
+        {inviteMore && (
+          <div className='background-Changer'>
+            <div className=" invite-more ">
+              <div className='card-info-bank invite-user '>
+                <div className='card-title invite-title'>
+                  <h3 className=" card-title-tittles">Invite User</h3>
+                </div>
+                <div className='card-title'>
+                  <RxCross2 className='cross-icon' onClick={CloseInviteUser} />
+                </div>
+              </div>
+              <div className=''> <p className='info-details invite-quote'>Use this section to invite members to your organisation. You can also set user permissions.</p></div>
+              <div className=' invite-email'>
+                <label >Enter Email</label><br></br>
+                <input type='email' name='cardemail' className='card-input-value width-input' placeholder='Enter email' value={sendEmail} onChange={(e) => setSendEmail(e.target.value)} />
+              </div>
+              <div className=' invite-email'>
+                <label >User Role*</label><br></br>
+                <div className='user-role-choose '>
+                  <input type='radio' name={userRole} onChange={handleUserRole} />
+                  <p className='paragraph-4'> Admin</p>
+                </div>
+                <p className='info-details invite-quotes'>Manage orders + buy items + manage roles and permissions</p>
+              </div>
+              <div className=' invite-email'>
+                <div className='user-role-choose '>
+                  <input type='radio' name={userRole} onChange={handleUserRole} />
+                  <p className='paragraph-4'> Superviser</p>
+                </div>
+                <p className='info-details invite-quotes'>Manage orders + buy items + manage roles and permissions</p>
+              </div>
+              <div className=' invite-email'>
+                <div className='user-role-choose '>
+                  <input type='radio' name={userRole} onChange={handleUserRole} />
+                  <p className='paragraph-4'>User</p>
+                </div>
+                <p className='info-details invite-quotes'>Manage orders + buy items + manage roles and permissions</p>
+                <button type='submit' className='clear-filter-btn space-between  send-email'>Send Email</button><br></br>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
       <div className="userDashboard">
         <h1 className="user-title">Hi, Vipin Kumar</h1>
         <p className="user-subtitle">Vipin Kumar</p>
+      </div>
+
+      {/* Upload Document */}
+      <div className="upload-document">
+        <h1 className="upload-document-title">Complete these steps to verify your business</h1>
+        <div className="document-container">
+
+          <div className="document-container-1">
+            <h1 className="upload-document-title">Upload business documents</h1>
+            <div className="upload-document-info">
+              <FcDocument className="doc-icons" />
+              <p>Provide your Personal Identification Document, Business Registration Document, and VAT Certificate</p>
+            </div>
+            <button className="uploadbtns" onClick={uploadDocument}>UPLOAD DOCUMENTS</button>
+          </div>
+          <div className="document-container-1">
+            <h1 className="upload-document-title">Invite members from your company</h1>
+            <div className="upload-document-info">
+              <PiUsersThreeLight className="doc-icons" />
+              <p>Provide your Personal Identification Document, Business Registration Document, and VAT Certificate</p>
+            </div>
+            <button className="uploadbtns" onClick={inviteMoreUser}>INVITE USER</button>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Steps Varification */}
+
+      <div className="upload-document step-varification-process">
+        <div className="document-container">
+          <div className="document-container-1">
+            <h4>Complete your business profile</h4>
+            <div className="steps">
+              <p>{`${currentStep}/${steps.length} steps completed`}</p>
+              <div className='fill-values'>
+                <div className="fill-value" style={{ width: `${(currentStep / steps.length) * 100}%` }}></div>
+              </div>
+            </div>
+            <div className="select-value">
+              {steps.map(step => (
+                <div key={step.id} className="radio-flex">
+                  <input
+                    type="radio"
+                    className="radio-size"
+                    checked={step.id === currentStep}
+                    onChange={() => handleRadioChange(step.id)}
+                  />
+                  <p className="varify-p">{step.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="document-container-1 document-container-2">
+            <AiOutlineProfile className="profile-icons-1"/>
+            <p className="bussiness-profile">Complete Your Bussiness Profile</p>
+            <button className="edit-detail-button bussines-profile-button">Bussiness Profile</button>
+          </div>
+        </div>
       </div>
       <div className="dashboard-containers">
         <Link to="/order-page">
@@ -88,19 +228,21 @@ const BuyerDashboard = () => {
             </div>
           </div>
         </Link>
-        <div className="dashboards">
-          <div className="order-contant">
-            <HiOutlineBuildingLibrary className="order-icon" />
-          </div>
-          <div className="containt-title">
-            <h4 className="orders-title">Company Profile</h4>
-            <div className="order-info">
-              <p className="order-infos">
-                View company information and submitted documentation
-              </p>
+        <Link to='/company-profile'>
+          <div className="dashboards">
+            <div className="order-contant">
+              <HiOutlineBuildingLibrary className="order-icon" />
+            </div>
+            <div className="containt-title">
+              <h4 className="orders-title">Company Profile</h4>
+              <div className="order-info">
+                <p className="order-infos">
+                  View company information and submitted documentation
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </Link>
         <Link to='/buyer-address'>
           <div className="dashboards">
             <div className="order-contant">
@@ -151,6 +293,5 @@ const BuyerDashboard = () => {
     </Fragment>
   );
 };
-
 export default BuyerDashboard;
 

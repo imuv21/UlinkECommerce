@@ -17,6 +17,7 @@ const ReviewConfirm = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/Re
 const RfqDetail = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/RfqDetail/RfqDetail'));
 const OrderPage = lazy(() => import('./pages/BuyerDashboard/OrderPage/OrderPage'));
 const ViewDetail = lazy(() => import('./pages/BuyerDashboard/OrderPage/ViewDetail/ViewDetail'));
+const CompanyProfile = lazy(() => import('./pages/BuyerDashboard/CompanyProfile/CompanyProfile'));
 
 //seller dashboard
 const SellerForm = lazy(() => import('./pages/SellerForm'));
@@ -146,6 +147,7 @@ function App() {
             <Route path='/view-detail' element={<ViewDetail />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/checkout' element={<Checkout />} />
+            <Route path='/company-profile' element={<CompanyProfile />} />
 
           </Routes>
         </Layout>
