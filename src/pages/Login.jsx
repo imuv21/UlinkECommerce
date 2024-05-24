@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../components/Schemas/validationSchema';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/logo2.png';
+import { urls } from '../components/Schemas/images';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Helmet } from 'react-helmet-async';
@@ -17,6 +17,9 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 const schema = yupResolver(loginSchema);
 
 const Login = () => {
+
+    //images
+    const logo = urls[0];
 
     //password hide and show
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -40,8 +43,8 @@ const Login = () => {
 
         try {
             const response = await axios.post(`${BASE_URL}/Login`, updatedLoggedUser);
-            const { firstname, lastname, token, message, status, useraddress, country, countryOfoperation, currency, currencySymbol, role, email, number } = response.data;
-            const user = { firstname, lastname, useraddress, countryOfoperation, currency, currencySymbol, country, role, email, number };
+            const { firstname, lastname, token, message, status, useraddress, country, countryOfoperation, whatsappnumber, currency, currencySymbol, role, email, number } = response.data;
+            const user = { firstname, lastname, useraddress, countryOfoperation, whatsappnumber, currency, currencySymbol, country, role, email, number };
             dispatch(loginSuccess({ token, message, user }));
             alert(`${status} : ${message}`);
             navigate('/');

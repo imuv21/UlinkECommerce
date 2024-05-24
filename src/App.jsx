@@ -21,6 +21,7 @@ const CompanyProfile = lazy(() => import('./pages/BuyerDashboard/CompanyProfile/
 
 //seller dashboard
 const SellerForm = lazy(() => import('./pages/SellerForm'));
+const NewBecomeASeller = lazy(() => import('./pages/NewBecomeASeller'));
 const BecomeASeller = lazy(() => import('./pages/BecomeASeller'));
 const CommissionStructure = lazy(() => import('./pages/CommissionStructure'));
 const Shipping = lazy(() => import('./components/SellerDashboard/Shipping'));
@@ -96,6 +97,7 @@ function App() {
 
             {/* Seller dashboard */}
             <Route path='/seller-form' element={<SellerForm />} />
+            <Route path='/seller-center' element={<NewBecomeASeller />} />
             <Route path='/become-a-seller' element={<BecomeASeller />} />
             <Route path='/commission-structure' element={<CommissionStructure />} />
             <Route path='/editsingle/:index' element={<EditSingle />} />

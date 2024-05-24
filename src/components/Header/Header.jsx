@@ -104,9 +104,11 @@ const Header = () => {
       });
 
       if (response.status === 200) {
-        alert(response.data); 
-        localStorage.clear();
-        dispatch(logout());
+        alert(response.data);
+        if(isAuthenticated && user.role === 'Seller'){
+          navigate('/seller-center');
+        } 
+        dispatch(logout()); 
       }
     } catch (error) {
       alert(error);
@@ -223,10 +225,10 @@ const Header = () => {
       <div className="sub-header">
         <div className="sup-header-option">
           <div className="sub-heading3">All Categories</div>
-          <div className="sub-heading2">Consumer Electronics</div>
+          {/* <div className="sub-heading2">Consumer Electronics</div>
           <div className="sub-heading2">Office & Stationery</div>
           <div className="sub-heading2">Food & Beverages</div>
-          <div className="sub-heading2">Personal Care</div>
+          <div className="sub-heading2">Personal Care</div> */}
         </div>
         <div className="sup-header-option">
           <div className="sub-header-option">

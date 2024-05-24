@@ -306,8 +306,6 @@ const AddSingle = () => {
                 {errors.productName && <div className='error'>{errors.productName?.message}</div>}
                 <Controller name="brandName" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.brandName || ''} onChange={handleChange} className="box flex" placeholder='Enter brand name' {...field} />} />
                 {errors.brandName && <div className='error'>{errors.brandName?.message}</div>}
-                <Controller name="keyFeatures" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.keyFeatures || ''} onChange={handleChange} className="box flex" placeholder='Enter key features' {...field} />} />
-                {errors.keyFeatures && <div className='error'>{errors.keyFeatures?.message}</div>}
                 <Controller name="keyWords" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.keyWords || ''} onChange={handleChange} className="box flex" placeholder="Enter keywords (separated by comma)..." {...field} />} />
                 {errors.keyWords && <div className='error'>{errors.keyWords?.message}</div>}
 
@@ -692,7 +690,6 @@ const AddSingle = () => {
                     </select>
                 )}
                 />
-                {errors.temperature && <div className='error'>{errors.temperature?.message}</div>}
 
                 <Controller name="imodelNum" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.imodelNum || ''} onChange={handleChange} className="box flex" placeholder='Enter item model number' {...field} />} />
 

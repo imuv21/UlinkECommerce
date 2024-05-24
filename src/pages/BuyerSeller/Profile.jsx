@@ -23,9 +23,10 @@ const Profile = () => {
 
             {isAuthenticated && (
                 <div className="procont">
+
                     <div className="profile-sel-box">
                         <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><AccountCircleIcon /> <div className="heading3">My Profile</div></div>
-                        <div className="flex" style={{ gap: '20px', justifyContent: 'start', width: '30%' }}>
+                        <div className="flex" style={{ gap: '50px', justifyContent: 'start', width: '30%' }}>
                             <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
                                 <div className='heading2'>Name</div>
                                 <div className='heading2'>Whatsapp</div>
@@ -33,7 +34,7 @@ const Profile = () => {
                             </div>
                             <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
                                 <div className="heading2">{user.firstname} {user.lastname}</div>
-                                <div className='heading2'>+91 1534534534523</div>
+                                <div className='heading2'>{user.whatsappnumber}</div>
                                 <div className='heading2'>English</div>
                             </div>
                         </div>
@@ -44,20 +45,17 @@ const Profile = () => {
 
                     <div className="profile-sel-box">
                         <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><KeyIcon /> <div className="heading3">Security</div></div>
-                        <div className="flex" style={{ gap: '20px', justifyContent: 'start', width: '30%' }}>
+                        <div className="flex" style={{ gap: '50px', justifyContent: 'start', width: '30%' }}>
                             <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
-                                <div className='heading2'>Email address</div>
-                                <div className='heading2'>Mobile number</div>
+                                <div className='heading2' style={{ whiteSpace: 'nowrap' }}>Email address</div>
+                                <div className='heading2' style={{ whiteSpace: 'nowrap' }}>Mobile number</div>
                             </div>
                             <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
-                                <div className="flex unupublished" style={{ gap: '10px' }}>
-                                    <div className="heading2">{user.email}</div> <VerifiedIcon style={{ color: 'rgb(0, 190, 0)' }} />
-                                </div>
-                                <div className="flex unupublished" style={{ gap: '10px' }}>
-                                    <div className='heading2'>{user.number}</div> <NewReleasesIcon style={{ color: 'rgb(255, 97, 73)' }} />
-                                </div>
+                                <div className="heading2 wh flex-start unupublished">{user.email} <VerifiedIcon style={{ color: 'rgb(0, 190, 0)' }} /></div>
+                                <div className='heading2 wh flex-start unupublished'>{user.number} <NewReleasesIcon style={{ color: 'rgb(255, 97, 73)' }} /></div>
                             </div>
                         </div>
+
                         <div className="flex wh" style={{ justifyContent: 'start', gap: '15px' }}>
                             <Link to={'/update-number'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update number</Link>
                             <Link to={'/update-email'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update email</Link>

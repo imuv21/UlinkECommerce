@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { sellerSchema } from '../components/Schemas/validationSchema';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import logo from '../assets/logo2.png';
+import { urls } from '../components/Schemas/images';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateSellerDetails } from '../Redux/sellerSlice';
@@ -16,6 +16,9 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 const schema = yupResolver(sellerSchema);
 
 const SellerForm = () => {
+
+    //images
+    const logo = urls[0];
 
     const navigate = useNavigate();
     const dispatch = useDispatch();

@@ -1,11 +1,14 @@
 import React, { Fragment } from 'react';
-import logo2 from '../assets/logo2.png';
+import { urls } from '../components/Schemas/images';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 
 const CommissionStructure = () => {
+
+    //images
+    const logo = urls[0];
 
     const cate = [
         {
@@ -100,7 +103,7 @@ const CommissionStructure = () => {
                         <button onClick={signup} className='btn box flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Register now</div></button>
                     </div>
                     <div className="flexcol">
-                        <img className='commission-logo' src={logo2} alt="logo" />
+                        <img className='commission-logo' src={logo} alt="logo" />
                     </div>
                 </div>
                 <div className="flexcol wh commission-box" style={{ gap: '10px', backgroundColor: 'white' }}>

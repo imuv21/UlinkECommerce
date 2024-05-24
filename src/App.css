@@ -2056,6 +2056,11 @@ button:focus {
   color: gray;
 }
 
+.unupublished{
+  gap: 15px;
+  width: 100%;
+}
+
 .unupublished .MuiSvgIcon-root{
   width: 17px;
   height: 17px;

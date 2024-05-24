@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signupSchema } from '../components/Schemas/validationSchema';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/logo2.png';
+import { urls } from '../components/Schemas/images';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Helmet } from 'react-helmet-async';
@@ -19,6 +19,9 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 const schema = yupResolver(signupSchema);
 const Signup = () => {
 
+    //images
+    const logo = urls[0];
+
     //password hide and show
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [conPasswordVisible, setConPasswordVisible] = useState(false);
@@ -32,7 +35,6 @@ const Signup = () => {
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
-
 
 
     //json lottie animation
@@ -72,9 +74,6 @@ const Signup = () => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
     };
 
-
-
-
     //select country code from data 
     const [ccode, setCcode] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState('');
@@ -98,9 +97,6 @@ const Signup = () => {
         const selected = ccode.find(country => country.iso2 === countryCode);
         setSelectedCountryTwo(selected);
     }
-
-
-
 
     //select country form api
     const [coperation, setCoperation] = useState([]);

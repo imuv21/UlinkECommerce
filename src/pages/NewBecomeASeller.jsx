@@ -30,14 +30,16 @@ const BecomeASeller = () => {
     };
 
     const navigate = useNavigate();
-    const signup = () => {
-        navigate('/signup');
+  
+    const login = () => {
+        navigate('/login');
     }
 
     const [currentPage, setCurrentPage] = useState(1);
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+
 
     //json lottie animation
     const options = {
@@ -196,7 +198,7 @@ const BecomeASeller = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Become A Seller</title>
+                <title>Seller Center</title>
                 <meta name="Sell more! Unlock the global market." content="Easily sell to the all over the globe without opening a local office. Tens of thousands of verified wholesale buyers are only a few clicks away." />
             </Helmet>
 
@@ -204,7 +206,7 @@ const BecomeASeller = () => {
                 <div className="svg-content flexcol-start" style={{ gap: '20px' }}>
                     <div className="heading4">Sell more! Unlock the global market.</div>
                     <div className="heading" style={{ color: 'white', fontWeight: '400' }}>Easily sell to the all over the globe without opening a local office. Tens of thousands of verified wholesale buyers are only a few clicks away.</div>
-                    <button onClick={signup} className='btn box flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Become A Seller</div></button>
+                    <button onClick={login} className='btn box flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Login as a Seller</div></button> 
                 </div>
                 <div className="svg-content flex">
                     <div style={{ width: '70%' }}>

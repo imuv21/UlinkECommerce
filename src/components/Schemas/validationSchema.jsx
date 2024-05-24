@@ -6,7 +6,6 @@ export const addSingleSchema = yup.object().shape({
 
     productName: yup.string().required('Product name is required').min(15, "Product name must be 15 characters or more"),
     brandName: yup.string().required('Brand name is required'),
-    keyFeatures: yup.string().required('Key features are required'),
     keyWords: yup.string().required('Key words are required'),
     dgrGoods: yup.string().required('Dangerous goods are required'),
     bulletPoints: yup.string().required('Bullet points are required'),
@@ -28,7 +27,7 @@ export const addSingleSchema = yup.object().shape({
     }).required('Barcode number is required'),
 
     unitmeasure: yup.string().required('Unit measure type is required'),
-    sku: yup.number().typeError('SKU must be a number').positive('SKU must be a positive number').integer('SKU must be an integer').required('SKU is required'),
+    sku: yup.string().required('SKU is required'),
     minOrderQuant: yup.number().typeError('Quantity must be a number').positive('Quantity must be a positive number').integer('Quantity must be an integer').required('Quantity is required')
         .test('is-lower', 'Min order quantity must be lower than available quantity',
             function (minOrderQuant) {
@@ -72,7 +71,6 @@ export const addSingleSchema = yup.object().shape({
     // productLgh: yup.number().typeError('Length must be a number').positive('Length must be a positive number').integer('Length must be an integer').required('Length is required'),
     // productHgt: yup.number().typeError('Height must be a number').positive('Height must be a positive number').integer('Height must be an integer').required('Height is required'),
 
-    temperature: yup.string().required('Temperature is required'),
     StockLocation: yup.string().required('Stock Location is required'),
     origin: yup.string().required('Origin is required'),
 });

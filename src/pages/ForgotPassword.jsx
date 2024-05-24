@@ -1,11 +1,14 @@
 import React, { Fragment, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/logo2.png';
+import { urls } from '../components/Schemas/images';
 import { Helmet } from 'react-helmet-async';
 import animation from "../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
 
 const ForgotPassword = () => {
+
+    //images
+    const logo = urls[0];
 
     const navigate = useNavigate();
     const resetPassword = () => {
