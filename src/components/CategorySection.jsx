@@ -14,6 +14,8 @@ import { Link } from 'react-router-dom';
 import Refurbish from '../assets/Refurbished.png';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+
+
 const NextArrow = (props) => {
   const { style, onClick } = props;
   return (
@@ -52,30 +54,48 @@ const CategorySection = () => {
     prevArrow: <PrevArrow />,
     responsive: [
       {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
+          breakpoint: 1300,
+          settings: {
+              slidesToShow: 6,
+              slidesToScroll: 2,
+          },
       },
       {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 2,
-        },
+          breakpoint: 1150,
+          settings: {
+              slidesToShow: 5,
+              slidesToScroll: 2,
+          },
       },
       {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
+          breakpoint: 1000,
+          settings: {
+              slidesToShow: 4,
+              slidesToScroll: 2,
+          },
       },
-    ],
+      {
+          breakpoint: 800,
+          settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+          },
+      },
+      {
+          breakpoint: 600,
+          settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+          },
+      },
+      {
+          breakpoint: 380,
+          settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+          },
+      },
+  ],
   };
 
   return (

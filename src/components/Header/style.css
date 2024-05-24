@@ -105,19 +105,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 70px;
   padding: 10px 20px;
   gap: 20px;
   background-color: white;
 }
-/* #004c6f */
 
 .sub-header {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 50px;
   padding: 10px 20px;
   gap: 20px;
   background-color: #004c6f;
@@ -126,18 +123,24 @@
   padding: 1px 5px;
   background-color: var(--CodeOne);
   filter: drop-shadow(2px 2px 2px gray);
+  font-size: 17px;
 }
 .offer {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
   padding: 10px 20px;
   gap: 20px;
   background-color: #ffd490;
+  text-align: center;
 }
-/* hsl(199, 100%, 88%) */
+
+.offer-text{
+  font-size: 15px;
+  font-weight: 600;
+}
+
 .sup-header-option{
   gap: 20px;
   display: flex;
@@ -162,23 +165,12 @@
   color: var(--CodeOne);
 }
 
-
-.head-end, .head-start {
-  gap: 20px;
+.head-start {
+  gap: 10px;
 }
 
 .logo {
   width: 140px;
- 
-}
-
-.header-nav {
-  width: fit-content;
-  gap: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
 }
 
 .header-burger {
@@ -199,6 +191,11 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+}
+
+.drawer a{
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .username{
@@ -280,37 +277,61 @@
   white-space: nowrap;
 }
 
-@media  screen and (max-width: 710px) {
-  
+@media  screen and (max-width: 800px) {
+  .search-input2 {
+    width: 80%;
+  }
 }
 
-@media screen and (max-width: 600px) {
-  .header {
-    gap: 10px;
+@media  screen and (max-width: 710px) {
+  .LoginRegister, .sub-header-option{
+    display: none;
   }
-
-  .head-end, .head-start {
-    gap: 10px;
+  .search-input2 {
+    width: 90%;
   }
-
+  .search-input2 input {
+    padding: 5px 10px;
+    border-radius: 16px;
+  }
+  .search-input2 span .MuiSvgIcon-root {
+    width: 18px;
+    height: 18px;
+    color: gray;
+  }
+  .logo {
+    width: 100px;
+  }
   .header-burger {
     display: block;
   }
-
-  .header-nav {
-    display: none;
+  .header {
+    gap: 10px;
+    padding: 5px 10px;
   }
-
-  .logo {
-    width: 70px;
+  .sub-header{
+    padding: 3px 10px;
   }
-
-  .search-input2 {
-    width: 100%;
+  .header-btns{
+    padding: 3px 10px;
+    font-size: 12px;
   }
-
-  .search-input2 input {
-    padding: 8px 10px;
-    border-radius: 16px;
+  .sub-heading3{
+    font-size: 12px;
   }
 }
+
+@media  screen and (max-width: 500px) {
+  .offer{
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px 10px;
+  }
+  .offer-text{
+    font-size: 12px;
+  }
+  .coupn{
+    font-size: 12px;
+  }
+}
+

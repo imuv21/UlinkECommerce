@@ -105,10 +105,10 @@ const Header = () => {
 
       if (response.status === 200) {
         alert(response.data);
-        if(isAuthenticated && user.role === 'Seller'){
+        if (isAuthenticated && user.role === 'Seller') {
           navigate('/seller-center');
-        } 
-        dispatch(logout()); 
+        }
+        dispatch(logout());
       }
     } catch (error) {
       alert(error);
@@ -124,19 +124,15 @@ const Header = () => {
   return (
     <Fragment>
       <div className="offer">
-        <h4>Save up to 20% OFF on your first 10 orders.</h4> <div className="coupn">ULINKITFIRST20</div>
+        <div className='offer-text'>Save up to 20% OFF on your first 10 orders.</div> <div className="coupn">ULINKITFIRST20</div>
       </div>
 
       <div className='header'>
         <div className="flex head-start">
-          <div className='header-burger' onClick={toggleMobileMenu} >
-            <ListIcon />
-          </div>
           <Link to="/"><img src={logo} alt="Logo" className='logo' /></Link>
         </div>
 
         <div className="flex wh" style={{ gap: '20px' }}>
-          <ReactFlagsSelect id="select-contry" selected={selected} onSelect={(selected) => setSelected(selected)} placeholder="Select Country " searchable searchPlaceholder="Search countries" />{" "}
           <div className="search-input2">
             <input type='text' placeholder='Search here...' />
             <span>
@@ -211,7 +207,6 @@ const Header = () => {
             </div>
           )}
 
-
           {isAuthenticated && user.role === 'Buyer' && (
             <div style={{ position: 'relative', cursor: 'pointer' }} onClick={tocart}>
               <ShoppingCartIcon style={{ color: 'black' }} />
@@ -222,8 +217,15 @@ const Header = () => {
         </div>
       </div>
 
+
+
+
+
       <div className="sub-header">
         <div className="sup-header-option">
+          <div className='header-burger' onClick={toggleMobileMenu} >
+            <ListIcon />
+          </div>
           <div className="sub-heading3">All Categories</div>
           {/* <div className="sub-heading2">Consumer Electronics</div>
           <div className="sub-heading2">Office & Stationery</div>
@@ -251,9 +253,10 @@ const Header = () => {
 
       <Drawer anchor="left" open={mobileMenuOpen} onClose={toggleMobileMenu}>
         <div className='drawer' onClick={toggleMobileMenu} onKeyDown={toggleMobileMenu}>
-          <Link to="/profile">Profile dfhtrhtrhrthjtrjhrtjt</Link>
-          <Link to="/cart">Cart</Link>
-          <Link to="/about-us">About Us</Link>
+          <Link to="/deals">Deals</Link>
+          <Link to="/express">Express</Link>
+          <Link to="/rfq-marketplace">RFQ Marketplace</Link>
+          <Link to="/enterprise">Enterprise</Link>
         </div>
       </Drawer>
 

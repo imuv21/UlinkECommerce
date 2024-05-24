@@ -64,14 +64,42 @@ const Carousel = () => {
         prevArrow: <PrevArrow />,
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 1300,
+                settings: {
+                    slidesToShow: 6,
+                    slidesToScroll: 2,
+                },
+            },
+            {
+                breakpoint: 1150,
+                settings: {
+                    slidesToShow: 5,
+                    slidesToScroll: 2,
+                },
+            },
+            {
+                breakpoint: 1000,
+                settings: {
+                    slidesToShow: 4,
+                    slidesToScroll: 2,
+                },
+            },
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                },
+            },
+            {
+                breakpoint: 600,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1,
                 },
             },
             {
-                breakpoint: 600,
+                breakpoint: 420,
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
