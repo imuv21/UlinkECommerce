@@ -3,10 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import animation from "../../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
 import { Helmet } from 'react-helmet-async';
-import logo from '../../assets/logo2.png';
+import { urls } from '../../components/Schemas/images';
 import axios from 'axios';
 
 const OtpEmail = () => {
+
+
+     //images
+     const logo = urls[0];
 
     const navigate = useNavigate();
     const updatePassword = () => {

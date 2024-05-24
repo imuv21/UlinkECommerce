@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { updateNumberSchema } from '../../components/Schemas/validationSchema';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../../assets/logo2.png';
+import { urls } from '../../components/Schemas/images';
 import { Helmet } from 'react-helmet-async';
 import animation from "../../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
@@ -12,6 +12,8 @@ import { allCountries } from '../../components/Schemas/countryCodes';
 const schema = yupResolver(updateNumberSchema);
 const UpdateNumber = () => {
 
+     //images
+     const logo = urls[0];
     const navigate = useNavigate();
    
 
