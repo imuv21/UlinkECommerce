@@ -14,7 +14,7 @@ import defaulImg from '../assets/default.jpg';
 const Carousel = () => {
 
     const dispatch = useDispatch();
-    const { products, status, error } = useSelector((state) => state.products);
+    const {  products = [], status, error } = useSelector((state) => state.products);
 
     //pagination
     const [page, setPage] = useState(0);
@@ -113,7 +113,7 @@ const Carousel = () => {
      
         <div className="product-slider-cont">
             <Sliders {...settings}>
-                {products.map((product) => (
+            {Array.isArray(products) && products.map((product) => (
                     <div className='show-img-detail-sup' key={uuidv4()}>
                         <Suspense fallback={<Loader />}>                                                   
                             <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
