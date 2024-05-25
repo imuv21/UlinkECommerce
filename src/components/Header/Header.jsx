@@ -167,7 +167,7 @@ const Header = () => {
                 <div className='LoginRegister'>Login / Register</div>
               </div>
               {isClickedTwo && (
-                <div className="popup">
+                <div className="popup account">
                   <div className='popupbox'>
                     <Link to="/login" className='loginbtn'><div className="heading2">Log in</div></Link>
                     <Link to="/signup" className='signupbtn'><div className="heading2">Register</div><div className='descrip'>It only takes 30 seconds</div></Link>
