@@ -346,7 +346,7 @@ const AddSingle = () => {
                             multiple
                             onChange={onFileSelect}
                             value={fileInputValue}
-                            style={{ display: 'none' }} // hide input
+                            style={{ display: 'none' }} 
                         />
                     </div>
                     <div className="container-dd">

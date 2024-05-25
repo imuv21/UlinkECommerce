@@ -19,7 +19,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 const NextArrow = (props) => {
   const { style, onClick } = props;
   return (
-    <div style={{ ...style, position: 'absolute', top: '40%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '999', right: '0%' }} onClick={onClick}>
+    <div style={{ ...style, position: 'absolute', top: '40%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '1', right: '0%' }} onClick={onClick}>
       <ChevronRightIcon />
     </div>
   );
@@ -27,7 +27,7 @@ const NextArrow = (props) => {
 const PrevArrow = (props) => {
   const { style, onClick } = props;
   return (
-    <div style={{ ...style, position: 'absolute', top: '40%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '999' }} onClick={onClick}>
+    <div style={{ ...style, position: 'absolute', top: '40%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '1' }} onClick={onClick}>
       <ChevronLeftIcon />
     </div>
   );

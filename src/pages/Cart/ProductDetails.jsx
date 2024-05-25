@@ -34,25 +34,10 @@ const ProductDetails = () => {
     }, [dispatch, id]);
 
 
-    // const [cart, setCart] = useState([]);
-    // const [cartText, setCartText] = useState(0);
     const cartHandler = () => {
         if (!product) return;
         dispatch(addToCart({ productId: id, quantity: value }));
         alert(`${value} items added to cart successfully!`);
-        // const existingCart = Array.isArray(savedCart) ? savedCart : [];
-        // const existingProductIndex = existingCart.findIndex(item => item.product.sku === product.sku);
-        // const newCart = [...existingCart];
-        // if (existingProductIndex !== -1) {
-        //     newCart[existingProductIndex].quantity += parseInt(value);
-        // } else {
-        //     newCart.push({
-        //         product: product,
-        //         quantity: parseInt(value)
-        //     });
-        // }
-        // setCart(newCart);
-        // setCartText(newCart.length);
     };
 
     //plus-minus
@@ -141,16 +126,16 @@ const ProductDetails = () => {
 
             <Fragment>
                 <div className="flex wh">
-                    <div className="heading2 wh captext">{product.categoryPath}</div>
+                    <div className="heading2 wh captext">{`${product.selectedSupOption} > ${product.selectedSubOption} > ${product.selectedMiniSubOption} > ${product.selectedMicroSubOption}`}</div>
                 </div>
 
                 <div className="pdcont">
-                    <div className="pdcol_one">
-                        <div className="sel-box" style={{ gap: '20px', height: '400px', justifyContent: 'space-between' }}>
+                    <div className="pdcol pdcol_one">
+                        <div className="big-image-box">
                             <div className="big-image">
                                 <img src={selectedImage} alt="Big Image" />
                             </div>
-                            <div className="flex" style={{ gap: '10px' }}>
+                            <div className="flex" style={{ width: '100%', padding: '10px', justifyContent: 'space-evenly', border: 'var(--border)' }}>
                                 {product.image && product.image.length > 0 && (
                                     <div className="small-image" onClick={() => handleImageClick(product.image[0].imageUrl)}>
                                         <img src={product.image[0].imageUrl} alt={product.productName} />
@@ -179,7 +164,7 @@ const ProductDetails = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="pdcol_two">
+                    <div className="pdcol pdcol_two">
                         <div className="heading2 wh captext">Brand : {product.brandName}</div>
                         <div className="heading wh captext">{product.productName}</div>
                         <div className="sel-box" style={{ gap: '20px' }}>
@@ -208,6 +193,11 @@ const ProductDetails = () => {
 
                         <div className="heading3 wh">About this item</div>
                         {/* {product.bulletPoints && renderBulletPoints(product.bulletPoints)} */}
+                        <ul className='bullet-points'>
+                            <li className='descrip2 caplist'>This is a buttlet point.</li>
+                            <li className='descrip2 caplist'>This is a buttlet point.</li>
+                            <li className='descrip2 caplist'>This is a buttlet point.</li>
+                        </ul>
                         <div className="flexcol wh">
                             <div className={`accordion-pd ${activeIndex === 1 ? 'active' : ''}`} onClick={() => toggleProductAccordion(1)}>
                                 <div className="heading3 flex"><img src={proDetail} className='img-big' alt="" />&nbsp;&nbsp;Product details</div>
@@ -234,8 +224,8 @@ const ProductDetails = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="pdcol_three">
-                        <div className="sel-box" style={{ gap: '20px' }}>
+                    <div className="pdcol pdcol_three">
+                        <div className="sel-box pdthree_one" style={{ gap: '20px' }}>
                             <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>
                                 <div className="heading3">Order quantity</div>
                                 <div className="plus-minus">
@@ -264,7 +254,7 @@ const ProductDetails = () => {
                                 )}
                             </div>
                         </div>
-                        <div className="sel-box" style={{ gap: '20px' }}>
+                        <div className="sel-box pdthree_two" style={{ gap: '20px' }}>
                             <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>
                                 <div className="heading3">Shipping & Returns</div>
                                 <div className="descrip warning-btn3 flex"><FlightIcon style={{ width: '15px' }} />International shipping</div>
@@ -284,16 +274,16 @@ const ProductDetails = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="sel-box" style={{ gap: '20px' }}>
+                        <div className="sel-box pdthree_three" style={{ gap: '20px' }}>
                             <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>
                                 <div className="heading3">Seller information</div>
-                                {/* <div className="flex wh" style={{ justifyContent: 'space-between', }}>
+                                <div className="flex wh" style={{ justifyContent: 'space-between'}}>
                                     <div className="descrip2">{product.seller.name}</div>
                                     {product.seller.isVerified ? (<div className="descrip warning-btn2 flex" style={{ color: 'green' }}><VerifiedIcon style={{ width: '15px' }} />Verified</div>)
                                         : (<div className="descrip warning-btn2 flex" style={{ color: 'orange' }}><NewReleasesIcon style={{ width: '15px' }} />Unverified</div>)}
-                                    <div className="descrip2">{product.seller.countryOfoperation}</div>
-                                </div> */}
-                                <div className="flex wh">
+                                </div>
+                                <div className="descrip2">{product.seller.companyName}, {product.seller.countryOfoperation}</div>
+                                <div className="flex-start wh">
                                     <a className='hoverr wh'>More from this seller</a>
                                 </div>
                             </div>

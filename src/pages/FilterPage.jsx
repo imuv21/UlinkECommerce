@@ -147,18 +147,18 @@ const FilterPage = () => {
                     <div className="filteredProducts">
                         {
                             filteredProducts.map((product, index) => (
-                                <div className='show-img-detail' key={index}>
+                                <a className='show-img-detail' key={index} href={`/product-details/${product.productId}`}>
                                     <img className='product-img-size' src={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} alt='img' />
                                     <div className='product-detail-info'>
                                         <p className='product-title'>{truncateText(product.productName, 20)} </p>
-                                        <p className='product-price'>{product.currencySymbol}{product.sellPrice}/ piece incl value</p>
+                                        <p className='product-price'>{product.currencySymbol}{parseFloat(product.sellPrice).toFixed(2)}/ piece incl value</p>
                                         <div className='flex' style={{ gap: '10px' }}>
-                                            <p className='product-discount'>{product.currencySymbol}{product.unitPrice}</p>
+                                            <p className='product-discount'>{product.currencySymbol}{parseFloat(product.unitPrice).toFixed(2)}</p>
                                             <span className='discount-percentage'>{(((product.unitPrice - product.sellPrice) / product.unitPrice) * 100).toFixed(2)}% OFF</span>
                                         </div>
                                         <p className='product-quantity'>Min Order: {product.minOrderQuant} peace</p>
                                     </div>
-                                </div>
+                                </a>
                             ))
                         }
                     </div>

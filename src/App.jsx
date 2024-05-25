@@ -1,4 +1,5 @@
 import './App.css';
+import './Responsive.css';
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Loader from './components/Loader/Loader';

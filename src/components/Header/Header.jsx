@@ -12,6 +12,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../Redux/AuthReducer';
 import { urls } from '../Schemas/images';
+import { supOptions } from '../Schemas/cate';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 import HomeIcon from '@mui/icons-material/Home';
@@ -43,15 +44,26 @@ const Header = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
+
+  //clicks
   const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => {
     setIsClicked(prevState => !prevState);
+  };
+
+  const [isClickedCate, setIsClickedCate] = useState(false);
+  const handleClickCate = () => {
+    setIsClickedCate(prevState => !prevState);
   };
 
   const [isClickedTwo, setIsClickedTwo] = useState(false);
   const handleClickTwo = () => {
     setIsClickedTwo(prevState => !prevState);
   };
+
+
+
+
 
   const navigate = useNavigate();
   const tocart = () => {
@@ -111,10 +123,13 @@ const Header = () => {
         dispatch(logout());
       }
     } catch (error) {
-      alert(error);
+      dispatch(logout());
     }
   };
 
+  const convertPascalToReadable = (text) => {
+    return text.replace(/([A-Z])/g, ' $1').trim();
+  };
 
   //images
   const logo = urls[0];
@@ -144,7 +159,7 @@ const Header = () => {
         <div className="flex head-start">
 
           {isAuthenticated ? (
-            <div className='heading2' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}>Hi {user.firstname} </div>
+            <div className='heading2 usernameheader' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}>Hi {user.firstname} </div>
           ) : (
             <div className={`icon-container ${isClickedTwo ? 'clicked' : ''}`} onClick={handleClickTwo}>
               <div className="flex" style={{ gap: '10px' }}>
@@ -169,7 +184,7 @@ const Header = () => {
             <div className={`icon-container ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
               <AccountCircleIcon style={{ color: 'black' }} />
               {isClicked && (
-                <div className="popup">
+                <div className="popup account">
                   <div className='popupbox'>
 
                     <div className="username">
@@ -217,18 +232,25 @@ const Header = () => {
         </div>
       </div>
 
-
-
-
-
       <div className="sub-header">
         <div className="sup-header-option">
           <div className='header-burger' onClick={toggleMobileMenu} >
             <ListIcon />
           </div>
-          <div className="sub-heading3">All Categories</div>
+          <div className={`sub-heading3 icon-container ${isClickedCate ? 'clicked' : ''}`} onClick={handleClickCate}>
+            All Categories
+            {isClickedCate && (
+              <div className="popup cate_forntend">
+                <div className='popupbox'>
+                  {supOptions.map((option, index) => (
+                    <div className="subpop-options" key={index}>{convertPascalToReadable(option)}</div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-        
+
         <div className="sup-header-option">
           <div className="sub-header-option">
             <LocalOfferIcon /> <div className="sub-heading3">Deals</div>

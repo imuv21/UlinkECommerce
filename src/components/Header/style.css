@@ -10,20 +10,31 @@
   align-items: center;
   justify-content: center;
   position: fixed;
-  width: 230px;
-  top: 95px;
-  right: 10px;
   height: fit-content;
   transform: translateX(-70%);
   gap: 10px;
   background-color: white;
   border: var(--border);
-  padding: 20px 12px 10px 12px;
   border-radius: var(--br1);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   opacity: 0;
   transition: opacity 0.3s, transform 0.3s;
-  z-index: 1;
+  z-index: 2;
+}
+
+.account{
+  padding: 20px 12px 10px 12px;
+  width: 230px;
+  top: 95px;
+  right: 10px;
+}
+
+.cate_forntend{
+  padding: 12px;
+  width: 220px;
+  height: fit-content;
+  top: 160px;
+  left: 10px;
 }
 
 .popupbox{
@@ -293,7 +304,7 @@
   .sup-header-option{
     gap: 10px;
   }
-  .LoginRegister, .sub-header-option{
+  .LoginRegister, .sub-header-option, .usernameheader{
     display: none;
   }
   .search-input2 {
