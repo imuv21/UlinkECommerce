@@ -2010,7 +2010,7 @@ button:focus {
 }
 
 .caplist {
-  text-transform: lowercase;
+  text-transform: capitalize;
   list-style: circle;
 }
 

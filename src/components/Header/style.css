@@ -4,6 +4,11 @@
   cursor: pointer;
 }
 
+.options-relative{
+  position: relative;
+  cursor: pointer;
+}
+
 .popup {
   display: flex;
   flex-direction: column;
@@ -35,6 +40,14 @@
   height: fit-content;
   top: 160px;
   left: 10px;
+}
+
+.options-popup{
+  padding: 12px;
+  width: 300px;
+  height: fit-content;
+  top: 0px;
+  left: 220px;
 }
 
 .popupbox{
@@ -256,7 +269,7 @@
 .subpop-options{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   gap: 10px;
   font-size: 14px;
   color: gray;

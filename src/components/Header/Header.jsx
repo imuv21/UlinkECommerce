@@ -12,7 +12,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../Redux/AuthReducer';
 import { urls } from '../Schemas/images';
-import { supOptions } from '../Schemas/cate';
+import { supOptions, subOptions } from '../Schemas/cate';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 import HomeIcon from '@mui/icons-material/Home';
@@ -135,6 +135,28 @@ const Header = () => {
   const logo = urls[0];
 
 
+  //categories
+  const [hoveredOption, setHoveredOption] = useState(null);
+
+  const handleMouseEnter = (index) => {
+    setHoveredOption(index);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredOption(null);
+  };
+
+  const getPopupContent = (option) => {
+    return (
+      <div className="popupbox">
+        {subOptions[option].map((subOption, index) => (
+          <div className='subpop-options' key={index}>{convertPascalToReadable(subOption)}</div>
+        ))}
+      </div>
+    );
+  };
+
+
 
   return (
     <Fragment>
@@ -237,13 +259,21 @@ const Header = () => {
           <div className='header-burger' onClick={toggleMobileMenu} >
             <ListIcon />
           </div>
-          <div className={`sub-heading3 icon-container ${isClickedCate ? 'clicked' : ''}`} onClick={handleClickCate}>
+
+          <div className={`sub-heading3 icon-container ${isClickedCate ? 'clicked' : ''}`} onClick={handleClickCate} onMouseLeave={handleMouseLeave}>
             All Categories
             {isClickedCate && (
               <div className="popup cate_forntend">
                 <div className='popupbox'>
                   {supOptions.map((option, index) => (
-                    <div className="subpop-options" key={index}>{convertPascalToReadable(option)}</div>
+                    <div className="subpop-options options-relative" key={index} onMouseEnter={() => handleMouseEnter(index)}>
+                      {convertPascalToReadable(option)}
+                      {hoveredOption === index && (
+                        <div className="popup options-popup">
+                          {getPopupContent(option)}
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>

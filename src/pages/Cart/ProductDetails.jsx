@@ -192,12 +192,8 @@ const ProductDetails = () => {
                         </div>
 
                         <div className="heading3 wh">About this item</div>
-                        {/* {product.bulletPoints && renderBulletPoints(product.bulletPoints)} */}
-                        <ul className='bullet-points'>
-                            <li className='descrip2 caplist'>This is a buttlet point.</li>
-                            <li className='descrip2 caplist'>This is a buttlet point.</li>
-                            <li className='descrip2 caplist'>This is a buttlet point.</li>
-                        </ul>
+                        {product.bulletPoints && renderBulletPoints(product.bulletPoints)}
+                       
                         <div className="flexcol wh">
                             <div className={`accordion-pd ${activeIndex === 1 ? 'active' : ''}`} onClick={() => toggleProductAccordion(1)}>
                                 <div className="heading3 flex"><img src={proDetail} className='img-big' alt="" />&nbsp;&nbsp;Product details</div>
