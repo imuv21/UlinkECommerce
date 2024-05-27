@@ -20,11 +20,15 @@ const Cart = () => {
   const [quantities, setQuantities] = useState({});
 
   useEffect(() => {
-    const initialQuantities = cart.reduce((acc, item) => {
-      acc[item.productId] = item.quantity;
-      return acc;
-    }, {});
-    setQuantities(initialQuantities);
+    if (cart && cart.length > 0) {
+      const initialQuantities = cart.reduce((acc, item) => {
+        acc[item.productId] = item.quantity;
+        return acc;
+      }, {});
+      setQuantities(initialQuantities);
+    } else {
+      setQuantities({});
+    }
   }, [cart]);
 
   const incrementValue = (productId) => {
@@ -93,27 +97,30 @@ const Cart = () => {
               {cartItems.map((item, index) => (
                 <div className='cart webdiv' key={item.productId}>
                   <div className="cartImg">
-                    <img src={item.image.imageUrl} alt={item.image.imageName} />
+                    {item.image && item.image.imageUrl ? (
+                      <img src={item.image.imageUrl} alt={item.image.imageName} />
+                    ) : (
+                      <div>No Image Available</div>
+                    )}
                   </div>
+                  
                   <div className="cartDetail">
                     <div className="heading2">
-                      {item.itemName}
+                      {item.itemName.length > 50 ? `${item.itemName.substring(0, 50)}...` : item.itemName}
                     </div>
                     <div className="flex" style={{ gap: '15px' }}>
-                      <span className='descrip2' style={{ textDecoration: 'line-through' }}>{currencySymbol} {item.unitPrice}</span>
-                      <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{`${(((item.unitPrice - item.sellPrice) / item.unitPrice) * 100).toFixed(2)}% OFF`}</span>
-                      <span>{currencySymbol}</span><span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbol}{item.sellPrice.toFixed(2)}</span>
+                      <span className='descrip2' style={{ textDecoration: 'line-through' }}>{currencySymbol} {parseFloat(item.unitPrice).toFixed(2)}</span>
+                      <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{`${parseFloat(((item.unitPrice - item.sellPrice) / item.unitPrice) * 100).toFixed(2)}% OFF`}</span>
+                      <span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbol}{parseFloat(item.sellPrice).toFixed(2)}</span>
                     </div>
                     <div className="flexcol-start" style={{ gap: '3px' }}>
-                      {/* <div className="descrip">Units per carton: {item.product.unitsPerCarton}</div>
-                      <div className="descrip">Min order quantity: {item.product.minOrderQuant}</div> */}
-                      <div className="descrip">GST: {item.gst.toFixed(2)}</div>
+                      <div className="descrip">Min order quantity: {item.minOrderQuant}</div>
+                      <div className="descrip">GST: {parseFloat(item.gst).toFixed(2)}</div>
                     </div>
                   </div>
 
-
                   <div className="cartPrice">
-                    <div className="heading2">Total : {currencySymbol} {(quantities[item.productId] * (item.sellPrice + item.gst)).toFixed(2)}</div>
+                    <div className="heading2">Total : {currencySymbol} {parseFloat(quantities[item.productId] * (item.sellPrice)).toFixed(2)}</div>
                     <div className="plus-minus webdiv" style={{ width: '150px' }}>
                       <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={() => decrementValue(item.productId, item.minOrderQuant)} /></div>
                       <input className='pminput' type="number" value={quantities[item.productId]} onChange={(e) => handleInputChange(e, item.productId, item.minOrderQuant)} />
@@ -131,7 +138,7 @@ const Cart = () => {
             <div className="heading3">Cart Summary</div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Subtotal</span></div>
-              <div className="heading2"><span>{currencySymbol} {totalSellPrice.toFixed(2)}</span></div>
+              <div className="heading2"><span>{currencySymbol} {parseFloat(totalSellPrice).toFixed(2)}</span></div>
             </div>
             <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
               <button className='btn addtocart flex' onClick={checkout}><ShoppingCartCheckoutIcon style={{ width: '15px' }} /><div className="heading2">Checkout</div></button>

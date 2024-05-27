@@ -34,13 +34,6 @@ const ProductDetails = () => {
         dispatch(fetchProductDetail(id));
     }, [dispatch, id]);
 
-
-    const cartHandler = () => {
-        if (!product) return;
-        dispatch(addToCart({ productId: id, quantity: value }));
-        alert(`${value} items added to cart successfully!`);
-    };
-
     //plus-minus
     const [moq, setMoq] = useState(1);
     const [value, setValue] = useState(moq.toString());
@@ -105,6 +98,15 @@ const ProductDetails = () => {
                 ))}
             </ul>
         );
+    };
+
+
+    const cartHandler = () => {
+        if (!product) return;
+        console.log('Product ID:', id); 
+        console.log('Quantity:', value);
+        dispatch(addToCart({ productId: id, quantity: value }));
+        alert(`${value} items added to cart successfully!`);
     };
 
 
@@ -194,7 +196,7 @@ const ProductDetails = () => {
 
                         <div className="heading3 wh">About this item</div>
                         {product.bulletPoints && renderBulletPoints(product.bulletPoints)}
-                       
+
                         <div className="flexcol wh">
                             <div className={`accordion-pd ${activeIndex === 1 ? 'active' : ''}`} onClick={() => toggleProductAccordion(1)}>
                                 <div className="heading3 flex"><img src={proDetail} className='img-big' alt="" />&nbsp;&nbsp;Product details</div>
@@ -274,7 +276,7 @@ const ProductDetails = () => {
                         <div className="sel-box pdthree_three" style={{ gap: '20px' }}>
                             <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>
                                 <div className="heading3">Seller information</div>
-                                <div className="flex wh" style={{ justifyContent: 'space-between'}}>
+                                <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                                     <div className="descrip2">{product.seller.name}</div>
                                     {product.seller.isVerified ? (<div className="descrip warning-btn2 flex" style={{ color: 'green' }}><VerifiedIcon style={{ width: '15px' }} />Verified</div>)
                                         : (<div className="descrip warning-btn2 flex" style={{ color: 'orange' }}><NewReleasesIcon style={{ width: '15px' }} />Unverified</div>)}

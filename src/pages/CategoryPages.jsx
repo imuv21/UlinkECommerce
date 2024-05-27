@@ -9,6 +9,8 @@ import ImageImport from '../components/Schemas/ImageImport';
 const Carousel = lazy(() => import('../components/Carousel'));
 const BrandCarousel = lazy(() => import('../components/BrandCarousel'));
 import Sliders from 'react-slick';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../Redux/productSlice';
 
 const CategoryPages = () => {
   const navigate = useNavigate()
@@ -37,20 +39,20 @@ const CategoryPages = () => {
     { image: ImageImport.WritingMaterial, name: 'Writing Material' }
   ];
 
-  //  Brand Object create
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://fakestoreapi.com/products')
-        const jsonData = await response.json()
-        setProductShow(jsonData)
-      }
-      catch (error) {
-        console.log(error)
-      }
-    }
-    fetchData()
-  }, [category])
+  //  product show 
+  
+  const dispatch = useDispatch();
+  const { products } = useSelector((state) => state.products);
+
+  useEffect (()=> {
+    dispatch(fetchProducts());
+  }, [dispatch])
+
+
+  //  I want to show here the categorywise product
+     
+
+
   const truncateText = (text, maxLength) => {
     if (text.length <= maxLength) {
       return text;
@@ -195,28 +197,23 @@ const CategoryPages = () => {
               </div>
             </div>
             <div className='show-all'>
-              {productShow && (
-                productShow.map((product, id) => {
-                  return (
-                    <div className='show-product-info' key={id}>
-                      <div className='show-img-detail'>
-                        <img className='product-img-size' src={product.image} style={{ background: 'none' }} />
-                        <div className='product-detail-info'>
-                          <p className='product-title'>{truncateText(product.title, 20)} </p>
-                          <p className='product-price'>AED {product.price}/ piece incl value</p>
-                          <div className='discount'>
-                            <p className='product-discount'>AED 7.35</p>
-                            <span className='discount-percentage'>50% Off</span>
-                          </div>
-                          <p className='product-quantity'>Unit per carton: 1</p>
-                          <p className='product-quantity'>Min Order: 1 peace</p>
-                        
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })
-              )}
+            
+                        {
+                            products.map((product, index) => (
+                                <a className='show-img-detail' key={index} href={`/product-details/${product.productId}`}>
+                                    <img className='product-img-size' src={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} alt='img' />
+                                    <div className='product-detail-info'>
+                                        <p className='product-title'>{truncateText(product.productName, 20)} </p>
+                                        <p className='product-price'>{product.currencySymbol}{parseFloat(product.sellPrice).toFixed(2)}/ piece incl value</p>
+                                        <div className='flex' style={{ gap: '10px' }}>
+                                            <p className='product-discount'>{product.currencySymbol}{parseFloat(product.unitPrice).toFixed(2)}</p>
+                                            <span className='discount-percentage'>{(((product.unitPrice - product.sellPrice) / product.unitPrice) * 100).toFixed(2)}% OFF</span>
+                                        </div>
+                                        <p className='product-quantity'>Min Order: {product.minOrderQuant} peace</p>
+                                    </div>
+                                </a>
+                            ))
+                        }
             </div>
           </div>
         );

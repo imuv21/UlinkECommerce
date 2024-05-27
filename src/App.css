@@ -1955,11 +1955,11 @@ button:focus {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 15px;
+  padding: 10px;
 }
 
 .cartImg {
-  width: 25%;
+  width: 20%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1967,12 +1967,12 @@ button:focus {
 
 .cartImg img {
   width: 100%;
-  aspect-ratio: 4/3;
-  object-fit: fill;
+  height: 100px;
+  object-fit: contain;
 }
 
 .cartDetail {
-  width: 50%;
+  width: 55%;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -18,18 +18,18 @@ export const addToCart = createAsyncThunk(
         try {
             const { auth } = getState();
             const token = auth.token;
+            console.log('Auth Token:', token);
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
             const response = await axios.post(
-                `${BASE_URL}/add-to-cart`,
-                { productId, quantity },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
-                }
+                `${BASE_URL}/add-to-cart?productId=${productId}&quantity=${quantity}`,
+                {}, 
+                { headers } 
             );
             return response.data;
         } catch (err) {
+            console.error('Error response:', err.response);
             return rejectWithValue(err.response.data);
         }
     }
