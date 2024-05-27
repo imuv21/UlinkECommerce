@@ -62,6 +62,22 @@ const Header = () => {
   };
 
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isClicked || isClickedCate || isClickedTwo) {
+        setIsClicked(false);
+        setIsClickedCate(false);
+        setIsClickedTwo(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isClicked, isClickedCate, isClickedTwo]);
+
+
 
 
 

@@ -304,6 +304,8 @@ const ProductDetails = () => {
                             {product.opSystem && <div>Operating system</div>}
                             {product.portType && <div>Port type</div>}
                             {product.dgrGoods && <div>Dangerous goods</div>}
+                            {product.availability && <div>Availability</div>}
+                            {product.PrivateLabel && <div>Private Label</div>}
                         </div>
                         <div className="over-field">
                             {product.sku && <div className='captext'>{product.sku}</div>}
@@ -313,6 +315,8 @@ const ProductDetails = () => {
                             {product.opSystem && <div className='captext'>{product.opSystem}</div>}
                             {product.portType && <div className='captext'>{product.portType}</div>}
                             {product.dgrGoods && <div className='captext'>{product.dgrGoods}</div>}
+                            {product.availability && <div className='captext'>{product.availability}</div>}
+                            {product.PrivateLabel && <div className='captext'>{product.PrivateLabel}</div>}
                         </div>
                     </div>
                     <div className="overview_one">
@@ -322,17 +326,13 @@ const ProductDetails = () => {
                             {product.productWdh && <div>Item width</div>}
                             {product.productHgt && <div>Item height</div>}
                             {product.productWgt && <div>Item weight</div>}
-                            {product.productWgtUnit && <div>Item weight unit</div>}
-                            {product.dimensionUnit && <div>Item dimensions unit</div>}
                         </div>
                         <div className="over-field">
                             {product.colors && <div className='captext'>{product.colors}</div>}
-                            {product.productLgh && <div className='captext'>{product.productLgh}</div>}
-                            {product.productWdh && <div className='captext'>{product.productWdh}</div>}
-                            {product.productHgt && <div className='captext'>{product.productHgt}</div>}
-                            {product.productWgt && <div className='captext'>{product.productWgt}</div>}
-                            {product.productWgtUnit && <div className='captext'>{product.productWgtUnit}</div>}
-                            {product.dimensionUnit && <div className='captext'>{product.dimensionUnit}</div>}
+                            {product.productLgh && product.dimensionUnit && <div className='captext'>{product.productLgh} {product.dimensionUnit}</div>}
+                            {product.productWdh && product.dimensionUnit && <div className='captext'>{product.productWdh} {product.dimensionUnit}</div>}
+                            {product.productHgt && product.dimensionUnit && <div className='captext'>{product.productHgt} {product.dimensionUnit}</div>}
+                            {product.productWgt && product.productWgtUnit && <div className='captext'>{product.productWgt} {product.productWgtUnit}</div>}
                         </div>
                     </div>
                 </div>

@@ -5,13 +5,24 @@ import Slider from '../components/Slider';
 import InfSlider from '../components/InfSlider';
 import CategorySection from '../components/CategorySection';
 import Carousel from '../components/Carousel';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const Home = () => {
+  const navigate = useNavigate();
 
+
+  
   const Banner1 = slider[12];
   const DiscountCoupne = slider[8];
   const Banners = slider[7];
   const summer = slider[11];
+
+
+  const ShowAll = () => {
+    navigate('/search-results')
+ }
 
   return (
     <Fragment>
@@ -25,7 +36,16 @@ const Home = () => {
         <div className='discount-pages'>
           <img className='banner-width' src={summer} />
         </div>
-        <div className="heading3 wh">Top picks of the month (29 items)</div>
+        {/* <div className="heading3 wh">Top picks of the month (29 items)</div> */}
+        
+       <div className='best-deals-product'>
+              <div className=''>
+                <h4>Top picks of the month (29 items)</h4>
+              </div>
+              <div className=''>
+                <h4 className='show-all-product' onClick={ShowAll}>Show All</h4>
+              </div>
+            </div>
         <Carousel />
         <div className="heading3 wh">Best deals (23 items)</div>
         <Carousel />
