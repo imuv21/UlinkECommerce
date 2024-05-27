@@ -21,7 +21,7 @@ const FilterPage = () => {
 
 
     // price
-    const [price, setPrice] = useState([0, 4000]);
+    const [price, setPrice] = useState([0, 100000]);
     const priceHandler = (event, newPrice) => {
         setPrice(newPrice);
     };
@@ -94,7 +94,7 @@ const FilterPage = () => {
                 <div className="fpone">
                     <div className="filterbox">
                         <div className="heading2 wh">Price</div>
-                        <Slider value={price} onChange={priceHandler} valueLabelDisplay="auto" aria-labelledby='range-slide' min={0} max={4000} />
+                        <Slider value={price} onChange={priceHandler} valueLabelDisplay="auto" aria-labelledby='range-slide' min={0} max={100000} />
                         <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                             <div className="minmaxbox heading2"> {price[0]}</div> <div className="heading2">To</div> <div className="minmaxbox heading2"> {price[1]}</div>
                         </div>
