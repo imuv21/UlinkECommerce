@@ -21,6 +21,7 @@ import mastercard from '../../assets/mastercard.png';
 import paypal from '../../assets/paypal.png';
 import upi from '../../assets/upi.png';
 import netbanking from '../../assets/netbanking.png';
+
 const ProductDetails = () => {
 
     const user = useSelector((state) => state.auth.user);

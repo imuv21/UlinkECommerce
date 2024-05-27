@@ -15,26 +15,40 @@ const Cart = () => {
         dispatch(fetchCart());
     }, [dispatch]);
 
-    if (status === 'loading') {
-        return <div>Loading...</div>;
-    }
+    const [quantities, setQuantities] = useState({});
 
-    if (status === 'failed') {
-        return <div>Error: {error}</div>;
-    }
+    useEffect(() => {
+        const initialQuantities = cart.reduce((acc, item) => {
+            acc[item.productId] = item.quantity;
+            return acc;
+        }, {});
+        setQuantities(initialQuantities);
+    }, [cart]);
 
-    const [value, setValue] = useState(1);
-
-    const incrementValue = (index) => {
-        // Implement increment logic
+    const incrementValue = (productId) => {
+        setQuantities(prev => ({
+            ...prev,
+            [productId]: prev[productId] + 1,
+        }));
     };
 
-    const decrementValue = (index) => {
-        // Implement decrement logic
+    const decrementValue = (productId, minOrderQuant) => {
+        setQuantities(prev => ({
+            ...prev,
+            [productId]: Math.max(prev[productId] - 1, minOrderQuant),
+        }));
     };
 
-    const handleInputChange = (e, index) => {
-        // Implement input change logic
+    const handleInputChange = (e, productId, minOrderQuant) => {
+        const newValue = parseInt(e.target.value);
+        setQuantities(prev => ({
+            ...prev,
+            [productId]: newValue >= minOrderQuant ? newValue : minOrderQuant,
+        }));
+    };
+
+    const remove = (productId) => {
+        // Implement remove logic, likely dispatching an action to remove the item from the cart
     };
 
     const checkout = () => {
@@ -48,22 +62,32 @@ const Cart = () => {
         }
     }, []);
 
+    if (status === 'loading') {
+        return <div>Loading...</div>;
+    }
+
+    if (status === 'failed') {
+        return <div>Error: {typeof error === 'object' ? JSON.stringify(error) : error}</div>;
+    }
+
+    const cartItems = cart || [];
+
     return (
         <div className="flexcol wh cart_page">
             <Helmet>
                 <title>Cart</title>
             </Helmet>
             <div className="flex wh">
-                <div className="heading wh">My Cart ({cart.length})</div>
+                <div className="heading wh">My Cart </div>
             </div>
             <div className="cart_cont wh">
                 <div className="cartcol_one" tabIndex={0} ref={scrollRef}>
-                    {cart.length === 0 ? (
+                    {cartItems.length === 0 ? (
                         <p>Your cart is empty.</p>
                     ) : (
                         <Fragment>
-                            {cart.map((item, index) => (
-                                <div className='cart webdiv' key={index}>
+                            {cartItems.map((item) => (
+                                <div className='cart webdiv' key={item.productId}>
                                     <div className="cartImg">
                                         <img src={item.image.imageUrl} alt={item.image.imageName} />
                                     </div>
@@ -72,24 +96,35 @@ const Cart = () => {
                                             {item.itemName}
                                         </div>
                                         <div className="flex" style={{ gap: '15px' }}>
-                                            <span className='descrip2' style={{ textDecoration: 'line-through' }}>{currencySymbol} {item.unitPrice.toFixed(2)}</span>
-                                            <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{`${(((item.unitPrice - item.sellPrice) / item.unitPrice) * 100).toFixed(0)}% OFF`}</span>
-                                            <span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbol} {item.sellPrice.toFixed(2)}</span>
+                                            <span className='descrip2' style={{ textDecoration: 'line-through' }}>AED {item.unitPrice}</span>
+                                            <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{`${(((item.unitPrice - item.sellPrice) / item.unitPrice) * 100).toFixed(2)}% OFF`}</span>
+                                            <span>AED</span><span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbol}{item.sellPrice.toFixed(2)}</span>
                                         </div>
                                         <div className="flexcol-start" style={{ gap: '3px' }}>
                                             <div className="descrip">GST: {item.gst.toFixed(2)}</div>
-                                            <div className="descrip">Quantity: {item.quantity}</div>
                                         </div>
                                     </div>
 
                                     <div className="cartPrice">
-                                        <div className="heading2">Total: {currencySymbol} {(item.quantity * item.sellPrice).toFixed(2)}</div>
+                                        <div className="heading2">Total : {currencySymbol} {(quantities[item.productId] * (item.sellPrice + item.gst)).toFixed(2)}</div>
                                         <div className="plus-minus webdiv" style={{ width: '150px' }}>
-                                            <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={() => decrementValue(index)} /></div>
-                                            <input className='pminput' type="number" value={item.quantity} onChange={(e) => handleInputChange(e, index)} />
-                                            <div style={{ cursor: 'pointer' }}><AddCircleOutlineIcon onClick={() => incrementValue(index)} /></div>
+                                            <div style={{ cursor: 'pointer' }}>
+                                                <RemoveCircleOutlineIcon onClick={() => decrementValue(item.productId, item.minOrderQuant)} />
+                                            </div>
+                                            <input
+                                                className='pminput'
+                                                type="number"
+                                                value={quantities[item.productId]}
+                                                onChange={(e) => handleInputChange(e, item.productId, item.minOrderQuant)}
+                                            />
+                                            <div style={{ cursor: 'pointer' }}>
+                                                <AddCircleOutlineIcon onClick={() => incrementValue(item.productId)} />
+                                            </div>
                                         </div>
-                                        <button className='remove flex' onClick={() => remove(index)}><RemoveShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Remove</div></button>
+                                        <button className='remove flex' onClick={() => remove(item.productId)}>
+                                            <RemoveShoppingCartIcon style={{ width: '15px' }} />
+                                            <div className="heading2">Remove</div>
+                                        </button>
                                     </div>
                                 </div>
                             ))}
@@ -104,13 +139,16 @@ const Cart = () => {
                             <div className="heading2"><span>{currencySymbol} {totalSellPrice.toFixed(2)}</span></div>
                         </div>
                         <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
-                            <button className='btn addtocart flex' onClick={checkout}><ShoppingCartCheckoutIcon style={{ width: '15px' }} /><div className="heading2">Checkout</div></button>
+                            <button className='btn addtocart flex' onClick={checkout}>
+                                <ShoppingCartCheckoutIcon style={{ width: '15px' }} />
+                                <div className="heading2">Checkout</div>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default Cart;

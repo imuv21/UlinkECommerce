@@ -1,5 +1,5 @@
 
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "./BuyerDashboard.css";
 import { BsBox } from "react-icons/bs";
 import { RiMessage2Line } from "react-icons/ri";
@@ -15,19 +15,36 @@ import { FcDocument } from "react-icons/fc";
 import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineProfile } from "react-icons/ai";
-
+import { useSelector } from "react-redux";
 
 
 const BuyerDashboard = () => {
+
+  const user = useSelector((state) => state.auth.user);
+
   const [inviteMore, setInviteMore] = useState(false);
   const [userRole, setUserRole] = useState('')
   const [sendEmail, setSendEmail] = useState('')
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState("");
+
+  useEffect(() => {
+    console.log("User is authenticated:", !!user);
+    if (!!user) {
+      setCurrentStep(1);
+    }
+  }, [user]);
+
+ 
+  const navigateToProfile = useNavigate();
+
+  const BussinessProfile = () => {
+    navigateToProfile("/company-profile")
+  }
   const steps = [
     { id: 1, text: 'Register your account' },
     { id: 2, text: 'Complete your business profile' },
-    { id: 3, text: 'Verify your email' },
-    { id: 4, text: 'Set up payment information' },
+    { id: 3, text: 'Upload your bussiness documents' },
+    { id: 4, text: 'Your business documents are verified' },
   ];
   const handleRadioChange = (stepId) => {
     setCurrentStep(stepId);
@@ -45,10 +62,7 @@ const BuyerDashboard = () => {
   const handleUserRole = (e) => {
     setUserRole(e.target.value)
   }
-
   //   Steps wise varification
-
-
   return (
     <Fragment>
       <Helmet>
@@ -100,15 +114,13 @@ const BuyerDashboard = () => {
         )}
       </div>
       <div className="userDashboard">
-        <h1 className="user-title">Hi, Vipin Kumar</h1>
-        <p className="user-subtitle">Vipin Kumar</p>
+        <h1 className="user-title">Hi, {user.firstname}{user.lastname}</h1>
+        <p className="user-subtitle">{user.firstname}{user.lastname} </p>
       </div>
-
       {/* Upload Document */}
       <div className="upload-document">
         <h1 className="upload-document-title">Complete these steps to verify your business</h1>
         <div className="document-container">
-
           <div className="document-container-1">
             <h1 className="upload-document-title">Upload business documents</h1>
             <div className="upload-document-info">
@@ -125,12 +137,9 @@ const BuyerDashboard = () => {
             </div>
             <button className="uploadbtns" onClick={inviteMoreUser}>INVITE USER</button>
           </div>
-
         </div>
       </div>
-
       {/* Steps Varification */}
-
       <div className="upload-document step-varification-process">
         <div className="document-container">
           <div className="document-container-1">
@@ -156,9 +165,9 @@ const BuyerDashboard = () => {
             </div>
           </div>
           <div className="document-container-1 document-container-2">
-            <AiOutlineProfile className="profile-icons-1"/>
+            <AiOutlineProfile className="profile-icons-1" />
             <p className="bussiness-profile">Complete Your Bussiness Profile</p>
-            <button className="edit-detail-button bussines-profile-button">Bussiness Profile</button>
+            <button className="edit-detail-button bussines-profile-button" onClick={BussinessProfile}>Bussiness Profile</button>
           </div>
         </div>
       </div>

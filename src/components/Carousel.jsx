@@ -18,9 +18,10 @@ const Carousel = () => {
 
     //pagination
     const [page, setPage] = useState(0);
+    const [size, setSize] = useState(12);
     useEffect(() => {
-        dispatch(fetchProducts({ page }));
-    }, [dispatch, page]);
+        dispatch(fetchProducts({ page, size }));
+    }, [dispatch, page, size]);
 
     useEffect(() => {
         if (status === 'idle') {

@@ -12,9 +12,10 @@ const FilterPage = () => {
 
     //pagination
     const [page, setPage] = useState(0);
+    const [size, setSize] = useState(10);
     useEffect(() => {
-        dispatch(fetchProducts({ page }));
-    }, [dispatch, page]);
+        dispatch(fetchProducts({ page, size }));
+    }, [dispatch, page, size]);
     const handlePageChange = (newPage) => {
         setPage(newPage);
     };
