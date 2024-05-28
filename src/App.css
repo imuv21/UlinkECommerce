@@ -1750,6 +1750,7 @@ button:focus {
 .procont {
   width: 100%;
   display: flex;
+  flex-direction: column;
   gap: 30px;
 }
 
@@ -2277,10 +2278,8 @@ button:focus {
 
 .top-deal-1 {
   width: 100%;
-  height: 280px;
   aspect-ratio: 4/2;
   object-fit: cover;
-  border-radius: 10px;
 }
 
 .all-offers-deals {

@@ -62,6 +62,7 @@ const Profile = () => {
                             <Link to={'/verify-update-password'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update password</Link>
                         </div>
                     </div>
+                    
                 </div>
             )}
         </div>

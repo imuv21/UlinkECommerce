@@ -39,7 +39,7 @@ const SellerOrder = () => {
                 </div>
                 {currentPage === 1 && (
                     <Fragment>
-                        <form className='searchBoxPro' onSubmit={searchSubmitHandler}>
+                        <form className='searchBoxPro' style={{display: 'none'}} onSubmit={searchSubmitHandler}>
                             <input type='text' className='searchinputPro' placeholder='Search for orders...' onChange={(e) => setKeyword(e.target.value)} />
                             <button type='submit' className='searchbtnPro'><SearchIcon /></button>
                             <select name="reasons" className='searchselectPro'>
@@ -76,7 +76,7 @@ const SellerOrder = () => {
                                 <option value="lowest">Price - lowest</option>
                             </select>
                         </form>
-                        <div className='productlist5' style={{ overflow: 'auto' }}>
+                        <div className='productlist5' style={{ overflow: 'auto', display: 'none' }}>
                             <div className="searchBoxPro2 grid-head">
                                 <div></div>
                                 <div className="heading3">Image</div>
@@ -101,6 +101,12 @@ const SellerOrder = () => {
                                 <div className="heading2">Visibility</div>
                                 <div className="heading2 flexcol"><EditNoteIcon style={{ cursor: 'pointer' }} /><DeleteIcon style={{ cursor: 'pointer' }} /> </div>
                             </div>
+                        </div>
+
+                        <div className="productlist">
+                            <img src={empty} className='productlist-img' alt="empty box" />
+                            <div className="heading">You do not have any products in this state</div>
+                            <div className="descrip2">This is where you will be able to view and manage your products</div>
                         </div>
 
                     </Fragment>
@@ -116,7 +122,7 @@ const SellerOrder = () => {
                 )}
                 {currentPage === 3 && (
                     <Fragment>
-                        <form className='searchBoxPro' onSubmit={searchSubmitHandler}>
+                        <form className='searchBoxPro' style={{display: 'none'}} onSubmit={searchSubmitHandler}>
                             <input type='text' className='searchinputPro' placeholder='Search for products...' onChange={(e) => setKeyword(e.target.value)} />
                             <button type='submit' className='searchbtnPro'><SearchIcon /></button>
 
@@ -131,7 +137,7 @@ const SellerOrder = () => {
                                 <option value="two">two</option>
                             </select>
                         </form>
-                        <div className='productlist5' style={{ overflow: 'auto' }}>
+                        <div className='productlist5' style={{ overflow: 'auto', display: 'none' }}>
                             <div className="searchBoxPro2 grid-head">
                                 <div></div>
                                 <div className="heading3">Image</div>
@@ -158,11 +164,17 @@ const SellerOrder = () => {
                             </div>
                         </div>
 
+                        <div className="productlist">
+                            <img src={empty} className='productlist-img' alt="empty box" />
+                            <div className="heading">You do not have any products in this state</div>
+                            <div className="descrip2">This is where you will be able to view and manage your products</div>
+                        </div>
+
                     </Fragment>
                 )}
                 {currentPage === 4 && (
                     <Fragment>
-                        <form className='searchBoxPro' onSubmit={searchSubmitHandler}>
+                        <form className='searchBoxPro' style={{display: 'none'}} onSubmit={searchSubmitHandler}>
                             <input type='text' className='searchinputPro' placeholder='Search for products...' onChange={(e) => setKeyword(e.target.value)} />
                             <button type='submit' className='searchbtnPro'><SearchIcon /></button>
                             <select name="reasons" className='searchselectPro'>
@@ -181,7 +193,7 @@ const SellerOrder = () => {
                                 <option value="two">two</option>
                             </select>
                         </form>
-                        <div className='productlist5' style={{ overflow: 'auto' }}>
+                        <div className='productlist5' style={{ overflow: 'auto', display: 'none' }}>
                             <div className="searchBoxPro2 grid-head">
                                 <div></div>
                                 <div className="heading3">Image</div>
@@ -208,11 +220,17 @@ const SellerOrder = () => {
                             </div>
                         </div>
 
+                        <div className="productlist">
+                            <img src={empty} className='productlist-img' alt="empty box" />
+                            <div className="heading">You do not have any products in this state</div>
+                            <div className="descrip2">This is where you will be able to view and manage your products</div>
+                        </div>
+
                     </Fragment>
                 )}
                 {currentPage === 5 && (
                     <Fragment>
-                        <form className='searchBoxPro' onSubmit={searchSubmitHandler}>
+                        <form className='searchBoxPro' style={{display: 'none'}} onSubmit={searchSubmitHandler}>
                             <input type='text' className='searchinputPro' placeholder='Search for products...' onChange={(e) => setKeyword(e.target.value)} />
                             <button type='submit' className='searchbtnPro'><SearchIcon /></button>
                             <select name="reasons" className='searchselectPro'>
@@ -231,7 +249,7 @@ const SellerOrder = () => {
                                 <option value="two">two</option>
                             </select>
                         </form>
-                        <div className='productlist5' style={{ overflow: 'auto' }}>
+                        <div className='productlist5' style={{ overflow: 'auto', display: 'none' }}>
                             <div className="searchBoxPro2 grid-head">
                                 <div></div>
                                 <div className="heading3">Image</div>
@@ -258,11 +276,16 @@ const SellerOrder = () => {
                             </div>
                         </div>
 
+                        <div className="productlist">
+                            <img src={empty} className='productlist-img' alt="empty box" />
+                            <div className="heading">You do not have any products in this state</div>
+                            <div className="descrip2">This is where you will be able to view and manage your products</div>
+                        </div>
                     </Fragment>
                 )}
                 {currentPage === 6 && (
                     <Fragment>
-                        <form className='searchBoxPro' onSubmit={searchSubmitHandler}>
+                        <form className='searchBoxPro' style={{display: 'none'}} onSubmit={searchSubmitHandler}>
                             <input type='text' className='searchinputPro' placeholder='Search for products...' onChange={(e) => setKeyword(e.target.value)} />
                             <button type='submit' className='searchbtnPro'><SearchIcon /></button>
 
@@ -277,7 +300,7 @@ const SellerOrder = () => {
                                 <option value="two">two</option>
                             </select>
                         </form>
-                        <div className='productlist5' style={{ overflow: 'auto' }}>
+                        <div className='productlist5' style={{ overflow: 'auto', display: 'none' }}>
                             <div className="searchBoxPro2 grid-head">
                                 <div></div>
                                 <div className="heading3">Image</div>
@@ -304,6 +327,11 @@ const SellerOrder = () => {
                             </div>
                         </div>
 
+                        <div className="productlist">
+                            <img src={empty} className='productlist-img' alt="empty box" />
+                            <div className="heading">You do not have any products in this state</div>
+                            <div className="descrip2">This is where you will be able to view and manage your products</div>
+                        </div>
                     </Fragment>
                 )}
             </div>
