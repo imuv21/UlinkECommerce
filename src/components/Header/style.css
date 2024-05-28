@@ -14,8 +14,8 @@
 .popup {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  justify-content: start;
   position: fixed;
   height: fit-content;
   transform: translateX(-70%);
@@ -47,7 +47,8 @@
 .options-popup{
   padding: 20px 15px;
   width: fit-content;
-  height: fit-content;
+  justify-content: space-between !important;
+  height: 500px;
   top: 0px;
   left: 220px;
 }
