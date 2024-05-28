@@ -106,7 +106,7 @@ const miniSubOptions = {
   WritingMaterial: ["AddressAndAccountingBooks", "CalendarJournalAndDiaries","NotebooksAndWritingPads","StickyNotesAndNoteCards"],
 
   Hair: ["HairAccessories", "HairCare","HairColoring","HairStylingProducts"], 
-  PersonalCare: ["BathAndBody", "HairSalonDisposables","MassageAndRelaxation","OralAndDentalCare","ShavingAndHairRemovalProducts",""], 
+  PersonalCare: ["BathAndBody", "HairSalonDisposables","MassageAndRelaxation","OralAndDentalCare","ShavingAndHairRemovalProducts"], 
   PersonalCareTools: ["HairStylingTools", "ShavingAndHairRemovalTools"], 
 
   AnimalFeedsAndSupplements: ["AnimalFeedsAndSupplements",""], 

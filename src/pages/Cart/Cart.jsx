@@ -78,6 +78,17 @@ const Cart = () => {
   }
 
   const cartItems = cart || [];
+  const totalItems = cartItems.length;
+
+  const truncateText = (text, maxLength) => {
+    if (!text) {
+      return '';
+    }
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.slice(0, maxLength) + '...';
+  }
 
 
   return (
@@ -86,7 +97,7 @@ const Cart = () => {
         <title>Cart</title>
       </Helmet>
       <div className="flex wh">
-        <div className="heading wh">My Cart </div>
+        <div className="heading wh">My Cart ({totalItems})</div>
       </div>
       <div className="cart_cont wh">
         <div className="cartcol_one" tabIndex={0} ref={scrollRef}>
@@ -103,10 +114,10 @@ const Cart = () => {
                       <div>No Image Available</div>
                     )}
                   </div>
-                  
+
                   <div className="cartDetail">
                     <div className="heading2">
-                      {item.itemName.length > 50 ? `${item.itemName.substring(0, 50)}...` : item.itemName}
+                      {truncateText(item.itemName, 50)}
                     </div>
                     <div className="flex" style={{ gap: '15px' }}>
                       <span className='descrip2' style={{ textDecoration: 'line-through' }}>{currencySymbol} {parseFloat(item.unitPrice).toFixed(2)}</span>

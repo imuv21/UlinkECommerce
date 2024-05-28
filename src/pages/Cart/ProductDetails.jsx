@@ -103,7 +103,7 @@ const ProductDetails = () => {
 
     const cartHandler = () => {
         if (!product) return;
-        console.log('Product ID:', id); 
+        console.log('Product ID:', id);
         console.log('Quantity:', value);
         dispatch(addToCart({ productId: id, quantity: value }));
         alert(`${value} items added to cart successfully!`);
@@ -296,44 +296,46 @@ const ProductDetails = () => {
 
                 <div className="overview">
                     <div className="overview_one">
-                        <div className="over-heading">
-                            {product.sku && <div>Seller SKU ID</div>}
-                            {product.specifications && <div>Specifications</div>}
-                            {product.avgBatteryLife && <div>Average battery life</div>}
-                            {product.connectivityType && <div>Connectivity type</div>}
-                            {product.opSystem && <div>Operating system</div>}
-                            {product.portType && <div>Port type</div>}
-                            {product.dgrGoods && <div>Dangerous goods</div>}
-                            {product.availability && <div>Availability</div>}
-                            {product.PrivateLabel && <div>Private Label</div>}
-                        </div>
-                        <div className="over-field">
-                            {product.sku && <div className='captext'>{product.sku}</div>}
-                            {product.specifications && <div className='captext'>{product.specifications}</div>}
-                            {product.avgBatteryLife && <div className='captext'>{product.avgBatteryLife}</div>}
-                            {product.connectivityType && <div className='captext'>{product.connectivityType}</div>}
-                            {product.opSystem && <div className='captext'>{product.opSystem}</div>}
-                            {product.portType && <div className='captext'>{product.portType}</div>}
-                            {product.dgrGoods && <div className='captext'>{product.dgrGoods}</div>}
-                            {product.availability && <div className='captext'>{product.availability}</div>}
-                            {product.PrivateLabel && <div className='captext'>{product.PrivateLabel}</div>}
-                        </div>
+                        {product.sku && <div className="over-heading"><div>Seller SKU ID</div> <div className='captext'>{product.sku}</div></div>}
+                        {product.specifications && <div className="over-heading"><div>Specifications</div> <div className='captext'>{product.specifications}</div></div>}
+                        {product.avgBatteryLife && <div className="over-heading"><div>Average battery life</div> <div className='captext'>{product.avgBatteryLife}</div></div>}
+                        {product.connectivityType && <div className="over-heading"><div>Connectivity type</div> <div className='captext'>{product.connectivityType}</div></div>}
+                        {product.opSystem && <div className="over-heading"><div>Operating system</div> <div className='captext'>{product.opSystem}</div></div>}
+                        {product.portType && <div className="over-heading"><div>Port type</div> <div className='captext'>{product.portType}</div></div>}
+                        {product.availability && <div className="over-heading"><div>Availability</div> <div className='captext'>{product.availability}</div></div>}
+                        {product.PrivateLabel && <div className="over-heading"><div>Private label</div> <div className='captext'>{product.PrivateLabel}</div></div>}
+                        {product.origin && <div className="over-heading"><div>Country of origin</div> <div className='captext'>{product.origin}</div></div>}
+                        {product.StockLocation && <div className="over-heading"><div>Stock location</div> <div className='captext'>{product.StockLocation}</div></div>}
+                        {product.temperature && <div className="over-heading"><div>Temperature</div> <div className='captext'>{product.temperature}</div></div>}
+                        {product.gender && <div className="over-heading"><div>Gender</div> <div className='captext'>{product.gender}</div></div>}
+                        {product.shelflife && <div className="over-heading"><div>Shelf life</div> <div className='captext'>{product.shelflife}</div></div>}
+                        {product.ingredients && <div className="over-heading"><div>Ingredients</div> <div className='captext'>{product.ingredients}</div></div>}
+                        {product.material && <div className="over-heading"><div>Material</div> <div className='captext'>{product.material}</div></div>}
+                        {product.compatibility && <div className="over-heading"><div>Compatibility</div> <div className='captext'>{product.compatibility}</div></div>}
+                        {product.memoryStorage && <div className="over-heading"><div>Memory storage</div> <div className='captext'>{product.memoryStorage}</div></div>}
+                        {product.version && <div className="over-heading"><div>Version</div> <div className='captext'>{product.version}</div></div>}
                     </div>
                     <div className="overview_one">
-                        <div className="over-heading">
-                            {product.colors && <div>Color</div>}
-                            {product.productLgh && <div>Item length</div>}
-                            {product.productWdh && <div>Item width</div>}
-                            {product.productHgt && <div>Item height</div>}
-                            {product.productWgt && <div>Item weight</div>}
-                        </div>
-                        <div className="over-field">
-                            {product.colors && <div className='captext'>{product.colors}</div>}
-                            {product.productLgh && product.dimensionUnit && <div className='captext'>{product.productLgh} {product.dimensionUnit}</div>}
-                            {product.productWdh && product.dimensionUnit && <div className='captext'>{product.productWdh} {product.dimensionUnit}</div>}
-                            {product.productHgt && product.dimensionUnit && <div className='captext'>{product.productHgt} {product.dimensionUnit}</div>}
-                            {product.productWgt && product.productWgtUnit && <div className='captext'>{product.productWgt} {product.productWgtUnit}</div>}
-                        </div>
+                        {product.colors && <div className="over-heading"><div>Color</div> <div className='captext'>{product.colors}</div></div>}
+                        {(product.productLgh && product.dimensionUnit) && <div className="over-heading"><div>Item length</div> <div className='captext'>{product.productLgh} {product.dimensionUnit}</div></div>}
+                        {(product.productWdh && product.dimensionUnit) && <div className="over-heading"><div>Item width</div> <div className='captext'>{product.productWdh} {product.dimensionUnit}</div></div>}
+                        {(product.productHgt && product.dimensionUnit) && <div className="over-heading"><div>Item height</div> <div className='captext'>{product.productHgt} {product.dimensionUnit}</div></div>}
+                        {(product.productWgt && product.productWgtUnit) && <div className="over-heading"><div>Item weight</div> <div className='captext'>{product.productWgt} {product.productWgtUnit}</div></div>}
+                        {product.screenSize && <div className="over-heading"><div>Screen size</div> <div className='captext'>{product.screenSize}</div></div>}
+                        {product.ram && <div className="over-heading"><div>RAM</div> <div className='captext'>{product.ram}</div></div>}
+                        {product.lensType && <div className="over-heading"><div>Lens type</div><div className='captext'>{product.lensType}</div></div>}
+                        {product.fitSize && <div className="over-heading"><div>Fit size</div> <div className='captext'>{product.fitSize}</div></div>}
+                        {product.form && <div className="over-heading"><div>Form</div> <div className='captext'>{product.form}</div></div>}
+                        {product.skinType && <div className="over-heading"><div>Skin type</div> <div className='captext'>{product.skinType}</div></div>}
+                        {product.voltage && <div className="over-heading"><div>Voltage</div> <div className='captext'>{product.voltage}</div></div>}
+                        {product.power && <div className="over-heading"><div>Power</div> <div className='captext'>{product.power}</div></div>}
+                        {product.powerPlugType && <div className="over-heading"><div>Power plug type</div> <div className='captext'>{product.powerPlugType}</div></div>}
+                        {product.condition && <div className="over-heading"><div>Condition</div> <div className='captext'>{product.condition}</div></div>}
+                        {product.pattern && <div className="over-heading"><div>Pattern</div> <div className='captext'>{product.pattern}</div></div>}
+                        {product.flavor && <div className="over-heading"><div>Flavor</div> <div className='captext'>{product.flavor}</div></div>}
+                        {product.petSize && <div className="over-heading"><div>Pet size</div> <div className='captext'>{product.petSize}</div></div>}
+                        {product.ageRange && <div className="over-heading"><div>Age range</div> <div className='captext'>{product.ageRange}</div></div>}
+                        {product.powerSource && <div className="over-heading"><div>Power source</div> <div className='captext'>{product.powerSource}</div></div>}
                     </div>
                 </div>
 

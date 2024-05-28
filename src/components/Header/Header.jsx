@@ -7,12 +7,11 @@ import ListIcon from '@mui/icons-material/List';
 import SearchIcon from '@mui/icons-material/Search';
 import Drawer from '@mui/material/Drawer';
 import { useCart } from '../context/CartContext';
-import ReactFlagsSelect from "react-flags-select";
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../Redux/AuthReducer';
 import { urls } from '../Schemas/images';
-import { supOptions, subOptions } from '../Schemas/cate';
+import { supOptions, subOptions, miniSubOptions } from '../Schemas/cate';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 import HomeIcon from '@mui/icons-material/Home';
@@ -28,22 +27,17 @@ import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import DepartureBoardIcon from '@mui/icons-material/DepartureBoard';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 
-
-
 const Header = () => {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const token = useSelector((state) => state.auth.token);
-
-
-  const [selected, setSelected] = useState("IN");
+  const { items: cart } = useSelector((state) => state.cart);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
-
 
   //clicks
   const [isClicked, setIsClicked] = useState(false);
@@ -61,7 +55,6 @@ const Header = () => {
     setIsClickedTwo(prevState => !prevState);
   };
 
-
   useEffect(() => {
     const handleScroll = () => {
       if (isClicked || isClickedCate || isClickedTwo) {
@@ -77,17 +70,14 @@ const Header = () => {
     };
   }, [isClicked, isClickedCate, isClickedTwo]);
 
-
-
-
-
   const navigate = useNavigate();
   const tocart = () => {
     navigate('/cart');
   }
 
-  const { cart } = useCart();
-  const carttext = Object.values(cart).length;
+
+  const cartItems = cart || [];
+  const carttext = cartItems.length;
   const numCharacters = carttext;
   let width;
   let height;
@@ -150,23 +140,31 @@ const Header = () => {
   //images
   const logo = urls[0];
 
-
   //categories
   const [hoveredOption, setHoveredOption] = useState(null);
-
   const handleMouseEnter = (index) => {
     setHoveredOption(index);
   };
-
   const handleMouseLeave = () => {
     setHoveredOption(null);
   };
 
   const getPopupContent = (option) => {
     return (
-      <div className="popupbox">
-        {subOptions[option].map((subOption, index) => (
-          <div className='subpop-options' key={index}>{convertPascalToReadable(subOption)}</div>
+      <div className='cate-grid'>
+        {subOptions[option].slice(0, 3).map((subOption, index) => (
+          <div className="popupbox-cate">
+            <div className='subpop-options underline' key={index}>
+              {convertPascalToReadable(subOption)}
+            </div>
+            <div className="cate-options">
+              {miniSubOptions[subOption].slice(0, 18).map((miniSubOption, miniIndex) => (
+                <div className='sub-cate-options' key={miniIndex}>
+                  {convertPascalToReadable(miniSubOption)}
+                </div>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     );
@@ -283,10 +281,15 @@ const Header = () => {
                 <div className='popupbox'>
                   {supOptions.map((option, index) => (
                     <div className="subpop-options options-relative" key={index} onMouseEnter={() => handleMouseEnter(index)}>
-                      {convertPascalToReadable(option)}
+                    
+                        {convertPascalToReadable(option)}
+                  
                       {hoveredOption === index && (
                         <div className="popup options-popup">
                           {getPopupContent(option)}
+                          <div className='wh'>
+                            <Link to="/search-results" className="subpop-options underline" style={{ color: 'var(--CodeTwo)' }}>More categories</Link>
+                          </div>
                         </div>
                       )}
                     </div>

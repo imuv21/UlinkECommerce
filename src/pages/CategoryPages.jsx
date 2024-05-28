@@ -11,12 +11,13 @@ const BrandCarousel = lazy(() => import('../components/BrandCarousel'));
 import Sliders from 'react-slick';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../Redux/productSlice';
+import ProductCard from '../components/ProductCard';
 
 const CategoryPages = () => {
   const navigate = useNavigate()
   const { category } = useParams()
   const [productShow, setProductShow] = useState([])
-//  Electronic Object Image
+  //  Electronic Object Image
   const sliderItems = [
     { image: ImageImport.Mobile, title: 'Mobile Phone' },
     { image: ImageImport.Camera, title: 'Camera' },
@@ -40,17 +41,17 @@ const CategoryPages = () => {
   ];
 
   //  product show 
-  
+
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
 
-  useEffect (()=> {
+
+  useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch])
 
 
-  //  I want to show here the categorywise product
-     
+
 
 
   const truncateText = (text, maxLength) => {
@@ -105,7 +106,7 @@ const CategoryPages = () => {
           slidesToScroll: 1,
         },
       },
-      
+
       {
         breakpoint: 460,
         settings: {
@@ -197,23 +198,23 @@ const CategoryPages = () => {
               </div>
             </div>
             <div className='show-all'>
-            
-                        {
-                            products.map((product, index) => (
-                                <a className='show-img-detail' key={index} href={`/product-details/${product.productId}`}>
-                                    <img className='product-img-size' src={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} alt='img' />
-                                    <div className='product-detail-info'>
-                                        <p className='product-title'>{truncateText(product.productName, 20)} </p>
-                                        <p className='product-price'>{product.currencySymbol}{parseFloat(product.sellPrice).toFixed(2)}/ piece incl value</p>
-                                        <div className='flex' style={{ gap: '10px' }}>
-                                            <p className='product-discount'>{product.currencySymbol}{parseFloat(product.unitPrice).toFixed(2)}</p>
-                                            <span className='discount-percentage'>{(((product.unitPrice - product.sellPrice) / product.unitPrice) * 100).toFixed(2)}% OFF</span>
-                                        </div>
-                                        <p className='product-quantity'>Min Order: {product.minOrderQuant} peace</p>
-                                    </div>
-                                </a>
-                            ))
-                        }
+              {
+                products.map((product, index) => (
+                  <a className='show-img-detail' key={index} href={`/product-details/${product.productId}`}>
+                    <img className='product-img-size' src={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} alt='img' />
+                    <div className='product-detail-info'>
+                      <p className='product-title'>{truncateText(product.productName, 20)} </p>
+                      <p className='product-price'>{product.currencySymbol}{parseFloat(product.sellPrice).toFixed(2)}/ piece incl value</p>
+                      <div className='flex' style={{ gap: '10px' }}>
+                        <p className='product-discount'>{product.currencySymbol}{parseFloat(product.unitPrice).toFixed(2)}</p>
+                        <span className='discount-percentage'>{(((product.unitPrice - product.sellPrice) / product.unitPrice) * 100).toFixed(2)}% OFF</span>
+
+                      </div>
+                      <p className='product-quantity'>Min Order: {product.minOrderQuant} peace</p>
+                    </div>
+                  </a>
+                ))
+              }
             </div>
           </div>
         );
@@ -239,23 +240,31 @@ const CategoryPages = () => {
               </div>
             </div>
             <div className='category-section'>
-      <Sliders {...settings}>
-        {sliderItems.map((category, index) => (
-           <div  key={index} className='category-image'>
-            <div className="category-image-sub">
-              <img className='img-aspect' src={category.image} alt={category.name}></img>
-              <div className='cate-title'>
-                <p className='category-img-title'>{category.title}</p>
-              </div>
+              <Sliders {...settings}>
+                {sliderItems.map((category, index) => (
+                  <div key={index} className='category-image'>
+                    <div className="category-image-sub">
+                      <img className='img-aspect' src={category.image} alt={category.name}></img>
+                      <div className='cate-title'>
+                        <p className='category-img-title'>{category.title}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </Sliders>
             </div>
-          </div>
-        ))}
-      </Sliders>
-    </div>
             <img className='banner-width' src={ImageImport.Tclbanner} ></img>
-            <div className="product-slider-cont product-width">
-              <Carousel />
-            </div>
+            <div className="product-slider-cont">
+            <Sliders {...settings}>
+            {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'consumerelectronics')).map((product) => (
+                    <div className='show-img-detail-sup' key={product.productId}>
+                        <Suspense fallback={<Loader />}>                                                   
+                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
+                        </Suspense>
+                    </div>
+                ))}
+            </Sliders>
+        </div>
             <img className='banner-width' src={ImageImport.Sumsungbanner} ></img>
             <div className='best-deals-product'>
               <div className=''>
@@ -281,9 +290,17 @@ const CategoryPages = () => {
                 <h4 className='show-all-product'>Show All</h4>
               </div>
             </div>
-            <div className="product-slider-cont product-width">
-              <Carousel />
-            </div>
+            <div className="product-slider-cont">
+            <Sliders {...settings}>
+            {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'consumerelectronics')).map((product) => (
+                    <div className='show-img-detail-sup' key={product.productId}>
+                        <Suspense fallback={<Loader />}>                                                   
+                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
+                        </Suspense>
+                    </div>
+                ))}
+            </Sliders>
+        </div>
             <div className='best-deals-product'>
               <div className='flex'>
                 <h3>Best Selling Mobile Acceseries</h3>
@@ -294,9 +311,17 @@ const CategoryPages = () => {
                 <h4 className='show-all-product'>Show All</h4>
               </div>
             </div>
-            <div className="product-slider-cont product-width">
-              <Carousel />
-            </div>
+            <div className="product-slider-cont">
+            <Sliders {...settings}>
+            {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'consumerelectronics')).map((product) => (
+                    <div className='show-img-detail-sup' key={product.productId}>
+                        <Suspense fallback={<Loader />}>                                                   
+                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
+                        </Suspense>
+                    </div>
+                ))}
+            </Sliders>
+        </div>
             <div className='banner-page'>
               <img className='banner-width' src={ImageImport.OldItemBanner} ></img>
             </div>
@@ -341,19 +366,19 @@ const CategoryPages = () => {
               </div>
             </div>
             <div className='category-section'>
-      <Sliders {...settings}>
-        {stationaryItems.map((category, index) => (
-           <div  key={index} className='category-image'>
-            <div className="category-image-sub">
-              <img className='img-aspect' src={category.image} alt={category.name}></img>
-              <div className='cate-title'>
-                <p className='category-img-title'>{category.title}</p>
-              </div>
+              <Sliders {...settings}>
+                {stationaryItems.map((category, index) => (
+                  <div key={index} className='category-image'>
+                    <div className="category-image-sub">
+                      <img className='img-aspect' src={category.image} alt={category.name}></img>
+                      <div className='cate-title'>
+                        <p className='category-img-title'>{category.title}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </Sliders>
             </div>
-          </div>
-        ))}
-      </Sliders>
-    </div>
             <div className='best-deals-product'>
               <div className=''>
                 <h3>Shop By Brand</h3>
@@ -384,13 +409,31 @@ const CategoryPages = () => {
                 <h4 className='show-all-product'>Show All</h4>
               </div>
             </div>
-            <div className="product-slider-cont product-width">
-              <Carousel />
+   
+            <div className="product-slider-cont">
+            <Sliders {...settings}>
+            {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'officeandstationery')).map((product) => (
+                    <div className='show-img-detail-sup' key={product.productId}>
+                        <Suspense fallback={<Loader />}>                                                   
+                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
+                        </Suspense>
+                    </div>
+                ))}
+            </Sliders>
+        </div>
+            <div className="product-slider-cont">
+            <Sliders {...settings}>
+            {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === '')).map((product) => (
+                    <div className='show-img-detail-sup' key={product.productId}>
+                        <Suspense fallback={<Loader />}>                                                   
+                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
+                        </Suspense>
+                    </div>
+                ))}
+            </Sliders>
+        </div>
             </div>
-            <div className="product-slider-cont product-width">
-              <Carousel />
-            </div>
-          </div>
+         
         );
       case 'food':
         return (
@@ -415,7 +458,7 @@ const CategoryPages = () => {
   return (
     <>
       <Suspense fallback={<Loader />}>
-      
+
         {renderPage()}
       </Suspense>
     </>

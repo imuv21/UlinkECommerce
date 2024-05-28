@@ -722,11 +722,6 @@ const AddSingle = () => {
                 )}
                 />
 
-
-
-
-
-
                 {selectedSupOption === "FoodAndBeverages" && (
                     <Controller name="shelflife" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.shelflife || ''} onChange={handleChange} className="box flex" placeholder='Enter shelf life (days)' {...field} />} />
                 )}
@@ -890,7 +885,6 @@ const AddSingle = () => {
                     )}
                     />
                 )}
-
 
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                     <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Save Draft</div></button>
