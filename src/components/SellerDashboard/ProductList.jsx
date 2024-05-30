@@ -1,5 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchSellerProducts } from '../../Redux/sellerProductSlice';
 import SearchIcon from '@mui/icons-material/Search';
 import empty from '../../assets/empty.png';
 import demo from '../../assets/demo.jpg';
@@ -7,7 +9,21 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Helmet } from 'react-helmet-async';
 
+
 const ProductList = () => {
+
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.auth.user);
+    const { sellerProducts, loading, error } = useSelector((state) => state.sellerProducts);
+
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(20);
+    useEffect(() => {
+        dispatch(fetchSellerProducts({ page, size }));
+    }, [dispatch, page, size]);
+
 
     const addsingle = () => {
         navigate('/seller-dashboard/add-single-product');
@@ -15,28 +31,26 @@ const ProductList = () => {
 
     const [clickedIndex, setClickedIndex] = useState(null);
     const [selectedItem, setSelectedItem] = useState({});
-    const tax = 10;
 
     const [currentPage, setCurrentPage] = useState(1);
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
 
-    const productDetail = (index) => {
-        navigate(`/product-details/${index}`);
+    const productDetail = (id) => {
+        navigate(`/product-details/${id}`);
     };
 
     //popup
     const [showPopup, setShowPopup] = useState(false);
     const handleAddAddress = (index) => {
         setClickedIndex(index);
-        setSelectedItem(singleFormData[index]);
+        setSelectedItem(sellerProducts[index]);
         setShowPopup(true);
     };
     const handleClosePopup = () => {
         setShowPopup(false);
     };
-
 
     //page 1
     const [keyword, setKeyword] = useState("");
@@ -44,19 +58,10 @@ const ProductList = () => {
         e.preventDefault();
     };
 
-
-    //form data handling
-    const [singleFormData, setSingleFormData] = useState([]);
-    const navigate = useNavigate();
-    useEffect(() => {
-        const savedSingleFormData = JSON.parse(localStorage.getItem('singleFormData')) || [];
-        setSingleFormData(savedSingleFormData.map(item => ({ ...item, images: item.images || [] })));
-    }, []);
-
-
     const handleEdit = (index) => {
         navigate(`/editsingle/${index}`);
     };
+
     const handleDelete = (index) => {
         const updatedSingleFormData = [...singleFormData];
         updatedSingleFormData.splice(index, 1);
@@ -64,48 +69,48 @@ const ProductList = () => {
         setSingleFormData(updatedSingleFormData);
     };
 
-
-
     //discount calculator
     const calculateDiscountPercentage = () => {
-        const salePrice = parseFloat(selectedItem.salePrice);
+        const sellPrice = parseFloat(selectedItem.sellPrice);
         const unitPrice = parseFloat(selectedItem.unitPrice);
 
-        if (isNaN(salePrice) || isNaN(unitPrice)) {
+        if (isNaN(sellPrice) || isNaN(unitPrice)) {
             return 'N/A';
         }
 
-        const discount = ((unitPrice - salePrice) / unitPrice) * 100;
+        const discount = ((unitPrice - sellPrice) / unitPrice) * 100;
         return `${discount.toFixed(2)}%`;
     };
 
-
     // Calculate Ulink Fee
     const calculateUlinkFee = () => {
-        const salePrice = parseFloat(selectedItem.salePrice);
-        const commission = parseFloat(selectedItem.commission);
+        const sellPrice = parseFloat(selectedItem.sellPrice);
+        const commision = parseFloat(selectedItem.commision);
         const quantity = 1;
 
-        if (isNaN(salePrice)) {
+        if (isNaN(sellPrice)) {
             return 'N/A';
         }
-        const ulinkFee = (commission/100) * salePrice * quantity;
-        return `${ulinkFee.toFixed(2)}₹`;
+        const ulinkFee = (commision / 100) * sellPrice * quantity;
+        return `${ulinkFee.toFixed(2)}`;
     };
-
 
     // Calculate Cost per unit
     const calculateCostPerUnit = (product) => {
-        const salePrice = parseFloat(product.salePrice);
+        const sellPrice = parseFloat(product.sellPrice);
+        const tax = parseFloat(product.gst);
         const quantity = 1;
 
-        if (isNaN(salePrice)) {
+        if (isNaN(sellPrice)) {
             return 'N/A';
         }
-        const ulinkFee = 0.05 * salePrice * quantity;
+        const ulinkFee = 0.05 * sellPrice * quantity;
         const costPerUnit = ulinkFee + tax;
-        return `${costPerUnit.toFixed(2)}₹`;
+        return `${costPerUnit.toFixed(2)}`;
     };
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
 
     return (
@@ -130,28 +135,28 @@ const ProductList = () => {
                             <div className="popbox">
                                 <div className="heading wh">Revenue Calculator</div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Unit Price</div><div className='bbox'>{selectedItem.unitPrice}₹</div>
+                                    <div className="heading2">Unit Price</div><div className='bbox'>{selectedItem.unitPrice}{user.currencySymbol}</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Shipping Charges</div><div className='bbox'>0₹</div>
+                                    <div className="heading2">Shipping Charges</div><div className='bbox'>0{user.currencySymbol}</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Discount</div><div className='bbox'>{calculateDiscountPercentage()}</div>
+                                    <div className="heading2">Discount</div><div className='bbox'>{calculateDiscountPercentage()}{user.currencySymbol}</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Sale Price</div><div className='bbox'>{selectedItem.salePrice}₹</div>
+                                    <div className="heading2">Sale Price</div><div className='bbox'>{selectedItem.sellPrice}{user.currencySymbol}</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Ulinkit Fee</div><div className='bbox'>{calculateUlinkFee()}</div>
+                                    <div className="heading2">Ulinkit Fee</div><div className='bbox'>{calculateUlinkFee()}{user.currencySymbol}</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Taxes on Fee</div><div className='bbox'>{tax}₹</div>
+                                    <div className="heading2">Taxes on Fee</div><div className='bbox'>{selectedItem.gst}{user.currencySymbol}</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Marketing Fee</div><div className='bbox'>{selectedItem.commission}%</div>
+                                    <div className="heading2">Marketing Fee</div><div className='bbox'>{selectedItem.commision}%</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Cost Per Unit</div><div className='bbox'>{calculateCostPerUnit(selectedItem)}</div>
+                                    <div className="heading2">Cost Per Unit</div><div className='bbox'>{calculateCostPerUnit(selectedItem)}{user.currencySymbol}</div>
                                 </div>
 
                                 <div className="flex" style={{ gap: '20px' }}>
@@ -166,7 +171,7 @@ const ProductList = () => {
 
             <div className="productlist">
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
-                    <button onClick={() => handlePageChange(1)} className={currentPage === 1 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">All Products (1)</div></button>
+                    <button onClick={() => handlePageChange(1)} className={currentPage === 1 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">All Products ({sellerProducts.length})</div></button>
                     <button onClick={() => handlePageChange(2)} className={currentPage === 2 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Approved (1)</div></button>
                     <button onClick={() => handlePageChange(3)} className={currentPage === 3 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Pending Approval (1)</div></button>
                     <button onClick={() => handlePageChange(4)} className={currentPage === 4 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Rejected (0)</div></button>
@@ -201,7 +206,7 @@ const ProductList = () => {
                         </form>
                         <div className='productlist5' style={{ overflow: 'auto' }}>
 
-                            {singleFormData.length === 0 ? (
+                            {sellerProducts.length === 0 ? (
                                 <Fragment>
                                     <div className="productlist">
                                         <img src={empty} className='productlist-img' alt="empty box" />
@@ -226,31 +231,34 @@ const ProductList = () => {
                                         <div className="heading3"></div>
                                     </div>
 
-                                    {singleFormData.map((item, index) => (
-                                        <div className="searchBoxPro2" key={index}>
+                                    {sellerProducts.map((item, index) => (
+                                        <div className="searchBoxPro2" key={item.productId}>
                                             <div><input type="checkbox" /></div>
                                             <div>
-                                                {item.images.length > 0 && <img className='imgPro' src={item.images[0].url} alt={item.images[0].name} />}
+                                                {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
                                             </div>
-                                            <div className="heading2 download-btn" onClick={() => productDetail(index)} style={{ whiteSpace: 'nowrap' }}>
+                                            <div className="heading2 download-btn" onClick={() => productDetail(item.productId)} style={{ whiteSpace: 'nowrap' }}>
                                                 {item.productName.length > 15 ? `${item.productName.substring(0, 15)}...` : item.productName}
                                             </div>
-                                            <div className="heading2">{item.categoryPath.length > 15 ? `${item.categoryPath.substring(0, 15)}...` : item.categoryPath}</div>
+                                            <div className="heading2">
+                                                {item.category.length > 15 ? `${item.category.substring(0, 15)}...` : item.category}
+                                            </div>
                                             <div className="heading2">
                                                 <div className="flex" style={{ gap: '5px' }}>
-                                                    <span style={{ textDecoration: 'line-through', color: 'gray' }}>{item.unitPrice}₹</span>-<span style={{ fontWeight: 'bold' }}>{item.salePrice}₹</span>
+                                                    <span style={{ textDecoration: 'line-through', color: 'gray' }}>{user.currencySymbol}{item.unitPrice}</span>-<span style={{ fontWeight: 'bold' }}>{user.currencySymbol}{item.sellPrice}</span>
                                                 </div>
                                             </div>
-                                            <div className="heading2"><span className='download-btn' onClick={() => handleAddAddress(index)}> {calculateCostPerUnit(item)} </span></div>
+                                            <div className="heading2"><span className='download-btn' onClick={() => handleAddAddress(index)}> {calculateCostPerUnit(item)}{user.currencySymbol} </span></div>
                                             <div className="heading2" style={{ whiteSpace: 'nowrap' }}>
                                                 <div className="flexcol" style={{ gap: '2px' }}>
-                                                    <span style={{ fontWeight: 'bold' }}>{item.availableQuantity}</span>
+                                                    {/* <span style={{ fontWeight: 'bold' }}>{item.availableQuantity}</span> */}
+                                                    <span style={{ fontWeight: 'bold' }}>3</span>
                                                     <span style={{ fontSize: '12px' }}>MOQ is {item.minOrderQuant}</span>
                                                 </div>
                                             </div>
-                                            <div className="heading2">Pending</div>
-                                            <div className="heading2" style={{ whiteSpace: 'nowrap' }}>{item.time}</div>
-                                            <div className="heading2">Offline</div>
+                                            <div className="heading2">{item.status}</div>
+                                            <div className="heading2" style={{ whiteSpace: 'nowrap' }}>{new Date(item.updatedDate).toLocaleString()}</div>
+                                            <div className="heading2">{item.visibility}</div>
                                             <div className="heading2 flexcol">
                                                 <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEdit(index)} />
                                                 <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDelete(index)} />
@@ -261,7 +269,6 @@ const ProductList = () => {
                                 </Fragment>
                             )}
                         </div>
-
                     </Fragment>
                 )}
                 {currentPage === 2 && (

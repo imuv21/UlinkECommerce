@@ -111,7 +111,6 @@ const Carousel = () => {
 
 
     return (
-     
         <div className="product-slider-cont">
             <Sliders {...settings}>
             {Array.isArray(products) && products.map((product) => (

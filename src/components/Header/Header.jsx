@@ -6,7 +6,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ListIcon from '@mui/icons-material/List';
 import SearchIcon from '@mui/icons-material/Search';
 import Drawer from '@mui/material/Drawer';
-import { useCart } from '../context/CartContext';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../Redux/AuthReducer';

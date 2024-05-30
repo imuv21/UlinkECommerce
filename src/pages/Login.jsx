@@ -45,9 +45,14 @@ const Login = () => {
             const response = await axios.post(`${BASE_URL}/Login`, updatedLoggedUser);
             const { firstname, lastname, token, message, status, useraddress, country, countryOfoperation, whatsappnumber, currency, currencySymbol, role, email, number } = response.data;
             const user = { firstname, lastname, useraddress, countryOfoperation, whatsappnumber, currency, currencySymbol, country, role, email, number };
+
             dispatch(loginSuccess({ token, message, user }));
             alert(`${status} : ${message}`);
-            navigate('/');
+            if (role === 'Seller') {
+                navigate('/seller-dashboard/seller-home');
+            } else {
+                navigate('/');
+            }
         } catch (error) {
             const message = error.response?.data?.message || 'Login failed!';
             const status = error.response?.data?.status || 'error';
@@ -59,8 +64,8 @@ const Login = () => {
         setLoggedUser({ ...loggedUser, [e.target.name]: e.target.value });
     };
 
-     //json lottie animation
-     const options = {
+    //json lottie animation
+    const options = {
         animationData: animation,
         loop: true,
     };

@@ -101,6 +101,14 @@ const FilterPage = () => {
                         </div>
                     </div>
                     <div className="filterbox">
+                        <div className="heading2 wh" style={{ marginBottom: '5px' }}>Categories</div>
+                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Boat</div></div>
+                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Sharptek</div></div>
+                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Noise</div></div>
+                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">BlueParrott</div></div>
+                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Jbl</div></div>
+                    </div>
+                    <div className="filterbox">
                         <div className="heading2 wh" style={{ marginBottom: '5px' }}>Brands</div>
                         <div className="checkbox"><input type="checkbox" /><div className="descrip2">Boat</div></div>
                         <div className="checkbox"><input type="checkbox" /><div className="descrip2">Sharptek</div></div>

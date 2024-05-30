@@ -7,6 +7,7 @@ import otpReducer from './otpSlice';
 import sellerReducer from './sellerSlice';
 import productDetailSlice from './productDetailSlice';
 import cartReducer from './cartSlice';
+import sellerProductSlice from './sellerProductSlice';
 
 
 const rootReducer = combineReducers({
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   addproduct: addProductSlice,
   productDetail: productDetailSlice,
   cart: cartReducer,
+  sellerProducts: sellerProductSlice,
 });
 
 export default rootReducer;
