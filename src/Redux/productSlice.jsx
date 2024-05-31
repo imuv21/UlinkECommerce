@@ -11,9 +11,13 @@ const productSlice = createSlice({
     name: 'products',
     initialState: {
         products: [],
+        totalItems: 0,
+        currentPage: 0,
+        totalPages: 0,
+        pageSize: 0,
         status: 'idle',
         error: null,
-    },
+      },
     reducers: {},
     extraReducers: (builder) => {
         builder
@@ -22,8 +26,12 @@ const productSlice = createSlice({
             })
             .addCase(fetchProducts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.products = action.payload;
-            })
+                state.products = action.payload.data;
+                state.totalItems = action.payload.totalItems;
+                state.currentPage = action.payload.currentPage;
+                state.totalPages = action.payload.totalPages;
+                state.pageSize = action.payload.pageSize;
+              })
             .addCase(fetchProducts.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;

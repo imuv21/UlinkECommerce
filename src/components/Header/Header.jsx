@@ -149,16 +149,23 @@ const Header = () => {
   };
 
   const getPopupContent = (option) => {
+    
+    const handleOptionClick = (supOption, subOption = '', miniSubOption = '') => {
+      navigate('/search-results', { 
+        state: { supOption, subOption, miniSubOption }
+      });
+    };
+
     return (
       <div className='cate-grid'>
         {subOptions[option].slice(0, 3).map((subOption, index) => (
-          <div className="popupbox-cate">
-            <div className='subpop-options underline' key={index}>
+          <div className="popupbox-cate"  key={index}>
+            <div className='subpop-options underline' onClick={() => handleOptionClick(option, subOption)} >
               {convertPascalToReadable(subOption)}
             </div>
             <div className="cate-options">
               {miniSubOptions[subOption].slice(0, 18).map((miniSubOption, miniIndex) => (
-                <div className='sub-cate-options' key={miniIndex}>
+                <div className='sub-cate-options' key={miniIndex} onClick={() => handleOptionClick(option, subOption, miniSubOption)}>
                   {convertPascalToReadable(miniSubOption)}
                 </div>
               ))}

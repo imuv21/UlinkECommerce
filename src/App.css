@@ -824,6 +824,30 @@ button:focus {
   white-space: nowrap;
 }
 
+ /* pagination btns */
+.pagination-btn{
+  width: 100px;
+  color: var(--CodeTwo);
+  transition: var(--trans);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  padding: 10px;
+  width: 100%;
+  gap: 10px;
+  border: 1px solid var(--CodeTwo);
+  border-radius: var(--br2);
+}
+.pagination-btn.active {
+  background-color: var(--CodeTwo); 
+  color: white;             
+  border: 1px solid #007bff; 
+}
+.pagination-btn:hover {
+  background-color: #ddd;    
+}
+.pagination-btn.active:hover {
+  background-color: #0056b3; 
+}
+
 
 .btn {
   border: none;
@@ -2167,6 +2191,15 @@ button:focus {
   gap: 5px;
   padding-bottom: 15px;
   border-bottom: 1px solid rgb(209, 209, 209);
+}
+
+.filterselect{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: start;
+  justify-content: center;
 }
 
 .minmaxbox {

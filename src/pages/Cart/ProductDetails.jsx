@@ -129,7 +129,7 @@ const ProductDetails = () => {
 
             <Fragment>
                 <div className="flex wh">
-                    <div className="heading2 wh captext">{`${product.selectedSupOption} > ${product.selectedSubOption} > ${product.selectedMiniSubOption} > ${product.selectedMicroSubOption}`}</div>
+                    <div className="heading2 wh">{`${product.selectedSupOption} > ${product.selectedSubOption} > ${product.selectedMiniSubOption} > ${product.selectedMicroSubOption}`}</div>
                 </div>
 
                 <div className="pdcont">

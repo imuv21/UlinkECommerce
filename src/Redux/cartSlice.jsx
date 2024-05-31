@@ -56,6 +56,27 @@ export const fetchCart = createAsyncThunk(
     }
 );
 
+export const deleteCartItem = createAsyncThunk(
+    'cart/deleteCartItem',
+    async (productId, { getState, rejectWithValue }) => {
+        try {
+            const { auth } = getState();
+            const token = auth.token;
+            const response = await axios.get(
+                `${BASE_URL}/cart/remove-item/${productId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            );
+            return response.data;
+        } catch (err) {
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
@@ -86,8 +107,24 @@ const cartSlice = createSlice({
             .addCase(fetchCart.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.payload;
+            })
+            .addCase(deleteCartItem.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(deleteCartItem.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.items = state.items.filter(item => item.productId !== action.meta.arg);
+                state.totalSellPrice = action.payload.totalSellPrice;
+                state.currency = action.payload.currency;
+                state.currencySymbol = action.payload.currencySymbol;
+            })
+            .addCase(deleteCartItem.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.payload;
             });
     }
 });
 
 export default cartSlice.reducer;
+
+

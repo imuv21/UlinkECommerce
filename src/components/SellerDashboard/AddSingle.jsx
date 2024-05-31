@@ -224,9 +224,7 @@ const AddSingle = () => {
             };
             const formData = new FormData();
             formData.append('productData', JSON.stringify(productData));
-            // productImage.forEach((image, index) => {
-            //     formData.append(`productImage${index + 1}`, JSON.stringify(image));
-            // });
+            
             for (let i = 0; i < images.length; i++) {
                 formData.append("productImage", images[i]);
             }
@@ -234,6 +232,7 @@ const AddSingle = () => {
             const response = await dispatch(addProduct(formData));
             if (response.type === 'product/addProduct/fulfilled') {
                 alert('Product added successfully!');
+                navigate('/seller-dashboard/product-list');
             } else {
                 console.log('Error in response:', response);
             }
@@ -247,7 +246,6 @@ const AddSingle = () => {
     const handleChange = (e) => {
         setSingleFormData({ ...singleFormData, [e.target.name]: e.target.value });
     };
-
 
     //focus
     const scrollRef = useRef(null);

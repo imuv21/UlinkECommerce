@@ -19,15 +19,13 @@ const Carousel = () => {
     //pagination
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(12);
+    
     useEffect(() => {
-        dispatch(fetchProducts({ page, size }));
-    }, [dispatch, page, size]);
-
-    useEffect(() => {
-        if (status === 'idle') {
-            dispatch(fetchProducts());
+        if (status === 'idle' || page !== 0 || size !== 12) {
+            dispatch(fetchProducts({ page, size }));
         }
-    }, [status, dispatch]);
+    }, [dispatch, page, size, status]);
+
     if (status === 'loading') {
         return <div>Loading...</div>;
     }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCart } from '../../Redux/cartSlice';
+import { fetchCart, deleteCartItem } from '../../Redux/cartSlice';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -53,9 +53,9 @@ const Cart = () => {
     }));
   };
 
-  const remove = (index) => {
-    // pending remove logic
-  };
+  const remove = (productId) => {
+    dispatch(deleteCartItem(productId));
+};
 
   const checkout = () => {
     window.location.href = '/checkout';

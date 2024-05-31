@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSellerProducts } from '../../Redux/sellerProductSlice';
+import { fetchSellerProducts,  deleteSellerProduct } from '../../Redux/sellerProductSlice';
 import SearchIcon from '@mui/icons-material/Search';
 import empty from '../../assets/empty.png';
 import demo from '../../assets/demo.jpg';
@@ -62,11 +62,8 @@ const ProductList = () => {
         navigate(`/editsingle/${index}`);
     };
 
-    const handleDelete = (index) => {
-        const updatedSingleFormData = [...singleFormData];
-        updatedSingleFormData.splice(index, 1);
-        localStorage.setItem('singleFormData', JSON.stringify(updatedSingleFormData));
-        setSingleFormData(updatedSingleFormData);
+    const handleDelete = (productId) => {
+        dispatch(deleteSellerProduct({ productId }))
     };
 
     //discount calculator
@@ -261,7 +258,7 @@ const ProductList = () => {
                                             <div className="heading2">{item.visibility}</div>
                                             <div className="heading2 flexcol">
                                                 <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEdit(index)} />
-                                                <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDelete(index)} />
+                                                <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDelete(item.productId)} />
                                             </div>
                                         </div>
                                     ))}
