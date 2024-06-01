@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCart, deleteCartItem } from '../../Redux/cartSlice';
+import { fetchCart, deleteCartItem, updateCartItem } from '../../Redux/cartSlice';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -8,7 +8,6 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { Helmet } from 'react-helmet-async';
 
 const Cart = () => {
-
   const dispatch = useDispatch();
   const { items: cart, totalSellPrice, currencySymbol, status, error } = useSelector((state) => state.cart);
 
@@ -16,7 +15,6 @@ const Cart = () => {
     dispatch(fetchCart());
   }, [dispatch]);
 
-  //plus-minus
   const [quantities, setQuantities] = useState({});
 
   useEffect(() => {
@@ -33,28 +31,39 @@ const Cart = () => {
 
   const incrementValue = (e, productId) => {
     e.stopPropagation();
-    setQuantities(prev => ({
-      ...prev,
-      [productId]: prev[productId] + 1,
-    }));
+    const newQuantities = {
+      ...quantities,
+      [productId]: quantities[productId] + 1,
+    };
+    console.log('Incrementing quantity:', newQuantities[productId]);
+    setQuantities(newQuantities);
+    dispatch(updateCartItem({ productId, quantity: newQuantities[productId] }));
   };
 
   const decrementValue = (e, productId, minOrderQuant) => {
     e.stopPropagation();
-    setQuantities(prev => ({
-      ...prev,
-      [productId]: Math.max(prev[productId] - 1, minOrderQuant),
-    }));
+    const newQuantities = {
+      ...quantities,
+      [productId]: Math.max(quantities[productId] - 1, minOrderQuant),
+    };
+    console.log('Decrementing quantity:', newQuantities[productId]);
+    setQuantities(newQuantities);
+    dispatch(updateCartItem({ productId, quantity: newQuantities[productId] }));
   };
 
   const handleInputChange = (e, productId, minOrderQuant) => {
     e.stopPropagation();
-    const newValue = parseInt(e.target.value);
-    setQuantities(prev => ({
-      ...prev,
+    const newValue = parseInt(e.target.value, 10);
+    const newQuantities = {
+      ...quantities,
       [productId]: newValue >= minOrderQuant ? newValue : minOrderQuant,
-    }));
+    };
+    console.log('Changing quantity via input:', newQuantities[productId]);
+    setQuantities(newQuantities);
+    dispatch(updateCartItem({ productId, quantity: newQuantities[productId] }));
   };
+
+
 
   const remove = (e, productId) => {
     e.stopPropagation();
@@ -72,15 +81,6 @@ const Cart = () => {
     }
   }, []);
 
-
-  if (status === 'loading') {
-    return <div>Loading...</div>;
-  }
-
-  if (status === 'failed') {
-    return <div>Error: {typeof error === 'object' ? JSON.stringify(error) : error}</div>;
-  }
-
   const cartItems = cart || [];
   const totalItems = cartItems.length;
 
@@ -94,6 +94,14 @@ const Cart = () => {
     return text.slice(0, maxLength) + '...';
   }
 
+
+  // if (status === 'loading') {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (status === 'failed') {
+  //   return <div>Error: {typeof error === 'object' ? JSON.stringify(error) : error}</div>;
+  // }
 
   return (
     <div className="flexcol wh cart_page">
@@ -109,7 +117,7 @@ const Cart = () => {
             <p>Your cart is empty.</p>
           ) : (
             <Fragment>
-              {cartItems.map((item, index) => (
+              {cartItems.map((item) => (
                 <div className='cart webdiv' key={item.productId}>
                   <a className="cartImg" href={`/product-details/${item.productId}`}>
                     {item.image && item.image.imageUrl ? (
@@ -135,7 +143,7 @@ const Cart = () => {
                   </div>
 
                   <div className="cartPrice">
-                    <div className="heading2">Total : {currencySymbol} {parseFloat(quantities[item.productId] * (item.sellPrice)).toFixed(2)}</div>
+                    <div className="heading2">Total : {currencySymbol} {parseFloat(item.totalAmount).toFixed(2)}</div>
                     <div className="plus-minus webdiv" style={{ width: '150px' }}>
                       <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={(e) => decrementValue(e, item.productId, item.minOrderQuant)} /></div>
                       <input className='pminput' type="number" value={quantities[item.productId]} onChange={(e) => handleInputChange(e, item.productId, item.minOrderQuant)} />
@@ -165,4 +173,4 @@ const Cart = () => {
   )
 }
 
-export default Cart
+export default Cart;

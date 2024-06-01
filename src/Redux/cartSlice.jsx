@@ -77,6 +77,30 @@ export const deleteCartItem = createAsyncThunk(
     }
 );
 
+export const updateCartItem = createAsyncThunk(
+    'cart/updateCartItem',
+    async ({ productId, quantity }, { getState, rejectWithValue }) => {
+        try {
+            const { auth } = getState();
+            const token = auth.token;
+            const response = await axios.get(
+                `${BASE_URL}/cart/adjust-item?productId=${productId}&quantity=${quantity}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            );
+            console.log('API response:', response.data);
+            return response.data;
+        } catch (err) {
+            console.error('Error response:', err.response);
+            return rejectWithValue(err.response.data);
+        }
+    }
+);
+
+
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
@@ -119,6 +143,27 @@ const cartSlice = createSlice({
                 state.currencySymbol = action.payload.currencySymbol;
             })
             .addCase(deleteCartItem.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.payload;
+            })
+            .addCase(updateCartItem.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(updateCartItem.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                const updatedCartItem = action.payload.cartItems.find(item => item.productId === action.meta.arg.productId);
+                const index = state.items.findIndex(item => item.productId === action.meta.arg.productId);
+                if (index !== -1) {
+                    state.items[index] = updatedCartItem;
+                } else {
+                    state.items.push(updatedCartItem); 
+                }
+                state.totalSellPrice = action.payload.totalSellPrice;
+                state.currency = action.payload.currency;
+                state.currencySymbol = action.payload.currencySymbol;
+                console.log('Cart item updated:', state.items[index]);
+            })
+            .addCase(updateCartItem.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.payload;
             });
