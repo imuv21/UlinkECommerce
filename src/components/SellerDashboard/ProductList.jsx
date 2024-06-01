@@ -19,7 +19,7 @@ const ProductList = () => {
     const { sellerProducts, loading, error } = useSelector((state) => state.sellerProducts);
 
     const [page, setPage] = useState(0);
-    const [size, setSize] = useState(20);
+    const [size, setSize] = useState(100);
     useEffect(() => {
         dispatch(fetchSellerProducts({ page, size }));
     }, [dispatch, page, size]);

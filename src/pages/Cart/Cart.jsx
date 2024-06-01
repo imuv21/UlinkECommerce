@@ -31,14 +31,16 @@ const Cart = () => {
     }
   }, [cart]);
 
-  const incrementValue = (productId) => {
+  const incrementValue = (e, productId) => {
+    e.stopPropagation();
     setQuantities(prev => ({
       ...prev,
       [productId]: prev[productId] + 1,
     }));
   };
 
-  const decrementValue = (productId, minOrderQuant) => {
+  const decrementValue = (e, productId, minOrderQuant) => {
+    e.stopPropagation();
     setQuantities(prev => ({
       ...prev,
       [productId]: Math.max(prev[productId] - 1, minOrderQuant),
@@ -46,6 +48,7 @@ const Cart = () => {
   };
 
   const handleInputChange = (e, productId, minOrderQuant) => {
+    e.stopPropagation();
     const newValue = parseInt(e.target.value);
     setQuantities(prev => ({
       ...prev,
@@ -53,9 +56,10 @@ const Cart = () => {
     }));
   };
 
-  const remove = (productId) => {
+  const remove = (e, productId) => {
+    e.stopPropagation();
     dispatch(deleteCartItem(productId));
-};
+  };
 
   const checkout = () => {
     window.location.href = '/checkout';
@@ -107,18 +111,18 @@ const Cart = () => {
             <Fragment>
               {cartItems.map((item, index) => (
                 <div className='cart webdiv' key={item.productId}>
-                  <div className="cartImg">
+                  <a className="cartImg" href={`/product-details/${item.productId}`}>
                     {item.image && item.image.imageUrl ? (
                       <img src={item.image.imageUrl} alt={item.image.imageName} />
                     ) : (
                       <div>No Image Available</div>
                     )}
-                  </div>
+                  </a>
 
                   <div className="cartDetail">
-                    <div className="heading2">
+                    <a className="heading2" href={`/product-details/${item.productId}`}>
                       {truncateText(item.itemName, 50)}
-                    </div>
+                    </a>
                     <div className="flex" style={{ gap: '15px' }}>
                       <span className='descrip2' style={{ textDecoration: 'line-through' }}>{currencySymbol} {parseFloat(item.unitPrice).toFixed(2)}</span>
                       <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{`${parseFloat(((item.unitPrice - item.sellPrice) / item.unitPrice) * 100).toFixed(2)}% OFF`}</span>
@@ -133,11 +137,11 @@ const Cart = () => {
                   <div className="cartPrice">
                     <div className="heading2">Total : {currencySymbol} {parseFloat(quantities[item.productId] * (item.sellPrice)).toFixed(2)}</div>
                     <div className="plus-minus webdiv" style={{ width: '150px' }}>
-                      <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={() => decrementValue(item.productId, item.minOrderQuant)} /></div>
+                      <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={(e) => decrementValue(e, item.productId, item.minOrderQuant)} /></div>
                       <input className='pminput' type="number" value={quantities[item.productId]} onChange={(e) => handleInputChange(e, item.productId, item.minOrderQuant)} />
-                      <div style={{ cursor: 'pointer' }}><AddCircleOutlineIcon onClick={() => incrementValue(item.productId)} /></div>
+                      <div style={{ cursor: 'pointer' }}><AddCircleOutlineIcon onClick={(e) => incrementValue(e, item.productId)} /></div>
                     </div>
-                    <button className='remove flex' onClick={() => remove(item.productId)}><RemoveShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Remove</div></button>
+                    <button className='remove flex' onClick={(e) => remove(e, item.productId)}><RemoveShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Remove</div></button>
                   </div>
                 </div>
               ))}

@@ -55,14 +55,14 @@ const AddSingle = () => {
     //     }
     //     setFileInputValue('');
     // };
-    
+
     const onFileSelect = (event) => {
         const files = event.target.files;
         if (files.length === 0) return;
-    
+
         const totalImages = images.length;
         const remainingSlots = 5 - totalImages;
-    
+
         if (files.length > remainingSlots) {
             alert("You can only select a maximum of 5 images. The excess files will be ignored.");
             // Select only the first 5 files
@@ -71,7 +71,7 @@ const AddSingle = () => {
         } else {
             setImages([...images, ...files]);
         }
-    
+
         setFileInputValue(''); // Reset file input value
     };
     const deleteImage = (index) => {
@@ -224,7 +224,7 @@ const AddSingle = () => {
             };
             const formData = new FormData();
             formData.append('productData', JSON.stringify(productData));
-            
+
             for (let i = 0; i < images.length; i++) {
                 formData.append("productImage", images[i]);
             }
@@ -344,7 +344,7 @@ const AddSingle = () => {
                             multiple
                             onChange={onFileSelect}
                             value={fileInputValue}
-                            style={{ display: 'none' }} 
+                            style={{ display: 'none' }}
                         />
                     </div>
                     <div className="container-dd">
@@ -485,7 +485,7 @@ const AddSingle = () => {
                         </select>
                     } />
                 </div>
-               
+
 
 
 
