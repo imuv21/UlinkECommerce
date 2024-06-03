@@ -1,10 +1,10 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSellerProducts,  deleteSellerProduct } from '../../Redux/sellerProductSlice';
+import { fetchSellerProducts,  deleteSellerProduct } from '../../../Redux/sellerProductSlice';
 import SearchIcon from '@mui/icons-material/Search';
-import empty from '../../assets/empty.png';
-import demo from '../../assets/demo.jpg';
+import empty from '../../../assets/empty.png';
+import demo from '../../../assets/demo.jpg';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Helmet } from 'react-helmet-async';

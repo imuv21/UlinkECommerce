@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { v4 as uuidv4 } from 'uuid';
-import { allCountries } from '../Schemas/countryCodes';
+import { allCountries } from '../../Schemas/countryCodes';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';

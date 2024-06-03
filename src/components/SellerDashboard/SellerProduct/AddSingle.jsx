@@ -1,13 +1,13 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react'
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { addSingleSchema } from '../Schemas/validationSchema';
+import { addSingleSchema } from '../../Schemas/validationSchema';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct } from '../../Redux/addProductSlice';
+import { addProduct } from '../../../Redux/addProductSlice';
 import { useNavigate } from 'react-router-dom';
-import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../Schemas/cate';
+import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../../Schemas/cate';
 import { Helmet } from 'react-helmet-async';
 
 const schema = yupResolver(addSingleSchema);

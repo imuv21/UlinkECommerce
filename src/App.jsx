@@ -28,21 +28,23 @@ const SellerForm = lazy(() => import('./pages/SellerForm'));
 const NewBecomeASeller = lazy(() => import('./pages/NewBecomeASeller'));
 const BecomeASeller = lazy(() => import('./pages/BecomeASeller'));
 const CommissionStructure = lazy(() => import('./pages/CommissionStructure'));
-const Shipping = lazy(() => import('./components/SellerDashboard/Shipping'));
-const EditSingle = lazy(() => import("./components/SellerDashboard/EditSingle"));
+const Shipping = lazy(() => import('./components/SellerDashboard/SellerAccount/Shipping'));
+const EditSingle = lazy(() => import("./components/SellerDashboard/SellerProduct/EditSingle"));
 const ProductDetails = lazy(() => import('./pages/Cart/ProductDetails'));
 const SellerOrder = lazy(() => import('./components/SellerDashboard/SellerOrder/SellerOrder'));
-const SellerAddress = lazy(() => import('./components/SellerDashboard/SellerAddress'));
+const SellerAddress = lazy(() => import('./components/SellerDashboard/SellerAccount/SellerAddress'));
 const MainLayout = lazy(() => import('./components/SellerDashboard/MainLayout'));
-const ProductList = lazy(() => import('./components/SellerDashboard/ProductList'));
-const Media = lazy(() => import('./components/SellerDashboard/Media'));
+const ProductList = lazy(() => import('./components/SellerDashboard/SellerProduct/ProductList'));
+const Media = lazy(() => import('./components/SellerDashboard/SellerProduct/Media'));
 const SellerHome = lazy(() => import('./components/SellerDashboard/SellerHome'));
-const AddSingle = lazy(() => import('./components/SellerDashboard/AddSingle'));
-const AddMulti = lazy(() => import('./components/SellerDashboard/AddMulti'));
-const Payments = lazy(() => import('./components/SellerDashboard/Payments'));
-const UploadProducts = lazy(() => import('./components/SellerDashboard/UploadProducts'));
-const EditProducts = lazy(() => import('./components/SellerDashboard/EditProducts'));
-const ArchiveUploads = lazy(() => import('./components/SellerDashboard/ArchiveUploads'));
+const AddSingle = lazy(() => import('./components/SellerDashboard/SellerProduct/AddSingle'));
+const AddMulti = lazy(() => import('./components/SellerDashboard/SellerProduct/AddMulti'));
+const Payments = lazy(() => import('./components/SellerDashboard/SellerAccount/Payments'));
+const PaymentDetails = lazy(() => import('./components/SellerDashboard/SellerAccount/PaymentDetails'));
+const UploadProducts = lazy(() => import('./components/SellerDashboard/SellerProduct/UploadProducts'));
+const EditProducts = lazy(() => import('./components/SellerDashboard/SellerProduct/EditProducts'));
+const ArchiveUploads = lazy(() => import('./components/SellerDashboard/SellerProduct/ArchiveUploads'));
+const SellerComProfile = lazy(() => import('./components/SellerDashboard/SellerAccount/SellerComProfile'));
 
 //Both seller and buyer
 const Profile = lazy(() => import('./pages/BuyerSeller/Profile'));
@@ -134,6 +136,8 @@ function App() {
                 <Route path="shipping-preferences" element={<Shipping />} />
                 <Route path="seller-address" element={<SellerAddress />} />
                 <Route path="payments" element={<Payments />} />
+                <Route path="add-a-bank-account" element={<PaymentDetails />} />
+                <Route path="seller-company-profile" element={<SellerComProfile />} />
               </Route>
             </Route>
 

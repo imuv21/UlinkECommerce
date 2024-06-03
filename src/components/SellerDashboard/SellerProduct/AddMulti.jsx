@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react'
-import empty from '../../assets/empty.png'
+import React, { useEffect, useRef } from 'react';
+import empty from '../../../assets/empty.png';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import EditNoteIcon from '@mui/icons-material/EditNote';

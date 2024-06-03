@@ -176,6 +176,20 @@ const Header = () => {
     );
   };
 
+  //search-bar
+  const [query, setQuery] = useState('');
+
+  const handleSearch = () => {
+    if (query.trim()) {
+      navigate(`/search-results?query=${query}`);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
 
   return (
@@ -191,9 +205,9 @@ const Header = () => {
 
         <div className="flex wh" style={{ gap: '20px' }}>
           <div className="search-input2">
-            <input type='text' placeholder='Search here...' />
+            <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} onKeyPress={handleKeyPress}   placeholder='Search here...' />
             <span>
-              <SearchIcon />
+              <SearchIcon onClick={handleSearch} />
             </span>
           </div>
         </div>

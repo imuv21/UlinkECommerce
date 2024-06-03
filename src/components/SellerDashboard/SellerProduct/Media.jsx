@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import empty from '../../assets/empty.png';
+import empty from '../../../assets/empty.png';
 import DownloadIcon from '@mui/icons-material/Download';
 import { Helmet } from 'react-helmet-async';
 

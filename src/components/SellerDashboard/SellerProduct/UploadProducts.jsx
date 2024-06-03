@@ -4,7 +4,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import UploadIcon from '@mui/icons-material/Upload';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import * as XLSX from 'xlsx';
-import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../Schemas/cate';
+import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../../Schemas/cate';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 const UploadProducts = () => {

@@ -298,7 +298,7 @@ const ProductDetails = () => {
 
                 <div className="overview">
                     <div className="overview_one">
-                        {product.sku && <div className="over-heading"><div>Seller SKU ID</div> <div className='captext'>{product.sku}</div></div>}
+                        {product.sku && <div className="over-heading"><div>SKU</div> <div className='captext'>{product.sku}</div></div>}
                         {product.specifications && <div className="over-heading"><div>Specifications</div> <div className='captext'>{product.specifications}</div></div>}
                         {product.avgBatteryLife && <div className="over-heading"><div>Average battery life</div> <div className='captext'>{product.avgBatteryLife}</div></div>}
                         {product.connectivityType && <div className="over-heading"><div>Connectivity type</div> <div className='captext'>{product.connectivityType}</div></div>}

@@ -3,7 +3,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import AdsClickIcon from '@mui/icons-material/AdsClick';
-import empty from '../../assets/empty.png';
+import empty from '../../../assets/empty.png';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 

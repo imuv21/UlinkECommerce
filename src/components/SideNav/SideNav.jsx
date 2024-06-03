@@ -92,7 +92,7 @@ const SideNav = () => {
                         </div>
                     </button>
                     <div className="panel" style={{ maxHeight: activeIndex === 8 ? '300px' : '0' }}>
-                        <div className="option">Company profile</div>
+                        <Link to="seller-company-profile" className="option">Company profile</Link>
                         <Link to="/profile" className="option">My account</Link>
                         <Link to="shipping-preferences" className="option">Shipping preferences</Link>
                         <Link to="seller-address" className="option">My addresses</Link>

@@ -95,13 +95,6 @@ const Cart = () => {
   }
 
 
-  // if (status === 'loading') {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (status === 'failed') {
-  //   return <div>Error: {typeof error === 'object' ? JSON.stringify(error) : error}</div>;
-  // }
 
   return (
     <div className="flexcol wh cart_page">

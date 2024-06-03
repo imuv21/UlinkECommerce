@@ -1,11 +1,12 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { bankSchema } from '../Schemas/validationSchema';
+import { bankSchema } from '../../Schemas/validationSchema';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 
 const schema = yupResolver(bankSchema);
 
@@ -39,8 +40,9 @@ const PaymentDetails = ({ handleOptionClick }) => {
         setIsChecked(!isChecked);
     };
 
-    const Click13 = () => {
-        handleOptionClick('Option13');
+    const navigate = useNavigate();
+    const backtopayment = () => {
+        navigate('/seller-dashboard/payments');
     };
 
     //validation
@@ -54,7 +56,7 @@ const PaymentDetails = ({ handleOptionClick }) => {
              <Helmet>
                 <title>Add A Bank Account</title>
             </Helmet>
-            <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={Click13} />&nbsp;&nbsp;Add a new account</div>
+            <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={backtopayment} />&nbsp;&nbsp;Add a new account</div>
             <form onSubmit={handleSubmit(onSubmit)} className="productlist2">
                 <div className="heading3 wh">Account information</div>
                 <div className="heading2 wh">This helps us to gather the right bank information from you.</div>

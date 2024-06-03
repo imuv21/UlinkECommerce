@@ -1,9 +1,11 @@
 import React from 'react'
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 
 const Payments = ({handleOptionClick}) => {
 
+    const navigate = useNavigate();
     const payoneer = () => {
         window.location.href = 'https://payouts.payoneer.com/partners/lp.aspx?token=51ee143a52644084a6f3fafebda9f1162C7B1C1C8E';
     }
@@ -13,8 +15,8 @@ const Payments = ({handleOptionClick}) => {
     const learn = () => {
         window.location.href = 'https://www1.payoneer.com/in/';
     }
-    const Click14 = () => {
-        handleOptionClick('Option14');
+    const addbank = () => {
+        navigate('/seller-dashboard/add-a-bank-account');
     };
 
 
@@ -43,7 +45,7 @@ const Payments = ({handleOptionClick}) => {
                     <div className="heading2 wh">Providing this bank account information allows us to deposit payments into your account, including payouts from orders</div>
                 </div>
                 <div className="flexcol" style={{ gap: '20px' }}>
-                    <button className='btn box2 flex' onClick={Click14} style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Add New Account</div></button>
+                    <button className='btn box2 flex' onClick={addbank} style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Add New Account</div></button>
                 </div>
             </div>
         </div>

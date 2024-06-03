@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import SailingIcon from '@mui/icons-material/Sailing';
@@ -8,6 +9,8 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { Helmet } from 'react-helmet-async';
 
 const Checkout = () => {
+
+  const { totalSellPrice, currencySymbol } = useSelector((state) => state.cart);
 
   const [subCurrentPage, setsubCurrentPage] = useState(1);
   const handleSubPageChange = (subPageNumber) => {
@@ -272,20 +275,20 @@ const Checkout = () => {
             <div className="flexcol wh" style={{ gap: '10px' }}>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading2">Subtotal</div>
-                <div className="heading2">AED 7,704.60</div>
+                <div className="heading2">{currencySymbol} {parseFloat(totalSellPrice).toFixed(2)}</div>
               </div>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading2">Shipping</div>
                 <div className="heading2">FREE</div>
               </div>
-              <div className="flex wh" style={{ justifyContent: 'space-between' }}>
+              <div className="flex wh" style={{ justifyContent: 'space-between', display: 'none' }}>
                 <div className="heading2">VAT</div>
                 <div className="heading2">AED 370.08</div>
               </div>
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Order total</span></div>
-              <div className="heading2"><span>AED 6,361.08</span></div>
+              <div className="heading2"><span>{currencySymbol} {parseFloat(totalSellPrice).toFixed(2)}</span></div>
             </div>
             <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
               <button className='btn addtocart flex'><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>

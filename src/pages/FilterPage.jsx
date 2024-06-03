@@ -5,10 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../Redux/productSlice';
 import defaulImg from '../assets/default.jpg';
 import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../components/Schemas/cate';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+//search-results
+const useQuery = () => {
+    return new URLSearchParams(useLocation().search);
+};
 
 const FilterPage = () => {
 
+    const query = useQuery().get('query') || '';
+    const navigate = useNavigate();
     const location = useLocation();
     const { supOption = '', subOption = '', miniSubOption = '' } = location.state || {};
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -88,6 +95,7 @@ const FilterPage = () => {
     useEffect(() => {
         if (!Array.isArray(products)) return;
         const normalizeString = (str) => str ? str.toLowerCase().replace(/\s+/g, '') : '';
+        const searchQueryRegex = new RegExp(query, 'i');
         const filtered = products.filter(product => {
             const productPrice = parseFloat(product.sellPrice);
             const isInPriceRange = productPrice >= price[0] && productPrice <= price[1];
@@ -99,7 +107,8 @@ const FilterPage = () => {
                 (!selectedMiniSubOption || normalizeString(product.selectedMiniSubOption) === normalizeString(selectedMiniSubOption)) &&
                 (!selectedMicroSubOption || normalizeString(product.selectedMicroSubOption) === normalizeString(selectedMicroSubOption));
 
-            return isInPriceRange && isCategoryMatch;
+            const isNameMatch = searchQueryRegex.test(product.productName);
+            return isInPriceRange && isCategoryMatch && (!query || isNameMatch);
         });
 
         let sortedProducts = [...filtered];
@@ -120,7 +129,9 @@ const FilterPage = () => {
                 break;
         }
         setFilteredProducts(sortedProducts);
-    }, [products, price, sortBy, selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption]);
+    }, [products, price, sortBy, selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption, query]);
+
+
 
     const handleSortChange = (event) => {
         setSortBy(event.target.value);
@@ -147,13 +158,25 @@ const FilterPage = () => {
         return text.replace(/([A-Z])/g, ' $1').trim();
     };
 
-
     //fetch products 
     useEffect(() => {
         if (status === 'idle') {
             dispatch(fetchProducts());
         }
     }, [status, dispatch]);
+
+
+    //clear query
+    const handleClear = () => {
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.delete('query');
+        navigate({
+            pathname: location.pathname,
+            search: searchParams.toString(),
+        });
+    };
+
+
 
     if (status === 'loading') {
         return <div>Loading...</div>;
@@ -168,8 +191,19 @@ const FilterPage = () => {
             <Helmet>
                 <title>Search Results</title>
             </Helmet>
-            <div className="flex wh">
-                <div className="heading2 wh captext">Home / Products / Healthy snacks</div>
+            <div className="flexcol wh" style={{ gap: '10px' }}>
+                { query && <div className="flex wh" style={{justifyContent: 'space-between'}}>
+                    <div className='heading2 wh captext'>Showing results for: {query}</div>
+                    <a className='hover' onClick={handleClear}>Clear</a>
+                </div>}
+                {selectedSupOption &&
+                    <div className="flex-start wh">
+                        <div className="heading2 captext">{convertPascalToReadable(selectedSupOption)}</div>
+                        {selectedSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedSubOption)}</div>}
+                        {selectedMiniSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedMiniSubOption)}</div>}
+                        {selectedMicroSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedMicroSubOption)}</div>}
+                    </div>
+                }
             </div>
             <div className="fpcont">
                 <div className="fpone">
@@ -278,10 +312,10 @@ const FilterPage = () => {
                 </div>
             </div>
             <div className="flex" style={{ gap: '10px' }}>
-                <button className='pagination-btn'  onClick={() => handlePageChange(0)} disabled={page === 0}>
+                <button className='pagination-btn' onClick={() => handlePageChange(0)} disabled={page === 0}>
                     First Page
                 </button>
-                <button className='pagination-btn'  onClick={() => handlePageChange(page - 1)} disabled={page === 0}>
+                <button className='pagination-btn' onClick={() => handlePageChange(page - 1)} disabled={page === 0}>
                     Previous
                 </button>
 
@@ -296,10 +330,10 @@ const FilterPage = () => {
                     </button>
                 ))}
 
-                <button className='pagination-btn'  onClick={() => handlePageChange(page + 1)} disabled={page === totalPages - 1}>
+                <button className='pagination-btn' onClick={() => handlePageChange(page + 1)} disabled={page === totalPages - 1}>
                     Next
                 </button>
-                <button className='pagination-btn'  onClick={() => handlePageChange(totalPages - 1)} disabled={page === totalPages - 1}>
+                <button className='pagination-btn' onClick={() => handlePageChange(totalPages - 1)} disabled={page === totalPages - 1}>
                     Last Page
                 </button>
             </div>
