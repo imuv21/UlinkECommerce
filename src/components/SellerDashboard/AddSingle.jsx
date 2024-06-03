@@ -381,7 +381,7 @@ const AddSingle = () => {
                 <Controller name="unitsPerCarton" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.unitsPerCarton || ''} onChange={handleChange} className="box flex" placeholder='Enter units per carton' {...field} />} />
                 {errors.unitsPerCarton && <div className='error'>{errors.unitsPerCarton?.message}</div>}
                 <div className="flex wh" style={{ gap: '20px' }}>
-                    <Controller name="size" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.size || ''} onChange={handleChange} className="box flex" placeholder='Enter size' {...field} />} />
+                    <Controller name="size" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.size || ''} onChange={handleChange} type='number' className="box flex" placeholder='Enter size' {...field} />} />
                     <Controller name="sizeUnit" control={control} defaultValue="" render={({ field }) => (
                         <select className="box flex" value={singleFormData.sizeUnit || ''} onChange={handleChange} {...field}>
                             <option value="">Select unit</option>
@@ -401,10 +401,9 @@ const AddSingle = () => {
                     )}
                     />
                 </div>
-                {(errors.size || errors.sizeUnit) &&
+                {(errors.sizeUnit) &&
                     <div className="flex wh">
                         <div className="flex wh">
-                            <div className='error'>{errors.size?.message}</div>
                         </div>
                         <div className="flex wh" style={{ justifyContent: 'space-around' }}>
                             <div className='error'>{errors.sizeUnit?.message}</div>

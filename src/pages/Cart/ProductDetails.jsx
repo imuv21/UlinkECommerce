@@ -100,13 +100,14 @@ const ProductDetails = () => {
         );
     };
 
-
     const cartHandler = () => {
         if (!product) return;
-        console.log('Product ID:', id);
-        console.log('Quantity:', value);
         dispatch(addToCart({ productId: id, quantity: value }));
         alert(`${value} items added to cart successfully!`);
+    };
+
+    const convertPascalToReadable = (text) => {
+        return text.replace(/([A-Z])/g, ' $1').trim();
     };
 
 
@@ -120,16 +121,17 @@ const ProductDetails = () => {
         return null;
     }
 
+      
 
     return (
         <div className="flexcol wh product-detail">
             <Helmet>
                 <title>Product Details</title>
             </Helmet>
-
+           
             <Fragment>
                 <div className="flex wh">
-                    <div className="heading2 wh">{`${product.selectedSupOption} > ${product.selectedSubOption} > ${product.selectedMiniSubOption} > ${product.selectedMicroSubOption}`}</div>
+                    <div className="heading2 wh">{`${convertPascalToReadable(product.selectedSupOption)} > ${convertPascalToReadable(product.selectedSubOption)} > ${convertPascalToReadable(product.selectedMiniSubOption)} > ${convertPascalToReadable(product.selectedMicroSubOption)}`}</div>
                 </div>
 
                 <div className="pdcont">

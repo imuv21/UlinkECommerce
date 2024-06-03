@@ -35,7 +35,7 @@ const Signup = () => {
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
-
+ 
 
     //json lottie animation
     const options = {
@@ -216,15 +216,15 @@ const Signup = () => {
                                             </select>
                                         )}
                                         />
-                                        <Controller name="whatsaapNumber" control={control} defaultValue="" render={({ field }) => <input value={userData.whatsaapNumber || ''} onChange={handleChange} className="box flex" autoComplete='off' placeholder='Enter your whatsapp number' {...field} />} />
+                                        <Controller name="whatsappnumber" control={control} defaultValue="" render={({ field }) => <input value={userData.whatsappnumber || ''} onChange={handleChange} className="box flex" autoComplete='off' placeholder='Enter your whatsapp number' {...field} />} />
                                     </div>
                                 )}
-                                {isChecked && (errors.whatsaapNumber) &&
+                                {isChecked && (errors.whatsappnumber) &&
                                     <div className="flex wh">
                                         <div className="flex wh">
                                         </div>
                                         <div className="flex wh" style={{ justifyContent: 'space-around' }}>
-                                            <div className='error'>{errors.whatsaapNumber?.message}</div>
+                                            <div className='error'>{errors.whatsappnumber?.message}</div>
                                         </div>
                                     </div>
                                 }

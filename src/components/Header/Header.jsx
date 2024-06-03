@@ -238,7 +238,7 @@ const Header = () => {
 
                   <div className='popupbox'>
                     {user.role === 'Buyer' && (<Link to={'/buyer-dashboard'} className="pop-options"><HomeIcon />Buyer Center</Link>)}
-                    {user.role === 'Seller' && (<Link to={'/seller-dashboard/add-single-product'} className="pop-options"> <DashboardIcon />Dashboard</Link>)}
+                    {user.role === 'Seller' && (<Link to={'/seller-dashboard/seller-home'} className="pop-options"> <DashboardIcon />Dashboard</Link>)}
                     <Link to={user.role === 'Seller' ? '/seller-dashboard/seller-orders' : '/order-page'} className="pop-options"> <AllInboxIcon /> Orders </Link>
                     {user.role === 'Seller' && (<div className="pop-options"> <MessageIcon /> Messages </div>)}
                     <div className="pop-options"> <SendTimeExtensionIcon /> RFQ Marketplace </div>
