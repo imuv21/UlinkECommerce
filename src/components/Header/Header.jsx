@@ -281,10 +281,10 @@ const Header = () => {
               {selectedFlag ? (
                 <div className="flex" style={{ gap: '10px' }}>
                   <img className='flag' src={selectedFlag.flagUrl} alt={selectedFlag.name} />
-                  {selectedFlag.name} ({selectedFlag.currencyCode}) ({selectedFlag.currencySymbol})
+                  <div className="descrip">{selectedFlag.name} ({selectedFlag.currencyCode}) ({selectedFlag.currencySymbol})</div>
                 </div>
               ) : (
-                <span>Select a country</span>
+                <span>Select a currency</span>
               )}
             </div>
             {isOpen && (
@@ -292,7 +292,7 @@ const Header = () => {
                 {flags.map((flag, index) => (
                   <div className="dropdown-flag-item flex" key={index} onClick={() => handleSelectFlag(flag)}>
                     <img className='flag' src={flag.flagUrl} alt={flag.name} />
-                    {flag.name} ({flag.currencyCode}) ({flag.currencySymbol})
+                    <div className="descrip">{flag.name} ({flag.currencyCode}) ({flag.currencySymbol})</div>
                   </div>
                 ))}
               </div>

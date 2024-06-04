@@ -26,36 +26,6 @@ const AddSingle = () => {
     const selectFiles = () => {
         document.getElementById('file-input').click();
     };
-
-    // const onFileSelect = (event) => {
-    //     const files = event.target.files;
-    //     if (files.length === 0) return;
-    //     const totalImages = images.length;
-    //     const remainingSlots = 5 - totalImages;
-    //     if (remainingSlots <= 0) {
-    //         alert("You've already selected the maximum allowed images (5).");
-    //         return;
-    //     }
-    //     for (let i = 0; i < Math.min(remainingSlots, files.length); i++) {
-    //         const file = files[i];
-    //         if (file.type.split('/')[0] === 'image') {
-    //             const reader = new FileReader();
-    //             reader.onload = (e) => {
-    //                 setImages((prevImages) => [
-    //                     ...prevImages,
-    //                     {
-    //                         name: file.name,
-    //                         url: e.target.result,
-    //                         size: file.size,
-    //                     },
-    //                 ]);
-    //             };
-    //             reader.readAsDataURL(file);
-    //         }
-    //     }
-    //     setFileInputValue('');
-    // };
-
     const onFileSelect = (event) => {
         const files = event.target.files;
         if (files.length === 0) return;
@@ -65,14 +35,12 @@ const AddSingle = () => {
 
         if (files.length > remainingSlots) {
             alert("You can only select a maximum of 5 images. The excess files will be ignored.");
-            // Select only the first 5 files
             const selectedFiles = Array.from(files).slice(0, remainingSlots);
             setImages([...images, ...selectedFiles]);
         } else {
             setImages([...images, ...files]);
         }
-
-        setFileInputValue(''); // Reset file input value
+        setFileInputValue(''); 
     };
     const deleteImage = (index) => {
         setImages((prevImages) => {

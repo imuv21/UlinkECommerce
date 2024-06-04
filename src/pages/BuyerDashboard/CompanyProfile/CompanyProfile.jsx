@@ -296,6 +296,9 @@ const CompanyProfile = () => {
     const handleBlur = () => {
         setOpen(false);
     };
+
+
+    
     return (
         <>
             <div className='responsive'>

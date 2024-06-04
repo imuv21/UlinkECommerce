@@ -125,6 +125,18 @@ export const profileSchema = yup.object().shape({
     language: yup.string().required('Language is required'),   
 });
 
+export const businessSchema = yup.object().shape({
+    companyname: yup.string().required('Enter company name'),
+    countryOfoperation: yup.string().required('Country of operation is required'),
+    firstname: yup.string().required('Enter your first name'),
+    lastname: yup.string().required('Enter your last name'),
+    wpcountrycode: yup.string().required('Country code is required'),
+    whatsappnumber: yup.string()
+        .matches(/^\d+$/, { message: 'Whatsapp number must contain only digits' })
+        .min(5, 'Whatsapp number must be at least 5 digits')
+        .max(15, 'Whatsapp number must be at most 15 digits'),
+    language: yup.string().required('Language is required'),   
+});
 
 
 

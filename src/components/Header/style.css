@@ -351,7 +351,7 @@
 
 .dropdown-flag-header {
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
   padding: 10px;
@@ -368,10 +368,21 @@
   right: 0;
   border-radius: 6px;
   background-color: #fff;
-  max-height: 200px;
+  max-height: 250px;
   overflow-y: auto;
   z-index: 1000;
 }
+
+
+.dropdown-flag-list::-webkit-scrollbar {
+  width: 15px;
+}
+
+.dropdown-flag-list::-webkit-scrollbar-thumb {
+  background-color: var(--scroll);
+  border-radius: 6px;
+}
+
 
 .dropdown-flag-item {
   padding: 10px;

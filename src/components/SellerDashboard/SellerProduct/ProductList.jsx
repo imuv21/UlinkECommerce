@@ -1,7 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSellerProducts,  deleteSellerProduct } from '../../../Redux/sellerProductSlice';
+import { fetchSellerProducts, deleteSellerProduct } from '../../../Redux/sellerProductSlice';
+import { fetchEditProduct } from '../../../Redux/updateProductSlice';
 import SearchIcon from '@mui/icons-material/Search';
 import empty from '../../../assets/empty.png';
 import demo from '../../../assets/demo.jpg';
@@ -58,8 +59,13 @@ const ProductList = () => {
         e.preventDefault();
     };
 
-    const handleEdit = (index) => {
-        navigate(`/editsingle/${index}`);
+   
+    const handleEdit = (productId) => {
+        dispatch(fetchEditProduct(productId)).unwrap().then(() => {
+                navigate(`/editsingle/${productId}`);
+            }).catch((error) => {
+                console.error('Failed to fetch product details:', error);
+            });
     };
 
     const handleDelete = (productId) => {
@@ -257,7 +263,7 @@ const ProductList = () => {
                                             <div className="heading2" style={{ whiteSpace: 'nowrap' }}>{new Date(item.updatedDate).toLocaleString()}</div>
                                             <div className="heading2">{item.visibility}</div>
                                             <div className="heading2 flexcol">
-                                                <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEdit(index)} />
+                                                <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEdit(item.productId)} />
                                                 <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDelete(item.productId)} />
                                             </div>
                                         </div>
