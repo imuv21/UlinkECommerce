@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { Slider } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../Redux/productSlice';
+import { fetchExchangeRates } from '../Redux/currencySlice';
+import currencySymbols from '../components/Schemas/currencySymbols';
 import defaulImg from '../assets/default.jpg';
 import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../components/Schemas/cate';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -23,13 +25,24 @@ const FilterPage = () => {
 
     const dispatch = useDispatch();
     const { products, status, error, currentPage, totalPages, pageSize, totalItems } = useSelector((state) => state.products);
+    const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
+    const exchangeRates = useSelector(state => state.currency.exchangeRates);
 
     //pagination
     const [page, setPage] = useState(currentPage);
     const [size, setSize] = useState(15);
     useEffect(() => {
         dispatch(fetchProducts({ page, size }));
+        dispatch(fetchExchangeRates());
     }, [dispatch, page, size]);
+
+    const convertPrice = (price, fromCurrency) => {
+        const rate = exchangeRates[selectedCurrency];
+        if (!rate) return price;
+        const priceInUSD = price / exchangeRates[fromCurrency];
+        return (priceInUSD * rate).toFixed(2);
+    };
+
     const handlePageChange = (newPage) => {
         if (newPage >= 0 && newPage < totalPages) {
             setPage(newPage);
@@ -192,7 +205,7 @@ const FilterPage = () => {
                 <title>Search Results</title>
             </Helmet>
             <div className="flexcol wh" style={{ gap: '10px' }}>
-                { query && <div className="flex wh" style={{justifyContent: 'space-between'}}>
+                {query && <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                     <div className='heading2 wh captext'>Showing results for: {query}</div>
                     <a className='hover' onClick={handleClear}>Clear</a>
                 </div>}
@@ -298,9 +311,9 @@ const FilterPage = () => {
                                     <img className='product-img-size' src={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} alt='img' />
                                     <div className='product-detail-info'>
                                         <p className='product-title'>{truncateText(product.productName, 20)} </p>
-                                        <p className='product-price'>{product.currencySymbol}{parseFloat(product.sellPrice).toFixed(2)}/ piece incl value</p>
+                                        <p className='product-price'>{currencySymbols[selectedCurrency]} {convertPrice(product.sellPrice, product.currencyname)} {selectedCurrency}/ piece incl value</p>
                                         <div className='flex' style={{ gap: '10px' }}>
-                                            <p className='product-discount'>{product.currencySymbol}{parseFloat(product.unitPrice).toFixed(2)}</p>
+                                            <p className='product-discount'> {currencySymbols[selectedCurrency]} {convertPrice(product.unitPrice, product.currencyname)} {selectedCurrency} </p>
                                             <span className='discount-percentage'>{(((product.unitPrice - product.sellPrice) / product.unitPrice) * 100).toFixed(2)}% OFF</span>
                                         </div>
                                         <p className='product-quantity'>Min Order: {product.minOrderQuant} peace</p>

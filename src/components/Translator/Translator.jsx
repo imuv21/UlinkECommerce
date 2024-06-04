@@ -1,123 +1,114 @@
+// import React, { useState, useEffect, useRef } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { fetchExchangeRates, setSelectedCurrency } from '../../Redux/currencySlice';
+// import currencySymbols from '../Schemas/currencySymbols';
+// import axios from 'axios';
+// import './Translator.css';
 
-import React, { useState, useEffect } from 'react';
-import currencySymbols from '../Schemas/currencySymbols';
-import axios from 'axios';
+// const Translator = () => {
+//   const dispatch = useDispatch();
+//   const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
+//   const exchangeRates = useSelector(state => state.currency.exchangeRates);
+//   const [flags, setFlags] = useState([]);
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [selectedFlag, setSelectedFlag] = useState(null);
+//   const dropdownRef = useRef(null);
 
-const Translator = () => {
 
-  const [amount, setAmount] = useState('');
-  const [fromCurrency, setFromCurrency] = useState('USD');
-  const [toCurrency, setToCurrency] = useState('INR');
-  const [convertedAmount, setConvertedAmount] = useState('');
-  const [currencyOptions, setCurrencyOptions] = useState([]);
-  const [flags, setFlags] = useState([]);
+//   useEffect(() => {
+//     dispatch(fetchExchangeRates());
+//   }, [dispatch]);
 
-  // Mapping into select
-  useEffect(() => {
-    const fetchCurrencyOptions = async () => {
-      try {
-        const response = await axios.get('https://api.exchangerate-api.com/v4/latest/USD');
-        const data = response.data;
-        const currencies = Object.keys(data.rates);
-        setCurrencyOptions(currencies);
-      } catch (error) {
-        console.error('Error fetching currency options:', error);
-      }
-    };
-    fetchCurrencyOptions();
-  }, []);
+//   const convertPrice = (price, fromCurrency) => {
+//     const rate = exchangeRates[selectedCurrency];
+//     if (!rate) return price;
+//     const priceInUSD = price / exchangeRates[fromCurrency];
+//     return (priceInUSD * rate).toFixed(2);
+//   };
 
-  // Function to convert currency
-  const convertCurrency = async () => {
-    try {
-      const response = await axios.get(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
-      const data = response.data;
-      const rate = data.rates[toCurrency];
-      const converted = (amount * rate).toFixed(2);
-      setConvertedAmount(converted);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+//   const products = [
+//     { id: 1, name: 'Product 1', price: 1, currencyCode: 'USD' },
+//     { id: 2, name: 'Product 2', price: 100, currencyCode: 'EUR' },
+//     { id: 3, name: 'Product 3', price: 100, currencyCode: 'INR' },
+//   ];
 
-  // Function to fetch flags
-  useEffect(() => {
-    const fetchFlags = async () => {
-      try {
-        const response = await axios.get('https://restcountries.com/v3.1/all');
-        const flagsData = response.data.map(country => ({
-          name: country.name.common,
-          flagUrl: country.flags.png,
-        }));
-        setFlags(flagsData);
-      } catch (error) {
-        console.error('Error fetching flags:', error);
-      }
-    };
+//   useEffect(() => {
+//     const handleClickOutside = (event) => {
+//       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+//         setIsOpen(false);
+//       }
+//     };
+//     document.addEventListener('mousedown', handleClickOutside);
+//     return () => {
+//       document.removeEventListener('mousedown', handleClickOutside);
+//     };
+//   }, []);
 
-    fetchFlags();
-  }, []);
+//   const handleToggleDropdown = () => {
+//     setIsOpen(!isOpen);
+//   };
+//   const handleSelectFlag = (flag) => {
+//     setSelectedFlag(flag);
+//     dispatch(setSelectedCurrency(flag.currencyCode));
+//     setIsOpen(false);
+//   };
 
-  const handleAmountChange = (e) => {
-    setAmount(e.target.value);
-  };
+//   // Fetch flags and currency information
+//   useEffect(() => {
+//     const fetchFlags = async () => {
+//       try {
+//         const response = await axios.get('https://restcountries.com/v3.1/all');
+//         const flagsData = response.data.map(country => {
+//           const currencyCode = Object.keys(country.currencies || {})[0];
+//           return {
+//             name: country.name.common,
+//             flagUrl: country.flags?.png || '',
+//             currencyCode: currencyCode || '',
+//             currencySymbol: currencySymbols[currencyCode] || '',
+//           };
+//         }).filter(flag => flag.currencyCode);
+//         setFlags(flagsData);
+//       } catch (error) {
+//         console.error('Error fetching flags:', error);
+//       }
+//     };
+//     fetchFlags();
+//   }, []);
 
-  const handleFromCurrencyChange = (e) => {
-    setFromCurrency(e.target.value);
-  };
+//   return (
+//     <div className='home flexcol wh'>
+//       <div className="dropdown-flag" ref={dropdownRef}>
+//         <div className="dropdown-flag-header" onClick={handleToggleDropdown}>
+//           {selectedFlag ? (
+//             <div className="flex" style={{ gap: '10px' }}>
+//               <img className='flag' src={selectedFlag.flagUrl} alt={selectedFlag.name} />
+//               {selectedFlag.name} ({selectedFlag.currencyCode}) ({selectedFlag.currencySymbol})
+//             </div>
+//           ) : (
+//             <span>Select a country</span>
+//           )}
+//         </div>
+//         {isOpen && (
+//           <div className="dropdown-flag-list">
+//             {flags.map((flag, index) => (
+//               <div className="dropdown-flag-item flex" key={index} onClick={() => handleSelectFlag(flag)}>
+//                 <img className='flag' src={flag.flagUrl} alt={flag.name} />
+//                 {flag.name} ({flag.currencyCode}) ({flag.currencySymbol})
+//               </div>
+//             ))}
+//           </div>
+//         )}
+//       </div>
 
-  const handleToCurrencyChange = (e) => {
-    setToCurrency(e.target.value);
-  };
+//       <ul>
+//         {products.map((product) => (
+//           <li key={product.id}>
+//             {product.name} | {convertPrice(product.price, product.currencyCode)} | {selectedCurrency} | {currencySymbols[selectedCurrency]}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    convertCurrency();
-  };
-
-  return (
-    <div className='home wh flexcol'>
-      <h2>Currency Converter</h2>
-
-      <form onSubmit={handleSubmit}>
-        <input type="number" value={amount} onChange={handleAmountChange} placeholder="Enter amount" />
-
-        <select value={fromCurrency} onChange={handleFromCurrencyChange}>
-          {currencyOptions.map((currency) => (
-            (currencySymbols[currency]) &&
-            <option key={currency} value={currency}>
-              {currency} ({currencySymbols[currency]})
-            </option>
-          ))}
-        </select>
-
-        <select value={toCurrency} onChange={handleToCurrencyChange}>
-          {currencyOptions.map((currency) => (
-            (currencySymbols[currency]) &&
-            <option key={currency} value={currency}>
-              {currency} ({currencySymbols[currency]})
-            </option>
-          ))}
-        </select>
-
-        <button type="submit">Convert</button>
-      </form>
-
-      {convertedAmount && (
-        <p>
-          {currencySymbols[fromCurrency]}{amount} {fromCurrency} equals to {currencySymbols[toCurrency]}{convertedAmount} {toCurrency}
-        </p>
-      )}
-
-      {flags.map((flag, index) => (
-        <div className="flex" key={index}>
-          <img style={{ width: '200px', height: '200px' }} src={flag.flagUrl} alt={flag.name} />
-          <div>{flag.name}</div>
-        </div>
-      ))}
-
-    </div>
-  );
-};
-
-export default Translator;
+// export default Translator;

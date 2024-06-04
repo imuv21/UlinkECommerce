@@ -33,8 +33,6 @@ const Carousel = () => {
         return <div>Error: {error}</div>;
     }
 
-
-
      const NextArrow = (props) => {
         const { style, onClick } = props;
         return (
@@ -107,14 +105,13 @@ const Carousel = () => {
         ],
     };
 
-
     return (
         <div className="product-slider-cont">
             <Sliders {...settings}>
             {Array.isArray(products) && products.map((product) => (
                     <div className='show-img-detail-sup' key={uuidv4()}>
                         <Suspense fallback={<Loader />}>                                                   
-                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
+                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} currencyName={product.currencyname} salePrice={product.sellPrice} />
                         </Suspense>
                     </div>
                 ))}

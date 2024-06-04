@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchExchangeRates } from '../../Redux/currencySlice';
+import currencySymbols from '../../components/Schemas/currencySymbols';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import SailingIcon from '@mui/icons-material/Sailing';
@@ -10,7 +12,21 @@ import { Helmet } from 'react-helmet-async';
 
 const Checkout = () => {
 
-  const { totalSellPrice, currencySymbol } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const { totalSellPrice, currency } = useSelector((state) => state.cart);
+  const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
+  const exchangeRates = useSelector(state => state.currency.exchangeRates);
+
+  useEffect(() => {
+    dispatch(fetchExchangeRates());
+  }, [dispatch]);
+
+  const convertPrice = (price, fromCurrency) => {
+    const rate = exchangeRates[selectedCurrency];
+    if (!rate) return price;
+    const priceInUSD = price / exchangeRates[fromCurrency];
+    return (priceInUSD * rate).toFixed(2);
+  };
 
   const [subCurrentPage, setsubCurrentPage] = useState(1);
   const handleSubPageChange = (subPageNumber) => {
@@ -275,7 +291,7 @@ const Checkout = () => {
             <div className="flexcol wh" style={{ gap: '10px' }}>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading2">Subtotal</div>
-                <div className="heading2">{currencySymbol} {parseFloat(totalSellPrice).toFixed(2)}</div>
+                <div className="heading2">{currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</div>
               </div>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading2">Shipping</div>
@@ -288,7 +304,7 @@ const Checkout = () => {
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Order total</span></div>
-              <div className="heading2"><span>{currencySymbol} {parseFloat(totalSellPrice).toFixed(2)}</span></div>
+              <div className="heading2"><span>{currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</span></div>
             </div>
             <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
               <button className='btn addtocart flex'><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>

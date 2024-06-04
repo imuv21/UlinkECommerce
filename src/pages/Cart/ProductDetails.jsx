@@ -11,6 +11,8 @@ import './cart.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductDetail } from '../../Redux/productDetailSlice';
 import { addToCart } from '../../Redux/cartSlice';
+import { fetchExchangeRates } from '../../Redux/currencySlice';
+import currencySymbols from '../../components/Schemas/currencySymbols';
 import { Helmet } from 'react-helmet-async';
 import InfoIcon from '@mui/icons-material/Info';
 import Loader from '../../components/Loader/Loader';
@@ -30,9 +32,20 @@ const ProductDetails = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { product, status, error } = useSelector((state) => state.productDetail);
+    const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
+    const exchangeRates = useSelector(state => state.currency.exchangeRates);
     useEffect(() => {
         dispatch(fetchProductDetail(id));
+        dispatch(fetchExchangeRates());
     }, [dispatch, id]);
+    // Fetch currency options and exchange rates
+    
+    const convertPrice = (price, fromCurrency) => {
+        const rate = exchangeRates[selectedCurrency];
+        if (!rate) return price;
+        const priceInUSD = price / exchangeRates[fromCurrency];
+        return (priceInUSD * rate).toFixed(2);
+    };
 
     //plus-minus
     const [moq, setMoq] = useState(1);
@@ -121,14 +134,14 @@ const ProductDetails = () => {
         return null;
     }
 
-      
+
 
     return (
         <div className="flexcol wh product-detail">
             <Helmet>
                 <title>Product Details</title>
             </Helmet>
-           
+
             <Fragment>
                 <div className="flex wh">
                     <div className="heading2 wh">{`${convertPascalToReadable(product.selectedSupOption)} > ${convertPascalToReadable(product.selectedSubOption)} > ${convertPascalToReadable(product.selectedMiniSubOption)} > ${convertPascalToReadable(product.selectedMicroSubOption)}`}</div>
@@ -175,11 +188,11 @@ const ProductDetails = () => {
                         <div className="sel-box" style={{ gap: '20px' }}>
                             <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>
                                 <div className="flex" style={{ gap: '15px' }}>
-                                    <span className='descrip2' style={{ textDecoration: 'line-through' }}>{product.currencySymbol}{product.unitPrice}</span>
+                                    <span className='descrip2' style={{ textDecoration: 'line-through' }}>{currencySymbols[selectedCurrency]} {convertPrice(product.unitPrice, product.currencyname)} {selectedCurrency}</span>
                                     <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{discountPercentage}% OFF</span>
                                 </div>
                                 <div className="flex" style={{ gap: '15px' }}>
-                                    <span>{product.currencyname}</span><span style={{ fontWeight: 'bold', fontSize: '22px' }}>{product.currencySymbol}{product.sellPrice}</span>
+                                    <span>{selectedCurrency}</span><span style={{ fontWeight: 'bold', fontSize: '22px' }}>{currencySymbols[selectedCurrency]} {convertPrice(product.sellPrice, product.currencyname)} {selectedCurrency}</span>
                                 </div>
                                 <div className="flex">
                                     <span className='descrip'>per piece</span>
@@ -239,7 +252,7 @@ const ProductDetails = () => {
 
                             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
                                 <div className="heading2"><span>Total Price</span></div>
-                                <div className="heading2"><span>{totalPrice} {product.currencyname}</span></div>
+                                <div className="heading2"><span>{currencySymbols[selectedCurrency]} {convertPrice(totalPrice, product.currencyname)} {selectedCurrency}</span></div>
                             </div>
 
                             <div className="flexcol wh" style={{ gap: '10px' }}>

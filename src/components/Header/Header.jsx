@@ -1,5 +1,5 @@
 import './style.css';
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -8,9 +8,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import Drawer from '@mui/material/Drawer';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchExchangeRates, setSelectedCurrency } from '../../Redux/currencySlice';
 import { logout } from '../../Redux/AuthReducer';
 import { urls } from '../Schemas/images';
 import { supOptions, subOptions, miniSubOptions } from '../Schemas/cate';
+import currencySymbols from '../Schemas/currencySymbols';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 import HomeIcon from '@mui/icons-material/Home';
@@ -29,11 +31,81 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 const Header = () => {
 
   const dispatch = useDispatch();
+  const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
+  const exchangeRates = useSelector(state => state.currency.exchangeRates);
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const token = useSelector((state) => state.auth.token);
   const { items: cart } = useSelector((state) => state.cart);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  //dropdown flag
+  const [flags, setFlags] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedFlag, setSelectedFlag] = useState(null);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    dispatch(fetchExchangeRates());
+  }, [dispatch]);
+
+  const convertPrice = (price, fromCurrency) => {
+    const rate = exchangeRates[selectedCurrency];
+    if (!rate) return price;
+    const priceInUSD = price / exchangeRates[fromCurrency];
+    return (priceInUSD * rate).toFixed(2);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+  const handleToggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+  const handleSelectFlag = (flag) => {
+    setSelectedFlag(flag);
+    dispatch(setSelectedCurrency(flag.currencyCode));
+    setIsOpen(false);
+  };
+
+  // Fetch flags and currency information
+  useEffect(() => {
+    const fetchFlags = async () => {
+      try {
+        const response = await axios.get('https://restcountries.com/v3.1/all');
+        const flagsData = response.data.map(country => {
+          const currencyCode = Object.keys(country.currencies || {})[0];
+          return {
+            name: country.name.common,
+            flagUrl: country.flags?.png || '',
+            currencyCode: currencyCode || '',
+            currencySymbol: currencySymbols[currencyCode] || '',
+          };
+        }).filter(flag => flag.currencyCode);
+        setFlags(flagsData);
+      } catch (error) {
+        console.error('Error fetching flags:', error);
+      }
+    };
+    fetchFlags();
+  }, []);
+
+
+
+
+
+
+
+
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -149,9 +221,9 @@ const Header = () => {
   };
 
   const getPopupContent = (option) => {
-    
+
     const handleOptionClick = (supOption, subOption = '', miniSubOption = '') => {
-      navigate('/search-results', { 
+      navigate('/search-results', {
         state: { supOption, subOption, miniSubOption }
       });
     };
@@ -159,7 +231,7 @@ const Header = () => {
     return (
       <div className='cate-grid'>
         {subOptions[option].slice(0, 3).map((subOption, index) => (
-          <div className="popupbox-cate"  key={index}>
+          <div className="popupbox-cate" key={index}>
             <div className='subpop-options underline' onClick={() => handleOptionClick(option, subOption)} >
               {convertPascalToReadable(subOption)}
             </div>
@@ -204,8 +276,31 @@ const Header = () => {
         </div>
 
         <div className="flex wh" style={{ gap: '20px' }}>
+          <div className="dropdown-flag" ref={dropdownRef}>
+            <div className="dropdown-flag-header" onClick={handleToggleDropdown}>
+              {selectedFlag ? (
+                <div className="flex" style={{ gap: '10px' }}>
+                  <img className='flag' src={selectedFlag.flagUrl} alt={selectedFlag.name} />
+                  {selectedFlag.name} ({selectedFlag.currencyCode}) ({selectedFlag.currencySymbol})
+                </div>
+              ) : (
+                <span>Select a country</span>
+              )}
+            </div>
+            {isOpen && (
+              <div className="dropdown-flag-list">
+                {flags.map((flag, index) => (
+                  <div className="dropdown-flag-item flex" key={index} onClick={() => handleSelectFlag(flag)}>
+                    <img className='flag' src={flag.flagUrl} alt={flag.name} />
+                    {flag.name} ({flag.currencyCode}) ({flag.currencySymbol})
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           <div className="search-input2">
-            <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} onKeyPress={handleKeyPress}   placeholder='Search here...' />
+            <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} onKeyPress={handleKeyPress} placeholder='Search here...' />
             <span>
               <SearchIcon onClick={handleSearch} />
             </span>
@@ -301,9 +396,9 @@ const Header = () => {
                 <div className='popupbox'>
                   {supOptions.map((option, index) => (
                     <div className="subpop-options options-relative" key={index} onMouseEnter={() => handleMouseEnter(index)}>
-                    
-                        {convertPascalToReadable(option)}
-                  
+
+                      {convertPascalToReadable(option)}
+
                       {hoveredOption === index && (
                         <div className="popup options-popup">
                           {getPopupContent(option)}

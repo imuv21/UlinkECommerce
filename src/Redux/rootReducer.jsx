@@ -8,6 +8,7 @@ import sellerReducer from './sellerSlice';
 import productDetailSlice from './productDetailSlice';
 import cartReducer from './cartSlice';
 import sellerProductSlice from './sellerProductSlice';
+import currencyReducer from './currencySlice';
 
 
 const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   productDetail: productDetailSlice,
   cart: cartReducer,
   sellerProducts: sellerProductSlice,
+  currency: currencyReducer,
 });
 
 export default rootReducer;

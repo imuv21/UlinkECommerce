@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCart, deleteCartItem, updateCartItem } from '../../Redux/cartSlice';
+import { fetchExchangeRates } from '../../Redux/currencySlice';
+import currencySymbols from '../../components/Schemas/currencySymbols';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -9,11 +11,21 @@ import { Helmet } from 'react-helmet-async';
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { items: cart, totalSellPrice, currencySymbol, status, error } = useSelector((state) => state.cart);
+  const { items: cart, totalSellPrice, currency, status, error } = useSelector((state) => state.cart);
+  const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
+  const exchangeRates = useSelector(state => state.currency.exchangeRates);
 
   useEffect(() => {
     dispatch(fetchCart());
+    dispatch(fetchExchangeRates());
   }, [dispatch]);
+
+  const convertPrice = (price, fromCurrency) => {
+    const rate = exchangeRates[selectedCurrency];
+    if (!rate) return price;
+    const priceInUSD = price / exchangeRates[fromCurrency];
+    return (priceInUSD * rate).toFixed(2);
+  };
 
   const [quantities, setQuantities] = useState({});
 
@@ -125,18 +137,18 @@ const Cart = () => {
                       {truncateText(item.itemName, 50)}
                     </a>
                     <div className="flex" style={{ gap: '15px' }}>
-                      <span className='descrip2' style={{ textDecoration: 'line-through' }}>{currencySymbol} {parseFloat(item.unitPrice).toFixed(2)}</span>
+                      <span className='descrip2' style={{ textDecoration: 'line-through' }}>{currencySymbols[selectedCurrency]} {convertPrice(item.unitPrice, currency)} {selectedCurrency}</span>
                       <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{`${parseFloat(((item.unitPrice - item.sellPrice) / item.unitPrice) * 100).toFixed(2)}% OFF`}</span>
-                      <span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbol}{parseFloat(item.sellPrice).toFixed(2)}</span>
+                      <span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbols[selectedCurrency]} {convertPrice(item.sellPrice, currency)} {selectedCurrency}</span>
                     </div>
                     <div className="flexcol-start" style={{ gap: '3px' }}>
                       <div className="descrip">Min order quantity: {item.minOrderQuant}</div>
-                      <div className="descrip">GST: {parseFloat(item.gst).toFixed(2)}</div>
+                      <div className="descrip">GST: {currencySymbols[selectedCurrency]} {convertPrice(item.gst, currency)} {selectedCurrency}</div>
                     </div>
                   </div>
 
                   <div className="cartPrice">
-                    <div className="heading2">Total : {currencySymbol} {parseFloat(item.totalAmount).toFixed(2)}</div>
+                    <div className="heading2">Total : {currencySymbols[selectedCurrency]} {convertPrice(item.totalAmount, currency)} {selectedCurrency}</div>
                     <div className="plus-minus webdiv" style={{ width: '150px' }}>
                       <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={(e) => decrementValue(e, item.productId, item.minOrderQuant)} /></div>
                       <input className='pminput' type="number" value={quantities[item.productId]} onChange={(e) => handleInputChange(e, item.productId, item.minOrderQuant)} />
@@ -154,7 +166,7 @@ const Cart = () => {
             <div className="heading3">Cart Summary</div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Subtotal</span></div>
-              <div className="heading2"><span>{currencySymbol} {parseFloat(totalSellPrice).toFixed(2)}</span></div>
+              <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</span></div>
             </div>
             <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
               <button className='btn addtocart flex' onClick={checkout}><ShoppingCartCheckoutIcon style={{ width: '15px' }} /><div className="heading2">Checkout</div></button>

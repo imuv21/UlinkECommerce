@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchExchangeRates } from '../Redux/currencySlice';
+import currencySymbols from './Schemas/currencySymbols';
 
 
-const ProductCard = ({ name, id, img, unitPrice, salePrice, moq, currency }) => {
+const ProductCard = ({ name, id, img, unitPrice, salePrice, moq, currencyName }) => {
 
-  
+  const dispatch = useDispatch();
+  const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
+  const exchangeRates = useSelector(state => state.currency.exchangeRates);
   const unitPriceNum = parseFloat(unitPrice);
   const salePriceNum = parseFloat(salePrice);
   const discountPercentage = ((unitPriceNum - salePriceNum) / unitPriceNum) * 100;
+
+  // Fetch currency options and exchange rates
+  useEffect(() => {
+    dispatch(fetchExchangeRates());
+  }, [dispatch]);
+
+  const convertPrice = (price, fromCurrency) => {
+    const rate = exchangeRates[selectedCurrency];
+    if (!rate) return price;
+    const priceInUSD = price / exchangeRates[fromCurrency];
+    return (priceInUSD * rate).toFixed(2);
+  };
 
 
   return (
@@ -14,9 +31,9 @@ const ProductCard = ({ name, id, img, unitPrice, salePrice, moq, currency }) => 
       <img className='product-img-size' src={img} alt='img' />
       <div className='product-detail-info'>
         <p className='product-title'>{name.length > 20 ? `${name.substring(0, 20)}...` : name}</p>
-        <p className='product-price'>{currency}{salePriceNum.toFixed(2)}/ piece </p>
+        <p className='product-price'>{currencySymbols[selectedCurrency]} {convertPrice(salePriceNum, currencyName)} {selectedCurrency}/ piece </p>
         <div className='flex' style={{ gap: '10px' }}>
-          <p className='product-discount'>{currency}{unitPriceNum.toFixed(2)}</p>
+          <p className='product-discount'> {currencySymbols[selectedCurrency]} {convertPrice(unitPriceNum, currencyName)} {selectedCurrency} </p>
           <span className='discount-percentage'>{discountPercentage.toFixed(2)}% OFF</span>
         </div>
         <p className='product-quantity'>Min Order: {moq} peace</p>
