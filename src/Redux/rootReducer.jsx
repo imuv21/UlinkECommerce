@@ -10,6 +10,7 @@ import cartReducer from './cartSlice';
 import sellerProductSlice from './sellerProductSlice';
 import currencyReducer from './currencySlice';
 import updateProductSlice from './updateProductSlice';
+import businessProfileReducer from './businessProfileSlice';
 
 
 const rootReducer = combineReducers({
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   sellerProducts: sellerProductSlice,
   currency: currencyReducer,
   editproducts: updateProductSlice,
+  businessProfile: businessProfileReducer,
 });
 
 export default rootReducer;

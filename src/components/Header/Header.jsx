@@ -13,6 +13,8 @@ import { logout } from '../../Redux/AuthReducer';
 import { urls } from '../Schemas/images';
 import { supOptions, subOptions, miniSubOptions } from '../Schemas/cate';
 import currencySymbols from '../Schemas/currencySymbols';
+import countryFlags from '../Schemas/countryFlags';
+import countryNames from '../Schemas/countryNames';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 import HomeIcon from '@mui/icons-material/Home';
@@ -39,22 +41,13 @@ const Header = () => {
   const { items: cart } = useSelector((state) => state.cart);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  //dropdown flag
-  const [flags, setFlags] = useState([]);
+  //dropdown 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedFlag, setSelectedFlag] = useState(null);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
     dispatch(fetchExchangeRates());
   }, [dispatch]);
-
-  const convertPrice = (price, fromCurrency) => {
-    const rate = exchangeRates[selectedCurrency];
-    if (!rate) return price;
-    const priceInUSD = price / exchangeRates[fromCurrency];
-    return (priceInUSD * rate).toFixed(2);
-  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -77,27 +70,7 @@ const Header = () => {
     setIsOpen(false);
   };
 
-  // Fetch flags and currency information
-  useEffect(() => {
-    const fetchFlags = async () => {
-      try {
-        const response = await axios.get('https://restcountries.com/v3.1/all');
-        const flagsData = response.data.map(country => {
-          const currencyCode = Object.keys(country.currencies || {})[0];
-          return {
-            name: country.name.common,
-            flagUrl: country.flags?.png || '',
-            currencyCode: currencyCode || '',
-            currencySymbol: currencySymbols[currencyCode] || '',
-          };
-        }).filter(flag => flag.currencyCode);
-        setFlags(flagsData);
-      } catch (error) {
-        console.error('Error fetching flags:', error);
-      }
-    };
-    fetchFlags();
-  }, []);
+
 
 
 
@@ -281,7 +254,10 @@ const Header = () => {
           <div className="dropdown-flag" ref={dropdownRef}>
             <div className="dropdown-flag-header" onClick={handleToggleDropdown}>
               {selectedCurrency ? (
-                <span>{selectedCurrency} ({currencySymbols[selectedCurrency]})</span>
+                <div className="flex" style={{ gap: '10px' }}>
+                  <img className='flag' src={countryFlags[selectedCurrency]} alt={selectedCurrency} />
+                  {countryNames[selectedCurrency]} ({currencySymbols[selectedCurrency]})
+                </div>
               ) : (
                 <span>Select a currency</span>
               )}
@@ -290,7 +266,7 @@ const Header = () => {
               <div className="dropdown-flag-list">
                 {Object.keys(exchangeRates).map((currencyCode, index) => (
                   <div className="dropdown-flag-item flex" key={index} onClick={() => handleSelectCurrency(currencyCode)}>
-                    {currencyCode} ({currencySymbols[currencyCode]})
+                    <img className='flag' src={countryFlags[currencyCode]} alt={currencyCode} />  {countryNames[currencyCode]} ({currencySymbols[currencyCode]})
                   </div>
                 ))}
               </div>

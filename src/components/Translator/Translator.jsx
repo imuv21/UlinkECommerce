@@ -228,3 +228,37 @@
 // };
 
 // export default Translator;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState } from 'react';
+import countryFlags from '../Schemas/countryFlags';
+import './Translator.css';
+
+const Translator = () => {
+
+  return (
+    <div className='home flexcol wh'>
+      {Object.entries(countryFlags).map(([code, flag], index) => (
+        <img style={{width: '100px', height: '100px'}} src={flag} alt={`flag-${code}`} key={index} />
+      ))}
+    </div>
+  );
+};
+
+export default Translator;

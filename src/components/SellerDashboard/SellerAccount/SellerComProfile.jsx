@@ -2,6 +2,8 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 import BusinessIcon from '@mui/icons-material/Business';
 import DescriptionIcon from '@mui/icons-material/Description';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -36,6 +38,24 @@ const SellerComProfile = () => {
     const cancelDoc = () => {
         setIsEditingDoc(false);
     }
+
+    //file upload functionality
+    const [selectedFile, setSelectedFile] = useState(null);
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const allowedFormats = ['jpg', 'jpeg', 'png', 'tif', 'pdf'];
+            const fileFormat = file.name.split('.').pop().toLowerCase();
+            if (file.size <= 10 * 1024 * 1024 && allowedFormats.includes(fileFormat)) {
+                setSelectedFile(file);
+            } else {
+                alert('Invalid file format or size. Please upload a file within 10MB and with a JPG, JPEG, PNG, TIF, or PDF format.');
+            }
+        }
+    };
+    const handleDeleteFile = () => {
+        setSelectedFile(null);
+    };
 
 
     return (
@@ -136,11 +156,28 @@ const SellerComProfile = () => {
 
                         {isEditingDoc ? (
                             <Fragment>
-                                <div className="flexcol" style={{ gap: '20px', justifyContent: 'start', width: '100%' }}>
+                                <div className="flexcol" style={{ gap: '20px', alignItems: 'start', width: '100%' }}>
                                     <div className="flexcol wh" style={{ gap: '5px' }}>
                                         <div className="heading3 wh">Business registration document</div>
                                         <div className="descrip wh">Upload a copy of a relevant business registration document so that we may verify you as an official business. This can be your business license, trade license, commercial register.</div>
                                     </div>
+                                    <label className="br-file-upload">
+                                        {selectedFile ? (
+                                            <div className='afterUpload flex'>
+                                                <div className="heading2 wh">{selectedFile.name}</div>
+                                                <DeleteForeverIcon onClick={handleDeleteFile} />
+                                            </div>
+                                        ) : (
+                                            <div className='beforeUpload flex'>
+                                                <UploadFileIcon />
+                                                <div className='flexcol wh'>
+                                                    <div className="heading2 wh">Attach File</div>
+                                                    <div className="descrip wh">Only JPG, JPEG, PNG, TIF, and PDF formats at 10MB or less</div>
+                                                </div>
+                                            </div>
+                                        )}
+                                        <input type="file" onChange={handleFileChange} />
+                                    </label>
                                 </div>
                             </Fragment>
                         ) : (
