@@ -67,12 +67,13 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
   };
-  const handleSelectFlag = (flag) => {
-    setSelectedFlag(flag);
-    dispatch(setSelectedCurrency(flag.currencyCode));
+
+  const handleSelectCurrency = (currencyCode) => {
+    dispatch(setSelectedCurrency(currencyCode));
     setIsOpen(false);
   };
 
@@ -276,23 +277,20 @@ const Header = () => {
         </div>
 
         <div className="flex wh" style={{ gap: '20px' }}>
+
           <div className="dropdown-flag" ref={dropdownRef}>
             <div className="dropdown-flag-header" onClick={handleToggleDropdown}>
-              {selectedFlag ? (
-                <div className="flex" style={{ gap: '10px' }}>
-                  <img className='flag' src={selectedFlag.flagUrl} alt={selectedFlag.name} />
-                  <div className="descrip">{selectedFlag.name} ({selectedFlag.currencyCode}) ({selectedFlag.currencySymbol})</div>
-                </div>
+              {selectedCurrency ? (
+                <span>{selectedCurrency} ({currencySymbols[selectedCurrency]})</span>
               ) : (
                 <span>Select a currency</span>
               )}
             </div>
             {isOpen && (
               <div className="dropdown-flag-list">
-                {flags.map((flag, index) => (
-                  <div className="dropdown-flag-item flex" key={index} onClick={() => handleSelectFlag(flag)}>
-                    <img className='flag' src={flag.flagUrl} alt={flag.name} />
-                    <div className="descrip">{flag.name} ({flag.currencyCode}) ({flag.currencySymbol})</div>
+                {Object.keys(exchangeRates).map((currencyCode, index) => (
+                  <div className="dropdown-flag-item flex" key={index} onClick={() => handleSelectCurrency(currencyCode)}>
+                    {currencyCode} ({currencySymbols[currencyCode]})
                   </div>
                 ))}
               </div>
