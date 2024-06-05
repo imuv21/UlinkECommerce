@@ -44,6 +44,17 @@ import Slider1 from  '../../assets/Stationary/bannerhp.png';
 import Board from '../../assets/Stationary/boardpng.png';
 import WritingMaterial from '../../assets/Stationary/writingmaterial.png';
 
+// Food and Beverages
+ import FoodBanner  from '../../assets/Food/attabanner.png';
+ import Cornflakeses from '../../assets/Food/cornflakes.psd2.png';
+ import Biscuit from '../../assets/Food/ceralacbanner.png';
+ import Chocklates from '../../assets/Food/chocklatesremovebg.png'
+ import Beverages from '../../assets/Food/beverages.png'
+ import Milk from '../../assets/Food/homeproductsCopy.png'
+ import Pantry from '../../assets/Food/Pantryremovebgpreview.png'
+ import RealJuice from '../../assets/Food/RealJuicebanner.png'
+ 
+ 
 
 
 
@@ -90,9 +101,15 @@ const ImageImport =  {
     Slider1,
     Board,
     WritingMaterial,
-
-
-   
+    // Food and Beverages
+    FoodBanner,
+    Cornflakeses,
+    Biscuit,
+    Chocklates,
+    Milk,
+    Pantry,
+    Beverages,
+    RealJuice,
 }
 
 

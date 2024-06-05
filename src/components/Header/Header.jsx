@@ -43,6 +43,7 @@ const Header = () => {
 
   //dropdown 
   const [isOpen, setIsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(''); //this one
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -70,6 +71,13 @@ const Header = () => {
     setIsOpen(false);
   };
 
+  const handleSearchChange = (e) => {  //this one
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredCurrencies = Object.keys(exchangeRates).filter((currencyCode) =>   //this one
+    countryNames[currencyCode].toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
 
 
@@ -237,6 +245,13 @@ const Header = () => {
     }
   };
 
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.slice(0, maxLength) + '';
+  }
+
 
   return (
     <Fragment>
@@ -254,21 +269,31 @@ const Header = () => {
           <div className="dropdown-flag" ref={dropdownRef}>
             <div className="dropdown-flag-header" onClick={handleToggleDropdown}>
               {selectedCurrency ? (
-                <div className="flex" style={{ gap: '10px' }}>
+                <div className="flex descrip" style={{ gap: '10px' }}>
                   <img className='flag' src={countryFlags[selectedCurrency]} alt={selectedCurrency} />
-                  {countryNames[selectedCurrency]} ({currencySymbols[selectedCurrency]})
+                  {truncateText(countryNames[selectedCurrency], 10)} ({currencySymbols[selectedCurrency]})
                 </div>
               ) : (
-                <span>Select a currency</span>
+                <div className='descrip'>Select your country</div>
               )}
             </div>
             {isOpen && (
               <div className="dropdown-flag-list">
-                {Object.keys(exchangeRates).map((currencyCode, index) => (
-                  <div className="dropdown-flag-item flex" key={index} onClick={() => handleSelectCurrency(currencyCode)}>
-                    <img className='flag' src={countryFlags[currencyCode]} alt={currencyCode} />  {countryNames[currencyCode]} ({currencySymbols[currencyCode]})
+                <input type="text" className="dropdown-flag-search" placeholder="Search here..."
+                  value={searchQuery} onChange={handleSearchChange} />
+
+                {filteredCurrencies.map((currencyCode, index) => (
+                  <div className="dropdown-flag-item descrip flex" key={index} onClick={() => handleSelectCurrency(currencyCode)}>
+                    <img className='flag' src={countryFlags[currencyCode]} alt={currencyCode} />
+                    {countryNames[currencyCode]} ({currencySymbols[currencyCode]})
                   </div>
                 ))}
+
+                {/* {Object.keys(exchangeRates).map((currencyCode, index) => (
+                  <div className="dropdown-flag-item descrip flex" key={index} onClick={() => handleSelectCurrency(currencyCode)}>
+                    <img className='flag' src={countryFlags[currencyCode]} alt={currencyCode} />  {countryNames[currencyCode]} ({currencySymbols[currencyCode]})
+                  </div>
+                ))} */}
               </div>
             )}
           </div>

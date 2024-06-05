@@ -247,18 +247,32 @@
 
 
 import React, { useState } from 'react';
-import countryFlags from '../Schemas/countryFlags';
-import './Translator.css';
 
 const Translator = () => {
+    const [selectedDate, setSelectedDate] = useState('');
+    const today = new Date();
+    const formattedToday = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getFullYear()}`;
 
-  return (
-    <div className='home flexcol wh'>
-      {Object.entries(countryFlags).map(([code, flag], index) => (
-        <img style={{width: '100px', height: '100px'}} src={flag} alt={`flag-${code}`} key={index} />
-      ))}
-    </div>
-  );
+    const handleDateChange = (e) => {
+        const selected = new Date(e.target.value);
+        if (selected >= today) {
+            setSelectedDate(e.target.value);
+        } else {
+            alert('Please select a date from today or later.');
+        }
+    };
+
+    return (
+        <div className='flexcol wh home'>
+            <p>Today is {formattedToday}</p>
+            <input 
+                type="date" 
+                value={selectedDate} 
+                onChange={handleDateChange} 
+                min={today.toISOString().split('T')[0]}
+            />
+        </div>
+    );
 };
 
 export default Translator;

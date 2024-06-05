@@ -39,20 +39,12 @@ const CategoryPages = () => {
     { image: ImageImport.Desk, name: 'Desk & Supplies' },
     { image: ImageImport.WritingMaterial, name: 'Writing Material' }
   ];
-
   //  product show 
-
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
-
-
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch])
-
-
-
-
 
   const truncateText = (text, maxLength) => {
     if (text.length <= maxLength) {
@@ -121,22 +113,27 @@ const CategoryPages = () => {
     const ShowAll = () => {
       navigate('/search-results')
     }
-    const BannerCategory = () => {
-      navigate('/search-results?category= ' + category)
+    const handleFilterFashion = () => {
+      const filterfashion = products.filter(product => product.selectedSupOption === 'FashionAndAccessories');
+      navigate('/search-results', { state: { selectedSupOption: 'FashionAndAccessories', products: filterfashion } }); 
+    }
+    const handleFilterElectronic = () => {
+      const filterElectronic = products.filter(product => product.selectedSupOption === 'ConsumerElectronics');
+      navigate('/search-results', { state: { selectedSupOption: 'ConsumerElectronics', products: filterElectronic }});
     }
     switch (category) {
-      case 'trending':
+      case 'trending':d
         return (
           <div className='discount-pages' >
             <div className='banner-page'>
               <img className='banner-width' src={ImageImport.Discount} ></img>
             </div>
             <div className='best-deals-product'>
-              <div className='best-deals ' onClick={() => BannerCategory('fashion')}>
-                <img className='top-deal-1' src={ImageImport.FashionBeauty}></img>
+              <div className='best-deals ' onClick={handleFilterFashion}>
+                <img className='top-deal-1' src={ImageImport.FashionBeauty} alt='fashionaccessories'></img>
               </div>
-              <div className='best-deals ' onClick={() => BannerCategory('electronics')}>
-                <img className='top-deal-1' src={ImageImport.ElecronicsDeals}></img>
+              <div className='best-deals ' onClick={handleFilterElectronic}>
+                <img className='top-deal-1' src={ImageImport.ElecronicsDeals} alt ="ConsumerElectronics"></img>
               </div>
             </div>
             <div className='all-offers-deals'>
@@ -255,16 +252,16 @@ const CategoryPages = () => {
             </div>
             <img className='banner-width' src={ImageImport.Tclbanner} ></img>
             <div className="product-slider-cont">
-            <Sliders {...settings}>
-            {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'consumerelectronics')).map((product) => (
-                    <div className='show-img-detail-sup' key={product.productId}>
-                        <Suspense fallback={<Loader />}>                                                   
-                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
-                        </Suspense>
-                    </div>
+              <Sliders {...settings}>
+                {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'ConsumerElectronics')).map((product) => (
+                  <div className='show-img-detail-sup' key={product.productId}>
+                    <Suspense fallback={<Loader />}>
+                      <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
+                    </Suspense>
+                  </div>
                 ))}
-            </Sliders>
-        </div>
+              </Sliders>
+            </div>
             <img className='banner-width' src={ImageImport.Sumsungbanner} ></img>
             <div className='best-deals-product'>
               <div className=''>
@@ -291,16 +288,16 @@ const CategoryPages = () => {
               </div>
             </div>
             <div className="product-slider-cont">
-            <Sliders {...settings}>
-            {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'consumerelectronics')).map((product) => (
-                    <div className='show-img-detail-sup' key={product.productId}>
-                        <Suspense fallback={<Loader />}>                                                   
-                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
-                        </Suspense>
-                    </div>
+              <Sliders {...settings}>
+                {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'ConsumerElectronics')).map((product) => (
+                  <div className='show-img-detail-sup' key={product.productId}>
+                    <Suspense fallback={<Loader />}>
+                      <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
+                    </Suspense>
+                  </div>
                 ))}
-            </Sliders>
-        </div>
+              </Sliders>
+            </div>
             <div className='best-deals-product'>
               <div className='flex'>
                 <h3>Best Selling Mobile Acceseries</h3>
@@ -312,16 +309,16 @@ const CategoryPages = () => {
               </div>
             </div>
             <div className="product-slider-cont">
-            <Sliders {...settings}>
-            {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'consumerelectronics')).map((product) => (
-                    <div className='show-img-detail-sup' key={product.productId}>
-                        <Suspense fallback={<Loader />}>                                                   
-                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
-                        </Suspense>
-                    </div>
+              <Sliders {...settings}>
+                {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'ConsumereElectronics')).map((product) => (
+                  <div className='show-img-detail-sup' key={product.productId}>
+                    <Suspense fallback={<Loader />}>
+                      <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
+                    </Suspense>
+                  </div>
                 ))}
-            </Sliders>
-        </div>
+              </Sliders>
+            </div>
             <div className='banner-page'>
               <img className='banner-width' src={ImageImport.OldItemBanner} ></img>
             </div>
@@ -404,41 +401,122 @@ const CategoryPages = () => {
                 <h3>Best Selling Mobile Acceseries</h3>
                 <p className='item-count'>({productShow.length} Items)</p>
               </div>
-
               <div className=''>
                 <h4 className='show-all-product'>Show All</h4>
               </div>
             </div>
-   
             <div className="product-slider-cont">
-            <Sliders {...settings}>
-            {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'officeandstationery')).map((product) => (
-                    <div className='show-img-detail-sup' key={product.productId}>
-                        <Suspense fallback={<Loader />}>                                                   
-                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
-                        </Suspense>
-                    </div>
+              <Sliders {...settings}>
+                {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'OfficeAndStationery')).map((product) => (
+                  <div className='show-img-detail-sup' key={product.productId}>
+                    <Suspense fallback={<Loader />}>
+                      <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
+                    </Suspense>
+                  </div>
                 ))}
-            </Sliders>
-        </div>
-            <div className="product-slider-cont">
-            <Sliders {...settings}>
-            {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === '')).map((product) => (
-                    <div className='show-img-detail-sup' key={product.productId}>
-                        <Suspense fallback={<Loader />}>                                                   
-                            <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg } unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
-                        </Suspense>
-                    </div>
-                ))}
-            </Sliders>
-        </div>
+              </Sliders>
             </div>
-         
+            <div className="product-slider-cont">
+              <Sliders {...settings}>
+                {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'OfficeAndStationery')).map((product) => (
+                  <div className='show-img-detail-sup' key={product.productId}>
+                    <Suspense fallback={<Loader />}>
+                      <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
+                    </Suspense>
+                  </div>
+                ))}
+              </Sliders>
+            </div>
+          </div>
+
         );
       case 'food':
         return (
-          <div className='electronics-page'>
-            <h1>Hello this is the food page</h1>
+          <div className='discount-pages'>
+            <div className='banner-page'>
+              <img className='banner-width' src={ImageImport.FoodBanner} ></img>
+            </div>
+            <div className='best-deals-product'>
+              <div className='best-deals'>
+                <img className='top-deal-1' src={ImageImport.Cornflakeses}></img>
+              </div>
+              <div className='best-deals'>
+                <img className='top-deal-1' src={ImageImport.Biscuit}></img>
+              </div>
+            </div>
+
+            <div className='best-deals-product'>
+              <div className='flex'>
+                <h3>Best Selling Mobile Acceseries</h3>
+                <p className='item-count'>({productShow.length} Items)</p>
+              </div>
+              <div className=''>
+                <h4 className='show-all-product'>Show All</h4>
+              </div>
+            </div>
+            <div className="product-slider-cont">
+              <Sliders {...settings}>
+                {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'OfficeAndStationery')).map((product) => (
+                  <div className='show-img-detail-sup' key={product.productId}>
+                    <Suspense fallback={<Loader />}>
+                      <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
+                    </Suspense>
+                  </div>
+                ))}
+              </Sliders>
+            </div>
+            <div className='all-offers-deals'>
+              <div className='offer-1 printer'>
+                <img className='offer-img-width' src={ImageImport.Chocklates}></img>
+                <div className=''>
+                  <h4 className='offer-title'>Chocklates</h4>
+                </div>
+              </div>
+              <div className='offer-1 tonorlnk'>
+                <img className='offer-img-width' src={ImageImport.Pantry}></img>
+                <div className=''>
+                  <h4 className='offer-title'>Pantry</h4>
+                </div>
+              </div>
+              <div className='offer-1 paper '>
+                <img className='offer-img-width' src={ImageImport.Milk}></img>
+                <div className=''>
+                  <h4 className='offer-title'>Milk</h4>
+                </div>
+              </div>
+              <div className='offer-1 office'>
+                <img className='offer-img-width' src={ImageImport.Beverages}></img>
+                <div className=''>
+                  <h4 className='offer-title'>Beverages</h4>
+                </div>
+              </div>
+
+            </div>
+
+            <div className='best-deals-product'>
+              <div className='flex'>
+                <h3>Best Selling Mobile Acceseries</h3>
+                <p className='item-count'>({productShow.length} Items)</p>
+              </div>
+              <div className=''>
+                <h4 className='show-all-product'>Show All</h4>
+              </div>
+            </div>
+            <div className="product-slider-cont">
+              <Sliders {...settings}>
+                {Array.isArray(products) && products.filter((product) => (product.selectedSupOption === 'OfficeAndStationery')).map((product) => (
+                  <div className='show-img-detail-sup' key={product.productId}>
+                    <Suspense fallback={<Loader />}>
+                      <ProductCard name={product.productName} moq={product.minOrderQuant} id={product.productId} img={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} unitPrice={product.unitPrice} currency={product.currencySymbol} salePrice={product.sellPrice} />
+                    </Suspense>
+                  </div>
+                ))}
+              </Sliders>
+            </div>
+
+            <div className='banner-page'>
+              <img className='banner-width' src={ImageImport.RealJuice} ></img>
+            </div>
           </div>
         );
       case 'personalcare':

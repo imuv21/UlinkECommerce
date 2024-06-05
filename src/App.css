@@ -2355,7 +2355,6 @@ button:focus {
 
 .offer-title {
   color: #252627;
-
 }
 
 .show-all-product:hover {
@@ -2528,4 +2527,20 @@ button:focus {
 
 .br-file-upload input[type="file"] {
   display: none;
+}
+
+.date-input{
+  width: 200px;
+  padding: 10px 50px;
+  border: 1px dashed black;
+  border-radius: var(--br1);
+  transition: var(--trans);
+}
+
+.date-input2{
+  width: 200px;
+  padding: 10px;
+  border: 1px dashed black;
+  border-radius: var(--br1);
+  transition: var(--trans);
 }

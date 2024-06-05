@@ -57,6 +57,20 @@ const SellerComProfile = () => {
         setSelectedFile(null);
     };
 
+    //date picker functionality
+    const [selectedDate, setSelectedDate] = useState('');
+    const today = new Date();
+    const formattedToday = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getFullYear()}`;
+
+    const handleDateChange = (e) => {
+        const selected = new Date(e.target.value);
+        if (selected >= today) {
+            setSelectedDate(e.target.value);
+        } else {
+            alert('Please select a date from today or later.');
+        }
+    };
+
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
@@ -178,6 +192,15 @@ const SellerComProfile = () => {
                                         )}
                                         <input type="file" onChange={handleFileChange} />
                                     </label>
+                                    <div className='heading2'>Select expiry date</div>
+                                    <input className='date-input' type="date" value={selectedDate} onChange={handleDateChange} min={today.toISOString().split('T')[0]} />
+                                    <div className="heading2">Registration document number</div>
+                                    <input className='date-input2' type="text" placeholder='Ente here...' />
+
+                                    <div className="flexcol wh" style={{ gap: '5px' }}>
+                                        <div className="heading3 wh">Business registration document</div>
+                                        <div className="descrip wh">Upload a copy of a relevant business registration document so that we may verify you as an official business. This can be your business license, trade license, commercial register.</div>
+                                    </div>
                                 </div>
                             </Fragment>
                         ) : (
