@@ -112,6 +112,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 50%;
 }
 
@@ -346,7 +347,7 @@
  /* dropdown flag */
 .dropdown-flag {
   position: relative;
-  width: 150px;
+  width: 200px;
 }
 
 .dropdown-flag-header {
@@ -357,6 +358,8 @@
   padding: 10px;
   font-size: var(--defontsize);
   width: 100%;
+  max-width: 200px;
+  min-width: 50px;
   border: 1px solid black;
   border-radius: 6px;
 }
@@ -368,9 +371,10 @@
   right: 0;
   border-radius: 6px;
   background-color: #fff;
+  width: 200px;
   max-height: 250px;
   overflow-y: auto;
-  z-index: 1000;
+  z-index: 3;
 }
 
 .dropdown-flag-search {
@@ -410,8 +414,13 @@
   object-fit: cover;
   filter: drop-shadow(1px 1px 1px black);
 }
-
-
+.headerflex{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 20px;
+}
 
 
 @media  screen and (max-width: 800px) {
@@ -438,6 +447,19 @@
     width: 18px;
     height: 18px;
     color: gray;
+  }
+  .dropdown-flag {
+    width: fit-content;
+  }
+  .dropdown-flag-header {
+    padding: 5px 10px;
+    border-radius: 16px;
+  }
+  .headerflex{
+    gap: 10px;
+  }
+  .flagname .descrip{
+    display: none;
   }
   .logo {
     width: 100px;

@@ -264,14 +264,14 @@ const Header = () => {
           <Link to="/"><img src={logo} alt="Logo" className='logo' /></Link>
         </div>
 
-        <div className="flex wh" style={{ gap: '20px' }}>
+        <div className="headerflex">
 
           <div className="dropdown-flag" ref={dropdownRef}>
             <div className="dropdown-flag-header" onClick={handleToggleDropdown}>
               {selectedCurrency ? (
-                <div className="flex descrip" style={{ gap: '10px' }}>
+                <div className="flex descrip flagname" style={{ gap: '10px' }}>
                   <img className='flag' src={countryFlags[selectedCurrency]} alt={selectedCurrency} />
-                  {truncateText(countryNames[selectedCurrency], 10)} ({currencySymbols[selectedCurrency]})
+                  <div className="descrip">{truncateText(countryNames[selectedCurrency], 10)}</div> ({currencySymbols[selectedCurrency]})
                 </div>
               ) : (
                 <div className='descrip'>Select your country</div>
@@ -288,12 +288,6 @@ const Header = () => {
                     {countryNames[currencyCode]} ({currencySymbols[currencyCode]})
                   </div>
                 ))}
-
-                {/* {Object.keys(exchangeRates).map((currencyCode, index) => (
-                  <div className="dropdown-flag-item descrip flex" key={index} onClick={() => handleSelectCurrency(currencyCode)}>
-                    <img className='flag' src={countryFlags[currencyCode]} alt={currencyCode} />  {countryNames[currencyCode]} ({currencySymbols[currencyCode]})
-                  </div>
-                ))} */}
               </div>
             )}
           </div>

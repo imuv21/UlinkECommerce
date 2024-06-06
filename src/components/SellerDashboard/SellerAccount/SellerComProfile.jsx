@@ -19,9 +19,8 @@ const SellerComProfile = () => {
         resolver: schema,
     });
 
-    //profile edit functionality
+    // profile edit functionality
     const [isEditing, setIsEditing] = useState(false);
-    const [isEditingDoc, setIsEditingDoc] = useState(false);
     const onSubmit = (data) => {
         setIsEditing(false);
         console.log(data);
@@ -29,47 +28,142 @@ const SellerComProfile = () => {
     const handleEditClick = () => {
         setIsEditing(true);
     };
-    const handleEditClickDoc = () => {
-        setIsEditingDoc(true);
-    };
     const cancel = () => {
         setIsEditing(false);
     }
+
+
+    //Doc edit functionality
+    const [docErrors, setDocErrors] = useState({});
+    const [isEditingDoc, setIsEditingDoc] = useState(false);
+
+    const clearError = (fieldName) => {
+        setDocErrors(prevErrors => ({
+            ...prevErrors,
+            [fieldName]: ''
+        }));
+    };
+    const handleDoc = (event) => {
+        event.preventDefault();
+        const newErrors = {};
+
+        if (!selectedFile) {
+            newErrors.selectedFile = 'Business registration document is required.';
+        }
+
+        if (!selectedDate) {
+            newErrors.selectedDate = 'Expiry date is required.';
+        }
+
+        if (!regDocNumber.trim()) {
+            newErrors.regDocNumber = 'Registration document number is required.';
+        }
+
+        if (!selectedFileTwo) {
+            newErrors.selectedFileTwo = 'Identity document is required.';
+        }
+
+        if (!selectedDateTwo) {
+            newErrors.selectedDateTwo = 'Expiry date is required.';
+        }
+
+        if (!idDocNumber.trim()) {
+            newErrors.idDocNumber = 'Identity document number is required.';
+        }
+
+        setDocErrors(newErrors);
+
+        if (Object.keys(newErrors).length === 0) {
+            console.log({
+                selectedFile,
+                selectedDate,
+                regDocNumber,
+                selectedFileTwo,
+                selectedDateTwo,
+                idDocNumber,
+                selectedFileThree,
+            });
+            // Handle form submission here
+            console.log("Form submitted successfully!");
+            setIsEditingDoc(false);
+            setDocErrors({});
+        } else {
+            console.log("Form submission failed. Please fix the errors.");
+        }
+    };
+    const handleEditClickDoc = () => {
+        setIsEditingDoc(true);
+    };
     const cancelDoc = () => {
         setIsEditingDoc(false);
     }
 
-    //file upload functionality
+
+
+    //rd and ic inputs
+    const [regDocNumber, setRegDocNumber] = useState('');
+    const [idDocNumber, setIdDocNumber] = useState('');
+
+    const handleRegDocNumberChange = (e) => {
+        setRegDocNumber(e.target.value);
+        clearError('regDocNumber');
+    };
+    const handleIdDocNumberChange = (e) => {
+        setIdDocNumber(e.target.value);
+        clearError('idDocNumber');
+    };
+
+
+
+    //file upload one, two and three
     const [selectedFile, setSelectedFile] = useState(null);
-    const handleFileChange = (event) => {
+    const [selectedFileTwo, setSelectedFileTwo] = useState(null);
+    const [selectedFileThree, setSelectedFileThree] = useState(null);
+    const [showFileThreeInput, setShowFileThreeInput] = useState(false);
+    const allowedFormats = ['jpg', 'jpeg', 'png', 'tif', 'pdf'];
+    const maxSize = 10 * 1024 * 1024;
+
+    useEffect(() => {
+        if (!selectedFileTwo && !selectedFileThree) {
+            setShowFileThreeInput(false);
+        }
+    }, [selectedFileTwo, selectedFileThree]);
+
+    const handleFileChange = (event, setFile, fieldName) => {
         const file = event.target.files[0];
         if (file) {
-            const allowedFormats = ['jpg', 'jpeg', 'png', 'tif', 'pdf'];
             const fileFormat = file.name.split('.').pop().toLowerCase();
-            if (file.size <= 10 * 1024 * 1024 && allowedFormats.includes(fileFormat)) {
-                setSelectedFile(file);
+            if (file.size <= maxSize && allowedFormats.includes(fileFormat)) {
+                setFile(file);
+                clearError(fieldName);
             } else {
                 alert('Invalid file format or size. Please upload a file within 10MB and with a JPG, JPEG, PNG, TIF, or PDF format.');
             }
         }
     };
-    const handleDeleteFile = () => {
-        setSelectedFile(null);
+    const handleDeleteFile = (setFile) => {
+        setFile(null);
     };
+   
 
-    //date picker functionality
+
+
+
+    // date picker one and two 
     const [selectedDate, setSelectedDate] = useState('');
-    const today = new Date();
-    const formattedToday = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getFullYear()}`;
-
-    const handleDateChange = (e) => {
+    const [selectedDateTwo, setSelectedDateTwo] = useState('');
+    const now = new Date();
+    const handleDateChange = (e, setDate, fieldName) => {
         const selected = new Date(e.target.value);
+        const today = new Date();
         if (selected >= today) {
-            setSelectedDate(e.target.value);
+            setDate(e.target.value);
+            clearError(fieldName);
         } else {
             alert('Please select a date from today or later.');
         }
     };
+   
 
 
     return (
@@ -80,6 +174,7 @@ const SellerComProfile = () => {
             <div className="procont">
 
                 <div className="flexcol" style={{ gap: '20px' }}>
+
                     <form className="profile-sel-box" onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><BusinessIcon /> <div className="heading">Business Profile</div></div>
                         {isEditing ? (
@@ -155,15 +250,15 @@ const SellerComProfile = () => {
                         <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><div className="heading2"> <div className="descrip2">To change your company name please contact Ulinkit at support@ulinkit.com</div> </div></div>
                     </form>
 
-                    <form className="profile-sel-box" onSubmit={handleSubmit(onSubmit)}>
+                    <form className="profile-sel-box" onSubmit={handleDoc}>
                         <div className="flexcol wh" style={{ gap: '5px' }}>
                             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                                 <div className="flex" style={{ gap: '10px' }}>
                                     <DescriptionIcon /> <div className="heading">Add Your Business Documents</div>
                                 </div>
-                                {(isEditingDoc === false) && <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClickDoc}>Edit</div>}
+                                {!isEditingDoc && <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClickDoc}>Edit</div>}
                             </div>
-                            {(isEditingDoc === true) && <div className="flex-start" style={{ gap: '5px', justifyContent: 'start', width: '100%' }}>
+                            {isEditingDoc && <div className="flex-start" style={{ gap: '5px', justifyContent: 'start', width: '100%' }}>
                                 <div className="descrip2">We need the following documents to verify your business and give you access to all Tradeling features. We will get in touch with you when these documents need to be renewed.</div>
                             </div>}
                         </div>
@@ -175,11 +270,12 @@ const SellerComProfile = () => {
                                         <div className="heading3 wh">Business registration document</div>
                                         <div className="descrip wh">Upload a copy of a relevant business registration document so that we may verify you as an official business. This can be your business license, trade license, commercial register.</div>
                                     </div>
+
                                     <label className="br-file-upload">
                                         {selectedFile ? (
                                             <div className='afterUpload flex'>
                                                 <div className="heading2 wh">{selectedFile.name}</div>
-                                                <DeleteForeverIcon onClick={handleDeleteFile} />
+                                                <DeleteForeverIcon onClick={() => handleDeleteFile(setSelectedFile)}  />
                                             </div>
                                         ) : (
                                             <div className='beforeUpload flex'>
@@ -190,17 +286,81 @@ const SellerComProfile = () => {
                                                 </div>
                                             </div>
                                         )}
-                                        <input type="file" onChange={handleFileChange} />
+                                        <input name='selectedFile' type="file" onChange={(e) => handleFileChange(e, setSelectedFile, 'selectedFile')} />
                                     </label>
-                                    <div className='heading2'>Select expiry date</div>
-                                    <input className='date-input' type="date" value={selectedDate} onChange={handleDateChange} min={today.toISOString().split('T')[0]} />
-                                    <div className="heading2">Registration document number</div>
-                                    <input className='date-input2' type="text" placeholder='Ente here...' />
+                                    {docErrors.selectedFile && <div className="error">{docErrors.selectedFile}</div>}
+
+                                    <div className="flexcol-start wh" style={{ gap: '5px' }}>
+                                        <div className='heading2'>Select expiry date</div>
+                                        <input className='date-input' name='selectedDate' type="date" value={selectedDate} onChange={(e) => handleDateChange(e, setSelectedDate, 'selectedDate')} min={now.toISOString().split('T')[0]} />
+                                        {docErrors.selectedDate && <div className="error">{docErrors.selectedDate}</div>}
+                                    </div>
+
+                                    <div className="flexcol-start wh" style={{ gap: '5px' }}>
+                                        <div className="heading2">Registration document number</div>
+                                        <input className='date-input2' name='regDocNumber' value={regDocNumber} onChange={(e) => { setRegDocNumber(e.target.value); clearError('regDocNumber'); }} type="text" placeholder='Enter here...' />
+                                        {docErrors.regDocNumber && <div className="error">{docErrors.regDocNumber}</div>}
+                                    </div>
 
                                     <div className="flexcol wh" style={{ gap: '5px' }}>
-                                        <div className="heading3 wh">Business registration document</div>
-                                        <div className="descrip wh">Upload a copy of a relevant business registration document so that we may verify you as an official business. This can be your business license, trade license, commercial register.</div>
+                                        <div className="heading3 wh">Identity document</div>
+                                        <div className="descrip wh">Upload your identity document so that we may verify you as a representative of your business. This could be your passport or any other officially issued identity document.</div>
                                     </div>
+
+                                    <label className="br-file-upload">
+                                        {selectedFileTwo ? (
+                                            <div className='afterUpload flex'>
+                                                <div className="heading2 wh">{selectedFileTwo.name}</div>
+                                                <DeleteForeverIcon onClick={() => handleDeleteFile(setSelectedFileTwo)} />
+                                            </div>
+                                        ) : (
+                                            <div className='beforeUpload flex'>
+                                                <UploadFileIcon />
+                                                <div className='flexcol wh'>
+                                                    <div className="heading2 wh">Attach File</div>
+                                                    <div className="descrip wh">Only JPG, JPEG, PNG, TIF, and PDF formats at 10MB or less</div>
+                                                </div>
+                                            </div>
+                                        )}
+                                        <input type="file" name='selectedFileTwo'   onChange={(e) => { handleFileChange(e, setSelectedFileTwo, 'selectedFileTwo'); setShowFileThreeInput(true); }} />
+                                    </label>
+                                    {docErrors.selectedFileTwo && <div className="error">{docErrors.selectedFileTwo}</div>}
+
+                                    {showFileThreeInput && (
+                                        <label className="br-file-upload">
+                                            {selectedFileThree ? (
+                                                <div className='afterUpload flex'>
+                                                    <div className="heading2 wh">{selectedFileThree.name}</div>
+                                                    <DeleteForeverIcon onClick={() => handleDeleteFile(setSelectedFileThree)} />
+                                                </div>
+                                            ) : (
+                                                <div className='beforeUpload flex'>
+                                                    <UploadFileIcon />
+                                                    <div className='flexcol wh'>
+                                                        <div className="heading2 wh">Attach File</div>
+                                                        <div className="descrip wh">Only JPG, JPEG, PNG, TIF, and PDF formats at 10MB or less</div>
+                                                    </div>
+                                                </div>
+                                            )}
+                                            <input type="file" name='selectedFileThree'  onChange={(e) => handleFileChange(e, setSelectedFileThree, 'selectedFileThree')} />
+                                        </label>
+                                    )}
+
+                                    <div className="flexcol-start wh" style={{ gap: '5px' }}>
+                                        <div className='heading2'>Select expiry date</div>
+                                        <input className='date-input' name='selectedDateTwo' type="date" value={selectedDateTwo} onChange={(e) => handleDateChange(e, setSelectedDateTwo, 'selectedDateTwo')} min={now.toISOString().split('T')[0]} />
+                                        {docErrors.selectedDateTwo && <div className="error">{docErrors.selectedDateTwo}</div>}
+                                    </div>
+
+                                    <div className="flexcol-start wh" style={{ gap: '5px' }}>
+                                        <div className="heading2">Identity document number</div>
+                                        <input className='date-input2' name='idDocNumber' value={idDocNumber} onChange={(e) => { setIdDocNumber(e.target.value); clearError('idDocNumber'); }} type="text" placeholder='Enter here...' />
+                                        {docErrors.idDocNumber && <div className="error">{docErrors.idDocNumber}</div>}
+                                    </div>
+
+                                    {/* <div className="flex-start wh" style={{ gap: '5px', alignItems: 'center', padding: '0px 5px' }}>
+                                        <input type="checkbox" name='isBusinessOwner' style={{ cursor: 'pointer', width: '15px', height: '15px' }} /> <div className="heading2">I'm not the business owner</div>
+                                    </div> */}
                                 </div>
                             </Fragment>
                         ) : (
@@ -209,15 +369,16 @@ const SellerComProfile = () => {
                                 <div className="heading2">To change your business documents please contact Ulinkit at support@ulinkit.com</div>
                             </div>
                         )}
+
                         {isEditingDoc &&
                             <div className="flex" style={{ gap: '20px' }}>
-                                <div className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}>Save</div>
-                                <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={cancelDoc} >Cancel</div>
+                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}>Save</button>
+                                <button type="button" className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={cancelDoc} >Cancel</button>
                             </div>
                         }
                     </form>
-                </div>
 
+                </div>
             </div>
         </div>
     )

@@ -1,73 +1,52 @@
-/* 
-.dropdown-flag {
-    position: relative;
-    width: 200px;
-  }
-  
-  .dropdown-flag-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    padding: 10px;
-    font-size: var(--defontsize);
-    width: 100%;
-    border: 1px solid black;
-    border-radius: 6px;
-  }
-  
-  .dropdown-flag-list {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    border-radius: 6px;
-    background-color: #fff;
-    max-height: 250px;
-    overflow-y: auto;
-    z-index: 1000;
-  }
-  
-  
-  .dropdown-flag-list::-webkit-scrollbar {
-    width: 15px;
-  }
-  
-  .dropdown-flag-list::-webkit-scrollbar-thumb {
-    background-color: var(--scroll);
-    border-radius: 6px;
-  }
-  
-  
-  .dropdown-flag-item {
-    padding: 10px;
-    cursor: pointer;
-    gap: 10px;
-    justify-content: start;
-    align-items: center;
-  }
-  
-  .dropdown-flag-item:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .flag {
-    width: 20px;
-    aspect-ratio: 4/3;
-    object-fit: contain;
-  }
-  
-  
-   */
+.step-verification {
+  display: flex;
+  flex-direction: column;
+}
 
+.step {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  font-family: Arial, sans-serif;
+  cursor: pointer; 
+}
 
+.step .checkmark {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: green;
+  color: white;
+  text-align: center;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.step .number {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ccc;
+  color: black;
+  text-align: center;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.completed .number,
+.completed .checkmark {
+  background-color: green;
+  color: white;
+}
 
+.step span {
+  margin-left: 5px;
+}
 
-
-
-
-
-
-   
+.completed span {
+  color: green;
+}
