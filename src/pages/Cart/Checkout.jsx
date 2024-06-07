@@ -126,9 +126,6 @@ const Checkout = () => {
 
 
 
-
-
-
   const scrollRef = useRef(null);
   useEffect(() => {
     if (scrollRef.current) {
@@ -146,6 +143,7 @@ const Checkout = () => {
       </div>
       <div className="cart_cont wh">
         <div className="cartcol_one" tabIndex={0} ref={scrollRef}>
+
           <div className="webdiv checkout">
             <div className="heading wh">Your addresses</div>
             <div className="heading3 wh">Shipping address</div>

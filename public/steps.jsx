@@ -10,28 +10,28 @@ const Translator = () => {
         { label: 'Set up your bank details', completed: false },
     ]);
 
-    // const toggleStep = (index) => {
-    //     setSteps(steps.map((step, i) => i === index ? { ...step, completed: !step.completed } : step));
-    // }
+    const toggleStep = (index) => {
+        setSteps(steps.map((step, i) => i === index ? { ...step, completed: !step.completed } : step));
+    }
 
     return (
         <div className="flex home wh">
             <div className="step-verification">
                 <div className={`step ${steps[0].completed ? 'completed' : ''}`} >
                     {steps[0].completed ? <span className="checkmark">✔</span> : <span className="number">1</span>}
-                    <span className="descrip2">{steps[0].label}</span>
+                    <span>{steps[0].label}</span>
                 </div>
                 <div className={`step ${steps[1].completed ? 'completed' : ''}`} >
                     {steps[1].completed ? <span className="checkmark">✔</span> : <span className="number">2</span>}
-                    <span className="descrip2">{steps[1].label}</span>
+                    <span>{steps[1].label}</span>
                 </div>
                 <div className={`step ${steps[2].completed ? 'completed' : ''}`} >
                     {steps[2].completed ? <span className="checkmark">✔</span> : <span className="number">3</span>}
-                    <span className="descrip2">{steps[2].label}</span>
+                    <span>{steps[2].label}</span>
                 </div>
-                <div className={`step ${steps[3].completed ? 'completed' : ''}`} >
+                <div className={`step ${steps[3].completed ? 'completed' : ''}`} onClick={() => toggleStep(3)}>
                     {steps[3].completed ? <span className="checkmark">✔</span> : <span className="number">4</span>}
-                    <span className="descrip2">{steps[3].label}</span>
+                    <span>{steps[3].label}</span>
                 </div>
             </div>
         </div>

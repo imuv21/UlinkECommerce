@@ -274,7 +274,10 @@ const Header = () => {
                   <div className="descrip">{truncateText(countryNames[selectedCurrency], 10)}</div> ({currencySymbols[selectedCurrency]})
                 </div>
               ) : (
-                <div className='descrip'>Select your country</div>
+                <div className='descrip'>
+                  <div className="syc">Select your country</div>
+                  <div className='sycmob'>Select</div>
+                </div>
               )}
             </div>
             {isOpen && (
@@ -350,7 +353,7 @@ const Header = () => {
 
                   <div className='popupbox'>
                     <Link to={'/profile'} className="subpop-options">My Profile</Link>
-                    <div className="subpop-options">My Company Profile</div>
+                    <Link to={'/seller-dashboard/seller-company-profile'} className="subpop-options">My Company Profile</Link>
                     {user.role === 'Buyer' && (<div className="subpop-options">Payment Management</div>)}
                     <div className="subpop-options">Access Management</div>
                     {user.role === 'Buyer' && (<div className="subpop-options">Addresses</div>)}

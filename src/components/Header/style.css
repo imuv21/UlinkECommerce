@@ -408,6 +408,10 @@
   background-color: #f0f0f0;
 }
 
+.descrip .sycmob{
+  display: none;
+}
+
 .flag {
   width: 20px;
   aspect-ratio: 4/3;
@@ -460,6 +464,12 @@
   }
   .flagname .descrip{
     display: none;
+  }
+  .descrip .syc{
+    display: none;
+  }
+  .descrip .sycmob{
+    display: flex;
   }
   .logo {
     width: 100px;

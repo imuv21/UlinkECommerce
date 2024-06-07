@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import { v4 as uuidv4 } from 'uuid';
-import { allCountries } from '../../Schemas/countryCodes';
+import { allCountries } from '../../components/Schemas/countryCodes';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
@@ -9,7 +9,7 @@ import SailingIcon from '@mui/icons-material/Sailing';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 
-const SellerAddress = () => {
+const BuyerAddress = () => {
 
     //select country form api
     const [countries, setCountries] = useState([]);
@@ -65,8 +65,7 @@ const SellerAddress = () => {
     const [seaport, setSeaport] = useState('');
     const [isLocationChecked, setIsLocationChecked] = useState(false);
     const [isBillingChecked, setIsBillingChecked] = useState(false);
-    const [isDefaultChecked, setIsDefaultChecked] = useState(false);
-    const [addressList, setAddressList] = useState(JSON.parse(localStorage.getItem('seller-addresses')) || []);
+    const [addressList, setAddressList] = useState(JSON.parse(localStorage.getItem('addresses')) || []);
 
     const handleAddAddress = () => {
         setShowPopup(true);
@@ -85,7 +84,6 @@ const SellerAddress = () => {
         setSeaport('');
         setIsLocationChecked('');
         setIsBillingChecked('');
-        setIsDefaultChecked('');
     };
 
     const handleEditAddress = (index) => {
@@ -105,7 +103,6 @@ const SellerAddress = () => {
         setSeaport(addressToEdit.seaport);
         setIsLocationChecked(addressToEdit.isLocationChecked);
         setIsBillingChecked(addressToEdit.isBillingChecked);
-        setIsDefaultChecked(addressToEdit.isDefaultChecked);
         setShowPopup(true);
         setEditMode(true);
     };
@@ -127,46 +124,20 @@ const SellerAddress = () => {
         setSeaport('');
         setIsLocationChecked('');
         setIsBillingChecked('');
-        setIsDefaultChecked('');
     };
 
     const handleSubmit = () => {
-        const newAddress = {
-            address,
-            selectedOrigin,
-            city,
-            area,
-            street,
-            office,
-            pobox,
-            postCode,
-            phoneNumber,
-            selectedCountry,
-            airport,
-            seaport,
-            isLocationChecked,
-            isBillingChecked,
-            isDefaultChecked
-        };
-
-        let updatedAddressList = [...addressList];
-
-        if (isDefaultChecked) {
-            updatedAddressList = updatedAddressList.map(addr => ({
-                ...addr,
-                isDefaultChecked: false
-            }));
-        }
-
+        const newAddress = { address, selectedOrigin, city, area, street, office, pobox, postCode, phoneNumber, selectedCountry, airport, seaport, isLocationChecked, isBillingChecked };
         if (editMode) {
+            const updatedAddressList = [...addressList];
             updatedAddressList[editIndex] = newAddress;
+            setAddressList(updatedAddressList);
+            localStorage.setItem('addresses', JSON.stringify(updatedAddressList));
         } else {
-            updatedAddressList.push(newAddress);
+            const updatedAddressList = [...addressList, newAddress];
+            setAddressList(updatedAddressList);
+            localStorage.setItem('addresses', JSON.stringify(updatedAddressList));
         }
-
-        setAddressList(updatedAddressList);
-        localStorage.setItem('seller-addresses', JSON.stringify(updatedAddressList));
-
         setShowPopup(false);
         setEditMode(false);
         setAddress('');
@@ -181,16 +152,15 @@ const SellerAddress = () => {
         setSelectedCountry('');
         setAirport('');
         setSeaport('');
-        setIsLocationChecked(false);
-        setIsBillingChecked(false);
-        setIsDefaultChecked(false);
+        setIsLocationChecked('');
+        setIsBillingChecked('');
     };
 
     const handleDeleteAddress = (index) => {
         const updatedAddressList = [...addressList];
         updatedAddressList.splice(index, 1);
         setAddressList(updatedAddressList);
-        localStorage.setItem('seller-addresses', JSON.stringify(updatedAddressList));
+        localStorage.setItem('addresses', JSON.stringify(updatedAddressList));
     };
 
 
@@ -199,16 +169,14 @@ const SellerAddress = () => {
             <Helmet>
                 <title>My Addresses</title>
             </Helmet>
-            <div className="productlist3">
-                <div className="flexcol" style={{ gap: '20px' }}>
-                    <div className="heading wh">My Addresses</div>
-                    <div className="heading2 wh">Provide information on your billing address and where you would like your items to be picked up from. <br /> We need your stock pickup location details in order to calculate accurate shipping rates.</div>
-                </div>
-                <div className="flexcol" style={{ gap: '20px' }}>
-                    <button onClick={handleAddAddress} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Add New Address</div></button>
-                </div>
+
+            <div className="flex wh" style={{ justifyContent: "space-between" }} >
+                <div className="heading wh">My Addresses</div>
+                <button onClick={handleAddAddress} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)', whiteSpace: 'nowrap' }}><div className="heading2">Add New Address</div></button>
             </div>
+
             <div className="productlist2">
+
                 {addressList.length === 0 ? (
                     <div className="heading3">Address list is empty</div>
                 ) : (
@@ -218,9 +186,8 @@ const SellerAddress = () => {
                                 <div className="flexcol-start" style={{ gap: '10px' }}>
                                     <div className="flex" style={{ gap: '20px' }}>
                                         <div className="heading3">{address.address}</div>
-                                        {address.isLocationChecked && <div className='descrip warning-btn'>Stock location</div>}
+                                        {address.isLocationChecked && <div className='descrip warning-btn'>Shipping</div>}
                                         {address.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
-                                        {address.isDefaultChecked && <div className='descrip warning-btn4'>Default</div>}
                                     </div>
                                     <div className="flex" style={{ gap: '10px' }}>
                                         <div className='descrip2'>{address.selectedOrigin}</div>
@@ -241,7 +208,7 @@ const SellerAddress = () => {
                                 </div>
                                 <div className="flexcol" style={{ gap: '20px' }}>
                                     <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditAddress(index)} />
-                                    {(!address.isDefaultChecked) && <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteAddress(index)} />}
+                                    <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteAddress(index)} />
                                 </div>
                             </div>
                         ))}
@@ -286,17 +253,11 @@ const SellerAddress = () => {
                                 <div className="heading2">Address type:</div>
                                 <div className="flex" style={{ gap: '20px' }}>
                                     <div className="flex">
-                                        <input type="checkbox" checked={isLocationChecked} onChange={() => setIsLocationChecked(!isLocationChecked)} />&nbsp;&nbsp;<div className="heading2">Stock location</div>
+                                        <input type="checkbox" checked={isLocationChecked} onChange={() => setIsLocationChecked(!isLocationChecked)} />&nbsp;&nbsp;<div className="heading2">Shipping address</div>
                                     </div>
                                     <div className="flex">
                                         <input type="checkbox" checked={isBillingChecked} onChange={() => setIsBillingChecked(!isBillingChecked)} />&nbsp;&nbsp;<div className="heading2">Billing address</div>
                                     </div>
-                                    {(!editMode) &&
-                                        <div className="flex">
-                                            <input type="checkbox" checked={isDefaultChecked} onChange={() => setIsDefaultChecked(!isDefaultChecked)} />&nbsp;&nbsp;<div className="heading2">Default address</div>
-                                        </div>
-                                    }
-
                                 </div>
 
                                 <div className="flex" style={{ gap: '20px' }}>
@@ -312,4 +273,4 @@ const SellerAddress = () => {
     )
 }
 
-export default SellerAddress
+export default BuyerAddress

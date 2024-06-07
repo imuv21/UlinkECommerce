@@ -10,6 +10,7 @@ import Layout from './components/Layout';
 
 //buyer dashboard
 const BuyerDashboard = lazy(() => import('./pages/BuyerDashboard/BuyerDashboard'));
+const BuyerAddress = lazy(() => import('./pages/BuyerDashboard/BuyerAddress'));
 const BuyerMessage = lazy(() => import('./pages/BuyerDashboard/BuyerMassage/BuyerMessage'));
 const Rfq = lazy(() => import('./pages/BuyerDashboard/Rfq/Rfq'));
 const MyProfile = lazy(() => import('./pages/BuyerDashboard/MyProfile/MyProfile'));
@@ -171,6 +172,7 @@ function App() {
               <Route path='/cart' element={<Cart />} />
               <Route path='/checkout' element={<Checkout />} />
               <Route path='/company-profile' element={<CompanyProfile />} />
+              <Route path='/buyer-address' element={<BuyerAddress />} />
             </Route>
 
           </Routes>
