@@ -5,11 +5,13 @@ import KeyIcon from '@mui/icons-material/Key';
 import { Link, useNavigate } from 'react-router-dom';
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { allCountries } from '../../components/Schemas/countryCodes';
 import { profileSchema } from '../../components/Schemas/validationSchema';
+import axios from 'axios';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const schema = yupResolver(profileSchema);
 
 const Profile = () => {
@@ -17,6 +19,33 @@ const Profile = () => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const token = useSelector((state) => state.auth.token);
+
+    const updatePassword = async (e) => {
+        e.preventDefault();
+        const email = user.email;
+        try {
+            const response = await axios.post(
+                `${BASE_URL}/user/update-details?email=${email}`,
+                {}, 
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            if (response.data.status) {
+                alert(response.data.message); 
+                navigate('/verify-update-password');
+            } else {
+                console.error("Failed to send OTP verification mail");
+                alert("Failed to send OTP verification mail");
+            }
+        } catch (error) {
+            console.error("Error updating password:", error);
+            alert("An error occurred while updating the password.");
+        }
+    };
 
     const { handleSubmit, control, formState: { errors }, setValue } = useForm({
         resolver: schema,
@@ -24,7 +53,7 @@ const Profile = () => {
 
     //profile edit functionality
     const [isEditing, setIsEditing] = useState(false);
-    
+
     const onSubmit = (data) => {
         setIsEditing(false);
         console.log(data);
@@ -79,7 +108,7 @@ const Profile = () => {
                                 <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
                                     <div className="flex wh" style={{ gap: '30px' }}>
                                         <Controller name="firstname" control={control} defaultValue={user.firstname || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your first name' {...field} />} />
-                                        <Controller name="lastname" control={control} defaultValue={user.lastname || ''} render={({ field }) => <input  autoComplete='off' className="box flex" placeholder='Enter your last name' {...field} />} />
+                                        <Controller name="lastname" control={control} defaultValue={user.lastname || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your last name' {...field} />} />
                                     </div>
 
                                     {(errors.firstname || errors.lastname) &&
@@ -105,7 +134,7 @@ const Profile = () => {
                                             </select>
                                         )}
                                         /> */}
-                                        <Controller name="whatsappnumber" control={control} defaultValue={user.whatsappnumber || ''} render={({ field }) => <input  className="box flex" autoComplete='off' placeholder='Enter your whatsapp number' {...field} />} />
+                                        <Controller name="whatsappnumber" control={control} defaultValue={user.whatsappnumber || ''} render={({ field }) => <input className="box flex" autoComplete='off' placeholder='Enter your whatsapp number' {...field} />} />
                                     </div>
 
                                     {(errors.whatsappnumber) &&
@@ -135,12 +164,10 @@ const Profile = () => {
                                 <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
                                     <div className='heading2'>Name</div>
                                     <div className='heading2'>Whatsapp</div>
-                                    <div className='heading2'>Language Preference</div>
                                 </div>
                                 <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
                                     <div className="heading2">{user.firstname} {user.lastname}</div>
                                     <div className='heading2'>{user.whatsappnumber}</div>
-                                    <div className='heading2'>English</div>
                                 </div>
                             </div>
                         )}
@@ -170,7 +197,7 @@ const Profile = () => {
                         <div className="flex wh" style={{ justifyContent: 'start', gap: '15px' }}>
                             <Link to={'/update-number'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update number</Link>
                             <Link to={'/update-email'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update email</Link>
-                            <Link to={'/verify-update-password'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update password</Link>
+                            <div className="btn flex box" onClick={updatePassword} style={{ width: '150px', cursor: 'pointer' }}>Update password</div>
                         </div>
                     </div>
 

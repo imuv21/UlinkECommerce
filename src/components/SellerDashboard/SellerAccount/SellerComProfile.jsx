@@ -33,9 +33,34 @@ const SellerComProfile = () => {
     }
 
 
-    //Doc edit functionality
+    //show the business docs form data
+    const getStoredFormData = () => {
+        const storedData = localStorage.getItem('business-docs');
+        return storedData ? JSON.parse(storedData) : null;
+    };
+    const [storedFormData, setStoredFormData] = useState(getStoredFormData());
+
+
+    //Doc submit and edit functionality
     const [docErrors, setDocErrors] = useState({});
     const [isEditingDoc, setIsEditingDoc] = useState(false);
+
+    useEffect(() => {
+        const storedData = localStorage.getItem('business-docs');
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            setStoredFormData(parsedData);
+            setSelectedFile(parsedData.selectedFile);
+            setSelectedDate(parsedData.selectedDate);
+            setRegDocNumber(parsedData.regDocNumber);
+            setSelectedFileTwo(parsedData.selectedFileTwo);
+            setSelectedDateTwo(parsedData.selectedDateTwo);
+            setIdDocNumber(parsedData.idDocNumber);
+            setSelectedFileThree(parsedData.selectedFileThree);
+            setIsBusinessOwner(parsedData.isBusinessOwner);
+            setIsEditingDoc(true);
+        }
+    }, []);
 
     const clearError = (fieldName) => {
         setDocErrors(prevErrors => ({
@@ -43,54 +68,68 @@ const SellerComProfile = () => {
             [fieldName]: ''
         }));
     };
-    const handleDoc = (event) => {
+
+    const handleDoc = async (event) => {
         event.preventDefault();
         const newErrors = {};
 
         if (!selectedFile) {
             newErrors.selectedFile = 'Business registration document is required.';
         }
-
         if (!selectedDate) {
             newErrors.selectedDate = 'Expiry date is required.';
         }
-
         if (!regDocNumber.trim()) {
             newErrors.regDocNumber = 'Registration document number is required.';
         }
-
         if (!selectedFileTwo) {
             newErrors.selectedFileTwo = 'Identity document is required.';
         }
-
         if (!selectedDateTwo) {
             newErrors.selectedDateTwo = 'Expiry date is required.';
         }
-
         if (!idDocNumber.trim()) {
             newErrors.idDocNumber = 'Identity document number is required.';
         }
-
         setDocErrors(newErrors);
 
         if (Object.keys(newErrors).length === 0) {
-            console.log({
-                selectedFile,
+
+            const convertFileToBase64 = (file) => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        resolve(reader.result);
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            };
+            const selectedFileBase64 = await convertFileToBase64(selectedFile);
+            const selectedFileTwoBase64 = selectedFileTwo ? await convertFileToBase64(selectedFileTwo) : null;
+            const selectedFileThreeBase64 = selectedFileThree ? await convertFileToBase64(selectedFileThree) : null;
+
+            const formData = {
+                selectedFile: selectedFileBase64,
                 selectedDate,
                 regDocNumber,
-                selectedFileTwo,
+                selectedFileTwo: selectedFileTwoBase64,
                 selectedDateTwo,
                 idDocNumber,
-                selectedFileThree,
-            });
-            // Handle form submission here
-            console.log("Form submitted successfully!");
+                selectedFileThree: selectedFileThreeBase64,
+                isBusinessOwner,
+            };
+
+            localStorage.setItem("business-docs", JSON.stringify(formData));
+            alert("Form submitted successfully!");
             setIsEditingDoc(false);
             setDocErrors({});
+            setStoredFormData(formData);
         } else {
-            console.log("Form submission failed. Please fix the errors.");
+            alert("Form submission failed. Please fix the errors.");
         }
     };
+
     const handleEditClickDoc = () => {
         setIsEditingDoc(true);
     };
@@ -98,22 +137,10 @@ const SellerComProfile = () => {
         setIsEditingDoc(false);
     }
 
-
-
     //rd and ic inputs
     const [regDocNumber, setRegDocNumber] = useState('');
     const [idDocNumber, setIdDocNumber] = useState('');
-
-    const handleRegDocNumberChange = (e) => {
-        setRegDocNumber(e.target.value);
-        clearError('regDocNumber');
-    };
-    const handleIdDocNumberChange = (e) => {
-        setIdDocNumber(e.target.value);
-        clearError('idDocNumber');
-    };
-
-
+    const [isBusinessOwner, setIsBusinessOwner] = useState(false);
 
     //file upload one, two and three
     const [selectedFile, setSelectedFile] = useState(null);
@@ -122,13 +149,11 @@ const SellerComProfile = () => {
     const [showFileThreeInput, setShowFileThreeInput] = useState(false);
     const allowedFormats = ['jpg', 'jpeg', 'png', 'tif', 'pdf'];
     const maxSize = 10 * 1024 * 1024;
-
     useEffect(() => {
         if (!selectedFileTwo && !selectedFileThree) {
             setShowFileThreeInput(false);
         }
     }, [selectedFileTwo, selectedFileThree]);
-
     const handleFileChange = (event, setFile, fieldName) => {
         const file = event.target.files[0];
         if (file) {
@@ -144,10 +169,6 @@ const SellerComProfile = () => {
     const handleDeleteFile = (setFile) => {
         setFile(null);
     };
-   
-
-
-
 
     // date picker one and two 
     const [selectedDate, setSelectedDate] = useState('');
@@ -163,7 +184,8 @@ const SellerComProfile = () => {
             alert('Please select a date from today or later.');
         }
     };
-   
+
+
 
 
     return (
@@ -256,7 +278,7 @@ const SellerComProfile = () => {
                                 <div className="flex" style={{ gap: '10px' }}>
                                     <DescriptionIcon /> <div className="heading">Add Your Business Documents</div>
                                 </div>
-                                {!isEditingDoc && <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClickDoc}>Edit</div>}
+                                {!isEditingDoc && <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClickDoc}> {storedFormData ? 'Edit' : 'Add'} </div>}
                             </div>
                             {isEditingDoc && <div className="flex-start" style={{ gap: '5px', justifyContent: 'start', width: '100%' }}>
                                 <div className="descrip2">We need the following documents to verify your business and give you access to all Tradeling features. We will get in touch with you when these documents need to be renewed.</div>
@@ -275,7 +297,7 @@ const SellerComProfile = () => {
                                         {selectedFile ? (
                                             <div className='afterUpload flex'>
                                                 <div className="heading2 wh">{selectedFile.name}</div>
-                                                <DeleteForeverIcon onClick={() => handleDeleteFile(setSelectedFile)}  />
+                                                <DeleteForeverIcon onClick={() => handleDeleteFile(setSelectedFile)} />
                                             </div>
                                         ) : (
                                             <div className='beforeUpload flex'>
@@ -322,7 +344,7 @@ const SellerComProfile = () => {
                                                 </div>
                                             </div>
                                         )}
-                                        <input type="file" name='selectedFileTwo'   onChange={(e) => { handleFileChange(e, setSelectedFileTwo, 'selectedFileTwo'); setShowFileThreeInput(true); }} />
+                                        <input type="file" name='selectedFileTwo' onChange={(e) => { handleFileChange(e, setSelectedFileTwo, 'selectedFileTwo'); setShowFileThreeInput(true); }} />
                                     </label>
                                     {docErrors.selectedFileTwo && <div className="error">{docErrors.selectedFileTwo}</div>}
 
@@ -342,7 +364,7 @@ const SellerComProfile = () => {
                                                     </div>
                                                 </div>
                                             )}
-                                            <input type="file" name='selectedFileThree'  onChange={(e) => handleFileChange(e, setSelectedFileThree, 'selectedFileThree')} />
+                                            <input type="file" name='selectedFileThree' onChange={(e) => handleFileChange(e, setSelectedFileThree, 'selectedFileThree')} />
                                         </label>
                                     )}
 
@@ -358,26 +380,58 @@ const SellerComProfile = () => {
                                         {docErrors.idDocNumber && <div className="error">{docErrors.idDocNumber}</div>}
                                     </div>
 
-                                    {/* <div className="flex-start wh" style={{ gap: '5px', alignItems: 'center', padding: '0px 5px' }}>
-                                        <input type="checkbox" name='isBusinessOwner' style={{ cursor: 'pointer', width: '15px', height: '15px' }} /> <div className="heading2">I'm not the business owner</div>
-                                    </div> */}
+                                    <div className="flex-start wh" style={{ gap: '5px', alignItems: 'center', padding: '0px 5px' }}>
+                                        <input type="checkbox" checked={isBusinessOwner} onChange={(e) => setIsBusinessOwner(e.target.checked)} name='isBusinessOwner' style={{ cursor: 'pointer', width: '15px', height: '15px' }} /> <div className="heading2">I'm not the business owner</div>
+                                    </div>
                                 </div>
                             </Fragment>
                         ) : (
-                            <div className="flexcol-start" style={{ gap: '5px', justifyContent: 'start', width: '100%' }}>
-                                <div className="heading2">Business documents let us verify you as a real business and allow you to interact with features of the site.</div>
-                                <div className="heading2">To change your business documents please contact Ulinkit at support@ulinkit.com</div>
+                            <div className="flexcol-start wh" style={{ gap: '20px' }}>
+                                <div className="flexcol-start wh" style={{ gap: '5px' }}>
+                                    <div className="heading2">Business documents let us verify you as a real business and allow you to interact with features of the site.</div>
+                                    <div className="heading2">To change your business documents please contact Ulinkit at support@ulinkit.com</div>
+                                </div>
+                                
+                                {storedFormData &&
+                                    <div className="bd_overview">
+                                        <div className="bd_overview_one">
+                                            <div className="bd_over-heading"><div>Registration Number</div> <div className='bd_captext'>{storedFormData?.regDocNumber || 'N/A'}</div></div>
+                                            <div className="bd_over-heading"><div>Identity Number</div> <div className='bd_captext'>{storedFormData?.idDocNumber || 'N/A'}</div></div>
+                                        </div>
+                                        <div className="bd_overview_one">
+                                            <div className="bd_over-heading"><div>Expiry Date</div> <div className='bd_captext'>{storedFormData?.selectedDate || 'N/A'}</div></div>
+                                            <div className="bd_over-heading"><div>Expiry Date</div> <div className='bd_captext'>{storedFormData?.selectedDateTwo || 'N/A'}</div></div>
+                                        </div>
+                                        <div className="bd_overview_one">
+                                            <div className="bd_over">
+                                                <div className="bd_over_box">
+                                                    <div className="descrip warning-btn3" style={{ width: 'fit-content' }}>Pending</div>
+                                                </div>
+                                                <div className="bd_over_box">
+                                                    <a href={storedFormData?.selectedFile} className='descrip2 hoverr' download="business_registration_document">Download</a>
+                                                </div>
+                                            </div>
+                                            <div className="bd_over">
+                                                <div className="bd_over_box">
+                                                    <div className="descrip warning-btn3" style={{ width: 'fit-content' }}>Pending</div>
+                                                </div>
+                                                <div className="bd_over_box">
+                                                    <a href={storedFormData?.selectedFileTwo} className='descrip2 hoverr' download="identity_document">Download</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         )}
 
                         {isEditingDoc &&
                             <div className="flex" style={{ gap: '20px' }}>
-                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}>Save</button>
+                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}> {storedFormData ? 'Update' : 'Submit'} </button>
                                 <button type="button" className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={cancelDoc} >Cancel</button>
                             </div>
                         }
                     </form>
-
                 </div>
             </div>
         </div>

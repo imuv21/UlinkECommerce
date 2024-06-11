@@ -1,41 +1,34 @@
 import React, { useState } from 'react';
-import './Translator.css'; 
 
-const Translator = () => {
+const MultiValueInput = () => {
+  const [inputValue, setInputValue] = useState('');
+  const [values, setValues] = useState([]);
 
-    const [steps, setSteps] = useState([
-        { label: 'Verify your contacts', completed: true },
-        { label: 'Upload your business documents', completed: false },
-        { label: 'Set shipping preferences', completed: false },
-        { label: 'Set up your bank details', completed: false },
-    ]);
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
 
-    // const toggleStep = (index) => {
-    //     setSteps(steps.map((step, i) => i === index ? { ...step, completed: !step.completed } : step));
-    // }
+  const handleValues = () => {
+    const newValues = inputValue.split(',').map(val => val.trim()).filter(val => val);
+    setValues(newValues);
+    setInputValue('');
+    console.log(values);
+  };
 
-    return (
-        <div className="flex home wh">
-            <div className="step-verification">
-                <div className={`step ${steps[0].completed ? 'completed' : ''}`} >
-                    {steps[0].completed ? <span className="checkmark">✔</span> : <span className="number">1</span>}
-                    <span className="descrip2">{steps[0].label}</span>
-                </div>
-                <div className={`step ${steps[1].completed ? 'completed' : ''}`} >
-                    {steps[1].completed ? <span className="checkmark">✔</span> : <span className="number">2</span>}
-                    <span className="descrip2">{steps[1].label}</span>
-                </div>
-                <div className={`step ${steps[2].completed ? 'completed' : ''}`} >
-                    {steps[2].completed ? <span className="checkmark">✔</span> : <span className="number">3</span>}
-                    <span className="descrip2">{steps[2].label}</span>
-                </div>
-                <div className={`step ${steps[3].completed ? 'completed' : ''}`} >
-                    {steps[3].completed ? <span className="checkmark">✔</span> : <span className="number">4</span>}
-                    <span className="descrip2">{steps[3].label}</span>
-                </div>
-            </div>
-        </div>
-    );
-}
+  return (
+    <div className='home flexcol wh'>
+      <input type="text" value={inputValue} onChange={handleInputChange} placeholder="Enter values separated by commas" />
+      <button onClick={handleValues}>Get values</button>
+      <div>
+        <h4>Values:</h4>
+        <ul>
+          {values.map((value, index) => (
+            <li key={index}>{value}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
 
-export default Translator;
+export default MultiValueInput;

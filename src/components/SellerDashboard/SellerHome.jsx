@@ -82,38 +82,38 @@ const SellerHome = () => {
     ]);
 
     const stepProcess = [
-        {
-            id: uuidv4(),
-            icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717742790/2243986_android_mobile_phone_app_communication_icon_a5qape.png',
-            title: 'Verify your mobile',
-            description: 'To complete your seller profile we need to verify your mobile number.',
-            btn: 'VERIFY YOUR MOBILE',
-            link: '/profile',
-        },
-        {
-            id: uuidv4(),
-            icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717747167/3123_documents_icon_dgij1z.png',
-            title: 'Upload your business documents',
-            description: 'To complete your seller profile we need to verify your business documents.',
-            btn: 'UPLOAD DOCUMENTS',
-            link: '/seller-dashboard/seller-company-profile',
-        },
-        {
-            id: uuidv4(),
-            icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717747167/3123_documents_icon_dgij1z.png',
-            title: 'Set shipping preferences',
-            description: 'To complete your seller profile, please select your shipping preference.',
-            btn: 'SET PREFERENCES',
-            link: '/seller-dashboard/seller-company-profile',
-        },
         // {
         //     id: uuidv4(),
-        //     icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717740444/5452454_and_bank_banking_buildings_business_icon_vvoa4o.png',
-        //     title: 'Set up your bank details',
-        //     description: 'Why do we need bank details. We want to pay you so tell us about your bank account and we’ll tie this to your account.',
-        //     btn: 'SET UP BANK DETAILS',
-        //     link: '/seller-dashboard/payments',
+        //     icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717742790/2243986_android_mobile_phone_app_communication_icon_a5qape.png',
+        //     title: 'Verify your mobile',
+        //     description: 'To complete your seller profile we need to verify your mobile number.',
+        //     btn: 'VERIFY YOUR MOBILE',
+        //     link: '/profile',
         // },
+        // {
+        //     id: uuidv4(),
+        //     icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717747167/3123_documents_icon_dgij1z.png',
+        //     title: 'Upload your business documents',
+        //     description: 'To complete your seller profile we need to verify your business documents.',
+        //     btn: 'UPLOAD DOCUMENTS',
+        //     link: '/seller-dashboard/seller-company-profile',
+        // },
+        // {
+        //     id: uuidv4(),
+        //     icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717747167/3123_documents_icon_dgij1z.png',
+        //     title: 'Set shipping preferences',
+        //     description: 'To complete your seller profile, please select your shipping preference.',
+        //     btn: 'SET PREFERENCES',
+        //     link: '/seller-dashboard/shipping-preferences',
+        // },
+        {
+            id: uuidv4(),
+            icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717740444/5452454_and_bank_banking_buildings_business_icon_vvoa4o.png',
+            title: 'Set up your bank details',
+            description: 'Why do we need bank details. We want to pay you so tell us about your bank account and we’ll tie this to your account.',
+            btn: 'SET UP BANK DETAILS',
+            link: '/seller-dashboard/payments',
+        },
     ]
 
     const updateProgressBar = (id, value) => {

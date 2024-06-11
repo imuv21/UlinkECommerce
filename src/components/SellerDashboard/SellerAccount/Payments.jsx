@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState, Fragment } from 'react';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 
-const Payments = ({handleOptionClick}) => {
+const Payments = () => {
 
     const navigate = useNavigate();
     const payoneer = () => {
@@ -20,9 +22,29 @@ const Payments = ({handleOptionClick}) => {
     };
 
 
+    //render bank details 
+    const [bankDetails, setBankDetails] = useState([]);
+    useEffect(() => {
+        const storedBankDetails = JSON.parse(localStorage.getItem('seller-bank-details')) || [];
+        setBankDetails(storedBankDetails);
+    }, []);
+
+    const handleEditbank = (index) => {
+        const bankToEdit = bankDetails[index];
+        navigate('/seller-dashboard/edit-bank-account', { state: { bankToEdit, index } });
+    };
+
+    const handleDeletebank = (index) => {
+        const updatedBankDetails = [...bankDetails];
+        updatedBankDetails.splice(index, 1);
+        setBankDetails(updatedBankDetails);
+        localStorage.setItem('seller-bank-details', JSON.stringify(updatedBankDetails));
+    }
+
+
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
-             <Helmet>
+            <Helmet>
                 <title>Payment Details</title>
             </Helmet>
             <div className="heading flex">Payment Details</div>
@@ -41,12 +63,47 @@ const Payments = ({handleOptionClick}) => {
             <div className="productlist3">
                 <div className="flexcol" style={{ gap: '20px' }}>
                     <div className="flex wh"><AccountBalanceIcon />&nbsp;&nbsp;<div className="heading3 wh">Add a bank account</div></div>
-                    
+
                     <div className="heading2 wh">Providing this bank account information allows us to deposit payments into your account, including payouts from orders</div>
                 </div>
                 <div className="flexcol" style={{ gap: '20px' }}>
                     <button className='btn box2 flex' onClick={addbank} style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Add New Account</div></button>
                 </div>
+            </div>
+
+            <div className="productlist2">
+                {bankDetails.length === 0 ? (
+                    <div className="heading3">Bank account list is empty</div>
+                ) : (
+                    <Fragment>
+                        {bankDetails.map((bank, index) => (
+                            <div className="productlist4" key={index}>
+                                <div className="flexcol-start" style={{ gap: '10px' }}>
+                                    <div className="flex" style={{ gap: '20px' }}>
+                                        <div className="heading3">{bank.bankName}</div>
+                                        {bank.defaultValue && <div className='descrip warning-btn4'>Default</div>}
+                                    </div>
+                                    <div className="flex" style={{ gap: '10px' }}>
+                                        <div className='descrip2'>Location: {bank.bankLocation}</div>
+                                        <div className='descrip2'>IBAN: {bank.iban}</div>
+                                        <div className='descrip2'>Name: {bank.accHolderName}</div>
+                                    </div>
+                                    <div className="flex" style={{ gap: '10px' }}>
+                                        <div className='descrip2'>Account Number: {bank.accNo}</div>
+                                        <div className='descrip2'>Swift/BIC: {bank.swiftbic}</div>
+                                        <div className='descrip2'>IFSC code: {bank.ifsc}</div>
+                                    </div>
+                                </div>
+                                {(!bank.defaultValue) &&
+                                    <div className="flexcol" style={{ gap: '20px' }}>
+                                        <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditbank(index)} />
+                                        <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeletebank(index)} />
+                                    </div>
+                                }
+                            </div>
+                        ))}
+                    </Fragment>
+                )}
             </div>
         </div>
     )

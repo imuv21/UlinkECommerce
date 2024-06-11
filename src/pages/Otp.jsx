@@ -133,7 +133,7 @@ const Otp = () => {
                             ))}
 
                         </div>
-                        <button className='resend' disabled={timerRunning} onClick={handleResendClick}>
+                        <button className='resend' style={{display: 'none'}} disabled={timerRunning} onClick={handleResendClick}>
                             {timerRunning ? `Resend OTP in ${timeLeft}` : "Resend OTP"}
                         </button>
                     </div>

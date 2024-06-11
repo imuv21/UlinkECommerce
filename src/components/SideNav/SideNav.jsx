@@ -99,12 +99,12 @@ const SideNav = () => {
                         <Link to="payments" className="option">Payments</Link>
                     </div>
 
-                    <button className={`accordion ${activeIndex === 9 ? 'active' : ''}`} onClick={() => toggleAccordion(9)}>
+                    <Link to="access-management" className={`accordion ${activeIndex === 9 ? 'active' : ''}`} onClick={() => toggleAccordion(9)}>
                         <div className='flex' style={{ gap: '20px' }}>
                             <svg className='svg' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"><path fillRule="evenodd" clipRule="evenodd" d="M20.25 15.404a3.25 3.25 0 0 1 3.25 3.25v1.096a.75.75 0 0 1-1.5 0v-1.096a1.75 1.75 0 0 0-1.75-1.75h-.8a.75.75 0 0 1 0-1.5h.8Zm-16.199 0a.75.75 0 1 1 0 1.5H3.25a1.75 1.75 0 0 0-1.75 1.75v1.096a.75.75 0 0 1-1.5 0v-1.096a3.25 3.25 0 0 1 3.25-3.25h.801Zm9.538-1.505a4.25 4.25 0 0 1 4.25 4.25v1.601a.75.75 0 1 1-1.5 0v-1.601a2.75 2.75 0 0 0-2.75-2.75H9.91a2.75 2.75 0 0 0-2.75 2.75v1.601a.75.75 0 1 1-1.5 0v-1.601a4.25 4.25 0 0 1 4.25-4.25h3.68Zm7.484-4.156a2.773 2.773 0 1 1-3.922 3.922 2.773 2.773 0 0 1 3.922-3.922Zm-14.724 0a2.773 2.773 0 1 1-3.922 3.922A2.773 2.773 0 0 1 6.35 9.743Zm11.966.968-.103.093a1.273 1.273 0 0 0-.093 1.697l.093.103a1.273 1.273 0 1 0 .103-1.893Zm-14.724 0-.103.093a1.273 1.273 0 0 0-.093 1.697l.093.103a1.273 1.273 0 1 0 .103-1.893Zm10.892-4.579a3.865 3.865 0 0 1 .15 5.306l-.15.16-.16.15a3.866 3.866 0 0 1-5.147 0l-.16-.15-.15-.16a3.865 3.865 0 0 1 5.617-5.306Zm-4.405 1.06a2.365 2.365 0 1 0 3.344 3.345 2.365 2.365 0 0 0-3.345-3.344Z" fill="currentColor"></path></svg>
                             <div className="heading2">Access Management</div>
                         </div>
-                    </button>
+                    </Link>
 
                     <button className={`accordion ${activeIndex === 10 ? 'active' : ''}`} onClick={() => toggleAccordion(10)}>
                         <div className='flex' style={{ gap: '20px' }}>

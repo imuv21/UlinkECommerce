@@ -7,7 +7,6 @@ import Loader from './components/Loader/Loader';
 import Layout from './components/Layout';
 
 
-
 //buyer dashboard
 const BuyerDashboard = lazy(() => import('./pages/BuyerDashboard/BuyerDashboard'));
 const BuyerAddress = lazy(() => import('./pages/BuyerDashboard/BuyerAddress'));
@@ -42,10 +41,13 @@ const AddSingle = lazy(() => import('./components/SellerDashboard/SellerProduct/
 const AddMulti = lazy(() => import('./components/SellerDashboard/SellerProduct/AddMulti'));
 const Payments = lazy(() => import('./components/SellerDashboard/SellerAccount/Payments'));
 const PaymentDetails = lazy(() => import('./components/SellerDashboard/SellerAccount/PaymentDetails'));
+const EditPaymentDetails = lazy(() => import('./components/SellerDashboard/SellerAccount/EditPaymentDetails'));
 const UploadProducts = lazy(() => import('./components/SellerDashboard/SellerProduct/UploadProducts'));
 const EditProducts = lazy(() => import('./components/SellerDashboard/SellerProduct/EditProducts'));
 const ArchiveUploads = lazy(() => import('./components/SellerDashboard/SellerProduct/ArchiveUploads'));
 const SellerComProfile = lazy(() => import('./components/SellerDashboard/SellerAccount/SellerComProfile'));
+const AccessManagement = lazy(() => import('./components/SellerDashboard/Access/AccessManagement'));
+const Permissions = lazy(() => import('./components/SellerDashboard/Access/Permissions'));
 
 //Both seller and buyer
 const Profile = lazy(() => import('./pages/BuyerSeller/Profile'));
@@ -91,7 +93,6 @@ function App() {
         <Layout>
           <Routes>
 
-          
             <Route path='/guidelines' element={<Guidelines />} />
             <Route path='/product-details/:id' element={<ProductDetails />} />
             <Route path='/' element={<Home />} />
@@ -103,10 +104,11 @@ function App() {
             <Route path='/become-a-seller' element={<BecomeASeller />} />
             <Route path='/commission-structure' element={<CommissionStructure />} />
             
-
+            
             {/* other */}
             <Route path='/img' element={<Image />} />
             <Route path='/trans' element={<Translator />} />
+
 
             {/* public */}
             <Route element={<Protector isAuthenticated={!isAuthenticated} redirect='/' />}>
@@ -118,6 +120,7 @@ function App() {
               <Route path='/seller-form' element={<SellerForm />} />
               <Route path='/seller-center' element={<NewBecomeASeller />} />
             </Route>
+
 
             {/* Seller dashboard */}
             <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRole="Seller" redirect='/seller-center' />}>
@@ -133,11 +136,14 @@ function App() {
                 <Route path="product-list" element={<ProductList />} />
                 <Route path="media" element={<Media />} />
                 <Route path="seller-home" element={<SellerHome />} />
+                <Route path="access-management" element={<AccessManagement />} />
+                <Route path="permissions" element={<Permissions />} />
                 <Route path="seller-orders" element={<SellerOrder />} />
                 <Route path="shipping-preferences" element={<Shipping />} />
                 <Route path="seller-address" element={<SellerAddress />} />
                 <Route path="payments" element={<Payments />} />
                 <Route path="add-a-bank-account" element={<PaymentDetails />} />
+                <Route path="edit-bank-account" element={<EditPaymentDetails />} />
                 <Route path="seller-company-profile" element={<SellerComProfile />} />
               </Route>
             </Route>

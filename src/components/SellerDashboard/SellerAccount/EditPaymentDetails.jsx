@@ -6,16 +6,19 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const schema = yupResolver(bankSchema);
 
-const PaymentDetails = () => {
+const EditPaymentDetails = () => {
 
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { bankToEdit, index } = location.state;
 
     //select country form api
     const [countries, setCountries] = useState([]);
-    const [selectedOrigin, setSelectedOrigin] = useState('');
+    const [selectedOrigin, setSelectedOrigin] = useState(bankToEdit.bankLocation);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -33,35 +36,40 @@ const PaymentDetails = () => {
         setSelectedOrigin(event.target.value);
     };
 
+
     //checkbox div 
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsChecked] = useState(bankToEdit.ibankName ? true : false);
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
      
     //default checkbox
-    const [isdefault, setIsdefault] = useState(false);
+    const [isdefault, setIsdefault] = useState(bankToEdit.defaultValue);
     const handleDefaultChange = () => {
         setIsdefault(!isdefault);
     };
 
     //validation
-    const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
+    const { handleSubmit, control, formState: { errors }, reset } = useForm({
+        resolver: schema,
+        defaultValues: bankToEdit
+    });
+
+    useEffect(() => {
+        reset(bankToEdit);
+    }, [bankToEdit, reset]);
+
     const onSubmit = data => {
         data.defaultValue = isdefault;
         let bankDetails = JSON.parse(localStorage.getItem('seller-bank-details')) || [];
-
         if (isdefault) {
             bankDetails = bankDetails.map(detail => ({ ...detail, defaultValue: false }));
         }
-
-        bankDetails.push(data);
+        bankDetails[index] = data;
         localStorage.setItem('seller-bank-details', JSON.stringify(bankDetails));
-        alert('Bank Details Added Successfully');
         navigate('/seller-dashboard/payments');
     };
 
-    const navigate = useNavigate();
     const backtopayment = () => {
         navigate('/seller-dashboard/payments');
     };
@@ -69,9 +77,9 @@ const PaymentDetails = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
              <Helmet>
-                <title>Add A Bank Account</title>
+                <title>Update Bank Account</title>
             </Helmet>
-            <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={backtopayment} />&nbsp;&nbsp;Add a new account</div>
+            <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={backtopayment} />&nbsp;&nbsp;Update your account</div>
             <form onSubmit={handleSubmit(onSubmit)} className="productlist2">
                 <div className="heading3 wh">Account information</div>
                 <div className="heading2 wh">This helps us to gather the right bank information from you.</div>
@@ -123,7 +131,7 @@ const PaymentDetails = () => {
                 </div>
 
                 <div className="flex" style={{ gap: '20px' }}>
-                    <button type='submit' className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Save</div></button>
+                    <button type='submit' className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Update</div></button>
                     <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Cancel</div></button>
                 </div>
             </form>
@@ -131,4 +139,4 @@ const PaymentDetails = () => {
     )
 }
 
-export default PaymentDetails
+export default EditPaymentDetails

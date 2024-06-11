@@ -5,48 +5,73 @@ import { useLottie } from "lottie-react";
 import { Helmet } from 'react-helmet-async';
 import { urls } from '../../components/Schemas/images';
 import axios from 'axios';
+import { logout } from '../../Redux/AuthReducer';
+import { useDispatch, useSelector } from 'react-redux';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const OtpEmail = () => {
 
-     //images
-     const logo = urls[0];
+    //images
+    const logo = urls[0];
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const token = useSelector((state) => state.auth.token);
 
-    //getting data from local storage
-    const [userData, setUserData] = useState(null);
-    useEffect(() => {
-        const storedUserData = localStorage.getItem('userData');
-        if (storedUserData) {
-            const parsedUserData = JSON.parse(storedUserData);
-            setUserData(parsedUserData);
-        }
-    }, []);
-
-    const verifyOtp = async (otp, username, role) => {
+    const verifyOtp = async (otp) => {
         try {
-            const response = await axios.post(`http://ulinkit.eu-north-1.elasticbeanstalk.com/api/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
-            alert(`Response : ${response.data.message} And Email : ${username}`);
+            const response = await axios.post(
+                `${BASE_URL}/user/update-details/verify?otp=${otp}&verificationType=email`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            alert(response.data.message);
             return response.data;
         } catch (error) {
-            console.error('OTP verification failed:', error);
+            alert('OTP verification failed:', error);
             throw error;
         }
     };
-
-    const sellerForm = async (otp) => {
-        const email = userData.email;
-        const role = userData.role;
-
+    const handleLogout = async () => {
         try {
-            const verificationResponse = await verifyOtp(otp, email, role);
-
-            if (userData && userData.role === 'seller') {
-                navigate('/seller-form');
-            } else {
+            const response = await axios.post(`${BASE_URL}/logout`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: 'application/json'
+                }
+            });
+            if (response.status === 200) {
+                alert(response.data);
+                dispatch(logout());
                 navigate('/login');
             }
         } catch (error) {
-            alert('Failed to verify OTP: ' + error.message);
+            dispatch(logout());
+            navigate('/login');
+        }
+    }
+    // const sellerForm = async (otp) => {
+    //     try {
+    //         const verificationResponse = await verifyOtp(otp);
+    //         if (verificationResponse.status === 200) {
+    //            await handleLogout();
+    //         }
+    //     } catch (error) {
+    //         alert('Failed to verify OTP');
+    //     }
+    // };
+    const sellerForm = async (otp) => {
+        try {
+            const verificationResponse = await verifyOtp(otp);
+            if (verificationResponse.status === 200) {
+                alert('Your email has been updated. Please log in again to continue.');
+                await handleLogout();
+            }
+        } catch (error) {
+            alert('Failed to verify OTP');
         }
     };
 
@@ -86,7 +111,7 @@ const OtpEmail = () => {
         }
     };
     useEffect(() => {
-        otpInputs.current[0].focus(); // Set focus on the first input when component mounts
+        otpInputs.current[0].focus();
     }, []);
 
 
@@ -135,7 +160,7 @@ const OtpEmail = () => {
                 <div className="signupcont">
                     <div className='flexcol cover'>
                         <div className="heading tcenter">Verify your email</div>
-                        <div className="heading2 tcenter">We have sent the OTP to example@gmail.com <br />Enter the OTP to verify your email.</div>
+                        <div className="heading2 tcenter">Enter the OTP to verify your email.</div>
                         <div className="flex gap">
 
                             {otpDigits.map((digit, index) => (
@@ -151,7 +176,7 @@ const OtpEmail = () => {
                             ))}
 
                         </div>
-                        <button className='resend' disabled={timerRunning} onClick={handleResendClick}>
+                        <button className='resend' style={{ display: 'none' }} disabled={timerRunning} onClick={handleResendClick}>
                             {timerRunning ? `Resend OTP in ${timeLeft}` : "Resend OTP"}
                         </button>
                     </div>

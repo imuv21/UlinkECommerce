@@ -11,9 +11,29 @@ import { Helmet } from 'react-helmet-async';
 
 const SellerAddress = () => {
 
-    //select country form api
     const [countries, setCountries] = useState([]);
     const [selectedOrigin, setSelectedOrigin] = useState('');
+    const [countriess, setCountriess] = useState([]);
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [selectedCountry, setSelectedCountry] = useState('');
+    const [showPopup, setShowPopup] = useState(false);
+    const [editMode, setEditMode] = useState(false);
+    const [editIndex, setEditIndex] = useState(null);
+    const [address, setAddress] = useState('');
+    const [area, setArea] = useState('');
+    const [street, setStreet] = useState('');
+    const [office, setOffice] = useState('');
+    const [pobox, setPobox] = useState('');
+    const [postCode, setPostCode] = useState('');
+    const [city, setCity] = useState('');
+    const [airport, setAirport] = useState('');
+    const [seaport, setSeaport] = useState('');
+    const [isLocationChecked, setIsLocationChecked] = useState(false);
+    const [isBillingChecked, setIsBillingChecked] = useState(false);
+    const [isDefaultChecked, setIsDefaultChecked] = useState(false);
+    const [addressList, setAddressList] = useState(JSON.parse(localStorage.getItem('seller-addresses')) || []);
+
+    //select country form api
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -32,9 +52,6 @@ const SellerAddress = () => {
     };
 
     //select country code from data 
-    const [countriess, setCountriess] = useState([]);
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [selectedCountry, setSelectedCountry] = useState('');
     useEffect(() => {
         const formattedCountries = allCountries.map(country => ({
             name: country[0],
@@ -48,46 +65,16 @@ const SellerAddress = () => {
         const countryCode = event.target.value;
         const selected = countriess.find(country => country.iso2 === countryCode);
         setSelectedCountry(selected);
-    }
+    };
 
-    //popup form
-    const [showPopup, setShowPopup] = useState(false);
-    const [editMode, setEditMode] = useState(false);
-    const [editIndex, setEditIndex] = useState(null);
-    const [address, setAddress] = useState('');
-    const [area, setArea] = useState('');
-    const [street, setStreet] = useState('');
-    const [office, setOffice] = useState('');
-    const [pobox, setPobox] = useState('');
-    const [postCode, setPostCode] = useState('');
-    const [city, setCity] = useState('');
-    const [airport, setAirport] = useState('');
-    const [seaport, setSeaport] = useState('');
-    const [isLocationChecked, setIsLocationChecked] = useState(false);
-    const [isBillingChecked, setIsBillingChecked] = useState(false);
-    const [isDefaultChecked, setIsDefaultChecked] = useState(false);
-    const [addressList, setAddressList] = useState(JSON.parse(localStorage.getItem('seller-addresses')) || []);
-
+    //add address
     const handleAddAddress = () => {
         setShowPopup(true);
         setEditMode(false);
-        setAddress('');
-        setSelectedOrigin('');
-        setCity('');
-        setArea('');
-        setStreet('');
-        setOffice('');
-        setPobox('');
-        setPostCode('');
-        setPhoneNumber('');
-        setSelectedCountry('');
-        setAirport('');
-        setSeaport('');
-        setIsLocationChecked('');
-        setIsBillingChecked('');
-        setIsDefaultChecked('');
+        resetFormFields();
     };
 
+    //edit address
     const handleEditAddress = (index) => {
         const addressToEdit = addressList[index];
         setEditIndex(index);
@@ -113,21 +100,7 @@ const SellerAddress = () => {
     const handleClosePopup = () => {
         setShowPopup(false);
         setEditMode(false);
-        setAddress('');
-        setSelectedOrigin('');
-        setCity('');
-        setArea('');
-        setStreet('');
-        setOffice('');
-        setPobox('');
-        setPostCode('');
-        setPhoneNumber('');
-        setSelectedCountry('');
-        setAirport('');
-        setSeaport('');
-        setIsLocationChecked('');
-        setIsBillingChecked('');
-        setIsDefaultChecked('');
+        resetFormFields();
     };
 
     const handleSubmit = () => {
@@ -169,6 +142,17 @@ const SellerAddress = () => {
 
         setShowPopup(false);
         setEditMode(false);
+        resetFormFields();
+    };
+
+    const handleDeleteAddress = (index) => {
+        const updatedAddressList = [...addressList];
+        updatedAddressList.splice(index, 1);
+        setAddressList(updatedAddressList);
+        localStorage.setItem('seller-addresses', JSON.stringify(updatedAddressList));
+    };
+
+    const resetFormFields = () => {
         setAddress('');
         setSelectedOrigin('');
         setCity('');
@@ -186,12 +170,6 @@ const SellerAddress = () => {
         setIsDefaultChecked(false);
     };
 
-    const handleDeleteAddress = (index) => {
-        const updatedAddressList = [...addressList];
-        updatedAddressList.splice(index, 1);
-        setAddressList(updatedAddressList);
-        localStorage.setItem('seller-addresses', JSON.stringify(updatedAddressList));
-    };
 
 
     return (
@@ -202,7 +180,7 @@ const SellerAddress = () => {
             <div className="productlist3">
                 <div className="flexcol" style={{ gap: '20px' }}>
                     <div className="heading wh">My Addresses</div>
-                    <div className="heading2 wh">Provide information on your billing address and where you would like your items to be picked up from. <br /> We need your stock pickup location details in order to calculate accurate shipping rates.</div>
+                    <div className="heading2 wh">Provide information on your billing address and where you would like your items to be picked up from. <br /> We need your stock pickup location details in order to calculate accurate shipping rates. <br /> For verification you must add a default address.</div>
                 </div>
                 <div className="flexcol" style={{ gap: '20px' }}>
                     <button onClick={handleAddAddress} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Add New Address</div></button>
@@ -239,10 +217,12 @@ const SellerAddress = () => {
                                         <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.seaport}</div>
                                     </div>
                                 </div>
-                                <div className="flexcol" style={{ gap: '20px' }}>
-                                    <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditAddress(index)} />
-                                    {(!address.isDefaultChecked) && <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteAddress(index)} />}
-                                </div>
+                                {(!address.isDefaultChecked) &&
+                                    <div className="flexcol" style={{ gap: '20px' }}>
+                                        <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditAddress(index)} />
+                                        <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteAddress(index)} />
+                                    </div>
+                                }
                             </div>
                         ))}
                     </Fragment>
@@ -269,7 +249,7 @@ const SellerAddress = () => {
                                 <input type="text" placeholder='Enter post code' className="box flex" value={postCode} onChange={(e) => setPostCode(e.target.value)} />
 
                                 <div className="flex" style={{ gap: '20px' }}>
-                                    <select className='box flex' name='countryCode' onChange={handleCountryChange}>
+                                    <select className='box flex' name='countryCode' value={selectedCountry.iso2 || ''} onChange={handleCountryChange}>
                                         <option value="">Select Country Code</option>
                                         {countriess.map(country => (
                                             <option key={country.iso2} value={country.iso2}>
@@ -291,12 +271,10 @@ const SellerAddress = () => {
                                     <div className="flex">
                                         <input type="checkbox" checked={isBillingChecked} onChange={() => setIsBillingChecked(!isBillingChecked)} />&nbsp;&nbsp;<div className="heading2">Billing address</div>
                                     </div>
-                                    {(!editMode) &&
-                                        <div className="flex">
-                                            <input type="checkbox" checked={isDefaultChecked} onChange={() => setIsDefaultChecked(!isDefaultChecked)} />&nbsp;&nbsp;<div className="heading2">Default address</div>
-                                        </div>
-                                    }
 
+                                    <div className="flex">
+                                        <input type="checkbox" checked={isDefaultChecked} onChange={() => setIsDefaultChecked(!isDefaultChecked)} />&nbsp;&nbsp;<div className="heading2">Default address</div>
+                                    </div>
                                 </div>
 
                                 <div className="flex" style={{ gap: '20px' }}>

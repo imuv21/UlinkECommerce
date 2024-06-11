@@ -4,10 +4,12 @@ import animation from "../../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
 import { Helmet } from 'react-helmet-async';
 import { urls } from '../../components/Schemas/images';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 const OtpEmail = () => {
 
+    const user = useSelector((state) => state.auth.user);
 
      //images
      const logo = urls[0];
@@ -17,53 +19,13 @@ const OtpEmail = () => {
         navigate('/update-password');
     }
 
-    //getting data from local storage
-    const [userData, setUserData] = useState(null);
-    useEffect(() => {
-        const storedUserData = localStorage.getItem('userData');
-        if (storedUserData) {
-            const parsedUserData = JSON.parse(storedUserData);
-            setUserData(parsedUserData);
-        }
-    }, []);
-
-    const verifyOtp = async (otp, username, role) => {
-        try {
-            const response = await axios.post(`http://ulinkit.eu-north-1.elasticbeanstalk.com/api/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
-            alert(`Response : ${response.data.message} And Email : ${username}`);
-            return response.data;
-        } catch (error) {
-            console.error('OTP verification failed:', error);
-            throw error;
-        }
-    };
-
-    const sellerForm = async (otp) => {
-        const email = userData.email;
-        const role = userData.role;
-
-        try {
-            const verificationResponse = await verifyOtp(otp, email, role);
-
-            if (userData && userData.role === 'seller') {
-                navigate('/seller-form');
-            } else {
-                navigate('/login');
-            }
-        } catch (error) {
-            alert('Failed to verify OTP: ' + error.message);
-        }
-    };
-
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
-    // Focus management
     const otpInputs = useRef([]);
     const focusNextInput = currentIndex => {
         if (currentIndex < otpInputs.current.length - 1) {
             otpInputs.current[currentIndex + 1].focus();
         }
     };
-
     const handleInputChange = (index, newValue) => {
         const newOtpDigits = [...otpDigits];
         newOtpDigits[index] = newValue;
@@ -77,7 +39,6 @@ const OtpEmail = () => {
             sellerForm(newOtpDigits.join(''));
         }
     };
-
     const handleKeyDown = (e, index) => {
         if (e.key === 'Backspace' && e.target.value === '') {
             e.preventDefault();
@@ -91,9 +52,8 @@ const OtpEmail = () => {
         }
     };
     useEffect(() => {
-        otpInputs.current[0].focus(); // Set focus on the first input when component mounts
+        otpInputs.current[0].focus(); 
     }, []);
-
 
     //json lottie animation
     const options = {
@@ -101,8 +61,6 @@ const OtpEmail = () => {
         loop: true,
     };
     const { View } = useLottie(options);
-
-
 
     //time
     const [timeLeft, setTimeLeft] = useState(60);
@@ -140,7 +98,7 @@ const OtpEmail = () => {
                 <div className="signupcont">
                     <div className='flexcol cover'>
                         <div className="heading tcenter">Verify your email</div>
-                        <div className="heading2 tcenter">We have sent the OTP to example@gmail.com <br />Enter the OTP to change the password.</div>
+                        <div className="heading2 tcenter">We have sent the OTP to {user.email} <br />Enter the OTP to change the password.</div>
                         <div className="flex gap">
 
                             {otpDigits.map((digit, index) => (

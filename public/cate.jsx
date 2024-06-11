@@ -1,119 +1,181 @@
-// {
-//   "images": [
-//     {
-//       "imageUrl": "https://api.ulinkit.com/api/image/9e0de39d-d08e-4358-93ee-6a6a42df8075_1.jpg",
-//       "size": "45.7KB",
-//       "name": "1.jpg",
-//       "dimension": "522 x 522",
-//       "priority": 0,
-//       "imageId": 340
-//     },
-//     {
-//       "imageUrl": "https://api.ulinkit.com/api/image/2d5e8da5-7cdb-4fd1-811b-bf0e7f386914_91czUQK5lhL._SX522_.jpg",
-//       "size": "61.0KB",
-//       "name": "91czUQK5lhL.SX522.jpg",
-//       "dimension": "522 x 522",
-//       "priority": 0,
-//       "imageId": 343
-//     },
-//     {
-//       "imageUrl": "https://api.ulinkit.com/api/image/ecc50549-63ae-4830-aefd-50daabdd1728_2.jpg",
-//       "size": "37.6KB",
-//       "name": "2.jpg",
-//       "dimension": "522 x 522",
-//       "priority": 0,
-//       "imageId": 341
-//     },
-//     {
-//       "imageUrl": "https://api.ulinkit.com/api/image/ef684700-bdd8-45ad-bcda-416aa73ae9a2_3.jpg",
-//       "size": "47.1KB",
-//       "name": "3.jpg",
-//       "dimension": "522 x 522",
-//       "priority": 0,
-//       "imageId": 342
-//     }
-//   ],
-//   "product": {
-//     "origin": "India",
-//     "privateLabel": null,
-//     "availability": "instock",
-//     "status": "Pending",
-//     "addedBy": "vipintech195504@gmail.com",
-//     "stockLocation": null,
-//     "temperature": "",
-//     "buynow": "yes",
-//     "readytoship": "yes",
-//     "productHgt": 22.0,
-//     "productLgh": 2.0,
-//     "productWdh": 1.0,
-//     "productWgt": 20.0,
-//     "dimensionUnit": null,
-//     "transportationMode": "regular",
-//     "avgLeadTime": 3,
-//     "size": 300.0,
-//     "unitsPerCarton": 1,
-//     "availableQuantity": 10,
-//     "cartonHgt": 3.0,
-//     "cartonLgh": 28.0,
-//     "cartonWdh": 18.0,
-//     "cartonWgt": 300.0,
-//     "sku": "MCSIDRAZZcalendar ",
-//     "unitmeasure": "box",
-//     "barcodeNum": "B077TVF22W",
-//     "barcode": "ASIN",
-//     "dgrGoods": "no",
-//     "gender": "unisex",
-//     "colors": "",
-//     "keyWords": ", Table calendar, 2024 calendar, Sticker, Officially licensed, Warner Bros, USA, Collectible, Magical design, Wizarding world, Hogwarts, Characters, Fan merchandise, Premium quality, Limited edition.",
-//     "keyFeatures": null,
-//     "brandName": "MCSID RAZZ ",
-//     "productName": "MCSID RAZZ - Harry Potter Table Calendar (2024) With Sticker - Officially Licensed By Warner Bros, USA",
-//     "variantColor": "Multi",
-//     "variantSize": "",
-//     "addInfo": "Immerse yourself in the magical world of Harry Potter with the MCSID RAZZ Table Calendar for 2024. This officially licensed product by Warner Bros brings the enchantment of Hogwarts and its beloved characters right to your desk. Featuring a captivating design and high-quality printing, each month is a journey into the wizarding world. Plus, it comes with a sticker for added fun and customization. Display your love for Harry Potter proudly with this premium, limited edition calendar made in the USA. Perfect for fans and collectors alike, it's a must-have addition to your magical collection.",
-//     "sizeUnit": "gr",
-//     "cartonWgtUnit": "g",
-//     "cartonLghUnit": "cm",
-//     "cartonHgtUnit": "cm",
-//     "cartonWdhUnit": "cm",
-//     "productWgtUnit": "g",
-//     "itemModelNumber": null,
-//     "incoterm": "",
-//     "lensType": null,
-//     "hsnCode": "4910 ",
-//     "material": null,
-//     "unitPrice": "899",
-//     "sellPrice": "299",
-//     "marketCurrency": null,
-//     "categoryPath": "Toys/ArtsAndCrafts/AdventCalendars/AdventCalendars",
-//     "shelfLife": null,
-//     "ingredients": null,
-//     "packType": null,
-//     "instructions": null,
-//     "portType": null,
-//     "connectivityType": null,
-//     "avgBatteryLife": null,
-//     "compatibility": null,
-//     "memoryStorage": null,
-//     "version": null,
-//     "opSystem": null,
-//     "screenSize": null,
-//     "ram": null,
-//     "specifications": null,
-//     "fitSize": null,
-//     "form": null,
-//     "skinType": null,
-//     "voltage": "",
-//     "power": "",
-//     "powerPlugType": "",
-//     "condition": null,
-//     "pattern": null,
-//     "flavour": null,
-//     "petSize": null,
-//     "ageRange": null,
-//     "powerSource": null,
-//     "minOrderQuant": 4,
-//     "bulletPoints": "Unique Design - This Harry Potter Themed Desk Calendar is made up of 180gsm thick paper that prevents ink through and avoids feathering also allows you to tear off to next. The monthly desk calendar features 12 beautifully designed depictions based on the Harry Potter Fandom./ Stay Organized - If you are not good at remembering your appointments, deadlines, and other events, you need to get this desk calendar. This flip desk calendar is the perfect tool to make your life more productive and efficient. You can make great use of it by sticking your daily to-do list, memo, and notes on it./ Durability - This table calendar comes in a portrait manner providing steadiness. These pages are \"Metal Wiro Bound\" along with a cardboard stand which keeps your Table Calendar durable & flexible enough./ Perfect Inclusion - An unique Calendar for your home or office and make your everyday dynamic and tasteful with the desk calendar 2024. This desk calendar makes a thoughtful present to your loved ones./ Dimension - The dime"
-//   }
-// }
+ //select country form api
+ const [countries, setCountries] = useState([]);
+ const [selectedOrigin, setSelectedOrigin] = useState('');
+ useEffect(() => {
+     const fetchData = async () => {
+         try {
+             const response = await axios.get('https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json');
+             const data = response.data;
+             const uniqueCountries = [...new Set(data.map(city => city.country))];
+             setCountries(uniqueCountries);
+         } catch (error) {
+             console.error('Error fetching data:', error);
+         }
+     };
+     fetchData();
+ }, []);
+ const originSelectChange = (event) => {
+     setSelectedOrigin(event.target.value);
+ };
 
+ //select country code from data 
+ const [countriess, setCountriess] = useState([]);
+ const [phoneNumber, setPhoneNumber] = useState('');
+ const [selectedCountry, setSelectedCountry] = useState('');
+ useEffect(() => {
+     const formattedCountries = allCountries.map(country => ({
+         name: country[0],
+         iso2: country[1],
+         dialCode: country[2]
+     }));
+
+     setCountriess(formattedCountries);
+ }, []);
+ const handleCountryChange = (event) => {
+     const countryCode = event.target.value;
+     const selected = countriess.find(country => country.iso2 === countryCode);
+     setSelectedCountry(selected);
+ }
+
+ //popup form
+ const [showPopup, setShowPopup] = useState(false);
+ const [editMode, setEditMode] = useState(false);
+ const [editIndex, setEditIndex] = useState(null);
+ const [address, setAddress] = useState('');
+ const [area, setArea] = useState('');
+ const [street, setStreet] = useState('');
+ const [office, setOffice] = useState('');
+ const [pobox, setPobox] = useState('');
+ const [postCode, setPostCode] = useState('');
+ const [city, setCity] = useState('');
+ const [airport, setAirport] = useState('');
+ const [seaport, setSeaport] = useState('');
+ const [isLocationChecked, setIsLocationChecked] = useState(false);
+ const [isBillingChecked, setIsBillingChecked] = useState(false);
+ const [isDefaultChecked, setIsDefaultChecked] = useState(false);
+ const [addressList, setAddressList] = useState(JSON.parse(localStorage.getItem('seller-addresses')) || []);
+
+ const handleAddAddress = () => {
+     setShowPopup(true);
+     setEditMode(false);
+     setAddress('');
+     setSelectedOrigin('');
+     setCity('');
+     setArea('');
+     setStreet('');
+     setOffice('');
+     setPobox('');
+     setPostCode('');
+     setPhoneNumber('');
+     setSelectedCountry('');
+     setAirport('');
+     setSeaport('');
+     setIsLocationChecked('');
+     setIsBillingChecked('');
+     setIsDefaultChecked('');
+ };
+
+ const handleEditAddress = (index) => {
+     const addressToEdit = addressList[index];
+     setEditIndex(index);
+     setAddress(addressToEdit.address);
+     setSelectedOrigin(addressToEdit.selectedOrigin);
+     setCity(addressToEdit.city);
+     setArea(addressToEdit.area);
+     setStreet(addressToEdit.street);
+     setOffice(addressToEdit.office);
+     setPobox(addressToEdit.pobox);
+     setPostCode(addressToEdit.postCode);
+     setPhoneNumber(addressToEdit.phoneNumber);
+     setSelectedCountry(countriess.find((country) => country.iso2 === addressToEdit.selectedCountry.iso2));
+     setAirport(addressToEdit.airport);
+     setSeaport(addressToEdit.seaport);
+     setIsLocationChecked(addressToEdit.isLocationChecked);
+     setIsBillingChecked(addressToEdit.isBillingChecked);
+     setIsDefaultChecked(addressToEdit.isDefaultChecked);
+     setShowPopup(true);
+     setEditMode(true);
+ };
+
+ const handleClosePopup = () => {
+     setShowPopup(false);
+     setEditMode(false);
+     setAddress('');
+     setSelectedOrigin('');
+     setCity('');
+     setArea('');
+     setStreet('');
+     setOffice('');
+     setPobox('');
+     setPostCode('');
+     setPhoneNumber('');
+     setSelectedCountry('');
+     setAirport('');
+     setSeaport('');
+     setIsLocationChecked('');
+     setIsBillingChecked('');
+     setIsDefaultChecked('');
+ };
+
+ const handleSubmit = () => {
+     const newAddress = {
+         address,
+         selectedOrigin,
+         city,
+         area,
+         street,
+         office,
+         pobox,
+         postCode,
+         phoneNumber,
+         selectedCountry,
+         airport,
+         seaport,
+         isLocationChecked,
+         isBillingChecked,
+         isDefaultChecked
+     };
+
+     let updatedAddressList = [...addressList];
+
+     if (isDefaultChecked) {
+         updatedAddressList = updatedAddressList.map(addr => ({
+             ...addr,
+             isDefaultChecked: false
+         }));
+     }
+
+     if (editMode) {
+         updatedAddressList[editIndex] = newAddress;
+     } else {
+         updatedAddressList.push(newAddress);
+     }
+
+     setAddressList(updatedAddressList);
+     localStorage.setItem('seller-addresses', JSON.stringify(updatedAddressList));
+
+     setShowPopup(false);
+     setEditMode(false);
+     setAddress('');
+     setSelectedOrigin('');
+     setCity('');
+     setArea('');
+     setStreet('');
+     setOffice('');
+     setPobox('');
+     setPostCode('');
+     setPhoneNumber('');
+     setSelectedCountry('');
+     setAirport('');
+     setSeaport('');
+     setIsLocationChecked(false);
+     setIsBillingChecked(false);
+     setIsDefaultChecked(false);
+ };
+
+ const handleDeleteAddress = (index) => {
+     const updatedAddressList = [...addressList];
+     updatedAddressList.splice(index, 1);
+     setAddressList(updatedAddressList);
+     localStorage.setItem('seller-addresses', JSON.stringify(updatedAddressList));
+ };

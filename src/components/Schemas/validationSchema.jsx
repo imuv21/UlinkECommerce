@@ -61,6 +61,7 @@ export const bankSchema = yup.object().shape({
     accHolderName: yup.string().required('Account holder name is required'),
     accNo: yup.string().required('Account number is required'),
     swiftbic: yup.string().required('Swift/BIC code is required'),
+    ifsc: yup.string().required('IFSC code is required'),
 });
 
 export const signupSchema = yup.object().shape({
