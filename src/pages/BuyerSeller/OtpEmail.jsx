@@ -28,13 +28,19 @@ const OtpEmail = () => {
                     }
                 }
             );
+            if (response.status === 200) {
+                alert('Your email has been updated. Please log in again to continue.');
+                await handleLogout();
+            }
             alert(response.data.message);
             return response.data;
         } catch (error) {
-            alert('OTP verification failed:', error);
+            console.error('OTP verification failed:', error); 
+            alert('OTP verification failed');
             throw error;
         }
     };
+
     const handleLogout = async () => {
         try {
             const response = await axios.post(`${BASE_URL}/logout`, null, {
@@ -44,33 +50,25 @@ const OtpEmail = () => {
                 }
             });
             if (response.status === 200) {
-                alert(response.data);
+                alert(response.data.message || 'Logged out successfully');
                 dispatch(logout());
                 navigate('/login');
+            } else {
+                console.warn('Unexpected response status:', response.status);
             }
         } catch (error) {
+            console.error('Logout failed:', error);
             dispatch(logout());
             navigate('/login');
         }
-    }
-    // const sellerForm = async (otp) => {
-    //     try {
-    //         const verificationResponse = await verifyOtp(otp);
-    //         if (verificationResponse.status === 200) {
-    //            await handleLogout();
-    //         }
-    //     } catch (error) {
-    //         alert('Failed to verify OTP');
-    //     }
-    // };
+    };
+
     const sellerForm = async (otp) => {
         try {
             const verificationResponse = await verifyOtp(otp);
-            if (verificationResponse.status === 200) {
-                alert('Your email has been updated. Please log in again to continue.');
-                await handleLogout();
-            }
+            
         } catch (error) {
+            console.error('Failed to verify OTP or logout:', error);
             alert('Failed to verify OTP');
         }
     };

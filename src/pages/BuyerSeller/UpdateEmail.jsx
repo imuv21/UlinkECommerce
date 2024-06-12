@@ -36,7 +36,7 @@ const ForgotPassword = () => {
             }
         } catch (error) {
             console.error("Error updating password:", error);
-            alert("An error occurred while updating the password.");
+            alert("An error occurred while updating the email.");
         }
         navigate('/verify-update-email');
     }

@@ -4,8 +4,10 @@ import animation from "../../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
 import { Helmet } from 'react-helmet-async';
 import { urls } from '../../components/Schemas/images';
-import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
+import { logout } from '../../Redux/AuthReducer';
+import { useDispatch, useSelector } from 'react-redux';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const OtpEmail = () => {
 
@@ -14,10 +16,65 @@ const OtpEmail = () => {
      //images
      const logo = urls[0];
 
-    const navigate = useNavigate();
-    const updatePassword = () => {
-        navigate('/update-password');
-    }
+     const navigate = useNavigate();
+     const dispatch = useDispatch();
+     const token = useSelector((state) => state.auth.token);
+   
+
+     const verifyOtp = async (otp) => {
+        try {
+            const response = await axios.post(
+                `${BASE_URL}/user/update-details/verify?otp=${otp}&verificationType=password`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            if (response.status === 200) {
+                await handleLogout();
+            }
+            alert(response.data.message);
+            return response.data;
+        } catch (error) {
+            console.error('OTP verification failed:', error); 
+            alert('OTP verification failed');
+            throw error;
+        }
+    };
+
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post(`${BASE_URL}/logout`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: 'application/json'
+                }
+            });
+            if (response.status === 200) {
+                alert(response.data.message || 'Logged out successfully');
+                dispatch(logout());
+                navigate('/login');
+            } else {
+                console.warn('Unexpected response status:', response.status);
+            }
+        } catch (error) {
+            console.error('Logout failed:', error);
+            dispatch(logout());
+            navigate('/login');
+        }
+    };
+
+    const sellerForm = async (otp) => {
+        try {
+            const verificationResponse = await verifyOtp(otp);
+            
+        } catch (error) {
+            alert('Failed to verify OTP!');
+        }
+    };
+
 
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
     const otpInputs = useRef([]);
@@ -114,7 +171,6 @@ const OtpEmail = () => {
                             ))}
 
                         </div>
-                        <button className='btn box flex' onClick={updatePassword} type='submit'><div className="heading2">Continue</div></button>
                         <Link to={'/profile'} className=' box flex'><div className="heading2" style={{color: 'gray'}}>Cancel</div></Link>
                     </div>
                 </div>

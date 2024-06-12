@@ -9,12 +9,16 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import animation from "../../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const schema = yupResolver(resetPasswordSchema);
 const ResetPassword = () => {
 
     //images
     const logo = urls[0];
     const navigate = useNavigate();
+    const token = useSelector((state) => state.auth.token);
 
     //password hide and show
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -26,6 +30,28 @@ const ResetPassword = () => {
         setConPasswordVisible(!conPasswordVisible);
     };
 
+    const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
+    const onSubmit = async (formData) => {
+        try {
+            const response = await axios.post(
+                `${BASE_URL}/user/update-details?password=${formData.password}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+            if (response.data.status) {
+                alert(response.data.message);
+                navigate('/verify-update-password');
+            } else {
+                alert("Failed to send OTP to update password!");
+            }
+        } catch (error) {
+            alert("Failed to send OTP to update password!");
+        }
+    };
 
     //json lottie animation
     const options = {
@@ -33,15 +59,6 @@ const ResetPassword = () => {
         loop: true,
     };
     const { View } = useLottie(options);
-
-
-
-    const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
-    const onSubmit = (formData) => {
-        console.log(formData);
-        alert('Congrats! Your password has been reset successfully. Please login again.');
-        navigate('/login');
-    };
 
     return (
         <Fragment>
@@ -74,7 +91,7 @@ const ResetPassword = () => {
                             </div>
                             {errors.confirmPass && <div className='error'>{errors.confirmPass.message}</div>}
                             <button className='btn box flex' type='submit'><div className="heading2">Set Password</div></button>
-                            <Link to={'/profile'} className=' box flex'><div className="heading2" style={{color: 'gray'}}>Cancel</div></Link>
+                            <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>
                         </form>
                     </div>
                 </div>

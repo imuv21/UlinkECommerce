@@ -21,32 +21,6 @@ const Profile = () => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const token = useSelector((state) => state.auth.token);
 
-    const updatePassword = async (e) => {
-        e.preventDefault();
-        const email = user.email;
-        try {
-            const response = await axios.post(
-                `${BASE_URL}/user/update-details?email=${email}`,
-                {}, 
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
-            if (response.data.status) {
-                alert(response.data.message); 
-                navigate('/verify-update-password');
-            } else {
-                console.error("Failed to send OTP verification mail");
-                alert("Failed to send OTP verification mail");
-            }
-        } catch (error) {
-            console.error("Error updating password:", error);
-            alert("An error occurred while updating the password.");
-        }
-    };
-
     const { handleSubmit, control, formState: { errors }, setValue } = useForm({
         resolver: schema,
     });
@@ -197,10 +171,9 @@ const Profile = () => {
                         <div className="flex wh" style={{ justifyContent: 'start', gap: '15px' }}>
                             <Link to={'/update-number'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update number</Link>
                             <Link to={'/update-email'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update email</Link>
-                            <div className="btn flex box" onClick={updatePassword} style={{ width: '150px', cursor: 'pointer' }}>Update password</div>
+                            <Link to={'/update-password'} className="btn flex box" style={{ width: '150px', cursor: 'pointer' }}>Update password</Link>
                         </div>
                     </div>
-
                 </div>
             )}
         </div>
