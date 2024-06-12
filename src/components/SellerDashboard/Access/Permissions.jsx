@@ -65,6 +65,133 @@ const Permissions = () => {
                     </div>
                 </div>
             </div>
+            <div className="access-sel-box">
+                <div className="heading">Payment</div>
+                <div className="access2">
+                    <div className='access-col2'>
+                        <div className="heading-ac">Permissions</div>
+                        <div className="heading-ac2">User</div>
+                        <div className="heading-ac2">Supervisor</div>
+                        <div className="heading-ac2">Admin</div>
+                    </div>
+                    <div className='access-col2'>
+                        <div className="ac-item">Request full order cancellation</div>
+                        <div className="ac-item2"><CloseIcon /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                    </div>
+                    <div className='access-col2'>
+                        <div className="ac-item">Request partial order cancellation</div>
+                        <div className="ac-item2"><CloseIcon /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                    </div>
+                </div>
+            </div>
+            <div className="access-sel-box">
+                <div className="heading">Messages & Leads</div>
+                <div className="access2">
+                    <div className='access-col2'>
+                        <div className="heading-ac">Permissions</div>
+                        <div className="heading-ac2">User</div>
+                        <div className="heading-ac2">Supervisor</div>
+                        <div className="heading-ac2">Admin</div>
+                    </div>
+                    <div className='access-col2'>
+                        <div className="ac-item">View all messages and leads</div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                    </div>
+                    <div className='access-col2'>
+                        <div className="ac-item">Respond to all messages and leads</div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                    </div>
+                    <div className='access-col2'>
+                        <div className="ac-item">Archive leads</div>
+                        <div className="ac-item2"><CloseIcon /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                    </div>
+                </div>
+            </div>
+            <div className="access-sel-box">
+                <div className="heading">Orders</div>
+                <div className="access2">
+                    <div className='access-col2'>
+                        <div className="heading-ac">Permissions</div>
+                        <div className="heading-ac2">User</div>
+                        <div className="heading-ac2">Supervisor</div>
+                        <div className="heading-ac2">Admin</div>
+                    </div>
+                    <div className='access-col2'>
+                        <div className="ac-item">Fulfil orders</div>
+                        <div className="ac-item2"><CloseIcon /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                    </div>
+                    <div className='access-col2'>
+                        <div className="ac-item">View orders</div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                    </div>
+                </div>
+            </div>
+            <div className="access-sel-box">
+                <div className="heading">Inventory</div>
+                <div className="access2">
+                    <div className='access-col2'>
+                        <div className="heading-ac">Permissions</div>
+                        <div className="heading-ac2">User</div>
+                        <div className="heading-ac2">Supervisor</div>
+                        <div className="heading-ac2">Admin</div>
+                    </div>
+                    <div className='access-col2'>
+                        <div className="ac-item">View product inventory</div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                    </div>
+                    <div className='access-col2'>
+                        <div className="ac-item">Upload products</div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                    </div>
+                    <div className='access-col2'>
+                        <div className="ac-item">Upload media</div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                    </div>
+                </div>
+            </div>
+            <div className="access-sel-box">
+                <div className="heading">Promotions</div>
+                <div className="access2">
+                    <div className='access-col2'>
+                        <div className="heading-ac">Permissions</div>
+                        <div className="heading-ac2">User</div>
+                        <div className="heading-ac2">Supervisor</div>
+                        <div className="heading-ac2">Admin</div>
+                    </div>
+                    <div className='access-col2'>
+                        <div className="ac-item">Create promotions</div>
+                        <div className="ac-item2"><CloseIcon /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                    </div>
+                    <div className='access-col2'>
+                        <div className="ac-item">View promotions</div>
+                        <div className="ac-item2"><CloseIcon /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

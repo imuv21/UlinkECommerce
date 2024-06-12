@@ -114,8 +114,7 @@ const BuyerDashboard = () => {
         )}
       </div>
       <div className="userDashboard">
-        <h1 className="user-title">Hi, {user.firstname}{user.lastname}</h1>
-        <p className="user-subtitle">{user.firstname}{user.lastname} </p>
+        <h1 className="user-title">Hi, {user.firstname} {user.lastname}</h1>
       </div>
       {/* Upload Document */}
       <div className="upload-document">

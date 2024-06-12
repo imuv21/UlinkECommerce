@@ -9,7 +9,7 @@ import { logout } from '../../Redux/AuthReducer';
 import { useDispatch, useSelector } from 'react-redux';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-const OtpEmail = () => {
+const OtpPassword = () => {
 
     const user = useSelector((state) => state.auth.user);
 
@@ -187,4 +187,4 @@ const OtpEmail = () => {
     )
 }
 
-export default OtpEmail
+export default OtpPassword

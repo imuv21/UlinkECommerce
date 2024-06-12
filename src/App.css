@@ -2224,6 +2224,7 @@ button:focus {
 .unupublished {
   gap: 15px;
   width: 100%;
+  white-space: nowrap;
 }
 
 .unupublished .MuiSvgIcon-root {

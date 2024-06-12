@@ -37,7 +37,6 @@ const SellerHome = () => {
             image: ''
         },
     ]
-
     const tvps = [
         {
             id: 1,
@@ -55,7 +54,6 @@ const SellerHome = () => {
             title: 'Al Mudhish Tea Milk Catering 410g x 48'
         },
     ]
-
     const tsps = [
         {
             id: 1,
@@ -74,53 +72,67 @@ const SellerHome = () => {
         },
     ]
 
+
+
+    //step-stones
     const [steps, setSteps] = useState([
-        { step: 1, label: 'Verify your contacts', completed: false },
+        { step: 1, label: 'Verify your contacts', completed: true },
         { step: 2, label: 'Upload your business documents', completed: false },
         { step: 3, label: 'Set shipping preferences', completed: false },
         { step: 4, label: 'Set up your bank details', completed: false },
     ]);
-
     const stepProcess = [
-        // {
-        //     id: uuidv4(),
-        //     icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717742790/2243986_android_mobile_phone_app_communication_icon_a5qape.png',
-        //     title: 'Verify your mobile',
-        //     description: 'To complete your seller profile we need to verify your mobile number.',
-        //     btn: 'VERIFY YOUR MOBILE',
-        //     link: '/profile',
-        // },
-        // {
-        //     id: uuidv4(),
-        //     icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717747167/3123_documents_icon_dgij1z.png',
-        //     title: 'Upload your business documents',
-        //     description: 'To complete your seller profile we need to verify your business documents.',
-        //     btn: 'UPLOAD DOCUMENTS',
-        //     link: '/seller-dashboard/seller-company-profile',
-        // },
-        // {
-        //     id: uuidv4(),
-        //     icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717747167/3123_documents_icon_dgij1z.png',
-        //     title: 'Set shipping preferences',
-        //     description: 'To complete your seller profile, please select your shipping preference.',
-        //     btn: 'SET PREFERENCES',
-        //     link: '/seller-dashboard/shipping-preferences',
-        // },
+        {
+            id: uuidv4(),
+            icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717742790/2243986_android_mobile_phone_app_communication_icon_a5qape.png',
+            title: 'Verify your mobile',
+            description: 'To complete your seller profile we need to verify your mobile number.',
+            btn: 'Verify mobile number',
+            link: '/profile',
+        },
+        {
+            id: uuidv4(),
+            icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717747167/3123_documents_icon_dgij1z.png',
+            title: 'Upload your business documents',
+            description: 'To complete your seller profile we need to verify your business documents.',
+            btn: 'Upload documents',
+            link: '/seller-dashboard/seller-company-profile',
+        },
+        {
+            id: uuidv4(),
+            icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717747167/3123_documents_icon_dgij1z.png',
+            title: 'Set shipping preferences',
+            description: 'To complete your seller profile, please select your shipping preference.',
+            btn: 'Set preferences',
+            link: '/seller-dashboard/shipping-preferences',
+        },
         {
             id: uuidv4(),
             icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717740444/5452454_and_bank_banking_buildings_business_icon_vvoa4o.png',
             title: 'Set up your bank details',
             description: 'Why do we need bank details. We want to pay you so tell us about your bank account and we’ll tie this to your account.',
-            btn: 'SET UP BANK DETAILS',
+            btn: 'Set up bank details',
             link: '/seller-dashboard/payments',
         },
-    ]
-
+    ];
+    const getCurrentStep = () => {
+        for (let i = 0; i < steps.length; i++) {
+            if (!steps[i].completed) {
+                return i;
+            }
+        }
+        return steps.length;
+    };
+    const currentStepIndex = getCurrentStep();
+    const filteredStepProcess = stepProcess.slice(currentStepIndex, currentStepIndex + 1);
+    const allStepsCompleted = steps.every(step => step.completed);
     const updateProgressBar = (id, value) => {
         const progressBar = document.getElementById(`progressBar-${id}`);
         progressBar.style.width = value + "%";
     };
 
+
+    //keywords
     const keywords = [
         {
             id: 15,
@@ -191,7 +203,6 @@ const SellerHome = () => {
     ]
 
     const scrollRef = useRef(null);
-
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.focus();
@@ -256,38 +267,35 @@ const SellerHome = () => {
                             </div>
                         </div>
                     </div>
+              
 
-                    <div className="sel-box">
+                    <div className="sel-box" style={{ display: allStepsCompleted ? 'none' : 'flex' }}>
                         <div className="flex wh">
                             <div className="step-verification" style={{ borderRight: '1px solid rgb(222, 222, 222)' }}>
                                 <div className="heading2">Complete these steps to start selling</div>
-                                <div className={`step ${steps[0].completed ? 'completed' : ''}`} >
-                                    {steps[0].completed ? <span className="checkmark">✔</span> : <span className="number">1</span>}
-                                    <span className="descrip2">{steps[0].label}</span>
-                                </div>
-                                <div className={`step ${steps[1].completed ? 'completed' : ''}`} >
-                                    {steps[1].completed ? <span className="checkmark">✔</span> : <span className="number">2</span>}
-                                    <span className="descrip2">{steps[1].label}</span>
-                                </div>
-                                <div className={`step ${steps[2].completed ? 'completed' : ''}`} >
-                                    {steps[2].completed ? <span className="checkmark">✔</span> : <span className="number">3</span>}
-                                    <span className="descrip2">{steps[2].label}</span>
-                                </div>
-                                <div className={`step ${steps[3].completed ? 'completed' : ''}`} >
-                                    {steps[3].completed ? <span className="checkmark">✔</span> : <span className="number">4</span>}
-                                    <span className="descrip2">{steps[3].label}</span>
-                                </div>
+                                {steps.map((step, index) => (
+                                    <div key={step.step} className={`step ${step.completed ? 'completed' : ''}`}>
+                                        {step.completed ? <span className="checkmark">✔</span> : <span className="number">{step.step}</span>}
+                                        <span className="descrip2">{step.label}</span>
+                                    </div>
+                                ))}
                             </div>
-                            {
-                                stepProcess.map((item) => (
+                            {currentStepIndex < steps.length ? (
+                                filteredStepProcess.map((item) => (
                                     <div className="bank-detail" key={item.id}>
-                                        <img style={{ width: '40px', height: '40px' }} src={item.icon} alt="bank-logo" />
+                                        <img style={{ width: '40px', height: '40px' }} src={item.icon} alt="step-icon" />
                                         <div className="heading3">{item.title}</div>
                                         <div className="heading2">{item.description}</div>
-                                        <Link to={item.link} className='btn box flex' style={{ width: '200px' }} type='submit'><div className="heading2">{item.btn}</div></Link>
+                                        <Link to={item.link} className="btn box flex" style={{ width: '200px', padding: '7px 10px' }} type="submit">
+                                            <div className="heading2">{item.btn}</div>
+                                        </Link>
                                     </div>
                                 ))
-                            }
+                            ) : (
+                                <div className="bank-detail">
+                                    <div className="heading3 wh" style={{textAlign : 'center', color: 'green'}}>Congratulations! <br /> You are a verified seller now!</div>
+                                </div>
+                            )}
                         </div>
                     </div>
 

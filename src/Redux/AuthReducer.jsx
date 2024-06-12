@@ -46,8 +46,13 @@ const authSlice = createSlice({
             state.message = '';
             state.signupEmail = null;
         },
+        updateUserDetails(state, action) {
+            state.user = { ...state.user, ...action.payload };
+            state.status = 'success';
+            state.message = 'Profile updated successfully';
+        },
     },
 });
 
-export const { loginSuccess, loginFailure, signupSuccess, signupFailure, logout } = authSlice.actions;
+export const { loginSuccess, loginFailure, signupSuccess, signupFailure, logout, updateUserDetails } = authSlice.actions;
 export default authSlice.reducer;

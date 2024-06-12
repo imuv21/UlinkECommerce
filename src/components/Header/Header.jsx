@@ -255,10 +255,11 @@ const Header = () => {
 
   return (
     <Fragment>
-      <div className="offer">
-        <div className='offer-text'>Save up to 20% OFF on your first 10 orders.</div> <div className="coupn">ULINKITFIRST20</div>
-      </div>
 
+      <div className="offer">
+        <div className='offer-text'>Get 20% OFF on your first order.</div> <div className="coupn">ULINKITFIRST20</div>
+      </div>
+      
       <div className='header'>
         <div className="flex head-start">
           <Link to="/"><img src={logo} alt="Logo" className='logo' /></Link>

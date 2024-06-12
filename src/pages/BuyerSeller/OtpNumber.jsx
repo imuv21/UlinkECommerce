@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet-async';
 import { urls } from '../../components/Schemas/images';
 import axios from 'axios';
 
-const OtpEmail = () => {
+const OtpNumber = () => {
 
     //images
     const logo = urls[0];
@@ -151,9 +151,10 @@ const OtpEmail = () => {
                             ))}
 
                         </div>
-                        <button className='resend' disabled={timerRunning} onClick={handleResendClick}>
+                        <button className='resend' style={{ display: 'none' }} disabled={timerRunning} onClick={handleResendClick}>
                             {timerRunning ? `Resend OTP in ${timeLeft}` : "Resend OTP"}
                         </button>
+                        <Link to={'/profile'} className=' box flex'><div className="heading2" style={{color: 'gray'}}>Cancel</div></Link>
                     </div>
                 </div>
 
@@ -170,4 +171,4 @@ const OtpEmail = () => {
     )
 }
 
-export default OtpEmail
+export default OtpNumber

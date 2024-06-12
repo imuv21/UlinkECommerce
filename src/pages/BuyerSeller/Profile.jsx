@@ -5,18 +5,21 @@ import KeyIcon from '@mui/icons-material/Key';
 import { Link, useNavigate } from 'react-router-dom';
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { allCountries } from '../../components/Schemas/countryCodes';
 import { profileSchema } from '../../components/Schemas/validationSchema';
+import { updateUserDetails } from '../../Redux/AuthReducer';
 import axios from 'axios';
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const schema = yupResolver(profileSchema);
 
 const Profile = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const token = useSelector((state) => state.auth.token);
@@ -28,9 +31,23 @@ const Profile = () => {
     //profile edit functionality
     const [isEditing, setIsEditing] = useState(false);
 
-    const onSubmit = (data) => {
-        setIsEditing(false);
-        console.log(data);
+    const onSubmit = async (data) => {
+        try {
+            const response = await axios.post(
+                `${BASE_URL}/user/update-details`,
+                { profile: data },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            if (response.status === 200) {
+                dispatch(updateUserDetails(data));
+                alert('Profile updated successfully!');
+                setIsEditing(false);
+                console.log(data);
+            }
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        }
     };
 
     const handleEditClick = () => {
@@ -40,6 +57,16 @@ const Profile = () => {
     const cancel = () => {
         setIsEditing(false);
     }
+
+    //redirect
+    const getDashboardLink = () => {
+        if (user.role === "Seller") {
+            return "/seller-dashboard/seller-home";
+        } else if (user.role === "Buyer") {
+            return "/buyer-dashboard";
+        }
+        return "/"; 
+    };
 
 
     //select country code from data 
@@ -62,14 +89,13 @@ const Profile = () => {
 
 
 
-
     return (
         <div className="flexcol wh product-detail">
             <Helmet>
                 <title>My Profile</title>
             </Helmet>
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                <div className="heading5">My Profile</div> <Link to="/seller-dashboard/seller-home" className='heading3'>Back</Link>
+                <div className="heading5">My Profile</div> <Link  to={getDashboardLink()} className='heading3'>Back</Link>
             </div>
 
             {isAuthenticated && (
@@ -97,8 +123,8 @@ const Profile = () => {
                                     }
 
                                     <div className='flex wh' style={{ gap: '30px' }}>
-                                        {/* <Controller name="wpcountrycode" control={control} defaultValue={userData.wpcountrycode || ''} render={({ field }) => (
-                                            <select className="box flex" value={userData.wpcountrycode || ''} onChange={handleChange}  {...field}>
+                                        <Controller name="wpcountrycode" control={control} defaultValue={user.wpcountrycode || ''} render={({ field }) => (
+                                            <select className="box flex" value={user.wpcountrycode || ''} onChange={handleCountryChange}  {...field}>
                                                 <option value="">Country code</option>
                                                 {ccode.map(country => (
                                                     <option key={country.iso2} value={country.dialCode}>
@@ -107,30 +133,20 @@ const Profile = () => {
                                                 ))}
                                             </select>
                                         )}
-                                        /> */}
+                                        />
                                         <Controller name="whatsappnumber" control={control} defaultValue={user.whatsappnumber || ''} render={({ field }) => <input className="box flex" autoComplete='off' placeholder='Enter your whatsapp number' {...field} />} />
                                     </div>
 
-                                    {(errors.whatsappnumber) &&
+                                    {(errors.whatsappnumber || errors.wpcountrycode) &&
                                         <div className="flex wh">
                                             <div className="flex wh">
-                                                {/* <div className='error'>{errors.wpcountrycode?.message}</div> */}
+                                                <div className='error'>{errors.wpcountrycode?.message}</div>
                                             </div>
                                             <div className="flex wh" style={{ justifyContent: 'space-around' }}>
                                                 <div className='error'>{errors.whatsappnumber?.message}</div>
                                             </div>
                                         </div>
                                     }
-
-                                    {/* <Controller name="language" control={control} defaultValue="" render={({ field }) => (
-                                        <select className="box flex" value={user.language || ''} onChange={handleChange} {...field}>
-                                            <option value="">Select your language</option>
-                                            <option value="English">English</option>
-                                            <option value="Hindi">Hindi</option>
-                                        </select>
-                                    )}
-                                    />
-                                    {errors.language && <div className='error'>{errors.language.message}</div>} */}
                                 </div>
                             </div>
                         ) : (
@@ -141,14 +157,14 @@ const Profile = () => {
                                 </div>
                                 <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
                                     <div className="heading2">{user.firstname} {user.lastname}</div>
-                                    <div className='heading2'>{user.whatsappnumber}</div>
+                                    <div className='heading2'>+{user.wpcountrycode}-{user.whatsappnumber}</div>
                                 </div>
                             </div>
                         )}
                         {isEditing ? (
                             <div className="flex" style={{ gap: '20px' }}>
-                                <div className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}>Save</div>
-                                <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={cancel} >Cancel</div>
+                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}>Save</button>
+                                <button className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={cancel} >Cancel</button>
                             </div>
                         ) : (
                             <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClick}>Edit</div>
@@ -164,7 +180,7 @@ const Profile = () => {
                             </div>
                             <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
                                 <div className="heading2 wh flex-start unupublished">{user.email} <VerifiedIcon style={{ color: 'rgb(0, 190, 0)' }} /></div>
-                                <div className='heading2 wh flex-start unupublished'>{user.number} <NewReleasesIcon style={{ color: 'rgb(255, 97, 73)' }} /></div>
+                                <div className='heading2 wh flex-start unupublished'>+{user.countryCode}-{user.number} <NewReleasesIcon style={{ color: 'rgb(255, 97, 73)' }} /></div>
                             </div>
                         </div>
 

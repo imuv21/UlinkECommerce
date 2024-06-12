@@ -236,7 +236,7 @@ const BuyerAddress = () => {
                                 <input type="text" placeholder='Enter post code' className="box flex" value={postCode} onChange={(e) => setPostCode(e.target.value)} />
 
                                 <div className="flex" style={{ gap: '20px' }}>
-                                    <select className='box flex' name='countryCode' onChange={handleCountryChange}>
+                                    <select className='box flex' name='countryCode' value={selectedCountry.iso2 || ''} onChange={handleCountryChange}>
                                         <option value="">Select Country Code</option>
                                         {countriess.map(country => (
                                             <option key={country.iso2} value={country.iso2}>

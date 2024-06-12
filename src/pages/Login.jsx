@@ -43,8 +43,8 @@ const Login = () => {
 
         try {
             const response = await axios.post(`${BASE_URL}/Login`, updatedLoggedUser);
-            const { firstname, lastname, token, message, status, useraddress, country, countryOfoperation, whatsappnumber, currency, currencySymbol, role, email, number } = response.data;
-            const user = { firstname, lastname, useraddress, countryOfoperation, whatsappnumber, currency, currencySymbol, country, role, email, number };
+            const { firstname, lastname, countryCode, wpcountrycode, token, message, status, country, countryOfoperation, whatsappnumber, currency, currencySymbol, role, email, number } = response.data;
+            const user = { firstname, lastname, countryCode, wpcountrycode, countryOfoperation, whatsappnumber, currency, currencySymbol, country, role, email, number };
 
             dispatch(loginSuccess({ token, message, user }));
             alert(`${status} : ${message}`);

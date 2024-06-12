@@ -9,18 +9,22 @@ import { logout } from '../../Redux/AuthReducer';
 import { useDispatch, useSelector } from 'react-redux';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-const OtpEmail = () => {
+const OtpProfile = () => {
 
-    //images
-    const logo = urls[0];
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const token = useSelector((state) => state.auth.token);
+    const user = useSelector((state) => state.auth.user);
 
-    const verifyOtp = async (otp) => {
+     //images
+     const logo = urls[0];
+
+     const navigate = useNavigate();
+     const dispatch = useDispatch();
+     const token = useSelector((state) => state.auth.token);
+   
+
+     const verifyOtp = async (otp) => {
         try {
             const response = await axios.post(
-                `${BASE_URL}/user/update-details/verify?otp=${otp}&verificationType=email`,
+                `${BASE_URL}/user/update-details/verify?otp=${otp}&verificationType=password`,
                 {},
                 {
                     headers: {
@@ -29,7 +33,6 @@ const OtpEmail = () => {
                 }
             );
             if (response.status === 200) {
-                alert('Your email has been updated. Please log in again to continue.');
                 await handleLogout();
             }
             alert(response.data.message);
@@ -68,20 +71,18 @@ const OtpEmail = () => {
             const verificationResponse = await verifyOtp(otp);
             
         } catch (error) {
-            console.error('Failed to verify OTP or logout:', error);
-            alert('Failed to verify OTP');
+            alert('Failed to verify OTP!');
         }
     };
 
+
     const [otpDigits, setOtpDigits] = useState(Array(6).fill(''));
-    // Focus management
     const otpInputs = useRef([]);
     const focusNextInput = currentIndex => {
         if (currentIndex < otpInputs.current.length - 1) {
             otpInputs.current[currentIndex + 1].focus();
         }
     };
-
     const handleInputChange = (index, newValue) => {
         const newOtpDigits = [...otpDigits];
         newOtpDigits[index] = newValue;
@@ -95,7 +96,6 @@ const OtpEmail = () => {
             sellerForm(newOtpDigits.join(''));
         }
     };
-
     const handleKeyDown = (e, index) => {
         if (e.key === 'Backspace' && e.target.value === '') {
             e.preventDefault();
@@ -109,9 +109,8 @@ const OtpEmail = () => {
         }
     };
     useEffect(() => {
-        otpInputs.current[0].focus();
+        otpInputs.current[0].focus(); 
     }, []);
-
 
     //json lottie animation
     const options = {
@@ -119,8 +118,6 @@ const OtpEmail = () => {
         loop: true,
     };
     const { View } = useLottie(options);
-
-
 
     //time
     const [timeLeft, setTimeLeft] = useState(60);
@@ -158,7 +155,7 @@ const OtpEmail = () => {
                 <div className="signupcont">
                     <div className='flexcol cover'>
                         <div className="heading tcenter">Verify your email</div>
-                        <div className="heading2 tcenter">Enter the OTP to verify your email.</div>
+                        <div className="heading2 tcenter">We have sent the OTP to {user.email} <br />Enter the OTP to update your profile.</div>
                         <div className="flex gap">
 
                             {otpDigits.map((digit, index) => (
@@ -174,9 +171,6 @@ const OtpEmail = () => {
                             ))}
 
                         </div>
-                        <button className='resend' style={{ display: 'none' }} disabled={timerRunning} onClick={handleResendClick}>
-                            {timerRunning ? `Resend OTP in ${timeLeft}` : "Resend OTP"}
-                        </button>
                         <Link to={'/profile'} className=' box flex'><div className="heading2" style={{color: 'gray'}}>Cancel</div></Link>
                     </div>
                 </div>
@@ -189,9 +183,8 @@ const OtpEmail = () => {
 
             </div>
 
-
         </Fragment>
     )
 }
 
-export default OtpEmail
+export default OtpProfile

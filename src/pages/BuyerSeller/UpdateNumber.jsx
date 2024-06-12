@@ -12,10 +12,10 @@ import { allCountries } from '../../components/Schemas/countryCodes';
 const schema = yupResolver(updateNumberSchema);
 const UpdateNumber = () => {
 
-     //images
-     const logo = urls[0];
+    //images
+    const logo = urls[0];
     const navigate = useNavigate();
-   
+
 
     //json lottie animation
     const options = {
@@ -72,31 +72,24 @@ const UpdateNumber = () => {
                         <div className="heading">Update Mobile Number</div>
                         <form className="flexcol gap" onSubmit={handleSubmit(onSubmit)}>
 
-                            <div className="flex wh" style={{ gap: '30px' }}>
-                                <Controller name="countryCode" value={selectedCountry} onChange={handleCountryChange} control={control} defaultValue="" render={({ field }) => (
-                                    <select className="box flex" value={updateUserNumber.countryCode || ''} onChange={handleChange} {...field}>
-                                        <option value="">Country code</option>
-                                        {ccode.map(country => (
-                                            <option key={country.iso2} value={country.dialCode}>
-                                                {`${country.name} (+${country.dialCode})`}
-                                            </option>
-                                        ))}
-                                    </select>
-                                )}
-                                />
-                                <Controller name="mobile" control={control} defaultValue="" render={({ field }) => <input value={updateUserNumber.mobile || ''} onChange={handleChange} className="box flex" autoComplete='off' placeholder='Enter your phone number' {...field} />} />
-                            </div>
 
-                            {(errors.countryCode || errors.mobile) &&
-                                <div className="flex wh">
-                                    <div className="flex wh">
-                                        <div className='error'>{errors.countryCode?.message}</div>
-                                    </div>
-                                    <div className="flex wh" style={{ justifyContent: 'space-around' }}>
-                                        <div className='error'>{errors.mobile?.message}</div>
-                                    </div>
-                                </div>
-                            }
+                            <Controller name="countryCode" value={selectedCountry} onChange={handleCountryChange} control={control} defaultValue="" render={({ field }) => (
+                                <select className="box flex" value={updateUserNumber.countryCode || ''} onChange={handleChange} {...field}>
+                                    <option value="">Country code</option>
+                                    {ccode.map(country => (
+                                        <option key={country.iso2} value={country.dialCode}>
+                                            {`${country.name} (+${country.dialCode})`}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+                            />
+                            {errors.countryCode && <div className="error">{errors.countryCode.message}</div>}
+
+
+                            <Controller name="mobile" control={control} defaultValue="" render={({ field }) => <input value={updateUserNumber.mobile || ''} onChange={handleChange} className="box flex" autoComplete='off' placeholder='Enter your phone number' {...field} />} />
+                            {errors.mobile && <div className="error">{errors.mobile.message}</div>}
+
 
                             <button className='btn box flex' type='submit'><div className="heading2">Send OTP</div></button>
                             <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>

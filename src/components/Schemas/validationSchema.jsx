@@ -122,8 +122,7 @@ export const profileSchema = yup.object().shape({
     whatsappnumber: yup.string()
         .matches(/^\d+$/, { message: 'Whatsapp number must contain only digits' })
         .min(5, 'Whatsapp number must be at least 5 digits')
-        .max(15, 'Whatsapp number must be at most 15 digits'),
-    language: yup.string().required('Language is required'),   
+        .max(15, 'Whatsapp number must be at most 15 digits'),   
 });
 
 export const businessSchema = yup.object().shape({
