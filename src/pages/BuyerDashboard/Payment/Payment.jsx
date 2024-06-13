@@ -24,6 +24,11 @@ const Payment = () => {
         setCardNumber(value);
     }
     const [expiryDate, setExpiryDate] = useState('');
+    //format card number
+    const formatCardNumber = (text) => {
+        return text.replace(/(.{4})/g, '$1 ');
+    };
+
     //mmyy
     const handleslash = (event) => {
         let value = event.target.value;
@@ -83,9 +88,6 @@ const Payment = () => {
         setCardList(updatedCardList);
         localStorage.setItem('cards', JSON.stringify(updatedCardList));
     };
-
-
-    
 
 
 
@@ -164,6 +166,61 @@ const Payment = () => {
 
 
 
+
+    //upis
+    //popup form
+    const [showPopupUpi, setShowPopupUpi] = useState(false);
+    const [editModeUpi, setEditModeUpi] = useState(false);
+    const [editIndexUpi, setEditIndexUpi] = useState(null);
+    const [upi, setUpi] = useState('');
+    const [upiList, setUpiList] = useState(JSON.parse(localStorage.getItem('upis')) || []);
+
+    const handleAddUpi = () => {
+        setShowPopupUpi(true);
+        setEditModeUpi(false);
+        setUpi('');
+    };
+    const handleEditUpi = (index) => {
+        const upiToEdit = upiList[index];
+        setEditIndexUpi(index);
+        setUpi(upiToEdit.upi);
+        setShowPopupUpi(true);
+        setEditModeUpi(true);
+    };
+    const handleCloseUpi = () => {
+        setShowPopupUpi(false);
+        setEditModeUpi(false);
+        setUpi('');
+    };
+    const handleSubmitUpi = () => {
+        const newUpi = { upi };
+        if (editModeUpi) {
+            const updatedUpiList = [...upiList];
+            updatedUpiList[editIndexUpi] = newUpi;
+            setUpiList(updatedUpiList);
+            localStorage.setItem('upis', JSON.stringify(updatedUpiList));
+        } else {
+            const updatedUpiList = [...upiList, newUpi];
+            setUpiList(updatedUpiList);
+            localStorage.setItem('upis', JSON.stringify(updatedUpiList));
+        }
+        setShowPopupUpi(false);
+        setEditModeUpi(false);
+        setUpi('');
+    };
+    const handleDeleteUpi = (index) => {
+        const updatedUpiList = [...upiList];
+        updatedUpiList.splice(index, 1);
+        setUpiList(updatedUpiList);
+        localStorage.setItem('upis', JSON.stringify(updatedUpiList));
+    };
+
+
+
+
+
+
+
     return (
         <div className="flexcol wh product-detail">
             <Helmet>
@@ -198,23 +255,46 @@ const Payment = () => {
                         {cardList.length === 0 ? (
                             <div className="heading3">You have no cards.</div>
                         ) : (
-                            <Fragment>
+                            <div className='card-grid'>
                                 {cardList.map((card, index) => (
-                                    <div className="productlist4" key={index}>
-                                        <div className="flexcol-start" style={{ gap: '20px' }}>
-                                            <div className="flex" style={{ gap: '10px' }}>
-                                                <div className='descrip2'>{card.cardNumber}</div>
-                                                <div className='descrip2'>{card.expiryDate}</div>
-                                                <div className='descrip2'>{card.fullName}</div>
+                                    <div className="card-grid-item" key={index}>
+                                        <div className="card">
+                                            <div className="card-number">{formatCardNumber(card.cardNumber)}</div>
+                                            <div className="card-holder">
+                                                <span>Card Holder</span>
+                                                <span>{card.fullName}</span>
                                             </div>
-                                        </div>
-                                        <div className="flexcol" style={{ gap: '20px' }}>
-                                            <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditCard(index)} />
-                                            <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteCard(index)} />
+                                            <div className="expiry-date">
+                                                <span>Expiry</span>
+                                                <div className="flex" style={{ gap: '5px' }}>
+                                                    <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditCard(index)} />
+                                                    <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteCard(index)} />
+                                                </div>
+                                                <span>{card.expiryDate}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
-                            </Fragment>
+                                <div className="card-grid-item">
+                                    <div className="card">
+                                        <div className="card-number">1234 5678 9012 3456</div>
+                                        <div className="card-holder">
+                                            <span>Card Holder</span>
+                                            <span>John Doe</span>
+                                        </div>
+                                        <div className="expiry-date">
+                                            <span>Expiry</span>
+                                            <div className="flex" style={{ gap: '5px' }}>
+                                                <EditNoteIcon style={{ cursor: 'pointer' }} />
+                                                <DeleteIcon style={{ cursor: 'pointer' }} />
+                                            </div>
+                                            <span>12/24</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
                         )}
                     </div>
                     {showPopupCard && (
@@ -258,15 +338,15 @@ const Payment = () => {
                                 {bankList.map((bank, index) => (
                                     <div className="productlist4" key={index}>
                                         <div className="flexcol-start" style={{ gap: '20px' }}>
-                                            <div className="flex" style={{ gap: '10px' }}>
-                                                <div className='descrip2'>{bank.bankName}</div>
-                                                <div className='descrip2'>{bank.accountHolderName}</div>
-                                                <div className='descrip2'>{bank.accountNumber}</div>
+                                            <div className="flex" style={{ gap: '20px' }}>
+                                                <div className='descrip2' style={{ textTransform: 'uppercase', fontWeight: '600' }}>{bank.bankName}</div>
+                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.accountHolderName}</div>
+                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.accountNumber}</div>
                                             </div>
-                                            <div className="flex" style={{ gap: '10px' }}>
-                                                <div className='descrip2'>{bank.ifscCode}</div>
-                                                <div className='descrip2'>{bank.branchName}</div>
-                                                <div className='descrip2'>{bank.swiftCode}</div>
+                                            <div className="flex" style={{ gap: '20px' }}>
+                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.ifscCode}</div>
+                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.branchName}</div>
+                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.swiftCode}</div>
                                             </div>
                                         </div>
                                         <div className="flexcol" style={{ gap: '20px' }}>
@@ -302,19 +382,51 @@ const Payment = () => {
             )}
 
             {subCurrentPage === 3 && (
-                <div className="productlist2">
-                    <div className="heading">Download imagebla lbaate</div>
-                    <div className="descrip2">Click download button to download images upload template</div>
-                    <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Download Images</div></button>
-                    <div className="heading">Upload image templates</div>
-                    <div className="descrip2">When you have your templates filled out, click the button below to upload the products.</div>
-                    <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                        <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Upload</div></button>
-                        <div className="flex" style={{ gap: '20px' }}>
-                            <button className='btn box2 flex' style={{ width: 'fit-content' }}><div className="heading2">Reset</div></button>
-                            <button className='btn box2 flex' style={{ width: 'fit-content' }}><div className="heading2">Save</div></button>
+                <div className='flexcol wh' style={{ gap: '20px' }}>
+                    <div className="productlist3">
+                        <div className="flexcol" style={{ gap: '20px' }}>
+                            <div className="heading wh">Add UPIs</div>
+                            <div className="heading2 wh">Add your UPIs here. You can select your upi by which you want to pay on the checkout page.</div>
+                        </div>
+                        <div className="flexcol" style={{ gap: '20px' }}>
+                            <button onClick={handleAddUpi} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Add New UPI</div></button>
                         </div>
                     </div>
+                    <div className="productlist2">
+                        {upiList.length === 0 ? (
+                            <div className="heading3">There are no UPIs.</div>
+                        ) : (
+                            <Fragment>
+                                {upiList.map((upis, index) => (
+                                    <div className="productlist4" key={index}>
+                                        <div className="flex wh" style={{ gap: '20px', justifyContent: 'space-between' }}>
+                                            <div className='descrip2' style={{ textTransform: 'uppercase', fontWeight: '600' }}>{upis.upi}</div>
+                                            <div className="flex" style={{ gap: '20px' }}>
+                                                <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditUpi(index)} />
+                                                <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteUpi(index)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </Fragment>
+                        )}
+                    </div>
+                    {showPopupUpi && (
+                        <div className='popup-parent'>
+                            <form className='popup-child'>
+                                <div className="popupform">
+                                    <div className="heading wh">Add New UPI</div>
+
+                                    <input type="text" placeholder='Enter a upi' className="box flex" value={upi} onChange={(e) => setUpi(e.target.value)} />
+
+                                    <div className="flex" style={{ gap: '20px' }}>
+                                        <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleSubmitUpi}><div className="heading2">Save</div></button>
+                                        <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleCloseUpi}><div className="heading2">Cancel</div></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    )}
                 </div>
             )}
 

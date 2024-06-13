@@ -9,6 +9,7 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { Helmet } from 'react-helmet-async';
+import { image } from '@cloudinary/url-gen/qualifiers/source';
 
 const Checkout = () => {
 
@@ -46,7 +47,7 @@ const Checkout = () => {
     if (storedAddresses) {
       const parsedAddresses = JSON.parse(storedAddresses);
       setAddresses(parsedAddresses);
-      const billing = parsedAddresses.filter(address => address.isBillingChecked);
+      const billing = parsedAddresses.filter(address => address.isBillingChecked && !address.isLocationChecked);
       const shipping = parsedAddresses.filter(address => address.isLocationChecked);
       setBillingAddresses(billing);
       setShippingAddresses(shipping);
@@ -125,6 +126,26 @@ const Checkout = () => {
   };
 
 
+  //upis 
+  const [upis, setUpis] = useState([]);
+  const [selectedUpi, setSelectedUpi] = useState({});
+  const retrieveUpis = () => {
+    const storedUpis = localStorage.getItem('upis');
+    if (storedUpis) {
+      setUpis(JSON.parse(storedUpis));
+    }
+  };
+  useEffect(() => {
+    retrieveUpis();
+  }, []);
+  const handleUpiChange = (event) => {
+    const selectedUpiData = upis.find(
+      (upis) => upis.upi === event.target.value
+    );
+    setSelectedUpi(selectedUpiData);
+  };
+
+
 
   const scrollRef = useRef(null);
   useEffect(() => {
@@ -146,6 +167,7 @@ const Checkout = () => {
 
           <div className="webdiv checkout">
             <div className="heading wh">Your addresses</div>
+
             <div className="heading3 wh">Shipping address</div>
             <select className='coupon' value={selectedShippingAddress.address} onChange={handleAddressShippingChange}>
               <option value=''>Select shipping address</option>
@@ -159,8 +181,8 @@ const Checkout = () => {
               <div className="flexcol-start wh" style={{ gap: '2px' }}>
                 <div className="flex" style={{ gap: '20px' }}>
                   <div className="heading3">{selectedShippingAddress.address}</div>
-                  {selectedShippingAddress.isLocationChecked && selectedShippingAddress.isBillingChecked && <div className='descrip warning-btn'>Shipping</div>}
-                  {selectedShippingAddress.isLocationChecked && selectedShippingAddress.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
+                  {selectedShippingAddress.isLocationChecked && <div className='descrip warning-btn'>Shipping</div>}
+                  {selectedShippingAddress.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
                 </div>
                 <div className="flex" style={{ gap: '10px' }}>
                   <div className='descrip2'>{selectedShippingAddress.selectedOrigin}</div>
@@ -178,6 +200,7 @@ const Checkout = () => {
                 </div>
               </div>
             )}
+
             <div className="heading3 wh">Billing address</div>
             <select className='coupon' id="billingAddressSelect" value={selectedBillingAddress.address} onChange={handleAddressBillingChange} disabled>
               <option value=''>Select billing address</option>
@@ -191,6 +214,7 @@ const Checkout = () => {
               <div className="flexcol-start wh" style={{ gap: '2px' }}>
                 <div className="flex" style={{ gap: '20px' }}>
                   <div className="heading3">{selectedBillingAddress.address}</div>
+                  {selectedBillingAddress.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
                 </div>
                 <div className="flex" style={{ gap: '10px' }}>
                   <div className='descrip2'>{selectedBillingAddress.selectedOrigin}</div>
@@ -208,6 +232,7 @@ const Checkout = () => {
                 </div>
               </div>
             )}
+
           </div>
 
           <div className="checkout webdiv">
@@ -269,11 +294,21 @@ const Checkout = () => {
 
           {subCurrentPage === 3 && (
             <div className="checkout webdiv">
-              <div className="heading3 wh">Billing address</div>
-              <select className='coupon' >
-                <option value=''>Select billing address</option>
-                <option>value</option>
+              <div className="heading3 wh">UPIs</div>
+              <select className='coupon' value={selectedUpi.address} onChange={handleUpiChange}>
+                <option value=''>Select a UPI</option>
+                {upis.map((upis, index) => (
+                  <option key={index} value={upis.upi}>
+                    {upis.upi}
+                  </option>
+                ))}
               </select>
+              {selectedUpi.upi && (
+                <div className='flex-start wh' style={{ gap: '20px' }} >
+                  <img src='https://res.cloudinary.com/dey1tujp8/image/upload/v1718266152/upi-id.1024x1024_xm8kjf.png' style={{ width: '17px', color: 'gray' }} alt='upi' />
+                  <div className='descrip2'>{selectedUpi.upi}</div>
+                </div>
+              )}
             </div>
           )}
 

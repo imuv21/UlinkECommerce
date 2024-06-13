@@ -354,10 +354,10 @@ const Header = () => {
 
                   <div className='popupbox'>
                     <Link to={'/profile'} className="subpop-options">My Profile</Link>
-                    <Link to={'/seller-dashboard/seller-company-profile'} className="subpop-options">My Company Profile</Link>
-                    {user.role === 'Buyer' && (<div className="subpop-options">Payment Management</div>)}
-                    <div className="subpop-options">Access Management</div>
-                    {user.role === 'Buyer' && (<div className="subpop-options">Addresses</div>)}
+                    <Link  to={user.role === 'Seller' ? '/seller-dashboard/seller-company-profile' : '/company-profile'} className="subpop-options">My Company Profile</Link>
+                    {user.role === 'Buyer' && (<Link to='/payment' className="subpop-options">Payment Management</Link>)}
+                    <Link to={user.role === 'Seller' ? '/seller-dashboard/access-management' : '/access-management'} className="subpop-options">Access Management</Link>
+                    {user.role === 'Buyer' && (<Link to="/buyer-address" className="subpop-options">Addresses</Link>)}
                     {user.role === 'Seller' && (<div className="subpop-options">Saved Products</div>)}
                   </div>
 

@@ -1,154 +1,268 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import KeyIcon from '@mui/icons-material/Key';
-import { Link, useNavigate } from 'react-router-dom';
-import NewReleasesIcon from '@mui/icons-material/NewReleases';
-import VerifiedIcon from '@mui/icons-material/Verified';
+import { Slider } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { allCountries } from '../../components/Schemas/countryCodes';
-import { profileSchema } from '../../components/Schemas/validationSchema';
-import { updateUserDetails } from '../../Redux/AuthReducer';
-import axios from 'axios';
+import { fetchProducts } from '../Redux/productSlice';
+import { fetchExchangeRates } from '../Redux/currencySlice';
+import currencySymbols from '../components/Schemas/currencySymbols';
+import defaulImg from '../assets/default.jpg';
+import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../components/Schemas/cate';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-const schema = yupResolver(profileSchema);
+const useQuery = () => {
+    return new URLSearchParams(useLocation().search);
+};
 
-const Profile = () => {
+const FilterPage = () => {
+
+    const query = useQuery().get('query') || '';
     const navigate = useNavigate();
+    const location = useLocation();
+    const { supOption = '', subOption = '', miniSubOption = '' } = location.state || {};
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [sortBy, setSortBy] = useState('low');
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(15);
+    const [price, setPrice] = useState([0, 100000]);
+
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.auth.user);
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    const token = useSelector((state) => state.auth.token);
+    const { products, status, error, totalItems } = useSelector((state) => state.products);
+    const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
+    const exchangeRates = useSelector(state => state.currency.exchangeRates);
 
-    const { handleSubmit, control, formState: { errors }, setValue } = useForm({
-        resolver: schema,
-    });
+    useEffect(() => {
+        dispatch(fetchProducts());
+        dispatch(fetchExchangeRates());
+    }, [dispatch]);
 
-    // profile edit functionality
-    const [isEditing, setIsEditing] = useState(false);
+    const convertPrice = (price, fromCurrency) => {
+        const rate = exchangeRates[selectedCurrency];
+        if (!rate) return price;
+        const priceInUSD = price / exchangeRates[fromCurrency];
+        return (priceInUSD * rate).toFixed(2);
+    };
 
-    const onSubmit = async (data) => {
-        try {
-            const response = await axios.post(
-                `${BASE_URL}/user/update-details`,
-                { profile: data },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+    const priceHandler = (event, newPrice) => {
+        setPrice(newPrice);
+    };
 
-            if (response.status === 200) {
-                dispatch(updateUserDetails(data));
-                alert('Profile updated successfully!');
-                setIsEditing(false);
-                console.log(data);
-            }
-        } catch (error) {
-            console.error('Error updating profile:', error);
+    const handleSupOptionChange = (event) => {
+        setSelectedSupOption(event.target.value);
+        setSelectedSubOption('');
+        setSelectedMiniSubOption('');
+        setSelectedMicroSubOption('');
+    };
+
+    const handleSubOptionChange = (event) => {
+        setSelectedSubOption(event.target.value);
+        setSelectedMiniSubOption('');
+        setSelectedMicroSubOption('');
+    };
+
+    const handleMiniSubOptionChange = (event) => {
+        setSelectedMiniSubOption(event.target.value);
+        setSelectedMicroSubOption('');
+    };
+
+    const handleMicroSubOptionChange = (event) => {
+        setSelectedMicroSubOption(event.target.value);
+    };
+
+    useEffect(() => {
+        if (!Array.isArray(products)) return;
+
+        const normalizeString = (str) => str ? str.toLowerCase().replace(/\s+/g, '') : '';
+        const searchQueryRegex = new RegExp(query, 'i');
+
+        const filtered = products.filter(product => {
+            const productPrice = parseFloat(product.sellPrice);
+            const isInPriceRange = productPrice >= price[0] && productPrice <= price[1];
+
+            const isCategoryMatch =
+                (!selectedSupOption || normalizeString(product.selectedSupOption) === normalizeString(selectedSupOption)) &&
+                (!selectedSubOption || normalizeString(product.selectedSubOption) === normalizeString(selectedSubOption)) &&
+                (!selectedMiniSubOption || normalizeString(product.selectedMiniSubOption) === normalizeString(selectedMiniSubOption)) &&
+                (!selectedMicroSubOption || normalizeString(product.selectedMicroSubOption) === normalizeString(selectedMicroSubOption));
+
+            const isNameMatch = searchQueryRegex.test(product.productName);
+            return isInPriceRange && isCategoryMatch && (!query || isNameMatch);
+        });
+
+        let sortedProducts = [...filtered];
+        switch (sortBy) {
+            case 'newest':
+                sortedProducts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                break;
+            case 'oldest':
+                sortedProducts.sort((a, b) => new Date(a.date) - new Date(b.date));
+                break;
+            case 'high':
+                sortedProducts.sort((a, b) => parseFloat(b.sellPrice) - parseFloat(a.sellPrice));
+                break;
+            case 'low':
+                sortedProducts.sort((a, b) => parseFloat(a.sellPrice) - parseFloat(b.sellPrice));
+                break;
+            default:
+                break;
+        }
+
+        setFilteredProducts(sortedProducts);
+        setPage(0); // Reset to first page on filters change
+    }, [products, price, sortBy, selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption, query]);
+
+    const handlePageChange = (newPage) => {
+        if (newPage >= 0 && newPage < Math.ceil(filteredProducts.length / size)) {
+            setPage(newPage);
         }
     };
 
-    const handleEditClick = () => {
-        setIsEditing(true);
+    const handlePageSizeChange = (e) => {
+        setSize(Number(e.target.value));
+        setPage(0);
     };
 
-    const cancel = () => {
-        setIsEditing(false);
+    const handleSortChange = (event) => {
+        setSortBy(event.target.value);
     };
 
-    // select country code from data 
-    const [ccode, setCcode] = useState([]);
-    const [selectedCountry, setSelectedCountry] = useState('');
-
-    useEffect(() => {
-        const formattedCountries = allCountries.map(country => ({
-            name: country[0],
-            iso2: country[1],
-            dialCode: country[2]
-        }));
-
-        setCcode(formattedCountries);
-    }, []);
-
-    const handleCountryChange = (event) => {
-        const countryCode = event.target.value;
-        const selected = ccode.find(country => country.iso2 === countryCode);
-        setSelectedCountry(selected);
+    const truncateText = (text, maxLength) => {
+        if (text.length <= maxLength) {
+            return text;
+        }
+        return text.slice(0, maxLength) + '...';
     };
+
+    const truncateAndConvertPascal = (text, maxLength) => {
+        const readableText = text.replace(/([A-Z])/g, ' $1').trim();
+        if (readableText.length <= maxLength) {
+            return readableText;
+        }
+        return readableText.slice(0, maxLength) + '...';
+    };
+
+    const convertPascalToReadable = (text) => {
+        return text.replace(/([A-Z])/g, ' $1').trim();
+    };
+
+    const handleClear = () => {
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.delete('query');
+        navigate({
+            pathname: location.pathname,
+            search: searchParams.toString(),
+        });
+    };
+
+    if (status === 'loading') {
+        return <div>Loading...</div>;
+    }
+    if (status === 'failed') {
+        return <div>Error: {error}</div>;
+    }
+
+    const displayedProducts = filteredProducts.slice(page * size, (page + 1) * size);
 
     return (
-        <form className="profile-sel-box" onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}>
-                <AccountCircleIcon /> <div className="heading3">My Profile</div>
+        <div className="flexcol wh product-detail">
+            <Helmet>
+                <title>Search Results</title>
+            </Helmet>
+            <div className="flexcol wh" style={{ gap: '10px' }}>
+                {query && <div className="flex wh" style={{ justifyContent: 'space-between' }}>
+                    <div className='heading2 wh captext'>Showing results for: {query}</div>
+                    <a className='hover' onClick={handleClear}>Clear</a>
+                </div>}
+                {selectedSupOption &&
+                    <div className="flex-start wh">
+                        <div className="heading2 captext">{convertPascalToReadable(selectedSupOption)}</div>
+                        {selectedSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedSubOption)}</div>}
+                        {selectedMiniSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedMiniSubOption)}</div>}
+                        {selectedMicroSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedMicroSubOption)}</div>}
+                    </div>
+                }
             </div>
-            {isEditing ? (
-                <div className="flex" style={{ gap: '50px', justifyContent: 'start', width: '30%' }}>
-                    <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
-                        <div className="flex wh" style={{ gap: '30px' }}>
-                            <Controller name="firstname" control={control} defaultValue={user.firstname || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your first name' {...field} />} />
-                            <Controller name="lastname" control={control} defaultValue={user.lastname || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your last name' {...field} />} />
+            <div className="fpcont">
+                <div className="fpone">
+                    <div className="filterbox">
+                        <div className="heading2 wh">Price</div>
+                        <Slider value={price} onChange={priceHandler} valueLabelDisplay="auto" aria-labelledby='range-slide' min={0} max={100000} />
+                        <div className="flex wh" style={{ justifyContent: 'space-between' }}>
+                            <div className="minmaxbox heading2"> {price[0]}</div> <div className="heading2">To</div> <div className="minmaxbox heading2"> {price[1]}</div>
                         </div>
+                    </div>
+                    <div className="filterbox">
+                        <div className="heading2 wh" style={{ marginBottom: '5px' }}>Categories</div>
+                        <div className="filterselect">
+                            <select onChange={handleSupOptionChange} className="box flex" value={selectedSupOption}>
+                                <option value="">Select category</option>
+                                {supOptions.map((option, index) => (
+                                    <option key={index} value={option}>{truncateAndConvertPascal(option)}</option>
+                                ))}
+                            </select>
 
-                        {(errors.firstname || errors.lastname) && (
-                            <div className="flex wh">
-                                <div className="flex wh">
-                                    <div className='error'>{errors.firstname?.message}</div>
-                                </div>
-                                <div className="flex wh">
-                                    <div className='error'>{errors.lastname?.message}</div>
+                            <select onChange={handleSubOptionChange} className="box flex" value={selectedSubOption}>
+                                <option value="">Select sub category</option>
+                                {subOptions[selectedSupOption] && subOptions[selectedSupOption].map((option, index) => (
+                                    <option key={index} value={option}>{truncateAndConvertPascal(option)}</option>
+                                ))}
+                            </select>
+
+                            <select onChange={handleMiniSubOptionChange} className="box flex" value={selectedMiniSubOption}>
+                                <option value="">Select sub sub category</option>
+                                {miniSubOptions[selectedSubOption] && miniSubOptions[selectedSubOption].map((option, index) => (
+                                    <option key={index} value={option}>{truncateAndConvertPascal(option)}</option>
+                                ))}
+                            </select>
+
+                            <select onChange={handleMicroSubOptionChange} className="box flex" value={selectedMicroSubOption}>
+                                <option value="">Select sub sub sub category</option>
+                                {microSubOptions[selectedMiniSubOption] && microSubOptions[selectedMiniSubOption].map((option, index) => (
+                                    <option key={index} value={option}>{truncateAndConvertPascal(option)}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div className="fptwo flexcol wh">
+                    <div className="flex wh" style={{ justifyContent: 'space-between' }}>
+                        <div className="heading2">{filteredProducts.length} Results Found</div>
+                        <div className="flex wh" style={{ alignItems: 'center', gap: '10px' }}>
+                            <label className="heading2" htmlFor="pageSize">Show:</label>
+                            <select id="pageSize" value={size} onChange={handlePageSizeChange}>
+                                <option value={15}>15</option>
+                                <option value={30}>30</option>
+                                <option value={45}>45</option>
+                            </select>
+                            <label className="heading2" htmlFor="sort">Sort By:</label>
+                            <select id="sort" value={sortBy} onChange={handleSortChange}>
+                                <option value="low">Price: Low to High</option>
+                                <option value="high">Price: High to Low</option>
+                                <option value="newest">Newest First</option>
+                                <option value="oldest">Oldest First</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="flexcol wh" style={{ gap: '15px' }}>
+                        {displayedProducts.map((product) => (
+                            <div key={product.id} className="product-card">
+                                <img src={product.image || defaulImg} alt={product.productName} />
+                                <div className="product-info">
+                                    <h3>{truncateText(product.productName, 20)}</h3>
+                                    <p>{currencySymbols[selectedCurrency]} {convertPrice(product.sellPrice, 'USD')}</p>
+                                    <p>{product.date}</p>
                                 </div>
                             </div>
-                        )}
-
-                        <div className='flex wh' style={{ gap: '30px' }}>
-                            <Controller name="wpcountrycode" control={control} defaultValue={user.wpcountrycode || ''} render={({ field }) => (
-                                <select className="box flex" value={user.wpcountrycode || ''} onChange={handleCountryChange}  {...field}>
-                                    <option value="">Country code</option>
-                                    {ccode.map(country => (
-                                        <option key={country.iso2} value={country.dialCode}>
-                                            {`${country.name} (+${country.dialCode})`}
-                                        </option>
-                                    ))}
-                                </select>
-                            )} />
-                            <Controller name="whatsappnumber" control={control} defaultValue={user.whatsappnumber || ''} render={({ field }) => <input className="box flex" autoComplete='off' placeholder='Enter your whatsapp number' {...field} />} />
-                        </div>
-
-                        {(errors.whatsappnumber || errors.wpcountrycode) && (
-                            <div className="flex wh">
-                                <div className="flex wh">
-                                    <div className='error'>{errors.wpcountrycode?.message}</div>
-                                </div>
-                                <div className="flex wh" style={{ justifyContent: 'space-around' }}>
-                                    <div className='error'>{errors.whatsappnumber?.message}</div>
-                                </div>
-                            </div>
-                        )}
+                        ))}
+                    </div>
+                    <div className="flex" style={{ gap: '10px' }}>
+                        <button className='pagination-btn' onClick={() => handlePageChange(page - 1)} disabled={page === 0}>Previous</button>
+                        <span>Page {page + 1} of {Math.ceil(filteredProducts.length / size)}</span>
+                        <button className='pagination-btn' onClick={() => handlePageChange(page + 1)} disabled={page === Math.ceil(filteredProducts.length / size) - 1}>Next</button>
                     </div>
                 </div>
-            ) : (
-                <div className="flex" style={{ gap: '50px', justifyContent: 'start', width: '30%' }}>
-                    <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
-                        <div className='heading2'>Name</div>
-                        <div className='heading2'>Whatsapp</div>
-                    </div>
-                    <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
-                        <div className="heading2">{user.firstname} {user.lastname}</div>
-                        <div className='heading2'>{user.wpcountrycode}-{user.whatsappnumber}</div>
-                    </div>
-                </div>
-            )}
-            {isEditing ? (
-                <div className="flex" style={{ gap: '20px' }}>
-                    <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}>Save</button>
-                    <button className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={cancel} >Cancel</button>
-                </div>
-            ) : (
-                <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClick}>Edit</div>
-            )}
-        </form>
+            </div>
+        </div>
     );
 };
 
-export default Profile;
+export default FilterPage;
