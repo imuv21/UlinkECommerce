@@ -11,6 +11,7 @@ import sellerProductSlice from './sellerProductSlice';
 import currencyReducer from './currencySlice';
 import updateProductSlice from './updateProductSlice';
 import businessProfileReducer from './businessProfileSlice';
+import forgotPasswordReducer from './forgotPasswordSlice';
 
 
 const rootReducer = combineReducers({
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   currency: currencyReducer,
   editproducts: updateProductSlice,
   businessProfile: businessProfileReducer,
+  forgotPassword: forgotPasswordReducer,
 });
 
 export default rootReducer;

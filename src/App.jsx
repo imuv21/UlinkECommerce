@@ -64,7 +64,7 @@ const Home = lazy(() => import("./pages/Home"));
 const Signup = lazy(() => import('./pages/Signup'));
 const Login = lazy(() => import('./pages/Login'));
 const Otp = lazy(() => import('./pages/Otp'));
-const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
+const ResetPassVerify = lazy(() => import('./pages/ResetPassVerify'));
 const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 const Guidelines = lazy(() => import('./pages/Guidelines/Guidelines'));
 const Checkout = lazy(() => import('./pages/Cart/Checkout'));
@@ -115,8 +115,8 @@ function App() {
             <Route element={<Protector isAuthenticated={!isAuthenticated} redirect='/' />}>
               <Route path='/login' element={<Login />} />
               <Route path='/verify-email' element={<Otp />} />
-              <Route path='/forgot-password' element={<ForgotPassword />} />
-              <Route path='/reset-password' element={<ResetPassword />} />
+              <Route path='/verify-reset-password' element={<ResetPassVerify />} />
+              <Route path='/forgot-password' element={<ResetPassword />} />
               <Route path='/signup' element={<Signup />} />
               <Route path='/seller-form' element={<SellerForm />} />
               <Route path='/seller-center' element={<NewBecomeASeller />} />

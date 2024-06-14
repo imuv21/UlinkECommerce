@@ -10,7 +10,7 @@ import { verifyForgotPassword } from '../Redux/forgotPasswordSlice';
 const ResetPassVerify = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { status, error } = useSelector((state) => state.forgotPassword);
+    const { status, error, role, username } = useSelector((state) => state.forgotPassword);
 
     // Images
     const logo = urls[0];
@@ -31,11 +31,6 @@ const ResetPassVerify = () => {
         if (newValue !== '' && index < otpDigits.length - 1) {
             focusNextInput(index);
         }
-        const isOtpComplete = newOtpDigits.every(digit => digit !== '');
-
-        if (isOtpComplete) {
-            dispatch(verifyForgotPassword({ otp: newOtpDigits.join('') }));
-        }
     };
 
     const handleKeyDown = (e, index) => {
@@ -52,17 +47,27 @@ const ResetPassVerify = () => {
     };
 
     useEffect(() => {
-        otpInputs.current[0].focus(); 
+        otpInputs.current[0].focus();
     }, []);
 
+    const handleSubmit = async () => {
+        const otp = otpDigits.join('');
+        if (otp.length === 6) {
+            try {
+                await dispatch(verifyForgotPassword({ otp, role, username })).unwrap();
+                alert('Password reset successfully! Please login with your new password.');
+                navigate('/login');
+            } catch (err) {
+                alert('OTP verification failed: ' + (err.message || 'Unknown error'));
+            }
+        }
+    };
+
     useEffect(() => {
-        if (status === 'succeeded') {
-            alert('Password reset successfully! Please login with your new password.');
-            navigate('/login');
-        } else if (status === 'failed') {
+        if (status === 'failed') {
             alert('OTP verification failed: ' + error);
         }
-    }, [status, error, navigate]);
+    }, [status, error]);
 
     // JSON lottie animation
     const options = {
@@ -120,7 +125,8 @@ const ResetPassVerify = () => {
                                 />
                             ))}
                         </div>
-                        <button className='resend' disabled={timerRunning} onClick={handleResendClick}>
+                        <button className='btn box flex' onClick={handleSubmit}>Verify OTP</button>
+                        <button className='resend' style={{display: 'none'}} disabled={timerRunning} onClick={handleResendClick}>
                             {timerRunning ? `Resend OTP in ${timeLeft}` : "Resend OTP"}
                         </button>
                     </div>
