@@ -94,6 +94,10 @@ input::-webkit-inner-spin-button {
   display: none;
 }
 
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
 button {
   cursor: pointer;
   border-radius: 0px;
@@ -1584,6 +1588,63 @@ button:focus {
 }
 
 
+ /* edit single image file upload  */
+ .edit-file-input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+.edit-custom-file-upload {
+  cursor: pointer;
+  background-color: var(--CodeTwo);
+  color: white;
+  border: none;
+  border-radius: var(--br1);
+  font-size: 14px;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+.edit-custom-file-upload:hover {
+  background-color: var(--CodeTwoHover);
+}
+.edit-file-input {
+  display: none;
+}
+.edit-delete{
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgb(198, 198, 198);
+}
+.edit-delete .MuiSvgIcon-root{
+  color: white;
+  width: 12px;
+  height: 12px;
+}
+.edit-img-card{
+  position: relative;
+  padding: 5px;
+  width: 60px;
+  height: 60px;
+  border: 1px solid rgb(213, 213, 213);
+  border-radius: var(--br1);
+}
+.edit-imgs{
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+}
+
+
+
+
+
 
 
 /* gidelines */
@@ -2829,4 +2890,11 @@ button:focus {
 
 .card-grid-item {
   padding: 10px;
+}
+
+.paymentsuccess{
+  height: 100vh;
+  width: 100%;
+  background-color: var(--CodeTwoHover);
+  gap: 20px;
 }

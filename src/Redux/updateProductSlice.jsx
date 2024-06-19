@@ -22,10 +22,54 @@ export const fetchEditProduct = createAsyncThunk(
     }
 );
 
+export const deleteImage = createAsyncThunk(
+    'editproducts/deleteImage',
+    async (imageId, { getState, rejectWithValue }) => {
+        try {
+            const { auth } = getState();
+            const token = auth.token;
+            const response = await axios.delete(`${BASE_URL}/product/image/delete-image/${imageId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            const errorMessage = error.response?.data || error.message;
+            return rejectWithValue(errorMessage);
+        }
+    }
+);
+
+export const uploadImage = createAsyncThunk(
+    'editproducts/uploadImage',
+    async ({ productId, file }, { getState, rejectWithValue }) => {
+        try {
+            const { auth } = getState();
+            const token = auth.token;
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const response = await axios.post(`${BASE_URL}/product/image/upload-image/${productId}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            const errorMessage = error.response?.data || error.message;
+            return rejectWithValue(errorMessage);
+        }
+    }
+);
+
 const updateProductSlice = createSlice({
     name: 'editproducts',
     initialState: {
         productData: null,
+        fetchedImages: [],
         loading: false,
         error: null,
     },
@@ -39,9 +83,34 @@ const updateProductSlice = createSlice({
             .addCase(fetchEditProduct.fulfilled, (state, action) => {
                 state.loading = false;
                 state.productData = action.payload;
+                state.fetchedImages = Array.isArray(action.payload.images) ? action.payload.images.map(image => ({
+                    imageUrl: image.imageUrl,
+                    name: image.name,
+                    priority: image.priority,
+                    imageId: image.imageId,
+                })) : [];
             })
             .addCase(fetchEditProduct.rejected, (state, action) => {
                 state.loading = false;
+                state.error = action.payload;
+            })
+            .addCase(deleteImage.fulfilled, (state, action) => {
+                state.fetchedImages = state.fetchedImages.filter(image => image.imageId !== action.payload.imageId);
+            })
+            .addCase(uploadImage.fulfilled, (state, action) => {
+                const { data } = action.payload;
+                if (data && data.imageUrl) {
+                    state.fetchedImages.push({
+                        imageUrl: data.imageUrl,
+                        name: data.name,
+                        priority: data.priority,
+                        imageId: data.imageId,
+                    });
+                } else {
+                    console.error('Invalid payload data:', action.payload);
+                }
+            })
+            .addCase(uploadImage.rejected, (state, action) => {
                 state.error = action.payload;
             });
     },

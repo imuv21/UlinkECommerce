@@ -9,9 +9,11 @@ import productDetailSlice from './productDetailSlice';
 import cartReducer from './cartSlice';
 import sellerProductSlice from './sellerProductSlice';
 import currencyReducer from './currencySlice';
-import updateProductSlice from './updateProductSlice';
-import businessProfileReducer from './businessProfileSlice';
+import updateProductReducer from './updateProductSlice';
 import forgotPasswordReducer from './forgotPasswordSlice';
+import addressReducer from './addressSlice';
+import creditInfoSlice from './creditInfoSlice';
+import businessProfileSlice from './businessProfileSlice';
 
 
 const rootReducer = combineReducers({
@@ -24,9 +26,11 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   sellerProducts: sellerProductSlice,
   currency: currencyReducer,
-  editproducts: updateProductSlice,
-  businessProfile: businessProfileReducer,
+  editproducts: updateProductReducer,
   forgotPassword: forgotPasswordReducer,
+  address: addressReducer,
+  creditInfo: creditInfoSlice,
+  businessProfile: businessProfileSlice,
 });
 
 export default rootReducer;

@@ -1,119 +1,58 @@
-import React, { Fragment, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { resetPasswordSchema } from '../components/Schemas/validationSchema';
-import { forgotPassword } from '../Redux/forgotPasswordSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { urls } from '../components/Schemas/images';
-import { Helmet } from 'react-helmet-async';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import animation from "../assets/json/animation-signup.json";
-import { useLottie } from "lottie-react";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const schema = yupResolver(resetPasswordSchema);
+const BASE_URL = 'https://api.ulinkit.com/api';
 
-const ResetPassword = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { status, message, error } = useSelector((state) => state.forgotPassword);
-
-    // Images
-    const logo = urls[0];
-
-    // Password hide and show
-    const [passwordVisible, setPasswordVisible] = useState(false);
-    const [conPasswordVisible, setConPasswordVisible] = useState(false);
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
-    };
-    const toggleConPasswordVisibility = () => {
-        setConPasswordVisible(!conPasswordVisible);
-    };
-
-    // JSON lottie animation
-    const options = {
-        animationData: animation,
-        loop: true,
-    };
-    const { View } = useLottie(options);
-
-
-    const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
-    const onSubmit = async (formData) => {
-        const { password, role, username } = formData;
+export const uploadImage = createAsyncThunk(
+    'editproducts/uploadImage',
+    async ({ productId, file }, { getState, rejectWithValue }) => {
         try {
-            const resultAction = await dispatch(forgotPassword({ password, role, username })).unwrap();
-            alert('We have sent an OTP to your email. Please check your email and enter the OTP to reset your password.');
-            navigate('/verify-reset-password');
-        } catch (err) {
-            alert(`Failed to send OTP: ${err.message || 'Unknown error'}`);
+            const { auth } = getState();
+            const token = auth.token;
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const response = await axios.post(`${BASE_URL}/product/image/upload-image/${productId}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            const errorMessage = error.response?.data || error.message;
+            return rejectWithValue(errorMessage);
         }
-    };
+    }
+);
 
-    return (
-        <Fragment>
-            <Helmet>
-                <title>Reset Password</title>
-            </Helmet>
-            <div className="login-cont">
+const editProductsSlice = createSlice({
+    name: 'editproducts',
+    initialState: {
+        fetchedImages: [],
+        error: null,
+    },
+    reducers: {},
+    extraReducers: (builder) => {
+        builder
+            .addCase(uploadImage.fulfilled, (state, action) => {
+                const { data } = action.payload;
+                if (data && data.imageUrl) {
+                    state.fetchedImages.push({
+                        imageUrl: data.imageUrl,
+                        name: data.name,
+                        priority: data.priority,
+                        imageId: data.imageId,
+                    });
+                } else {
+                    console.error('Invalid payload data:', action.payload);
+                }
+            })
+            .addCase(uploadImage.rejected, (state, action) => {
+                state.error = action.payload;
+            });
+    },
+});
 
-                <Link to='/' className="logo-otpform">
-                    <img src={logo} alt="logo" />
-                </Link>
-
-                <div className="signupcont">
-                    <div className='flexcol cover'>
-                        <div className="heading">Reset your password</div>
-                        <form className="flexcol gap" onSubmit={handleSubmit(onSubmit)}>
-
-                            <Controller name="role" control={control} defaultValue="" render={({ field }) => (
-                                <select className="box flex" {...field}>
-                                    <option value="">Select a role...</option>
-                                    <option value="Buyer">Buyer</option>
-                                    <option value="Seller">Seller</option>
-                                </select>
-                            )}
-                            />
-                            {errors.role && <div className='error'>{errors.role.message}</div>}
-
-                            <Controller name="username" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter your email' autoComplete="email" {...field} />} />
-                            {errors.username && <div className='error'>{errors.username.message}</div>}
-
-                            <div className="search-input">
-                                <Controller name="password" control={control} defaultValue="" render={({ field }) => <input type={passwordVisible ? "text" : "password"} autoComplete="new-password" className="box flex" placeholder='Enter a new password' {...field} />} />
-                                <span onClick={togglePasswordVisibility}>
-                                    {passwordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                </span>
-                            </div>
-                            {errors.password && <div className='error'>{errors.password.message}</div>}
-
-                            <div className="search-input">
-                                <Controller name="confirmPass" control={control} defaultValue="" render={({ field }) => <input type={conPasswordVisible ? "text" : "password"} autoComplete="new-password" className="box flex" placeholder='Enter the password again' {...field} />} />
-                                <span onClick={toggleConPasswordVisibility}>
-                                    {conPasswordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                </span>
-                            </div>
-                            {errors.confirmPass && <div className='error'>{errors.confirmPass.message}</div>}
-                            <button className='btn box flex' type='submit'>
-                                <div className="heading2">Send OTP</div>
-                            </button>
-                        </form>
-                        {status === 'loading' && <p>Loading...</p>}
-                        {status === 'failed' && <p className='error'>Error: {error}</p>}
-                    </div>
-                </div>
-
-                <div className="svg-bg-signup">
-                    <div style={{ width: '80%' }}>
-                        {View}
-                    </div>
-                </div>
-
-            </div>
-        </Fragment>
-    )
-}
-
-export default ResetPassword;
+export default editProductsSlice.reducer;

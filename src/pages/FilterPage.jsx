@@ -24,7 +24,7 @@ const FilterPage = () => {
     const [sortBy, setSortBy] = useState('low');
 
     const dispatch = useDispatch();
-    const { products, status, error, currentPage, totalPages, pageSize, totalItems } = useSelector((state) => state.products);
+    const { products, status, error, currentPage, totalPages } = useSelector((state) => state.products);
     const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
     const exchangeRates = useSelector(state => state.currency.exchangeRates);
 

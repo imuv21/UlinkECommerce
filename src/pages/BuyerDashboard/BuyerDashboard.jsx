@@ -16,28 +16,32 @@ import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineProfile } from "react-icons/ai";
 import { useSelector } from "react-redux";
+import { IoIosRadioButtonOff } from "react-icons/io";
+import { GiTimeTrap } from "react-icons/gi";
+
 
 
 const BuyerDashboard = () => {
-
-  const user = useSelector((state) => state.auth.user);
-
   const [inviteMore, setInviteMore] = useState(false);
   const [userRole, setUserRole] = useState('')
   const [sendEmail, setSendEmail] = useState('')
-  const [currentStep, setCurrentStep] = useState("");
-
+  const user = useSelector((state) => state.auth.user);
+  const profile = useSelector((state) => state.auth.profile);
   useEffect(() => {
-    console.log("User is authenticated:", !!user);
     if (!!user) {
       setCurrentStep(1);
     }
   }, [user]);
-
- 
   const navigateToProfile = useNavigate();
 
+  useEffect(() => {
+    if (!profile) {
+       setCurrentStep(2)
+    }
+  }, [profile])
+
   const BussinessProfile = () => {
+    console.log("Updating currentSteps to ", stepId)
     navigateToProfile("/company-profile")
   }
   const steps = [
@@ -46,9 +50,8 @@ const BuyerDashboard = () => {
     { id: 3, text: 'Upload your bussiness documents' },
     { id: 4, text: 'Your business documents are verified' },
   ];
-  const handleRadioChange = (stepId) => {
-    setCurrentStep(stepId);
-  };
+  const [currentStep, setCurrentStep] = useState();
+
   const navigate = useNavigate()
   const uploadDocument = () => {
     navigate("/company-profile")
@@ -114,7 +117,8 @@ const BuyerDashboard = () => {
         )}
       </div>
       <div className="userDashboard">
-        <h1 className="user-title">Hi, {user.firstname} {user.lastname}</h1>
+        <h1 className="user-title">Hi, {user.firstname}{user.lastname}</h1>
+        <p className="user-subtitle">{user.firstname}{user.lastname} </p>
       </div>
       {/* Upload Document */}
       <div className="upload-document">
@@ -150,24 +154,43 @@ const BuyerDashboard = () => {
               </div>
             </div>
             <div className="select-value">
-              {steps.map(step => (
+              {steps.map((step, index) => (
                 <div key={step.id} className="radio-flex">
-                  <input
-                    type="radio"
-                    className="radio-size"
-                    checked={step.id === currentStep}
-                    onChange={() => handleRadioChange(step.id)}
-                  />
+                {/*  i want fill  radio button */}
+                 <IoIosRadioButtonOff className={`radio-size ${index < currentStep ? "active" : ""}`}   />
                   <p className="varify-p">{step.text}</p>
                 </div>
               ))}
             </div>
           </div>
+          { currentStep === 1 && (
           <div className="document-container-1 document-container-2">
             <AiOutlineProfile className="profile-icons-1" />
+            <div className="">
             <p className="bussiness-profile">Complete Your Bussiness Profile</p>
             <button className="edit-detail-button bussines-profile-button" onClick={BussinessProfile}>Bussiness Profile</button>
+            </div>
           </div>
+          )}
+          { currentStep === 2 && (
+          <div className="document-container-1 document-container-2">
+            <FcDocument className="profile-icons-1" />
+            <div className="">
+            <p className="bussiness-profile">Upload Your Bussiness Documents</p>
+            <button className="edit-detail-button bussines-profile-button" onClick={uploadDocument}>Upload Documents</button>
+            </div>
+          </div>
+          )}
+          { currentStep === 3 && (
+          <div className="document-container-1 document-container-2">
+            <GiTimeTrap className="profile-icons-1" />
+            <div className="">
+            <p className="bussiness-profile">Please wait, our team is reviewing and verifying your documents.</p>
+            <button className="edit-detail-button bussines-profile-button" onClick={BussinessProfile}>Bussiness Profile</button>
+            </div>
+          </div>
+        )}
+        
         </div>
       </div>
       <div className="dashboard-containers">

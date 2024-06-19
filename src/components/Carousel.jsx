@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../Redux/productSlice';
 import { v4 as uuidv4 } from 'uuid';
 import Loader from './Loader/Loader';
-const ProductCard = lazy(() => import('../components/ProductCard'));
+const ProductCard = lazy(() => import('./ProductCard'));
 import Sliders from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -17,13 +17,14 @@ const Carousel = () => {
     const {  products = [], status, error } = useSelector((state) => state.products);
 
     //pagination
-    const [page, setPage] = useState(0);
-    const [size, setSize] = useState(12);
+    const [page, setPage] = useState(1);
+    const [size, setSize] = useState(15);
     
     useEffect(() => {
-        if (status === 'idle' || page !== 0 || size !== 12) {
+        if (status === 'idle') {
             dispatch(fetchProducts({ page, size }));
         }
+      
     }, [dispatch, page, size, status]);
 
     if (status === 'loading') {

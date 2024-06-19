@@ -1,4 +1,6 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect, Fragment } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addAddress, fetchAddresses, deleteAddress } from '../../../Redux/addressSlice';
 import { v4 as uuidv4 } from 'uuid';
 import { allCountries } from '../../Schemas/countryCodes';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -8,8 +10,17 @@ import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import SailingIcon from '@mui/icons-material/Sailing';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 
 const SellerAddress = () => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { addresses, status, error } = useSelector((state) => state.address);
+
+    useEffect(() => {
+        dispatch(fetchAddresses());
+    }, [dispatch]);
 
     const [countries, setCountries] = useState([]);
     const [selectedOrigin, setSelectedOrigin] = useState('');
@@ -17,8 +28,6 @@ const SellerAddress = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [selectedCountry, setSelectedCountry] = useState('');
     const [showPopup, setShowPopup] = useState(false);
-    const [editMode, setEditMode] = useState(false);
-    const [editIndex, setEditIndex] = useState(null);
     const [address, setAddress] = useState('');
     const [area, setArea] = useState('');
     const [street, setStreet] = useState('');
@@ -31,7 +40,8 @@ const SellerAddress = () => {
     const [isLocationChecked, setIsLocationChecked] = useState(false);
     const [isBillingChecked, setIsBillingChecked] = useState(false);
     const [isDefaultChecked, setIsDefaultChecked] = useState(false);
-    const [addressList, setAddressList] = useState(JSON.parse(localStorage.getItem('seller-addresses')) || []);
+    const [editingIndex, setEditingIndex] = useState(null);
+
 
     //select country form api
     useEffect(() => {
@@ -58,7 +68,6 @@ const SellerAddress = () => {
             iso2: country[1],
             dialCode: country[2]
         }));
-
         setCountriess(formattedCountries);
     }, []);
     const handleCountryChange = (event) => {
@@ -70,88 +79,12 @@ const SellerAddress = () => {
     //add address
     const handleAddAddress = () => {
         setShowPopup(true);
-        setEditMode(false);
         resetFormFields();
     };
-
-    //edit address
-    const handleEditAddress = (index) => {
-        const addressToEdit = addressList[index];
-        setEditIndex(index);
-        setAddress(addressToEdit.address);
-        setSelectedOrigin(addressToEdit.selectedOrigin);
-        setCity(addressToEdit.city);
-        setArea(addressToEdit.area);
-        setStreet(addressToEdit.street);
-        setOffice(addressToEdit.office);
-        setPobox(addressToEdit.pobox);
-        setPostCode(addressToEdit.postCode);
-        setPhoneNumber(addressToEdit.phoneNumber);
-        setSelectedCountry(countriess.find((country) => country.iso2 === addressToEdit.selectedCountry.iso2));
-        setAirport(addressToEdit.airport);
-        setSeaport(addressToEdit.seaport);
-        setIsLocationChecked(addressToEdit.isLocationChecked);
-        setIsBillingChecked(addressToEdit.isBillingChecked);
-        setIsDefaultChecked(addressToEdit.isDefaultChecked);
-        setShowPopup(true);
-        setEditMode(true);
-    };
-
     const handleClosePopup = () => {
         setShowPopup(false);
-        setEditMode(false);
         resetFormFields();
     };
-
-    const handleSubmit = () => {
-        const newAddress = {
-            address,
-            selectedOrigin,
-            city,
-            area,
-            street,
-            office,
-            pobox,
-            postCode,
-            phoneNumber,
-            selectedCountry,
-            airport,
-            seaport,
-            isLocationChecked,
-            isBillingChecked,
-            isDefaultChecked
-        };
-
-        let updatedAddressList = [...addressList];
-
-        if (isDefaultChecked) {
-            updatedAddressList = updatedAddressList.map(addr => ({
-                ...addr,
-                isDefaultChecked: false
-            }));
-        }
-
-        if (editMode) {
-            updatedAddressList[editIndex] = newAddress;
-        } else {
-            updatedAddressList.push(newAddress);
-        }
-
-        setAddressList(updatedAddressList);
-        localStorage.setItem('seller-addresses', JSON.stringify(updatedAddressList));
-
-        setShowPopup(false);
-        setEditMode(false);
-        resetFormFields();
-    };
-
-    const handleDeleteAddress = (index) => {
-        const updatedAddressList = [...addressList];
-        updatedAddressList.splice(index, 1);
-        setAddressList(updatedAddressList);
-        localStorage.setItem('seller-addresses', JSON.stringify(updatedAddressList));
-    };
-
     const resetFormFields = () => {
         setAddress('');
         setSelectedOrigin('');
@@ -168,9 +101,72 @@ const SellerAddress = () => {
         setIsLocationChecked(false);
         setIsBillingChecked(false);
         setIsDefaultChecked(false);
+        setEditingIndex(null);
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = {
+            address,
+            selectedOrigin,
+            city,
+            area,
+            street,
+            office,
+            pobox,
+            postCode,
+            phoneNumber,
+            selectedCountry: selectedCountry.dialCode,
+            airport,
+            seaport,
+            isLocationChecked,
+            isBillingChecked,
+            isDefaultChecked
+        };
+        if (editingIndex !== null) {
+
+        } else {
+            await dispatch(addAddress(formData));
+        }
+        dispatch(fetchAddresses());
+        alert('Address saved successfully');
+        setShowPopup(false);
+        resetFormFields();
     };
 
+    //edit address
+    const handleEditAddress = (index) => {
+        const addressToEdit = addresses[index];
+        setAddress(addressToEdit.address);
+        setSelectedOrigin(addressToEdit.selectedOrigin);
+        setCity(addressToEdit.city);
+        setArea(addressToEdit.area);
+        setStreet(addressToEdit.street);
+        setOffice(addressToEdit.office);
+        setPobox(addressToEdit.pobox);
+        setPostCode(addressToEdit.postCode);
+        setPhoneNumber(addressToEdit.phoneNumber);
+        setSelectedCountry(countriess.find(country => country.dialCode === addressToEdit.selectedCountry));
+        setAirport(addressToEdit.airport);
+        setSeaport(addressToEdit.seaport);
+        setIsLocationChecked(addressToEdit.isLocationChecked);
+        setIsBillingChecked(addressToEdit.isBillingChecked);
+        setIsDefaultChecked(addressToEdit.isDefaultChecked);
+        setEditingIndex(index);
+        setShowPopup(true);
+    };
 
+    //delete address
+    const  handleDeleteAddress = (id) => {
+        dispatch(deleteAddress({ id }));
+    }
+
+
+    if (status === 'loading') {
+        return <div>Loading...</div>;
+    }
+    if (status === 'failed') {
+        return <div>Error: {error}</div>;
+    }
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
@@ -187,11 +183,11 @@ const SellerAddress = () => {
                 </div>
             </div>
             <div className="productlist2">
-                {addressList.length === 0 ? (
+                {addresses.length === 0 ? (
                     <div className="heading3">Address list is empty</div>
                 ) : (
                     <Fragment>
-                        {addressList.map((address, index) => (
+                        {addresses.map((address, index) => (
                             <div className="productlist4" key={index}>
                                 <div className="flexcol-start" style={{ gap: '10px' }}>
                                     <div className="flex" style={{ gap: '20px' }}>
@@ -201,26 +197,26 @@ const SellerAddress = () => {
                                         {address.isDefaultChecked && <div className='descrip warning-btn4'>Default</div>}
                                     </div>
                                     <div className="flex" style={{ gap: '10px' }}>
-                                        <div className='descrip2'>{address.selectedOrigin}</div>
-                                        <div className='descrip2'>{address.city}</div>
-                                        <div className='descrip2'>Area: {address.area.length > 15 ? `${address.area.substring(0, 15)}...` : address.area}</div>
-                                        <div className='descrip2'>Street: {address.street} {address.street.length > 15 ? `${address.street.substring(0, 15)}...` : address.street}</div>
+                                       { address.selectedOrigin && <div className='descrip2'>{address.selectedOrigin}</div>}
+                                       { address.city && <div className='descrip2'>{address.city}</div>}
+                                       { address.area && <div className='descrip2'>Area: {address.area.length > 15 ? `${address.area.substring(0, 15)}...` : address.area}</div>}
+                                       { address.street && <div className='descrip2'>Street: {address.street} {address.street.length > 15 ? `${address.street.substring(0, 15)}...` : address.street}</div>}
                                     </div>
                                     <div className="flex" style={{ gap: '10px' }}>
-                                        <div className='descrip2'>Building/Office: {address.office.length > 15 ? `${address.office.substring(0, 15)}...` : address.office}</div>
-                                        <div className='descrip2'>Pobox: {address.pobox}</div>
-                                        <div className='descrip2'>Post code: {address.postCode}</div>
+                                        { address.office && <div className='descrip2'>Building/Office: {address.office.length > 15 ? `${address.office.substring(0, 15)}...` : address.office}</div>}
+                                        { address.pobox && <div className='descrip2'>Pobox: {address.pobox}</div>}
+                                        { address.postCode && <div className='descrip2'>Post code: {address.postCode}</div>}
                                     </div>
                                     <div className="flex" style={{ gap: '20px' }}>
-                                        <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.selectedCountry.dialCode + address.phoneNumber}</div>
-                                        <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.airport}</div>
-                                        <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.seaport}</div>
+                                        { (address.phoneNumber && address.selectedCountry) && <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;+{address.selectedCountry  + " " + address.phoneNumber}</div>}
+                                        { address.airport && <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.airport}</div>}
+                                        { address.seaport && <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.seaport}</div>}
                                     </div>
                                 </div>
                                 {(!address.isDefaultChecked) &&
                                     <div className="flexcol" style={{ gap: '20px' }}>
                                         <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditAddress(index)} />
-                                        <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteAddress(index)} />
+                                        <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteAddress(address.id)} />
                                     </div>
                                 }
                             </div>
@@ -230,12 +226,12 @@ const SellerAddress = () => {
             </div>
             {showPopup && (
                 <div className='popup-parent'>
-                    <form className='popup-child'>
+                    <form className='popup-child' onSubmit={handleSubmit}>
                         <div style={{ height: '500px', overflow: 'auto' }}>
                             <div className="popupform">
                                 <div className="heading wh">Add New Address</div>
                                 <input type="text" placeholder='Enter address' className="box flex" value={address} onChange={(e) => setAddress(e.target.value)} />
-                                <select className="box flex" value={selectedOrigin} onChange={originSelectChange} name='country' >
+                                <select className="box flex" value={selectedOrigin} onChange={originSelectChange} name='country'>
                                     <option value="">Select Country</option>
                                     {countries.map((country) => (
                                         <option key={uuidv4()} value={country}>{country}</option>
@@ -278,8 +274,12 @@ const SellerAddress = () => {
                                 </div>
 
                                 <div className="flex" style={{ gap: '20px' }}>
-                                    <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleSubmit}><div className="heading2">Save Address</div></button>
-                                    <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleClosePopup}><div className="heading2">Cancel</div></button>
+                                    <button className='btn box2 flex' style={{ width: 'fit-content' }} type="submit">
+                                        <div className="heading2">Save Address</div>
+                                    </button>
+                                    <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleClosePopup}>
+                                        <div className="heading2">Cancel</div>
+                                    </button>
                                 </div>
                             </div>
                         </div>

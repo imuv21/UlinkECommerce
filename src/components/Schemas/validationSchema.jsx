@@ -1,6 +1,6 @@
 
-import * as yup from 'yup';
 
+import * as yup from 'yup';
 
 export const addSingleSchema = yup.object().shape({
 
@@ -44,10 +44,8 @@ export const addSingleSchema = yup.object().shape({
                 return sellPrice < unitPrice;
             }
         ),
-
     availableQuantity: yup.number().typeError('Quantity must be a number').positive('Quantity must be a positive number').integer('Quantity must be an integer').required('Quantity is required').min(1, "Minimum order quantity is 1"),
     unitsPerCarton: yup.number().typeError('Units per carton must be a number').positive('Units per carton must be a positive number').integer('Units per carton must be an integer').required('Units per carton is required'),
-    sizeUnit: yup.string().required('Unit is required'),
     avgLeadTime: yup.number().typeError('Lead time must be a number').positive('Lead time must be a positive number').integer('Lead time must be an integer').required('Lead time is required'),
     transportationMode: yup.string().required('Transportation mode is required'),
     StockLocation: yup.string().required('Stock Location is required'),

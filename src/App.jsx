@@ -22,6 +22,7 @@ const RfqDetail = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/RfqDet
 const OrderPage = lazy(() => import('./pages/BuyerDashboard/OrderPage/OrderPage'));
 const ViewDetail = lazy(() => import('./pages/BuyerDashboard/OrderPage/ViewDetail/ViewDetail'));
 const CompanyProfile = lazy(() => import('./pages/BuyerDashboard/CompanyProfile/CompanyProfile'));
+const PaymentSuccess = lazy(() => import('./pages/Cart/PaymentSuccess'));
 
 //seller dashboard
 const SellerForm = lazy(() => import('./pages/SellerForm'));
@@ -94,6 +95,7 @@ function App() {
         <Layout>
           <Routes>
 
+            {/* public */}
             <Route path='/guidelines' element={<Guidelines />} />
             <Route path='/product-details/:id' element={<ProductDetails />} />
             <Route path='/' element={<Home />} />
@@ -111,7 +113,7 @@ function App() {
             <Route path='/trans' element={<Translator />} />
 
 
-            {/* public */}
+            {/* Without authentication */}
             <Route element={<Protector isAuthenticated={!isAuthenticated} redirect='/' />}>
               <Route path='/login' element={<Login />} />
               <Route path='/verify-email' element={<Otp />} />
@@ -181,6 +183,7 @@ function App() {
               <Route path='/checkout' element={<Checkout />} />
               <Route path='/company-profile' element={<CompanyProfile />} />
               <Route path='/buyer-address' element={<BuyerAddress />} />
+              <Route path='/payment-success' element={<PaymentSuccess />} />
             </Route>
 
           </Routes>

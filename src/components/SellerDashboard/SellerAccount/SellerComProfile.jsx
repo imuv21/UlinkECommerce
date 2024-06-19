@@ -33,13 +33,15 @@ const SellerComProfile = () => {
     }
 
 
+    
+
+
     //show the business docs form data
     const getStoredFormData = () => {
         const storedData = localStorage.getItem('business-docs');
         return storedData ? JSON.parse(storedData) : null;
     };
     const [storedFormData, setStoredFormData] = useState(getStoredFormData());
-
 
     //Doc submit and edit functionality
     const [docErrors, setDocErrors] = useState({});
@@ -264,7 +266,7 @@ const SellerComProfile = () => {
                         {isEditing ? (
                             <div className="flex" style={{ gap: '20px' }}>
                                 <div className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}>Save</div>
-                                <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={cancel} >Cancel</div>
+                                <div className="btn flex box" type='button' style={{ width: '100px', cursor: 'pointer' }} onClick={cancel} >Cancel</div>
                             </div>
                         ) : (
                             <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClick}>Edit</div>

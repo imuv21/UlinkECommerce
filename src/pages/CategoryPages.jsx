@@ -12,6 +12,7 @@ import Sliders from 'react-slick';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../Redux/productSlice';
 import ProductCard from '../components/ProductCard';
+import defaulImg from '../assets/default.jpg';
 
 const CategoryPages = () => {
   const navigate = useNavigate()
@@ -41,10 +42,18 @@ const CategoryPages = () => {
   ];
   //  product show 
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.products);
+  // const { products } = useSelector((state) => state.products);
+  const {  products = [], status, error } = useSelector((state) => state.products);
+  //pagination
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(15);
+  
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch])
+      if (status === 'idle') {
+          dispatch(fetchProducts({ page, size }));
+      }
+    
+  }, [dispatch, page, size, status]);
 
   const truncateText = (text, maxLength) => {
     if (text.length <= maxLength) {
@@ -122,7 +131,7 @@ const CategoryPages = () => {
       navigate('/search-results', { state: { selectedSupOption: 'ConsumerElectronics', products: filterElectronic }});
     }
     switch (category) {
-      case 'trending':d
+      case 'trending':
         return (
           <div className='discount-pages' >
             <div className='banner-page'>
