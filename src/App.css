@@ -1588,13 +1588,14 @@ button:focus {
 }
 
 
- /* edit single image file upload  */
- .edit-file-input-container {
+/* edit single image file upload  */
+.edit-file-input-container {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 30px;
 }
+
 .edit-custom-file-upload {
   cursor: pointer;
   background-color: var(--CodeTwo);
@@ -1605,13 +1606,16 @@ button:focus {
   padding: 10px 15px;
   transition: background-color 0.3s ease;
 }
+
 .edit-custom-file-upload:hover {
   background-color: var(--CodeTwoHover);
 }
+
 .edit-file-input {
   display: none;
 }
-.edit-delete{
+
+.edit-delete {
   position: absolute;
   top: 2px;
   right: 2px;
@@ -1622,12 +1626,14 @@ button:focus {
   border-radius: 50%;
   background-color: rgb(198, 198, 198);
 }
-.edit-delete .MuiSvgIcon-root{
+
+.edit-delete .MuiSvgIcon-root {
   color: white;
   width: 12px;
   height: 12px;
 }
-.edit-img-card{
+
+.edit-img-card {
   position: relative;
   padding: 5px;
   width: 60px;
@@ -1635,7 +1641,8 @@ button:focus {
   border: 1px solid rgb(213, 213, 213);
   border-radius: var(--br1);
 }
-.edit-imgs{
+
+.edit-imgs {
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: contain;
@@ -2768,6 +2775,7 @@ button:focus {
   gap: 10px;
   padding: 20px 0px;
 }
+
 .access2 {
   display: flex;
   flex-direction: column;
@@ -2776,6 +2784,7 @@ button:focus {
   width: 100%;
   padding-top: 10px;
 }
+
 .access-col {
   display: flex;
   flex-direction: column;
@@ -2784,6 +2793,7 @@ button:focus {
   flex-grow: 1;
   gap: 10px;
 }
+
 .access-col2 {
   display: flex;
   flex-direction: row;
@@ -2864,17 +2874,20 @@ button:focus {
   letter-spacing: 2px;
 }
 
-.card-holder, .expiry-date {
+.card-holder,
+.expiry-date {
   display: flex;
   justify-content: space-between;
   font-size: 0.9em;
 }
 
-.card-holder span, .expiry-date span {
+.card-holder span,
+.expiry-date span {
   display: block;
 }
 
-.card-holder span:first-child, .expiry-date span:first-child {
+.card-holder span:first-child,
+.expiry-date span:first-child {
   font-size: 0.8em;
   opacity: 0.8;
 }
@@ -2892,9 +2905,79 @@ button:focus {
   padding: 10px;
 }
 
-.paymentsuccess{
+.paymentsuccess {
   height: 100vh;
   width: 100%;
   background-color: var(--CodeTwoHover);
   gap: 20px;
+}
+
+
+/* seller company profile */
+.company-profile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: start;
+  gap: 10px;
+  padding: 10px 0px;
+}
+
+.cp-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: start;
+  align-items: center;
+  gap: 60px;
+}
+
+.cp-row .descrip2 {
+  width: 150px;
+}
+
+.cp-row .heading2 {
+  width: fit-content;
+}
+
+
+/* profile photo */
+.scp-profile-image-uploader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scp-profile-image {
+  border-radius: 50%;
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+}
+
+.scp-edit-icon {
+  position: absolute;
+  bottom: 7px;
+  right: 7px;
+  background-color: white;
+  border-radius: 50%;
+  padding: 2px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scp-edit-icon .MuiSvgIcon-root {
+  width: 20px;
+  height: 20px;
+  color: gray;
+  cursor: pointer;
+}
+
+.scp-image-container {
+  position: relative;
 }

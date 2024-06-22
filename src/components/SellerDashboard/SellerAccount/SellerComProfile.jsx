@@ -8,22 +8,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { businessSchema } from '../../Schemas/validationSchema';
+import { fetchSellerBusinessProfile, updateSellerBusinessProfile } from '../../../Redux/sellerBusinessProfileSlice';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+
 const schema = yupResolver(businessSchema);
 
 const SellerComProfile = () => {
 
-    const user = useSelector((state) => state.auth.user);
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const dispatch = useDispatch();
+    const { sellerprofile, updateStatus, updateError } = useSelector((state) => state.sellerBusinessProfile);
 
-    const { handleSubmit, control, formState: { errors }, setValue } = useForm({
+    useEffect(() => {
+        dispatch(fetchSellerBusinessProfile());
+    }, [dispatch]);
+
+    const { handleSubmit, control, formState: { errors } } = useForm({
         resolver: schema,
     });
 
     // profile edit functionality
     const [isEditing, setIsEditing] = useState(false);
     const onSubmit = (data) => {
+        dispatch(updateSellerBusinessProfile(data));
         setIsEditing(false);
-        console.log(data);
     };
     const handleEditClick = () => {
         setIsEditing(true);
@@ -32,8 +41,46 @@ const SellerComProfile = () => {
         setIsEditing(false);
     }
 
+    //select country form api
+    const [coperation, setCoperation] = useState([]);
+    const [selectedOp, setSelectedOp] = useState('');
 
-    
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json');
+                const data = response.data;
+                const uniqueCountries = [...new Set(data.map(city => city.country))];
+                setCoperation(uniqueCountries);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    // profile photo upload functionality
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState('https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg');
+    const handleImageChange = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            setSelectedImage(file);
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setImageUrl(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+    const handleUploadClick = () => {
+        document.getElementById('avatar').click();
+    };
+
+
+
+
 
 
     //show the business docs form data
@@ -203,73 +250,107 @@ const SellerComProfile = () => {
                         <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><BusinessIcon /> <div className="heading">Business Profile</div></div>
                         {isEditing ? (
                             <div className="flex" style={{ gap: '50px', justifyContent: 'start', width: '30%' }}>
+
                                 <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
-                                    <div className="flex wh" style={{ gap: '30px' }}>
-                                        <Controller name="firstname" control={control} defaultValue={user.firstname || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your first name' {...field} />} />
-                                        <Controller name="lastname" control={control} defaultValue={user.lastname || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your last name' {...field} />} />
-                                    </div>
 
-                                    {(errors.firstname || errors.lastname) &&
-                                        <div className="flex wh">
-                                            <div className="flex wh">
-                                                <div className='error'>{errors.firstname?.message}</div>
-                                            </div>
-                                            <div className="flex wh">
-                                                <div className='error'>{errors.lastname?.message}</div>
+                                    <div className="scp-profile-image-uploader">
+                                        <div className="scp-image-container">
+                                            <img src={imageUrl} alt="Profile" className="scp-profile-image" />
+                                            <div className="scp-edit-icon" onClick={handleUploadClick}>
+                                                <AddPhotoAlternateIcon />
                                             </div>
                                         </div>
-                                    }
-
-                                    <div className='flex wh' style={{ gap: '30px' }}>
-                                        <Controller name="whatsappnumber" control={control} defaultValue={user.whatsappnumber || ''} render={({ field }) => <input className="box flex" autoComplete='off' placeholder='Enter your whatsapp number' {...field} />} />
+                                        <input id="avatar" type="file" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} />
                                     </div>
 
-                                    {(errors.whatsappnumber) &&
-                                        <div className="flex wh">
-                                            <div className="flex wh">
-                                            </div>
-                                            <div className="flex wh" style={{ justifyContent: 'space-around' }}>
-                                                <div className='error'>{errors.whatsappnumber?.message}</div>
-                                            </div>
-                                        </div>
-                                    }
+                                    <Controller name="companyname" control={control} defaultValue={sellerprofile.companyname || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your company name' {...field} />} />
+                                    {errors.companyname && <div className='error'>{errors.companyname.message}</div>}
+
+                                    <Controller name="buildingNumber" control={control} defaultValue={sellerprofile.buildingNumber || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your building number' {...field} />} />
+                                    {errors.buildingNumber && <div className='error'>{errors.buildingNumber.message}</div>}
+
+                                    <Controller name="streetName" control={control} defaultValue={sellerprofile.streetName || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your street name' {...field} />} />
+                                    {errors.streetName && <div className='error'>{errors.streetName.message}</div>}
+
+                                    <Controller name="city" control={control} defaultValue={sellerprofile.city || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your city' {...field} />} />
+                                    {errors.city && <div className='error'>{errors.city.message}</div>}
+
+                                    <Controller name="state" control={control} defaultValue={sellerprofile.state || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your state' {...field} />} />
+                                    {errors.state && <div className='error'>{errors.state.message}</div>}
+
+                                    <Controller name="countryOfOperation" control={control} defaultValue={sellerprofile.countryOfoperation || ''} render={({ field }) => (
+                                        <select className="box flex" onChange={(e) => { field.onChange(e); setSelectedOp(e.target.value) }}  {...field} >
+                                            <option value="">Select country of operation</option>
+                                            {coperation.map((country) => (
+                                                <option key={uuidv4()} value={country}>{country}</option>
+                                            ))}
+                                        </select>
+                                    )} />
+                                    {errors.countryOfoperation && <div className='error'>{errors.countryOfoperation.message}</div>}
+
+
+
+                                    <Controller name="postCode" control={control} defaultValue={sellerprofile.postCode || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your post code' {...field} />} />
+                                    {errors.postCode && <div className='error'>{errors.postCode.message}</div>}
+
+                                    <Controller name="companyDescription" control={control} defaultValue={sellerprofile.companyDescription || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your company description' {...field} />} />
+                                    {errors.companyDescription && <div className='error'>{errors.companyDescription.message}</div>}
+
                                 </div>
                             </div>
                         ) : (
-                            <div className="flex" style={{ gap: '50px', justifyContent: 'start', width: '30%' }}>
-                                <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
-                                    <div className='heading2'>Company Name</div>
-                                    <div className='heading2'>Building Number</div>
-                                    <div className='heading2'>Street Name</div>
-                                    <div className='heading2'>City</div>
-                                    <div className='heading2'>State</div>
-                                    <div className='heading2'>Country Of Operation</div>
-                                    <div className='heading2'>Post/Zip Code </div>
-                                    <div className='heading2'>Company description</div>
-                                    <div className='heading2'>Name</div>
-                                    <div className='heading2'>Whatsapp</div>
-                                </div>
-                                <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
-                                    <div className='heading2'>ulinkit</div>
-                                    <div className='heading2'>3534531</div>
-                                    <div className='heading2'>Street Name</div>
-                                    <div className='heading2'>City</div>
-                                    <div className='heading2'>State</div>
-                                    <div className='heading2'>Country Of Operation</div>
-                                    <div className='heading2'>4355435</div>
-                                    <div className='heading2'>Company description</div>
-                                    <div className="heading2">{user.firstname} {user.lastname}</div>
-                                    <div className='heading2'>{user.whatsappnumber}</div>
-                                </div>
-                            </div>
+                            <Fragment>
+                                {sellerprofile ? (
+                                    <div className="company-profile">
+
+                                        <div className="scp-profile-image-uploader">
+                                            <div className="scp-image-container">
+                                                <img src={imageUrl} alt="Profile" className="scp-profile-image" />
+                                                <div className="scp-edit-icon" onClick={handleUploadClick} style={{ display: 'none' }} >
+                                                    <AddPhotoAlternateIcon />
+                                                </div>
+                                            </div>
+                                            <input id="avatar" type="file" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} />
+                                        </div>
+
+                                        <div className="cp-row">
+                                            <div className='descrip2'>Company Name</div> <div className='heading2'> {sellerprofile.companyname}</div>
+                                        </div>
+                                        <div className="cp-row">
+                                            <div className='descrip2'>Building Number</div> <div className='heading2'> {sellerprofile.buildingNumber}</div>
+                                        </div>
+                                        <div className="cp-row">
+                                            <div className='descrip2'>Street Name</div> <div className='heading2'> {sellerprofile.streetName}</div>
+                                        </div>
+                                        <div className="cp-row">
+                                            <div className='descrip2'>City</div> <div className='heading2'> {sellerprofile.city}</div>
+                                        </div>
+                                        <div className="cp-row">
+                                            <div className='descrip2'>State</div> <div className='heading2'> {sellerprofile.state}</div>
+                                        </div>
+                                        <div className="cp-row">
+                                            <div className='descrip2'>Country Of Operation</div> <div className='heading2'> {sellerprofile.countryOfoperation}</div>
+                                        </div>
+                                        <div className="cp-row">
+                                            <div className='descrip2'>Post/Zip Code</div> <div className='heading2'> {sellerprofile.postCode}</div>
+                                        </div>
+                                        <div className="cp-row">
+                                            <div className='descrip2'>Company description</div> <div className='heading2'> {sellerprofile.companyDescription}</div>
+                                        </div>
+                                    </div>) : (
+                                    <div className="company-profile">
+                                        <div className="heading2">No Company Profile Found</div>
+                                    </div>)
+                                }
+                            </Fragment>
                         )}
                         {isEditing ? (
                             <div className="flex" style={{ gap: '20px' }}>
-                                <div className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}>Save</div>
-                                <div className="btn flex box" type='button' style={{ width: '100px', cursor: 'pointer' }} onClick={cancel} >Cancel</div>
+                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}>Save</button>
+                                <button className="btn flex box" type='button' style={{ width: '100px', cursor: 'pointer' }} onClick={cancel} >Cancel</button>
                             </div>
                         ) : (
-                            <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClick}>Edit</div>
+                            <div className="btn flex box" type='button' style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClick}>Edit</div>
                         )}
                         <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><div className="heading2"> <div className="descrip2">To change your company name please contact Ulinkit at support@ulinkit.com</div> </div></div>
                     </form>
@@ -393,7 +474,7 @@ const SellerComProfile = () => {
                                     <div className="heading2">Business documents let us verify you as a real business and allow you to interact with features of the site.</div>
                                     <div className="heading2">To change your business documents please contact Ulinkit at support@ulinkit.com</div>
                                 </div>
-                                
+
                                 {storedFormData &&
                                     <div className="bd_overview">
                                         <div className="bd_overview_one">

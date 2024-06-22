@@ -177,120 +177,56 @@ const EditSingle = () => {
         }
     }, [fetchedImages]);
 
-    useEffect(() => {
-        if (imagesPreview.length > 0) {
-            console.log("Images Preview:", imagesPreview);
-        }
-    }, [imagesPreview]);
-
-    // const onFileSlect = async (event) => {
-    //     const files = event.target.files;
-    //     if (files.length === 0) return;
-    //     const totalImages = images.length;
-    //     const remainingSlots = 5 - totalImages;
-    //     let selectedFiles = [];
-    //     if (files.length > remainingSlots) {
-    //         alert("You can only select a maximum of 5 images. The excess files will be ignored.");
-    //         selectedFiles = Array.from(files).slice(0, remainingSlots);
-    //     } else {
-    //         selectedFiles = Array.from(files);
-    //     }
-    //     const newImages = selectedFiles.map(file => ({
-    //         file,
-    //         isUploaded: false
-    //     }));
-    //     const newImagesPreview = selectedFiles.map(file => ({
-    //         src: URL.createObjectURL(file),
-    //         isUploaded: false
-    //     }));
-    //     setImages([...images, ...newImages]);
-    //     setImagesPreview([...imagesPreview, ...newImagesPreview]);
-    //     alert('Image uploaded successfully');
-    // };
-
-
     const onFileSelect = async (event) => {
-        const files = event.target.files;
-        if (files.length === 0) return;
-
+        const file = event.target.files[0];
+        if (!file) return;
         const totalImages = images.length;
-        const remainingSlots = 5 - totalImages;
-        let selectedFiles = [];
-
-        if (files.length > remainingSlots) {
-            alert("You can only select a maximum of 5 images. The excess files will be ignored.");
-            selectedFiles = Array.from(files).slice(0, remainingSlots);
-        } else {
-            selectedFiles = Array.from(files);
+        if (totalImages >= 5) {
+            alert("You can only select a maximum of 5 images.");
+            return;
         }
+        
+        const newImage = { file, isUploaded: false };
+        const newImagePreview = { src: URL.createObjectURL(file), isUploaded: false };
+      
+        setImages(prevImages => [...prevImages, newImage]);
+        setImagesPreview(prevPreviews => [...prevPreviews, newImagePreview]);
 
-        const newImagesPreview = selectedFiles.map(file => ({
-            src: URL.createObjectURL(file),
-            isUploaded: false
-        }));
-
-        setImagesPreview(prevImagesPreview => [...prevImagesPreview, ...newImagesPreview]);
-
-        for (const file of selectedFiles) {
-            try {
-                const response = await dispatch(uploadImage({ productId, file }));
-
-                if (response.meta.requestStatus === 'fulfilled') {
-                    console.log('Response:', response);
-                    const data = response.payload.data;
-
-                    if (data) {
-                        const { imageUrl, name, priority, imageId } = data;
-
-                        setImages(prevImages => [
-                            ...prevImages,
-                            { src: imageUrl, isUploaded: true, imageId, name, priority },
-                        ]);
-
-                        setImagesPreview(prevImagesPreview => {
-                            const updatedPreviews = [...prevImagesPreview];
-                            const previewIndex = updatedPreviews.findIndex(preview => preview.src === URL.createObjectURL(file));
-                            if (previewIndex !== -1) {
-                                updatedPreviews[previewIndex] = { src: imageUrl, isUploaded: true, imageId, name, priority };
-                            }
-                            return updatedPreviews;
-                        });
-                    } else {
-                        console.error('Response payload data is null or undefined:', response.payload);
-                        alert('Error: Received invalid response data');
-                    }
-                } else {
-                    throw new Error(response.payload);
-                }
-            } catch (error) {
-                console.error('Error uploading image:', error);
-                alert('Error uploading image');
-            }
+        if (!productId) {
+            console.error('Product ID is missing');
+            return;
+        }
+        try {
+            await dispatch(uploadImage({ productId, file }));
+            alert('Image uploaded successfully');
+        } catch (error) {
+            console.error('Error uploading image:', error);
         }
     };
-
-
-   
-
-
 
     const onDeleteImage = async (imageId, index) => {
         const response = await dispatch(deleteImage(imageId));
         if (response.meta.requestStatus === 'fulfilled') {
-            const newImages = [...images];
-            const newImagesPreview = [...imagesPreview];
-
-            newImages.splice(index, 1);
-            newImagesPreview.splice(index, 1);
-
-            setImages(newImages);
-            setImagesPreview(newImagesPreview);
+            setImages(prevImages => {
+                const newImages = [...prevImages];
+                newImages.splice(index, 1);
+                return newImages;
+            });
+            setImagesPreview(prevPreviews => {
+                const newPreviews = [...prevPreviews];
+                if (!newPreviews[index].isUploaded) {
+                    URL.revokeObjectURL(newPreviews[index].src);
+                }
+                newPreviews.splice(index, 1);
+                return newPreviews;
+            });
             alert('Image deleted successfully');
         } else {
             console.error('Error deleting image:', response.payload);
             alert('Error deleting image');
         }
     };
+
 
 
 
@@ -349,7 +285,7 @@ const EditSingle = () => {
                     <label htmlFor="edit-file-upload" className="edit-custom-file-upload">
                         Choose Files
                     </label>
-                    <input type="file" id="edit-file-upload" multiple onChange={onFileSelect} className="edit-file-input" />
+                    <input type="file" id="edit-file-upload" onChange={(event) => onFileSelect(event, productId)} className="edit-file-input" />
                     <div className="flex" style={{ gap: '10px' }}>
                         {imagesPreview.map((image, index) => (
                             <div className='edit-img-card' key={index}>

@@ -274,7 +274,7 @@ const BuyerDashboard = () => {
             </div>
           </div>
         </Link>
-        <Link to='/buyer-address'>
+        <Link to='/my-addresses'>
           <div className="dashboards">
             <div className="order-contant">
               <IoLocationOutline className="order-icon" />

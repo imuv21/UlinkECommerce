@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addAddress, fetchAddresses, deleteAddress } from '../../../Redux/addressSlice';
+import { addAddress, fetchAddresses, updateAddress, deleteAddress } from '../../../Redux/addressSlice';
 import { v4 as uuidv4 } from 'uuid';
 import { allCountries } from '../../Schemas/countryCodes';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -122,7 +122,11 @@ const SellerAddress = () => {
             isBillingChecked,
             isDefaultChecked
         };
+
         if (editingIndex !== null) {
+            //update address dispatch
+            const addressToUpdate = addresses.find(address => address.id === editingIndex);
+            await dispatch(updateAddress({ id: addressToUpdate.id, formData }));
 
         } else {
             await dispatch(addAddress(formData));
@@ -134,29 +138,31 @@ const SellerAddress = () => {
     };
 
     //edit address
-    const handleEditAddress = (index) => {
-        const addressToEdit = addresses[index];
-        setAddress(addressToEdit.address);
-        setSelectedOrigin(addressToEdit.selectedOrigin);
-        setCity(addressToEdit.city);
-        setArea(addressToEdit.area);
-        setStreet(addressToEdit.street);
-        setOffice(addressToEdit.office);
-        setPobox(addressToEdit.pobox);
-        setPostCode(addressToEdit.postCode);
-        setPhoneNumber(addressToEdit.phoneNumber);
-        setSelectedCountry(countriess.find(country => country.dialCode === addressToEdit.selectedCountry));
-        setAirport(addressToEdit.airport);
-        setSeaport(addressToEdit.seaport);
-        setIsLocationChecked(addressToEdit.isLocationChecked);
-        setIsBillingChecked(addressToEdit.isBillingChecked);
-        setIsDefaultChecked(addressToEdit.isDefaultChecked);
-        setEditingIndex(index);
-        setShowPopup(true);
+    const handleEditAddress = (id) => {
+        const addressToEdit = addresses.find(address => address.id === id);
+        if (addressToEdit) {
+            setAddress(addressToEdit.address);
+            setSelectedOrigin(addressToEdit.selectedOrigin);
+            setCity(addressToEdit.city);
+            setArea(addressToEdit.area);
+            setStreet(addressToEdit.street);
+            setOffice(addressToEdit.office);
+            setPobox(addressToEdit.pobox);
+            setPostCode(addressToEdit.postCode);
+            setPhoneNumber(addressToEdit.phoneNumber);
+            setSelectedCountry(countriess.find(country => country.dialCode === addressToEdit.selectedCountry));
+            setAirport(addressToEdit.airport);
+            setSeaport(addressToEdit.seaport);
+            setIsLocationChecked(addressToEdit.isLocationChecked);
+            setIsBillingChecked(addressToEdit.isBillingChecked);
+            setIsDefaultChecked(addressToEdit.isDefaultChecked);
+            setEditingIndex(id);
+            setShowPopup(true);
+        }
     };
 
     //delete address
-    const  handleDeleteAddress = (id) => {
+    const handleDeleteAddress = (id) => {
         dispatch(deleteAddress({ id }));
     }
 
@@ -187,35 +193,35 @@ const SellerAddress = () => {
                     <div className="heading3">Address list is empty</div>
                 ) : (
                     <Fragment>
-                        {addresses.map((address, index) => (
-                            <div className="productlist4" key={index}>
+                        {addresses.map((address) => (
+                            <div className="productlist4" key={uuidv4()}>
                                 <div className="flexcol-start" style={{ gap: '10px' }}>
                                     <div className="flex" style={{ gap: '20px' }}>
                                         <div className="heading3">{address.address}</div>
-                                        {address.isLocationChecked && <div className='descrip warning-btn'>Stock location</div>}
+                                        {address.isLocationChecked && <div className='descrip warning-btn'>Shipping</div>}
                                         {address.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
                                         {address.isDefaultChecked && <div className='descrip warning-btn4'>Default</div>}
                                     </div>
                                     <div className="flex" style={{ gap: '10px' }}>
-                                       { address.selectedOrigin && <div className='descrip2'>{address.selectedOrigin}</div>}
-                                       { address.city && <div className='descrip2'>{address.city}</div>}
-                                       { address.area && <div className='descrip2'>Area: {address.area.length > 15 ? `${address.area.substring(0, 15)}...` : address.area}</div>}
-                                       { address.street && <div className='descrip2'>Street: {address.street} {address.street.length > 15 ? `${address.street.substring(0, 15)}...` : address.street}</div>}
+                                        {address.selectedOrigin && <div className='descrip2'>{address.selectedOrigin}</div>}
+                                        {address.city && <div className='descrip2'>{address.city}</div>}
+                                        {address.area && <div className='descrip2'>Area: {address.area.length > 15 ? `${address.area.substring(0, 15)}...` : address.area}</div>}
+                                        {address.street && <div className='descrip2'>Street: {address.street} {address.street.length > 15 ? `${address.street.substring(0, 15)}...` : address.street}</div>}
                                     </div>
                                     <div className="flex" style={{ gap: '10px' }}>
-                                        { address.office && <div className='descrip2'>Building/Office: {address.office.length > 15 ? `${address.office.substring(0, 15)}...` : address.office}</div>}
-                                        { address.pobox && <div className='descrip2'>Pobox: {address.pobox}</div>}
-                                        { address.postCode && <div className='descrip2'>Post code: {address.postCode}</div>}
+                                        {address.office && <div className='descrip2'>Building/Office: {address.office.length > 15 ? `${address.office.substring(0, 15)}...` : address.office}</div>}
+                                        {address.pobox && <div className='descrip2'>Pobox: {address.pobox}</div>}
+                                        {address.postCode && <div className='descrip2'>Post code: {address.postCode}</div>}
                                     </div>
                                     <div className="flex" style={{ gap: '20px' }}>
-                                        { (address.phoneNumber && address.selectedCountry) && <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;+{address.selectedCountry  + " " + address.phoneNumber}</div>}
-                                        { address.airport && <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.airport}</div>}
-                                        { address.seaport && <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.seaport}</div>}
+                                        {(address.phoneNumber && address.selectedCountry) && <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;+{address.selectedCountry + " " + address.phoneNumber}</div>}
+                                        {address.airport && <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.airport}</div>}
+                                        {address.seaport && <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.seaport}</div>}
                                     </div>
                                 </div>
                                 {(!address.isDefaultChecked) &&
                                     <div className="flexcol" style={{ gap: '20px' }}>
-                                        <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditAddress(index)} />
+                                        <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditAddress(address.id)} />
                                         <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteAddress(address.id)} />
                                     </div>
                                 }

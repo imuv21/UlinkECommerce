@@ -1,4 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+export const updateUserDetails = createAsyncThunk(
+    'auth/updateUserDetails',
+    async (profile, { getState }) => {
+        const { auth } = getState();
+        const token = auth.token;
+        const response = await axios.post(
+            `${BASE_URL}/user/update-details`,
+            null,
+            {
+                params: { profile: JSON.stringify(profile) },
+                headers: { Authorization: `Bearer ${token}` },
+            }
+        );
+        return response.data;
+    }
+);
+
 
 const initialState = {
     isAuthenticated: false,
@@ -9,6 +30,7 @@ const initialState = {
     signupEmail: null,
     signupData: null,
 };
+
 
 const authSlice = createSlice({
     name: 'auth',
@@ -46,13 +68,29 @@ const authSlice = createSlice({
             state.message = '';
             state.signupEmail = null;
         },
-        updateUserDetails(state, action) {
-            state.user = { ...state.user, ...action.payload };
-            state.status = 'success';
-            state.message = 'Profile updated successfully';
-        },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(updateUserDetails.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(updateUserDetails.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.message = action.payload.message;
+                if (state.user) {
+                    state.user.firstname = action.payload.data.firstname;
+                    state.user.lastname = action.payload.data.lastname;
+                    state.user.wpcountrycode = action.payload.data.wpcountrycode;
+                    state.user.whatsappnumber = action.payload.data.whatsappnumber;
+                }
+            })
+            .addCase(updateUserDetails.rejected, (state, action) => {
+                state.status = 'error';
+                state.message = action.payload || 'Failed to update user details';
+            });
     },
 });
 
-export const { loginSuccess, loginFailure, signupSuccess, signupFailure, logout, updateUserDetails } = authSlice.actions;
+export const { loginSuccess, loginFailure, signupSuccess, signupFailure, logout } = authSlice.actions;
 export default authSlice.reducer;
+

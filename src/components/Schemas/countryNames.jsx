@@ -1,8 +1,8 @@
 
 const countryNames = {
-    USD: 'United States',
-    EUR: 'European Union',
-    GBP: 'United Kingdom',
+    USD: 'USA',
+    EUR: 'EU',
+    GBP: 'UK',
     INR: 'India',
     AUD: 'Australia',
     CAD: 'Canada',
@@ -27,7 +27,7 @@ const countryNames = {
     IDR: 'Indonesia',
     MYR: 'Malaysia',
     SAR: 'Saudi Arabia',
-    AED: 'United Arab Emirates',
+    AED: 'UAE',
     CLP: 'Chile',
     ARS: 'Argentina',
     COP: 'Colombia',

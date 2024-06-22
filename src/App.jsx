@@ -9,7 +9,6 @@ import Layout from './components/Layout';
 
 //buyer dashboard
 const BuyerDashboard = lazy(() => import('./pages/BuyerDashboard/BuyerDashboard'));
-const BuyerAddress = lazy(() => import('./pages/BuyerDashboard/BuyerAddress'));
 const BuyerMessage = lazy(() => import('./pages/BuyerDashboard/BuyerMassage/BuyerMessage'));
 const Rfq = lazy(() => import('./pages/BuyerDashboard/Rfq/Rfq'));
 const MyProfile = lazy(() => import('./pages/BuyerDashboard/MyProfile/MyProfile'));
@@ -33,7 +32,6 @@ const Shipping = lazy(() => import('./components/SellerDashboard/SellerAccount/S
 const EditSingle = lazy(() => import("./components/SellerDashboard/SellerProduct/EditSingle"));
 const ProductDetails = lazy(() => import('./pages/Cart/ProductDetails'));
 const SellerOrder = lazy(() => import('./components/SellerDashboard/SellerOrder/SellerOrder'));
-const SellerAddress = lazy(() => import('./components/SellerDashboard/SellerAccount/SellerAddress'));
 const MainLayout = lazy(() => import('./components/SellerDashboard/MainLayout'));
 const ProductList = lazy(() => import('./components/SellerDashboard/SellerProduct/ProductList'));
 const Media = lazy(() => import('./components/SellerDashboard/SellerProduct/Media'));
@@ -52,6 +50,7 @@ const Permissions = lazy(() => import('./components/SellerDashboard/Access/Permi
 
 //Both seller and buyer
 const Profile = lazy(() => import('./pages/BuyerSeller/Profile'));
+const SellerAddress = lazy(() => import('./components/SellerDashboard/SellerAccount/SellerAddress'));
 const UpdateEmail = lazy(() => import('./pages/BuyerSeller/UpdateEmail'));
 const OtpEmail = lazy(() => import('./pages/BuyerSeller/OtpEmail'));
 const UpdateNumber = lazy(() => import('./pages/BuyerSeller/UpdateNumber'));
@@ -127,7 +126,7 @@ function App() {
 
             {/* Seller dashboard */}
             <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRole="Seller" redirect='/seller-center' />}>
-              <Route path='/editsingle/:index' element={<EditSingle />} />
+              <Route path='/editsingle/:productId' element={<EditSingle />} />
               <Route path="/seller-order" element={<SellerOrder />} />
 
               <Route path="/seller-dashboard" element={<MainLayout />}>
@@ -143,7 +142,6 @@ function App() {
                 <Route path="permissions" element={<Permissions />} />
                 <Route path="seller-orders" element={<SellerOrder />} />
                 <Route path="shipping-preferences" element={<Shipping />} />
-                <Route path="seller-address" element={<SellerAddress />} />
                 <Route path="payments" element={<Payments />} />
                 <Route path="add-a-bank-account" element={<PaymentDetails />} />
                 <Route path="edit-bank-account" element={<EditPaymentDetails />} />
@@ -155,6 +153,7 @@ function App() {
             {/* Both seller and buyer */}
             <Route element={<Protector isAuthenticated={isAuthenticated} redirect='/' />}>
               <Route path="/profile" element={<Profile />} />
+              <Route path="/my-addresses" element={<SellerAddress />} />
               <Route path="/update-email" element={<UpdateEmail />} />
               <Route path="/verify-update-email" element={<OtpEmail />} />
               <Route path="/update-number" element={<UpdateNumber />} />
@@ -182,7 +181,6 @@ function App() {
               <Route path='/cart' element={<Cart />} />
               <Route path='/checkout' element={<Checkout />} />
               <Route path='/company-profile' element={<CompanyProfile />} />
-              <Route path='/buyer-address' element={<BuyerAddress />} />
               <Route path='/payment-success' element={<PaymentSuccess />} />
             </Route>
 

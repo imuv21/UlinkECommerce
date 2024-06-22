@@ -11,9 +11,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { allCountries } from '../../components/Schemas/countryCodes';
 import { profileSchema } from '../../components/Schemas/validationSchema';
 import { updateUserDetails } from '../../Redux/AuthReducer';
-import axios from 'axios';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const schema = yupResolver(profileSchema);
 
 const Profile = () => {
@@ -22,9 +21,8 @@ const Profile = () => {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    const token = useSelector((state) => state.auth.token);
 
-    const { handleSubmit, control, formState: { errors }, setValue } = useForm({
+    const { handleSubmit, control, formState: { errors } } = useForm({
         resolver: schema,
     });
 
@@ -32,19 +30,17 @@ const Profile = () => {
     const [isEditing, setIsEditing] = useState(false);
 
     const onSubmit = async (data) => {
-        try {
-            const response = await axios.post(
-                `${BASE_URL}/user/update-details`,
-                { profile: data },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+        const profile = {
+            firstname: data.firstname,
+            lastname: data.lastname,
+            wpcountrycode: data.wpcountrycode,
+            whatsappnumber: data.whatsappnumber,
+        };
 
-            if (response.status === 200) {
-                dispatch(updateUserDetails(data));
-                alert('Profile updated successfully!');
-                setIsEditing(false);
-                console.log(data);
-            }
+        try {
+            await dispatch(updateUserDetails(profile)).unwrap();
+            alert('Profile updated successfully!');
+            setIsEditing(false);
         } catch (error) {
             console.error('Error updating profile:', error);
         }
@@ -110,6 +106,7 @@ const Profile = () => {
                                         <Controller name="firstname" control={control} defaultValue={user.firstname || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your first name' {...field} />} />
                                         <Controller name="lastname" control={control} defaultValue={user.lastname || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your last name' {...field} />} />
                                     </div>
+                                    
 
                                     {(errors.firstname || errors.lastname) &&
                                         <div className="flex wh">

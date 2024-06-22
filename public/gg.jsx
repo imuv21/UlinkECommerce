@@ -1,58 +1,92 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const BASE_URL = 'https://api.ulinkit.com/api';
+// Define the initial state
+const initialState = {
+    isAuthenticated: false,
+    user: null,
+    token: null,
+    status: '',
+    message: '',
+    signupEmail: null,
+    signupData: null,
+};
 
-export const uploadImage = createAsyncThunk(
-    'editproducts/uploadImage',
-    async ({ productId, file }, { getState, rejectWithValue }) => {
+// Create an async thunk for updating user details
+export const updateUserDetails = createAsyncThunk(
+    'auth/updateUserDetails',
+    async ({ profile, token }, { rejectWithValue }) => {
         try {
-            const { auth } = getState();
-            const token = auth.token;
-
-            const formData = new FormData();
-            formData.append('file', file);
-
-            const response = await axios.post(`${BASE_URL}/product/image/upload-image/${productId}`, formData, {
+            const response = await axios.post('https://api.ulinkit.com/api/user/update-details', null, {
+                params: { profile },
                 headers: {
-                    'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${token}`,
                 },
             });
             return response.data;
         } catch (error) {
-            const errorMessage = error.response?.data || error.message;
-            return rejectWithValue(errorMessage);
+            if (error.response && error.response.data) {
+                return rejectWithValue(error.response.data);
+            }
+            return rejectWithValue(error.message);
         }
     }
 );
 
-const editProductsSlice = createSlice({
-    name: 'editproducts',
-    initialState: {
-        fetchedImages: [],
-        error: null,
+// Create the slice
+const authSlice = createSlice({
+    name: 'auth',
+    initialState,
+    reducers: {
+        loginSuccess(state, action) {
+            state.isAuthenticated = true;
+            state.user = action.payload.user;
+            state.token = action.payload.token;
+            state.status = 'success';
+            state.message = action.payload.message;
+        },
+        loginFailure(state, action) {
+            state.isAuthenticated = false;
+            state.user = null;
+            state.token = null;
+            state.status = 'error';
+            state.message = action.payload.message;
+        },
+        signupSuccess(state, action) {
+            state.signupData = action.payload.signupData;
+            state.signupEmail = action.payload.email;
+            state.status = 'success';
+            state.message = action.payload.message;
+        },
+        signupFailure(state, action) {
+            state.status = 'error';
+            state.message = action.payload.message;
+        },
+        logout(state) {
+            state.isAuthenticated = false;
+            state.user = null;
+            state.token = null;
+            state.status = '';
+            state.message = '';
+            state.signupEmail = null;
+        },
     },
-    reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(uploadImage.fulfilled, (state, action) => {
-                const { data } = action.payload;
-                if (data && data.imageUrl) {
-                    state.fetchedImages.push({
-                        imageUrl: data.imageUrl,
-                        name: data.name,
-                        priority: data.priority,
-                        imageId: data.imageId,
-                    });
-                } else {
-                    console.error('Invalid payload data:', action.payload);
-                }
+            .addCase(updateUserDetails.pending, (state) => {
+                state.status = 'loading';
             })
-            .addCase(uploadImage.rejected, (state, action) => {
-                state.error = action.payload;
+            .addCase(updateUserDetails.fulfilled, (state, action) => {
+                state.status = 'success';
+                state.message = action.payload.message;
+                state.user = action.payload.data;
+            })
+            .addCase(updateUserDetails.rejected, (state, action) => {
+                state.status = 'error';
+                state.message = action.payload || 'Failed to update user details';
             });
     },
 });
 
-export default editProductsSlice.reducer;
+export const { loginSuccess, loginFailure, signupSuccess, signupFailure, logout } = authSlice.actions;
+export default authSlice.reducer;

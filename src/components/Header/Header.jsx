@@ -1,3 +1,4 @@
+
 import './style.css';
 import React, { useState, useEffect, Fragment, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -5,9 +6,11 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ListIcon from '@mui/icons-material/List';
 import SearchIcon from '@mui/icons-material/Search';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Drawer from '@mui/material/Drawer';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchAddresses } from '../../Redux/addressSlice';
 import { fetchExchangeRates, setSelectedCurrency } from '../../Redux/currencySlice';
 import { logout } from '../../Redux/AuthReducer';
 import { urls } from '../Schemas/images';
@@ -40,6 +43,41 @@ const Header = () => {
   const token = useSelector((state) => state.auth.token);
   const { items: cart } = useSelector((state) => state.cart);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { addresses, status, error } = useSelector((state) => state.address);
+
+
+  //select address
+  const [selectedAddress, setSelectedAddress] = useState(null);
+
+  useEffect(() => {
+    dispatch(fetchAddresses());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (addresses.length > 0) {
+      const savedAddress = sessionStorage.getItem('selectedAddress');
+      if (savedAddress) {
+        const address = JSON.parse(savedAddress);
+        const foundAddress = addresses.find(addr => addr.id === address.id);
+        if (foundAddress) {
+          setSelectedAddress(foundAddress);
+        } else {
+          const defaultAddress = addresses.find(addr => addr.isDefaultChecked);
+          setSelectedAddress(defaultAddress || addresses[0]);
+        }
+      } else {
+        const defaultAddress = addresses.find(addr => addr.isDefaultChecked);
+        setSelectedAddress(defaultAddress || addresses[0]);
+      }
+    }
+  }, [addresses]);
+
+  const handleAddressChange = (address) => {
+    setSelectedAddress(address);
+    sessionStorage.setItem('selectedAddress', JSON.stringify(address));
+  };
+
+
 
   //dropdown 
   const [isOpen, setIsOpen] = useState(false);
@@ -100,12 +138,18 @@ const Header = () => {
     setIsClickedTwo(prevState => !prevState);
   };
 
+  const [isClickedAdd, setIsClickedAdd] = useState(false);
+  const handleClickAdd = () => {
+    setIsClickedAdd(prevState => !prevState);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
-      if (isClicked || isClickedCate || isClickedTwo) {
+      if (isClicked || isClickedCate || isClickedTwo || isClickedAdd) {
         setIsClicked(false);
         setIsClickedCate(false);
         setIsClickedTwo(false);
+        setIsClickedAdd(false);
       }
     };
 
@@ -113,7 +157,7 @@ const Header = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isClicked, isClickedCate, isClickedTwo]);
+  }, [isClicked, isClickedCate, isClickedTwo, isClickedAdd]);
 
   const navigate = useNavigate();
   const tocart = () => {
@@ -237,12 +281,14 @@ const Header = () => {
     }
   };
 
+
   const truncateText = (text, maxLength) => {
+    if (!text) return '';
     if (text.length <= maxLength) {
       return text;
     }
     return text.slice(0, maxLength) + '';
-  }
+  };
 
 
   return (
@@ -259,6 +305,46 @@ const Header = () => {
 
         <div className="headerflex">
 
+          {isAuthenticated && user.role === 'Buyer' && (
+            <div className={`icon-container ${isClickedAdd ? 'clicked' : ''}`} onClick={handleClickAdd}>
+              <div className="flex">
+                <LocationOnIcon style={{ color: 'gray' }} />
+                <div className="flexcol-start">
+                  <div className="descrip">Deliver to</div>
+                  {selectedAddress && <div className='descrip'>{truncateText(selectedAddress?.address, 10)}..</div>}
+                </div>
+              </div>
+
+              {isClickedAdd && (
+                <div className="popup address-relative">
+                  <div className="address-container">
+                    { addresses && addresses.map((address) => (
+                      <div key={address.id} className={`address-card ${selectedAddress?.id === address.id ? 'selected' : ''}`}>
+
+                        <input type="radio" id={address.id} name="address" value={address.address} checked={selectedAddress?.id === address.id} onChange={() => handleAddressChange(address)} />
+
+                        <label htmlFor={address.id}>
+                          <div className="address-header">
+                            <div className='heading2'>{address.address}</div>
+                            <div className="tags">
+                              {address.isLocationChecked && <span className="tag shipping">Shipping</span>}
+                              {address.isBillingChecked && <span className="tag billing">Billing</span>}
+                              {address.isDefaultChecked && <span className="tag default">Default</span>}
+                            </div>
+                            <div className="descrip">
+                              {`${address.street}, ${address.area}, ${address.city}, ${address.selectedOrigin}`}
+                            </div>
+                          </div>
+                        </label>
+
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="dropdown-flag" ref={dropdownRef}>
             <div className="dropdown-flag-header" onClick={handleToggleDropdown}>
               {selectedCurrency ? (
@@ -268,7 +354,7 @@ const Header = () => {
                 </div>
               ) : (
                 <div className='descrip'>
-                  <div className="syc">Select your country</div>
+                  <div className="syc">Select your currency</div>
                   <div className='sycmob'>Select</div>
                 </div>
               )}
@@ -289,7 +375,7 @@ const Header = () => {
           </div>
 
           <div className="search-input2">
-            <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} onKeyPress={handleKeyPress} placeholder='Search here...' />
+            <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} onKeyPress={handleKeyPress} placeholder='Search Ulinkit...' />
             <span>
               <SearchIcon onClick={handleSearch} />
             </span>
@@ -349,7 +435,7 @@ const Header = () => {
                     <Link to={user.role === 'Seller' ? '/seller-dashboard/seller-company-profile' : '/company-profile'} className="subpop-options">My Company Profile</Link>
                     {user.role === 'Buyer' && (<Link to='/payment' className="subpop-options">Payment Management</Link>)}
                     <Link to={user.role === 'Seller' ? '/seller-dashboard/access-management' : '/access-management'} className="subpop-options">Access Management</Link>
-                    {user.role === 'Buyer' && (<Link to="/buyer-address" className="subpop-options">Addresses</Link>)}
+                    <Link to="/my-addresses" className="subpop-options">Addresses</Link>
                     {user.role === 'Seller' && (<div className="subpop-options">Saved Products</div>)}
                   </div>
 

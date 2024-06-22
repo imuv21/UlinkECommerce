@@ -14,6 +14,7 @@ import forgotPasswordReducer from './forgotPasswordSlice';
 import addressReducer from './addressSlice';
 import creditInfoSlice from './creditInfoSlice';
 import businessProfileSlice from './businessProfileSlice';
+import sellerBusinessProfileSlice from './sellerBusinessProfileSlice';
 
 
 const rootReducer = combineReducers({
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   address: addressReducer,
   creditInfo: creditInfoSlice,
   businessProfile: businessProfileSlice,
+  sellerBusinessProfile: sellerBusinessProfileSlice,
 });
 
 export default rootReducer;

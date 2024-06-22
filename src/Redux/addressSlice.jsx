@@ -8,7 +8,7 @@ export const fetchAddresses = createAsyncThunk(
         try {
             const { auth } = getState();
             const token = auth.token;
-            const response = await axios.get(`https://api.ulinkit.com/api/seller/get-address`, {
+            const response = await axios.get(`https://api.ulinkit.com/api/user/get-address`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -31,7 +31,7 @@ export const addAddress = createAsyncThunk(
         try {
             const { auth } = getState();
             const token = auth.token;
-            const response = await axios.post(`https://api.ulinkit.com/api/seller/add-address`, addressData, {
+            const response = await axios.post(`https://api.ulinkit.com/api/user/add-address`, addressData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -55,12 +55,33 @@ export const deleteAddress = createAsyncThunk(
         try {
             const { auth } = getState();
             const token = auth.token;
-            const response = await axios.delete(`https://api.ulinkit.com/api/seller/delete-address/${id}`, {
+            const response = await axios.delete(`https://api.ulinkit.com/api/user/delete-address/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
             return id; 
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const updateAddress = createAsyncThunk(
+    'address/updateAddress',
+    async ({ id, formData }, { getState, rejectWithValue }) => {
+        try {
+            const { auth } = getState();
+            const token = auth.token;
+            const response = await axios.post('https://api.ulinkit.com/api/user/update-address', {
+                ...formData,
+                id
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
         }
@@ -77,6 +98,8 @@ const addressSlice = createSlice({
         addAddressError: null,
         deleteAddressStatus: 'idle',
         deleteAddressError: null,
+        updateAddressStatus: 'idle',
+        updateAddressError: null,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -113,6 +136,20 @@ const addressSlice = createSlice({
             .addCase(deleteAddress.rejected, (state, action) => {
                 state.deleteAddressStatus = 'failed';
                 state.deleteAddressError = action.payload || 'Failed to delete address';
+            })
+            .addCase(updateAddress.pending, (state) => {
+                state.updateAddressStatus = 'loading';
+            })
+            .addCase(updateAddress.fulfilled, (state, action) => {
+                state.updateAddressStatus = 'succeeded';
+                const index = state.addresses.findIndex(address => address.id === action.payload.id);
+                if (index !== -1) {
+                    state.addresses[index] = action.payload;
+                }
+            })
+            .addCase(updateAddress.rejected, (state, action) => {
+                state.updateAddressStatus = 'failed';
+                state.updateAddressError = action.payload || 'Failed to update address';
             });
     },
 });

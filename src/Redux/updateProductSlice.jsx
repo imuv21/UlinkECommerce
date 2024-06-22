@@ -98,7 +98,7 @@ const updateProductSlice = createSlice({
                 state.fetchedImages = state.fetchedImages.filter(image => image.imageId !== action.payload.imageId);
             })
             .addCase(uploadImage.fulfilled, (state, action) => {
-                const { data } = action.payload;
+                const data = action.payload.data;
                 if (data && data.imageUrl) {
                     state.fetchedImages.push({
                         imageUrl: data.imageUrl,
