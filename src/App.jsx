@@ -74,6 +74,7 @@ const CategoryPages = lazy(() => import('./pages/CategoryPages'));
 const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const PolicyComponent = lazy(() => import('./pages/PolicyComponent'));
+const FAQPage = lazy(() => import('./pages/FAQ/FAQPage'));
 
 //Other
 const Image = lazy(() => import('./components/Image'));
@@ -105,6 +106,7 @@ function App() {
             <Route path='/return-policy' element={<PolicyComponent />} />
             <Route path='/become-a-seller' element={<BecomeASeller />} />
             <Route path='/commission-structure' element={<CommissionStructure />} />
+            <Route path='/faq' element={<FAQPage />} />
             
             
             {/* other */}

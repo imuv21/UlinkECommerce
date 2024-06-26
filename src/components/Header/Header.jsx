@@ -375,7 +375,7 @@ const Header = () => {
           </div>
 
           <div className="search-input2">
-            <input type='text' value={query} onChange={(e) => setQuery(e.target.value)} onKeyPress={handleKeyPress} placeholder='Search Ulinkit...' />
+            <input type='text' name="query_search" value={query} onChange={(e) => setQuery(e.target.value)} onKeyPress={handleKeyPress} placeholder='Search Ulinkit...' />
             <span>
               <SearchIcon onClick={handleSearch} />
             </span>

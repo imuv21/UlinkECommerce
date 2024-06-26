@@ -425,7 +425,7 @@ const BecomeASeller = () => {
 
 
 
-                    <button className='btn box flex' style={{ width: '20%', marginTop: '20px', backgroundColor: 'var(--CodeOne)' }} type='submit'><div className="heading2">View all FAQs</div></button>
+                    <Link to="/faq" className='btn box flex' style={{ width: '20%', marginTop: '20px', backgroundColor: 'var(--CodeOne)' }} type='submit'><div className="heading2">View all FAQs</div></Link>
                 </div>
             </div>
 

@@ -38,8 +38,8 @@ const ProductDetails = () => {
         dispatch(fetchProductDetail(id));
         dispatch(fetchExchangeRates());
     }, [dispatch, id]);
-    // Fetch currency options and exchange rates
     
+    // Fetch currency options and exchange rates
     const convertPrice = (price, fromCurrency) => {
         const rate = exchangeRates[selectedCurrency];
         if (!rate) return price;
@@ -112,13 +112,11 @@ const ProductDetails = () => {
             </ul>
         );
     };
-
     const cartHandler = () => {
         if (!product) return;
         dispatch(addToCart({ productId: id, quantity: value }));
         alert(`${value} items added to cart successfully!`);
     };
-
     const convertPascalToReadable = (text) => {
         return text.replace(/([A-Z])/g, ' $1').trim();
     };
@@ -138,6 +136,7 @@ const ProductDetails = () => {
 
     return (
         <div className="flexcol wh product-detail">
+            
             <Helmet>
                 <title>Product Details</title>
             </Helmet>
@@ -362,6 +361,7 @@ const ProductDetails = () => {
                     {product.addInfo}
                 </div>
             </Fragment>
+
         </div>
     )
 }

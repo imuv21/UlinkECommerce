@@ -162,37 +162,37 @@ const Checkout = () => {
 
 
   //payment methods 
-  const checkoutHandler = async (amount, currency) => {
+  // const checkoutHandler = async (amount, currency) => {
 
-    const { data: { key } } = await axios.get('http://localhost:4000/api/getkey');
+  //   const { data: { key } } = await axios.get('http://localhost:4000/api/getkey');
 
-    const { data: { order } } = await axios.post('http://localhost:4000/api/checkout', { amount, currency })
+  //   const { data: { order } } = await axios.post('http://localhost:4000/api/checkout', { amount, currency })
 
-    const options = {
-      key: key,
-      amount: order.amount,
-      currency: order.currency,
-      name: "Uttam Verma",
-      description: "Test Transaction",
-      image: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
-      order_id: order.id,
-      callback_url: "http://localhost:4000/api/paymentverification",
-      prefill: {
-        name: "Uttam Verma",
-        email: "imuv21@gmail.com",
-        contact: "9026075867"
-      },
-      notes: {
-        address: "Razorpay Corporate Office"
-      },
-      theme: {
-        color: "#00aaff"
-      }
-    };
+  //   const options = {
+  //     key: key,
+  //     amount: order.amount,
+  //     currency: order.currency,
+  //     name: "Uttam Verma",
+  //     description: "Test Transaction",
+  //     image: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
+  //     order_id: order.id,
+  //     callback_url: "http://localhost:4000/api/paymentverification",
+  //     prefill: {
+  //       name: "Uttam Verma",
+  //       email: "imuv21@gmail.com",
+  //       contact: "9026075867"
+  //     },
+  //     notes: {
+  //       address: "Razorpay Corporate Office"
+  //     },
+  //     theme: {
+  //       color: "#00aaff"
+  //     }
+  //   };
     
-    const razor = new window.Razorpay(options);
-    razor.open();
-  }
+  //   const razor = new window.Razorpay(options);
+  //   razor.open();
+  // }
 
 
 
@@ -384,9 +384,9 @@ const Checkout = () => {
               <div className="heading2"><span>Order total</span></div>
               <div className="heading2"><span>{currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</span></div>
             </div>
-            <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
+            {/* <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
               <button className='btn addtocart flex' onClick={() => checkoutHandler(convertPrice(totalSellPrice, currency), selectedCurrency)}><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

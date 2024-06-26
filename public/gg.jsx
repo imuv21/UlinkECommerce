@@ -1,92 +1,50 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+const handleDoc = async (event) => {
+  event.preventDefault();
+  const newErrors = {};
 
-// Define the initial state
-const initialState = {
-    isAuthenticated: false,
-    user: null,
-    token: null,
-    status: '',
-    message: '',
-    signupEmail: null,
-    signupData: null,
-};
+  if (!selectedFile) newErrors.selectedFile = 'Business registration document is required.';
+  if (!selectedDate) newErrors.selectedDate = 'Expiry date is required.';
+  if (!regDocNumber.trim()) newErrors.regDocNumber = 'Registration document number is required.';
+  if (!selectedFileTwo) newErrors.selectedFileTwo = 'Identity document is required.';
+  if (!selectedDateTwo) newErrors.selectedDateTwo = 'Expiry date is required.';
+  if (!idDocNumber.trim()) newErrors.idDocNumber = 'Identity document number is required.';
+  setDocErrors(newErrors);
 
-// Create an async thunk for updating user details
-export const updateUserDetails = createAsyncThunk(
-    'auth/updateUserDetails',
-    async ({ profile, token }, { rejectWithValue }) => {
-        try {
-            const response = await axios.post('https://api.ulinkit.com/api/user/update-details', null, {
-                params: { profile },
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            return response.data;
-        } catch (error) {
-            if (error.response && error.response.data) {
-                return rejectWithValue(error.response.data);
-            }
-            return rejectWithValue(error.message);
-        }
+  if (Object.keys(newErrors).length === 0) {
+    const formDataTradeLicense = new FormData();
+    formDataTradeLicense.append('file', selectedFile);
+    const tradeLicenseData = {
+      documentNumber: regDocNumber,
+      isBusinessOwner,
+      expiryDate: selectedDate,
+      documentType: 'TRADE_LICENSE'
+    };
+
+    const formDataIdentityDoc = new FormData();
+    formDataIdentityDoc.append('file', selectedFileTwo);
+    if (selectedFileThree) {
+      formDataIdentityDoc.append('file', selectedFileThree);
     }
-);
+    const identityDocData = {
+      documentNumber: idDocNumber,
+      isBusinessOwner,
+      expiryDate: selectedDateTwo,
+      documentType: 'IDENTITY_DOCUMENT'
+    };
 
-// Create the slice
-const authSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {
-        loginSuccess(state, action) {
-            state.isAuthenticated = true;
-            state.user = action.payload.user;
-            state.token = action.payload.token;
-            state.status = 'success';
-            state.message = action.payload.message;
-        },
-        loginFailure(state, action) {
-            state.isAuthenticated = false;
-            state.user = null;
-            state.token = null;
-            state.status = 'error';
-            state.message = action.payload.message;
-        },
-        signupSuccess(state, action) {
-            state.signupData = action.payload.signupData;
-            state.signupEmail = action.payload.email;
-            state.status = 'success';
-            state.message = action.payload.message;
-        },
-        signupFailure(state, action) {
-            state.status = 'error';
-            state.message = action.payload.message;
-        },
-        logout(state) {
-            state.isAuthenticated = false;
-            state.user = null;
-            state.token = null;
-            state.status = '';
-            state.message = '';
-            state.signupEmail = null;
-        },
-    },
-    extraReducers: (builder) => {
-        builder
-            .addCase(updateUserDetails.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(updateUserDetails.fulfilled, (state, action) => {
-                state.status = 'success';
-                state.message = action.payload.message;
-                state.user = action.payload.data;
-            })
-            .addCase(updateUserDetails.rejected, (state, action) => {
-                state.status = 'error';
-                state.message = action.payload || 'Failed to update user details';
-            });
-    },
-});
+    try {
+      await dispatch(uploadDocument({ file: formDataTradeLicense, docType: 'TRADE_LICENSE' }));
+      await dispatch(uploadDocument({ file: formDataIdentityDoc, docType: 'IDENTITY_DOCUMENT' }));
+      await dispatch(updateSellerDocData({ documentType: 'TRADE_LICENSE', documentData: tradeLicenseData }));
+      await dispatch(updateSellerDocData({ documentType: 'IDENTITY_DOCUMENT', documentData: identityDocData }));
 
-export const { loginSuccess, loginFailure, signupSuccess, signupFailure, logout } = authSlice.actions;
-export default authSlice.reducer;
+      alert("Form submitted successfully!");
+      setIsEditingDoc(false);
+      setDocErrors({});
+    } catch (error) {
+      alert("Form submission failed. Please try again.");
+    }
+  } else {
+    alert("Form submission failed. Please fix the errors.");
+  }
+};

@@ -14,6 +14,8 @@ const SellerHome = () => {
 
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const uploadedImageUrl = useSelector((state) => state.sellerBusinessProfile.imageUrl);
+    const defaultImageUrl = "https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg";
 
     const quickLinks = [
         {
@@ -344,7 +346,7 @@ const SellerHome = () => {
                     <div className="sel-box">
                         <div className="flex wh" style={{ padding: '15px', gap: '15px' }}>
                             <div className="flex" style={{ width: 'fit-content' }}>
-                                <div className="flex profile">UV</div>
+                                <img src={uploadedImageUrl || defaultImageUrl}  className="profile" alt='profile' />
                             </div>
                             <div className="flexcol" style={{ alignItems: 'start', width: '100%' }}>
                                 {isAuthenticated && (

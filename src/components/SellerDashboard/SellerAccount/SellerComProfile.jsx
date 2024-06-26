@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { businessSchema } from '../../Schemas/validationSchema';
-import { fetchSellerBusinessProfile, updateSellerBusinessProfile } from '../../../Redux/sellerBusinessProfileSlice';
+import { fetchSellerBusinessProfile, updateSellerBusinessProfile, updateSellerDocData, uploadDocument, uploadProfileImage, deleteSellerDocument } from '../../../Redux/sellerBusinessProfileSlice';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
@@ -18,11 +18,12 @@ const schema = yupResolver(businessSchema);
 const SellerComProfile = () => {
 
     const dispatch = useDispatch();
-    const { sellerprofile, updateStatus, updateError } = useSelector((state) => state.sellerBusinessProfile);
+    const { sellerprofile, status, error, updateStatus, updateError } = useSelector((state) => state.sellerBusinessProfile);
 
     useEffect(() => {
         dispatch(fetchSellerBusinessProfile());
     }, [dispatch]);
+
 
     const { handleSubmit, control, formState: { errors } } = useForm({
         resolver: schema,
@@ -60,8 +61,14 @@ const SellerComProfile = () => {
     }, []);
 
     // profile photo upload functionality
+    const uploadedImageUrl = useSelector((state) => state.sellerBusinessProfile.imageUrl);
     const [selectedImage, setSelectedImage] = useState(null);
     const [imageUrl, setImageUrl] = useState('https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg');
+    useEffect(() => {
+        if (uploadedImageUrl) {
+            setImageUrl(uploadedImageUrl);
+        }
+    }, [uploadedImageUrl]);
     const handleImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
@@ -72,8 +79,10 @@ const SellerComProfile = () => {
                 setImageUrl(e.target.result);
             };
             reader.readAsDataURL(file);
+            dispatch(uploadProfileImage(file));
         }
     };
+    
     const handleUploadClick = () => {
         document.getElementById('avatar').click();
     };
@@ -83,33 +92,10 @@ const SellerComProfile = () => {
 
 
 
-    //show the business docs form data
-    const getStoredFormData = () => {
-        const storedData = localStorage.getItem('business-docs');
-        return storedData ? JSON.parse(storedData) : null;
-    };
-    const [storedFormData, setStoredFormData] = useState(getStoredFormData());
 
     //Doc submit and edit functionality
     const [docErrors, setDocErrors] = useState({});
     const [isEditingDoc, setIsEditingDoc] = useState(false);
-
-    useEffect(() => {
-        const storedData = localStorage.getItem('business-docs');
-        if (storedData) {
-            const parsedData = JSON.parse(storedData);
-            setStoredFormData(parsedData);
-            setSelectedFile(parsedData.selectedFile);
-            setSelectedDate(parsedData.selectedDate);
-            setRegDocNumber(parsedData.regDocNumber);
-            setSelectedFileTwo(parsedData.selectedFileTwo);
-            setSelectedDateTwo(parsedData.selectedDateTwo);
-            setIdDocNumber(parsedData.idDocNumber);
-            setSelectedFileThree(parsedData.selectedFileThree);
-            setIsBusinessOwner(parsedData.isBusinessOwner);
-            setIsEditingDoc(true);
-        }
-    }, []);
 
     const clearError = (fieldName) => {
         setDocErrors(prevErrors => ({
@@ -122,6 +108,9 @@ const SellerComProfile = () => {
         event.preventDefault();
         const newErrors = {};
 
+        if (!selectedFile.file && !selectedFile.name) {
+            newErrors.selectedFile = 'Business registration document is required.';
+        }
         if (!selectedFile) {
             newErrors.selectedFile = 'Business registration document is required.';
         }
@@ -130,6 +119,9 @@ const SellerComProfile = () => {
         }
         if (!regDocNumber.trim()) {
             newErrors.regDocNumber = 'Registration document number is required.';
+        }
+        if (!selectedFileTwo.file && !selectedFileTwo.name) {
+            newErrors.selectedFileTwo = 'Identity document is required.';
         }
         if (!selectedFileTwo) {
             newErrors.selectedFileTwo = 'Identity document is required.';
@@ -144,36 +136,41 @@ const SellerComProfile = () => {
 
         if (Object.keys(newErrors).length === 0) {
 
-            const convertFileToBase64 = (file) => {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => {
-                        resolve(reader.result);
-                    };
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                });
-            };
-            const selectedFileBase64 = await convertFileToBase64(selectedFile);
-            const selectedFileTwoBase64 = selectedFileTwo ? await convertFileToBase64(selectedFileTwo) : null;
-            const selectedFileThreeBase64 = selectedFileThree ? await convertFileToBase64(selectedFileThree) : null;
-
-            const formData = {
-                selectedFile: selectedFileBase64,
-                selectedDate,
-                regDocNumber,
-                selectedFileTwo: selectedFileTwoBase64,
-                selectedDateTwo,
-                idDocNumber,
-                selectedFileThree: selectedFileThreeBase64,
+            const tradeLicenseData = {
+                documentNumber: regDocNumber,
                 isBusinessOwner,
+                expiryDate: selectedDate,
+                documentType: 'TRADE_LICENSE'
             };
 
-            localStorage.setItem("business-docs", JSON.stringify(formData));
-            alert("Form submitted successfully!");
-            setIsEditingDoc(false);
-            setDocErrors({});
-            setStoredFormData(formData);
+            const identityDocData = {
+                documentNumber: idDocNumber,
+                isBusinessOwner,
+                expiryDate: selectedDateTwo,
+                documentType: 'IDENTITY_DOCUMENT'
+            };
+
+            try {
+                if (selectedFile && selectedFile.file) {
+                    await dispatch(uploadDocument({ file: selectedFile.file, docType: 'TRADE_LICENSE' }));
+                }
+                if (selectedFileTwo && selectedFileTwo.file) {
+                    await dispatch(uploadDocument({ file: selectedFileTwo.file, docType: 'IDENTITY_DOCUMENT' }));
+                }
+                if (selectedFileThree && selectedFileThree.file) {
+                    await dispatch(uploadDocument({ file: selectedFileThree.file, docType: 'IDENTITY_DOCUMENT' }));
+                }
+                dispatch(updateSellerDocData({ documentType: 'TRADE_LICENSE', documentData: tradeLicenseData }));
+                dispatch(updateSellerDocData({ documentType: 'IDENTITY_DOCUMENT', documentData: identityDocData }));
+
+                alert("Form submitted successfully!");
+                setIsEditingDoc(false);
+                setDocErrors({});
+                await dispatch(fetchSellerBusinessProfile());
+            } catch (error) {
+                alert("Form submission failed. Please try again.");
+            }
+
         } else {
             alert("Form submission failed. Please fix the errors.");
         }
@@ -182,7 +179,8 @@ const SellerComProfile = () => {
     const handleEditClickDoc = () => {
         setIsEditingDoc(true);
     };
-    const cancelDoc = () => {
+    const cancelDoc = async () => {
+        await dispatch(fetchSellerBusinessProfile());
         setIsEditingDoc(false);
     }
 
@@ -192,31 +190,63 @@ const SellerComProfile = () => {
     const [isBusinessOwner, setIsBusinessOwner] = useState(false);
 
     //file upload one, two and three
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [selectedFileTwo, setSelectedFileTwo] = useState(null);
-    const [selectedFileThree, setSelectedFileThree] = useState(null);
-    const [showFileThreeInput, setShowFileThreeInput] = useState(false);
+    const [selectedFile, setSelectedFile] = useState({ file: null, name: '', path: '', size: '', id: '' });
+    const [selectedFileTwo, setSelectedFileTwo] = useState({ file: null, name: '', path: '', size: '', id: '' });
+    const [selectedFileThree, setSelectedFileThree] = useState({ file: null, name: '', path: '', size: '', id: '' });
+
+    useEffect(() => {
+        if (sellerprofile) {
+            if (sellerprofile.documents.TRADE_LICENSE) {
+                const tradeLicense = sellerprofile.documents.TRADE_LICENSE;
+                setSelectedDate(tradeLicense.expiryDate || '');
+                setRegDocNumber(tradeLicense.documentNumber || '');
+                if (tradeLicense.docs && tradeLicense.docs.length > 0) {
+                    const tradeLicenseFile = tradeLicense.docs.length > 0 ? tradeLicense.docs[0] : { filename: '', filesize: '', documentPath: '', id: '' };
+                    setSelectedFile({ file: null, name: tradeLicenseFile.filename, path: tradeLicenseFile.documentPath, size: tradeLicenseFile.filesize, id: tradeLicenseFile.id });
+                }
+            }
+            if (sellerprofile.documents.IDENTITY_DOCUMENT) {
+                const identityDocument = sellerprofile.documents.IDENTITY_DOCUMENT;
+                setSelectedDateTwo(identityDocument.expiryDate || '');
+                setIdDocNumber(identityDocument.documentNumber || '');
+                if (identityDocument.docs && identityDocument.docs.length > 0) {
+                    const identityDocumentFile = identityDocument.docs.length > 0 ? identityDocument.docs[0] : { filename: '', filesize: '', documentPath: '', id: '' };
+                    setSelectedFileTwo({ file: null, name: identityDocumentFile.filename, path: identityDocumentFile.documentPath, size: identityDocumentFile.filesize, id: identityDocumentFile.id });
+                }
+                if (identityDocument.docs && identityDocument.docs.length > 1) {
+                    const identityDocumentFileTwo = identityDocument.docs.length > 1 ? identityDocument.docs[1] : { filename: '', filesize: '', documentPath: '', id: '' };
+                    setSelectedFileThree({ file: null, name: identityDocumentFileTwo.filename, path: identityDocumentFileTwo.documentPath, size: identityDocumentFileTwo.filesize, id: identityDocumentFileTwo.id });
+                }
+            }
+            setIsBusinessOwner(sellerprofile.isBusinessOwner);
+        }
+    }, [sellerprofile]);
+
+    const handleDeleteFile = async (fileData, setFile, event) => {
+        event.stopPropagation();
+        const { path: documentPath, name: filename, size: filesize, id } = fileData;
+        try {
+            await dispatch(deleteSellerDocument({ documentPath, filename, filesize, id }));
+            setFile({ file: null, name: '', path: '', size: '', id: '' });
+        } catch (error) {
+            console.error("Failed to delete file:", error);
+        }
+    };
+
     const allowedFormats = ['jpg', 'jpeg', 'png', 'tif', 'pdf'];
     const maxSize = 10 * 1024 * 1024;
-    useEffect(() => {
-        if (!selectedFileTwo && !selectedFileThree) {
-            setShowFileThreeInput(false);
-        }
-    }, [selectedFileTwo, selectedFileThree]);
+
     const handleFileChange = (event, setFile, fieldName) => {
         const file = event.target.files[0];
         if (file) {
             const fileFormat = file.name.split('.').pop().toLowerCase();
             if (file.size <= maxSize && allowedFormats.includes(fileFormat)) {
-                setFile(file);
+                setFile({ file, name: file.name });
                 clearError(fieldName);
             } else {
                 alert('Invalid file format or size. Please upload a file within 10MB and with a JPG, JPEG, PNG, TIF, or PDF format.');
             }
         }
-    };
-    const handleDeleteFile = (setFile) => {
-        setFile(null);
     };
 
     // date picker one and two 
@@ -233,6 +263,9 @@ const SellerComProfile = () => {
             alert('Please select a date from today or later.');
         }
     };
+
+
+
 
 
 
@@ -306,11 +339,7 @@ const SellerComProfile = () => {
                                         <div className="scp-profile-image-uploader">
                                             <div className="scp-image-container">
                                                 <img src={imageUrl} alt="Profile" className="scp-profile-image" />
-                                                <div className="scp-edit-icon" onClick={handleUploadClick} style={{ display: 'none' }} >
-                                                    <AddPhotoAlternateIcon />
-                                                </div>
                                             </div>
-                                            <input id="avatar" type="file" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} />
                                         </div>
 
                                         <div className="cp-row">
@@ -361,7 +390,7 @@ const SellerComProfile = () => {
                                 <div className="flex" style={{ gap: '10px' }}>
                                     <DescriptionIcon /> <div className="heading">Add Your Business Documents</div>
                                 </div>
-                                {!isEditingDoc && <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClickDoc}> {storedFormData ? 'Edit' : 'Add'} </div>}
+                                {!isEditingDoc && <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClickDoc}> {sellerprofile ? 'Edit' : 'Add'} </div>}
                             </div>
                             {isEditingDoc && <div className="flex-start" style={{ gap: '5px', justifyContent: 'start', width: '100%' }}>
                                 <div className="descrip2">We need the following documents to verify your business and give you access to all Tradeling features. We will get in touch with you when these documents need to be renewed.</div>
@@ -377,10 +406,10 @@ const SellerComProfile = () => {
                                     </div>
 
                                     <label className="br-file-upload">
-                                        {selectedFile ? (
+                                        {(selectedFile && selectedFile.name) ? (
                                             <div className='afterUpload flex'>
                                                 <div className="heading2 wh">{selectedFile.name}</div>
-                                                <DeleteForeverIcon onClick={() => handleDeleteFile(setSelectedFile)} />
+                                                <DeleteForeverIcon onClick={(event) => handleDeleteFile(selectedFile, setSelectedFile, event)} />
                                             </div>
                                         ) : (
                                             <div className='beforeUpload flex'>
@@ -413,10 +442,10 @@ const SellerComProfile = () => {
                                     </div>
 
                                     <label className="br-file-upload">
-                                        {selectedFileTwo ? (
+                                        {(selectedFileTwo && selectedFileTwo.name) ? (
                                             <div className='afterUpload flex'>
                                                 <div className="heading2 wh">{selectedFileTwo.name}</div>
-                                                <DeleteForeverIcon onClick={() => handleDeleteFile(setSelectedFileTwo)} />
+                                                <DeleteForeverIcon onClick={(event) => handleDeleteFile(selectedFileTwo, setSelectedFileTwo, event)} />
                                             </div>
                                         ) : (
                                             <div className='beforeUpload flex'>
@@ -427,29 +456,28 @@ const SellerComProfile = () => {
                                                 </div>
                                             </div>
                                         )}
-                                        <input type="file" name='selectedFileTwo' onChange={(e) => { handleFileChange(e, setSelectedFileTwo, 'selectedFileTwo'); setShowFileThreeInput(true); }} />
+                                        <input type="file" name='selectedFileTwo' onChange={(e) => { handleFileChange(e, setSelectedFileTwo, 'selectedFileTwo'); }} />
                                     </label>
                                     {docErrors.selectedFileTwo && <div className="error">{docErrors.selectedFileTwo}</div>}
 
-                                    {showFileThreeInput && (
-                                        <label className="br-file-upload">
-                                            {selectedFileThree ? (
-                                                <div className='afterUpload flex'>
-                                                    <div className="heading2 wh">{selectedFileThree.name}</div>
-                                                    <DeleteForeverIcon onClick={() => handleDeleteFile(setSelectedFileThree)} />
+                                    <label className="br-file-upload">
+                                        {(selectedFileThree && selectedFileThree.name) ? (
+                                            <div className='afterUpload flex'>
+                                                <div className="heading2 wh">{selectedFileThree.name}</div>
+                                                <DeleteForeverIcon onClick={(event) => handleDeleteFile(selectedFileThree, setSelectedFileThree, event)} />
+                                            </div>
+                                        ) : (
+                                            <div className='beforeUpload flex'>
+                                                <UploadFileIcon />
+                                                <div className='flexcol wh'>
+                                                    <div className="heading2 wh">Attach File</div>
+                                                    <div className="descrip wh">Only JPG, JPEG, PNG, TIF, and PDF formats at 10MB or less</div>
                                                 </div>
-                                            ) : (
-                                                <div className='beforeUpload flex'>
-                                                    <UploadFileIcon />
-                                                    <div className='flexcol wh'>
-                                                        <div className="heading2 wh">Attach File</div>
-                                                        <div className="descrip wh">Only JPG, JPEG, PNG, TIF, and PDF formats at 10MB or less</div>
-                                                    </div>
-                                                </div>
-                                            )}
-                                            <input type="file" name='selectedFileThree' onChange={(e) => handleFileChange(e, setSelectedFileThree, 'selectedFileThree')} />
-                                        </label>
-                                    )}
+                                            </div>
+                                        )}
+                                        <input type="file" name='selectedFileThree' onChange={(e) => handleFileChange(e, setSelectedFileThree, 'selectedFileThree')} />
+                                    </label>
+
 
                                     <div className="flexcol-start wh" style={{ gap: '5px' }}>
                                         <div className='heading2'>Select expiry date</div>
@@ -475,31 +503,39 @@ const SellerComProfile = () => {
                                     <div className="heading2">To change your business documents please contact Ulinkit at support@ulinkit.com</div>
                                 </div>
 
-                                {storedFormData &&
+                                {sellerprofile && sellerprofile.documents &&
                                     <div className="bd_overview">
                                         <div className="bd_overview_one">
-                                            <div className="bd_over-heading"><div>Registration Number</div> <div className='bd_captext'>{storedFormData?.regDocNumber || 'N/A'}</div></div>
-                                            <div className="bd_over-heading"><div>Identity Number</div> <div className='bd_captext'>{storedFormData?.idDocNumber || 'N/A'}</div></div>
+                                            <div className="bd_over-heading"><div>Registration Number</div> <div className='bd_captext'>{sellerprofile?.documents?.TRADE_LICENSE?.documentNumber || 'N/A'}</div></div>
+                                            <div className="bd_over-heading"><div>Identity Number</div> <div className='bd_captext'>{sellerprofile?.documents?.IDENTITY_DOCUMENT?.documentNumber || 'N/A'}</div></div>
                                         </div>
                                         <div className="bd_overview_one">
-                                            <div className="bd_over-heading"><div>Expiry Date</div> <div className='bd_captext'>{storedFormData?.selectedDate || 'N/A'}</div></div>
-                                            <div className="bd_over-heading"><div>Expiry Date</div> <div className='bd_captext'>{storedFormData?.selectedDateTwo || 'N/A'}</div></div>
+                                            <div className="bd_over-heading"><div>Expiry Date</div> <div className='bd_captext'>{sellerprofile?.documents?.TRADE_LICENSE?.expiryDate || 'N/A'}</div></div>
+                                            <div className="bd_over-heading"><div>Expiry Date</div> <div className='bd_captext'>{sellerprofile?.documents?.IDENTITY_DOCUMENT?.expiryDate || 'N/A'}</div></div>
                                         </div>
                                         <div className="bd_overview_one">
                                             <div className="bd_over">
                                                 <div className="bd_over_box">
-                                                    <div className="descrip warning-btn3" style={{ width: 'fit-content' }}>Pending</div>
+                                                    <div className="descrip warning-btn3" style={{ width: 'fit-content' }}>{sellerprofile?.documents?.TRADE_LICENSE?.status || 'N/A'}</div>
                                                 </div>
                                                 <div className="bd_over_box">
-                                                    <a href={storedFormData?.selectedFile} className='descrip2 hoverr' download="business_registration_document">Download</a>
+                                                    {
+                                                        sellerprofile?.documents?.TRADE_LICENSE?.docs && sellerprofile.documents.TRADE_LICENSE.docs[0] && sellerprofile.documents.TRADE_LICENSE.docs[0].documentPath ?
+                                                        (<a href={sellerprofile.documents.TRADE_LICENSE.docs[0].documentPath} className='descrip2 hoverr' download="business_registration_document">Download</a>) :
+                                                        (<div className='descrip2' style={{whiteSpace: 'nowrap'}}  >No document</div>)
+                                                    }
                                                 </div>
                                             </div>
                                             <div className="bd_over">
                                                 <div className="bd_over_box">
-                                                    <div className="descrip warning-btn3" style={{ width: 'fit-content' }}>Pending</div>
+                                                    <div className="descrip warning-btn3" style={{ width: 'fit-content' }}>{sellerprofile?.documents?.IDENTITY_DOCUMENT?.status || 'N/A'}</div>
                                                 </div>
                                                 <div className="bd_over_box">
-                                                    <a href={storedFormData?.selectedFileTwo} className='descrip2 hoverr' download="identity_document">Download</a>
+                                                    {
+                                                        sellerprofile?.documents?.IDENTITY_DOCUMENT?.docs && sellerprofile.documents.IDENTITY_DOCUMENT.docs[0] && sellerprofile.documents.IDENTITY_DOCUMENT.docs[0].documentPath ?
+                                                        (<a href={sellerprofile.documents.IDENTITY_DOCUMENT.docs[0].documentPath} className='descrip2 hoverr' download="identity_document">Download</a>) : 
+                                                        (<div className='descrip2' style={{whiteSpace: 'nowrap'}} >No document</div>)
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -510,7 +546,7 @@ const SellerComProfile = () => {
 
                         {isEditingDoc &&
                             <div className="flex" style={{ gap: '20px' }}>
-                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}> {storedFormData ? 'Update' : 'Submit'} </button>
+                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}> {sellerprofile ? 'Update' : 'Submit'} </button>
                                 <button type="button" className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={cancelDoc} >Cancel</button>
                             </div>
                         }

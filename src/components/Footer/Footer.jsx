@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import './footer.css';
 import whatsapp from '../../assets/whatsappicon.png';
@@ -16,10 +16,30 @@ import netbanking from '../../assets/netbanking.png';
 
 
 const Footer = () => {
+
+  //clicks
+  const [isClickedFooter, setIsClickedFooter] = useState(false);
+  const handleClickFooter = () => {
+    setIsClickedFooter(prevState => !prevState);
+  };
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isClickedFooter) {
+        setIsClickedFooter(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isClickedFooter]);
+
+
   return (
 
     <Fragment>
-      
       <div className="supContFooter">
         <div className="footer-section">
           <div className="footer">
@@ -54,8 +74,8 @@ const Footer = () => {
             <div className="item-list">
               <Link className="itemLink">Help</Link>
               <Link className="itemLink">Contact us</Link>
-              <Link className="itemLink">Terms and Conditions</Link>
-              <Link className="itemLink">Return and refund policy</Link>
+              <Link to="/faq" className="itemLink">FAQs</Link>
+              <Link to="/terms-and-conditions" className="itemLink">Terms and Conditions</Link>
             </div>
           </div>
           <div className="footer">
@@ -77,13 +97,25 @@ const Footer = () => {
             </div>
           </div>
         </div>
-
         <div className="footer-nav">
           <div className="fsecone">
             <h3 className="footer-title2">Stay Updated</h3>
-            <div className="flex subscribe">
-              <input type="text" className="box flex" placeholder="Sign up for email updates" />
-              <button className="btn2 box flex" style={{ width: 'fit-content' }}>Subscribe</button>
+            <div className={`flex subscribe ${isClickedFooter ? 'clicked' : ''}`}>
+              <input type="text" name="email_updates" className="box flex" placeholder="Enter your email to get updates" />
+              <button className="btn2 box flex" style={{ width: 'fit-content' }} onClick={handleClickFooter}>Subscribe</button>
+
+              {isClickedFooter && (
+                <div className="footer-popup footer-subscribe">
+                  <div className="wrapper-footer">
+                    <div className='thankyoutext'>Thank you !</div>
+                    <div className="flexcol wh">
+                      <p>Thanks for subscribing to our news letter. </p>
+                      <p>You should receive a confirmation email soon. </p>
+                    </div>
+                    <button onClick={handleClickFooter} className="go-home"> Close </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -101,16 +133,15 @@ const Footer = () => {
             <div className="fsectwo">
               <h3 className="footer-title2">Follow Us On</h3>
               <div className="flex" style={{ gap: '20px' }}>
-                <Link to="https://www.facebook.com/"><FacebookIcon /></Link>
-                <Link to="https://www.instagram.com/"><InstagramIcon /></Link>
+                <Link to="https://www.facebook.com/profile.php?id=61559396105110"><FacebookIcon /></Link>
+                <Link to="https://www.instagram.com/u_linkitus?igsh=MWMyaGV4MWN0ejFtbA%3D%3D"><InstagramIcon /></Link>
                 <Link to="https://www.youtube.com/"><YouTubeIcon /></Link>
-                <Link to="https://www.linkedin.com/"><LinkedInIcon /></Link>
+                <Link to="https://www.linkedin.com/in/ulink-it-88522b308/"><LinkedInIcon /></Link>
                 <Link to="https://www.twitter.com/"><XIcon /></Link>
               </div>
             </div>
           </div>
         </div>
-
         <div className="footerfooter">
           <div className="ffone">
             <img src={mastercard} alt="mastercard" />
@@ -129,7 +160,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-
     </Fragment>
   );
 };

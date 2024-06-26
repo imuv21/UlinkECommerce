@@ -33,14 +33,111 @@ export const updateSellerBusinessProfile = createAsyncThunk(
   }
 );
 
+export const updateSellerDocData = createAsyncThunk(
+  'sellerBusinessProfile/updateSellerDocData',
+  async ({ documentType, documentData }, { getState }) => {
+    const { auth } = getState();
+    const token = auth.token;
+    const response = await axios.post(`${BASE_URL}/seller/update-doc-data`, documentData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return { documentType, data: response.data };
+  }
+);
+
+export const uploadDocument = createAsyncThunk(
+  'sellerBusinessProfile/uploadDocument',
+  async ({ file, docType }, { getState, rejectWithValue }) => {
+
+    const { auth } = getState();
+    const token = auth.token;
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await axios.post(`${BASE_URL}/seller/upload-document?docType=${docType}`, formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const uploadProfileImage = createAsyncThunk(
+  'sellerBusinessProfile/uploadProfileImage',
+  async (file, { getState }) => {
+    const { auth } = getState();
+    const token = auth.token;
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await axios.post(`${BASE_URL}/seller/upload-profile-image`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      }
+    });
+
+    return response.data;
+  }
+);
+
+export const deleteSellerDocument = createAsyncThunk(
+  'sellerBusinessProfile/deleteSellerDocument',
+  async ({ documentPath, filename, filesize, id }, { getState, rejectWithValue }) => {
+    const { auth } = getState();
+    const token = auth.token;
+
+    try {
+      const response = await axios.delete(`${BASE_URL}/user/delete-document`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        data: {
+          documentPath, filename, filesize, id
+        }
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+
 const sellerBusinessProfileSlice = createSlice({
   name: 'sellerBusinessProfile',
   initialState: {
     sellerprofile: null,
     status: 'idle',
     error: null,
+
     updateStatus: 'idle',
-    updateError: null
+    updateError: null,
+
+    docUpdateStatus: 'idle',
+    docUpdateError: null,
+
+    docloading: false,
+    docerror: null,
+    docsuccess: false,
+
+    imageUploadStatus: 'idle',
+    imageUploadError: null,
+    imageUrl: null,
+
+    deleteldg: false,
+    deleteerr: null,
+    deletescs: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -76,6 +173,59 @@ const sellerBusinessProfileSlice = createSlice({
       .addCase(updateSellerBusinessProfile.rejected, (state, action) => {
         state.updateStatus = 'failed';
         state.updateError = action.error.message;
+      })
+      .addCase(updateSellerDocData.pending, (state) => {
+        state.docUpdateStatus = 'loading';
+      })
+      .addCase(updateSellerDocData.fulfilled, (state, action) => {
+        state.docUpdateStatus = 'succeeded';
+        const { documentType, data } = action.payload;
+        if (state.sellerprofile && state.sellerprofile.documents) {
+          state.sellerprofile.documents[documentType] = data;
+        }
+      })
+      .addCase(updateSellerDocData.rejected, (state, action) => {
+        state.docUpdateStatus = 'failed';
+        state.docUpdateError = action.error.message;
+      })
+      .addCase(uploadDocument.pending, (state) => {
+        state.docloading = true;
+        state.docerror = null;
+        state.docsuccess = false;
+      })
+      .addCase(uploadDocument.fulfilled, (state) => {
+        state.docloading = false;
+        state.docsuccess = true;
+      })
+      .addCase(uploadDocument.rejected, (state, action) => {
+        state.docloading = false;
+        state.docerror = action.payload;
+        state.docsuccess = false;
+      })
+      .addCase(uploadProfileImage.pending, (state) => {
+        state.imageUploadStatus = 'loading';
+      })
+      .addCase(uploadProfileImage.fulfilled, (state, action) => {
+        state.imageUploadStatus = 'succeeded';
+        state.imageUrl = action.payload.data.imageUrl;
+      })
+      .addCase(uploadProfileImage.rejected, (state, action) => {
+        state.imageUploadStatus = 'failed';
+        state.imageUploadError = action.error.message;
+      })
+      .addCase(deleteSellerDocument.pending, (state) => {
+        state.deleteldg = true;
+        state.deleteerr = null;
+        state.deletescs = false;
+      })
+      .addCase(deleteSellerDocument.fulfilled, (state) => {
+        state.deleteldg = false;
+        state.deletescs = true;
+      })
+      .addCase(deleteSellerDocument.rejected, (state, action) => {
+        state.deleteldg = false;
+        state.deleteerr = action.payload;
+        state.deletescs = false;
       });
   }
 });
