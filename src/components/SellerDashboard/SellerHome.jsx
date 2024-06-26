@@ -15,7 +15,16 @@ const SellerHome = () => {
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const uploadedImageUrl = useSelector((state) => state.sellerBusinessProfile.imageUrl);
-    const defaultImageUrl = "https://t3.ftcdn.net/jpg/03/58/90/78/360_F_358907879_Vdu96gF4XVhjCZxN2kCG0THTsSQi8IhT.jpg";
+    const defaultImageUrl = "https://res.cloudinary.com/dey1tujp8/image/upload/v1719407087/imgdefault_ssubhu.jpg";
+    const [profileImgSeller, setProfileImgSeller] = useState(defaultImageUrl);
+
+    useEffect(() => {
+        if (uploadedImageUrl) {
+            setProfileImgSeller(uploadedImageUrl);
+        } else {
+            setProfileImgSeller(defaultImageUrl);
+        }
+    }, [uploadedImageUrl]);
 
     const quickLinks = [
         {
@@ -269,7 +278,7 @@ const SellerHome = () => {
                             </div>
                         </div>
                     </div>
-              
+
 
                     <div className="sel-box" style={{ display: allStepsCompleted ? 'none' : 'flex' }}>
                         <div className="flex wh">
@@ -295,7 +304,7 @@ const SellerHome = () => {
                                 ))
                             ) : (
                                 <div className="bank-detail">
-                                    <div className="heading3 wh" style={{textAlign : 'center', color: 'green'}}>Congratulations! <br /> You are a verified seller now!</div>
+                                    <div className="heading3 wh" style={{ textAlign: 'center', color: 'green' }}>Congratulations! <br /> You are a verified seller now!</div>
                                 </div>
                             )}
                         </div>
@@ -346,7 +355,7 @@ const SellerHome = () => {
                     <div className="sel-box">
                         <div className="flex wh" style={{ padding: '15px', gap: '15px' }}>
                             <div className="flex" style={{ width: 'fit-content' }}>
-                                <img src={uploadedImageUrl || defaultImageUrl}  className="profile" alt='profile' />
+                                <img src={profileImgSeller} className="profile" alt='profile' />
                             </div>
                             <div className="flexcol" style={{ alignItems: 'start', width: '100%' }}>
                                 {isAuthenticated && (
