@@ -315,10 +315,10 @@ const Header = () => {
                 </div>
               </div>
 
-              {isClickedAdd && (
+              {(isClickedAdd && addresses && addresses.length > 0) && (
                 <div className="popup address-relative">
                   <div className="address-container">
-                    { addresses && addresses.map((address) => (
+                    { addresses.map((address) => (
                       <div key={address.id} className={`address-card ${selectedAddress?.id === address.id ? 'selected' : ''}`}>
 
                         <input type="radio" id={address.id} name="address" value={address.address} checked={selectedAddress?.id === address.id} onChange={() => handleAddressChange(address)} />

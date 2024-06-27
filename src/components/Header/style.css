@@ -94,7 +94,6 @@
   align-items: start;
   justify-content: start;
   position: fixed;
-  height: fit-content;
   transform: translateX(-70%);
   gap: 10px;
   background-color: white;
@@ -111,11 +110,14 @@
   width: 230px;
   top: 95px;
   right: 10px;
+  height: fit-content;
 }
 
 .address-relative{
   padding: 10px;
   width: 260px;
+  max-height: 250px;
+  overflow-y: auto;
   top: 100px;
   left: 160px;
 }
@@ -471,12 +473,19 @@
 
 
 .dropdown-flag-list::-webkit-scrollbar {
-  width: 15px;
+  width: 12px;
 }
-
 .dropdown-flag-list::-webkit-scrollbar-thumb {
   background-color: var(--scroll);
   border-radius: 6px;
+}
+
+.address-relative::-webkit-scrollbar{
+  width: 10px;
+}
+.address-relative::-webkit-scrollbar-thumb {
+  background-color: var(--scroll);
+  border-radius: var(--br1);
 }
 
 

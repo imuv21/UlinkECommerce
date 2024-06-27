@@ -26,7 +26,7 @@ export const addSingleSchema = yup.object().shape({
     }).required('Barcode number is required'),
 
     unitmeasure: yup.string().required('Unit measure type is required'),
-    sku: yup.string().required('SKU is required'),
+    sku: yup.string().required('SKU is required').min(4, "SKU must be 4 characters or more"),
     minOrderQuant: yup.number().typeError('Quantity must be a number').positive('Quantity must be a positive number').integer('Quantity must be an integer').required('Quantity is required')
         .test('is-lower', 'Min order quantity must be lower than available quantity',
             function (minOrderQuant) {

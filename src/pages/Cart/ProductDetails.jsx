@@ -14,6 +14,7 @@ import { addToCart } from '../../Redux/cartSlice';
 import { fetchExchangeRates } from '../../Redux/currencySlice';
 import currencySymbols from '../../components/Schemas/currencySymbols';
 import { Helmet } from 'react-helmet-async';
+import axios from 'axios';
 import InfoIcon from '@mui/icons-material/Info';
 import Loader from '../../components/Loader/Loader';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -38,7 +39,8 @@ const ProductDetails = () => {
         dispatch(fetchProductDetail(id));
         dispatch(fetchExchangeRates());
     }, [dispatch, id]);
-    
+
+
     // Fetch currency options and exchange rates
     const convertPrice = (price, fromCurrency) => {
         const rate = exchangeRates[selectedCurrency];
@@ -46,6 +48,7 @@ const ProductDetails = () => {
         const priceInUSD = price / exchangeRates[fromCurrency];
         return (priceInUSD * rate).toFixed(2);
     };
+
 
     //plus-minus
     const [moq, setMoq] = useState(1);
@@ -67,6 +70,7 @@ const ProductDetails = () => {
     const toggleProductAccordion = (index) => {
         setActiveIndex(activeIndex === index ? null : index);
     };
+
 
     //img-change-slider moq discount
     const [selectedImage, setSelectedImage] = useState(null);
@@ -101,13 +105,14 @@ const ProductDetails = () => {
         setSelectedImage(image);
     };
 
+
     //bullet-points
     const renderBulletPoints = (bulletPoints) => {
         const bulletPointArray = bulletPoints.split('/').filter(point => point.trim() !== '');
         return (
             <ul className='bullet-points'>
                 {bulletPointArray.map((point, index) => (
-                    <li className='descrip2 caplist' key={index}>{point.trim()}.</li>
+                    <li className='descrip2 caplist' key={index}>{point.trim()}</li>
                 ))}
             </ul>
         );
@@ -120,6 +125,33 @@ const ProductDetails = () => {
     const convertPascalToReadable = (text) => {
         return text.replace(/([A-Z])/g, ' $1').trim();
     };
+
+
+    //currency change
+    const [rates, setRates] = useState({});
+    const [toCurrency, setToCurrency] = useState('USD');
+    const [convertedAmount, setConvertedAmount] = useState(0);
+
+    useEffect(() => {
+        axios.get('https://api.exchangerate-api.com/v4/latest/USD')
+            .then(response => setRates(response.data.rates))
+            .catch(error => console.error('Error fetching the exchange rates:', error));
+    }, []);
+
+    if (product && product.sellPrice && product.currencyname) {
+        const fixedAmount = product.sellPrice;
+        const fromCurrency = product.currencyname;
+
+        useEffect(() => {
+            if (rates[fromCurrency] && rates[toCurrency]) {
+                setConvertedAmount((fixedAmount * rates[toCurrency]) / rates[fromCurrency]);
+            }
+        }, [fixedAmount, fromCurrency, toCurrency, rates]);
+    }
+
+    const handleToCurrencyChange = e => setToCurrency(e.target.value);
+
+
 
 
     if (status === 'loading') {
@@ -136,7 +168,7 @@ const ProductDetails = () => {
 
     return (
         <div className="flexcol wh product-detail">
-            
+
             <Helmet>
                 <title>Product Details</title>
             </Helmet>
@@ -191,7 +223,22 @@ const ProductDetails = () => {
                                     <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{discountPercentage}% OFF</span>
                                 </div>
                                 <div className="flex" style={{ gap: '15px' }}>
-                                    <span>{selectedCurrency}</span><span style={{ fontWeight: 'bold', fontSize: '22px' }}>{currencySymbols[selectedCurrency]} {convertPrice(product.sellPrice, product.currencyname)} {selectedCurrency}</span>
+
+                                    <span>{selectedCurrency}</span>
+                                    <span style={{ fontWeight: 'bold', fontSize: '22px' }}>{currencySymbols[selectedCurrency]} {convertPrice(product.sellPrice, product.currencyname)} {selectedCurrency}</span>
+
+                                    <span style={{ fontWeight: 'normal', fontSize: '12px' }}>
+                                        {/* {fixedAmount} {fromCurrency}  */}
+                                        Converted to {convertedAmount.toFixed(2)}
+                                        <select style={{ padding : '0px'}} value={toCurrency} onChange={handleToCurrencyChange}>
+                                            {Object.keys(rates).map(currency => (
+                                                <option style={{ fontWeight: 'normal', fontSize: '12px' }} key={currency} value={currency}>
+                                                    {currency}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </span>
+
                                 </div>
                                 <div className="flex">
                                     <span className='descrip'>per piece</span>
@@ -310,7 +357,7 @@ const ProductDetails = () => {
 
                 <div className="overview">
                     <div className="overview_one">
-                        {product.sku && <div className="over-heading"><div>SKU</div> <div className='captext'>{product.sku}</div></div>}
+                        {(product.sku || product.sku === 0) && <div className="over-heading"><div>SKU</div> <div className='captext'>{product.sku}</div></div>}
                         {product.specifications && <div className="over-heading"><div>Specifications</div> <div className='captext'>{product.specifications}</div></div>}
                         {product.avgBatteryLife && <div className="over-heading"><div>Average battery life</div> <div className='captext'>{product.avgBatteryLife}</div></div>}
                         {product.connectivityType && <div className="over-heading"><div>Connectivity type</div> <div className='captext'>{product.connectivityType}</div></div>}

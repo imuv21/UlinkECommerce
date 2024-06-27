@@ -195,7 +195,7 @@ const SellerComProfile = () => {
     const [selectedFileThree, setSelectedFileThree] = useState({ file: null, name: '', path: '', size: '', id: '' });
 
     useEffect(() => {
-        if (sellerprofile) {
+        if (sellerprofile && sellerprofile.documents) {
             if (sellerprofile.documents.TRADE_LICENSE) {
                 const tradeLicense = sellerprofile.documents.TRADE_LICENSE;
                 setSelectedDate(tradeLicense.expiryDate || '');
@@ -218,7 +218,7 @@ const SellerComProfile = () => {
                     setSelectedFileThree({ file: null, name: identityDocumentFileTwo.filename, path: identityDocumentFileTwo.documentPath, size: identityDocumentFileTwo.filesize, id: identityDocumentFileTwo.id });
                 }
             }
-            setIsBusinessOwner(sellerprofile.isBusinessOwner);
+            setIsBusinessOwner(sellerprofile.isBusinessOwner || false);
         }
     }, [sellerprofile]);
 
@@ -278,7 +278,6 @@ const SellerComProfile = () => {
             <div className="procont">
 
                 <div className="flexcol" style={{ gap: '20px' }}>
-
                     <form className="profile-sel-box" onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><BusinessIcon /> <div className="heading">Business Profile</div></div>
                         {isEditing ? (
@@ -343,28 +342,28 @@ const SellerComProfile = () => {
                                         </div>
 
                                         <div className="cp-row">
-                                            <div className='descrip2'>Company Name</div> <div className='heading2'> {sellerprofile.companyname}</div>
+                                            <div className='descrip2'>Company Name</div> <div className='heading2'> {sellerprofile.companyname || 'Null'}</div>
                                         </div>
                                         <div className="cp-row">
-                                            <div className='descrip2'>Building Number</div> <div className='heading2'> {sellerprofile.buildingNumber}</div>
+                                            <div className='descrip2'>Building Number</div> <div className='heading2'> {sellerprofile.buildingNumber || 'Null'}</div>
                                         </div>
                                         <div className="cp-row">
-                                            <div className='descrip2'>Street Name</div> <div className='heading2'> {sellerprofile.streetName}</div>
+                                            <div className='descrip2'>Street Name</div> <div className='heading2'> {sellerprofile.streetName || 'Null'}</div>
                                         </div>
                                         <div className="cp-row">
-                                            <div className='descrip2'>City</div> <div className='heading2'> {sellerprofile.city}</div>
+                                            <div className='descrip2'>City</div> <div className='heading2'> {sellerprofile.city || 'Null'}</div>
                                         </div>
                                         <div className="cp-row">
-                                            <div className='descrip2'>State</div> <div className='heading2'> {sellerprofile.state}</div>
+                                            <div className='descrip2'>State</div> <div className='heading2'> {sellerprofile.state || 'Null'}</div>
                                         </div>
                                         <div className="cp-row">
-                                            <div className='descrip2'>Country Of Operation</div> <div className='heading2'> {sellerprofile.countryOfoperation}</div>
+                                            <div className='descrip2'>Country Of Operation</div> <div className='heading2'> {sellerprofile.countryOfoperation || 'Null'}</div>
                                         </div>
                                         <div className="cp-row">
-                                            <div className='descrip2'>Post/Zip Code</div> <div className='heading2'> {sellerprofile.postCode}</div>
+                                            <div className='descrip2'>Post/Zip Code</div> <div className='heading2'> {sellerprofile.postCode || 'Null'}</div>
                                         </div>
                                         <div className="cp-row">
-                                            <div className='descrip2'>Company description</div> <div className='heading2'> {sellerprofile.companyDescription}</div>
+                                            <div className='descrip2'>Company description</div> <div className='heading2'> {sellerprofile.companyDescription || 'Null'}</div>
                                         </div>
                                     </div>) : (
                                     <div className="company-profile">

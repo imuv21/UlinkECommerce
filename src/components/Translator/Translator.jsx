@@ -1,25 +1,27 @@
-// import React, { useState } from 'react';
-// import './Translator.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
+const Translator = () => {
 
-// const Translator = () => {
+  
 
+  return (
+    <div className="flexcol home wh">
 
+      <select value={toCurrency} onChange={handleToCurrencyChange}>
+        {Object.keys(rates).map(currency => (
+          <option key={currency} value={currency}>
+            {currency}
+          </option>
+        ))}
+      </select>
+    
+      <span>
+        {fixedAmount} {fromCurrency} to {convertedAmount.toFixed(2)} {toCurrency}
+      </span>
 
-//     return (
-//         <div className="flex wh home">
-//             <div className="wrapper-footer">
-//                 <div className='thankyoutext'>Thank you !</div>
-//                 <div className="flexcol wh">
-//                     <p>Thanks for subscribing to our news letter. </p>
-//                     <p>you should receive a confirmation email soon </p>
-//                 </div>
-//                 <button className="go-home">
-//                     go home
-//                 </button>
-//             </div>
-//         </div>
-//     );
-// };
+    </div>
+  );
+};
 
-// export default Translator;
+export default Translator;

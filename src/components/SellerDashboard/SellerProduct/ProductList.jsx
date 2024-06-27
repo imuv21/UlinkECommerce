@@ -59,13 +59,13 @@ const ProductList = () => {
         e.preventDefault();
     };
 
-   
+
     const handleEdit = (productId) => {
         dispatch(fetchEditProduct(productId)).unwrap().then(() => {
-                navigate(`/editsingle/${productId}`);
-            }).catch((error) => {
-                console.error('Failed to fetch product details:', error);
-            });
+            navigate(`/editsingle/${productId}`);
+        }).catch((error) => {
+            console.error('Failed to fetch product details:', error);
+        });
     };
 
     const handleDelete = (productId) => {
@@ -300,31 +300,70 @@ const ProductList = () => {
                                 <option value="two">two</option>
                             </select>
                         </form>
-                        <div className='productlist5' style={{ overflow: 'auto', display: 'none' }}>
-                            <div className="searchBoxPro2 grid-head">
-                                <div></div>
-                                <div className="heading3">Image</div>
-                                <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Product Name</div>
-                                <div className="heading3">Category</div>
-                                <div className="heading3">Price</div>
-                                <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Available Quantity</div>
-                                <div className="heading3">Status</div>
-                                <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Created / Updated</div>
-                                <div className="heading3">Visibility</div>
-                                <div className="heading3"></div>
-                            </div>
-                            <div className="searchBoxPro2">
-                                <div><input type="checkbox" /></div>
-                                <div><img src={demo} className='imgPro' alt="demo" /></div>
-                                <div className="heading2" style={{ whiteSpace: 'nowrap' }}>Product Name</div>
-                                <div className="heading2">Category</div>
-                                <div className="heading2">Price</div>
-                                <div className="heading2" style={{ whiteSpace: 'nowrap' }}>Available Quantity</div>
-                                <div className="heading2">Status</div>
-                                <div className="heading2" style={{ whiteSpace: 'nowrap' }}>Created / Updated</div>
-                                <div className="heading2">Visibility</div>
-                                <div className="heading2 flexcol"><EditNoteIcon style={{ cursor: 'pointer' }} /><DeleteIcon style={{ cursor: 'pointer' }} /> </div>
-                            </div>
+
+                        <div className='productlist5' style={{ overflow: 'auto' }}>
+                            {sellerProducts.length === 0 ? (
+                                <Fragment>
+                                    <div className="productlist">
+                                        <img src={empty} className='productlist-img' alt="empty box" />
+                                        <div className="heading">You do not have any products in this list</div>
+                                        <div className="descrip2">This is where you will be able to view and manage your products</div>
+                                    </div>
+                                </Fragment>
+                            ) : (
+                                <Fragment>
+
+                                    <div className="searchBoxPro2 grid-head">
+                                        <div></div>
+                                        <div className="heading3">Image</div>
+                                        <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Product Name</div>
+                                        <div className="heading3">Category</div>
+                                        <div className="heading3">Price</div>
+                                        <div className="heading3">Fee Preview</div>
+                                        <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Available Quantity</div>
+                                        <div className="heading3">Status</div>
+                                        <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Created / Updated</div>
+                                        <div className="heading3">Visibility</div>
+                                        <div className="heading3"></div>
+                                    </div>
+
+                                    {sellerProducts.map((item, index) => (
+                                        <div className="searchBoxPro2" key={item.productId}>
+                                            <div><input type="checkbox" /></div>
+                                            <div>
+                                                {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
+                                            </div>
+                                            <div className="heading2 download-btn" onClick={() => productDetail(item.productId)} style={{ whiteSpace: 'nowrap' }}>
+                                                {item.productName.length > 15 ? `${item.productName.substring(0, 15)}...` : item.productName}
+                                            </div>
+                                            <div className="heading2">
+                                                {item.category.length > 15 ? `${item.category.substring(0, 15)}...` : item.category}
+                                            </div>
+                                            <div className="heading2">
+                                                <div className="flex" style={{ gap: '5px' }}>
+                                                    <span style={{ textDecoration: 'line-through', color: 'gray' }}>{user.currencySymbol}{item.unitPrice}</span>-<span style={{ fontWeight: 'bold' }}>{user.currencySymbol}{item.sellPrice}</span>
+                                                </div>
+                                            </div>
+                                            <div className="heading2"><span className='download-btn' onClick={() => handleAddAddress(index)}> {calculateCostPerUnit(item)}{user.currencySymbol} </span></div>
+                                            <div className="heading2" style={{ whiteSpace: 'nowrap' }}>
+                                                <div className="flexcol" style={{ gap: '2px' }}>
+                                                    {/* <span style={{ fontWeight: 'bold' }}>{item.availableQuantity}</span> */}
+                                                    <span style={{ fontWeight: 'bold' }}>3</span>
+                                                    <span style={{ fontSize: '12px' }}>MOQ is {item.minOrderQuant}</span>
+                                                </div>
+                                            </div>
+                                            <div className="heading2">{item.status}</div>
+                                            <div className="heading2" style={{ whiteSpace: 'nowrap' }}>{new Date(item.updatedDate).toLocaleString()}</div>
+                                            <div className="heading2">{item.visibility}</div>
+                                            <div className="heading2 flexcol">
+                                                <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEdit(item.productId)} />
+                                                <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDelete(item.productId)} />
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                </Fragment>
+                            )}
                         </div>
 
                     </Fragment>

@@ -65,6 +65,25 @@ export const uploadImage = createAsyncThunk(
     }
 );
 
+export const updateProduct = createAsyncThunk(
+    'editproducts/updateProduct',
+    async ({ productId, productData }, { getState, rejectWithValue }) => {
+        try {
+            const { auth } = getState();
+            const token = auth.token;
+            const response = await axios.put(`${BASE_URL}/product/update-product/${productId}`, productData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            const errorMessage = error.response?.data || error.message;
+            return rejectWithValue(errorMessage);
+        }
+    }
+);
+
 const updateProductSlice = createSlice({
     name: 'editproducts',
     initialState: {
@@ -72,6 +91,7 @@ const updateProductSlice = createSlice({
         fetchedImages: [],
         loading: false,
         error: null,
+        updateStatus: null,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -112,8 +132,23 @@ const updateProductSlice = createSlice({
             })
             .addCase(uploadImage.rejected, (state, action) => {
                 state.error = action.payload;
+            })
+            .addCase(updateProduct.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+                state.updateStatus = null;
+            })
+            .addCase(updateProduct.fulfilled, (state, action) => {
+                state.loading = false;
+                state.updateStatus = action.payload;
+            })
+            .addCase(updateProduct.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
             });
     },
 });
 
 export default updateProductSlice.reducer;
+
+

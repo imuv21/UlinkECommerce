@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
-import { fetchEditProduct, deleteImage, uploadImage } from '../../../Redux/updateProductSlice';
+import { fetchEditProduct, deleteImage, uploadImage, updateProduct } from '../../../Redux/updateProductSlice';
 import ClearIcon from '@mui/icons-material/Clear';
 
 const schema = yupResolver(addSingleSchema);
@@ -18,6 +18,7 @@ const EditSingle = () => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
     const { productId } = useParams();
+
     const [selectedSupOption, setSelectedSupOption] = useState("");
 
 
@@ -29,6 +30,7 @@ const EditSingle = () => {
     const productData = useSelector((state) => state.editproducts.productData);
     const loading = useSelector((state) => state.editproducts.loading);
     const error = useSelector((state) => state.editproducts.error);
+    const updateStatus = useSelector((state) => state.editproducts.updateStatus);
 
     useEffect(() => {
         dispatch(fetchEditProduct(productId));
@@ -125,8 +127,15 @@ const EditSingle = () => {
 
 
     const onSubmit = async (data) => {
-        // Handle form submission
-        console.log(data);
+        dispatch(updateProduct({ productId, productData: data }))
+            .unwrap()
+            .then(() => {
+                alert("Product updated successfully");
+                navigate('/seller-dashboard/product-list');
+            })
+            .catch((error) => {
+                console.error("Failed to update product:", error);
+            });
     };
 
     const handleCancel = () => {
@@ -185,10 +194,10 @@ const EditSingle = () => {
             alert("You can only select a maximum of 5 images.");
             return;
         }
-        
+
         const newImage = { file, isUploaded: false };
         const newImagePreview = { src: URL.createObjectURL(file), isUploaded: false };
-      
+
         setImages(prevImages => [...prevImages, newImage]);
         setImagesPreview(prevPreviews => [...prevPreviews, newImagePreview]);
 
@@ -819,11 +828,10 @@ const EditSingle = () => {
 
 
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
-                    <button className='btn box2 flex' onClick={handleCancel} style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Cancel</div></button>
+                    <button className='btn box2 flex' type='button' onClick={handleCancel} style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Cancel</div></button>
                     <button className='btn box2 flex' type='submit' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Update</div></button>
                 </div>
             </form>
-
         </div>
     )
 };

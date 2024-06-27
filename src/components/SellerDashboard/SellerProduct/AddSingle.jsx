@@ -215,6 +215,13 @@ const AddSingle = () => {
         setSingleFormData({ ...singleFormData, [e.target.name]: e.target.value });
     };
 
+
+
+    //convert pascal to readable
+    const convertPascalToReadable = (text) => {
+        return text.replace(/([A-Z])/g, ' $1').trim();
+    };
+
     //focus
     const scrollRef = useRef(null);
     useEffect(() => {
@@ -238,25 +245,25 @@ const AddSingle = () => {
                     <select onChange={handleSupOptionChange} className="box flex">
                         <option value="">Select category</option>
                         {supOptions.map((option, index) => (
-                            <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
+                            <option key={index} value={option}>{option.length > 25 ? `${convertPascalToReadable(option.substring(0, 25))}...` : convertPascalToReadable(option)}</option>
                         ))}
                     </select>
                     <select onChange={handleSubOptionChange} className="box flex">
                         <option value="">Select sub category</option>
                         {subOptions[selectedSupOption] && subOptions[selectedSupOption].map((option, index) => (
-                            <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
+                            <option key={index} value={option}>{option.length > 25 ? `${convertPascalToReadable(option.substring(0, 25))}...` : convertPascalToReadable(option)}</option>
                         ))}
                     </select>
                     <select onChange={handleMiniSubOptionChange} className="box flex">
                         <option value="">Select an option</option>
                         {miniSubOptions[selectedSubOption] && miniSubOptions[selectedSubOption].map((option, index) => (
-                            <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
+                            <option key={index} value={option}>{option.length > 25 ? `${convertPascalToReadable(option.substring(0, 25))}...` : convertPascalToReadable(option)}</option>
                         ))}
                     </select>
                     <select onChange={handleMicroSubOptionChange} className="box flex">
                         <option value="">Select sub option</option>
                         {microSubOptions[selectedMiniSubOption] && microSubOptions[selectedMiniSubOption].map((option, index) => (
-                            <option key={index} value={option}>{option.length > 15 ? `${option.substring(0, 15)}...` : option}</option>
+                            <option key={index} value={option}>{option.length > 25 ? `${convertPascalToReadable(option.substring(0, 25))}...` : convertPascalToReadable(option)}</option>
                         ))}
                     </select>
                 </div>
@@ -341,7 +348,7 @@ const AddSingle = () => {
                 {errors.barcode && <div className='error'>{errors.barcode.message}</div>}
                 <Controller name="barcodeNum" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.barcodeNum || ''} onChange={handleChange} type='text' className="box flex" placeholder='Enter barcode number' {...field} />} />
                 {errors.barcodeNum && <div className='error'>{errors.barcodeNum?.message}</div>}
-                <Controller name="sku" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.sku || ''} onChange={handleChange} className="box flex" placeholder='Enter SKU' {...field} />} />
+                <Controller name="sku" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.sku || ''} onChange={handleChange} type='text' className="box flex" placeholder='Enter SKU' {...field} />} />
                 {errors.sku && <div className='error'>{errors.sku?.message}</div>}
 
 
@@ -852,7 +859,7 @@ const AddSingle = () => {
                 )}
 
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
-                    <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Save Draft</div></button>
+                    <button className='btn box2 flex' type='button' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Cancel</div></button>
                     <button className='btn box2 flex' onClick={uploadImages} disabled={!isSubmitEnabled} type='submit' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Send for Review</div></button>
                 </div>
             </form>
