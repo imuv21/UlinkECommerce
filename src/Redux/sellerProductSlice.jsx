@@ -6,14 +6,14 @@ const initialState = {
     sellerProducts: [],
     totalItems: 0,
     currentPage: 0,
-    totalPages: 0,
     loading: false,
     error: null,
+    pageSize: 20,
 };
 
 export const fetchSellerProducts = createAsyncThunk(
     'sellerProducts/fetchSellerProducts',
-    async ({ page = 0, size = 0 }, { getState , rejectWithValue }) => {
+    async ({ page }, { getState , rejectWithValue }) => {
         try {
             const { auth } = getState();
             const token = auth.token;
@@ -22,8 +22,7 @@ export const fetchSellerProducts = createAsyncThunk(
                     Authorization: `Bearer ${token}`,
                 },
                 params: {
-                    page: page,
-                    size: size
+                    page: page
                 }
             });
             return response.data;
@@ -71,6 +70,12 @@ const sellerProductSlice = createSlice({
                 state.totalItems = action.payload.totalItems;
                 state.currentPage = action.payload.currentPage;
                 state.totalPages = action.payload.totalPages;
+
+                state.pageSize = action.payload.pageSize;
+                state.isFirst = action.payload.isFirst;
+                state.isLast = action.payload.isLast;
+                state.hasPrevious = action.payload.hasPrevious;
+                state.hasNext = action.payload.hasNext;
             })
             .addCase(fetchSellerProducts.rejected, (state, action) => {
                 state.loading = false;

@@ -243,12 +243,20 @@ button:focus {
   justify-content: center;
   gap: 10px;
   width: 100%;
-  padding: var(--pad);
+}
+
+.searchBoxPronew {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 70%;
+  padding: 10px 10px 20px 10px;
 }
 
 .searchBoxPro2 {
   display: grid;
-  grid-template-columns: 50px 150px 200px 200px 200px 200px 200px 200px 200px 200px 50px;
+  grid-template-columns: 150px 200px 200px 200px 200px 200px 200px 200px 200px 70px;
   gap: 0px;
   width: 100%;
 }
@@ -283,11 +291,25 @@ button:focus {
 }
 
 .imgPro {
-  aspect-ratio: 4/3;
-  object-fit: contain;
   width: 100px;
-  height: auto;
+  height: 50px;
+  object-fit: contain;
+  aspect-ratio: 1/1;
 }
+
+.sfp_relative {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.sfp_relative2 {
+  position: relative;
+  display: flex;
+  width: 50%;
+  margin-bottom: 10px;
+}
+
 
 .searchinputPro {
   padding: 10px;
@@ -304,12 +326,17 @@ button:focus {
 }
 
 .searchbtnPro {
-  padding: 10px 0px;
-  width: fit-content;
-  border: none;
-  background-color: white;
   cursor: pointer;
-  transition: var(--trans);
+  position: absolute;
+  right: 10px;
+  top: 70%;
+  transform: translateY(-70%);
+}
+
+.searchbtnPro .MuiSvgIcon-root {
+  width: 22px;
+  height: 22px;
+  color: gray;
 }
 
 #rfs-btn {
@@ -1035,8 +1062,8 @@ button:focus {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 15px;
-  gap: 20px;
+  padding: 10px;
+  gap: 10px;
 }
 
 .sel-box {
@@ -1256,14 +1283,14 @@ button:focus {
 }
 
 .productlist5 {
-  gap: 0px;
+  gap: 10px;
   background-color: white;
   border-radius: var(--br1);
   border: var(--border);
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   padding: 20px;
 }
@@ -1954,16 +1981,42 @@ button:focus {
   border-bottom: 1px solid #dddddd;
 }
 
+
 .big-image {
-  width: 100%;
-  min-width: 200px;
-  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 300px;
+  overflow: hidden;
 }
 
-.big-image img {
+.image-wrapper-big {
   width: 100%;
+  height: 100%; /* Ensure it matches the height of big-image */
+  overflow: hidden;
+  position: relative;
+}
+
+.zoomedimg {
+  width: 100%;
+  height: 100%; /* Ensure it matches the height of image-wrapper-big */
+  display: block;
   object-fit: contain;
 }
+
+.popupzoom {
+    position: fixed; /* Fix the position of the popup */
+    top: 20%; /* Adjust as needed */
+    left: 33%; /* Adjust as needed */
+    width: 400px; /* Adjust as needed */
+    height: 500px; /* Adjust as needed */
+    background-size: 180%; /* Zoom in the background image */
+    background-repeat: no-repeat;
+    pointer-events: none; /* Prevent the popup from blocking mouse events */
+    filter: drop-shadow(0px 0px 10px black);
+}
+
 
 .small-image {
   width: 50px;
@@ -2577,6 +2630,7 @@ button:focus {
   width: 20px;
   height: 15px;
   filter: drop-shadow(1px 1px 2px rgb(127, 127, 127));
+  z-index: -1;
 }
 
 
@@ -3020,4 +3074,52 @@ button:focus {
   width: 22px;
   height: 22px;
   color: gray;
+}
+
+
+/* all product styling */
+.allproduct {
+  gap: 0px;
+  background-color: white;
+  border-radius: var(--br1);
+  border: var(--border);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  padding: 20px;
+  overflow: auto;
+}
+
+.allproduct2 {
+  gap: 0px;
+  background-color: white;
+  border-radius: var(--br1);
+  border: var(--border);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: auto;
+}
+
+.allproduct2::-webkit-scrollbar {
+  height: 12px;
+}
+
+.allproduct2::-webkit-scrollbar-thumb {
+  background-color: var(--scroll);
+  border-radius: var(--br1);
+}
+
+.allproduct::-webkit-scrollbar {
+  height: 12px;
+}
+
+.allproduct::-webkit-scrollbar-thumb {
+  background-color: var(--scroll);
+  border-radius: var(--br1);
 }

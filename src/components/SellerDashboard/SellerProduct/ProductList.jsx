@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSellerProducts, deleteSellerProduct } from '../../../Redux/sellerProductSlice';
 import { fetchEditProduct } from '../../../Redux/updateProductSlice';
@@ -20,7 +20,7 @@ const ProductList = () => {
     const { sellerProducts, loading, error } = useSelector((state) => state.sellerProducts);
 
     const [page, setPage] = useState(0);
-    const [size, setSize] = useState(100);
+    const [size, setSize] = useState(21);
     useEffect(() => {
         dispatch(fetchSellerProducts({ page, size }));
     }, [dispatch, page, size]);
@@ -144,7 +144,7 @@ const ProductList = () => {
                                     <div className="heading2">Shipping Charges</div><div className='bbox'>0{user.currencySymbol}</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Discount</div><div className='bbox'>{calculateDiscountPercentage()}{user.currencySymbol}</div>
+                                    <div className="heading2">Discount</div><div className='bbox'>{calculateDiscountPercentage()}</div>
                                 </div>
                                 <div className="popboxdivs">
                                     <div className="heading2">Sale Price</div><div className='bbox'>{selectedItem.sellPrice}{user.currencySymbol}</div>
@@ -175,17 +175,20 @@ const ProductList = () => {
             <div className="productlist">
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                     <button onClick={() => handlePageChange(1)} className={currentPage === 1 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">All Products ({sellerProducts.length})</div></button>
-                    <button onClick={() => handlePageChange(2)} className={currentPage === 2 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Approved (1)</div></button>
-                    <button onClick={() => handlePageChange(3)} className={currentPage === 3 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Pending Approval (1)</div></button>
+                    <button onClick={() => handlePageChange(2)} className={currentPage === 2 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Approved (0)</div></button>
+                    <button onClick={() => handlePageChange(3)} className={currentPage === 3 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Pending Approval ({sellerProducts.length})</div></button>
                     <button onClick={() => handlePageChange(4)} className={currentPage === 4 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Rejected (0)</div></button>
                     <button onClick={() => handlePageChange(5)} className={currentPage === 5 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Archived (0)</div></button>
                     <button onClick={() => handlePageChange(6)} className={currentPage === 6 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Draft (0)</div></button>
                 </div>
                 {currentPage === 1 && (
                     <Fragment>
-                        <form className='searchBoxPro' onSubmit={searchSubmitHandler}>
-                            <input type='text' className='searchinputPro' placeholder='Search for products...' onChange={(e) => setKeyword(e.target.value)} />
-                            <button type='submit' className='searchbtnPro'><SearchIcon /></button>
+                        <div className='searchBoxPro'>
+                            <div className="sfp_relative">
+                                <input type='text' className='searchinputPro' placeholder='Search for products...' />
+                                <div className='searchbtnPro'><SearchIcon /></div>
+                            </div>
+
                             <select name="reasons" className='searchselectPro'>
                                 <option value="">Rejection reasons</option>
                                 <option value="one">one</option>
@@ -206,8 +209,8 @@ const ProductList = () => {
                                 <option value="one">one</option>
                                 <option value="two">two</option>
                             </select>
-                        </form>
-                        <div className='productlist5' style={{ overflow: 'auto' }}>
+                        </div>
+                        <div className='allproduct'>
 
                             {sellerProducts.length === 0 ? (
                                 <Fragment>
@@ -219,9 +222,7 @@ const ProductList = () => {
                                 </Fragment>
                             ) : (
                                 <Fragment>
-
                                     <div className="searchBoxPro2 grid-head">
-                                        <div></div>
                                         <div className="heading3">Image</div>
                                         <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Product Name</div>
                                         <div className="heading3">Category</div>
@@ -231,12 +232,11 @@ const ProductList = () => {
                                         <div className="heading3">Status</div>
                                         <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Created / Updated</div>
                                         <div className="heading3">Visibility</div>
-                                        <div className="heading3"></div>
+                                        <div className="heading3">Action</div>
                                     </div>
 
                                     {sellerProducts.map((item, index) => (
                                         <div className="searchBoxPro2" key={item.productId}>
-                                            <div><input type="checkbox" /></div>
                                             <div>
                                                 {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
                                             </div>
@@ -268,7 +268,7 @@ const ProductList = () => {
                                             </div>
                                         </div>
                                     ))}
-
+                                    <Link to="/all-products" className="descrip hoverr" style={{ marginTop: '10px' }}>See all products</Link>
                                 </Fragment>
                             )}
                         </div>
@@ -285,10 +285,22 @@ const ProductList = () => {
                 )}
                 {currentPage === 3 && (
                     <Fragment>
-                        <form className='searchBoxPro' onSubmit={searchSubmitHandler}>
-                            <input type='text' className='searchinputPro' placeholder='Search for products...' onChange={(e) => setKeyword(e.target.value)} />
-                            <button type='submit' className='searchbtnPro'><SearchIcon /></button>
+                        <div className='searchBoxPro'>
+                            <div className="sfp_relative">
+                                <input type='text' className='searchinputPro' placeholder='Search for products...' />
+                                <div className='searchbtnPro'><SearchIcon /></div>
+                            </div>
 
+                            <select name="reasons" className='searchselectPro'>
+                                <option value="">Rejection reasons</option>
+                                <option value="one">one</option>
+                                <option value="two">two</option>
+                            </select>
+                            <select name="reasons" className='searchselectPro'>
+                                <option value="">Status</option>
+                                <option value="one">one</option>
+                                <option value="two">two</option>
+                            </select>
                             <select name="reasons" className='searchselectPro'>
                                 <option value="">Category</option>
                                 <option value="one">one</option>
@@ -299,9 +311,9 @@ const ProductList = () => {
                                 <option value="one">one</option>
                                 <option value="two">two</option>
                             </select>
-                        </form>
+                        </div>
+                        <div className='allproduct'>
 
-                        <div className='productlist5' style={{ overflow: 'auto' }}>
                             {sellerProducts.length === 0 ? (
                                 <Fragment>
                                     <div className="productlist">
@@ -312,9 +324,7 @@ const ProductList = () => {
                                 </Fragment>
                             ) : (
                                 <Fragment>
-
                                     <div className="searchBoxPro2 grid-head">
-                                        <div></div>
                                         <div className="heading3">Image</div>
                                         <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Product Name</div>
                                         <div className="heading3">Category</div>
@@ -324,12 +334,11 @@ const ProductList = () => {
                                         <div className="heading3">Status</div>
                                         <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Created / Updated</div>
                                         <div className="heading3">Visibility</div>
-                                        <div className="heading3"></div>
+                                        <div className="heading3">Action</div>
                                     </div>
 
                                     {sellerProducts.map((item, index) => (
                                         <div className="searchBoxPro2" key={item.productId}>
-                                            <div><input type="checkbox" /></div>
                                             <div>
                                                 {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
                                             </div>
@@ -361,11 +370,10 @@ const ProductList = () => {
                                             </div>
                                         </div>
                                     ))}
-
+                                    <Link to="/all-products" className="descrip hoverr" style={{ marginTop: '10px' }}>See all products</Link>
                                 </Fragment>
                             )}
                         </div>
-
                     </Fragment>
                 )}
                 {currentPage === 4 && (

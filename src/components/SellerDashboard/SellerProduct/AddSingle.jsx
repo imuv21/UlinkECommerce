@@ -345,16 +345,16 @@ const AddSingle = () => {
                     </select>
                 )}
                 />
-                {errors.barcode && <div className='error'>{errors.barcode.message}</div>}
+           
                 <Controller name="barcodeNum" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.barcodeNum || ''} onChange={handleChange} type='text' className="box flex" placeholder='Enter barcode number' {...field} />} />
-                {errors.barcodeNum && <div className='error'>{errors.barcodeNum?.message}</div>}
+              
                 <Controller name="sku" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.sku || ''} onChange={handleChange} type='text' className="box flex" placeholder='Enter SKU' {...field} />} />
                 {errors.sku && <div className='error'>{errors.sku?.message}</div>}
 
 
                 <div className="heading3">Packaging</div>
                 <Controller name="unitsPerCarton" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.unitsPerCarton || ''} onChange={handleChange} className="box flex" placeholder='Enter units per carton' {...field} />} />
-                {errors.unitsPerCarton && <div className='error'>{errors.unitsPerCarton?.message}</div>}
+             
                 <div className="flex wh" style={{ gap: '20px' }}>
                     <Controller name="size" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.size || ''} onChange={handleChange} type='number' className="box flex" placeholder='Enter size' {...field} />} />
                     <Controller name="sizeUnit" control={control} defaultValue="" render={({ field }) => (
@@ -514,7 +514,6 @@ const AddSingle = () => {
                     </select>
                 )}
                 />
-                {errors.unitmeasure && <div className='error'>{errors.unitmeasure?.message}</div>}
 
 
                 <div className="heading3">Product inventory</div>

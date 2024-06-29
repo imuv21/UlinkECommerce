@@ -47,6 +47,7 @@ const ArchiveUploads = lazy(() => import('./components/SellerDashboard/SellerPro
 const SellerComProfile = lazy(() => import('./components/SellerDashboard/SellerAccount/SellerComProfile'));
 const AccessManagement = lazy(() => import('./components/SellerDashboard/Access/AccessManagement'));
 const Permissions = lazy(() => import('./components/SellerDashboard/Access/Permissions'));
+const AllSellerProducts = lazy(() => import('./components/SellerDashboard/ProductListPages/AllSellerProducts'));
 
 //Both seller and buyer
 const Profile = lazy(() => import('./pages/BuyerSeller/Profile'));
@@ -130,6 +131,7 @@ function App() {
             <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRole="Seller" redirect='/seller-center' />}>
               <Route path='/editsingle/:productId' element={<EditSingle />} />
               <Route path="/seller-order" element={<SellerOrder />} />
+              <Route path="/all-products" element={<AllSellerProducts />} />
 
               <Route path="/seller-dashboard" element={<MainLayout />}>
                 <Route path="add-single-product" element={<AddSingle />} />

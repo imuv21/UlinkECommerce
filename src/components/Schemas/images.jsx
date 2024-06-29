@@ -6,7 +6,6 @@ const urls = [
 ];
 
 const slider = [
-    "https://res.cloudinary.com/dey1tujp8/image/upload/v1716460602/Ulinkit/4_bsthpk.jpg",
     "https://res.cloudinary.com/dey1tujp8/image/upload/v1718610472/newtruckbanner1_wnf47s.png",
     "https://res.cloudinary.com/dey1tujp8/image/upload/v1716460602/Ulinkit/1_zpybcf.png",
     "https://res.cloudinary.com/dey1tujp8/image/upload/v1716460602/Ulinkit/6_nurht6.jpg",

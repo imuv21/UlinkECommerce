@@ -106,6 +106,19 @@ const ProductDetails = () => {
     };
 
 
+    //image zoom functionality
+    const [isHovered, setIsHovered] = useState(false);
+    const [backgroundPosition, setBackgroundPosition] = useState('0% 0%');
+
+    const handleMouseMove = (e) => {
+        const { left, top, width, height } = e.target.getBoundingClientRect();
+        const x = ((e.pageX - left) / width) * 100;
+        const y = ((e.pageY - top) / height) * 80;
+
+        setBackgroundPosition(`${x}% ${y}%`);
+    };
+
+
     //bullet-points
     const renderBulletPoints = (bulletPoints) => {
         const bulletPointArray = bulletPoints.split('/').filter(point => point.trim() !== '');
@@ -137,7 +150,6 @@ const ProductDetails = () => {
             .then(response => setRates(response.data.rates))
             .catch(error => console.error('Error fetching the exchange rates:', error));
     }, []);
-
     if (product && product.sellPrice && product.currencyname) {
         const fixedAmount = product.sellPrice;
         const fromCurrency = product.currencyname;
@@ -148,7 +160,6 @@ const ProductDetails = () => {
             }
         }, [fixedAmount, fromCurrency, toCurrency, rates]);
     }
-
     const handleToCurrencyChange = e => setToCurrency(e.target.value);
 
 
@@ -181,9 +192,17 @@ const ProductDetails = () => {
                 <div className="pdcont">
                     <div className="pdcol pdcol_one">
                         <div className="big-image-box">
-                            <div className="big-image">
-                                <img src={selectedImage} alt="Big Image" />
+
+                            <div className="big-image" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} onMouseMove={handleMouseMove}>
+                                <div className="image-wrapper-big">
+                                    <img src={selectedImage} alt="Big Image" className='zoomedimg' />
+                                </div>
                             </div>
+                            {isHovered && (
+                                <div className="popupzoom" style={{ backgroundImage: `url(${selectedImage})`, backgroundPosition: backgroundPosition }}>
+                                </div>
+                            )}
+
                             <div className="flex" style={{ width: '100%', padding: '10px', justifyContent: 'space-evenly', border: 'var(--border)' }}>
                                 {product.image && product.image.length > 0 && (
                                     <div className="small-image" onClick={() => handleImageClick(product.image[0].imageUrl)}>
@@ -230,7 +249,7 @@ const ProductDetails = () => {
                                     <span style={{ fontWeight: 'normal', fontSize: '12px' }}>
                                         {/* {fixedAmount} {fromCurrency}  */}
                                         Converted to {convertedAmount.toFixed(2)}
-                                        <select style={{ padding : '0px'}} value={toCurrency} onChange={handleToCurrencyChange}>
+                                        <select style={{ padding: '0px' }} value={toCurrency} onChange={handleToCurrencyChange}>
                                             {Object.keys(rates).map(currency => (
                                                 <option style={{ fontWeight: 'normal', fontSize: '12px' }} key={currency} value={currency}>
                                                     {currency}

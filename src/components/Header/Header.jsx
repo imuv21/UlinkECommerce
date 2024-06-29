@@ -24,7 +24,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import AllInboxIcon from '@mui/icons-material/AllInbox';
 import SendIcon from '@mui/icons-material/Send';
 import SendTimeExtensionIcon from '@mui/icons-material/SendTimeExtension';
-
+import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MessageIcon from '@mui/icons-material/Message';
 import StorefrontIcon from '@mui/icons-material/Storefront';
@@ -305,12 +305,13 @@ const Header = () => {
 
         <div className="headerflex">
 
-          {isAuthenticated && user.role === 'Buyer' && (
+          {isAuthenticated && (
             <div className={`icon-container ${isClickedAdd ? 'clicked' : ''}`} onClick={handleClickAdd}>
               <div className="flex">
                 <LocationOnIcon style={{ color: 'gray' }} />
                 <div className="flexcol-start">
-                  <div className="descrip">Deliver to</div>
+                  {user.role === 'Buyer' && <div className="descrip">Deliver to</div> } 
+                  {user.role === 'Seller' && <div className="descrip">Stock location</div> } 
                   {selectedAddress && <div className='descrip'>{truncateText(selectedAddress?.address, 10)}..</div>}
                 </div>
               </div>
@@ -464,8 +465,8 @@ const Header = () => {
             <ListIcon />
           </div>
 
-          <div className={`sub-heading3 icon-container ${isClickedCate ? 'clicked' : ''}`} onClick={handleClickCate} onMouseLeave={handleMouseLeave}>
-            All Categories
+          <div className={`sub-heading3 flex icon-container ${isClickedCate ? 'clicked' : ''}`} onClick={handleClickCate} onMouseLeave={handleMouseLeave} style={{ gap: '10px'}}>
+           <MenuIcon />   All Categories
             {isClickedCate && (
               <div className="popup cate_forntend">
                 <div className='popupbox'>

@@ -9,23 +9,7 @@ export const addSingleSchema = yup.object().shape({
     keyWords: yup.string().required('Key words are required'),
     dgrGoods: yup.string().required('Dangerous goods are required'),
     bulletPoints: yup.string().required('Bullet points are required'),
-    barcode: yup.string().required('Barcode type is required'),
-    barcodeNum: yup.string().test('barcodeValidation', 'Invalid barcode number', function (value) {
-        const barcodeType = this.parent.barcode;
-        if (barcodeType === 'UPC') {
-            return (value && value.length === 12);
-        } else if (barcodeType === 'EAN') {
-            return (value && (value.length === 8 || value.length === 13));
-        } else if (barcodeType === 'ASIN') {
-            return (value && value.length === 10);
-        } else if (barcodeType === 'GTIN') {
-            return (value && (value.length === 8 || value.length === 12 || value.length === 13 || value.length === 14));
-        } else {
-            return true;
-        }
-    }).required('Barcode number is required'),
 
-    unitmeasure: yup.string().required('Unit measure type is required'),
     sku: yup.string().required('SKU is required').min(4, "SKU must be 4 characters or more"),
     minOrderQuant: yup.number().typeError('Quantity must be a number').positive('Quantity must be a positive number').integer('Quantity must be an integer').required('Quantity is required')
         .test('is-lower', 'Min order quantity must be lower than available quantity',
@@ -45,11 +29,11 @@ export const addSingleSchema = yup.object().shape({
             }
         ),
     availableQuantity: yup.number().typeError('Quantity must be a number').positive('Quantity must be a positive number').integer('Quantity must be an integer').required('Quantity is required').min(1, "Minimum order quantity is 1"),
-    unitsPerCarton: yup.number().typeError('Units per carton must be a number').positive('Units per carton must be a positive number').integer('Units per carton must be an integer').required('Units per carton is required'),
+  
     avgLeadTime: yup.number().typeError('Lead time must be a number').positive('Lead time must be a positive number').integer('Lead time must be an integer').required('Lead time is required'),
     transportationMode: yup.string().required('Transportation mode is required'),
     StockLocation: yup.string().required('Stock Location is required'),
-    origin: yup.string().required('Origin is required'),
+    origin: yup.string().required('Origin is required')
 });
 
 export const bankSchema = yup.object().shape({
