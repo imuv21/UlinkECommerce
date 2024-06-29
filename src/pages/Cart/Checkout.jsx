@@ -373,7 +373,7 @@ const Checkout = () => {
               </div>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading2">Shipping</div>
-                <div className="heading2">FREE</div>
+                <div className="heading2">Null</div>
               </div>
               <div className="flex wh" style={{ justifyContent: 'space-between', display: 'none' }}>
                 <div className="heading2">VAT</div>

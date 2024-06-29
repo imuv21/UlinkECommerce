@@ -40,7 +40,7 @@ const AddSingle = () => {
         } else {
             setImages([...images, ...files]);
         }
-        setFileInputValue(''); 
+        setFileInputValue('');
     };
     const deleteImage = (index) => {
         setImages((prevImages) => {
@@ -97,11 +97,11 @@ const AddSingle = () => {
     const [selectedSubOption, setSelectedSubOption] = useState('');
     const [selectedMiniSubOption, setSelectedMiniSubOption] = useState('');
     const [selectedMicroSubOption, setSelectedMicroSubOption] = useState('');
-    const [isSecondSelectEnabled, setIsSecondSelectEnabled] = useState(false);
-    const [isThirdSelectEnabled, setIsThirdSelectEnabled] = useState(false);
-    const [isFourthSelectEnabled, setIsFourthSelectEnabled] = useState(false);
     const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchValue, setSearchValue] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
 
     useEffect(() => {
         setIsSubmitEnabled(selectedSupOption && selectedSubOption && selectedMiniSubOption && selectedMicroSubOption);
@@ -110,9 +110,6 @@ const AddSingle = () => {
     const handleSupOptionChange = (event) => {
         const selectedOption = event.target.value;
         setSelectedSupOption(selectedOption);
-        setIsSecondSelectEnabled(true);
-        setIsThirdSelectEnabled(false);
-        setIsFourthSelectEnabled(false);
         setSelectedSubOption('');
         setSelectedMiniSubOption('');
         setSelectedMicroSubOption('');
@@ -120,15 +117,12 @@ const AddSingle = () => {
     const handleSubOptionChange = (event) => {
         const selectedOption = event.target.value;
         setSelectedSubOption(selectedOption);
-        setIsThirdSelectEnabled(true);
-        setIsFourthSelectEnabled(false);
         setSelectedMiniSubOption('');
         setSelectedMicroSubOption('');
     };
     const handleMiniSubOptionChange = (event) => {
         const selectedOption = event.target.value;
         setSelectedMiniSubOption(selectedOption);
-        setIsFourthSelectEnabled(true);
         setSelectedMicroSubOption('');
     };
     const handleMicroSubOptionChange = (event) => {
@@ -215,12 +209,53 @@ const AddSingle = () => {
         setSingleFormData({ ...singleFormData, [e.target.name]: e.target.value });
     };
 
-
-
     //convert pascal to readable
     const convertPascalToReadable = (text) => {
         return text.replace(/([A-Z])/g, ' $1').trim();
     };
+
+
+    //search categories
+    const handleSearchChange = (event) => {
+        const query = event.target.value;
+        const sanitizedQuery = query.replace(/\s+/g, '');
+        setSearchQuery(query);
+        setSearchValue(sanitizedQuery);
+
+        if (sanitizedQuery.length > 0) {
+            const filteredSuggestions = [];
+            supOptions.forEach((sup) => {
+                const subCategories = subOptions[sup] || [];
+                subCategories.forEach((sub) => {
+                    const miniSubCategories = miniSubOptions[sub] || [];
+                    miniSubCategories.forEach((miniSub) => {
+                        const microSubCategories = microSubOptions[miniSub] || [];
+                        microSubCategories.forEach((microSub) => {
+                            const fullPath = `${sup}/${sub}/${miniSub}/${microSub}`;
+                            if (fullPath.toLowerCase().includes(sanitizedQuery.toLowerCase())) {
+                                filteredSuggestions.push(fullPath);
+                            }
+                        });
+                    });
+                });
+            });
+            setSuggestions(filteredSuggestions);
+        } else {
+            setSuggestions([]);
+        }
+    };
+
+    const handleSuggestionClick = (suggestion) => {
+        const [sup, sub, miniSub, microSub] = suggestion.split('/');
+        setSelectedSupOption(sup);
+        setSelectedSubOption(sub);
+        setSelectedMiniSubOption(miniSub);
+        setSelectedMicroSubOption(microSub);
+        setSearchQuery('');
+        setSearchValue('');
+        setSuggestions([]);
+    };
+
 
     //focus
     const scrollRef = useRef(null);
@@ -240,6 +275,18 @@ const AddSingle = () => {
 
             <form className="productlist2" onSubmit={handleSubmit(onSubmit)}>
                 <div className="heading3">Basic information</div>
+
+                <input type="text" className='box flex' placeholder="Search category here..." value={searchQuery} onChange={handleSearchChange} />
+
+                {suggestions.length > 0 && (
+                    <div className="flexcol wh">
+                        {suggestions.map((suggestion, index) => (
+                            <div key={index} className="flex-start descrip wh" style={{ cursor: 'pointer' }} onClick={() => handleSuggestionClick(suggestion)}>
+                                {convertPascalToReadable(suggestion)}
+                            </div>
+                        ))}
+                    </div>
+                )}
 
                 <div className="flex-start wh" style={{ gap: '10px' }}>
                     <select onChange={handleSupOptionChange} className="box flex">
@@ -267,6 +314,7 @@ const AddSingle = () => {
                         ))}
                     </select>
                 </div>
+
                 <div className="flex-start wh" style={{ gap: '10px' }}>
                     <div className="greenerror">{errorMessage ? errorMessage : isSubmitEnabled ? `Selected path: ${categoryPath}` : 'Please make all selections'}</div>
                     {selectedSupOption && (<div className='greenerror'>Margin value: {commission}%</div>)}
@@ -345,16 +393,16 @@ const AddSingle = () => {
                     </select>
                 )}
                 />
-           
+
                 <Controller name="barcodeNum" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.barcodeNum || ''} onChange={handleChange} type='text' className="box flex" placeholder='Enter barcode number' {...field} />} />
-              
+
                 <Controller name="sku" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.sku || ''} onChange={handleChange} type='text' className="box flex" placeholder='Enter SKU' {...field} />} />
                 {errors.sku && <div className='error'>{errors.sku?.message}</div>}
 
 
                 <div className="heading3">Packaging</div>
                 <Controller name="unitsPerCarton" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.unitsPerCarton || ''} onChange={handleChange} className="box flex" placeholder='Enter units per carton' {...field} />} />
-             
+
                 <div className="flex wh" style={{ gap: '20px' }}>
                     <Controller name="size" control={control} defaultValue="" render={({ field }) => <input value={singleFormData.size || ''} onChange={handleChange} type='number' className="box flex" placeholder='Enter size' {...field} />} />
                     <Controller name="sizeUnit" control={control} defaultValue="" render={({ field }) => (
