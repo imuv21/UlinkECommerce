@@ -28,8 +28,13 @@ const Profile = () => {
 
     //profile edit functionality
     const [isEditing, setIsEditing] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const onSubmit = async (data) => {
+
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         const profile = {
             firstname: data.firstname,
             lastname: data.lastname,
@@ -40,9 +45,11 @@ const Profile = () => {
         try {
             await dispatch(updateUserDetails(profile)).unwrap();
             alert('Profile updated successfully!');
-            setIsEditing(false);
         } catch (error) {
             console.error('Error updating profile:', error);
+        } finally {
+            setIsSubmitting(false);  
+            setIsEditing(false);
         }
     };
 
@@ -61,7 +68,7 @@ const Profile = () => {
         } else if (user.role === "Buyer") {
             return "/buyer-dashboard";
         }
-        return "/"; 
+        return "/";
     };
 
 
@@ -91,7 +98,7 @@ const Profile = () => {
                 <title>My Profile</title>
             </Helmet>
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                <div className="heading5">My Profile</div> <Link  to={getDashboardLink()} className='heading3'>Back</Link>
+                <div className="heading5">My Profile</div> <Link to={getDashboardLink()} className='heading3'>Back</Link>
             </div>
 
             {isAuthenticated && (
@@ -106,7 +113,7 @@ const Profile = () => {
                                         <Controller name="firstname" control={control} defaultValue={user.firstname || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your first name' {...field} />} />
                                         <Controller name="lastname" control={control} defaultValue={user.lastname || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your last name' {...field} />} />
                                     </div>
-                                    
+
 
                                     {(errors.firstname || errors.lastname) &&
                                         <div className="flex wh">
@@ -160,7 +167,7 @@ const Profile = () => {
                         )}
                         {isEditing ? (
                             <div className="flex" style={{ gap: '20px' }}>
-                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}>Save</button>
+                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}  disabled={isSubmitting}> {isSubmitting ? 'Saving...' : 'Save'}</button>
                                 <button className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={cancel} >Cancel</button>
                             </div>
                         ) : (

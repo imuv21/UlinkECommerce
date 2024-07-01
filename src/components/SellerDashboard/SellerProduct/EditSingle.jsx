@@ -128,18 +128,18 @@ const EditSingle = () => {
 
 
     const onSubmit = async (data) => {
-
+      
         if (isSubmitting) return;
         setIsSubmitting(true);
 
         try {
             await dispatch(updateProduct({ productId, productData: data })).unwrap();
             alert("Product updated successfully");
-            navigate('/seller-dashboard/product-list');
         } catch (error) {
             console.error("Failed to update product:", error);
         } finally {
             setIsSubmitting(false);
+            navigate('/seller-dashboard/product-list');
         }
     };
 

@@ -12,13 +12,17 @@ import { fetchSellerBusinessProfile, updateSellerBusinessProfile, updateSellerDo
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { useNavigate } from 'react-router-dom';
 
 const schema = yupResolver(businessSchema);
 
 const SellerComProfile = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { sellerprofile, status, error, updateStatus, updateError } = useSelector((state) => state.sellerBusinessProfile);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    
 
     useEffect(() => {
         dispatch(fetchSellerBusinessProfile());
@@ -31,9 +35,23 @@ const SellerComProfile = () => {
 
     // profile edit functionality
     const [isEditing, setIsEditing] = useState(false);
-    const onSubmit = (data) => {
-        dispatch(updateSellerBusinessProfile(data));
-        setIsEditing(false);
+    const onSubmit = async (data) => {
+
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
+        try {
+            if (selectedImage) {
+                await dispatch(uploadProfileImage(selectedImage));
+            }
+            await dispatch(updateSellerBusinessProfile(data));
+            alert('Profile updated successfully!');
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        } finally {
+            setIsSubmitting(false);
+            setIsEditing(false);
+        }
     };
     const handleEditClick = () => {
         setIsEditing(true);
@@ -79,10 +97,9 @@ const SellerComProfile = () => {
                 setImageUrl(e.target.result);
             };
             reader.readAsDataURL(file);
-            dispatch(uploadProfileImage(file));
         }
     };
-    
+
     const handleUploadClick = () => {
         document.getElementById('avatar').click();
     };
@@ -96,6 +113,7 @@ const SellerComProfile = () => {
     //Doc submit and edit functionality
     const [docErrors, setDocErrors] = useState({});
     const [isEditingDoc, setIsEditingDoc] = useState(false);
+    const [isSubmittingDoc, setIsSubmittingDoc] = useState(false);
 
     const clearError = (fieldName) => {
         setDocErrors(prevErrors => ({
@@ -106,6 +124,10 @@ const SellerComProfile = () => {
 
     const handleDoc = async (event) => {
         event.preventDefault();
+
+        if (isSubmittingDoc) return;
+        setIsSubmittingDoc(true);
+
         const newErrors = {};
 
         if (!selectedFile.file && !selectedFile.name) {
@@ -162,15 +184,16 @@ const SellerComProfile = () => {
                 }
                 dispatch(updateSellerDocData({ documentType: 'TRADE_LICENSE', documentData: tradeLicenseData }));
                 dispatch(updateSellerDocData({ documentType: 'IDENTITY_DOCUMENT', documentData: identityDocData }));
-
-                alert("Form submitted successfully!");
-                setIsEditingDoc(false);
                 setDocErrors({});
-                await dispatch(fetchSellerBusinessProfile());
+               
             } catch (error) {
                 alert("Form submission failed. Please try again.");
+            } finally {
+                await dispatch(fetchSellerBusinessProfile());
+                alert("Form submitted successfully.");
+                setIsSubmittingDoc(false);
+                setIsEditingDoc(false);
             }
-
         } else {
             alert("Form submission failed. Please fix the errors.");
         }
@@ -374,7 +397,9 @@ const SellerComProfile = () => {
                         )}
                         {isEditing ? (
                             <div className="flex" style={{ gap: '20px' }}>
-                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}>Save</button>
+                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }} disabled={isSubmitting}>
+                                    {isSubmitting ? 'Saving...' : 'Save'}
+                                </button>
                                 <button className="btn flex box" type='button' style={{ width: '100px', cursor: 'pointer' }} onClick={cancel} >Cancel</button>
                             </div>
                         ) : (
@@ -520,8 +545,8 @@ const SellerComProfile = () => {
                                                 <div className="bd_over_box">
                                                     {
                                                         sellerprofile?.documents?.TRADE_LICENSE?.docs && sellerprofile.documents.TRADE_LICENSE.docs[0] && sellerprofile.documents.TRADE_LICENSE.docs[0].documentPath ?
-                                                        (<a href={sellerprofile.documents.TRADE_LICENSE.docs[0].documentPath} className='descrip2 hoverr' download="business_registration_document">Download</a>) :
-                                                        (<div className='descrip2' style={{whiteSpace: 'nowrap'}}  >No document</div>)
+                                                            (<a href={sellerprofile.documents.TRADE_LICENSE.docs[0].documentPath} className='descrip2 hoverr' download="business_registration_document">Download</a>) :
+                                                            (<div className='descrip2' style={{ whiteSpace: 'nowrap' }}  >No document</div>)
                                                     }
                                                 </div>
                                             </div>
@@ -532,8 +557,8 @@ const SellerComProfile = () => {
                                                 <div className="bd_over_box">
                                                     {
                                                         sellerprofile?.documents?.IDENTITY_DOCUMENT?.docs && sellerprofile.documents.IDENTITY_DOCUMENT.docs[0] && sellerprofile.documents.IDENTITY_DOCUMENT.docs[0].documentPath ?
-                                                        (<a href={sellerprofile.documents.IDENTITY_DOCUMENT.docs[0].documentPath} className='descrip2 hoverr' download="identity_document">Download</a>) : 
-                                                        (<div className='descrip2' style={{whiteSpace: 'nowrap'}} >No document</div>)
+                                                            (<a href={sellerprofile.documents.IDENTITY_DOCUMENT.docs[0].documentPath} className='descrip2 hoverr' download="identity_document">Download</a>) :
+                                                            (<div className='descrip2' style={{ whiteSpace: 'nowrap' }} >No document</div>)
                                                     }
                                                 </div>
                                             </div>
@@ -545,7 +570,7 @@ const SellerComProfile = () => {
 
                         {isEditingDoc &&
                             <div className="flex" style={{ gap: '20px' }}>
-                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}> {sellerprofile ? 'Update' : 'Submit'} </button>
+                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }} disabled={isSubmittingDoc}> {isSubmittingDoc ? 'Saving...' : 'Save'} </button>
                                 <button type="button" className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={cancelDoc} >Cancel</button>
                             </div>
                         }

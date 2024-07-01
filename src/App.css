@@ -1874,6 +1874,12 @@ button:focus {
 /* cart styling */
 /* Product details styling */
 
+.shareicons .MuiSvgIcon-root {
+  width: 18px;
+  color: gray;
+  cursor: pointer;
+}
+
 .bullet-points {
   width: 100%;
 }

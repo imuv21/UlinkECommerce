@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FlightIcon from '@mui/icons-material/Flight';
 import returned from '../../assets/returned.png';
@@ -19,6 +19,14 @@ import InfoIcon from '@mui/icons-material/Info';
 import Loader from '../../components/Loader/Loader';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import XIcon from '@mui/icons-material/X';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+
 import visa from '../../assets/visa.png';
 import mastercard from '../../assets/mastercard.png';
 import paypal from '../../assets/paypal.png';
@@ -242,25 +250,27 @@ const ProductDetails = () => {
                                     <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{discountPercentage}% OFF</span>
                                 </div>
                                 <div className="flex" style={{ gap: '15px' }}>
-
                                     <span>{selectedCurrency}</span>
                                     <span style={{ fontWeight: 'bold', fontSize: '22px' }}>{currencySymbols[selectedCurrency]} {convertPrice(product.sellPrice, product.currencyname)} {selectedCurrency}</span>
 
-                                    <span style={{ fontWeight: 'normal', fontSize: '12px' }}>
+                                    <span style={{ fontWeight: 'normal', fontSize: '14px', fontWeight: 600 }}>
                                         {/* {fixedAmount} {fromCurrency}  */}
                                         Converted to {convertedAmount.toFixed(2)}
                                         <select style={{ padding: '0px' }} value={toCurrency} onChange={handleToCurrencyChange}>
                                             {Object.keys(rates).map(currency => (
-                                                <option style={{ fontWeight: 'normal', fontSize: '12px' }} key={currency} value={currency}>
+                                                <option style={{ fontWeight: 'normal', fontSize: '14px', fontWeight: 600 }} key={currency} value={currency}>
                                                     {currency}
                                                 </option>
                                             ))}
                                         </select>
                                     </span>
-
                                 </div>
                                 <div className="flex">
                                     <span className='descrip'>per piece</span>
+                                </div>
+
+                                <div className="flex shareicons" style={{gap: '10px'}}>
+                                    <div className='descrip2'>Share it on :</div> < WhatsAppIcon /> < FacebookIcon /> <XIcon /> 
                                 </div>
                             </div>
                         </div>
@@ -345,7 +355,7 @@ const ProductDetails = () => {
                                 </div>
                                 <div className="flexcol wh bbottom" style={{ alignItems: 'start', padding: '10px 0px' }}>
                                     <div className="heading2 flex" style={{ gap: '5px' }}><img src={returned} className='img' /><span>Returns</span></div>
-                                    <div className="descrip2"><a className='hoverr'>Read seller's return policy</a></div>
+                                    <div className="descrip2"><Link to="/return-policy" className='hoverr'>Read seller's return policy</Link></div>
                                 </div>
 
                                 <div className="flexcol wh" style={{ alignItems: 'start', paddingTop: '10px' }}>

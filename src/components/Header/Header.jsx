@@ -46,6 +46,17 @@ const Header = () => {
   const { addresses, status, error } = useSelector((state) => state.address);
 
 
+  //animation
+  const [showFirst, setShowFirst] = useState(true);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowFirst(prevShowFirst => !prevShowFirst);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+
   //select address
   const [selectedAddress, setSelectedAddress] = useState(null);
 
@@ -294,9 +305,17 @@ const Header = () => {
   return (
     <Fragment>
 
-      <div className="offer">
-        <div className='offer-text'>Get 20% OFF on your first order.</div> <div className="coupn">ULINKITFIRST20</div>
-      </div>
+      {showFirst ? (
+        <div className="offer">
+          <div className='offer-text bounce-in-top'>Get 20% OFF on your first order.</div>
+          <div className="coupn bounce-in-bottom">ULINKITFIRST20</div>
+        </div>
+      ) : (
+        <div className="offer2">
+          <div className="gwm slide-in-left">Global Wholesale Marketplace</div>
+          <div className="fcb slide-in-right">For Cross-Border</div>
+        </div>
+      )}
 
       <div className='header'>
         <div className="flex head-start">
@@ -310,8 +329,8 @@ const Header = () => {
               <div className="flex">
                 <LocationOnIcon style={{ color: 'gray' }} />
                 <div className="flexcol-start">
-                  {user.role === 'Buyer' && <div className="descrip">Deliver to</div> } 
-                  {user.role === 'Seller' && <div className="descrip">Stock location</div> } 
+                  {user.role === 'Buyer' && <div className="descrip">Deliver to</div>}
+                  {user.role === 'Seller' && <div className="descrip">Stock location</div>}
                   {selectedAddress && <div className='descrip'>{truncateText(selectedAddress?.address, 10)}..</div>}
                 </div>
               </div>
@@ -319,7 +338,7 @@ const Header = () => {
               {(isClickedAdd && addresses && addresses.length > 0) && (
                 <div className="popup address-relative">
                   <div className="address-container">
-                    { addresses.map((address) => (
+                    {addresses.map((address) => (
                       <div key={address.id} className={`address-card ${selectedAddress?.id === address.id ? 'selected' : ''}`}>
 
                         <input type="radio" id={address.id} name="address" value={address.address} checked={selectedAddress?.id === address.id} onChange={() => handleAddressChange(address)} />
@@ -465,8 +484,8 @@ const Header = () => {
             <ListIcon />
           </div>
 
-          <div className={`sub-heading3 flex icon-container ${isClickedCate ? 'clicked' : ''}`} onClick={handleClickCate} onMouseLeave={handleMouseLeave} style={{ gap: '10px'}}>
-           <MenuIcon />   All Categories
+          <div className={`sub-heading3 flex icon-container ${isClickedCate ? 'clicked' : ''}`} onClick={handleClickCate} onMouseLeave={handleMouseLeave} style={{ gap: '10px' }}>
+            <MenuIcon />   All Categories
             {isClickedCate && (
               <div className="popup cate_forntend">
                 <div className='popupbox'>
