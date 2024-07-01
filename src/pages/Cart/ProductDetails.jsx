@@ -171,6 +171,27 @@ const ProductDetails = () => {
     const handleToCurrencyChange = e => setToCurrency(e.target.value);
 
 
+    const pageLink = `https://www.ulinkit.com/product-details/${id}`;
+    const handleShare = (platform) => {
+        let shareUrl = '';
+        switch (platform) {
+            case 'whatsapp':
+                shareUrl = `https://wa.me/?text=${encodeURIComponent(pageLink)}`;
+                break;
+            case 'facebook':
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageLink)}`;
+                break;
+            case 'twitter':
+                shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(pageLink)}`;
+                break;
+            default:
+                break;
+        }
+        window.open(shareUrl, '_blank');
+    };
+
+
+
 
 
     if (status === 'loading') {
@@ -269,8 +290,11 @@ const ProductDetails = () => {
                                     <span className='descrip'>per piece</span>
                                 </div>
 
-                                <div className="flex shareicons" style={{gap: '10px'}}>
-                                    <div className='descrip2'>Share it on :</div> < WhatsAppIcon /> < FacebookIcon /> <XIcon /> 
+                                <div className="flex shareicons" style={{ gap: '10px' }}>
+                                    <div className='descrip2'>Share it on :</div>
+                                    < WhatsAppIcon onClick={() => handleShare('whatsapp')} />
+                                    < FacebookIcon onClick={() => handleShare('facebook')} />
+                                    <XIcon onClick={() => handleShare('twitter')}  />
                                 </div>
                             </div>
                         </div>
