@@ -97,7 +97,10 @@ const AddSingle = () => {
     const [selectedSubOption, setSelectedSubOption] = useState('');
     const [selectedMiniSubOption, setSelectedMiniSubOption] = useState('');
     const [selectedMicroSubOption, setSelectedMicroSubOption] = useState('');
+
     const [isSubmitEnabled, setIsSubmitEnabled] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const [errorMessage, setErrorMessage] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [searchValue, setSearchValue] = useState('');
@@ -172,6 +175,10 @@ const AddSingle = () => {
     //form validation
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
     const onSubmit = async (data) => {
+
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         try {
             const currentTime = new Date();
             const productImage = images.map(image => ({
@@ -201,8 +208,12 @@ const AddSingle = () => {
 
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsSubmitting(false);
         }
     };
+
+    
 
     const [singleFormData, setSingleFormData] = useState({});
     const handleChange = (e) => {
@@ -907,7 +918,7 @@ const AddSingle = () => {
 
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                     <button className='btn box2 flex' type='button' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Cancel</div></button>
-                    <button className='btn box2 flex' onClick={uploadImages} disabled={!isSubmitEnabled} type='submit' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Send for Review</div></button>
+                    <button className='btn box2 flex' onClick={uploadImages} disabled={!isSubmitEnabled || isSubmitting} type='submit' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">{isSubmitting ? 'Submitting...' : 'Submit'}</div></button>
                 </div>
             </form>
         </div>

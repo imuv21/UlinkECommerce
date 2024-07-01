@@ -19,10 +19,26 @@ const Footer = () => {
 
   //clicks
   const [isClickedFooter, setIsClickedFooter] = useState(false);
-  const handleClickFooter = () => {
-    setIsClickedFooter(prevState => !prevState);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [newsEmail, setNewsEmail] = useState('');
+
+  const handleClickFooter = (event) => {
+    event.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    // Simulate an asynchronous operation (like an API call)
+    setTimeout(() => {
+      setIsClickedFooter(prevState => !prevState);
+      setIsSubmitting(false);
+      setNewsEmail(''); 
+    }, 1500);
   };
 
+  const closepopup = (event) => {
+    event.preventDefault();
+    setIsClickedFooter(prevState => !prevState);
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,6 +51,9 @@ const Footer = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [isClickedFooter]);
+
+
+
 
 
   return (
@@ -100,9 +119,12 @@ const Footer = () => {
         <div className="footer-nav">
           <div className="fsecone">
             <h3 className="footer-title2">Stay Updated</h3>
-            <div className={`flex subscribe ${isClickedFooter ? 'clicked' : ''}`}>
-              <input type="text" name="email_updates" className="box flex" placeholder="Enter your email to get updates" />
-              <button className="btn2 box flex" style={{ width: 'fit-content' }} onClick={handleClickFooter}>Subscribe</button>
+            <form className={`flex subscribe ${isClickedFooter ? 'clicked' : ''}`} onSubmit={handleClickFooter}>
+              <input type="text" name="email_updates" className="box flex" placeholder="Enter your email to get updates" value={newsEmail} onChange={(e) => setNewsEmail(e.target.value)} required />
+
+              <button type="submit" className="btn2 box flex" style={{ width: 'fit-content' }} disabled={isSubmitting}>
+                {isSubmitting ? 'Submitting...' : 'Subscribe'}
+              </button>
 
               {isClickedFooter && (
                 <div className="footer-popup footer-subscribe">
@@ -112,11 +134,11 @@ const Footer = () => {
                       <p>Thanks for subscribing to our news letter. </p>
                       <p>You should receive a confirmation email soon. </p>
                     </div>
-                    <button onClick={handleClickFooter} className="go-home"> Close </button>
+                    <button type="button" onClick={closepopup} className="go-home"> Close </button>
                   </div>
                 </div>
               )}
-            </div>
+            </form>
           </div>
 
           <div className="supfsectwo">

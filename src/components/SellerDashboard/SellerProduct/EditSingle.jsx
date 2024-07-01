@@ -30,7 +30,8 @@ const EditSingle = () => {
     const productData = useSelector((state) => state.editproducts.productData);
     const loading = useSelector((state) => state.editproducts.loading);
     const error = useSelector((state) => state.editproducts.error);
-    const updateStatus = useSelector((state) => state.editproducts.updateStatus);
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         dispatch(fetchEditProduct(productId));
@@ -127,15 +128,19 @@ const EditSingle = () => {
 
 
     const onSubmit = async (data) => {
-        dispatch(updateProduct({ productId, productData: data }))
-            .unwrap()
-            .then(() => {
-                alert("Product updated successfully");
-                navigate('/seller-dashboard/product-list');
-            })
-            .catch((error) => {
-                console.error("Failed to update product:", error);
-            });
+
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
+        try {
+            await dispatch(updateProduct({ productId, productData: data })).unwrap();
+            alert("Product updated successfully");
+            navigate('/seller-dashboard/product-list');
+        } catch (error) {
+            console.error("Failed to update product:", error);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleCancel = () => {
@@ -320,9 +325,9 @@ const EditSingle = () => {
                     </select>
                 )}
                 />
-              
+
                 <Controller name="barcodeNum" control={control} defaultValue="" render={({ field }) => <input type='text' className="box flex" placeholder='Enter barcode number' {...field} />} />
-               
+
                 <Controller name="sku" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter SKU' {...field} />} />
                 {errors.sku && <div className='error'>{errors.sku?.message}</div>}
 
@@ -827,7 +832,9 @@ const EditSingle = () => {
 
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                     <button className='btn box2 flex' type='button' onClick={handleCancel} style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Cancel</div></button>
-                    <button className='btn box2 flex' type='submit' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Update</div></button>
+                    <button className='btn box2 flex' type='submit' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }} disabled={isSubmitting}>
+                        <div className="heading2">{isSubmitting ? 'Updating...' : 'Update'}</div>
+                    </button>
                 </div>
             </form>
         </div>
