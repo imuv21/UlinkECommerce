@@ -21,8 +21,10 @@ import countryNames from '../Schemas/countryNames';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 import HomeIcon from '@mui/icons-material/Home';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import AllInboxIcon from '@mui/icons-material/AllInbox';
 import SendIcon from '@mui/icons-material/Send';
+import PrintIcon from '@mui/icons-material/Print';
 import SendTimeExtensionIcon from '@mui/icons-material/SendTimeExtension';
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -154,13 +156,27 @@ const Header = () => {
     setIsClickedAdd(prevState => !prevState);
   };
 
+
+  const [isConsumer, setIsConsumer] = useState(false);
+  const handleConsumer = () => {
+    setIsConsumer(prevState => !prevState);
+  };
+
+  const [isOffice, setIsOffice] = useState(false);
+  const handleOffice = () => {
+    setIsOffice(prevState => !prevState);
+  };
+
+
   useEffect(() => {
     const handleScroll = () => {
-      if (isClicked || isClickedCate || isClickedTwo || isClickedAdd) {
+      if (isClicked || isClickedCate || isClickedTwo || isClickedAdd || isConsumer || isOffice) {
         setIsClicked(false);
         setIsClickedCate(false);
         setIsClickedTwo(false);
         setIsClickedAdd(false);
+        setIsConsumer(false);
+        setIsOffice(false);
       }
     };
 
@@ -168,7 +184,7 @@ const Header = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isClicked, isClickedCate, isClickedTwo, isClickedAdd]);
+  }, [isClicked, isClickedCate, isClickedTwo, isClickedAdd, isConsumer, isOffice]);
 
   const navigate = useNavigate();
   const tocart = () => {
@@ -250,7 +266,6 @@ const Header = () => {
   };
 
   const getPopupContent = (option) => {
-
     const handleOptionClick = (supOption, subOption = '', miniSubOption = '') => {
       navigate('/search-results', {
         state: { supOption, subOption, miniSubOption }
@@ -277,6 +292,48 @@ const Header = () => {
     );
   };
 
+  const getConsumerPopupContent = () => {
+    return (
+      <div className='cate-grid'>
+        {subOptions.ConsumerElectronics.slice(0, 3).map((subOption, index) => (
+          <div className="popupbox-cate" key={index}>
+            <div className='subpop-options underline' onClick={() => handleOptionClick("ConsumerElectronics", subOption)}>
+              {convertPascalToReadable(subOption)}
+            </div>
+            <div className="cate-options">
+              {miniSubOptions[subOption].map((miniSubOption, miniIndex) => (
+                <div className='sub-cate-options' key={miniIndex} onClick={() => handleOptionClick("ConsumerElectronics", subOption, miniSubOption)}>
+                  {convertPascalToReadable(miniSubOption)}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const getOfficePopupContent = () => {
+    return (
+      <div className='cate-grid'>
+        {subOptions.OfficeAndStationery.slice(0, 3).map((subOption, index) => (
+          <div className="popupbox-cate" key={index}>
+            <div className='subpop-options underline' onClick={() => handleOptionClick("OfficeAndStationery", subOption)}>
+              {convertPascalToReadable(subOption)}
+            </div>
+            <div className="cate-options">
+              {miniSubOptions[subOption].map((miniSubOption, miniIndex) => (
+                <div className='sub-cate-options' key={miniIndex} onClick={() => handleOptionClick("OfficeAndStationery", subOption, miniSubOption)}>
+                  {convertPascalToReadable(miniSubOption)}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   //search-bar
   const [query, setQuery] = useState('');
 
@@ -291,7 +348,6 @@ const Header = () => {
       handleSearch();
     }
   };
-
 
   const truncateText = (text, maxLength) => {
     if (!text) return '';
@@ -508,6 +564,31 @@ const Header = () => {
               </div>
             )}
           </div>
+
+          <div className={`sub-heading3 cate-icon flex icon-container ${isConsumer ? 'clicked' : ''}`} onClick={handleConsumer} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
+            <PhoneAndroidIcon />  Consumer Electronics
+            {isConsumer && (
+              <div className="popup ce-options-popup">
+                {getConsumerPopupContent()}
+                <div className='wh'>
+                  <Link to="/search-results" className="subpop-options underline" style={{ color: 'var(--CodeTwo)' }}>More categories</Link>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className={`sub-heading3 cate-icon flex icon-container ${isOffice ? 'clicked' : ''}`} onClick={handleOffice} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
+            <PrintIcon />  Office And Stationery
+            {isOffice && (
+              <div className="popup oas-options-popup">
+                {getOfficePopupContent()}
+                <div className='wh'>
+                  <Link to="/search-results" className="subpop-options underline" style={{ color: 'var(--CodeTwo)' }}>More categories</Link>
+                </div>
+              </div>
+            )}
+          </div>
+
         </div>
 
         <div className="sup-header-option">

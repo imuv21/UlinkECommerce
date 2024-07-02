@@ -212,7 +212,7 @@ const ProductList = () => {
                         </div>
                         <div className='allproduct'>
 
-                            {sellerProducts.length === 0 ? (
+                            {sellerProducts && sellerProducts.length === 0 ? (
                                 <Fragment>
                                     <div className="productlist">
                                         <img src={empty} className='productlist-img' alt="empty box" />
@@ -235,7 +235,7 @@ const ProductList = () => {
                                         <div className="heading3">Action</div>
                                     </div>
 
-                                    {sellerProducts.map((item, index) => (
+                                    {sellerProducts && sellerProducts.map((item, index) => (
                                         <div className="searchBoxPro2" key={item.productId}>
                                             <div>
                                                 {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
@@ -314,7 +314,7 @@ const ProductList = () => {
                         </div>
                         <div className='allproduct'>
 
-                            {sellerProducts.length === 0 ? (
+                            {sellerProducts && sellerProducts.length === 0 ? (
                                 <Fragment>
                                     <div className="productlist">
                                         <img src={empty} className='productlist-img' alt="empty box" />
@@ -337,7 +337,7 @@ const ProductList = () => {
                                         <div className="heading3">Action</div>
                                     </div>
 
-                                    {sellerProducts.map((item, index) => (
+                                    {sellerProducts && sellerProducts.map((item, index) => (
                                         <div className="searchBoxPro2" key={item.productId}>
                                             <div>
                                                 {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}

@@ -279,7 +279,7 @@ const ProductDetails = () => {
                                         Converted to {convertedAmount.toFixed(2)}
                                         <select style={{ padding: '0px' }} value={toCurrency} onChange={handleToCurrencyChange}>
                                             {Object.keys(rates).map(currency => (
-                                                <option style={{ fontWeight: 'normal', fontSize: '14px', fontWeight: 600 }} key={currency} value={currency}>
+                                                <option key={currency} value={currency}>
                                                     {currency}
                                                 </option>
                                             ))}
