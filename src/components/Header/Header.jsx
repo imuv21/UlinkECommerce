@@ -565,7 +565,7 @@ const Header = () => {
             )}
           </div>
 
-          <div className={`sub-heading3 cate-icon flex icon-container ${isConsumer ? 'clicked' : ''}`} onClick={handleConsumer} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
+          <div className={`sub-heading2 cate-icon flex icon-container ${isConsumer ? 'clicked' : ''}`} onClick={handleConsumer} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
             <PhoneAndroidIcon />  Consumer Electronics
             {isConsumer && (
               <div className="popup ce-options-popup">
@@ -577,7 +577,7 @@ const Header = () => {
             )}
           </div>
 
-          <div className={`sub-heading3 cate-icon flex icon-container ${isOffice ? 'clicked' : ''}`} onClick={handleOffice} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
+          <div className={`sub-heading2 cate-icon flex icon-container ${isOffice ? 'clicked' : ''}`} onClick={handleOffice} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
             <PrintIcon />  Office And Stationery
             {isOffice && (
               <div className="popup oas-options-popup">

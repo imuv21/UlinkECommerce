@@ -22,11 +22,11 @@ const miniSubOptions = {
 
   AudioAndStudio: ["AmplifiersAndSpeakers", "AudioAndVideoAccessories", "HeadphonesAndHeadsets", "MediaPlayers", "Radio", "RecordingAndStudioEquipment"],
   CamerasAndCamcorders: ["Camcorders", "CameraAccessories", "DigitalCameras", "InstantAndFilmCameras", "SecurityCamerasAndDrones", "WebcamsAndAccessories"],
-  ComputersAndAccessories: ["ComputerAndLaptopComponents", "ComputerAccessories", "DextopAndComputer", "KeyboardsAndKepads", "LaptopAndNotebookAccess", "LaptopsAndNotebooks", "Monitors", "Mouse", "NetworkAndSecurity", "PosSystems", "Softwares", 'StorageDevice'],
+  ComputersAndAccessories: ["ComputerAndLaptopComponents", "ComputerAccessories",  "KeyboardsAndKepads",  "Monitors", "Mouse", "NetworkAndSecurity", "PosSystems", "Softwares", 'StorageDevice'],
   ElectricalAndElectronicAccessories: ["Adapters", "CablesAndConnectors"],
   GamingAndConsoles: ["GamingAccessories", "GamingConsoles", "GamingTitles"],
   //problem 1
-  MobilePhonesAndTablets: ["ChargersAndBatteries", "MobilePhoneAndTabletAccessories", "MobilePhones", "Tablets"],
+  MobilePhonesAndTablets: ["ChargersAndBatteries", "MobilePhoneAndTabletAccessories", "MobilePhones"],
   MusicalInstruments: ["KeyboardInstruments", "PercussionInstruments", 'StringedInstruments', "WindInstruments"],
   ProjectorsAndAccessories: ["ProjectorAccessories", "Projectors"],
   SmartHomeSolutions: ["SmartDevices", "SmartHomeDevices"],
@@ -41,7 +41,7 @@ const miniSubOptions = {
   WatchesAndJewelry: ["JewelryAndAccessories", "Watches"],
 
   AutomotiveCareAndCleaning: ["AutomotiveCleaningTools", "ExteriorCare", "InteriorCare"],
-  AutomotivePartsAndAccessories: ["ATVUTVPartsAndAccessories", "AviationPartsAndAccessories", "BusPartsAndAccessories", "CarBodyParts", "CarBrakeSystems", "CarElectricalSystems", "CarElectronics", "CarEngineSystems", "CarExhaustSystems", "CarExteriorAccessories", "CarHvacSystems", "CarInteriorAccessories", "CarLightingSystems", "CarSuspensionSystems", "CarTransmissionSystems", "ContainerAndTrailerPartsAndAccessories", "Go-KartPartsAndAccessories", "HeavyDutyVehiclePartsAndAccessories", "MarinePartsAndAccessories", "MotorcycleAndScooterPartsAndAccessories", "NewEnergyVehiclePartsAndAccessories", "RVPartsAndAccessories", "TrainAndRailwayPartsAndAccessories", "TruckPartsAndAccessories"],
+  AutomotivePartsAndAccessories: ["ATVUTVPartsAndAccessories", "AviationPartsAndAccessories", "BusPartsAndAccessories", "CarBodyParts", "CarBrakeSystems", "CarElectricalSystems", "CarElectronics", "CarEngineSystems", "CarExhaustSystems", "CarExteriorAccessories", "CarHvacSystems", "CarInteriorAccessories", "CarLightingSystems", "CarSuspensionSystems", "CarTransmissionSystems", "ContainerAndTrailerPartsAndAccessories", "GoKartPartsAndAccessories", "HeavyDutyVehiclePartsAndAccessories", "MarinePartsAndAccessories", "MotorcycleAndScooterPartsAndAccessories", "NewEnergyVehiclePartsAndAccessories", "RVPartsAndAccessories", "TrainAndRailwayPartsAndAccessories", "TruckPartsAndAccessories"],
   GarageAndWorkshop: ["RepairEquipment"],
   OilsAndFluids: ["FluidFlushes", "GreasesAndLubricants", "Oils"],
   RecoveryAndOffRoadAccessories: ["EmergencyTools", "TowingAndWinches"],
@@ -54,7 +54,7 @@ const miniSubOptions = {
   FrozenFood: ["FrozenFishAndSeafood", "FrozenFruitsAndVegetables", "FrozenMealsAndAppentizers", "FrozenMeatAndPoultry", "FrozenSweetsAndDesserts"],
   FruitAndVegetables: ["FreshFruits", "FreshVegetables"],
   MeatPoultryAndFish: ["FishAndSeafood", "Meat", "Poultry"],
-  Pantry: ["BakingDecorations", "BakingIngredients", "CannedFood", "Cereals", "DipsAndCondiments", "DryGroceryIndustrialIngredients", "GrainsAndPulses", "HoneyAndSyrups", "InstantFood", "JamsAndSpreads", "JamsAndSpreads", "OilsAndFats", "OlivesAndPickles", "Snacks", "SpicesAndSeasonings", "Stock", "SugarAndSugarAlternatives"],
+  Pantry: ["BakingDecorations", "BakingIngredients", "CannedFood", "Cereals", "DipsAndCondiments", "DryGroceryIndustrialIngredients", "GrainsAndPulses", "HoneyAndSyrups", "InstantFood", "JamsAndSpreads",  "OilsAndFats", "OlivesAndPickles", "Snacks", "SpicesAndSeasonings", "Stock", "SugarAndSugarAlternatives"],
 
   BabyCare: ["BabyBath", "BabyHealthCareAndGrooming", "BabySafety", "BabySkinCare"],
   BabyClothingAndFootwear: ["BabyClothing", "BabyClothingAccessories", "BabyFootwear"],
@@ -70,23 +70,23 @@ const miniSubOptions = {
   Skincare: ["EyeCare", "FaceCare", "LipCare", "SunCareAndTanning"],
 
   Appliances: ["CleaningAppliances", "CoffeeAndEspressoMachines", "CollingAppliances", "HeatingAppliances", "LargeKitchenApliances", "LaundaryAppliances", "SmallKitchenAppliances"],
-  CommercialFurniture: ["BarFurniture", "HairSalonFurniture", "HairSalonFurniture", "healthAndMedicalFurniture", "HotelFurniture", "RestaurantFurniture", "SchoolFurniture"],
+  CommercialFurniture: ["BarFurniture", "HairSalonFurniture", "HealthAndMedicalFurniture", "HotelFurniture", "RestaurantFurniture", "SchoolFurniture"],
   GardenAndOutdoor: ["BBQAndGrills", "GardenDecor", "GardeningTools", "OutdoorFurniture", "PestControl", "WateringAndIrrigation"],
   HomeDecor: ["ArtworkAndFrames", "Clocks", "DecorativeAccessories", "HomeFragrances", "Islamic", "Mirrors", "PartySupplies"],
   HomeFurniture: ["Bedrooms", "DiningRooms", "KidsAndBabyFurniture", "KitchenFurniture", "LivingRooms"],
   HomeTextiles: ["Bedding", "CarpetsAndRugs", "CurtainsAndBlinds"],
-  HouseholdSupplies: ["BathroomAccessories", "CleaningSupplies", "CleaningTools", "DisposableHygieneProducts", "DisposableTableWare", "HomeStorageAndOrganisation", "KitchenEssentials", "KitchenLines", "KitchenStorageAndOrganisation", "LaundryStorageAndOrganisation", "PhotoAlbums", "SewingAndAccessories", "StorageAndOrganisation", "TableEssentials"],
+  HouseholdSupplies: ["BathroomAccessories", "CleaningSupplies", "CleaningTools", "DisposableHygieneProducts", "DisposableTableware", "HomeStorageAndOrganization", "KitchenEssentials", "KitchenLines", "KitchenStorageAndOrganisation", "LaundryStorageAndOrganization", "PhotoAlbums", "SewingAndAccessories", "StorageAndOrganization", "TableEssentials"],
   KitchenAndDining: ["Bakeware", "CoffeeAndTeaTools", "Cookware", "Dinnerware", "Drinkware", "KitchenKnivesAndAccessories", "KitchenToolsAndUtensils", "Tableware"],
 
   Printers3D: ["Printers3D"],
   //problem 2
-  AgriculturalMachineryEquipment: ["AgriculturalMachineryParts", "AgriculturalSprayer", "AnimalAndPoultrHusbandrEquipment", "AquacultureMachineAerators", "Balers", "BiomassBriquetteMachines", "BiomassDryers", "CompostMakingMachines", "Cultivators", "EggIncubators", "FarmIrrigationSystem", "FarmTrailer", "FeedProcessingMachines", "FertilizerSpreaders", "ForestryMachinery", "Harvesters", "IndoorFarmingAndHydroponicsMachines", "IrrigationEquipment", "MilkingMachines", "OilPressers", "OtherAgriculturalMachineryAndEquipments", "OtherFarmMachines", "SeedProcessingMachines", "Seeders", "Shellers", "Silos", "SlaughteringEquipment", "TowableBachoe", "Tractors"],
+  AgriculturalMachineryEquipment: ["AgriculturalMachineryParts", "AgriculturalSprayer", "AnimalAndPoultryHusbandrEquipment", "AquacultureMachineAerators", "Balers", "BiomassBriquetteMachines", "BiomassDryers", "CompostMakingMachines", "Cultivators", "EggIncubators", "FarmIrrigationSystem", "FarmTrailer", "FeedProcessingMachines", "FertilizerSpreaders", "ForestryMachinery", "Harvesters", "IndoorFarmingAndHydroponicsMachines", "IrrigationEquipment", "MilkingMachines", "OilPressers", "OtherAgriculturalMachineryAndEquipments", "OtherFarmMachines", "SeedProcessingMachines", "Seeders", "Shellers", "Silos", "SlaughteringEquipment", "TowableBachoe", "Tractors"],
   ApparelAndTextileMachinery: ["ApparelAndTextileMachineryParts", "ApparelMachinery", "CapMakingMachines", "HomeTextileProduct", "IroningAndWashingEquipments", "LeatherProductionMachinery", "ShoeMakingMachines", "TextileMachinery"],
   ChemicalAndPharmaceuticalMachinery: ["ChemicalMachineryAndEquipment", "CosmeticsProductionEquipment", "Crystalizer", "PharmaceuticalMachinery"],
   CleaningAndFiltrationMachinery: ["AirCleaningEquipment", "CleaningEquipmentParts", "CornerCleaningMachines", "DishwashingEquipments", "FiltrationEquipment"],
    //problem 3
-  EngineeringAndConstructionMachinery: ["AbrasiveMachines", "BuildingMaterialMachinery", "ConcreteMachinery", "ConstructionLifter", "ConstructionMachinery", "Cranes", "CuttingMachines", "DrillingMachines", "EarthMovingMachines", "ElectronicsProductionsMachinery", "GaugesIndicatorsAndMeter", "MortarSprayMachines", "MunicipalMachinery", "OtherConstructionMachinery", "PileDriver", "PipeJackingMachines", "PolishingMachines", "Rammers", "RenderingMachines", "RoadMachinery", "ScientificLabEquipment", "TestingMachines", "TransformerMakingEquipment"],
-  FoodAndBeverageMachinery: ["BakingEquipment", "BeanProductProcessingMachinery", "BakingEquipment", "BeanProductPRocessingMachinery", "BeverageProcessingMachines", "CoffeeMachine", "DairyProcessingMachine", "FishProcessingMachines", "FoodProcessingMachines", "FoodSterlizer", "FruitAndVegetableProcessingMachines", "Fryer", "GrainProcessingMachines", "GrainProductMakingMachines", "HoneyProcessingMachines", "KitchenMachines", "MeatProcessingMachine", "MeatProductionMakingMachines", "NutsProcessingMachines", "OtherFoodProcessing", "Pasteurizer", "PetFoodProcessingMachines", "SeasoningProcessing", "SnackMacine"],
+  EngineeringAndConstructionMachinery: ["AbrasiveMachines", "BuildingMaterialMachinery", "ConcreteMachinery", "ConstructionLifter", "ConstructionMachinery", "Cranes", "CuttingMachines", "DrillingMachines", "EarthMovingMachines", "ElectronicsProductionsMachinery", "GaugesIndicatorsAndMeter", "MortarSprayMachines", "MunicipalMachinery", "OtherConstructionMachinery", "PileDriver", "PipeJackingMachines", "PolishingMachines", "Rammers", "RenderingMachines", "RoadMachinery", "ScientificLabEquipment"],
+  FoodAndBeverageMachinery: [ "BakingEquipment", "BeanProductProcessingMachinery", "BeverageProcessingMachines", "CoffeeMachine", "DairyProcessingMachine",  "FoodProcessingMachines", "FoodSterlizer", "FruitAndVegetableProcessingMachines", "Fryer", "GrainProcessingMachines", "GrainProductMakingMachines", "HoneyProcessingMachines", "KitchenMachines", "MeatProcessingMachine", "MeatProductionMakingMachines", "NutsProcessingMachines", "OtherFoodProcessing", "Pasteurizer", "PetFoodProcessingMachines", "SeasoningProcessing", "SnackMacine"],
   PackagingMachine: ["AuxiliaryPackagingMachines", "BlisterPackahingMachines", "BoxingMachine", "CappingMachines", "CoatingMachines", "EmbossingMachines", "FillingMachines", "GluingMachines", "LabelingMachines", "LaminatingMachines", "MultiFunctionPackagingMachines", "OtherPackaginMachines", "PackagingFormingMachines", "PackagingLine", "PackagingMachinery", "PackagingMateialMachines", "SealingMachines", "VacuumPackagingMachines", "WrappingMachines"],
   PlasticAndRubberProcessingMachinery: ["FoamCuttingMachine", "FoamMachinery", "InjectionMoldingMachines", "OtherPlasticProductMakingMachinery", "OtherPlasticAndRubberMachinery", "PipeBellingMachines", "PlasticAndRubberMachinery", "PlasticAuxiliaryEquipment", "PlasticBowlingMachinery", "PlasticCuttingMachinery", "PlasticExtruders", "PlasticFlockingMachinery", "PlasticLaminatingMachinery", "PlasticRawMaterialMachinery", "PlasticRecyclingMachinery", "PlasticRotationalMoldingMachines", "PlasticThermoformingMachines", "RubberPRocessingMachines", "RubberProductMakingMachines", "RubberRecyclingMach"],
 
@@ -144,7 +144,6 @@ const miniSubOptions = {
   ToolsAndHardware: ["Fasteners", "FurnitureHardware", "HandTools", "HydraulicTools", "PowerTools", "ToolORganizers", "ToolParts", "ValvesPumpsAndPlumbing"],
 
 };
-
 const microSubOptions = {
 
   AmplifiersAndSpeakers: ["Amplifiers", "Boomboxes", "CeilingSpeakers", "ComputerSpeakers", "FloorStandSpeakers", "Loudspeakers", "MonitorSpeakers", "OutdoorSpeakers", "PortableSpeakers", "SoundbarSpeakers", "Subwoofers", "WallMountSpeakers"],
@@ -155,7 +154,7 @@ const microSubOptions = {
   RecordingAndStudioEquipment: ["KaraokeSystems", "MicrophoneCovers", "MicrophoneFilters", "Microphones", "VoiceRecorders"],
 
   Camcorders: ["DVDCamcorders", "FlashMemoryCamcorders", "HDDCamcorders", "Mini-DVCamcorders"],
-  CameraAccessories: ["AccessoriesSets", "CameraBagsCoversAndCases", "CameraChargersAndBatteries", "CameraFilms", "CameraFiltersAndProtectors", "CameraLenses", "CameraStrapsHolders", "ClapperBoards", "DigitalPhotoFrames", "FlashesAndLighting", "Gimbals", "LensCapsAndHoods", "LensCleaningKits", "Sliders", "StudioBackgrounds", "TripodAndMonopodAccessories", "TripodsAndMonopods"],
+  CameraAccessories: ["AccessoriesSets", "CameraBagsCoversAndCases", "CameraChargersAndBatteries", "CameraFilms", "CameraFiltersAndProtectors", "CameraLenses", "CameraStrapsHolders", "ClapperBoards", "DigitalPhotoFrames", "FlashesAndLighting", "Gimbals", "LensCapsAndHoods", "LensCleaningKits", "Sliders", "StudioBackgrounds", "TripodsAndMonopods"],
   DigitalCameras: ["360-DegreeCameras", "Action Cameras", "CompactDigitalCameras", "DSLRCameras", "MirrorlessCameras"],
   InstantAndFilmCameras: ["FilmCameras", "InstantCameras"],
   SecurityCamerasAndDrones: ["BinocularsAndTelescopes", "Drones", "SecurityCameras", "SurveillanceSystems"],
@@ -172,7 +171,7 @@ const microSubOptions = {
   NetworkAndSecurity: ["AccessPoints", "DockingStations", "EthernetSwitches", "FirewallsAndVpn", "Modems", "NetworkBridges", "NetworkCabinets", "NetworkGatways", "NetworkHubs", "NetworkInterfaceCards", "NetwrokSwitches", "NetworkTransceivers"],
   PosSystems: ["CashRegisterDrawers", "CashRegisters", "CreditCardReaders", "MobileComputers", "PosComputerSystem", "PosEquipmentOther", "PoleDisplays", "PosComputersAndAccessories"],
   Softwares: ["AccountingAndFinance", "AntivirusAndSecurity", "BusinessAndOffice", "DesignAndIllustration", "EducationAndReferences", "OperatingSystems", "PhotoVideoAndMusic", "TestingAndEngineering", "Utilities"],
-  StorageDevices: ["CdsAndDvds", "ExternalHardDiskDrive", "ExternalSolidStateDrives", "FlashDrives", "GamingDrives", "InternalHardDiskDrives", "InternalSolidStateDevies", "MemoryCards", "NetworkAttachedStorage"],
+  StorageDevice: ["CdsAndDvds", "ExternalHardDiskDrive", "ExternalSolidStateDrives", "FlashDrives", "GamingDrives", "InternalHardDiskDrives", "InternalSolidStateDevies", "MemoryCards", "NetworkAttachedStorage"],
 
   Adapters: ["CableAdapters", "PowerAdapters"],
   CablesAndConnectors: ["AUXCables", "AudioCables", "CableAccessories", "CoaxialCables", "ElectricalConnector", "EthernetCables", "HdmiCables", "PowerExtensionCords", "RcaCables", "SurgeProtectors"],
@@ -188,7 +187,7 @@ const microSubOptions = {
   TabletsAndEBooksReaders: ["EbookReaders", "Tablets"],
 
 
-  KeyboardInstruments: ["Accordion", "ElectricOrgan", "Accordion", "Electric", "KeyboardInstrument", "Piano"],
+  KeyboardInstruments: ["Accordion", "ElectricOrgan", "Electric", "KeyboardInstrument", "Piano"],
   PercussionInstruments: ["Castanets", "ChimesAndTriangles", "Cymbals", "Drum", "Gong", "Maracas", "PercussionInstruments", "Tambourine", "Xylophone"],
   StringedInstruments: ["Banjo", "Bouzouki", "Cello", "ElectricGuitar", "Guitar", "Harp", "HurdyGurdy", "Lute", "Mandolin", "Oud", "StringedInstrumentsPartsAndAccessories", "Violin", "Zither"],
   WindInstruments: ["Basson", "Clarinet", "Flute", "Harmonica", "Horm", "Melodica", "Oboe", "PanFlute", "Recorder", "Saxophone", "Trombone", "Trumpet", "Tuba", "WindInstrumentsPartsAndAccessories"],
@@ -204,8 +203,8 @@ const microSubOptions = {
 
   DigitalDisplays: ["DigitalSignage", "InteractiveDisplays"],
   HomeEntertainmentSystems: ["HiFiSystems", "HomeTheaterSystems"],
-  StreamingDevice: ['SatelliteReceivers', "TvBoxes", "TvTuners"],
-  TvAccessories: ["TvMounts", "TvRemoteControls", "TvRemoteControls"],
+  StreamingDevices: ['SatelliteReceivers', "TvBoxes", "TvTuners"],
+  TvAccessories: ["TvMounts", "TvRemoteControls"],
   Televisions: ["Lcd", "Led", "PlasmaScreens"],
 
   FitnessTrackersAndAccessories: ["FitnessTrackerBands", "FitnessTrackerChargers"],
@@ -236,9 +235,9 @@ const microSubOptions = {
   KidsSportswear: ["KidsSportBottoms", "KidsSportTops", "KidsTracksuitsAndSets"],
   kidsSwimwear: ["KidsBikinis", "kidsSwimBriefs", "kidsSwimCaps", "kidsSwimDresses", "kidsSwimShorts", "kidsSwimsuits"],
   KidsTops: ["KidsDresses", "KidsJacketsAndCoats", "KidsShirtsAndBlouses", "KidsSweatshirtsAndKnitwear"],
-  KidsUnderwear: ["KidsBodysuits", "KidsBoxersAndBriefs", "KidsUndershirts"],
+  KidsUnderWear: ["KidsBodysuits", "KidsBoxersAndBriefs", "KidsUndershirts"],
   MaternityWear: ["MaternityBottom", "MaternityDresses", "MaternityJumpsuits", "MaternitySleepwear", "MaternitySupports", "MaternityTops", "MaternityUnderwear"],
-  Sleepwear: ["Lingerie", "NightDressesAndGowns", "NightWearSets", "Pajamas", "Robes", "SleepMasks"],
+  SleepWear: ["Lingerie", "NightDressesAndGowns", "NightWearSets", "Pajamas", "Robes", "SleepMasks"],
   SocksAndTights: ["SocksAndStockings", "Tights"],
   Sportswear: ["SportBottoms", "SportGlovesAndHandwraps", "SportSocks", "SportTops", "SportTrackSuitsAndSets", "SportUnderwear"],
   Tops: ["ShirtsAndBlouses", "SweatshirtsAndKnitwear", "TShirtsAndPolo", "Vests"],
@@ -279,7 +278,7 @@ const microSubOptions = {
   CarTransmissionSystems: ["ClutchMasterCylinders", "Driveshafts", "Gearboxes", "PropellerShafts", "TensionersAndBelts"],
   ContainerAndTrailerPartsAndAccessories: ["ContainerPartsAndAccessories", "TrailerPartsAndAccessories"],
   GoKartPartsAndAccessories: ["GoKartBodyParts", "GoKartBrakeSystems", "GoKartCabinCovers", "GoKartEngines", "GoKartHardware", "GoKartModificationAccessories", "GoKartSeats", "GoKartSteeringWheels"],
-  HeavyDutyVehiclePartsAndAccessories: ["HeavyDutyVehicleAccessories", "HeavyDutyVehicleParts"],
+  HeavyDutyVehiclePartsAndAccessories: ["HeavyDutyVehicleAccessories"],
   MarinePartsAndAccessories: ["BoatAnchors", "BoatCovers", "BoatEngines", "MarineHardware", "MarinePropellers", "MarinePumps"],
   MotorcycleAndScooterPartsAndAccessories: ["MotorcycleAndScooterAccessories", "MotorcycleAndScooterBodyParts", "MotorcycleAndScooterBrakes", "MotorcycleAndScooterEngines", "MotorcycleAndScooterGauges", "MotorcycleAndScooterHandlebarsAndControls", "MotorcycleAndScooterLights", "MotorcycleAndScooterProtectiveGear", "MotorcycleAndScooterRacks", "MotorcycleAndScooterSeats", "MotorcycleAndScooterSuspensionSystems"],
   NewEnergyVehiclePartsAndAccessories: ["DC/DCConverters", "EVChargingCableHolders", "EVChargingCables", "EVChargingStations", "EVConnectors", "ElectricMotors", "OnBoardChargers"],
@@ -324,7 +323,7 @@ const microSubOptions = {
   Cream: ["CookingCream", "ThickCream", "WhippingCream"],
   Eggs: ["FreshEggs", "LiquidEggs", "QuailAndDuckEggs"],
   Milk: ["CondenseAndEvaporatedMilk", "FreshMilk", "LongLifeMilk", "MilkPowder", "PlantBasedMilk"],
-  YoghurtAndLabneh: ["CustardAndPudding", "Laban", "Labneh", "Yoghurt"],
+  YogurtAndLabneh: ["CustardAndPudding", "Laban", "Labneh", "Yoghurt"],
 
 
   FrozenFishAndSeafood: ["FrozenFish", "FrozenSeafood"],
@@ -346,12 +345,12 @@ const microSubOptions = {
   Cereals: ["BreakfastCereals", "FitnessCereals", "Granola", "Oats"],
   DipsAndCondiments: ["ChutneyAndRelish", "Dips", "Ketchup", "Mayonnaise", "Mustared", "Paste", "SaladDressings", "Sauce", "Vinegar"],
   DryGroceryIndustrialIngredients: ["DryGrocery", "IndustrialIngredients"],
-  GrainsAndPulses: ['Barley', "Bulgur", "Corn", "DryLegumes", "Millet", "PastaAndNoodles", "Quinoa", "Rice", "Rice", "Wheat"],
+  GrainsAndPulses: ['Barley', "Bulgur", "Corn", "DryLegumes", "Millet", "PastaAndNoodles", "Quinoa", "Rice", "Wheat"],
   HoneyAndSyrups: ["Honey", "Syrup"],
   InstantFood: ["InstantNoodles", "InstantRice", "InstantSauceAndPasta", "InstantSoup", "MashedPotatoes", "ReadyToEat"],
   JamsAndSpreads: ["JamsAndMarmalades", "Spreads"],
-  OilsAndFats: ["CoconutOil", "FruitOils", "Ghee", "Margarine", "MixedOils", "OliveOil", "SeedAndNutOils", "SeedAndNutOils", "VefetableOils"],
-  OlivesAndPickles: ["BlackOlives", "FruitPicklesAndPreserves", "GreenOlives", "MixedOlives", "MixedPicklesAndPreserves", "VegetablesPickles"],
+  OilsAndFats: ["CoconutOil", "FruitOils", "Ghee", "Margarine", "MixedOils", "OliveOil", "SeedAndNutOils", "VefetableOils"],
+  OlivesAndPickles: ["BlackAndOlives", "FruitPicklesAndPreserves", "GreenAndOlives", "MixedAndOlives", "MixedPicklesAndPreserves", "VegetablesAndPickles"],
   Snacks: ["Chips", "Crackers", "NutAndSeedSnacks", "PopcornAndPuffs"],
   SpicesAndSeasonings: ['DryFruitsAndVegetables', "DryHerbs", "DrySeedsAndNuts", "Salt", "Spices"],
   Stock: ['BeefStock', "ChickenStock", "SeaFoodStock", "VegetableStock"],
@@ -409,12 +408,12 @@ const microSubOptions = {
   LipCare: ["LipBalms", "LipScrubs"],
   SunCareAndTanning: ["AfterSunCare", "Self-Tanners", "Sunscreen"],
 
-  CleaningAppliances: ["ElectricDeepCleaners", "ElectricFloorCleaners", "ElectricFloorCleaners", "ElectricWindowCleaners", "SteamMops", "VacuumCleaners"],
+  CleaningAppliances: ["ElectricDeepCleaners", "ElectricFloorCleaners",  "ElectricWindowCleaners", "SteamMops", "VacuumCleaners"],
   CoffeeAndEspressoMachines: ["CoffeeBeanGrinders", "CoffeeMachines", "EspressoMachines"],
   CollingAppliances: ["AirConditioners", "AirCoolers", "AirDehumidifiers", "AirHumidifiers", "AirPurifiers", "CoolingFans"],
   HeatingAppliances: ['ElectricFireplaces', "ElectricHeaters", "GasHeaters", "KeroseneHeaters", "OilHeaters"],
-  LargeKitchenAppliances: ["Dishwashers", "Freezers", "Microwaves", "Ovens", "RangeHoods", "Refrigerators", "StovesAndHobs", "WaterColersAndDispensers"],
-  LaundryAppliances: ["ClothesSteamers", "Dryers", "Irons", "SewingMachines", "WashingMachines"],
+  LargeKitchenApliances: ["Dishwashers", "Freezers", "Microwaves", "Ovens", "RangeHoods", "Refrigerators", "StovesAndHobs", "WaterColersAndDispensers"],
+  LaundaryAppliances: ["ClothesSteamers", "Dryers", "Irons", "SewingMachines", "WashingMachines"],
   SmallKitchenAppliances: ["AirAndDeepFryers", "Blenders", "ChocolateFountains", "ChoppersAndMinceres", "EggCookers", "ElectricKettles", "FoodDehydrators", "FoodMakers", "FoodProcessors", "GrillsAndToasters", "IceMakers", "Juicers", "MeatGrinders", "Mixers", "SealingMachines", "SmartPots"],
 
   BarFurniture: ["BarChairsAndStools", "BarTables"],
@@ -427,13 +426,13 @@ const microSubOptions = {
   BBQAndGrills: ["BBQAccessories", "BBQCleaningTools", "BbqFans", "BbqGrillsAndSmokers", "BbqMittens", "BbqToolsAndSets", "BarbecueKettles", "Charcoal", "CharcoalStarters", "FireWood", "GrillBrushes", "GrillCovers"],
   GardenDecor: ["ArchesAndArbors", "CobblesAndPebbles", "DecorativeStonesAndStatues", "FencesNettingsAndGates", "Fountains", "PergolasAndTrellises", "ShedsAndStorage"],
   GardeningTools: ["AgriculturalSeeds", "FertilizersAndComposts", "FlowerPotsAndPlanters", "GardenCarts", "GardeningGloves", "GrassShears", "PlantsAndFlowers", "ShovelsAndRakes"],
-  OutDoorFurniture: ['GardenSwings', "Hammocks", "OutdoorSeats", 'outdoorShades', "OutdoorTables", "SunLoungers"],
+  OutdoorFurniture: ['GardenSwings', "Hammocks", "OutdoorSeats", 'outdoorShades', "OutdoorTables", "SunLoungers"],
   PestControl: ["Electric", "FoggersAndSprays", "Gel", "Manual"],
   WateringAndIrrigation: ["HoseConnectors", "HosesAndReels", "IrrigationsSystems", "Sprayers", "SuctionFilters", "WaterPumps", "WateringPails"],
 
   ArtworkAndFrames: ["ArtCards", "Mosaics", "PhotoFrames", "WallArtAndFrames", "WallHangings", "WallStickers", "Wallpaper"],
   Clocks: ["FloorClocks", "SpecialtyClocks", "TableClocks", "WallClocks"],
-  DecorativeAccessories: ["ArtificialPlantsAndFlowers", "DoorHangingAccessories", "DriedPlantsAndPhoto", "OrnamentsAndScuptures", "Plaques", "RoomDividers", "SeasonalDecoration", "SeasonalDecoration", "TissueBoxCovers", "TrophiesAndMedals", "VasesAndBowls"],
+  DecorativeAccessories: ["ArtificialPlantsAndFlowers", "DoorHangingAccessories", "DriedPlantsAndPhoto", "OrnamentsAndScuptures", "Plaques", "RoomDividers", "SeasonalDecoration",  "TissueBoxCovers", "TrophiesAndMedals", "VasesAndBowls"],
   HomeFragrances: ["AromaOilsAndDiffusers", "BakhoorAndIncense", "CandleHolders", "Candles", "IncenseBurnersAndHolders"],
   Islamic: ["DigitalTallyCounter", "QiblahCompasses", "Quran", "QuranBoxes", "QuranCovers", "QuranHolders", "QuranReaderPens"],
   Mirrors: ["FloorMirrors", "WalLMirrors"],
@@ -444,8 +443,8 @@ const microSubOptions = {
 
   Bedrooms: ["BedBases", "BedroomSets", "Beds", "BedsideTables", "DrawerUnits", "Dressers", "Headboards", "Mattresses", "SpringBoxes", "Wardrobes"],
   DiningRooms: ["DiningChairs", "DiningTableSets", "DiningTables", "SideboardsAndBuffets",],
-  KidsAndBabyFuniture: ["BabyAndToddlerMattresses", "BabyBedsAndCribs", "JuniorChair", 'ToddlerBeds'],
-  KichenFurniture: ["IslandsAndWorktops", "KitchenChairsAndStools"],
+  KidsAndBabyFurniture: ["BabyAndToddlerMattresses", "BabyBedsAndCribs", "JuniorChair", 'ToddlerBeds'],
+  KitchenFurniture: ["IslandsAndWorktops", "KitchenChairsAndStools"],
   LivingRooms: ["ChairsAndBenches", "CoffeeTables", "ConsoleTables", "PoufsAndBeanbags", "Recliners", "SideTables", "SofaBedsAndDayBeds", "SofasAndSofaSets", "TvTables"],
 
 
@@ -457,9 +456,9 @@ const microSubOptions = {
   CleaningSupplies: ["AirFresheners", "BathroomCleaners", "DishCleaners", "DrainCleaners", "FloorCleaners", "FurnitureCleaners", "GlassCleaners", "KitchenCleaners", "LaundryCleaners", "MultiPurposeCleaners"],
   CleaningTools: ["BroomsAndDustpans", "CleaningBrushes", "CleaningCaddies", "CleaningCloths", "CleaningGloves", "CleaningWipers", "Dusters", "LintRemovers", "MoppingTools", "ScouringPads", "Sponges", "SteelScrubbers", "ToiletBrushes", "TrashBins"],
   DisposableHygieneProducts: ["FacialTissuePaper", "KitchenPaper", "Napkins", "ToiletPaper", "ToiletSeatCover", "WetWipes"],
-  DisposaleTableware: ["DsiposableBowls", "DisposableCups", "DisposableCutlery", 'DisposableDinnerwa', "DisposablePlates", "DisposableStraws"],
+  DisposableTableware: ["DsiposableBowls", "DisposableCups", "DisposableCutlery", 'DisposableDinnerwa', "DisposablePlates", "DisposableStraws"],
   HomeStorageAndOrganization: ["HooksAndWallOrganization", "StorageBags", "StorageBoxes", "StorageUnits"],
-  KitchensEssentials: ["AluminumFoil", "BankingPaper", "ClingFilm", "FoodStorageBags", "SofraSheets", "TrashBags"],
+  KitchenEssentials: ["AluminumFoil", "BankingPaper", "ClingFilm", "FoodStorageBags", "SofraSheets", "TrashBags"],
   KitchenLines: ["Aprons", "KitchenTowels"],
   KitchenStorageAndOrganisation: ["DishRacks", "KitchenStage", "StorageContainers", "StorageJarsAndCanisters"],
   LaundryStorageOrganization: ["ClothesHangers", "ClothesStands", "Clothesslines", "Clothespins", "DryingRacksAndHangers", "IronHolders", "IroningBoardsCovers", "IroningBoards", "LaundryBaskets"],
@@ -482,7 +481,7 @@ const microSubOptions = {
 
   AgriculturalMachineryParts: ["AgriculturalMachineryParts"],
   AgriculturalSprayer: ["AgriculturalSprayer"],
-  AnimalAndPoultryHusbandryEquipment: ["AnimalAndPoultryHusbandryEquipment"],
+  AnimalAndPoultryHusbandrEquipment: ["AnimalAndPoultryHusbandryEquipment"],
   AquacultureMachineAerators: ['AquacultureMachineAerators'],
   Balers: ["Balers"],
   BiomassBriquetteMachines: ["BiomassBriquetteMachines"],
@@ -505,6 +504,12 @@ const microSubOptions = {
   SeedProcessingMachines: ["SeedProcessingMachines"],
   //problem 2
   Seeders: ["Seeders"],
+  Shellers: ["Shellers"],
+  Silos: ["Silos"],
+  SlaughteringEquipment: ["SlaughteringEquipment"],
+  TowableBachoe: ["TowableBachoe"],
+  Tractors: ["Tractors"],
+
 
 
   ApparelAndTextileMachineryParts: ["ApparelMachineParts", "CapMakingMachineParts", "GloveMakingMachine", "HometextileProduct", "LeatherProductionMachineParts", "ShoemakingMachineParts", "SockKnittingMachine", "TextileMachineParts"],
@@ -532,7 +537,7 @@ const microSubOptions = {
   BuildingMaterialMachinery: ["BoardMakingMachinery", "BrickMakingMachinery", "BuildingMaterialMaking", "CementMakingMachine", "DryMortarMachines", "DuctMakingMachines", "Floorboards", "GlassProductionMachines", "GypsumPowderMachines", "PipeMakingMachines", "PlasterOfParisMachines", "SandMakingMachinery", "StoneMachinery"],
   ConcreteMachinery: ["ConcreteBatchingPlant", "ConcreateMixerTruk", "ConcreteMixers", "ConcretePumps", "ConcreteVibrator", "ShotcreteMachines"],
   ConstructionLifter: ["ConstructionLifter"],
-  ConstructionMachineryAttachments: ["Bucket", "EarthAugers", "ExcavatorRakes", "Grapples", "HydraulicBreakers", "HydraulicShears", "QuickHitch", "Rippers"],
+  ConstructionMachinery: ["Bucket", "EarthAugers", "ExcavatorRakes", "Grapples", "HydraulicBreakers", "HydraulicShears", "QuickHitch", "Rippers"],
   Cranes: ["BridgeCranes", "FloatingCranes", "GantryCranes", "JibCranes", "OherCranes", "PortalCranes", "TowerCranes", "TruckCranes"],
   CuttingMachines: ["CuttingMachines"],
   DrillingMachines: ["DrillingMachines"],
@@ -540,7 +545,7 @@ const microSubOptions = {
   ElectronicsProductionsMachinery: ["ElectronicsProductionsMachinery"],
   GaugesIndicatorsAndMeter: ["Gauges", "Indicators", "Meters"],
   MortarSprayMachines: ["MortarSprayMachines"],
-  MunicipalMachinery: ["GarbageTruck", "HydroseedingMachine", "RoadSweeper", "RoadSweeper", "SnowSweeper", "WateringCart"],
+  MunicipalMachinery: ["GarbageTruck", "HydroseedingMachine", "RoadSweeper",  "SnowSweeper", "WateringCart"],
   OtherConstructionMachinery: ["OtherConstructionMachinery"],
   PileDriver: ["PileDriver"],
   PipeJackingMachines: ["PipeJackingMachines"],
@@ -554,7 +559,7 @@ const microSubOptions = {
 
   BakingEquipment: ["BakingOven", "BreadMakingMachine", "CakeMachine", "DoughMixer", "DoughSheeter", "OtherBakingEquipment"],
   BeanProductProcessingMachinery: ["BeanProductProcessingMachinery"],
-  BeverageProcessingMachinery: ["BeverageMachineParts", "Concentrator", "DispensingMachines", "Emulsifier", "FermentingEquipment", "Filter", "HeatExchanger", "Homogenizer", "JuiceExtractor", "Mixer", "OtherBeverageMachines", "Separator", "Sterilizer", "StorageTank", "Wahser"],
+  BeverageProcessingMachines: ["BeverageMachineParts", "Concentrator", "DispensingMachines", "Emulsifier", "FermentingEquipment", "Filter", "HeatExchanger", "Homogenizer", "JuiceExtractor", "Mixer", "OtherBeverageMachines", "Separator", "Sterilizer", "StorageTank", "Wahser"],
   CoffeeMachine: ["CoffeeBeanRoasters", "CoffeeMakingEquipment", "OtherCoffeeMachines"],
   DairyProcessingMachine: ["DairyProcessingMachine"],
   EggProcessingMachines: ["EggProcessingMachines"],
@@ -901,11 +906,3 @@ const microSubOptions = {
 };
 
 export { supOptions, subOptions, miniSubOptions, microSubOptions }
-
-
-
-
-
-
-
-
