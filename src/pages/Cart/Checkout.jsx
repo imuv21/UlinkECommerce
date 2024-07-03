@@ -146,8 +146,6 @@ const Checkout = () => {
     setSelectedUpi(selectedUpiData);
   };
 
-
-
   const scrollRef = useRef(null);
   useEffect(() => {
     if (scrollRef.current) {
@@ -161,7 +159,7 @@ const Checkout = () => {
 
 
 
-  //payment methods 
+  // payment methods 
   // const checkoutHandler = async (amount, currency) => {
 
   //   const { data: { key } } = await axios.get('http://localhost:4000/api/getkey');

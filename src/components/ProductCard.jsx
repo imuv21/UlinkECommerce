@@ -8,6 +8,9 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 const ProductCard = ({ name, id, img, unitPrice, salePrice, moq, currencyName, handleClickCart }) => {
 
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
   const exchangeRates = useSelector(state => state.currency.exchangeRates);
   const unitPriceNum = parseFloat(unitPrice);
@@ -30,7 +33,7 @@ const ProductCard = ({ name, id, img, unitPrice, salePrice, moq, currencyName, h
   return (
     <a className={`show-img-detail-sub`} href={`/product-details/${id}`}>
       <img className='product-img-size' src={img} alt='img' />
-      <div className="add-to-cart-icon" onClick={(event) => handleClickCart(event, id)}><AddShoppingCartIcon /></div>
+     { isAuthenticated && user.role === 'Buyer' && <div className="add-to-cart-icon" onClick={(event) => handleClickCart(event, id)}><AddShoppingCartIcon /></div>}
       <div className='product-detail-info'>
         <p className='product-title'>{name.length > 20 ? `${name.substring(0, 20)}...` : name}</p>
         <p className='product-price'>{currencySymbols[selectedCurrency]} {convertPrice(salePriceNum, currencyName)} {selectedCurrency}/ piece </p>
