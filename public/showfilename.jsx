@@ -1,248 +1,137 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../Redux/productSlice';
+import React, { useState, useEffect, Fragment } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { bankSchema } from '../../Schemas/validationSchema';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { v4 as uuidv4 } from 'uuid';
-import Loader from './Loader/Loader';
-const ProductCard = lazy(() => import('./ProductCard'));
-import Sliders from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import defaulImg from '../assets/default.jpg';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { fetchProductDetail } from '../Redux/productDetailSlice';
-import { addToCart } from '../Redux/cartSlice';
-import { fetchExchangeRates } from '../Redux/currencySlice';
-import currencySymbols from '../components/Schemas/currencySymbols';
+import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
+import { useNavigate, useParams } from 'react-router-dom';
+import { fetchBankDetails } from '../../../Redux/bankDetailsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Carousel = () => {
+const schema = yupResolver(bankSchema);
+
+const EditPaymentDetails = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { products = [], status, error } = useSelector((state) => state.products);
-    const { product } = useSelector((state) => state.productDetail);
-
-    const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
-    const exchangeRates = useSelector(state => state.currency.exchangeRates);
+    const { bankDetails, status, error } = useSelector((state) => state.bankDetails);
+    const { handleSubmit, control, formState: { errors }, setValue } = useForm({
+        resolver: schema
+    });
 
     useEffect(() => {
-        dispatch(fetchExchangeRates());
+        dispatch(fetchBankDetails());
     }, [dispatch]);
 
-    const convertPrice = (price, fromCurrency) => {
-        const rate = exchangeRates[selectedCurrency];
-        if (!rate) return price;
-        const priceInUSD = price / exchangeRates[fromCurrency];
-        return (priceInUSD * rate).toFixed(2);
-    };
-
-    const [moq, setMoq] = useState(1);
-    const [value, setValue] = useState(moq.toString());
-    const incrementValue = () => {
-        setValue(prevValue => (parseInt(prevValue) + 1).toString());
-    };
-    const decrementValue = () => {
-        setValue(prevValue => Math.max(parseInt(prevValue) - 1, moq).toString());
-    };
-    const handleInputChange = (e) => {
-        const newValue = parseInt(e.target.value);
-        setValue(newValue >= moq ? newValue.toString() : moq.toString());
-    };
-
-    const cartHandler = (id) => {
-        if (!product) return;
-        dispatch(addToCart({ productId: id, quantity: value }));
-        alert(`${value} items added to cart successfully!`);
-    };
-
-    const [page, setPage] = useState(1);
-    const [size, setSize] = useState(15);
-
     useEffect(() => {
-        if (status === 'idle') {
-            dispatch(fetchProducts({ page, size }));
+        if (status === 'succeeded') {
+            const bankDetail = bankDetails.find((bank) => bank.id === parseInt(id));
+            if (bankDetail) {
+                setValue("bankName", bankDetail.bankName);
+                setValue("bankLocation", bankDetail.bankLocation);
+                setValue("iban", bankDetail.iban);
+                setValue("accNo", bankDetail.accNo);
+                setValue("accHolderName", bankDetail.accHolderName);
+                setValue("swiftbic", bankDetail.swiftbic);
+                setValue("ifsc", bankDetail.ifsc);
+                setValue("ibankName", bankDetail.interMediary.ibankName);
+                setValue("iiban", bankDetail.interMediary.iiban);
+                setValue("iaccNo", bankDetail.interMediary.iaccNo);
+                setValue("iswiftbic", bankDetail.interMediary.iswiftbic);
+                setValue("iifsc", bankDetail.interMediary.iifsc);
+                setValue("defaultValue", bankDetail.defaultValue);
+
+                setSelectedOrigin(bankDetail.bankLocation);
+                setIsChecked(bankDetail.interMediary.ibankName !== null);
+                setIsdefault(bankDetail.defaultValue);
+            }
         }
-    }, [dispatch, page, size, status]);
+    }, [status, bankDetails, id, setValue]);
 
-    const [isClickedCart, setIsClickedCart] = useState(false);
-    const [selectedProductId, setSelectedProductId] = useState(null);
-    const handleClickCart = (event, id) => {
-        event.preventDefault();
-        event.stopPropagation();
-        setSelectedProductId(id);
-        setIsClickedCart(true);
-    };
-
+    // Select country from API
+    const [countries, setCountries] = useState([]);
+    const [selectedOrigin, setSelectedOrigin] = useState('');
     useEffect(() => {
-        if (selectedProductId) {
-            dispatch(fetchProductDetail(selectedProductId));
-        }
-    }, [dispatch, selectedProductId]);
-
-    const [salep, setSalep] = useState();
-    const [unitp, setUnitp] = useState();
-    const [discountPercentage, setDiscountPercentage] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(salep);
-
-    useEffect(() => {
-        if (product && product.minOrderQuant) {
-            setMoq(product.minOrderQuant);
-            setValue(product.minOrderQuant.toString());
-        }
-        if (product && product.sellPrice && product.unitPrice) {
-            setSalep(product.sellPrice);
-            setUnitp(product.unitPrice);
-        }
-    }, [product]);
-
-    useEffect(() => {
-        if (salep && unitp) {
-            const discount = ((unitp - salep) / unitp) * 100;
-            setDiscountPercentage(discount.toFixed(2));
-        }
-        if (value && salep) {
-            const Tprice = parseFloat(salep) * parseInt(value);
-            setTotalPrice((Tprice.toFixed(2)));
-        }
-    }, [salep, unitp, value]);
-
-    const closepopup = (event) => {
-        event.preventDefault();
-        setIsClickedCart(false);
-    };
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (isClickedCart) {
-                setIsClickedCart(false);
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json');
+                const data = response.data;
+                const uniqueCountries = [...new Set(data.map(city => city.country))];
+                setCountries(uniqueCountries);
+            } catch (error) {
+                console.error('Error fetching data:', error);
             }
         };
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [isClickedCart]);
-
-    if (status === 'loading') {
-        return <div>Loading...</div>;
-    }
-    if (status === 'failed') {
-        return <div>Error: {error}</div>;
-    }
-
-    const NextArrow = (props) => {
-        const { style, onClick } = props;
-        return (
-            <div style={{ ...style, position: 'absolute', top: '50%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '1', right: '0%' }} onClick={onClick}>
-                <ChevronRightIcon />
-            </div>
-        );
+        fetchData();
+    }, []);
+    const originSelectChange = (event) => {
+        setSelectedOrigin(event.target.value);
     };
 
-    const PrevArrow = (props) => {
-        const { style, onClick } = props;
-        return (
-            <div style={{ ...style, position: 'absolute', top: '50%', display: "flex", alignItems: 'center', justifyContent: 'center', background: "white", borderRadius: '50%', cursor: 'pointer', filter: 'drop-shadow(5px 5px 5px gray)', width: '40px', height: '40px', zIndex: '1' }} onClick={onClick}>
-                <ChevronLeftIcon />
-            </div>
-        );
+    // Checkbox div 
+    const [isChecked, setIsChecked] = useState(false);
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
     };
 
-    const settings = {
-        dots: false,
-        infinite: false,
-        speed: 400,
-        slidesToShow: 7,
-        slidesToScroll: 2,
-        nextArrow: <NextArrow />,
-        prevArrow: <PrevArrow />,
-        responsive: [
-            {
-                breakpoint: 1300,
-                settings: {
-                    slidesToShow: 6,
-                    slidesToScroll: 2,
-                },
-            },
-            {
-                breakpoint: 1150,
-                settings: {
-                    slidesToShow: 5,
-                    slidesToScroll: 2,
-                },
-            },
-            {
-                breakpoint: 1000,
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 2,
-                },
-            },
-            {
-                breakpoint: 800,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 420,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
+    // Default checkbox
+    const [isdefault, setIsdefault] = useState(false);
+    const handleDefaultChange = () => {
+        setIsdefault(!isdefault);
+    };
+
+    // Submit form
+    const onSubmit = (data) => {
+        // Handle form submission
+    };
+
+    const backtopayment = () => {
+        navigate('/seller-dashboard/payments');
     };
 
     return (
-        <div className={`product-slider-cont ${isClickedCart ? 'clicked' : ''}`}>
-            <Sliders {...settings}>
-                {Array.isArray(products) && products.map((pro) => (
-                    <div className='show-img-detail-sup' key={uuidv4()}>
-                        <Suspense fallback={<Loader />}>
-                            <ProductCard handleClickCart={handleClickCart} name={pro.productName} moq={pro.minOrderQuant} id={pro.productId} img={pro.images && pro.images.length > 0 ? pro.images[0].imageUrl : defaulImg} unitPrice={pro.unitPrice} currencyName={pro.currencyname} salePrice={pro.sellPrice} />
-                        </Suspense>
-                    </div>
-                ))}
-            </Sliders>
-            {(isClickedCart && product) && (
-                <div className="add-to-cart-popup add-to-cart">
-                    <div className="add-to-cart-wrapper-footer">
-                        <div className="heading3 captext">{product.productName.length > 30 ? `${product.productName.substring(0, 30)}...` : product.productName}</div>
-                        <div className="flex" style={{ gap: '15px' }}>
-                            <span className='descrip' style={{ textDecoration: 'line-through' }}>{currencySymbols[selectedCurrency]} {convertPrice(product.unitPrice, product.currencyname)} {selectedCurrency}</span>
-                            <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{discountPercentage}% OFF</span>
-                        </div>
-                        <div className="flex" style={{ gap: '15px' }}>
-                            <span className='descrip2'>{currencySymbols[selectedCurrency]} {convertPrice(product.sellPrice, product.currencyname)} {selectedCurrency}</span> <span className='descrip'>per piece</span>
-                        </div>
-                        <div className="line-out"></div>
-                        <div className="descrip2">Minimum Order Quantity: {product.minOrderQuant}</div>
-                        <div className="heading2">Total Price: {currencySymbols[selectedCurrency]} {convertPrice(totalPrice, product.currencyname)} {selectedCurrency}</div>
-                        <div className="plus-minus">
-                            <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={decrementValue} /></div>
-                            <input className='pminput' type="number" value={value} onChange={handleInputChange} />
-                            <div style={{ cursor: 'pointer' }}><AddCircleOutlineIcon onClick={incrementValue} /></div>
-                        </div>
-                        <button className='btn2 addtocart flex' onClick={() => cartHandler(product.productId)} >
-                            <AddShoppingCartIcon style={{ width: '15px' }} />
-                            <div className="heading2 captext">ADD TO CART</div>
-                        </button>
-                        <button type="button" onClick={closepopup} className="go-home-cart"> CLOSE </button>
-                    </div>
+        <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
+            <Helmet>
+                <title>Update Bank Account</title>
+            </Helmet>
+            <div className="heading flex">
+                <ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={backtopayment} />
+                &nbsp;&nbsp;Update your account
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="productlist2">
+                <div className="heading3 wh">Account information</div>
+                <div className="heading2 wh">This helps us to gather the right bank information from you.</div>
+                <Controller name="bankName" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter bank name' {...field} />} />
+                {errors.bankName && <div className='error'>{errors.bankName?.message}</div>}
+                <Controller name="bankLocation" control={control} defaultValue={selectedOrigin} render={({ field }) => (
+                    <select className="box flex" {...field} value={selectedOrigin} onChange={(e) => { field.onChange(e); originSelectChange(e); }}>
+                        <option value="">Select bank location</option>
+                        {countries.map((country) => (
+                            <option key={uuidv4()} value={country}>{country}</option>
+                        ))}
+                    </select>
+                )} />
+                {errors.bankLocation && <div className='error'>{errors.bankLocation?.message}</div>}
+                <Controller name="iban" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter IBAN number' {...field} />} />
+                {errors.iban && <div className='error'>{errors.iban?.message}</div>}
+                <Controller name="accNo" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter account number' {...field} />} />
+                {errors.accNo && <div className='error'>{errors.accNo?.message}</div>}
+                <Controller name="accHolderName" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder="Enter account holder's name" {...field} />} />
+                {errors.accHolderName && <div className='error'>{errors.accHolderName?.message}</div>}
+                <Controller name="swiftbic" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder="Enter swift/BIC code" {...field} />} />
+                {errors.swiftbic && <div className='error'>{errors.swiftbic?.message}</div>}
+                <Controller name="ifsc" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder="Enter IFSC code" {...field} />} />
+                {errors.ifsc && <div className='error'>{errors.ifsc?.message}</div>}
+                <div className="flex wh">
+                    <input type="checkbox" name='check' checked={isChecked} onChange={handleCheckboxChange} />&nbsp;&nbsp;<div className="heading2 wh">I want to specify an intermediary bank</div>
                 </div>
-            )}
-        </div>
-    );
-};
-
-export default Carousel;
+                {isChecked && (
+                    <Fragment>
+                        <div className="heading3 wh">Intermediary bank details</div>
+                        <div className="heading2 wh">Intermediary banks route your money to where ever you are.</div>
+                        <Controller name='ibankName' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary bank name' {...field} />} />
+                        <Controller name='iiban' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary IBAN' {...field} />} />
+                        <Controller name='iaccNo' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary bank account number' {...field} />} />
+                        <Controller name='iswif

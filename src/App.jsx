@@ -148,7 +148,7 @@ function App() {
                 <Route path="shipping-preferences" element={<Shipping />} />
                 <Route path="payments" element={<Payments />} />
                 <Route path="add-a-bank-account" element={<PaymentDetails />} />
-                <Route path="edit-bank-account" element={<EditPaymentDetails />} />
+                <Route path="edit-bank-account/:id" element={<EditPaymentDetails />} />
                 <Route path="seller-company-profile" element={<SellerComProfile />} />
               </Route>
             </Route>

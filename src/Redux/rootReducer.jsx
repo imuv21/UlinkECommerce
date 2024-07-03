@@ -15,6 +15,7 @@ import addressReducer from './addressSlice';
 import creditInfoSlice from './creditInfoSlice';
 import businessProfileSlice from './businessProfileSlice';
 import sellerBusinessProfileSlice from './sellerBusinessProfileSlice';
+import bankDetailsReducer from './bankDetailsSlice';
 
 
 const rootReducer = combineReducers({
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   creditInfo: creditInfoSlice,
   businessProfile: businessProfileSlice,
   sellerBusinessProfile: sellerBusinessProfileSlice,
+  bankDetails: bankDetailsReducer,
 });
 
 export default rootReducer;

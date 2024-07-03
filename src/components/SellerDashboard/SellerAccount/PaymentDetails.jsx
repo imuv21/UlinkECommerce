@@ -7,11 +7,15 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addBankDetails } from '../../../Redux/bankDetailsSlice';
 
 const schema = yupResolver(bankSchema);
 
 const PaymentDetails = () => {
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     //select country form api
     const [countries, setCountries] = useState([]);
@@ -33,42 +37,60 @@ const PaymentDetails = () => {
         setSelectedOrigin(event.target.value);
     };
 
+    //form handler
+    const [isdefault, setIsdefault] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleDefaultChange = () => {
+        setIsdefault(!isdefault);
+    };
+
+    const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
+    const onSubmit = (data) => {
+
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
+        const bankDetails = {
+            ...data,
+            defaultValue: isdefault,
+            interMediary: {
+                iaccNo: data.iaccNo || '',
+                ibankName: data.ibankName || '',
+                iiban: data.iiban || '',
+                iifsc: data.iifsc || '',
+                iswiftbic: data.iswiftbic || ''
+            }
+        };
+
+        dispatch(addBankDetails({ bankDetails })).then((response) => {
+            if (response.payload.status) {
+                alert(response.payload.message);
+                setIsSubmitting(false);
+                navigate('/seller-dashboard/payments');
+            } else {
+                alert('Error adding bank details');
+            }
+        });
+    };
+
+
+
+
+
     //checkbox div 
     const [isChecked, setIsChecked] = useState(false);
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);
     };
-     
-    //default checkbox
-    const [isdefault, setIsdefault] = useState(false);
-    const handleDefaultChange = () => {
-        setIsdefault(!isdefault);
-    };
 
-    //validation
-    const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
-    const onSubmit = data => {
-        data.defaultValue = isdefault;
-        let bankDetails = JSON.parse(localStorage.getItem('seller-bank-details')) || [];
-
-        if (isdefault) {
-            bankDetails = bankDetails.map(detail => ({ ...detail, defaultValue: false }));
-        }
-
-        bankDetails.push(data);
-        localStorage.setItem('seller-bank-details', JSON.stringify(bankDetails));
-        alert('Bank Details Added Successfully');
-        navigate('/seller-dashboard/payments');
-    };
-
-    const navigate = useNavigate();
     const backtopayment = () => {
         navigate('/seller-dashboard/payments');
     };
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
-             <Helmet>
+            <Helmet>
                 <title>Add A Bank Account</title>
             </Helmet>
             <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={backtopayment} />&nbsp;&nbsp;Add a new account</div>
@@ -108,14 +130,14 @@ const PaymentDetails = () => {
                 </div>
                 {isChecked && (
                     <Fragment>
-                      <div className="heading3 wh">Intermediary bank details</div>  
-                      <div className="heading2 wh">Intermediary banks route your money to where ever you are.</div>
+                        <div className="heading3 wh">Intermediary bank details</div>
+                        <div className="heading2 wh">Intermediary banks route your money to where ever you are.</div>
 
-                      <Controller name='ibankName' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary bank name' {...field} />} />
-                      <Controller name='iiban' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary IBAN' {...field} />} />
-                      <Controller name='iaccNo' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary bank account number' {...field} />} />
-                      <Controller name='iswiftbic' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary swift/BIC code' {...field} />} />
-                      <Controller name='iifsc' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary IFSC code' {...field} />} />
+                        <Controller name='ibankName' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary bank name' {...field} />} />
+                        <Controller name='iiban' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary IBAN' {...field} />} />
+                        <Controller name='iaccNo' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary bank account number' {...field} />} />
+                        <Controller name='iswiftbic' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary swift/BIC code' {...field} />} />
+                        <Controller name='iifsc' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary IFSC code' {...field} />} />
                     </Fragment>
                 )}
                 <div className="flex wh">
@@ -123,7 +145,7 @@ const PaymentDetails = () => {
                 </div>
 
                 <div className="flex" style={{ gap: '20px' }}>
-                    <button type='submit' className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Save</div></button>
+                    <button type='submit' className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2"  disabled={isSubmitting}> {isSubmitting ? 'Saving...' : 'Save'} </div></button>
                     <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Cancel</div></button>
                 </div>
             </form>

@@ -168,7 +168,7 @@ const Profile = () => {
                         {isEditing ? (
                             <div className="flex" style={{ gap: '20px' }}>
                                 <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}  disabled={isSubmitting}> {isSubmitting ? 'Saving...' : 'Save'}</button>
-                                <button className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={cancel} >Cancel</button>
+                                <button className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={cancel}>Cancel</button>
                             </div>
                         ) : (
                             <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClick}>Edit</div>
