@@ -46,7 +46,7 @@ const PaymentDetails = () => {
     };
 
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
 
         if (isSubmitting) return;
         setIsSubmitting(true);
@@ -63,15 +63,15 @@ const PaymentDetails = () => {
             }
         };
 
-        dispatch(addBankDetails({ bankDetails })).then((response) => {
-            if (response.payload.status) {
-                alert(response.payload.message);
-                setIsSubmitting(false);
-                navigate('/seller-dashboard/payments');
-            } else {
-                alert('Error adding bank details');
-            }
-        });
+        try {
+            await dispatch(addBankDetails({ bankDetails })).unwrap();
+            alert('Bank details added successfully');
+        } catch (err) {
+            console.error('Failed to update bank details:', err);
+        } finally {
+            setIsSubmitting(false);
+            navigate('/seller-dashboard/payments');
+        }
     };
 
 

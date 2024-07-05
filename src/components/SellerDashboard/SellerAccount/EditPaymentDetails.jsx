@@ -7,16 +7,17 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchBankDetails } from '../../../Redux/bankDetailsSlice';
+import { fetchBankDetails, updateBankDetails } from '../../../Redux/bankDetailsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const schema = yupResolver(bankSchema);
 
 const EditPaymentDetails = () => {
+
     const { id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { bankDetails, status, error } = useSelector((state) => state.bankDetails);
+    const { bankDetails, loading, error } = useSelector((state) => state.bankDetails);
     const { handleSubmit, control, formState: { errors }, setValue } = useForm({
         resolver: schema
     });
@@ -25,13 +26,14 @@ const EditPaymentDetails = () => {
     const [selectedOrigin, setSelectedOrigin] = useState('');
     const [isChecked, setIsChecked] = useState(false);
     const [isDefault, setIsDefault] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         dispatch(fetchBankDetails());
     }, [dispatch]);
 
     useEffect(() => {
-        if (status === 'succeeded') {
+        if (bankDetails) {
             const bankDetail = bankDetails.find((bank) => bank.id === parseInt(id));
             if (bankDetail) {
                 setValue("bankName", bankDetail.bankName || '');
@@ -48,12 +50,16 @@ const EditPaymentDetails = () => {
                 setValue("iifsc", bankDetail.interMediary?.iifsc || '');
                 setValue("defaultValue", bankDetail.defaultValue || false);
 
+                const hasIntermediaryValue = bankDetail.interMediary?.ibankName || bankDetail.interMediary?.iiban || bankDetail.interMediary?.iaccNo || bankDetail.interMediary?.iswiftbic || bankDetail.interMediary?.iifsc;
+
+                setValue("check", hasIntermediaryValue ? true : false);
+
                 setSelectedOrigin(bankDetail.bankLocation);
-                setIsChecked(bankDetail.interMediary?.ibankName !== null);
+                setIsChecked(hasIntermediaryValue ? true : false);
                 setIsDefault(bankDetail.defaultValue);
             }
         }
-    }, [status, bankDetails, id, setValue]);
+    }, [bankDetails, id, setValue]);
 
     useEffect(() => {
         const fetchCountries = async () => {
@@ -81,8 +87,39 @@ const EditPaymentDetails = () => {
         setIsDefault(!isDefault);
     };
 
-    const onSubmit = (data) => {
-        // Handle form submission logic
+    const onSubmit = async (data) => {
+
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
+        const bankDetails = {
+            id: id, 
+            accHolderName: data.accHolderName,
+            accNo: data.accNo,
+            bankLocation: data.bankLocation,
+            bankName: data.bankName,
+            defaultValue: isDefault,
+            swiftbic: data.swiftbic,
+            ifsc: data.ifsc,
+            iban: data.iban,
+            interMediary: isChecked ? {
+                iiban: data.iiban,
+                iifsc: data.iifsc,
+                ibankName: data.ibankName,
+                iaccNo: data.iaccNo,
+                iswiftbic: data.iswiftbic
+            } : {}
+        };
+
+        try {
+            await dispatch(updateBankDetails({ id: id, bankDetails })).unwrap();
+            alert('Bank details updated successfully');
+        } catch (err) {
+            console.error('Failed to update bank details:', err);
+        } finally {
+            setIsSubmitting(false);
+            navigate('/seller-dashboard/payments');
+        }
     };
 
     const backtopayment = () => {
@@ -98,6 +135,8 @@ const EditPaymentDetails = () => {
                 <ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={backtopayment} />&nbsp;&nbsp;Update your account
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="productlist2">
+                {loading && <p>Loading...</p>}
+                {error && <p>Error: {error}</p>}
                 <div className="heading3 wh">Account information</div>
                 <div className="heading2 wh">This helps us to gather the right bank information from you.</div>
                 <Controller name="bankName" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter bank name' {...field} />} />
@@ -139,7 +178,7 @@ const EditPaymentDetails = () => {
                     <input type="checkbox" name='defaultValue' checked={isDefault} onChange={handleDefaultChange} />&nbsp;&nbsp;<div className="heading2 wh">Set bank details as default</div>
                 </div>
                 <div className="flex" style={{ gap: '20px' }}>
-                    <button type='submit' className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Update</div></button>
+                    <button type='submit' className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }} disabled={isSubmitting}><div className="heading2">{isSubmitting ? 'Submitting...' : 'Submit'}</div></button>
                     <button type='button' className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }} onClick={backtopayment}><div className="heading2">Cancel</div></button>
                 </div>
             </form>

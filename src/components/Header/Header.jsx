@@ -30,7 +30,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MessageIcon from '@mui/icons-material/Message';
 import StorefrontIcon from '@mui/icons-material/Storefront';
-
+import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import DepartureBoardIcon from '@mui/icons-material/DepartureBoard';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
@@ -167,16 +167,22 @@ const Header = () => {
     setIsOffice(prevState => !prevState);
   };
 
+  const [isFood, setIsFood] = useState(false);
+  const handleFood = () => {
+    setIsFood(prevState => !prevState);
+  };
+
 
   useEffect(() => {
     const handleScroll = () => {
-      if (isClicked || isClickedCate || isClickedTwo || isClickedAdd || isConsumer || isOffice) {
+      if (isClicked || isClickedCate || isClickedTwo || isClickedAdd || isConsumer || isOffice || isFood) {
         setIsClicked(false);
         setIsClickedCate(false);
         setIsClickedTwo(false);
         setIsClickedAdd(false);
         setIsConsumer(false);
         setIsOffice(false);
+        setIsFood(false);
       }
     };
 
@@ -184,7 +190,7 @@ const Header = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isClicked, isClickedCate, isClickedTwo, isClickedAdd, isConsumer, isOffice]);
+  }, [isClicked, isClickedCate, isClickedTwo, isClickedAdd, isConsumer, isOffice, isFood]);
 
   const navigate = useNavigate();
   const tocart = () => {
@@ -324,6 +330,27 @@ const Header = () => {
             <div className="cate-options">
               {miniSubOptions[subOption].map((miniSubOption, miniIndex) => (
                 <div className='sub-cate-options' key={miniIndex} onClick={() => handleOptionClick("OfficeAndStationery", subOption, miniSubOption)}>
+                  {convertPascalToReadable(miniSubOption)}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const getFoodPopupContent = () => {
+    return (
+      <div className='cate-grid'>
+        {subOptions.FoodAndBeverages.slice(4, 7).map((subOption, index) => (
+          <div className="popupbox-cate" key={index}>
+            <div className='subpop-options underline' onClick={() => handleOptionClick("FoodAndBeverages", subOption)}>
+              {convertPascalToReadable(subOption)}
+            </div>
+            <div className="cate-options">
+              {miniSubOptions[subOption].map((miniSubOption, miniIndex) => (
+                <div className='sub-cate-options' key={miniIndex} onClick={() => handleOptionClick("FoodAndBeverages", subOption, miniSubOption)}>
                   {convertPascalToReadable(miniSubOption)}
                 </div>
               ))}
@@ -536,6 +563,7 @@ const Header = () => {
 
       <div className="sub-header">
         <div className="sup-header-option">
+          
           <div className='header-burger' onClick={toggleMobileMenu} >
             <ListIcon />
           </div>
@@ -582,6 +610,18 @@ const Header = () => {
             {isOffice && (
               <div className="popup oas-options-popup">
                 {getOfficePopupContent()}
+                <div className='wh'>
+                  <Link to="/search-results" className="subpop-options underline" style={{ color: 'var(--CodeTwo)' }}>More categories</Link>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          <div className={`sub-heading2 cate-icon flex icon-container ${isFood ? 'clicked' : ''}`} onClick={handleFood} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
+            <FastfoodIcon />  Food And Beverages
+            {isFood && (
+              <div className="popup fab-options-popup">
+                {getFoodPopupContent()}
                 <div className='wh'>
                   <Link to="/search-results" className="subpop-options underline" style={{ color: 'var(--CodeTwo)' }}>More categories</Link>
                 </div>

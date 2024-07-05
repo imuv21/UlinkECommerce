@@ -378,40 +378,37 @@ button:focus {
 /* product card */
 /* slider styling */
 .add-to-cart-popup {
-  width: 300px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: start;
+  align-items: center; 
+  justify-content: center; 
   position: fixed;
-  top: 30%;
-  left: 40%;
-  transform: translate(-30%, -40%);
-  height: fit-content;
-  gap: 10px;
-  background: white;
-  border: var(--border);
-  border-radius: var(--br1);
-  filter: drop-shadow(5px 5px 5px rgb(154, 154, 154));
-  opacity: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(3, 3, 3, 0.434);
   transition: opacity 0.3s, transform 0.3s;
   z-index: 2;
 }
 
 .add-to-cart-wrapper-footer {
+  width: 400px;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   justify-content: center;
   text-align: center;
-  width: 100%;
   border-radius: 10px;
-  gap: 7px;
+  gap: 10px;
   background: white;
+  padding: 15px 25px;
+  filter: drop-shadow(7px 7px 10px rgb(48, 48, 48));
 }
 
 .add-to-cart {
-  padding: 15px;
+ padding: 0px;
 }
 
 .go-home-cart {
@@ -2694,8 +2691,11 @@ button:focus {
   color: #252627;
 }
 
+.show-all-product{
+  transition: var(--trans);
+}
 .show-all-product:hover {
-  border-bottom: 2px solid var(--CodeOne);
+  color: var(--CodeTwo);
   cursor: pointer;
 }
 

@@ -157,6 +157,15 @@
   left: 230px;
 }
 
+.fab-options-popup {
+  padding: 20px 15px;
+  width: fit-content;
+  justify-content: space-between !important;
+  height: 500px;
+  top: 160px;
+  left: 350px;
+}
+
 .cate-icon .MuiSvgIcon-root{
   width: 15px;
   height: 15px;

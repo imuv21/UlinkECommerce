@@ -166,6 +166,8 @@ const Checkout = () => {
 
   //   const { data: { order } } = await axios.post('http://localhost:4000/api/checkout', { amount, currency })
 
+  //   const { data: { order } } = await axios.post('https://api.ulinkit.com/api/payment/test/get-transaction', { amount, currency })
+
   //   const options = {
   //     key: key,
   //     amount: order.amount,
