@@ -381,8 +381,8 @@ button:focus {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center; 
-  justify-content: center; 
+  align-items: center;
+  justify-content: center;
   position: fixed;
   top: 0;
   left: 0;
@@ -408,7 +408,7 @@ button:focus {
 }
 
 .add-to-cart {
- padding: 0px;
+  padding: 0px;
 }
 
 .go-home-cart {
@@ -434,7 +434,7 @@ button:focus {
   color: #5892ff;
 }
 
-.line-out{
+.line-out {
   width: 100%;
   border: 1px solid rgb(231, 231, 231);
   border-radius: 20px;
@@ -2399,6 +2399,108 @@ button:focus {
 
 /* Checkout styling  */
 
+.payment-gatway{
+  position: relative;
+}
+
+.payment-popup {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(3, 3, 3, 0.434);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 2;
+}
+
+.payment-popup-card {
+  padding: 0px;
+}
+
+.payment-gatway .payment-popup {
+  opacity: 0;
+  bottom: -10px;
+  transition: opacity 0.3s ease, bottom 0.3s ease;
+}
+
+.payment-gatway.clicked .payment-popup {
+  opacity: 1;
+  bottom: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.payment-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: var(--br1);
+  transition: var(--trans);
+}
+
+.payment-option:hover{
+  filter: drop-shadow(1px 1px 2px gray);
+  background: var(--CodeThree);
+  cursor: pointer;
+}
+
+.payment-option:hover img {
+  filter: none;
+}
+
+.payment-option:hover .heading2{
+  color: var(--CodeTwo);
+}
+
+.payment-option .heading2{
+  font-style: italic;
+  transition: var(--trans);
+}
+
+.payment-option img{
+  filter: saturate(0);
+  aspect-ratio: 4/1;
+  object-fit: contain;
+  width: 100px;
+  height: auto;
+  transition: var(--trans);
+}
+
+.payment-popupbox {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 10px;
+  gap: 25px;
+  background: white;
+  padding: 15px 25px;
+  filter: drop-shadow(7px 7px 10px rgb(48, 48, 48));
+}
+
+
 .checkout {
   width: 100%;
   gap: 20px;
@@ -2691,9 +2793,10 @@ button:focus {
   color: #252627;
 }
 
-.show-all-product{
+.show-all-product {
   transition: var(--trans);
 }
+
 .show-all-product:hover {
   color: var(--CodeTwo);
   cursor: pointer;

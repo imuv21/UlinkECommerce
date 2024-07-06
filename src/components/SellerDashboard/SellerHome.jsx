@@ -89,8 +89,7 @@ const SellerHome = () => {
     const [steps, setSteps] = useState([
         { step: 1, label: 'Verify your contacts', completed: true },
         { step: 2, label: 'Upload your business documents', completed: false },
-        { step: 3, label: 'Set shipping preferences', completed: false },
-        { step: 4, label: 'Set up your bank details', completed: false },
+        { step: 3, label: 'Set up your bank details', completed: false },
     ]);
     const stepProcess = [
         {
@@ -109,14 +108,14 @@ const SellerHome = () => {
             btn: 'Upload documents',
             link: '/seller-dashboard/seller-company-profile',
         },
-        {
-            id: uuidv4(),
-            icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717747167/3123_documents_icon_dgij1z.png',
-            title: 'Set shipping preferences',
-            description: 'To complete your seller profile, please select your shipping preference.',
-            btn: 'Set preferences',
-            link: '/seller-dashboard/shipping-preferences',
-        },
+        // {
+        //     id: uuidv4(),
+        //     icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717747167/3123_documents_icon_dgij1z.png',
+        //     title: 'Set shipping preferences',
+        //     description: 'To complete your seller profile, please select your shipping preference.',
+        //     btn: 'Set preferences',
+        //     link: '/seller-dashboard/shipping-preferences',
+        // },
         {
             id: uuidv4(),
             icon: 'https://res.cloudinary.com/dey1tujp8/image/upload/v1717740444/5452454_and_bank_banking_buildings_business_icon_vvoa4o.png',

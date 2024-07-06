@@ -19,6 +19,23 @@ const Checkout = () => {
   const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
   const exchangeRates = useSelector(state => state.currency.exchangeRates);
 
+  const [paymentClicked, setPaymentClicked] = useState(false);
+  const handlePaymentClick = () => {
+    setPaymentClicked(prevState => !prevState);
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (paymentClicked) {
+        setPaymentClicked(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [paymentClicked]);
+
   useEffect(() => {
     dispatch(fetchExchangeRates());
   }, [dispatch]);
@@ -160,43 +177,58 @@ const Checkout = () => {
 
 
   // payment methods 
-  // const checkoutHandler = async (amount, currency) => {
+  const checkoutHandler = async (amount, currency) => {
+    console.log(amount, currency);
 
-  //   const { data: { key } } = await axios.get('http://localhost:4000/api/getkey');
+    try {
+      const response = await axios.post('https://api.ulinkit.com/api/payment/test/get-transaction', { amount, currency });
+      const order = response.data; // Adjusted according to the response structure
 
-  //   const { data: { order } } = await axios.post('http://localhost:4000/api/checkout', { amount, currency })
+      const options = {
+        key: 'rzp_test_nacM37dbbc6tDi',
+        amount: order.amount,
+        currency: order.currency,
+        name: "Uttam Verma",
+        description: "Test Transaction",
+        image: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
+        order_id: order.orderId,
+        handler: handleRazorpayCallback, // Directly passing the handler function
 
-  //   const { data: { order } } = await axios.post('https://api.ulinkit.com/api/payment/test/get-transaction', { amount, currency })
+        prefill: {
+          name: "Uttam Verma",
+          email: "imuv21@gmail.com",
+          contact: "9026075867"
+        },
+        notes: {
+          address: "Razorpay Corporate Office"
+        },
+        theme: {
+          color: "#00aaff"
+        }
+      };
 
-  //   const options = {
-  //     key: key,
-  //     amount: order.amount,
-  //     currency: order.currency,
-  //     name: "Uttam Verma",
-  //     description: "Test Transaction",
-  //     image: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
-  //     order_id: order.id,
-  //     callback_url: "http://localhost:4000/api/paymentverification",
-  //     prefill: {
-  //       name: "Uttam Verma",
-  //       email: "imuv21@gmail.com",
-  //       contact: "9026075867"
-  //     },
-  //     notes: {
-  //       address: "Razorpay Corporate Office"
-  //     },
-  //     theme: {
-  //       color: "#00aaff"
-  //     }
-  //   };
-    
-  //   const razor = new window.Razorpay(options);
-  //   razor.open();
-  // }
+      const razor = new window.Razorpay(options);
+      razor.open();
+    } catch (error) {
+      console.error('Error in checkoutHandler', error);
+    }
+  };
 
-
-
-
+  const handleRazorpayCallback = async (response) => {
+    console.log(response);
+    try {
+      await axios.post('https://api.ulinkit.com/api/payment/test/callback', {
+        paymentId: response.razorpay_payment_id,
+        orderId: response.razorpay_order_id,
+        signature: response.razorpay_signature,
+        gateway: 'RAZORPAY'
+      });
+      setPaymentStatus('success');
+    } catch (error) {
+      console.error('Error handling Razorpay callback', error);
+      setPaymentStatus('error');
+    }
+  };
 
 
   return (
@@ -387,6 +419,28 @@ const Checkout = () => {
             {/* <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
               <button className='btn addtocart flex' onClick={() => checkoutHandler(convertPrice(totalSellPrice, currency), selectedCurrency)}><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>
             </div> */}
+
+            <div className={`flexcol wh topbottom payment-gatway ${paymentClicked ? 'clicked' : ''}`} onClick={handlePaymentClick} style={{ gap: '10px' }}>
+              <button className='btn addtocart flex'><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>
+              {paymentClicked && (
+                <div className="payment-popup-card payment-popup">
+                  <div className='payment-popupbox'>
+                    <div className="heading">Choose a payment method</div>
+                    <div className="flexcol wh">
+                      <div className="payment-option" onClick={() => checkoutHandler(convertPrice(totalSellPrice, currency), selectedCurrency)}>
+                        <div className="heading2">Pay with</div>
+                        <img src="https://res.cloudinary.com/dey1tujp8/image/upload/v1720262856/pngwing.com_pcirhd.png"  alt="Razorpay" />
+                      </div>
+                      <div className="payment-option">
+                        <div className="heading2">Pay with</div>
+                        <img src="https://res.cloudinary.com/dey1tujp8/image/upload/v1720262856/pngwing.com_1_mjjcxi.png" alt="Paypal" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            
           </div>
         </div>
       </div>

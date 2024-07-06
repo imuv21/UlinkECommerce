@@ -135,62 +135,81 @@ const Header = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
+
+
   //clicks
+  const popupRefs = useRef([]);
   const [isClicked, setIsClicked] = useState(false);
   const handleClick = () => {
+    closeAllPopups();
     setIsClicked(prevState => !prevState);
   };
-
   const [isClickedCate, setIsClickedCate] = useState(false);
   const handleClickCate = () => {
+    closeAllPopups();
     setIsClickedCate(prevState => !prevState);
   };
-
   const [isClickedTwo, setIsClickedTwo] = useState(false);
   const handleClickTwo = () => {
+    closeAllPopups();
     setIsClickedTwo(prevState => !prevState);
   };
-
   const [isClickedAdd, setIsClickedAdd] = useState(false);
   const handleClickAdd = () => {
+    closeAllPopups();
     setIsClickedAdd(prevState => !prevState);
   };
-
-
   const [isConsumer, setIsConsumer] = useState(false);
   const handleConsumer = () => {
+    closeAllPopups();
     setIsConsumer(prevState => !prevState);
   };
-
   const [isOffice, setIsOffice] = useState(false);
   const handleOffice = () => {
+    closeAllPopups();
     setIsOffice(prevState => !prevState);
   };
-
   const [isFood, setIsFood] = useState(false);
   const handleFood = () => {
+    closeAllPopups();
     setIsFood(prevState => !prevState);
   };
+  const closeAllPopups = () => {
+    setIsClicked(false);
+    setIsClickedCate(false);
+    setIsClickedTwo(false);
+    setIsClickedAdd(false);
+    setIsConsumer(false);
+    setIsOffice(false);
+    setIsFood(false);
+  };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!popupRefs.current.some(ref => ref && ref.contains(event.target))) {
+        closeAllPopups();
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (isClicked || isClickedCate || isClickedTwo || isClickedAdd || isConsumer || isOffice || isFood) {
-        setIsClicked(false);
-        setIsClickedCate(false);
-        setIsClickedTwo(false);
-        setIsClickedAdd(false);
-        setIsConsumer(false);
-        setIsOffice(false);
-        setIsFood(false);
-      }
+      closeAllPopups();
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isClicked, isClickedCate, isClickedTwo, isClickedAdd, isConsumer, isOffice, isFood]);
+  }, []);
+
+
+
+
 
   const navigate = useNavigate();
   const tocart = () => {
@@ -563,7 +582,7 @@ const Header = () => {
 
       <div className="sub-header">
         <div className="sup-header-option">
-          
+
           <div className='header-burger' onClick={toggleMobileMenu} >
             <ListIcon />
           </div>
@@ -616,7 +635,7 @@ const Header = () => {
               </div>
             )}
           </div>
-          
+
           <div className={`sub-heading2 cate-icon flex icon-container ${isFood ? 'clicked' : ''}`} onClick={handleFood} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
             <FastfoodIcon />  Food And Beverages
             {isFood && (

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./bla.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <section class="one clearfix">
+            <div class="left">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="right">
+                <div class="right-child">
+                    <h2>Scroll</h2>
+
+                </div>
+            </div>
+        </section>
+
+        <div class="bottom">
+        </div>
+    </div>
+  
+    <script>
+        $(window).scroll(reOrder);
+        $(window).resize(reOrder);
+
+        function reOrder() {
+            var mq = window.matchMedia("(min-width: 992px)");
+            if (mq.matches) {
+                $(".right-child").addClass("customm");
+                $(".right-child h2").text("Scroll");
+                var scroll = $(window).scrollTop(),
+                    topContent = $(".one").position().top - 25,
+                    sectionHeight = $(".left").height(),
+                    rightHeight = $(".right-child").height(),
+                    bottomContent = topContent + sectionHeight - rightHeight - 45;
+
+                if (scroll > topContent && scroll < bottomContent) {
+                    $(".customm").removeClass("posAbs").addClass("posFix");
+                } else if (scroll > bottomContent) {
+                    $(".customm").removeClass("posFix").addClass("posAbs");
+                } else if (scroll < topContent) {
+                    $(".customm").removeClass("posFix");
+                }
+            } else {
+                $(".right-child").removeClass("customm posAbs posFix");
+                $(".right-child h2").text("fixed");
+            }
+        }
+    </script>
+</body>
+
+</html>
