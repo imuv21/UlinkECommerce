@@ -24,6 +24,7 @@ const NextArrow = (props) => {
     </div>
   );
 };
+
 const PrevArrow = (props) => {
   const { style, onClick } = props;
   return (
@@ -32,7 +33,16 @@ const PrevArrow = (props) => {
     </div>
   );
 };
+
 const CategorySection = () => {
+
+  const Sports = 'https://res.cloudinary.com/dey1tujp8/image/upload/v1720425339/sports_zeupv6.png';
+  const BabyCenter = 'https://res.cloudinary.com/dey1tujp8/image/upload/v1720425339/babycentrecircularbaner_plo459.png';
+  const Toys = 'https://res.cloudinary.com/dey1tujp8/image/upload/v1720425339/toys_vogv6y.png';
+  const HomeGarden = 'https://res.cloudinary.com/dey1tujp8/image/upload/v1720425339/homegarden_qqednm.png';
+  const PetAnimal = 'https://res.cloudinary.com/dey1tujp8/image/upload/v1720425339/petanimal_simecj.png';
+  const Automotive = 'https://res.cloudinary.com/dey1tujp8/image/upload/v1720425339/automotivecircularbanner_tq5nrd.png';
+
   const categories = [
     { name: 'Trending Product', image: Discount, link: '/category-pages/trending' },
     { name: 'Consumer Electronic', image: Electronic, link: '/category-pages/electronic' },
@@ -42,8 +52,15 @@ const CategorySection = () => {
     { name: 'Home & Kitchen', image: Kitchen, link: '/category-pages/kitchen' },
     { name: 'Beauty & Fragrences', image: Buety, link: '/category-pages/buety' },
     { name: 'Fashion & Acceseries', image: Fashion, link: '/category-pages/fashion' },
+    { name: 'Automotive', image: Automotive, link: '/category-pages/automotive' },
+    { name: 'Baby Center', image: BabyCenter, link: '/category-pages/babycenter' },
+    { name: 'Home & Garden', image: HomeGarden, link: '/category-pages/homegarden' },
+    { name: 'Pet & Animal', image: PetAnimal, link: '/category-pages/petanimal' },
+    { name: 'Sports', image: Sports, link: '/category-pages/sports' },
+    { name: 'Toys', image: Toys, link: '/category-pages/toys' },
     { name: 'Refurbished', image: Refurbish, link: '/category-pages/refurbish' },
   ];
+
   const settings = {
     dots: false,
     infinite: false,
@@ -54,48 +71,48 @@ const CategorySection = () => {
     prevArrow: <PrevArrow />,
     responsive: [
       {
-          breakpoint: 1300,
-          settings: {
-              slidesToShow: 6,
-              slidesToScroll: 2,
-          },
+        breakpoint: 1300,
+        settings: {
+          slidesToShow: 6,
+          slidesToScroll: 2,
+        },
       },
       {
-          breakpoint: 1150,
-          settings: {
-              slidesToShow: 5,
-              slidesToScroll: 2,
-          },
+        breakpoint: 1150,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 2,
+        },
       },
       {
-          breakpoint: 1000,
-          settings: {
-              slidesToShow: 4,
-              slidesToScroll: 2,
-          },
+        breakpoint: 1000,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 2,
+        },
       },
       {
-          breakpoint: 800,
-          settings: {
-              slidesToShow: 3,
-              slidesToScroll: 1,
-          },
+        breakpoint: 800,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
       },
       {
-          breakpoint: 600,
-          settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
-          },
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
       },
       {
-          breakpoint: 380,
-          settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-          },
+        breakpoint: 380,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
       },
-  ],
+    ],
   };
 
   return (
