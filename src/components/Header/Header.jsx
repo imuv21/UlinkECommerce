@@ -93,29 +93,11 @@ const Header = () => {
 
 
   //dropdown 
-  const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(''); //this one
-  const dropdownRef = useRef(null);
 
   useEffect(() => {
     dispatch(fetchExchangeRates());
   }, [dispatch]);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  const handleToggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
 
   const handleSelectCurrency = (currencyCode) => {
     dispatch(setSelectedCurrency(currencyCode));
@@ -130,50 +112,45 @@ const Header = () => {
     countryNames[currencyCode].toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
 
 
-  //clicks
-  const popupRefs = useRef([]);
+  //popups handling 
+  const [isOpen, setIsOpen] = useState(false);
+  const isOpenRef = useRef(null);
+  const popupisOpenRef = useRef(null);
+
   const [isClicked, setIsClicked] = useState(false);
-  const handleClick = () => {
-    closeAllPopups();
-    setIsClicked(prevState => !prevState);
-  };
+  const isClickedRef = useRef(null);
+  const popupisClickedRef = useRef(null);
+
   const [isClickedCate, setIsClickedCate] = useState(false);
-  const handleClickCate = () => {
-    closeAllPopups();
-    setIsClickedCate(prevState => !prevState);
-  };
+  const isClickedCateRef = useRef(null);
+  const popupisClickedCateRef = useRef(null);
+
   const [isClickedTwo, setIsClickedTwo] = useState(false);
-  const handleClickTwo = () => {
-    closeAllPopups();
-    setIsClickedTwo(prevState => !prevState);
-  };
+  const isClickedTwoRef = useRef(null);
+  const popupisClickedTwoRef = useRef(null);
+
   const [isClickedAdd, setIsClickedAdd] = useState(false);
-  const handleClickAdd = () => {
-    closeAllPopups();
-    setIsClickedAdd(prevState => !prevState);
-  };
+  const isClickedAddRef = useRef(null);
+  const popupisClickedAddRef = useRef(null);
+
   const [isConsumer, setIsConsumer] = useState(false);
-  const handleConsumer = () => {
-    closeAllPopups();
-    setIsConsumer(prevState => !prevState);
-  };
+  const isConsumerRef = useRef(null);
+  const popupisConsumerRef = useRef(null);
+
   const [isOffice, setIsOffice] = useState(false);
-  const handleOffice = () => {
-    closeAllPopups();
-    setIsOffice(prevState => !prevState);
-  };
+  const isOfficeRef = useRef(null);
+  const popupisOfficeRef = useRef(null);
+
   const [isFood, setIsFood] = useState(false);
-  const handleFood = () => {
-    closeAllPopups();
-    setIsFood(prevState => !prevState);
-  };
+  const isFoodRef = useRef(null);
+  const popupisFoodRef = useRef(null);
+
   const closeAllPopups = () => {
     setIsClicked(false);
     setIsClickedCate(false);
@@ -182,15 +159,75 @@ const Header = () => {
     setIsConsumer(false);
     setIsOffice(false);
     setIsFood(false);
+    setIsOpen(false);
+  };
+
+  const handleClick = () => {
+    closeAllPopups();
+    setIsClicked(prevState => !prevState);
+  };
+
+  const handleClickCate = () => {
+    closeAllPopups();
+    setIsClickedCate(prevState => !prevState);
+  };
+
+  const handleClickTwo = () => {
+    closeAllPopups();
+    setIsClickedTwo(prevState => !prevState);
+  };
+
+  const handleClickAdd = () => {
+    closeAllPopups();
+    setIsClickedAdd(prevState => !prevState);
+  };
+
+  const handleConsumer = () => {
+    closeAllPopups();
+    setIsConsumer(prevState => !prevState);
+  };
+
+  const handleOffice = () => {
+    closeAllPopups();
+    setIsOffice(prevState => !prevState);
+  };
+
+  const handleFood = () => {
+    closeAllPopups();
+    setIsFood(prevState => !prevState);
+  };
+
+  const handleToggleDropdown = () => {
+    closeAllPopups();
+    setIsOpen(prevState => !prevState);
+  };
+
+  const handleClickOutside = (event) => {
+    
+    const popups = [
+      { containerRef: isClickedRef, popupRef: popupisClickedRef },
+      { containerRef: isClickedCateRef, popupRef: popupisClickedCateRef },
+      { containerRef: isClickedTwoRef, popupRef: popupisClickedTwoRef },
+      { containerRef: isClickedAddRef, popupRef: popupisClickedAddRef },
+      { containerRef: isConsumerRef, popupRef: popupisConsumerRef },
+      { containerRef: isOfficeRef, popupRef: popupisOfficeRef },
+      { containerRef: isFoodRef, popupRef: popupisFoodRef },
+      { containerRef: isOpenRef, popupRef: popupisOpenRef },
+    ];
+
+    const clickedInsideAny = popups.some(({ containerRef, popupRef }) =>
+      containerRef.current && containerRef.current.contains(event.target) ||
+      popupRef.current && popupRef.current.contains(event.target)
+    );
+
+    if (!clickedInsideAny) {
+      closeAllPopups();
+    }
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!popupRefs.current.some(ref => ref && ref.contains(event.target))) {
-        closeAllPopups();
-      }
-    };
     document.addEventListener('mousedown', handleClickOutside);
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -208,14 +245,10 @@ const Header = () => {
   }, []);
 
 
-
-
-
   const navigate = useNavigate();
   const tocart = () => {
     navigate('/cart');
   }
-
 
   const cartItems = cart || [];
   const carttext = cartItems.length;
@@ -427,7 +460,7 @@ const Header = () => {
         <div className="headerflex">
 
           {isAuthenticated && (
-            <div className={`icon-container ${isClickedAdd ? 'clicked' : ''}`} onClick={handleClickAdd}>
+            <div ref={isClickedAddRef} className={`icon-container ${isClickedAdd ? 'clicked' : ''}`} onClick={handleClickAdd}>
               <div className="flex">
                 <LocationOnIcon style={{ color: 'gray' }} />
                 <div className="flexcol-start">
@@ -438,7 +471,7 @@ const Header = () => {
               </div>
 
               {(isClickedAdd && addresses && addresses.length > 0) && (
-                <div className="popup address-relative">
+                <div ref={popupisClickedAddRef} className="popup address-relative">
                   <div className="address-container">
                     {addresses.map((address) => (
                       <div key={address.id} className={`address-card ${selectedAddress?.id === address.id ? 'selected' : ''}`}>
@@ -467,7 +500,7 @@ const Header = () => {
             </div>
           )}
 
-          <div className="dropdown-flag" ref={dropdownRef}>
+          <div ref={isOpenRef} className="dropdown-flag">
             <div className="dropdown-flag-header" onClick={handleToggleDropdown}>
               {selectedCurrency ? (
                 <div className="flex descrip flagname" style={{ gap: '10px' }}>
@@ -482,7 +515,7 @@ const Header = () => {
               )}
             </div>
             {isOpen && (
-              <div className="dropdown-flag-list">
+              <div ref={popupisOpenRef} className="dropdown-flag-list">
                 <input type="text" className="dropdown-flag-search" placeholder="Search here..."
                   value={searchQuery} onChange={handleSearchChange} />
 
@@ -509,13 +542,13 @@ const Header = () => {
           {isAuthenticated ? (
             <div className='heading2 usernameheader' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}>Hi {user.firstname} </div>
           ) : (
-            <div className={`icon-container ${isClickedTwo ? 'clicked' : ''}`} onClick={handleClickTwo}>
+            <div ref={isClickedTwoRef} className={`icon-container ${isClickedTwo ? 'clicked' : ''}`} onClick={handleClickTwo}>
               <div className="flex" style={{ gap: '10px' }}>
                 <AccountCircleIcon style={{ color: 'black' }} />
                 <div className='LoginRegister'>Login / Register</div>
               </div>
               {isClickedTwo && (
-                <div className="popup account">
+                <div ref={popupisClickedTwoRef} className="popup account">
                   <div className='popupbox'>
                     <Link to="/login" className='loginbtn'><div className="heading2">Log in</div></Link>
                     <Link to="/signup" className='signupbtn'><div className="heading2">Register</div><div className='descrip'>It only takes 30 seconds</div></Link>
@@ -529,10 +562,10 @@ const Header = () => {
           )}
 
           {isAuthenticated && (
-            <div className={`icon-container ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
+            <div ref={isClickedRef} className={`icon-container ${isClicked ? 'clicked' : ''}`} onClick={handleClick}>
               <AccountCircleIcon style={{ color: 'black' }} />
               {isClicked && (
-                <div className="popup account">
+                <div ref={popupisClickedRef} className="popup account">
                   <div className='popupbox'>
 
                     <div className="username">
@@ -587,10 +620,10 @@ const Header = () => {
             <ListIcon />
           </div>
 
-          <div className={`sub-heading3 flex icon-container ${isClickedCate ? 'clicked' : ''}`} onClick={handleClickCate} onMouseLeave={handleMouseLeave} style={{ gap: '10px' }}>
+          <div ref={isClickedCateRef} className={`sub-heading3 flex icon-container ${isClickedCate ? 'clicked' : ''}`} onClick={handleClickCate} onMouseLeave={handleMouseLeave} style={{ gap: '10px' }}>
             <MenuIcon />   All Categories
             {isClickedCate && (
-              <div className="popup cate_forntend">
+              <div ref={popupisClickedCateRef} className="popup cate_forntend">
                 <div className='popupbox'>
                   {supOptions.map((option, index) => (
                     <div className="subpop-options options-relative" key={index} onMouseEnter={() => handleMouseEnter(index)}>
@@ -612,10 +645,10 @@ const Header = () => {
             )}
           </div>
 
-          <div className={`sub-heading2 cate-icon flex icon-container ${isConsumer ? 'clicked' : ''}`} onClick={handleConsumer} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
+          <div ref={isConsumerRef} className={`sub-heading2 cate-icon flex icon-container ${isConsumer ? 'clicked' : ''}`} onClick={handleConsumer} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
             <PhoneAndroidIcon />  Consumer Electronics
             {isConsumer && (
-              <div className="popup ce-options-popup">
+              <div ref={popupisConsumerRef} className="popup ce-options-popup">
                 {getConsumerPopupContent()}
                 <div className='wh'>
                   <Link to="/search-results" className="subpop-options underline" style={{ color: 'var(--CodeTwo)' }}>More categories</Link>
@@ -624,10 +657,10 @@ const Header = () => {
             )}
           </div>
 
-          <div className={`sub-heading2 cate-icon flex icon-container ${isOffice ? 'clicked' : ''}`} onClick={handleOffice} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
+          <div ref={isOfficeRef} className={`sub-heading2 cate-icon flex icon-container ${isOffice ? 'clicked' : ''}`} onClick={handleOffice} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
             <PrintIcon />  Office And Stationery
             {isOffice && (
-              <div className="popup oas-options-popup">
+              <div ref={popupisOfficeRef} className="popup oas-options-popup">
                 {getOfficePopupContent()}
                 <div className='wh'>
                   <Link to="/search-results" className="subpop-options underline" style={{ color: 'var(--CodeTwo)' }}>More categories</Link>
@@ -636,10 +669,10 @@ const Header = () => {
             )}
           </div>
 
-          <div className={`sub-heading2 cate-icon flex icon-container ${isFood ? 'clicked' : ''}`} onClick={handleFood} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
+          <div ref={isFoodRef} className={`sub-heading2 cate-icon flex icon-container ${isFood ? 'clicked' : ''}`} onClick={handleFood} onMouseLeave={handleMouseLeave} style={{ gap: '5px' }}>
             <FastfoodIcon />  Food And Beverages
             {isFood && (
-              <div className="popup fab-options-popup">
+              <div ref={popupisFoodRef} className="popup fab-options-popup">
                 {getFoodPopupContent()}
                 <div className='wh'>
                   <Link to="/search-results" className="subpop-options underline" style={{ color: 'var(--CodeTwo)' }}>More categories</Link>
