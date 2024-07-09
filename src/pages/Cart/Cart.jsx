@@ -9,6 +9,8 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -47,7 +49,7 @@ const Cart = () => {
     e.stopPropagation();
     const newQuantities = {
       ...quantities,
-      [productId]: quantities[productId] + 1,
+      [productId]: (quantities[productId] || 0) + 1,
     };
     console.log('Incrementing quantity:', newQuantities[productId]);
     setQuantities(newQuantities);
@@ -58,7 +60,7 @@ const Cart = () => {
     e.stopPropagation();
     const newQuantities = {
       ...quantities,
-      [productId]: Math.max(quantities[productId] - 1, minOrderQuant),
+      [productId]: Math.max((quantities[productId] || 0) - 1, minOrderQuant),
     };
     console.log('Decrementing quantity:', newQuantities[productId]);
     setQuantities(newQuantities);
@@ -123,7 +125,7 @@ const Cart = () => {
           ) : (
             <Fragment>
               {cartItems.map((item) => (
-                <div className='cart webdiv' key={item.productId}>
+                <div className='cart webdiv' key={uuidv4()}>
                   <a className="cartImg" href={`/product-details/${item.productId}`}>
                     {item.image && item.image.imageUrl ? (
                       <img src={item.image.imageUrl} alt={item.image.imageName} />

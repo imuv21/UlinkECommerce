@@ -7,8 +7,7 @@ import rootReducer from './Redux/rootReducer';
 
 const persistConfig = {
     key: 'root',
-    storage: storage, 
-    whitelist: ['selectedAddress'],
+    storage: storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

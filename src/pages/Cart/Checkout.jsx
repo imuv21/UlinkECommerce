@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchExchangeRates } from '../../Redux/currencySlice';
 import currencySymbols from '../../components/Schemas/currencySymbols';
@@ -63,6 +63,9 @@ const Checkout = () => {
   //addresss
   const addresses = useSelector(state => state.address.addresses);
   const selectedAddress = useSelector(state => state.selectedAddress.address);
+  const [selectedBillingAddress, setSelectedBillingAddress] = useState(null);
+  const shippingAddresses = addresses.filter(address => address.isLocationChecked);
+  const selectedShippingAddress = selectedAddress && selectedAddress.isLocationChecked ? selectedAddress : shippingAddresses.find(addr => addr.isDefaultChecked) || shippingAddresses[0];
 
   useEffect(() => {
     dispatch(fetchAddresses());
@@ -75,9 +78,29 @@ const Checkout = () => {
     }
   }, [addresses, selectedAddress, dispatch]);
 
+  useEffect(() => {
+    if (selectedShippingAddress && (selectedShippingAddress.isBillingChecked && selectedShippingAddress.isLocationChecked)) {
+      setSelectedBillingAddress(null);
+    }
+  }, [selectedShippingAddress]);
+
   const handleAddressChange = (address) => {
     dispatch(setSelectedAddress(address));
   };
+
+  const handleAddressShippingChange = (event) => {
+    const address = shippingAddresses.find(addr => addr.address === event.target.value);
+    handleAddressChange(address);
+  };
+
+  const handleAddressBillingChange = (event) => {
+    const address = addresses.find(addr => addr.address === event.target.value);
+    setSelectedBillingAddress(address);
+  };
+
+
+
+
 
 
   //cards 
@@ -153,7 +176,7 @@ const Checkout = () => {
 
     try {
       const response = await axios.post('https://api.ulinkit.com/api/payment/test/get-transaction', { amount, currency });
-      const order = response.data; // Adjusted according to the response structure
+      const order = response.data;
 
       const options = {
         key: RAZORPAY_API_KEY,
@@ -163,7 +186,7 @@ const Checkout = () => {
         description: "Test Transaction",
         image: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
         order_id: order.orderId,
-        handler: handleRazorpayCallback, // Directly passing the handler function
+        handler: handleRazorpayCallback,
 
         prefill: {
           name: `${user.firstname} ${user.lastname}`,
@@ -171,7 +194,7 @@ const Checkout = () => {
           contact: user.number
         },
         notes: {
-          address: "Razorpay Corporate Office"
+          address: selectedShippingAddress || selectedBillingAddress
         },
         theme: {
           color: "#00aaff"
@@ -212,12 +235,11 @@ const Checkout = () => {
       </div>
       <div className="cart_cont wh">
         <div className="cartcol_one" tabIndex={0} ref={scrollRef}>
-
           <div className="webdiv checkout">
             <div className="heading wh">Your addresses</div>
 
-            {/* <div className="heading3 wh">Shipping address</div>
-            <select className='coupon' value={selectedShippingAddress.address} onChange={handleAddressShippingChange}>
+            <div className="heading3 wh">Shipping address</div>
+            <select className='coupon' value={selectedShippingAddress?.address || ''} onChange={handleAddressShippingChange} disabled={selectedShippingAddress && selectedBillingAddress}>
               <option value=''>Select shipping address</option>
               {shippingAddresses.map((address, index) => (
                 <option key={index} value={address.address}>
@@ -225,69 +247,76 @@ const Checkout = () => {
                 </option>
               ))}
             </select>
-            <div className="flexcol-start wh" style={{ gap: '2px' }}>
-              <div className="flex" style={{ gap: '20px' }}>
-                <div className="heading3">{selectedShippingAddress.address}</div>
-                {selectedShippingAddress.isLocationChecked && <div className='descrip warning-btn'>Shipping</div>}
-                {selectedShippingAddress.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
+            {selectedShippingAddress && (
+              <div className="flexcol-start wh" style={{ gap: '2px' }}>
+                <div className="flex" style={{ gap: '20px' }}>
+                  <div className="heading3">{selectedShippingAddress.address}</div>
+                  {selectedShippingAddress.isLocationChecked && <div className='descrip warning-btn'>Shipping</div>}
+                  {selectedShippingAddress.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
+                </div>
+                <div className="flex" style={{ gap: '10px' }}>
+                  <div className='descrip2'>{selectedShippingAddress.selectedOrigin}</div>
+                  <div className='descrip2'>{selectedShippingAddress.city}</div>
+                  <div className='descrip2'>{selectedShippingAddress.area}</div>
+                  <div className='descrip2'>{selectedShippingAddress.street}</div>
+                  <div className='descrip2'>{selectedShippingAddress.office}</div>
+                  <div className='descrip2'>Pobox: {selectedShippingAddress.pobox}</div>
+                  <div className='descrip2'>Post code: {selectedShippingAddress.postCode}</div>
+                </div>
+                <div className="flex" style={{ gap: '20px' }}>
+                  <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.phoneNumber}</div>
+                  <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.airport}</div>
+                  <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.seaport}</div>
+                </div>
               </div>
-              <div className="flex" style={{ gap: '10px' }}>
-                <div className='descrip2'>{selectedShippingAddress.selectedOrigin}</div>
-                <div className='descrip2'>{selectedShippingAddress.city}</div>
-                <div className='descrip2'>{selectedShippingAddress.area}</div>
-                <div className='descrip2'>{selectedShippingAddress.street}</div>
-                <div className='descrip2'>{selectedShippingAddress.office}</div>
-                <div className='descrip2'>Pobox: {selectedShippingAddress.pobox}</div>
-                <div className='descrip2'>Post code: {selectedShippingAddress.postCode}</div>
-              </div>
-              <div className="flex" style={{ gap: '20px' }}>
-                <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.phoneNumber}</div>
-                <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.airport}</div>
-                <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.seaport}</div>
-              </div>
-            </div> */}
+            )}
 
-
-            {/* <div className="heading3 wh">Billing address</div>
-            <select className='coupon' id="billingAddressSelect" value={selectedBillingAddress.address} onChange={handleAddressBillingChange} disabled>
-              <option value=''>Select billing address</option>
-              {billingAddresses.map((address, index) => (
-                <option key={index} value={address.address}>
-                  {address.address}
-                </option>
-              ))}
-            </select>
-            <div className="flexcol-start wh" style={{ gap: '2px' }}>
-              <div className="flex" style={{ gap: '20px' }}>
-                <div className="heading3">{selectedBillingAddress.address}</div>
-                {selectedBillingAddress.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
+            {selectedShippingAddress && !(selectedShippingAddress.isBillingChecked && selectedShippingAddress.isLocationChecked) && (
+              <>
+                <div className="heading3 wh">Billing address</div>
+                <select className='coupon' id="billingAddressSelect" value={selectedBillingAddress?.address || ''} onChange={handleAddressBillingChange} disabled={!selectedShippingAddress || selectedBillingAddress}>
+                  <option value=''>Select billing address</option>
+                  {addresses.filter(address => address.isBillingChecked).map((address, index) => (
+                    <option key={index} value={address.address}>
+                      {address.address}
+                    </option>
+                  ))}
+                </select>
+              </>
+            )}
+            {selectedBillingAddress && (
+              <div className="flexcol-start wh" style={{ gap: '2px' }}>
+                <div className="flex" style={{ gap: '20px' }}>
+                  <div className="heading3">{selectedBillingAddress.address}</div>
+                  {selectedBillingAddress.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
+                </div>
+                <div className="flex" style={{ gap: '10px' }}>
+                  <div className='descrip2'>{selectedBillingAddress.selectedOrigin}</div>
+                  <div className='descrip2'>{selectedBillingAddress.city}</div>
+                  <div className='descrip2'>{selectedBillingAddress.area}</div>
+                  <div className='descrip2'>{selectedBillingAddress.street}</div>
+                  <div className='descrip2'>{selectedBillingAddress.office}</div>
+                  <div className='descrip2'>Pobox: {selectedBillingAddress.pobox}</div>
+                  <div className='descrip2'>Post code: {selectedBillingAddress.postCode}</div>
+                </div>
+                <div className="flex" style={{ gap: '20px' }}>
+                  <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.phoneNumber}</div>
+                  <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.airport}</div>
+                  <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.seaport}</div>
+                </div>
               </div>
-              <div className="flex" style={{ gap: '10px' }}>
-                <div className='descrip2'>{selectedBillingAddress.selectedOrigin}</div>
-                <div className='descrip2'>{selectedBillingAddress.city}</div>
-                <div className='descrip2'>{selectedBillingAddress.area}</div>
-                <div className='descrip2'>{selectedBillingAddress.street}</div>
-                <div className='descrip2'>{selectedBillingAddress.office}</div>
-                <div className='descrip2'>Pobox: {selectedBillingAddress.pobox}</div>
-                <div className='descrip2'>Post code: {selectedBillingAddress.postCode}</div>
-              </div>
-              <div className="flex" style={{ gap: '20px' }}>
-                <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.phoneNumber}</div>
-                <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.airport}</div>
-                <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.seaport}</div>
-              </div>
-            </div> */}
+            )}
 
           </div>
 
-          <div className="checkout webdiv">
+          {/* <div className="checkout webdiv">
             <div className="heading wh">Choose a payment method</div>
             <div className="flex-start wh" style={{ gap: '20px' }}>
               <button onClick={() => handleSubPageChange(1)} className={subCurrentPage === 1 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Card</div></button>
               <button onClick={() => handleSubPageChange(2)} className={subCurrentPage === 2 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Net banking</div></button>
               <button onClick={() => handleSubPageChange(3)} className={subCurrentPage === 3 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">UPI</div></button>
             </div>
-          </div>
+          </div> */}
 
           {/* {subCurrentPage === 1 && (
             <div className="checkout webdiv">
@@ -384,9 +413,6 @@ const Checkout = () => {
               <div className="heading2"><span>Order total</span></div>
               <div className="heading2"><span>{currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</span></div>
             </div>
-            {/* <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
-              <button className='btn addtocart flex' onClick={() => checkoutHandler(convertPrice(totalSellPrice, currency), selectedCurrency)}><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>
-            </div> */}
 
             <div className={`flexcol wh topbottom payment-gatway ${paymentClicked ? 'clicked' : ''}`} onClick={handlePaymentClick} style={{ gap: '10px' }}>
               <button className='btn addtocart flex'><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>
