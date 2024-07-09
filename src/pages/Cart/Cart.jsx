@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from 'uuid';
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { items: cart, totalSellPrice, currency, status, error } = useSelector((state) => state.cart);
+  const { items: cart, totalSellPrice, totalUnitGstPrice, currency, status, error } = useSelector((state) => state.cart);
   const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
   const exchangeRates = useSelector(state => state.currency.exchangeRates);
 
@@ -172,7 +172,7 @@ const Cart = () => {
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Total GST</span></div>
-              <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</span></div>
+              <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalUnitGstPrice, currency)} {selectedCurrency}</span></div>
             </div>
             <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
               <button className='btn addtocart flex' onClick={checkout}><ShoppingCartCheckoutIcon style={{ width: '15px' }} /><div className="heading2">Checkout</div></button>

@@ -18,7 +18,7 @@ const RAZORPAY_API_KEY = import.meta.env.VITE_RAZORPAY_API_KEY;
 const Checkout = () => {
 
   const dispatch = useDispatch();
-  const { totalSellPrice, currency } = useSelector((state) => state.cart);
+  const { totalSellPrice, totalUnitGstPrice, currency } = useSelector((state) => state.cart);
   const user = useSelector((state) => state.auth.user);
   const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
   const exchangeRates = useSelector(state => state.currency.exchangeRates);
@@ -224,6 +224,7 @@ const Checkout = () => {
     }
   };
 
+  const totalOrder = totalSellPrice + totalUnitGstPrice;
 
   return (
     <div className="flexcol wh cart_page">
@@ -404,14 +405,14 @@ const Checkout = () => {
                 <div className="heading2">Shipping</div>
                 <div className="heading2">Null</div>
               </div>
-              <div className="flex wh" style={{ justifyContent: 'space-between', display: 'none' }}>
-                <div className="heading2">VAT</div>
-                <div className="heading2">AED 370.08</div>
+              <div className="flex wh" style={{ justifyContent: 'space-between' }}>
+                <div className="heading2">Total GST</div>
+                <div className="heading2">{currencySymbols[selectedCurrency]} {convertPrice(totalUnitGstPrice, currency)} {selectedCurrency}</div>
               </div>
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Order total</span></div>
-              <div className="heading2"><span>{currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</span></div>
+              <div className="heading2"><span>{currencySymbols[selectedCurrency]} {convertPrice(totalOrder, currency)} {selectedCurrency}</span></div>
             </div>
 
             <div className={`flexcol wh topbottom payment-gatway ${paymentClicked ? 'clicked' : ''}`} onClick={handlePaymentClick} style={{ gap: '10px' }}>
