@@ -5,9 +5,6 @@ import Slider from '../components/Slider';
 import InfSlider from '../components/InfSlider';
 import CategorySection from '../components/CategorySection';
 import Carousel from '../components/Carousel';
-import ConsumerElec from './CategoryCarousel/ConsumerElec';
-import Fashion from './CategoryCarousel/Fashion';
-import HomeGarden from './CategoryCarousel/HomeGarden';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -46,17 +43,17 @@ const Home = () => {
         </div>
         <Carousel />
         <div className="heading3 wh">Consumer Electronics (23 items)</div>
-        <ConsumerElec />
+        <Carousel />
         <div className='discount-pages'>
           <img className='banner-width' src={Banner1} />
         </div>
         <div className="heading3 wh">Fashion And Accessories(25 items)</div>
-        <Fashion />
+        <Carousel />
         <div className='discount-pages'>
           <img className='banner-width' src={DiscountCoupne} />
         </div>
         <div className="heading3 wh">Baby Center (7 items)</div>
-        <HomeGarden />
+        <Carousel />
         <div className='discount-pages'>
           <img className='banner-width' src={Banners} />
         </div>

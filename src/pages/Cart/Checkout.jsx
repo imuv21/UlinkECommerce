@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchExchangeRates } from '../../Redux/currencySlice';
 import currencySymbols from '../../components/Schemas/currencySymbols';
+import { fetchAddresses } from '../../Redux/addressSlice';
+import { setSelectedAddress } from '../../Redux/selectedAddress';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import SailingIcon from '@mui/icons-material/Sailing';
@@ -11,11 +13,13 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { Helmet } from 'react-helmet-async';
 import { image } from '@cloudinary/url-gen/qualifiers/source';
 import axios from 'axios';
+const RAZORPAY_API_KEY = import.meta.env.VITE_RAZORPAY_API_KEY;
 
 const Checkout = () => {
 
   const dispatch = useDispatch();
   const { totalSellPrice, currency } = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.auth.user);
   const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
   const exchangeRates = useSelector(state => state.currency.exchangeRates);
 
@@ -53,55 +57,27 @@ const Checkout = () => {
   };
 
 
-  //billing and shipping addresss
-  const [addresses, setAddresses] = useState([]);
-  const [billingAddresses, setBillingAddresses] = useState([]);
-  const [shippingAddresses, setShippingAddresses] = useState([]);
-  const [selectedBillingAddress, setSelectedBillingAddress] = useState({});
-  const [selectedShippingAddress, setSelectedShippingAddress] = useState({});
 
-  const retrieveAddresses = () => {
-    const storedAddresses = localStorage.getItem('addresses');
-    if (storedAddresses) {
-      const parsedAddresses = JSON.parse(storedAddresses);
-      setAddresses(parsedAddresses);
-      const billing = parsedAddresses.filter(address => address.isBillingChecked && !address.isLocationChecked);
-      const shipping = parsedAddresses.filter(address => address.isLocationChecked);
-      setBillingAddresses(billing);
-      setShippingAddresses(shipping);
-    }
-  };
+
+
+  //addresss
+  const addresses = useSelector(state => state.address.addresses);
+  const selectedAddress = useSelector(state => state.selectedAddress.address);
 
   useEffect(() => {
-    retrieveAddresses();
-  }, []);
-
-  const handleAddressBillingChange = (event) => {
-    const selectedAddressData = billingAddresses.find(
-      (address) => address.address === event.target.value
-    );
-    setSelectedBillingAddress(selectedAddressData);
-  };
-
-  const handleAddressShippingChange = (event) => {
-    const selectedAddressData = shippingAddresses.find(
-      (address) => address.address === event.target.value
-    );
-    setSelectedShippingAddress(selectedAddressData);
-    if (selectedAddressData.isBillingChecked && selectedAddressData.isLocationChecked) {
-      setSelectedBillingAddress({});
-      document.getElementById('billingAddressSelect').disabled = true;
-    } else {
-      document.getElementById('billingAddressSelect').disabled = false;
-    }
-  };
+    dispatch(fetchAddresses());
+  }, [dispatch]);
 
   useEffect(() => {
-    if (selectedShippingAddress.isBillingChecked && selectedShippingAddress.isLocationChecked) {
-      setSelectedBillingAddress({});
-      document.getElementById('billingAddressSelect').disabled = true;
+    if (addresses.length > 0 && !selectedAddress) {
+      const defaultAddress = addresses.find(addr => addr.isDefaultChecked);
+      dispatch(setSelectedAddress(defaultAddress || addresses[0]));
     }
-  }, [selectedShippingAddress]);
+  }, [addresses, selectedAddress, dispatch]);
+
+  const handleAddressChange = (address) => {
+    dispatch(setSelectedAddress(address));
+  };
 
 
   //cards 
@@ -171,11 +147,6 @@ const Checkout = () => {
   }, []);
 
 
-
-
-
-
-
   // payment methods 
   const checkoutHandler = async (amount, currency) => {
     console.log(amount, currency);
@@ -185,19 +156,19 @@ const Checkout = () => {
       const order = response.data; // Adjusted according to the response structure
 
       const options = {
-        key: 'rzp_test_nacM37dbbc6tDi',
+        key: RAZORPAY_API_KEY,
         amount: order.amount,
         currency: order.currency,
-        name: "Uttam Verma",
+        name: `${user.firstname} ${user.lastname}`,
         description: "Test Transaction",
         image: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
         order_id: order.orderId,
         handler: handleRazorpayCallback, // Directly passing the handler function
 
         prefill: {
-          name: "Uttam Verma",
-          email: "imuv21@gmail.com",
-          contact: "9026075867"
+          name: `${user.firstname} ${user.lastname}`,
+          email: user.email,
+          contact: user.number
         },
         notes: {
           address: "Razorpay Corporate Office"
@@ -254,29 +225,28 @@ const Checkout = () => {
                 </option>
               ))}
             </select>
-            {selectedShippingAddress.address && (
-              <div className="flexcol-start wh" style={{ gap: '2px' }}>
-                <div className="flex" style={{ gap: '20px' }}>
-                  <div className="heading3">{selectedShippingAddress.address}</div>
-                  {selectedShippingAddress.isLocationChecked && <div className='descrip warning-btn'>Shipping</div>}
-                  {selectedShippingAddress.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
-                </div>
-                <div className="flex" style={{ gap: '10px' }}>
-                  <div className='descrip2'>{selectedShippingAddress.selectedOrigin}</div>
-                  <div className='descrip2'>{selectedShippingAddress.city}</div>
-                  <div className='descrip2'>{selectedShippingAddress.area}</div>
-                  <div className='descrip2'>{selectedShippingAddress.street}</div>
-                  <div className='descrip2'>{selectedShippingAddress.office}</div>
-                  <div className='descrip2'>Pobox: {selectedShippingAddress.pobox}</div>
-                  <div className='descrip2'>Post code: {selectedShippingAddress.postCode}</div>
-                </div>
-                <div className="flex" style={{ gap: '20px' }}>
-                  <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.phoneNumber}</div>
-                  <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.airport}</div>
-                  <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.seaport}</div>
-                </div>
+            <div className="flexcol-start wh" style={{ gap: '2px' }}>
+              <div className="flex" style={{ gap: '20px' }}>
+                <div className="heading3">{selectedShippingAddress.address}</div>
+                {selectedShippingAddress.isLocationChecked && <div className='descrip warning-btn'>Shipping</div>}
+                {selectedShippingAddress.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
               </div>
-            )}
+              <div className="flex" style={{ gap: '10px' }}>
+                <div className='descrip2'>{selectedShippingAddress.selectedOrigin}</div>
+                <div className='descrip2'>{selectedShippingAddress.city}</div>
+                <div className='descrip2'>{selectedShippingAddress.area}</div>
+                <div className='descrip2'>{selectedShippingAddress.street}</div>
+                <div className='descrip2'>{selectedShippingAddress.office}</div>
+                <div className='descrip2'>Pobox: {selectedShippingAddress.pobox}</div>
+                <div className='descrip2'>Post code: {selectedShippingAddress.postCode}</div>
+              </div>
+              <div className="flex" style={{ gap: '20px' }}>
+                <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.phoneNumber}</div>
+                <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.airport}</div>
+                <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.seaport}</div>
+              </div>
+            </div>
+
 
             <div className="heading3 wh">Billing address</div>
             <select className='coupon' id="billingAddressSelect" value={selectedBillingAddress.address} onChange={handleAddressBillingChange} disabled>
@@ -287,28 +257,26 @@ const Checkout = () => {
                 </option>
               ))}
             </select>
-            {selectedBillingAddress.address && (
-              <div className="flexcol-start wh" style={{ gap: '2px' }}>
-                <div className="flex" style={{ gap: '20px' }}>
-                  <div className="heading3">{selectedBillingAddress.address}</div>
-                  {selectedBillingAddress.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
-                </div>
-                <div className="flex" style={{ gap: '10px' }}>
-                  <div className='descrip2'>{selectedBillingAddress.selectedOrigin}</div>
-                  <div className='descrip2'>{selectedBillingAddress.city}</div>
-                  <div className='descrip2'>{selectedBillingAddress.area}</div>
-                  <div className='descrip2'>{selectedBillingAddress.street}</div>
-                  <div className='descrip2'>{selectedBillingAddress.office}</div>
-                  <div className='descrip2'>Pobox: {selectedBillingAddress.pobox}</div>
-                  <div className='descrip2'>Post code: {selectedBillingAddress.postCode}</div>
-                </div>
-                <div className="flex" style={{ gap: '20px' }}>
-                  <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.phoneNumber}</div>
-                  <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.airport}</div>
-                  <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.seaport}</div>
-                </div>
+            <div className="flexcol-start wh" style={{ gap: '2px' }}>
+              <div className="flex" style={{ gap: '20px' }}>
+                <div className="heading3">{selectedBillingAddress.address}</div>
+                {selectedBillingAddress.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
               </div>
-            )}
+              <div className="flex" style={{ gap: '10px' }}>
+                <div className='descrip2'>{selectedBillingAddress.selectedOrigin}</div>
+                <div className='descrip2'>{selectedBillingAddress.city}</div>
+                <div className='descrip2'>{selectedBillingAddress.area}</div>
+                <div className='descrip2'>{selectedBillingAddress.street}</div>
+                <div className='descrip2'>{selectedBillingAddress.office}</div>
+                <div className='descrip2'>Pobox: {selectedBillingAddress.pobox}</div>
+                <div className='descrip2'>Post code: {selectedBillingAddress.postCode}</div>
+              </div>
+              <div className="flex" style={{ gap: '20px' }}>
+                <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.phoneNumber}</div>
+                <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.airport}</div>
+                <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.seaport}</div>
+              </div>
+            </div>
 
           </div>
 
@@ -429,7 +397,7 @@ const Checkout = () => {
                     <div className="flexcol wh">
                       <div className="payment-option" onClick={() => checkoutHandler(convertPrice(totalSellPrice, currency), selectedCurrency)}>
                         <div className="heading2">Pay with</div>
-                        <img src="https://res.cloudinary.com/dey1tujp8/image/upload/v1720262856/pngwing.com_pcirhd.png"  alt="Razorpay" />
+                        <img src="https://res.cloudinary.com/dey1tujp8/image/upload/v1720262856/pngwing.com_pcirhd.png" alt="Razorpay" />
                       </div>
                       <div className="payment-option">
                         <div className="heading2">Pay with</div>
@@ -440,7 +408,7 @@ const Checkout = () => {
                 </div>
               )}
             </div>
-            
+
           </div>
         </div>
       </div>

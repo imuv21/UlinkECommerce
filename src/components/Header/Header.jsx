@@ -11,6 +11,7 @@ import Drawer from '@mui/material/Drawer';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddresses } from '../../Redux/addressSlice';
+import { setSelectedAddress } from '../../Redux/selectedAddress';
 import { fetchExchangeRates, setSelectedCurrency } from '../../Redux/currencySlice';
 import { logout } from '../../Redux/AuthReducer';
 import { urls } from '../Schemas/images';
@@ -45,7 +46,6 @@ const Header = () => {
   const token = useSelector((state) => state.auth.token);
   const { items: cart } = useSelector((state) => state.cart);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { addresses, status, error } = useSelector((state) => state.address);
 
 
   //animation
@@ -60,34 +60,22 @@ const Header = () => {
 
 
   //select address
-  const [selectedAddress, setSelectedAddress] = useState(null);
+  const addresses = useSelector(state => state.address.addresses);
+  const selectedAddress = useSelector(state => state.selectedAddress.address);
 
   useEffect(() => {
     dispatch(fetchAddresses());
   }, [dispatch]);
 
   useEffect(() => {
-    if (addresses.length > 0) {
-      const savedAddress = sessionStorage.getItem('selectedAddress');
-      if (savedAddress) {
-        const address = JSON.parse(savedAddress);
-        const foundAddress = addresses.find(addr => addr.id === address.id);
-        if (foundAddress) {
-          setSelectedAddress(foundAddress);
-        } else {
-          const defaultAddress = addresses.find(addr => addr.isDefaultChecked);
-          setSelectedAddress(defaultAddress || addresses[0]);
-        }
-      } else {
-        const defaultAddress = addresses.find(addr => addr.isDefaultChecked);
-        setSelectedAddress(defaultAddress || addresses[0]);
-      }
+    if (addresses.length > 0 && !selectedAddress) {
+      const defaultAddress = addresses.find(addr => addr.isDefaultChecked);
+      dispatch(setSelectedAddress(defaultAddress || addresses[0]));
     }
-  }, [addresses]);
+  }, [addresses, selectedAddress, dispatch]);
 
   const handleAddressChange = (address) => {
-    setSelectedAddress(address);
-    sessionStorage.setItem('selectedAddress', JSON.stringify(address));
+    dispatch(setSelectedAddress(address));
   };
 
 
@@ -203,7 +191,7 @@ const Header = () => {
   };
 
   const handleClickOutside = (event) => {
-    
+
     const popups = [
       { containerRef: isClickedRef, popupRef: popupisClickedRef },
       { containerRef: isClickedCateRef, popupRef: popupisClickedCateRef },
@@ -473,7 +461,7 @@ const Header = () => {
               {(isClickedAdd && addresses && addresses.length > 0) && (
                 <div ref={popupisClickedAddRef} className="popup address-relative">
                   <div className="address-container">
-                    {addresses.map((address) => (
+                    {addresses.filter((address) => address.isLocationChecked).map((address) => (
                       <div key={address.id} className={`address-card ${selectedAddress?.id === address.id ? 'selected' : ''}`}>
 
                         <input type="radio" id={address.id} name="address" value={address.address} checked={selectedAddress?.id === address.id} onChange={() => handleAddressChange(address)} />

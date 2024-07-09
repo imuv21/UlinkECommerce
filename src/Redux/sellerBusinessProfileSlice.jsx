@@ -84,7 +84,6 @@ export const uploadProfileImage = createAsyncThunk(
         'Content-Type': 'multipart/form-data',
       }
     });
-
     return response.data;
   }
 );

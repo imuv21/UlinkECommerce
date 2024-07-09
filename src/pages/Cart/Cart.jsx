@@ -8,9 +8,11 @@ import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { items: cart, totalSellPrice, currency, status, error } = useSelector((state) => state.cart);
   const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
   const exchangeRates = useSelector(state => state.currency.exchangeRates);
@@ -75,15 +77,13 @@ const Cart = () => {
     dispatch(updateCartItem({ productId, quantity: newQuantities[productId] }));
   };
 
-
-
   const remove = (e, productId) => {
     e.stopPropagation();
     dispatch(deleteCartItem(productId));
   };
 
   const checkout = () => {
-    window.location.href = '/checkout';
+    navigate('/checkout');
   }
 
   const scrollRef = useRef(null);
@@ -166,6 +166,10 @@ const Cart = () => {
             <div className="heading3">Cart Summary</div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Subtotal</span></div>
+              <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</span></div>
+            </div>
+            <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
+              <div className="heading2"><span>Total GST</span></div>
               <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</span></div>
             </div>
             <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
