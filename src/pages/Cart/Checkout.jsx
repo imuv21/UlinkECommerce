@@ -216,7 +216,7 @@ const Checkout = () => {
           <div className="webdiv checkout">
             <div className="heading wh">Your addresses</div>
 
-            <div className="heading3 wh">Shipping address</div>
+            {/* <div className="heading3 wh">Shipping address</div>
             <select className='coupon' value={selectedShippingAddress.address} onChange={handleAddressShippingChange}>
               <option value=''>Select shipping address</option>
               {shippingAddresses.map((address, index) => (
@@ -245,10 +245,10 @@ const Checkout = () => {
                 <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.airport}</div>
                 <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.seaport}</div>
               </div>
-            </div>
+            </div> */}
 
 
-            <div className="heading3 wh">Billing address</div>
+            {/* <div className="heading3 wh">Billing address</div>
             <select className='coupon' id="billingAddressSelect" value={selectedBillingAddress.address} onChange={handleAddressBillingChange} disabled>
               <option value=''>Select billing address</option>
               {billingAddresses.map((address, index) => (
@@ -276,7 +276,7 @@ const Checkout = () => {
                 <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.airport}</div>
                 <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.seaport}</div>
               </div>
-            </div>
+            </div> */}
 
           </div>
 
@@ -289,7 +289,7 @@ const Checkout = () => {
             </div>
           </div>
 
-          {subCurrentPage === 1 && (
+          {/* {subCurrentPage === 1 && (
             <div className="checkout webdiv">
               <div className="heading3 wh">Cards</div>
               <select className='coupon' value={selectedCard.address} onChange={handleCardChange}>
@@ -355,7 +355,7 @@ const Checkout = () => {
                 </div>
               )}
             </div>
-          )}
+          )} */}
 
         </div>
         <div className="cartcol_two">
