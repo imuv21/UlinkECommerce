@@ -167,11 +167,11 @@ const Cart = () => {
           <div className="sel-box" style={{ gap: '10px' }}>
             <div className="heading3">Cart Summary</div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
-              <div className="heading2"><span>Subtotal</span></div>
+              <div className="heading2"><span>Total Price</span></div>
               <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</span></div>
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
-              <div className="heading2"><span>Total GST</span></div>
+              <div className="heading2"><span>Total Tax</span></div>
               <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalUnitGstPrice, currency)} {selectedCurrency}</span></div>
             </div>
             <div className="flexcol wh topbottom" style={{ gap: '10px' }}>

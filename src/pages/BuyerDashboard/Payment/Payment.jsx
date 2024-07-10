@@ -5,30 +5,30 @@ import { Helmet } from 'react-helmet-async';
 
 const Payment = () => {
 
+    //page
     const [subCurrentPage, setsubCurrentPage] = useState(1);
     const handleSubPageChange = (subPageNumber) => {
         setsubCurrentPage(subPageNumber);
     };
 
-
-    //cards
-    //popup form
+    //cards popup form
     const [showPopupCard, setShowPopupCard] = useState(false);
     const [editModeCard, setEditModeCard] = useState(false);
     const [editIndexCard, setEditIndexCard] = useState(null);
     const [cardNumber, setCardNumber] = useState('');
+    const [expiryDate, setExpiryDate] = useState('');
+    const [fullName, setFullName] = useState('');
+
     //cardnumber
     const handlecardnum = (event) => {
         let value = event.target.value;
         value = value.replace(/\D/g, '');
         setCardNumber(value);
     }
-    const [expiryDate, setExpiryDate] = useState('');
     //format card number
     const formatCardNumber = (text) => {
         return text.replace(/(.{4})/g, '$1 ');
     };
-
     //mmyy
     const handleslash = (event) => {
         let value = event.target.value;
@@ -38,8 +38,6 @@ const Payment = () => {
         }
         setExpiryDate(value);
     };
-    const [fullName, setFullName] = useState('');
-    const [cardList, setCardList] = useState(JSON.parse(localStorage.getItem('cards')) || []);
 
     const handleAddCard = () => {
         setShowPopupCard(true);
@@ -91,8 +89,8 @@ const Payment = () => {
 
 
 
-    //banks
-    //popup form
+
+    //banks popup form
     const [showPopupBank, setShowPopupBank] = useState(false);
     const [editModeBank, setEditModeBank] = useState(false);
     const [editIndexBank, setEditIndexBank] = useState(null);
@@ -102,7 +100,6 @@ const Payment = () => {
     const [ifscCode, setIfscCode] = useState('');
     const [branchName, setBranchName] = useState('');
     const [swiftCode, setSwiftCode] = useState('');
-    const [bankList, setBankList] = useState(JSON.parse(localStorage.getItem('banks')) || []);
 
     const handleAddBank = () => {
         setShowPopupBank(true);
@@ -166,14 +163,11 @@ const Payment = () => {
 
 
 
-
-    //upis
-    //popup form
+    //upis popup form
     const [showPopupUpi, setShowPopupUpi] = useState(false);
     const [editModeUpi, setEditModeUpi] = useState(false);
     const [editIndexUpi, setEditIndexUpi] = useState(null);
     const [upi, setUpi] = useState('');
-    const [upiList, setUpiList] = useState(JSON.parse(localStorage.getItem('upis')) || []);
 
     const handleAddUpi = () => {
         setShowPopupUpi(true);
@@ -216,11 +210,6 @@ const Payment = () => {
     };
 
 
-
-
-
-
-
     return (
         <div className="flexcol wh product-detail">
             <Helmet>
@@ -239,7 +228,7 @@ const Payment = () => {
                 <button onClick={() => handleSubPageChange(3)} className={subCurrentPage === 3 ? 'toggle-active btn-toggle box2 flex' : 'btn-toggle box2 flex'}><div className="heading2">UPIs</div></button>
             </div>
 
-
+          {/* 
             {subCurrentPage === 1 && (
                 <div className='flexcol wh' style={{ gap: '20px' }}>
                     <div className="productlist3">
@@ -428,7 +417,7 @@ const Payment = () => {
                         </div>
                     )}
                 </div>
-            )}
+            )} */}
 
         </div>
     )

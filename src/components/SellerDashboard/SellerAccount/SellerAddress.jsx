@@ -41,6 +41,7 @@ const SellerAddress = () => {
     const [isBillingChecked, setIsBillingChecked] = useState(false);
     const [isDefaultChecked, setIsDefaultChecked] = useState(false);
     const [editingIndex, setEditingIndex] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
 
     //select country form api
@@ -105,6 +106,10 @@ const SellerAddress = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         const formData = {
             address,
             selectedOrigin,
@@ -123,18 +128,22 @@ const SellerAddress = () => {
             isDefaultChecked
         };
 
-        if (editingIndex !== null) {
-            //update address dispatch
-            const addressToUpdate = addresses.find(address => address.id === editingIndex);
-            await dispatch(updateAddress({ id: addressToUpdate.id, formData }));
-
-        } else {
-            await dispatch(addAddress(formData));
+        try {
+            if (editingIndex !== null) {
+                const addressToUpdate = addresses.find(address => address.id === editingIndex);
+                await dispatch(updateAddress({ id: addressToUpdate.id, formData }));
+            } else {
+                await dispatch(addAddress(formData));
+            }
+            dispatch(fetchAddresses());
+            alert('Address saved successfully');
+            setShowPopup(false);
+            resetFormFields();
+        } catch (error) {
+            console.error('Error saving address:', error);
+        } finally {
+            setIsSubmitting(false);
         }
-        dispatch(fetchAddresses());
-        alert('Address saved successfully');
-        setShowPopup(false);
-        resetFormFields();
     };
 
     //edit address
@@ -281,7 +290,7 @@ const SellerAddress = () => {
 
                                 <div className="flex" style={{ gap: '20px' }}>
                                     <button className='btn box2 flex' style={{ width: 'fit-content' }} type="submit">
-                                        <div className="heading2">Save Address</div>
+                                        <div className="heading2" disabled={isSubmitting}>{isSubmitting ? 'Submitting...' : 'Submit'}</div>
                                     </button>
                                     <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleClosePopup}>
                                         <div className="heading2">Cancel</div>

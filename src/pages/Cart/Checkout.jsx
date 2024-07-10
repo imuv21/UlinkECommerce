@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Fragment } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchExchangeRates } from '../../Redux/currencySlice';
 import currencySymbols from '../../components/Schemas/currencySymbols';
@@ -55,9 +55,6 @@ const Checkout = () => {
   const handleSubPageChange = (subPageNumber) => {
     setsubCurrentPage(subPageNumber);
   };
-
-
-
 
 
   //addresss
@@ -162,6 +159,7 @@ const Checkout = () => {
     setSelectedUpi(selectedUpiData);
   };
 
+
   const scrollRef = useRef(null);
   useEffect(() => {
     if (scrollRef.current) {
@@ -207,7 +205,6 @@ const Checkout = () => {
       console.error('Error in checkoutHandler', error);
     }
   };
-
   const handleRazorpayCallback = async (response) => {
     console.log(response);
     try {
@@ -310,16 +307,17 @@ const Checkout = () => {
 
           </div>
 
-          {/* <div className="checkout webdiv">
+          <div className="checkout webdiv">
             <div className="heading wh">Choose a payment method</div>
             <div className="flex-start wh" style={{ gap: '20px' }}>
               <button onClick={() => handleSubPageChange(1)} className={subCurrentPage === 1 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Card</div></button>
               <button onClick={() => handleSubPageChange(2)} className={subCurrentPage === 2 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Net banking</div></button>
               <button onClick={() => handleSubPageChange(3)} className={subCurrentPage === 3 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">UPI</div></button>
+              <button onClick={() => handleSubPageChange(4)} className={subCurrentPage === 4 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Other Gateways</div></button>
             </div>
-          </div> */}
+          </div>
 
-          {/* {subCurrentPage === 1 && (
+          {subCurrentPage === 1 && (
             <div className="checkout webdiv">
               <div className="heading3 wh">Cards</div>
               <select className='coupon' value={selectedCard.address} onChange={handleCardChange}>
@@ -385,6 +383,22 @@ const Checkout = () => {
                 </div>
               )}
             </div>
+          )}
+{/* 
+          {subCurrentPage === 4 && (
+            <div className="checkout webdiv">
+              <div className="heading3 wh">Other Gateways</div>
+              <div className="flexcol wh">
+                <div className="payment-option" onClick={() => checkoutHandler(convertPrice(totalSellPrice, currency), selectedCurrency)}>
+                  <div className="heading2">Pay with</div>
+                  <img src="https://res.cloudinary.com/dey1tujp8/image/upload/v1720262856/pngwing.com_pcirhd.png" alt="Razorpay" />
+                </div>
+                <div className="payment-option">
+                  <div className="heading2">Pay with</div>
+                  <img src="https://res.cloudinary.com/dey1tujp8/image/upload/v1720262856/pngwing.com_1_mjjcxi.png" alt="Paypal" />
+                </div>
+              </div>
+            </div>
           )} */}
 
         </div>
@@ -398,7 +412,7 @@ const Checkout = () => {
             </div>
             <div className="flexcol wh" style={{ gap: '10px' }}>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                <div className="heading2">Subtotal</div>
+                <div className="heading2">Total Price</div>
                 <div className="heading2">{currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</div>
               </div>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
@@ -406,12 +420,12 @@ const Checkout = () => {
                 <div className="heading2">Null</div>
               </div>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                <div className="heading2">Total GST</div>
+                <div className="heading2">Total Tax</div>
                 <div className="heading2">{currencySymbols[selectedCurrency]} {convertPrice(totalUnitGstPrice, currency)} {selectedCurrency}</div>
               </div>
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
-              <div className="heading2"><span>Order total</span></div>
+              <div className="heading2"><span>Subtotal</span></div>
               <div className="heading2"><span>{currencySymbols[selectedCurrency]} {convertPrice(totalOrder, currency)} {selectedCurrency}</span></div>
             </div>
 
