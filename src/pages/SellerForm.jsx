@@ -24,11 +24,15 @@ const SellerForm = () => {
     const dispatch = useDispatch();
     const { status, error, success } = useSelector((state) => state.seller);
     const signupData = useSelector((state) => state.auth.signupData);
-
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [sellerData, setSellerData] = useState({});
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
 
     const onSubmit = async (formData) => {
+
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+
         const username = signupData.email;
         const password = signupData.password;
         const updatedSellerData = { ...sellerData, ...formData };
@@ -49,9 +53,11 @@ const SellerForm = () => {
     useEffect(() => {
         if (status === 'succeeded') {
             alert('Congrats! You have become a seller. Please login into your account.');
+            setIsSubmitting(false);
             navigate('/login');
         } else if (status === 'failed') {
             alert('Failed to update seller details: ' + error);
+            setIsSubmitting(false);
         }
     }, [status, error, navigate]);
 
@@ -118,7 +124,7 @@ const SellerForm = () => {
                         )}
                         />
                         {errors.countryOfoperation && <div className='error'>{errors.countryOfoperation.message}</div>}
-                        <button className='btn box flex' type='submit'><div className="heading2">Continue</div></button>
+                        <button className='btn box flex' type='submit' disabled={isSubmitting}><div className="heading2">{isSubmitting ? 'Submitting...' : 'Submit'}</div></button>
                         <div className="descrip">By registering you agree to the user <Link>Terms & Conditions</Link> and <Link>Privacy Policy</Link></div>
                     </form>
                 </div>

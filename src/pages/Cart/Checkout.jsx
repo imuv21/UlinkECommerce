@@ -23,23 +23,6 @@ const Checkout = () => {
   const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
   const exchangeRates = useSelector(state => state.currency.exchangeRates);
 
-  const [paymentClicked, setPaymentClicked] = useState(false);
-  const handlePaymentClick = () => {
-    setPaymentClicked(prevState => !prevState);
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (paymentClicked) {
-        setPaymentClicked(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [paymentClicked]);
-
   useEffect(() => {
     dispatch(fetchExchangeRates());
   }, [dispatch]);
@@ -159,6 +142,7 @@ const Checkout = () => {
     setSelectedUpi(selectedUpiData);
   };
 
+  const totalOrder = totalSellPrice + totalUnitGstPrice;
 
   const scrollRef = useRef(null);
   useEffect(() => {
@@ -169,7 +153,9 @@ const Checkout = () => {
 
 
   // payment methods 
-  const checkoutHandler = async (amount, currency) => {
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState('razorpay');
+
+  const razorpayHandler = async (amount, currency) => {
     console.log(amount, currency);
 
     try {
@@ -202,7 +188,7 @@ const Checkout = () => {
       const razor = new window.Razorpay(options);
       razor.open();
     } catch (error) {
-      console.error('Error in checkoutHandler', error);
+      console.error('Error in razorpay gateway', error);
     }
   };
   const handleRazorpayCallback = async (response) => {
@@ -221,7 +207,24 @@ const Checkout = () => {
     }
   };
 
-  const totalOrder = totalSellPrice + totalUnitGstPrice;
+  const paypalHandler = async (amount, currency) => {
+    console.log('paypal handler');
+  };
+
+  const handlePaymentClick = () => {
+    const amount = convertPrice(totalSellPrice, currency);
+    const selectedCurrency = currency;
+
+    if (selectedPaymentOption === 'paypal') {
+      paypalHandler(amount, selectedCurrency);
+    } else {
+      razorpayHandler(amount, selectedCurrency);
+    }
+  };
+
+
+
+
 
   return (
     <div className="flexcol wh cart_page">
@@ -384,22 +387,20 @@ const Checkout = () => {
               )}
             </div>
           )}
-{/* 
+
           {subCurrentPage === 4 && (
             <div className="checkout webdiv">
               <div className="heading3 wh">Other Gateways</div>
-              <div className="flexcol wh">
-                <div className="payment-option" onClick={() => checkoutHandler(convertPrice(totalSellPrice, currency), selectedCurrency)}>
-                  <div className="heading2">Pay with</div>
+              <div className="payop-box">
+                <div className={`payment-option ${selectedPaymentOption === 'razorpay' ? 'selected' : ''}`} onClick={() => setSelectedPaymentOption('razorpay')}>
                   <img src="https://res.cloudinary.com/dey1tujp8/image/upload/v1720262856/pngwing.com_pcirhd.png" alt="Razorpay" />
                 </div>
-                <div className="payment-option">
-                  <div className="heading2">Pay with</div>
+                <div className={`payment-option ${selectedPaymentOption === 'paypal' ? 'selected' : ''}`} onClick={() => setSelectedPaymentOption('paypal')}>
                   <img src="https://res.cloudinary.com/dey1tujp8/image/upload/v1720262856/pngwing.com_1_mjjcxi.png" alt="Paypal" />
                 </div>
               </div>
             </div>
-          )} */}
+          )}
 
         </div>
         <div className="cartcol_two">
@@ -429,25 +430,12 @@ const Checkout = () => {
               <div className="heading2"><span>{currencySymbols[selectedCurrency]} {convertPrice(totalOrder, currency)} {selectedCurrency}</span></div>
             </div>
 
-            <div className={`flexcol wh topbottom payment-gatway ${paymentClicked ? 'clicked' : ''}`} onClick={handlePaymentClick} style={{ gap: '10px' }}>
-              <button className='btn addtocart flex'><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>
-              {paymentClicked && (
-                <div className="payment-popup-card payment-popup">
-                  <div className='payment-popupbox'>
-                    <div className="heading">Choose a payment method</div>
-                    <div className="flexcol wh">
-                      <div className="payment-option" onClick={() => checkoutHandler(convertPrice(totalSellPrice, currency), selectedCurrency)}>
-                        <div className="heading2">Pay with</div>
-                        <img src="https://res.cloudinary.com/dey1tujp8/image/upload/v1720262856/pngwing.com_pcirhd.png" alt="Razorpay" />
-                      </div>
-                      <div className="payment-option">
-                        <div className="heading2">Pay with</div>
-                        <img src="https://res.cloudinary.com/dey1tujp8/image/upload/v1720262856/pngwing.com_1_mjjcxi.png" alt="Paypal" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+            {/* <div className={`flexcol wh topbottom`} style={{ gap: '10px' }}>
+              <button className='btn addtocart flex' onClick={() => razorpayHandler(convertPrice(totalSellPrice, currency), selectedCurrency)}><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>
+            </div> */}
+
+            <div className={`flexcol wh topbottom`} style={{ gap: '10px' }}>
+              <button className='btn addtocart flex' onClick={handlePaymentClick}><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>
             </div>
 
           </div>

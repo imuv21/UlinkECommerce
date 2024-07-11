@@ -16,7 +16,7 @@ const ResetPassword = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { status, message, error } = useSelector((state) => state.forgotPassword);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     // Images
     const logo = urls[0];
@@ -43,6 +43,8 @@ const ResetPassword = () => {
 
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
     const onSubmit = async (formData) => {
+        if (isSubmitting) return;
+        setIsSubmitting(true);
         const { password, role, username } = formData;
         try {
             const resultAction = await dispatch(forgotPassword({ password, role, username })).unwrap();
@@ -50,6 +52,8 @@ const ResetPassword = () => {
             navigate('/verify-reset-password');
         } catch (err) {
             alert(`Failed to send OTP: ${err.message || 'Unknown error'}`);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -97,7 +101,7 @@ const ResetPassword = () => {
                                 </span>
                             </div>
                             {errors.confirmPass && <div className='error'>{errors.confirmPass.message}</div>}
-                            <button className='btn box flex' type='submit'><div className="heading2">Send OTP</div></button>
+                            <button className='btn box flex' type='submit' disabled={isSubmitting}><div className="heading2">{isSubmitting ? 'Sending OTP...' : 'Send OTP'}</div></button>
                         </form>
                     </div>
                 </div>

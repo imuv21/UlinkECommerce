@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addAddress, fetchAddresses, updateAddress, deleteAddress } from '../../../Redux/addressSlice';
+import { addAddress, fetchAddresses, updateAddress, deleteAddress, markDefaultAddress } from '../../../Redux/addressSlice';
 import { v4 as uuidv4 } from 'uuid';
 import { allCountries } from '../../Schemas/countryCodes';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -16,7 +16,8 @@ const SellerAddress = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { addresses, status, error } = useSelector((state) => state.address);
+    const { addresses, status, error, markDefaultStatus, markDefaultError } = useSelector((state) => state.address);
+
 
     useEffect(() => {
         dispatch(fetchAddresses());
@@ -129,14 +130,28 @@ const SellerAddress = () => {
         };
 
         try {
+            let response;
             if (editingIndex !== null) {
                 const addressToUpdate = addresses.find(address => address.id === editingIndex);
-                await dispatch(updateAddress({ id: addressToUpdate.id, formData }));
+                response = await dispatch(updateAddress({ id: addressToUpdate.id, formData }));
+                if (formData.isDefaultChecked) {
+                    await dispatch(markDefaultAddress(addressToUpdate.id));
+                }
+                await dispatch(fetchAddresses());
+                alert('Address updated successfully');
             } else {
-                await dispatch(addAddress(formData));
+                response = await dispatch(addAddress(formData));
+                const newAddress = response.payload;
+                if (formData.isDefaultChecked) {
+                    if (newAddress && newAddress.id) {
+                        await dispatch(markDefaultAddress(newAddress.id));
+                    } else {
+                        console.error('Failed to retrieve new address ID');
+                    }
+                }
+                await dispatch(fetchAddresses());
+                alert('Address saved successfully');
             }
-            dispatch(fetchAddresses());
-            alert('Address saved successfully');
             setShowPopup(false);
             resetFormFields();
         } catch (error) {

@@ -38,7 +38,7 @@ export const addAddress = createAsyncThunk(
             });
 
             if (response.data && response.data.status) {
-                return response.data.message;
+                return response.data.data; 
             } else {
                 return rejectWithValue('Failed to add address');
             }
@@ -88,6 +88,31 @@ export const updateAddress = createAsyncThunk(
     }
 );
 
+export const markDefaultAddress = createAsyncThunk(
+    'address/markDefaultAddress',
+    async (id, { getState, rejectWithValue }) => {
+        try {
+            const { auth } = getState();
+            const token = auth.token;
+            const response = await axios.post(`https://api.ulinkit.com/api/user/mark-default-address?id=${id}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (response.data && response.data.status) {
+                return response.data.message;
+            } else {
+                return rejectWithValue('Failed to mark address as default');
+            }
+        } catch (error) {
+            console.error('Mark Default Address Error:', error);
+            return rejectWithValue(error.response ? error.response.data : 'Network error');
+        }
+    }
+);
+
+
 const addressSlice = createSlice({
     name: 'address',
     initialState: {
@@ -100,6 +125,8 @@ const addressSlice = createSlice({
         deleteAddressError: null,
         updateAddressStatus: 'idle',
         updateAddressError: null,
+        markDefaultStatus: 'idle',
+        markDefaultError: null,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -150,6 +177,17 @@ const addressSlice = createSlice({
             .addCase(updateAddress.rejected, (state, action) => {
                 state.updateAddressStatus = 'failed';
                 state.updateAddressError = action.payload || 'Failed to update address';
+            })
+            .addCase(markDefaultAddress.pending, (state) => {
+                state.markDefaultStatus = 'loading';
+                state.markDefaultError = null;
+            })
+            .addCase(markDefaultAddress.fulfilled, (state, action) => {
+                state.markDefaultStatus = 'succeeded';
+            })
+            .addCase(markDefaultAddress.rejected, (state, action) => {
+                state.markDefaultStatus = 'failed';
+                state.markDefaultError = action.payload;
             });
     },
 });
