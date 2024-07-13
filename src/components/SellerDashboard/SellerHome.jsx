@@ -30,22 +30,22 @@ const SellerHome = () => {
         {
             id: 1,
             title: 'Add Product',
-            image: ''
+            link: '/seller-dashboard/add-single-product'
         },
         {
             id: 2,
             title: 'Add Multiple Products',
-            image: ''
+            link: '/seller-dashboard/upload-products-bulk'
         },
         {
             id: 3,
             title: 'Edit Product',
-            image: ''
+            link: '/seller-dashboard/product-list'
         },
         {
             id: 4,
             title: 'Create Promotion',
-            image: ''
+            link: '/'
         },
     ]
     const tvps = [
@@ -385,7 +385,7 @@ const SellerHome = () => {
                         <div className="flexcol score wh">
                             <div className="heading3 wh">Finance center</div>
                             <div className="descrip2 wh">Our minimum rating requirement for displaying an overall seller score has not been reached.</div>
-                            <a className="linc wh" href='#'>Update bank details&nbsp;&nbsp;</a>
+                            <Link to='/seller-dashboard/payments' className="linc wh">Update bank details&nbsp;&nbsp;</Link>
                         </div>
                     </div>
 
@@ -394,12 +394,12 @@ const SellerHome = () => {
                             <div className="heading3 wh">Quick links</div>
                             {
                                 quickLinks.map((item) => (
-                                    <div key={uuidv4()} className='quick flex wh'>
+                                    <Link to={item.link} key={uuidv4()} className='quick flex wh'>
                                         <div className="flex">
                                             <div className="heading3">{item.title}</div>
                                         </div>
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"><path fillRule="evenodd" clipRule="evenodd" d="M4.25 12a.75.75 0 0 1 .75-.75h14a.75.75 0 0 1 0 1.5H5a.75.75 0 0 1-.75-.75Z" fill="currentColor"></path><path fillRule="evenodd" clipRule="evenodd" d="M19.53 11.47a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 1 1-1.06-1.06l5-5a.75.75 0 0 1 1.06 0Z" fill="currentColor"></path><path fillRule="evenodd" clipRule="evenodd" d="M13.47 6.47a.75.75 0 0 1 1.06 0l5 5a.75.75 0 1 1-1.06 1.06l-5-5a.75.75 0 0 1 0-1.06Z" fill="currentColor"></path></svg>
-                                    </div>
+                                    </Link>
                                 ))
                             }
                         </div>

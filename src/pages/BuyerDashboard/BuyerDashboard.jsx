@@ -164,7 +164,7 @@ const BuyerDashboard = () => {
               {steps.map((step, index) => (
                 <div key={step.id} className="radio-flex">
                 {/*  i want fill  radio button */}
-                 <IoIosRadioButtonOff className={`radio-size ${index < currentStep ? "active" : ""}`}   />
+                 <IoIosRadioButtonOff className={`radio-size ${index < currentStep ? "id" : ""}`}   />
                   <p className="varify-p">{step.text}</p>
                 </div>
               ))}
