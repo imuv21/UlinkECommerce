@@ -42,7 +42,7 @@ const CompanyProfile = () => {
     const [declaration, setDeclaration] = useState(true);
     const [selectedDeclaration, setSelectedDeclaration] = useState({ file: null, name: '', path: '', size: '', id: '' });
     //  documentPath all state
-    const [filePath, setFilePath] = useState('')
+    const [filePath, setFilePath] = useState('') 
     const [identityPath, setIdentityPath] = useState('')
     const [gstPath, setGstPath] = useState('')
     const [declarationPath, setDeclarationPath] = useState('')
@@ -68,10 +68,9 @@ const CompanyProfile = () => {
         }));
         dispatch(uploadBuyerDocument({ ...uploadFileUpload, [name]: value }));
     };
-    // useEffect(() => {
-    //     dispatch(fetchUploadFile());
-    // }, [dispatch]);
-
+    useEffect(() => {
+        dispatch(fetchUploadFile());
+    }, [dispatch]);
     useEffect(() => {
         if (doc) {
             console.log('Document Data:', doc);
@@ -79,7 +78,6 @@ const CompanyProfile = () => {
             const identityDoc = doc.IDENTITY_DOCUMENT?.docs?.[0];
             const gstCertDoc = doc.GST_CERTIFICATE?.docs?.[0];
             const declarationDoc = doc.DECLARATION_CERTIFICATE?.docs?.[0];
-          
             setUploadFileUpload(prevState => {
                 const newState = {
                     ...prevState,
@@ -87,6 +85,7 @@ const CompanyProfile = () => {
                     selectedidentityFile: identityDoc?.filename || prevState.selectedidentityFile,
                     selectedVatCertificate: gstCertDoc?.filename || prevState.selectedVatCertificate,
                     selectedDeclaration: declarationDoc?.filename || prevState.selectedDeclaration,
+                
                     tradeNumber: doc.TRADE_LICENSE?.documentNumber || prevState.tradeNumber,
                     enddate: doc.TRADE_LICENSE?.expiryDate || prevState.enddate,
                     expirydate: doc.IDENTITY_DOCUMENT?.expiryDate || prevState.expirydate,
@@ -99,6 +98,8 @@ const CompanyProfile = () => {
                 setDeclarationPath(declarationDoc?.documentPath || declarationPath);
                 return newState;
             }, [doc]);
+
+     
             setSelectedFile(prevState => ({
                 ...prevState,
                 file: tradeLicenseDoc,
@@ -133,7 +134,6 @@ const CompanyProfile = () => {
             }))
         }
     }, [doc]);
-    //  YE FILES SUBMIT WALA CODE HAI YAHA SE  DEKHNA HAI
     const handlefileData = async (e) => {
         e.preventDefault();
          const tradeLicenseDoc = 'TRADE_LICENSE';
@@ -187,28 +187,27 @@ const CompanyProfile = () => {
                 gstNumber: '',
             })
            setAddDoc(true)
+           dispatch(fetchUploadFile())
         }
         catch (error) {
             console.log("Error in updating file data", error)
         }
+      
     };
+    const handleCancel = () => {
+        setAddDoc(true)
+    }
     // Declaration file upload
     const handleDeclaration = (e) => {
         const selectedDeclaration = e.target.files[0];
         if (selectedDeclaration) {
             // Dispatch upload action
             dispatch(uploadBuyerDocument({ file: selectedDeclaration, docType: 'DECLARATION_CERTIFICATE' }))
-                .then(() => {
-                    // Update local state after successful upload
-                    setUploadFileUpload(prevState => ({
-                        ...prevState,
-                        selectedDeclaration: selectedDeclaration.name
-                    }));
-                    setDeclaration(true);
-                })
-                .catch(error => {
-                    console.error('Error uploading declaration:', error);
-                });
+               setUploadFileUpload((prevState)=> ({
+                 ...prevState,
+                 selectedDeclaration: selectedDeclaration.name
+               }))
+              setDeclaration(true)
         }
     };
     //  Vat certificate logic here
@@ -275,7 +274,8 @@ const CompanyProfile = () => {
             const result = await dispatch(deleteUploadFile({ documentPath, filename, filesize, id })).unwrap();
             console.log('File deleted successfully ', result)
             setSelectedIdentityFile({ file: null, name: '', path: '', size: '', id: '' });
-            setIdentityFileUpload(true)
+            setIdentityFileUpload(false)
+            dispatch(fetchUploadFile())
         }
         catch (error) {
             console.log("Failed to delete file:", error)
@@ -359,7 +359,6 @@ const CompanyProfile = () => {
         }
         const { path: documentPath, name: filename, size: filesize, id } = fileData;
         console.log('File Data:', { documentPath, filename, filesize, id });
-
         if (!id) {
             console.log('ID is null or undefined')
             return;
@@ -369,6 +368,7 @@ const CompanyProfile = () => {
             console.log('File deleted successfully ', result)
             setSelectedVatCertificate({ file: null, name: '', path: '', size: '', id: '' });
             setVatCertificate(false)
+            dispatch(fetchUploadFile())
         }
         catch (error) {
             console.log("Failed to delete file:", error)
@@ -387,26 +387,27 @@ const CompanyProfile = () => {
         link.click();
         document.body.removeChild(link);
     };
-    const DeleteDecleration = async (fileData) => {
-        if (!fileData) {
-            console.log('File Data is null or undefined');
+    const deleteDecleration = async (fileData) => {
+        if (!fileData || !fileData.id) {
+            console.log('File Data is null or undefined', fileData);
             return;
         }
-        const { path: documentPath, filename, filesize, id } = fileData;
-        console.log('File Data:', { documentPath, filename, filesize, id });
-
+        const { path: documentPath, name: filename, size: filesize, id } = fileData;
+        // Log fileData and destructured values for debugging
+        console.log('Destructured File Data:', { documentPath, filename, filesize, id });
         if (!id) {
             console.log('ID is null or undefined');
             return;
         }
         try {
             const result = await dispatch(deleteUploadFile({ documentPath, filename, filesize, id })).unwrap();
-            console.log('File deleted successfully ', result);
+            console.log('File deleted successfully:', result);
+            // Resetting state after successful deletion
             setSelectedDeclaration({ file: null, name: '', path: '', size: '', id: '' });
             setDeclaration(false); // Update state or trigger re-fetch if needed
+            dispatch(fetchUploadFile())
         } catch (error) {
             console.error("Failed to delete file:", error);
-
         }
     };
     const handleDelete = async (fileData) => {
@@ -425,6 +426,7 @@ const CompanyProfile = () => {
             console.log('File deleted successfully', result);
             setSelectedFile({ file: null, name: '', path: '', size: '', id: '' });
             setFileUpload(false);
+            dispatch(fetchUploadFile())
         } catch (error) {
             console.log('Failed to delete file: ', error);
         }
@@ -451,17 +453,17 @@ const CompanyProfile = () => {
         city: '',
         poBoxNumber: ''
     });
-    // const CompanyDataSubmit = (e) => {
-    //     e.preventDefault();
-    //     dispatch(updateBusinessProfile(formdata, token)).then(() => {
-    //         dispatch(fetchBusinessProfile());
-    //     });
-    //     setProfileDetail(false);
-    //     console.log(formdata);
-    // };
-    // useEffect(() => {
-    //     dispatch(fetchBusinessProfile());
-    // }, [dispatch]);
+    const CompanyDataSubmit = (e) => {
+        e.preventDefault();
+        dispatch(updateBusinessProfile(formdata, token)).then(()=> {
+            dispatch(fetchBusinessProfile(token))
+        })
+        setProfileDetail(false);
+        console.log(formdata);
+    };
+    useEffect(() => {
+            dispatch(fetchBusinessProfile(token ));
+    }, [dispatch, token]);
     useEffect(() => {
         console.log("Status: ", status);
         console.log("Profile: ", profile);
@@ -480,6 +482,9 @@ const CompanyProfile = () => {
             });
         }
     }, [status, profile, error]);
+
+   
+   
     const CompanyData = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
@@ -501,9 +506,9 @@ const CompanyProfile = () => {
         dispatch(updateCreditInfo(creditInfoData, token));
         setCreditInfo(false);
     };
-    // useEffect(() => {
-    //     dispatch(fetchCreditInfo(token));
-    // }, [dispatch, token]);
+    useEffect(() => {
+        dispatch(fetchCreditInfo(token));
+    }, [dispatch, token]);
     useEffect(() => {
         console.log("Status: ", status);
         console.log("Credit: ", credit);
@@ -632,7 +637,7 @@ const CompanyProfile = () => {
                             </div>
                         ) : (
                             <div className='show-company-form'>
-                                <div className='company-profile'>
+                                <div className='company-profile-buyer'>
                                     <div className='company-profile-name'>
                                         <h4>Business Profile</h4>
                                     </div>
@@ -692,7 +697,7 @@ const CompanyProfile = () => {
             <div className='responsive'>
                 <div className='company-border'>
                     <div className='company-padding'>
-                        <div className='company-profile'>
+                        <div className='company-profile-buyer'>
                             <div className='company-profile-name'>
                                 <CiCircleInfo className='info-icons' />
                                 <h4>Credit Information</h4>
@@ -766,7 +771,7 @@ const CompanyProfile = () => {
                     <div className='responsive'>
                         <div className='company-border'>
                             <div className='company-padding'>
-                                <div className='company-profile'>
+                                <div className='company-profile-buyer'>
                                     <div className='company-profile-name'>
                                         <h4>Add your business documents</h4>
                                     </div>
@@ -825,7 +830,7 @@ const CompanyProfile = () => {
                         <div className='company-border'>
                             <form onSubmit={handlefileData}>
                                 <div className='company-padding'>
-                                    <div className='company-profile'>
+                                    <div className='company-profile-buyer'>
                                         <div className='company-profile-name'>
                                             <h4>Bussiness Documents</h4>
                                         </div>
@@ -839,7 +844,7 @@ const CompanyProfile = () => {
                                         </div>
                                         <div className='company-detail-name'>
                                             <h4>Trade License / Company Incorporation Certificate</h4>
-                                            <p className='file-formate'>Upload a copy of your Trade Licence. This lets us verify you as an official business. This can be a JPG, PNG, PDF, JPEG, TIF.</p>
+                                            <p className='file-formate'>Upload a copy of your Trade Licence. This lets us verify you as an official business. This can be a JPG, PNG, PDF, JPEG, TIF Or Any Other Formate Upload Doc</p>
                                             <div>
                                                 {fileUpload && uploadFileUpload.selectedfile ? (
                                                     <div className='file-upload'>
@@ -982,7 +987,7 @@ const CompanyProfile = () => {
                                         </div>
                                         <div className='company-detail-name'>
                                             <h4>Declaration of VAT Exemption (Resellers)</h4>
-                                            <p className='file-formate'>Upload a copy of your VAT/GST Exempted Reseller Certificate. This lets us verify you as an exempted byuer. This can be a JPG, PNG, PDF, JPEG, TIF.</p>
+                                            <p className='file-formate'>Upload a copy of your VAT/GST Exempted Reseller Certificate. This lets us verify you as an exempted byuer. This can be a JPG, PNG, PDF, JPEG, TIF. Or Any Formate </p>
                                             <div>
                                                 {declaration && uploadFileUpload.selectedDeclaration ? (
                                                     <div className='file-upload'>
@@ -996,7 +1001,7 @@ const CompanyProfile = () => {
                                                             style={{ display: 'none' }} />
                                                         <div className='dow'>
                                                             <MdOutlineFileDownload onClick={() => dounloaddecleration(declarationPath)} />
-                                                            <AiOutlineDelete onClick={() => DeleteDecleration(setSelectedDeclaration)} />
+                                                            <AiOutlineDelete onClick={() => deleteDecleration(selectedDeclaration)} />
                                                         </div>
                                                     </div>
                                                 ) : (
@@ -1011,7 +1016,7 @@ const CompanyProfile = () => {
                                 </div>
                                 <div className='savecancel'>
                                     <button type='submit' className='sv'>Save</button>
-                                    <button>Cancel</button>
+                                    <button onClick={handleCancel} >Cancel</button>
                                 </div>
                             </form>
                         </div>

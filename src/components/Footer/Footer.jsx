@@ -31,7 +31,7 @@ const Footer = () => {
     setTimeout(() => {
       setIsClickedFooter(prevState => !prevState);
       setIsSubmitting(false);
-      setNewsEmail(''); 
+      setNewsEmail('');
     }, 1500);
   };
 
@@ -155,11 +155,21 @@ const Footer = () => {
             <div className="fsectwo">
               <h3 className="footer-title2">Follow Us On</h3>
               <div className="flex" style={{ gap: '20px' }}>
-                <Link to="https://www.facebook.com/profile.php?id=61559396105110"><FacebookIcon /></Link>
-                <Link to="https://www.instagram.com/u_linkitus?igsh=MWMyaGV4MWN0ejFtbA%3D%3D"><InstagramIcon /></Link>
-                <Link to="https://www.youtube.com/"><YouTubeIcon /></Link>
-                <Link to="https://www.linkedin.com/in/ulink-it-88522b308/"><LinkedInIcon /></Link>
-                <Link to="https://www.twitter.com/"><XIcon /></Link>
+                <a href="https://www.facebook.com/profile.php?id=61559396105110" target="_blank" rel="noopener noreferrer">
+                  <FacebookIcon />
+                </a>
+                <a href="https://www.instagram.com/u_linkitus?igsh=MWMyaGV4MWN0ejFtbA%3D%3D" target="_blank" rel="noopener noreferrer">
+                  <InstagramIcon />
+                </a>
+                <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+                  <YouTubeIcon />
+                </a>
+                <a href="https://www.linkedin.com/in/ulink-it-88522b308/" target="_blank" rel="noopener noreferrer">
+                  <LinkedInIcon />
+                </a>
+                <a href="https://www.twitter.com/" target="_blank" rel="noopener noreferrer">
+                  <XIcon />
+                </a>
               </div>
             </div>
           </div>

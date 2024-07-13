@@ -152,6 +152,9 @@ const Checkout = () => {
   }, []);
 
 
+   // const paypalHandler = async (amount, currency) => {
+  //   console.log('paypal handler');
+  // };
   // payment methods 
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('razorpay');
 
@@ -208,11 +211,26 @@ const Checkout = () => {
   };
 
   const paypalHandler = async (amount, currency) => {
-    console.log('paypal handler');
+    try {
+      const fPrice = Number(amount).toFixed(2);
+      let res = await axios.post('http://localhost:8000/paymentpaypal', {
+        price: fPrice,
+        currency: currency,
+      });
+
+      if (res && res.data) {
+        let link = res.data.links[1].href
+        window.location.href = link
+      } else {
+        console.error("No approval URL returned");
+      }
+    } catch (error) {
+      console.error("Payment Error: ", error);
+    }
   };
 
   const handlePaymentClick = () => {
-    const amount = convertPrice(totalSellPrice, currency);
+    const amount = convertPrice(totalOrder, currency);
     const selectedCurrency = currency;
 
     if (selectedPaymentOption === 'paypal') {

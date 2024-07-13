@@ -30,28 +30,21 @@ export const updateCreditInfo = createAsyncThunk(
 
 export const fetchCreditInfo = createAsyncThunk(
     'creditInfo/fetchCreditInfo',
-    async (_, { getState, rejectWithValue }) => {
+    async ({token}, { getState, rejectWithValue }) => {
         try {
-            const { auth } = getState();
-            const token = auth.token;
-            const response = await axios.post(`${BASE_URL}/buyer/get-business-profile`,
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            const { auth: { token: authToken } } = getState();
+            const response = await axios.get(`${BASE_URL}/buyer/get-business-profile`, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            });
             return response.data;
         } 
         catch(error){
-            if(error.response){
-                return rejectWithValue(error.response.data);
-            }
-            return rejectWithValue(error.message)
+            const errorMessage = error.response?.data?.message || error.message;
+            return rejectWithValue(errorMessage);
         }
     }
-
 );
 
 const creditInfoSlice = createSlice({

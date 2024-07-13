@@ -27,6 +27,7 @@ const BuyerDashboard = () => {
   const [sendEmail, setSendEmail] = useState('')
   const user = useSelector((state) => state.auth.user);
   const profile = useSelector((state) => state.auth.profile);
+  const doc = useSelector((state) => state.auth.doc)
   useEffect(() => {
     if (!!user) {
       setCurrentStep(1);
@@ -39,6 +40,12 @@ const BuyerDashboard = () => {
        setCurrentStep(2)
     }
   }, [profile])
+
+  useEffect(() => {
+    if(!doc){
+      setCurrentStep(3)
+    }
+  })
 
   const BussinessProfile = () => {
     console.log("Updating currentSteps to ", stepId)
