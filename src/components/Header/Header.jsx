@@ -35,6 +35,8 @@ import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import DepartureBoardIcon from '@mui/icons-material/DepartureBoard';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 const Header = () => {
 
@@ -424,6 +426,9 @@ const Header = () => {
     return text.slice(0, maxLength) + '';
   };
 
+  const isVerifiedBuyer = false;
+  const isVerifiedSeller = useSelector((state) => state.auth.isVerifiedSeller);
+
 
   return (
     <Fragment>
@@ -560,7 +565,27 @@ const Header = () => {
                       {user.firstname} {user.lastname}
                     </div>
 
-                    <div className="warning-btn3">{user.role === 'Buyer' ? 'Verify Your Mobile' : 'Unverified Seller'}</div>
+                    {user.role === 'Seller' ? ( isVerifiedSeller ? (
+                        <div className="warning-btn2 flex"> <VerifiedIcon style={{ width: '13px' }} />
+                          Verified Seller
+                        </div>
+                      ) : (
+                        <div className="warning-btn3 flex"> <NewReleasesIcon style={{ width: '13px' }} />
+                          Unverified Seller
+                        </div>
+                      )
+                    ) : user.role === 'Buyer' ? ( isVerifiedBuyer ? (
+                        <div className="warning-btn2 flex"> <VerifiedIcon style={{ width: '13px' }} />
+                          Verified Buyer
+                        </div>
+                      ) : (
+                        <div className="warning-btn3 flex"> <NewReleasesIcon style={{ width: '13px' }} />
+                          Unverified Buyer
+                        </div>
+                      )
+                    ) : null}
+
+
                   </div>
 
                   <div className='popupbox'>

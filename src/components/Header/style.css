@@ -393,13 +393,6 @@
   text-transform: capitalize;
 }
 
-.warning-btn3 {
-  background-color: rgb(255, 171, 135);
-  border-radius: 15px;
-  font-size: 12px;
-  padding: 3px 10px;
-}
-
 .pop-options {
   display: flex;
   align-items: center;

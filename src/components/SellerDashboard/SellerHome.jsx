@@ -7,11 +7,15 @@ import img4 from '../../assets/img4.webp';
 import img5 from '../../assets/img5.webp';
 import { v4 as uuidv4 } from 'uuid';
 import { Helmet } from 'react-helmet-async';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setVerifiedSeller } from '../../Redux/AuthReducer';
 import { Link } from 'react-router-dom';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 const SellerHome = () => {
 
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const uploadedImageUrl = useSelector((state) => state.sellerBusinessProfile.imageUrl);
@@ -84,13 +88,41 @@ const SellerHome = () => {
     ]
 
 
+    //steps-related
+    const { bankDetails } = useSelector((state) => state.bankDetails);
+    const { sellerprofile } = useSelector((state) => state.sellerBusinessProfile);
 
-    //step-stones
     const [steps, setSteps] = useState([
         { step: 1, label: 'Verify your contacts', completed: true },
         { step: 2, label: 'Upload your business documents', completed: false },
         { step: 3, label: 'Set up your bank details', completed: false },
     ]);
+
+    useEffect(() => {
+        const identityDocumentStatus = sellerprofile.documents.IDENTITY_DOCUMENT.status;
+        const tradeLicenseStatus = sellerprofile.documents.TRADE_LICENSE.status;
+        const allDocumentsVerified = identityDocumentStatus === 'VERIFIED' && tradeLicenseStatus === 'PENDING';
+        setSteps(prevSteps => prevSteps.map(step => 
+            step.step === 2 ? { ...step, completed: allDocumentsVerified } : step
+        ));
+    }, [sellerprofile]);
+
+    useEffect(() => {
+        const hasDefaultBank = bankDetails.some(bank => bank.defaultValue);
+        setSteps(prevSteps => prevSteps.map(step =>
+            step.step === 3 ? { ...step, completed: hasDefaultBank } : step
+        ));
+    }, [bankDetails]);
+
+    useEffect(() => {
+        const allStepsCompleted = steps.every(step => step.completed);
+        if (allStepsCompleted) {
+            dispatch(setVerifiedSeller(true));
+        } else {
+            dispatch(setVerifiedSeller(false));
+        }
+    }, [steps, dispatch]);
+
     const stepProcess = [
         {
             id: uuidv4(),
@@ -223,17 +255,7 @@ const SellerHome = () => {
         });
     }, []);
 
-
-    //getting data from local storage (backend)
-    const [loggedUser, setLoggedUser] = useState(null);
-    useEffect(() => {
-        const storedUserData = localStorage.getItem('loggedUser');
-        if (storedUserData) {
-            const parsedUserData = JSON.parse(storedUserData);
-            setLoggedUser(parsedUserData);
-        }
-    }, []);
-
+    const isVerifiedSeller = useSelector((state) => state.auth.isVerifiedSeller);
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
@@ -311,7 +333,6 @@ const SellerHome = () => {
 
 
                     <div className="flex wh" style={{ gap: '30px' }}>
-
                         <div className="sel-box">
                             <div className="flexcol score2 wh">
                                 <div className="heading3">Top viewed products from other sellers</div>
@@ -360,7 +381,10 @@ const SellerHome = () => {
                                 {isAuthenticated && (
                                     <div className="heading3 name">{user.firstname} {user.lastname}</div>
                                 )}
-                                <div className="descrip warning-btn">Pending Verification</div>
+                                { isVerifiedSeller ?
+                                    (<div className="warning-btn2 flex"><VerifiedIcon style={{ width: '13px' }} />Verified Seller</div>) :
+                                    (<div className="warning-btn3 flex"><NewReleasesIcon style={{ width: '13px' }} />Unverified Seller</div>)
+                                }
                             </div>
                         </div>
                         <div className="flexcol score wh bt">

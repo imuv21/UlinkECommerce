@@ -29,7 +29,7 @@ const BuyerDashboard = () => {
   const profile = useSelector((state) => state.auth.profile);
   const doc = useSelector((state) => state.auth.doc)
   useEffect(() => {
-    if (!!user) {
+    if (!user) {
       setCurrentStep(1);
     }
   }, [user]);
@@ -164,7 +164,7 @@ const BuyerDashboard = () => {
               {steps.map((step, index) => (
                 <div key={step.id} className="radio-flex">
                 {/*  i want fill  radio button */}
-                 <IoIosRadioButtonOff className={`radio-size ${index < currentStep ? "id" : ""}`}   />
+                 <IoIosRadioButtonOff className={`radio-size ${index < currentStep ? "rd" : ""}`}   />
                   <p className="varify-p">{step.text}</p>
                 </div>
               ))}

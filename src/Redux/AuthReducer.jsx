@@ -29,6 +29,7 @@ const initialState = {
     message: '',
     signupEmail: null,
     signupData: null,
+    isVerifiedSeller: false,
 };
 
 
@@ -67,6 +68,10 @@ const authSlice = createSlice({
             state.status = '';
             state.message = '';
             state.signupEmail = null;
+            state.isVerifiedSeller = false;
+        },
+        setVerifiedSeller(state, action) {
+            state.isVerifiedSeller = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -91,6 +96,6 @@ const authSlice = createSlice({
     },
 });
 
-export const { loginSuccess, loginFailure, signupSuccess, signupFailure, logout } = authSlice.actions;
+export const { loginSuccess, loginFailure, signupSuccess, signupFailure, logout, setVerifiedSeller } = authSlice.actions;
 export default authSlice.reducer;
 

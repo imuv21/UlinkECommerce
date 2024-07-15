@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FlightIcon from '@mui/icons-material/Flight';
 import returned from '../../assets/returned.png';
@@ -30,13 +30,13 @@ import mastercard from '../../assets/mastercard.png';
 import paypal from '../../assets/paypal.png';
 import upi from '../../assets/upi.png';
 import netbanking from '../../assets/netbanking.png';
-
 const ProductDetails = () => {
 
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
     const { id } = useParams();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { product, status, error } = useSelector((state) => state.productDetail);
     const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
@@ -45,6 +45,10 @@ const ProductDetails = () => {
         dispatch(fetchProductDetail(id));
         dispatch(fetchExchangeRates());
     }, [dispatch, id]);
+
+    const rfqredirect = () => {
+        navigate('/rfq');
+    }
 
 
     // Fetch currency options and exchange rates
@@ -357,7 +361,7 @@ const ProductDetails = () => {
                                 {isAuthenticated && user.role === 'Buyer' && (
                                     <Fragment>
                                         <button className='btn2 addtocart flex' onClick={cartHandler}><AddShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Add to cart</div></button>
-                                        <button className='btn addtocart flex'><div className="heading2">Negotiate with seller</div></button>
+                                        <button onClick={rfqredirect} className='btn addtocart flex'><div className="heading2">Negotiate with seller</div></button>
                                     </Fragment>
                                 )}
                                 {!isAuthenticated && (
@@ -368,7 +372,7 @@ const ProductDetails = () => {
                         <div className="sel-box pdthree_two" style={{ gap: '20px' }}>
                             <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>
                                 <div className="heading3">Shipping & Returns</div>
-                                <div className="descrip warning-btn3 flex"><FlightIcon style={{ width: '15px' }} />International shipping</div>
+                                <div className="warning-btn flex"><FlightIcon style={{ width: '13px' }} />International shipping</div>
                             </div>
                             <div className="flexcol wh" style={{ gap: '0px' }}>
                                 <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
@@ -390,8 +394,8 @@ const ProductDetails = () => {
                                 <div className="heading3">Seller information</div>
                                 <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                                     <div className="descrip2">{product.seller.name}</div>
-                                    {product.seller.isVerified ? (<div className="descrip warning-btn2 flex" style={{ color: 'green' }}><VerifiedIcon style={{ width: '15px' }} />Verified</div>)
-                                        : (<div className="descrip warning-btn2 flex" style={{ color: 'orange' }}><NewReleasesIcon style={{ width: '15px' }} />Unverified</div>)}
+                                    {product.seller.isVerified ? (<div className="warning-btn2 flex"><VerifiedIcon style={{ width: '13px' }} />Verified</div>)
+                                        : (<div className="warning-btn3 flex"><NewReleasesIcon style={{ width: '13px' }} />Unverified</div>)}
                                 </div>
                                 <div className="descrip2">{product.seller.companyName}, {product.seller.countryOfoperation}</div>
                                 <div className="flex-start wh">

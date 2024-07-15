@@ -84,7 +84,7 @@ const Payments = () => {
                                 <div className="flexcol-start" style={{ gap: '10px' }}>
                                     <div className="flex" style={{ gap: '20px' }}>
                                         <div className="heading3">{bank.bankName}</div>
-                                        {bank.defaultValue && <div className='descrip warning-btn4'>Default</div>}
+                                        {bank.defaultValue && <div className='warning-btn4' style={{ padding: '2px 10px'}}>Default</div>}
                                     </div>
                                     <div className="flex" style={{ gap: '10px' }}>
                                         <div className='descrip2'>Location: {bank.bankLocation}</div>

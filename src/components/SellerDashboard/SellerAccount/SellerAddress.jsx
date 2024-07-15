@@ -222,9 +222,9 @@ const SellerAddress = () => {
                                 <div className="flexcol-start" style={{ gap: '10px' }}>
                                     <div className="flex" style={{ gap: '20px' }}>
                                         <div className="heading3">{address.address}</div>
-                                        {address.isLocationChecked && <div className='descrip warning-btn'>Shipping</div>}
-                                        {address.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
-                                        {address.isDefaultChecked && <div className='descrip warning-btn4'>Default</div>}
+                                        {address.isLocationChecked && <div className='warning-btn' style={{ padding: '2px 10px'}}>Shipping</div>}
+                                        {address.isBillingChecked && <div className='warning-btn2' style={{ padding: '2px 10px'}}>Billing</div>}
+                                        {address.isDefaultChecked && <div className='warning-btn4' style={{ padding: '2px 10px'}}>Default</div>}
                                     </div>
                                     <div className="flex" style={{ gap: '10px' }}>
                                         {address.selectedOrigin && <div className='descrip2'>{address.selectedOrigin}</div>}
@@ -275,7 +275,7 @@ const SellerAddress = () => {
                                 <input type="text" placeholder='Enter post code' className="box flex" value={postCode} onChange={(e) => setPostCode(e.target.value)} />
 
                                 <div className="flex" style={{ gap: '20px' }}>
-                                    <select className='box flex' name='countryCode' value={selectedCountry.iso2 || ''} onChange={handleCountryChange}>
+                                    <select className='box flex' name='countryCode' value={selectedCountry.iso2 || ''} onChange={handleCountryChange} required>
                                         <option value="">Select Country Code</option>
                                         {countriess.map(country => (
                                             <option key={country.iso2} value={country.iso2}>
@@ -283,7 +283,7 @@ const SellerAddress = () => {
                                             </option>
                                         ))}
                                     </select>
-                                    <input type="number" placeholder="Enter phone number" className='box flex' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                                    <input type="number" placeholder="Enter phone number" className='box flex' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
                                 </div>
 
                                 <input type="text" placeholder='Enter nearest airport' className="box flex" value={airport} onChange={(e) => setAirport(e.target.value)} />

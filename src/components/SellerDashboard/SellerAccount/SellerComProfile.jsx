@@ -540,7 +540,7 @@ const SellerComProfile = () => {
                                         <div className="bd_overview_one">
                                             <div className="bd_over">
                                                 <div className="bd_over_box">
-                                                    <div className="descrip warning-btn3" style={{ width: 'fit-content' }}>{sellerprofile?.documents?.TRADE_LICENSE?.status || 'N/A'}</div>
+                                                    <div className="warning-btn3 flex" style={{ width: 'fit-content', padding: '2px 15px' }}>{sellerprofile?.documents?.TRADE_LICENSE?.status || 'N/A'}</div>
                                                 </div>
                                                 <div className="bd_over_box">
                                                     {
@@ -552,7 +552,7 @@ const SellerComProfile = () => {
                                             </div>
                                             <div className="bd_over">
                                                 <div className="bd_over_box">
-                                                    <div className="descrip warning-btn3" style={{ width: 'fit-content' }}>{sellerprofile?.documents?.IDENTITY_DOCUMENT?.status || 'N/A'}</div>
+                                                    <div className="warning-btn3 flex" style={{ width: 'fit-content', padding: '2px 15px' }}>{sellerprofile?.documents?.IDENTITY_DOCUMENT?.status || 'N/A'}</div>
                                                 </div>
                                                 <div className="bd_over_box">
                                                     {

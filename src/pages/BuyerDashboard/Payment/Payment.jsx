@@ -1,35 +1,172 @@
-import React, { useState, Fragment } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addBankDetailBuyer, fetchPaymentDetails } from '../../../Redux/paymentMethods';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Helmet } from 'react-helmet-async';
+import { v4 as uuidv4 } from 'uuid';
 
 const Payment = () => {
 
-    //page
-    const [subCurrentPage, setsubCurrentPage] = useState(1);
-    const handleSubPageChange = (subPageNumber) => {
-        setsubCurrentPage(subPageNumber);
-    };
+    const [showPopupBank, setShowPopupBank] = useState(false);
+    const [editModeBank, setEditModeBank] = useState(false);
+    const [editIndexBank, setEditIndexBank] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [bankName, setBankName] = useState('');
+    const [accHolderName, setAccHolderName] = useState('');
+    const [accNo, setAccNo] = useState('');
+    const [ifsc, setIfsc] = useState('');
+    const [bankLocation, setBankLocation] = useState('');
+    const [swiftBIC, setSwiftBIC] = useState('');
+    const [iban, setIban] = useState('');
 
-    //cards popup form
+    const [showPopupUpi, setShowPopupUpi] = useState(false);
+    const [editModeUpi, setEditModeUpi] = useState(false);
+    const [editIndexUpi, setEditIndexUpi] = useState(null);
+    const [isSubmittingUpi, setIsSubmittingUpi] = useState(false);
+    const [upi, setUpi] = useState('');
+
     const [showPopupCard, setShowPopupCard] = useState(false);
     const [editModeCard, setEditModeCard] = useState(false);
     const [editIndexCard, setEditIndexCard] = useState(null);
+    const [isSubmittingCard, setIsSubmittingCard] = useState(false);
     const [cardNumber, setCardNumber] = useState('');
     const [expiryDate, setExpiryDate] = useState('');
-    const [fullName, setFullName] = useState('');
+    const [fullname, setFullname] = useState('');
 
-    //cardnumber
+    const dispatch = useDispatch();
+    const { bankDetails, upiDetails, cardDetails, loading, error } = useSelector((state) => state.paymentMethods);
+
+    useEffect(() => {
+        dispatch(fetchPaymentDetails());
+    }, [dispatch]);
+
+    // useEffect(() => {
+    //     if (bankDetails.length > 0) {
+    //         console.log('Bank details in component:', bankDetails);
+    //     }
+    // }, [bankDetails]);
+    // useEffect(() => {
+    //     if (upiDetails.length > 0) {
+    //         console.log('UPI details in component:', upiDetails);
+    //     }
+    // }, [upiDetails]);
+    // useEffect(() => {
+    //     if (cardDetails.length > 0) {
+    //         console.log('Card details in component:', cardDetails);
+    //     }
+    // }, [cardDetails]);
+
+
+    //banks popup form
+    const handleAddBank = () => {
+        setShowPopupBank(true);
+        setEditModeBank(false);
+    };
+    const handleSubmitBank = async (e) => {
+        e.preventDefault();
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+        const newBankDetails = {
+            bankName,
+            accHolderName,
+            accNo,
+            ifsc,
+            bankLocation,
+            swiftBIC,
+            iban
+        };
+
+        try {
+            await dispatch(addBankDetailBuyer({ details: newBankDetails, type: 'BANK' })).unwrap();
+            dispatch(fetchPaymentDetails());
+            alert('Bank details added successfully!');
+        } catch (err) {
+            alert('Failed to add bank details: ' + (err.message || 'Unknown error'));
+        } finally {
+            setIsSubmitting(false);
+            handleCloseBank();
+        }
+    };
+    const handleCloseBank = () => {
+        setShowPopupBank(false);
+        setEditModeBank(false);
+        setBankName('');
+        setAccHolderName('');
+        setAccNo('');
+        setIfsc('');
+        setBankLocation('');
+        setSwiftBIC('');
+        setIban('');
+    };
+    const handleEditBank = (index) => {
+        const bank = bankDetails[index];
+        setBankName(bank.bankName);
+        setAccHolderName(bank.accHolderName);
+        setAccNo(bank.accNo);
+        setIfsc(bank.ifsc);
+        setBankLocation(bank.bankLocation);
+        setSwiftBIC(bank.swiftBIC);
+        setIban(bank.iban);
+        setEditModeBank(true);
+        setEditIndexBank(index);
+        setShowPopupBank(true);
+    };
+    const handleDeleteBank = (index) => {
+    };
+
+
+    //upis popup form
+    const handleAddUpi = () => {
+        setShowPopupUpi(true);
+        setEditModeUpi(false);
+    };
+    const handleSubmitUpi = async (e) => {
+        e.preventDefault();
+        if (isSubmittingUpi) return;
+        setIsSubmittingUpi(true);
+        const newUpiDetails = {
+            upi
+        };
+        try {
+            await dispatch(addBankDetailBuyer({ details: newUpiDetails, type: 'UPI' })).unwrap();
+            dispatch(fetchPaymentDetails());
+            alert('UPI details added successfully!');
+        } catch (err) {
+            alert('Failed to add UPI details: ' + (err.message || 'Unknown error'));
+        } finally {
+            setIsSubmittingUpi(false);
+            handleCloseUpi();
+        }
+    };
+    const handleCloseUpi = () => {
+        setShowPopupUpi(false);
+        setEditModeUpi(false);
+        setUpi('');
+    };
+    const handleEditUpi = (index) => {
+        const upis = upiDetails[index];
+        setUpi(upis.upi);
+        setEditModeUpi(true);
+        setEditIndexUpi(index);
+        setShowPopupUpi(true);
+    };
+    const handleDeleteUpi = (index) => {
+    };
+
+
+    // cards popup form
+    // cardnumber
     const handlecardnum = (event) => {
         let value = event.target.value;
         value = value.replace(/\D/g, '');
         setCardNumber(value);
     }
-    //format card number
+    // format card number
     const formatCardNumber = (text) => {
         return text.replace(/(.{4})/g, '$1 ');
     };
-    //mmyy
+    // mmyy
     const handleslash = (event) => {
         let value = event.target.value;
         value = value.replace(/\D/g, '');
@@ -38,176 +175,61 @@ const Payment = () => {
         }
         setExpiryDate(value);
     };
-
     const handleAddCard = () => {
         setShowPopupCard(true);
         setEditModeCard(false);
-        setCardNumber('');
-        setExpiryDate('');
-        setFullName('');
     };
-    const handleEditCard = (index) => {
-        const cardToEdit = cardList[index];
-        setEditIndexCard(index);
-        setCardNumber(cardToEdit.cardNumber);
-        setExpiryDate(cardToEdit.expiryDate);
-        setFullName(cardToEdit.fullName);
-        setShowPopupCard(true);
-        setEditModeCard(true);
+    const handleSubmitCard = async (e) => {
+        e.preventDefault();
+        if (isSubmittingCard) return;
+        setIsSubmittingCard(true);
+
+        const newCardDetails = {
+            cardNumber,
+            expiryDate,
+            fullname
+        };
+
+        try {
+            await dispatch(addBankDetailBuyer({ details: newCardDetails, type: 'CARD' })).unwrap();
+            dispatch(fetchPaymentDetails());
+            alert('Card details added successfully!');
+        } catch (err) {
+            alert('Failed to add card details: ' + (err.message || 'Unknown error'));
+        } finally {
+            setIsSubmittingCard(false);
+            handleCloseCard();
+        }
     };
     const handleCloseCard = () => {
         setShowPopupCard(false);
         setEditModeCard(false);
         setCardNumber('');
         setExpiryDate('');
-        setFullName('');
+        setFullname('');
     };
-    const handleSubmitCard = () => {
-        const newCard = { cardNumber, expiryDate, fullName };
-        if (editModeCard) {
-            const updatedCardList = [...cardList];
-            updatedCardList[editIndexCard] = newCard;
-            setCardList(updatedCardList);
-            localStorage.setItem('cards', JSON.stringify(updatedCardList));
-        } else {
-            const updatedCardList = [...cardList, newCard];
-            setCardList(updatedCardList);
-            localStorage.setItem('cards', JSON.stringify(updatedCardList));
-        }
-        setShowPopupCard(false);
-        setEditModeCard(false);
-        setCardNumber('');
-        setExpiryDate('');
-        setFullName('');
+    const handleEditCard = (index) => {
+        const card = cardDetails[index];
+        setCardNumber(card.cardNumber);
+        setExpiryDate(card.expiryDate);
+        setFullname(card.fullname);
+        setEditModeCard(true);
+        setEditIndexCard(index);
+        setShowPopupCard(true);
     };
     const handleDeleteCard = (index) => {
-        const updatedCardList = [...cardList];
-        updatedCardList.splice(index, 1);
-        setCardList(updatedCardList);
-        localStorage.setItem('cards', JSON.stringify(updatedCardList));
     };
 
 
-
-
-    //banks popup form
-    const [showPopupBank, setShowPopupBank] = useState(false);
-    const [editModeBank, setEditModeBank] = useState(false);
-    const [editIndexBank, setEditIndexBank] = useState(null);
-    const [bankName, setBankName] = useState('');
-    const [accountHolderName, setAccountHolderName] = useState('');
-    const [accountNumber, setAccountNumber] = useState('');
-    const [ifscCode, setIfscCode] = useState('');
-    const [branchName, setBranchName] = useState('');
-    const [swiftCode, setSwiftCode] = useState('');
-
-    const handleAddBank = () => {
-        setShowPopupBank(true);
-        setEditModeBank(false);
-        setBankName('');
-        setAccountHolderName('');
-        setAccountNumber('');
-        setIfscCode('');
-        setBranchName('');
-        setSwiftCode('');
-    };
-    const handleEditBank = (index) => {
-        const bankToEdit = bankList[index];
-        setEditIndexBank(index);
-        setBankName(bankToEdit.bankName);
-        setAccountHolderName(bankToEdit.accountHolderName);
-        setAccountNumber(bankToEdit.accountNumber);
-        setIfscCode(bankToEdit.ifscCode);
-        setBranchName(bankToEdit.branchName);
-        setSwiftCode(bankToEdit.swiftCode);
-        setShowPopupBank(true);
-        setEditModeBank(true);
-    };
-    const handleCloseBank = () => {
-        setShowPopupBank(false);
-        setEditModeBank(false);
-        setBankName('');
-        setAccountHolderName('');
-        setAccountNumber('');
-        setIfscCode('');
-        setBranchName('');
-        setSwiftCode('');
-    };
-    const handleSubmitBank = () => {
-        const newBank = { bankName, accountHolderName, accountNumber, ifscCode, branchName, swiftCode };
-        if (editModeBank) {
-            const updatedBankList = [...bankList];
-            updatedBankList[editIndexBank] = newBank;
-            setBankList(updatedBankList);
-            localStorage.setItem('banks', JSON.stringify(updatedBankList));
-        } else {
-            const updatedBankList = [...bankList, newBank];
-            setBankList(updatedBankList);
-            localStorage.setItem('banks', JSON.stringify(updatedBankList));
-        }
-        setShowPopupBank(false);
-        setEditModeBank(false);
-        setBankName('');
-        setAccountHolderName('');
-        setAccountNumber('');
-        setIfscCode('');
-        setBranchName('');
-        setSwiftCode('');
-    };
-    const handleDeleteBank = (index) => {
-        const updatedBankList = [...bankList];
-        updatedBankList.splice(index, 1);
-        setBankList(updatedBankList);
-        localStorage.setItem('banks', JSON.stringify(updatedBankList));
+    // page
+    const [subCurrentPage, setsubCurrentPage] = useState(1);
+    const handleSubPageChange = (subPageNumber) => {
+        setsubCurrentPage(subPageNumber);
     };
 
-
-
-    //upis popup form
-    const [showPopupUpi, setShowPopupUpi] = useState(false);
-    const [editModeUpi, setEditModeUpi] = useState(false);
-    const [editIndexUpi, setEditIndexUpi] = useState(null);
-    const [upi, setUpi] = useState('');
-
-    const handleAddUpi = () => {
-        setShowPopupUpi(true);
-        setEditModeUpi(false);
-        setUpi('');
-    };
-    const handleEditUpi = (index) => {
-        const upiToEdit = upiList[index];
-        setEditIndexUpi(index);
-        setUpi(upiToEdit.upi);
-        setShowPopupUpi(true);
-        setEditModeUpi(true);
-    };
-    const handleCloseUpi = () => {
-        setShowPopupUpi(false);
-        setEditModeUpi(false);
-        setUpi('');
-    };
-    const handleSubmitUpi = () => {
-        const newUpi = { upi };
-        if (editModeUpi) {
-            const updatedUpiList = [...upiList];
-            updatedUpiList[editIndexUpi] = newUpi;
-            setUpiList(updatedUpiList);
-            localStorage.setItem('upis', JSON.stringify(updatedUpiList));
-        } else {
-            const updatedUpiList = [...upiList, newUpi];
-            setUpiList(updatedUpiList);
-            localStorage.setItem('upis', JSON.stringify(updatedUpiList));
-        }
-        setShowPopupUpi(false);
-        setEditModeUpi(false);
-        setUpi('');
-    };
-    const handleDeleteUpi = (index) => {
-        const updatedUpiList = [...upiList];
-        updatedUpiList.splice(index, 1);
-        setUpiList(updatedUpiList);
-        localStorage.setItem('upis', JSON.stringify(updatedUpiList));
-    };
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
 
     return (
@@ -228,12 +250,11 @@ const Payment = () => {
                 <button onClick={() => handleSubPageChange(3)} className={subCurrentPage === 3 ? 'toggle-active btn-toggle box2 flex' : 'btn-toggle box2 flex'}><div className="heading2">UPIs</div></button>
             </div>
 
-          {/* 
             {subCurrentPage === 1 && (
                 <div className='flexcol wh' style={{ gap: '20px' }}>
                     <div className="productlist3">
                         <div className="flexcol" style={{ gap: '20px' }}>
-                            <div className="heading wh">My Cards</div>
+                            <div className="heading wh">My Cards ({cardDetails.length})</div>
                             <div className="heading2 wh">Add your cards here. You can select your card by which you want to pay on the checkout page.</div>
                         </div>
                         <div className="flexcol" style={{ gap: '20px' }}>
@@ -241,17 +262,17 @@ const Payment = () => {
                         </div>
                     </div>
                     <div className="productlist2">
-                        {cardList.length === 0 ? (
+                        {cardDetails.length === 0 ? (
                             <div className="heading3">You have no cards.</div>
                         ) : (
                             <div className='card-grid'>
-                                {cardList.map((card, index) => (
-                                    <div className="card-grid-item" key={index}>
+                                {cardDetails.map((card, index) => (
+                                    <div className="card-grid-item" key={uuidv4()}>
                                         <div className="card">
                                             <div className="card-number">{formatCardNumber(card.cardNumber)}</div>
                                             <div className="card-holder">
                                                 <span>Card Holder</span>
-                                                <span>{card.fullName}</span>
+                                                <span>{card.fullname}</span>
                                             </div>
                                             <div className="expiry-date">
                                                 <span>Expiry</span>
@@ -264,31 +285,12 @@ const Payment = () => {
                                         </div>
                                     </div>
                                 ))}
-                                <div className="card-grid-item">
-                                    <div className="card">
-                                        <div className="card-number">1234 5678 9012 3456</div>
-                                        <div className="card-holder">
-                                            <span>Card Holder</span>
-                                            <span>John Doe</span>
-                                        </div>
-                                        <div className="expiry-date">
-                                            <span>Expiry</span>
-                                            <div className="flex" style={{ gap: '5px' }}>
-                                                <EditNoteIcon style={{ cursor: 'pointer' }} />
-                                                <DeleteIcon style={{ cursor: 'pointer' }} />
-                                            </div>
-                                            <span>12/24</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-
                             </div>
                         )}
                     </div>
                     {showPopupCard && (
                         <div className='popup-parent'>
-                            <form className='popup-child'>
+                            <form className='popup-child' onSubmit={handleSubmitCard}>
                                 <div className="popupform">
                                     <div className="heading wh">Add New Card</div>
                                     <div className="heading2">Enter card number</div>
@@ -296,9 +298,9 @@ const Payment = () => {
                                     <div className="heading2">Enter expiry date</div>
                                     <input type="text" placeholder="MM/YY" className="box flex" maxLength={5} value={expiryDate} onChange={handleslash} />
                                     <div className="heading2">Enter full name (same as on the card)</div>
-                                    <input type="text" placeholder='Enter full name' className="box flex" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                                    <input type="text" placeholder='Enter full name' className="box flex" value={fullname} onChange={(e) => setFullname(e.target.value)} />
                                     <div className="flex" style={{ gap: '20px' }}>
-                                        <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleSubmitCard}><div className="heading2">Save</div></button>
+                                        <button className='btn box2 flex' style={{ width: 'fit-content' }} type="submit" disabled={isSubmittingCard}><div className="heading2">{isSubmittingCard ? 'Submitting...' : 'Submit'}</div></button>
                                         <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleCloseCard}><div className="heading2">Cancel</div></button>
                                     </div>
                                 </div>
@@ -312,7 +314,7 @@ const Payment = () => {
                 <div className='flexcol wh' style={{ gap: '20px' }}>
                     <div className="productlist3">
                         <div className="flexcol" style={{ gap: '20px' }}>
-                            <div className="heading wh">Bank Details</div>
+                            <div className="heading wh">Bank Details ({bankDetails.length})</div>
                             <div className="heading2 wh">Add your bank accounts here. You can select your account by which you want to pay on the checkout page.</div>
                         </div>
                         <div className="flexcol" style={{ gap: '20px' }}>
@@ -320,22 +322,23 @@ const Payment = () => {
                         </div>
                     </div>
                     <div className="productlist2">
-                        {cardList.length === 0 ? (
+                        { bankDetails.length === 0 ? (
                             <div className="heading3">There are no bank accounts.</div>
                         ) : (
                             <Fragment>
-                                {bankList.map((bank, index) => (
-                                    <div className="productlist4" key={index}>
+                                {bankDetails.map((bank, index) => (
+                                    <div className="productlist4" key={uuidv4()}>
                                         <div className="flexcol-start" style={{ gap: '20px' }}>
                                             <div className="flex" style={{ gap: '20px' }}>
                                                 <div className='descrip2' style={{ textTransform: 'uppercase', fontWeight: '600' }}>{bank.bankName}</div>
-                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.accountHolderName}</div>
-                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.accountNumber}</div>
+                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.accHolderName}</div>
+                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.accNo}</div>
                                             </div>
                                             <div className="flex" style={{ gap: '20px' }}>
-                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.ifscCode}</div>
-                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.branchName}</div>
-                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.swiftCode}</div>
+                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.ifsc}</div>
+                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.bankLocation}</div>
+                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.swiftBIC}</div>
+                                                <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.iban}</div>
                                             </div>
                                         </div>
                                         <div className="flexcol" style={{ gap: '20px' }}>
@@ -349,18 +352,19 @@ const Payment = () => {
                     </div>
                     {showPopupBank && (
                         <div className='popup-parent'>
-                            <form className='popup-child'>
+                            <form className='popup-child' onSubmit={handleSubmitBank}>
                                 <div className="popupform">
                                     <div className="heading wh">Add New Bank Account</div>
                                     <input type="text" placeholder='Enter bank name' className="box flex" value={bankName} onChange={(e) => setBankName(e.target.value)} />
-                                    <input type="text" placeholder='Enter account holder name' className="box flex" value={accountHolderName} onChange={(e) => setAccountHolderName(e.target.value)} />
-                                    <input type="text" placeholder='Enter account number' className="box flex" value={accountNumber} onChange={(e) => setAccountNumber(e.target.value)} />
+                                    <input type="text" placeholder='Enter account holder name' className="box flex" value={accHolderName} onChange={(e) => setAccHolderName(e.target.value)} />
+                                    <input type="text" placeholder='Enter account number' className="box flex" value={accNo} onChange={(e) => setAccNo(e.target.value)} />
 
-                                    <input type="text" placeholder='Enter IFSC code' className="box flex" value={ifscCode} onChange={(e) => setIfscCode(e.target.value)} />
-                                    <input type="text" placeholder='Enter branch name' className="box flex" value={branchName} onChange={(e) => setBranchName(e.target.value)} />
-                                    <input type="text" placeholder='Enter swift code' className="box flex" value={swiftCode} onChange={(e) => setSwiftCode(e.target.value)} />
+                                    <input type="text" placeholder='Enter IFSC code' className="box flex" value={ifsc} onChange={(e) => setIfsc(e.target.value)} />
+                                    <input type="text" placeholder='Enter branch name' className="box flex" value={bankLocation} onChange={(e) => setBankLocation(e.target.value)} />
+                                    <input type="text" placeholder='Enter swift code' className="box flex" value={swiftBIC} onChange={(e) => setSwiftBIC(e.target.value)} />
+                                    <input type="text" placeholder='Enter IBAN code' className="box flex" value={iban} onChange={(e) => setIban(e.target.value)} />
                                     <div className="flex" style={{ gap: '20px' }}>
-                                        <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleSubmitBank}><div className="heading2">Save</div></button>
+                                        <button className='btn box2 flex' style={{ width: 'fit-content' }} type="submit" disabled={isSubmitting}><div className="heading2">{isSubmitting ? 'Submitting...' : 'Submit'}</div></button>
                                         <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleCloseBank}><div className="heading2">Cancel</div></button>
                                     </div>
                                 </div>
@@ -374,7 +378,7 @@ const Payment = () => {
                 <div className='flexcol wh' style={{ gap: '20px' }}>
                     <div className="productlist3">
                         <div className="flexcol" style={{ gap: '20px' }}>
-                            <div className="heading wh">Add UPIs</div>
+                            <div className="heading wh">UPIs ({upiDetails.length})</div>
                             <div className="heading2 wh">Add your UPIs here. You can select your upi by which you want to pay on the checkout page.</div>
                         </div>
                         <div className="flexcol" style={{ gap: '20px' }}>
@@ -382,12 +386,12 @@ const Payment = () => {
                         </div>
                     </div>
                     <div className="productlist2">
-                        {upiList.length === 0 ? (
+                        { upiDetails.length === 0 ? (
                             <div className="heading3">There are no UPIs.</div>
                         ) : (
                             <Fragment>
-                                {upiList.map((upis, index) => (
-                                    <div className="productlist4" key={index}>
+                                {upiDetails.map((upis, index) => (
+                                    <div className="productlist4" key={uuidv4()}>
                                         <div className="flex wh" style={{ gap: '20px', justifyContent: 'space-between' }}>
                                             <div className='descrip2' style={{ textTransform: 'uppercase', fontWeight: '600' }}>{upis.upi}</div>
                                             <div className="flex" style={{ gap: '20px' }}>
@@ -402,14 +406,14 @@ const Payment = () => {
                     </div>
                     {showPopupUpi && (
                         <div className='popup-parent'>
-                            <form className='popup-child'>
+                            <form className='popup-child' onSubmit={handleSubmitUpi}>
                                 <div className="popupform">
                                     <div className="heading wh">Add New UPI</div>
 
                                     <input type="text" placeholder='Enter a upi' className="box flex" value={upi} onChange={(e) => setUpi(e.target.value)} />
 
                                     <div className="flex" style={{ gap: '20px' }}>
-                                        <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleSubmitUpi}><div className="heading2">Save</div></button>
+                                        <button className='btn box2 flex' style={{ width: 'fit-content' }} type="submit" disabled={isSubmittingUpi}><div className="heading2">{isSubmittingUpi ? 'Submitting...' : 'Submit'}</div></button>
                                         <button className='btn box2 flex' style={{ width: 'fit-content' }} type="button" onClick={handleCloseUpi}><div className="heading2">Cancel</div></button>
                                     </div>
                                 </div>
@@ -417,8 +421,7 @@ const Payment = () => {
                         </div>
                     )}
                 </div>
-            )} */}
-
+            )}
         </div>
     )
 }
