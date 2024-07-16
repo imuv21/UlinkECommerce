@@ -18,7 +18,8 @@ import sellerBusinessProfileSlice from './sellerBusinessProfileSlice';
 import bankDetailsReducer from './bankDetailsSlice';
 import selectedAddressReducer from './selectedAddress';
 import uploadBuyerDocSlice from './uploadBuyerDocSlice';
-import bankReducer from './paymentMethods';
+import paymentMethodsReducer from './paymentMethods';
+import selectedPaymentMethodReducer from './selectedPaymentMethod';
 
 
 const rootReducer = combineReducers({
@@ -40,7 +41,8 @@ const rootReducer = combineReducers({
   bankDetails: bankDetailsReducer,
   selectedAddress: selectedAddressReducer,
   uploadBuyerDoc: uploadBuyerDocSlice,
-  paymentMethods: bankReducer,
+  paymentMethods: paymentMethodsReducer,
+  selectedPaymentMethod: selectedPaymentMethodReducer,
 });
 
 export default rootReducer;

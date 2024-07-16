@@ -451,7 +451,6 @@ const Header = () => {
         </div>
 
         <div className="headerflex">
-
           {isAuthenticated && (
             <div ref={isClickedAddRef} className={`icon-container ${isClickedAdd ? 'clicked' : ''}`} onClick={handleClickAdd}>
               <div className="flex">
@@ -560,7 +559,6 @@ const Header = () => {
               {isClicked && (
                 <div ref={popupisClickedRef} className="popup account">
                   <div className='popupbox'>
-
                     <div className="username">
                       {user.firstname} {user.lastname}
                     </div>
@@ -584,8 +582,6 @@ const Header = () => {
                         </div>
                       )
                     ) : null}
-
-
                   </div>
 
                   <div className='popupbox'>
@@ -594,7 +590,7 @@ const Header = () => {
                     <Link to={user.role === 'Seller' ? '/seller-dashboard/seller-orders' : '/order-page'} className="pop-options"> <AllInboxIcon /> Orders </Link>
                     {user.role === 'Seller' && (<div className="pop-options"> <MessageIcon /> Messages </div>)}
                     <div className="pop-options"> <SendTimeExtensionIcon /> RFQ Marketplace </div>
-                    <div className="pop-options"> <SendIcon />{user.role === 'Buyer' ? 'Create RFQ' : 'Manage Quotes'}</div>
+                    <Link to={user.role === 'Buyer' ? '/createrfq' : '/quotes'} className="pop-options"> <SendIcon />{user.role === 'Buyer' ? 'Create RFQ' : 'Manage Quotes'}</Link>
                     {user.role === 'Seller' && (<Link to="/seller-dashboard/product-list" className="pop-options"> <StorefrontIcon />Product Catalogue</Link>)}
                   </div>
 

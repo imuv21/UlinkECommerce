@@ -57,6 +57,50 @@ export const fetchPaymentDetails = createAsyncThunk(
     }
 );
 
+export const editBankDetailBuyer = createAsyncThunk(
+    'paymentMethods/editBankDetailBuyer',
+    async ({ details, type }, { getState, rejectWithValue }) => {
+        try {
+            const { auth } = getState();
+            const token = auth.token;
+            const endpoint = `${BASE_URL}/buyer/update-payment-methods`;
+
+            const response = await axios.post(
+                endpoint,
+                { ...details, type },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || 'Network Error');
+        }
+    }
+);
+
+export const deletePaymentMethod = createAsyncThunk(
+    'paymentMethods/deletePaymentMethod',
+    async (id, { getState, rejectWithValue }) => {
+        try {
+            const { auth } = getState();
+            const token = auth.token;
+            const endpoint = `${BASE_URL}/buyer/delete-payment-methods?id=${id}`;
+
+            const response = await axios.delete(endpoint, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || 'Network Error');
+        }
+    }
+);
+
 const bankSlice = createSlice({
     name: 'paymentMethods',
     initialState,
@@ -92,6 +136,36 @@ const bankSlice = createSlice({
                 state.error = null;
             })
             .addCase(fetchPaymentDetails.rejected, (state, action) => {
+                state.loading = false;
+                state.success = false;
+                state.error = action.payload || 'Something went wrong';
+            })
+            .addCase(deletePaymentMethod.pending, (state) => {
+                state.loading = true;
+                state.success = false;
+                state.error = null;
+            })
+            .addCase(deletePaymentMethod.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+            })
+            .addCase(deletePaymentMethod.rejected, (state, action) => {
+                state.loading = false;
+                state.success = false;
+                state.error = action.payload || 'Something went wrong';
+            })
+            .addCase(editBankDetailBuyer.pending, (state) => {
+                state.loading = true;
+                state.success = false;
+                state.error = null;
+            })
+            .addCase(editBankDetailBuyer.fulfilled, (state) => {
+                state.loading = false;
+                state.success = true;
+                state.error = null;
+            })
+            .addCase(editBankDetailBuyer.rejected, (state, action) => {
                 state.loading = false;
                 state.success = false;
                 state.error = action.payload || 'Something went wrong';

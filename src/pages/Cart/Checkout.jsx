@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchExchangeRates } from '../../Redux/currencySlice';
-import currencySymbols from '../../components/Schemas/currencySymbols';
+import { fetchPaymentDetails } from '../../Redux/paymentMethods';
 import { fetchAddresses } from '../../Redux/addressSlice';
 import { setSelectedAddress } from '../../Redux/selectedAddress';
+import { setSelectedPaymentMethod } from '../../Redux/selectedPaymentMethod';
+import currencySymbols from '../../components/Schemas/currencySymbols';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import SailingIcon from '@mui/icons-material/Sailing';
@@ -33,11 +35,11 @@ const Checkout = () => {
     const priceInUSD = price / exchangeRates[fromCurrency];
     return (priceInUSD * rate).toFixed(2);
   };
-
   const [subCurrentPage, setsubCurrentPage] = useState(1);
   const handleSubPageChange = (subPageNumber) => {
     setsubCurrentPage(subPageNumber);
   };
+
 
 
   //addresss
@@ -80,70 +82,63 @@ const Checkout = () => {
 
 
 
-
-
-
   //cards 
-  const [cards, setCards] = useState([]);
+  const { bankDetails, upiDetails, cardDetails, loading, error } = useSelector((state) => state.paymentMethods);
+  const selectedPaymentMethod = useSelector((state) => state.selectedPaymentMethod.paymentMethod);
   const [selectedCard, setSelectedCard] = useState({});
-  const retrieveCards = () => {
-    const storedCards = localStorage.getItem('cards');
-    if (storedCards) {
-      setCards(JSON.parse(storedCards));
-    }
-  };
-  useEffect(() => {
-    retrieveCards();
-  }, []);
-  const handleCardChange = (event) => {
-    const selectedCardData = cards.find(
-      (card) => card.fullName === event.target.value
-    );
-    setSelectedCard(selectedCardData);
-  };
-
-
-  //banks 
-  const [banks, setBanks] = useState([]);
   const [selectedBank, setSelectedBank] = useState({});
-  const retrieveBanks = () => {
-    const storedBanks = localStorage.getItem('banks');
-    if (storedBanks) {
-      setBanks(JSON.parse(storedBanks));
-    }
-  };
-  useEffect(() => {
-    retrieveBanks();
-  }, []);
-  const handleBankChange = (event) => {
-    const selectedBankData = banks.find(
-      (bank) => bank.accountHolderName === event.target.value
-    );
-    setSelectedBank(selectedBankData);
-  };
-
-
-  //upis 
-  const [upis, setUpis] = useState([]);
   const [selectedUpi, setSelectedUpi] = useState({});
-  const retrieveUpis = () => {
-    const storedUpis = localStorage.getItem('upis');
-    if (storedUpis) {
-      setUpis(JSON.parse(storedUpis));
-    }
-  };
+
   useEffect(() => {
-    retrieveUpis();
-  }, []);
+    dispatch(fetchPaymentDetails());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedPaymentMethod) {
+      switch (selectedPaymentMethod.type) {
+        case 'card':
+          setSelectedCard(selectedPaymentMethod.data);
+          break;
+        case 'bank':
+          setSelectedBank(selectedPaymentMethod.data);
+          break;
+        case 'upi':
+          setSelectedUpi(selectedPaymentMethod.data);
+          break;
+        default:
+          break;
+      }
+    }
+  }, [selectedPaymentMethod]);
+
+  const handleCardChange = (event) => {
+    const selectedCardData = cardDetails.find(
+      (card) => card.fullname === event.target.value
+    );
+    setSelectedCard(selectedCardData || {});
+    dispatch(setSelectedPaymentMethod({ type: 'card', data: selectedCardData || {} }));
+  };
+
+  const handleBankChange = (event) => {
+    const selectedBankData = bankDetails.find(
+      (bank) => bank.accHolderName === event.target.value
+    );
+    setSelectedBank(selectedBankData || {});
+    dispatch(setSelectedPaymentMethod({ type: 'bank', data: selectedBankData || {} }));
+  };
+
   const handleUpiChange = (event) => {
-    const selectedUpiData = upis.find(
+    const selectedUpiData = upiDetails.find(
       (upis) => upis.upi === event.target.value
     );
-    setSelectedUpi(selectedUpiData);
+    setSelectedUpi(selectedUpiData || {});
+    dispatch(setSelectedPaymentMethod({ type: 'upi', data: selectedUpiData || {} }));
   };
 
-  const totalOrder = totalSellPrice + totalUnitGstPrice;
 
+
+
+  const totalOrder = totalSellPrice + totalUnitGstPrice;
   const scrollRef = useRef(null);
   useEffect(() => {
     if (scrollRef.current) {
@@ -152,12 +147,9 @@ const Checkout = () => {
   }, []);
 
 
-   // const paypalHandler = async (amount, currency) => {
-  //   console.log('paypal handler');
-  // };
+
   // payment methods 
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('razorpay');
-
   const razorpayHandler = async (amount, currency) => {
     console.log(amount, currency);
 
@@ -209,7 +201,6 @@ const Checkout = () => {
       setPaymentStatus('error');
     }
   };
-
   const paypalHandler = async (amount, currency) => {
     try {
       const fPrice = Number(amount).toFixed(2);
@@ -228,7 +219,6 @@ const Checkout = () => {
       console.error("Payment Error: ", error);
     }
   };
-
   const handlePaymentClick = () => {
     const amount = convertPrice(totalOrder, currency);
     const selectedCurrency = currency;
@@ -241,6 +231,19 @@ const Checkout = () => {
   };
 
 
+
+
+
+  //private data 
+  const maskText = (text) => {
+    if (text.length <= 4) {
+      return text; 
+    }
+    const maskedLength = text.length - 4;
+    const maskedPart = '*'.repeat(maskedLength);
+    const visiblePart = text.slice(-4);
+    return maskedPart + visiblePart;
+  };
 
 
 
@@ -338,73 +341,88 @@ const Checkout = () => {
             </div>
           </div>
 
-          {subCurrentPage === 1 && (
-            <div className="checkout webdiv">
-              <div className="heading3 wh">Cards</div>
-              <select className='coupon' value={selectedCard.address} onChange={handleCardChange}>
-                <option value=''>Select a card</option>
-                {cards.map((card, index) => (
-                  <option key={index} value={card.fullName}>
-                    {card.fullName}
-                  </option>
-                ))}
-              </select>
-              {selectedCard.fullName && (
-                <div className='flex-start wh' style={{ gap: '20px' }}>
-                  <CreditCardIcon style={{ width: '17px', color: 'gray' }} />
-                  <div className='descrip2'>{selectedCard.fullName}</div>
-                  <div className="descrip2">{selectedCard.cardNumber}</div>
-                  <div className="descrip2">{selectedCard.expiryDate}</div>
-                </div>
-              )}
-            </div>
-          )}
+          {
+            loading ? (
+              <div className="heading2">
+                Loading...
+              </div>
+            ) : error ? (
+              <div className="heading2">
+                {error}
+              </div>
+            ) : (
+              <>
+                {subCurrentPage === 1 && (
+                  <div className="checkout webdiv">
+                    <div className="heading3 wh">Cards</div>
+                    <select className='coupon' value={selectedCard.fullname || ''} onChange={handleCardChange}>
+                      <option value=''>Select a card</option>
+                      {cardDetails.map((card, index) => (
+                        <option key={index} value={card.fullname}>
+                          {card.fullname}
+                        </option>
+                      ))}
+                    </select>
+                    {selectedCard?.fullname && (
+                      <div className='flex-start wh' style={{ gap: '20px' }}>
+                        <CreditCardIcon style={{ width: '17px', color: 'gray' }} />
+                        <div className='descrip2'>{selectedCard.fullname}</div>
+                        <div className="descrip2">{maskText(selectedCard.cardNumber)}</div>
+                        <div className="descrip2">{selectedCard.expiryDate}</div>
+                      </div>
+                    )}
+                  </div>
+                )}
 
-          {subCurrentPage === 2 && (
-            <div className="checkout webdiv">
-              <div className="heading3 wh">Bank accounts</div>
-              <select className='coupon' value={selectedBank.address} onChange={handleBankChange}>
-                <option value=''>Select an account</option>
-                {banks.map((bank, index) => (
-                  <option key={index} value={bank.accountHolderName}>
-                    {bank.accountHolderName}
-                  </option>
-                ))}
-              </select>
-              {selectedBank.accountHolderName && (
-                <div className='flex-start wh' style={{ gap: '20px' }} >
-                  <AccountBalanceIcon style={{ width: '17px', color: 'gray' }} />
-                  <div className='descrip2'>{selectedBank.accountHolderName}</div>
-                  <div className="descrip2">{selectedBank.accountNumber}</div>
-                  <div className="descrip2">{selectedBank.bankName}</div>
+                {subCurrentPage === 2 && (
+                  <div className="checkout webdiv">
+                    <div className="heading3 wh">Bank accounts</div>
+                    <select className='coupon' value={selectedBank.accHolderName || ''} onChange={handleBankChange}>
+                      <option value=''>Select an account</option>
+                      {bankDetails.map((bank, index) => (
+                        <option key={index} value={bank.accHolderName}>
+                          {bank.accHolderName}
+                        </option>
+                      ))}
+                    </select>
+                    {selectedBank?.accHolderName && (
+                      <div className='flex-start wh' style={{ gap: '20px' }} >
+                        <AccountBalanceIcon style={{ width: '17px', color: 'gray' }} />
+                        <div className='descrip2'>{selectedBank.accHolderName}</div>
+                        <div className="descrip2">{maskText(selectedBank.accNo)}</div>
+                        <div className="descrip2">{selectedBank.bankName}</div>
+                        <div className="descrip2">{selectedBank.bankLocation}</div>
+                        <div className="descrip2">{selectedBank.ifsc}</div>
+                        <div className="descrip2">{selectedBank.swiftBIC}</div>
+                        <div className="descrip2">{selectedBank.iban}</div>
+                      </div>
+                    )}
+                  </div>
+                )}
 
-                  <div className="descrip2">{selectedBank.branchName}</div>
-                  <div className="descrip2">{selectedBank.ifscCode}</div>
-                  <div className="descrip2">{selectedBank.swiftCode}</div>
-                </div>
-              )}
-            </div>
-          )}
+                {subCurrentPage === 3 && (
+                  <div className="checkout webdiv">
+                    <div className="heading3 wh">UPIs</div>
+                    <select className='coupon' value={selectedUpi.upi || ''} onChange={handleUpiChange}>
+                      <option value=''>Select a UPI</option>
+                      {upiDetails.map((upis, index) => (
+                        <option key={index} value={upis.upi}>
+                          {upis.upi}
+                        </option>
+                      ))}
+                    </select>
+                    {selectedUpi?.upi && (
+                      <div className='flex-start wh' style={{ gap: '20px' }} >
+                        <img src='https://res.cloudinary.com/dey1tujp8/image/upload/v1718266152/upi-id.1024x1024_xm8kjf.png' style={{ width: '17px', color: 'gray' }} alt='upi' />
+                        <div className='descrip2'>{selectedUpi.upi}</div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
+            )
+          }
 
-          {subCurrentPage === 3 && (
-            <div className="checkout webdiv">
-              <div className="heading3 wh">UPIs</div>
-              <select className='coupon' value={selectedUpi.address} onChange={handleUpiChange}>
-                <option value=''>Select a UPI</option>
-                {upis.map((upis, index) => (
-                  <option key={index} value={upis.upi}>
-                    {upis.upi}
-                  </option>
-                ))}
-              </select>
-              {selectedUpi.upi && (
-                <div className='flex-start wh' style={{ gap: '20px' }} >
-                  <img src='https://res.cloudinary.com/dey1tujp8/image/upload/v1718266152/upi-id.1024x1024_xm8kjf.png' style={{ width: '17px', color: 'gray' }} alt='upi' />
-                  <div className='descrip2'>{selectedUpi.upi}</div>
-                </div>
-              )}
-            </div>
-          )}
 
           {subCurrentPage === 4 && (
             <div className="checkout webdiv">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addBankDetailBuyer, fetchPaymentDetails } from '../../../Redux/paymentMethods';
+import { addBankDetailBuyer, fetchPaymentDetails, deletePaymentMethod, editBankDetailBuyer } from '../../../Redux/paymentMethods';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Helmet } from 'react-helmet-async';
@@ -41,27 +41,19 @@ const Payment = () => {
         dispatch(fetchPaymentDetails());
     }, [dispatch]);
 
-    // useEffect(() => {
-    //     if (bankDetails.length > 0) {
-    //         console.log('Bank details in component:', bankDetails);
-    //     }
-    // }, [bankDetails]);
-    // useEffect(() => {
-    //     if (upiDetails.length > 0) {
-    //         console.log('UPI details in component:', upiDetails);
-    //     }
-    // }, [upiDetails]);
-    // useEffect(() => {
-    //     if (cardDetails.length > 0) {
-    //         console.log('Card details in component:', cardDetails);
-    //     }
-    // }, [cardDetails]);
-
-
+  
     //banks popup form
     const handleAddBank = () => {
-        setShowPopupBank(true);
+        setBankName('');
+        setAccHolderName('');
+        setAccNo('');
+        setIfsc('');
+        setBankLocation('');
+        setSwiftBIC('');
+        setIban('');
         setEditModeBank(false);
+        setEditIndexBank(null);
+        setShowPopupBank(true);
     };
     const handleSubmitBank = async (e) => {
         e.preventDefault();
@@ -78,11 +70,16 @@ const Payment = () => {
         };
 
         try {
-            await dispatch(addBankDetailBuyer({ details: newBankDetails, type: 'BANK' })).unwrap();
+            if (editModeBank) {
+                await dispatch(editBankDetailBuyer({ details: { ...newBankDetails, id: bankDetails[editIndexBank].id }, type: 'BANK' })).unwrap();
+                alert('Bank details updated successfully!');
+            } else {
+                await dispatch(addBankDetailBuyer({ details: newBankDetails, type: 'BANK' })).unwrap();
+                alert('Bank details added successfully!');
+            }
             dispatch(fetchPaymentDetails());
-            alert('Bank details added successfully!');
         } catch (err) {
-            alert('Failed to add bank details: ' + (err.message || 'Unknown error'));
+            alert((editModeBank ? 'Failed to update' : 'Failed to add') + ' Bank details: ' + (err.message || 'Unknown error'));
         } finally {
             setIsSubmitting(false);
             handleCloseBank();
@@ -91,6 +88,7 @@ const Payment = () => {
     const handleCloseBank = () => {
         setShowPopupBank(false);
         setEditModeBank(false);
+        setEditIndexBank(null);
         setBankName('');
         setAccHolderName('');
         setAccNo('');
@@ -112,28 +110,37 @@ const Payment = () => {
         setEditIndexBank(index);
         setShowPopupBank(true);
     };
-    const handleDeleteBank = (index) => {
+    const handleDeleteBank = async (index) => {
+        const bankId = bankDetails[index].id;
+        await dispatch(deletePaymentMethod(bankId));
+        dispatch(fetchPaymentDetails());
     };
 
 
     //upis popup form
     const handleAddUpi = () => {
-        setShowPopupUpi(true);
+        setUpi('');
         setEditModeUpi(false);
+        setEditIndexUpi(null);
+        setShowPopupUpi(true);
     };
     const handleSubmitUpi = async (e) => {
         e.preventDefault();
         if (isSubmittingUpi) return;
         setIsSubmittingUpi(true);
-        const newUpiDetails = {
-            upi
-        };
+        const newUpiDetails = { upi };
+
         try {
-            await dispatch(addBankDetailBuyer({ details: newUpiDetails, type: 'UPI' })).unwrap();
+            if (editModeUpi) {
+                await dispatch(editBankDetailBuyer({ details: { ...newUpiDetails, id: upiDetails[editIndexUpi].id }, type: 'UPI' })).unwrap();
+                alert('UPI details updated successfully!');
+            } else {
+                await dispatch(addBankDetailBuyer({ details: newUpiDetails, type: 'UPI' })).unwrap();
+                alert('UPI details added successfully!');
+            }
             dispatch(fetchPaymentDetails());
-            alert('UPI details added successfully!');
         } catch (err) {
-            alert('Failed to add UPI details: ' + (err.message || 'Unknown error'));
+            alert((editModeUpi ? 'Failed to update' : 'Failed to add') + ' UPI details: ' + (err.message || 'Unknown error'));
         } finally {
             setIsSubmittingUpi(false);
             handleCloseUpi();
@@ -142,6 +149,7 @@ const Payment = () => {
     const handleCloseUpi = () => {
         setShowPopupUpi(false);
         setEditModeUpi(false);
+        setEditIndexUpi(null);
         setUpi('');
     };
     const handleEditUpi = (index) => {
@@ -151,7 +159,10 @@ const Payment = () => {
         setEditIndexUpi(index);
         setShowPopupUpi(true);
     };
-    const handleDeleteUpi = (index) => {
+    const handleDeleteUpi = async (index) => {
+        const upiId = upiDetails[index].id;
+        await dispatch(deletePaymentMethod(upiId));
+        dispatch(fetchPaymentDetails());
     };
 
 
@@ -176,8 +187,12 @@ const Payment = () => {
         setExpiryDate(value);
     };
     const handleAddCard = () => {
-        setShowPopupCard(true);
+        setCardNumber('');
+        setExpiryDate('');
+        setFullname('');
         setEditModeCard(false);
+        setEditIndexCard(null);
+        setShowPopupCard(true);
     };
     const handleSubmitCard = async (e) => {
         e.preventDefault();
@@ -191,11 +206,17 @@ const Payment = () => {
         };
 
         try {
-            await dispatch(addBankDetailBuyer({ details: newCardDetails, type: 'CARD' })).unwrap();
+            if (editModeCard) {
+                await dispatch(editBankDetailBuyer({ details: { ...newCardDetails, id: cardDetails[editIndexCard].id }, type: 'CARD' })).unwrap();
+                alert('Card details updated successfully!');
+            } else {
+                await dispatch(addBankDetailBuyer({ details: newCardDetails, type: 'CARD' })).unwrap();
+                alert('Card details added successfully!');
+            }
             dispatch(fetchPaymentDetails());
-            alert('Card details added successfully!');
         } catch (err) {
-            alert('Failed to add card details: ' + (err.message || 'Unknown error'));
+            alert((editModeCard ? 'Failed to update' : 'Failed to add') + ' Card details: ' + (err.message || 'Unknown error'));
+
         } finally {
             setIsSubmittingCard(false);
             handleCloseCard();
@@ -204,6 +225,7 @@ const Payment = () => {
     const handleCloseCard = () => {
         setShowPopupCard(false);
         setEditModeCard(false);
+        setEditIndexCard(null);
         setCardNumber('');
         setExpiryDate('');
         setFullname('');
@@ -217,7 +239,10 @@ const Payment = () => {
         setEditIndexCard(index);
         setShowPopupCard(true);
     };
-    const handleDeleteCard = (index) => {
+    const handleDeleteCard = async (index) => {
+        const cardId = cardDetails[index].id;
+        await dispatch(deletePaymentMethod(cardId));
+        dispatch(fetchPaymentDetails());
     };
 
 
@@ -322,7 +347,7 @@ const Payment = () => {
                         </div>
                     </div>
                     <div className="productlist2">
-                        { bankDetails.length === 0 ? (
+                        {bankDetails.length === 0 ? (
                             <div className="heading3">There are no bank accounts.</div>
                         ) : (
                             <Fragment>
@@ -386,7 +411,7 @@ const Payment = () => {
                         </div>
                     </div>
                     <div className="productlist2">
-                        { upiDetails.length === 0 ? (
+                        {upiDetails.length === 0 ? (
                             <div className="heading3">There are no UPIs.</div>
                         ) : (
                             <Fragment>
