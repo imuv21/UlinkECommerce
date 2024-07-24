@@ -18,24 +18,129 @@ const FilterPage = () => {
 
     const query = useQuery().get('query') || '';
     const navigate = useNavigate();
-    const location = useLocation();
-    const { supOption = '', subOption = '', miniSubOption = '' } = location.state || {};
-    const [filteredProducts, setFilteredProducts] = useState([]);
-    const [sortBy, setSortBy] = useState('low');
+    // const location = useLocation();
+    // const { supOption = '', subOption = '', miniSubOption = '' } = location.state || {};
 
     const dispatch = useDispatch();
-    const { products, status, error, currentPage, totalPages } = useSelector((state) => state.products);
+    const { products, status, error, currentPage, totalPages, totalItems, numberOfElements, pageSize, lastPage, isLast, hasNext, hasPrevious, isFirst, firstPage } = useSelector((state) => state.products);
     const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
     const exchangeRates = useSelector(state => state.currency.exchangeRates);
 
-    //pagination
+    //product fetch
     const [page, setPage] = useState(currentPage);
     const [size, setSize] = useState(15);
-    useEffect(() => {
-        dispatch(fetchProducts({ page, size }));
-        dispatch(fetchExchangeRates());
-    }, [dispatch, page, size]);
+    const [sort, setSort] = useState('PRICE_HIGH_TO_LOW');
+    const [category, setCategory] = useState('');
+    const [vprice, setVprice] = useState([0, 100000]);
+    const minPrice = vprice[0];
+    const maxPrice = vprice[1];
 
+    const [selectedSupOption, setSelectedSupOption] = useState('');
+    const [selectedSubOption, setSelectedSubOption] = useState('');
+    const [selectedMiniSubOption, setSelectedMiniSubOption] = useState('');
+    const [selectedMicroSubOption, setSelectedMicroSubOption] = useState('');
+
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchProducts({ page, size, sort, category, minPrice, maxPrice }));
+        }
+    }, [status, dispatch, page, size, sort, category, minPrice, maxPrice]);
+    useEffect(() => {
+        if (status === 'success' || status === 'failed') {
+            setPage(currentPage);
+        }
+    }, [status, currentPage]);
+
+
+    useEffect(() => {
+        if (selectedSupOption && selectedSubOption && selectedMiniSubOption && selectedMicroSubOption) {
+            setCategory(selectedMicroSubOption);
+        } else if (selectedSupOption && selectedSubOption && selectedMiniSubOption) {
+            setCategory(selectedMiniSubOption);
+        } else if (selectedSupOption && selectedSubOption) {
+            setCategory(selectedSubOption);
+        } else if (selectedSupOption) {
+            setCategory(selectedSupOption);
+        } else {
+            setCategory('');
+        }
+    }, [selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption]);
+
+    useEffect(() => {
+        if (category) {
+            dispatch(fetchProducts({ page, size, sort, category, minPrice, maxPrice }));
+        }
+    }, [category, dispatch, page, size, sort, minPrice, maxPrice]);
+
+    //pagination, sorting, price and category
+    const handlePageChange = (newPage) => {
+        if (newPage >= 0 && newPage < totalPages) {
+            setPage(newPage);
+            dispatch(fetchProducts({ page: newPage, size, sort, category, minPrice, maxPrice }));
+        }
+    };
+    const handleSortChange = (e) => {
+        setSort(e.target.value);
+        dispatch(fetchProducts({ page, size, sort: e.target.value, category, minPrice, maxPrice }));
+    };
+    const priceHandler = (newPrice) => {
+        setVprice(newPrice);
+        setTimeout(() => {
+            dispatch(fetchProducts({ page, size, sort, category, minPrice: newPrice[0], maxPrice: newPrice[1] }));
+        }, 2000);
+    };
+
+    const handleSupOptionChange = (event) => {
+        const selectedOption = event.target.value;
+        setSelectedSupOption(selectedOption);
+        setSelectedSubOption('');
+        setSelectedMiniSubOption('');
+        setSelectedMicroSubOption('');
+    };
+    const handleSubOptionChange = (event) => {
+        const selectedOption = event.target.value;
+        setSelectedSubOption(selectedOption);
+        setSelectedMiniSubOption('');
+        setSelectedMicroSubOption('');
+    };
+    const handleMiniSubOptionChange = (event) => {
+        const selectedOption = event.target.value;
+        setSelectedMiniSubOption(selectedOption);
+        setSelectedMicroSubOption('');
+    };
+    const handleMicroSubOptionChange = (event) => {
+        const selectedOption = event.target.value;
+        setSelectedMicroSubOption(selectedOption);
+    };
+
+    // Function to get page numbers to display
+    const getPageNumbers = (currentPage, totalPages) => {
+        const pageNumbers = [];
+        const maxPageButtons = 5; // Number of page buttons to display at once
+
+        // Determine the start and end page numbers
+        let startPage = Math.max(0, currentPage - 2);
+        let endPage = Math.min(totalPages - 1, currentPage + 2);
+
+        // Ensure we always show the correct number of page buttons
+        if (endPage - startPage < maxPageButtons - 1) {
+            if (startPage === 0) {
+                endPage = Math.min(totalPages - 1, startPage + maxPageButtons - 1);
+            } else if (endPage === totalPages - 1) {
+                startPage = Math.max(0, endPage - maxPageButtons + 1);
+            }
+        }
+        for (let i = startPage; i <= endPage; i++) {
+            pageNumbers.push(i);
+        }
+        return pageNumbers;
+    };
+    const pageNumbers = getPageNumbers(page, totalPages);
+
+    //currency
+    useEffect(() => {
+        dispatch(fetchExchangeRates());
+    }, [dispatch]);
     const convertPrice = (price, fromCurrency) => {
         const rate = exchangeRates[selectedCurrency];
         if (!rate) return price;
@@ -43,112 +148,6 @@ const FilterPage = () => {
         return (priceInUSD * rate).toFixed(2);
     };
 
-    const handlePageChange = (newPage) => {
-        if (newPage >= 0 && newPage < totalPages) {
-            setPage(newPage);
-        }
-    };
-    const handlePageSizeChange = (e) => {
-        setSize(Number(e.target.value));
-        setPage(0);
-    };
-
-
-    // price
-    const [price, setPrice] = useState([0, 100000]);
-    const priceHandler = (event, newPrice) => {
-        setPrice(newPrice);
-    };
-
-
-
-    // Category filter 
-    const [selectedSupOption, setSelectedSupOption] = useState(supOption);
-    const [selectedSubOption, setSelectedSubOption] = useState(subOption);
-    const [selectedMiniSubOption, setSelectedMiniSubOption] = useState(miniSubOption);
-    const [selectedMicroSubOption, setSelectedMicroSubOption] = useState('');
-
-    const [isSecondSelectEnabled, setIsSecondSelectEnabled] = useState(!!supOption);
-    const [isThirdSelectEnabled, setIsThirdSelectEnabled] = useState(!!subOption);
-    const [isFourthSelectEnabled, setIsFourthSelectEnabled] = useState(!!miniSubOption);
-
-    const handleSupOptionChange = (event) => {
-        const selectedOption = event.target.value;
-        setSelectedSupOption(selectedOption);
-        setIsSecondSelectEnabled(true);
-        setIsThirdSelectEnabled(false);
-        setIsFourthSelectEnabled(false);
-        setSelectedSubOption('');
-        setSelectedMiniSubOption('');
-        setSelectedMicroSubOption('');
-    };
-
-    const handleSubOptionChange = (event) => {
-        const selectedOption = event.target.value;
-        setSelectedSubOption(selectedOption);
-        setIsThirdSelectEnabled(true);
-        setIsFourthSelectEnabled(false);
-        setSelectedMiniSubOption('');
-        setSelectedMicroSubOption('');
-    };
-
-    const handleMiniSubOptionChange = (event) => {
-        const selectedOption = event.target.value;
-        setSelectedMiniSubOption(selectedOption);
-        setIsFourthSelectEnabled(true);
-        setSelectedMicroSubOption('');
-    };
-
-    const handleMicroSubOptionChange = (event) => {
-        const selectedOption = event.target.value;
-        setSelectedMicroSubOption(selectedOption);
-    };
-
-    // filter products based on price range, category and short products
-    useEffect(() => {
-        if (!Array.isArray(products)) return;
-        const normalizeString = (str) => str ? str.toLowerCase().replace(/\s+/g, '') : '';
-        const searchQueryRegex = new RegExp(query, 'i');
-        const filtered = products.filter(product => {
-            const productPrice = parseFloat(product.sellPrice);
-            const isInPriceRange = productPrice >= price[0] && productPrice <= price[1];
-
-
-            const isCategoryMatch =
-                (!selectedSupOption || normalizeString(product.selectedSupOption) === normalizeString(selectedSupOption)) &&
-                (!selectedSubOption || normalizeString(product.selectedSubOption) === normalizeString(selectedSubOption)) &&
-                (!selectedMiniSubOption || normalizeString(product.selectedMiniSubOption) === normalizeString(selectedMiniSubOption)) &&
-                (!selectedMicroSubOption || normalizeString(product.selectedMicroSubOption) === normalizeString(selectedMicroSubOption));
-
-            const isNameMatch = searchQueryRegex.test(product.productName);
-            return isInPriceRange && isCategoryMatch && (!query || isNameMatch);
-        });
-
-        let sortedProducts = [...filtered];
-        switch (sortBy) {
-            case 'newest':
-                sortedProducts.sort((a, b) => new Date(b.date) - new Date(a.date));
-                break;
-            case 'oldest':
-                sortedProducts.sort((a, b) => new Date(a.date) - new Date(b.date));
-                break;
-            case 'high':
-                sortedProducts.sort((a, b) => parseFloat(b.sellPrice) - parseFloat(a.sellPrice));
-                break;
-            case 'low':
-                sortedProducts.sort((a, b) => parseFloat(a.sellPrice) - parseFloat(b.sellPrice));
-                break;
-            default:
-                break;
-        }
-        setFilteredProducts(sortedProducts);
-    }, [products, price, sortBy, selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption, query]);
-
-
-
-    const handleSortChange = (event) => {
-        setSortBy(event.target.value);
-    };
 
     //TruncateText
     const truncateText = (text, maxLength) => {
@@ -157,7 +156,6 @@ const FilterPage = () => {
         }
         return text.slice(0, maxLength) + '...';
     }
-
     const truncateAndConvertPascal = (text, maxLength) => {
         const readableText = text.replace(/([A-Z])/g, ' $1').trim();
         if (readableText.length <= maxLength) {
@@ -165,19 +163,10 @@ const FilterPage = () => {
         }
         return readableText.slice(0, maxLength) + '...';
     };
-
     //spaced-text
     const convertPascalToReadable = (text) => {
         return text.replace(/([A-Z])/g, ' $1').trim();
     };
-
-    //fetch products 
-    useEffect(() => {
-        if (status === 'idle') {
-            dispatch(fetchProducts());
-        }
-    }, [status, dispatch]);
-
 
     //clear query
     const handleClear = () => {
@@ -189,7 +178,14 @@ const FilterPage = () => {
         });
     };
 
-
+    const handleClearCat = () => {
+        setCategory('');
+        setSelectedSupOption('');
+        setSelectedSubOption('');
+        setSelectedMiniSubOption('');
+        setSelectedMicroSubOption('');
+        dispatch(fetchProducts({ page, size, sort, category: '', minPrice, maxPrice }));
+    };
 
     if (status === 'loading') {
         return <div>Loading...</div>;
@@ -205,26 +201,32 @@ const FilterPage = () => {
                 <title>Search Results</title>
             </Helmet>
             <div className="flexcol wh" style={{ gap: '10px' }}>
-                {query && <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                    <div className='heading2 wh captext'>Showing results for: {query}</div>
-                    <a className='hover' onClick={handleClear}>Clear</a>
-                </div>}
-                {selectedSupOption &&
-                    <div className="flex-start wh">
-                        <div className="heading2 captext">{convertPascalToReadable(selectedSupOption)}</div>
-                        {selectedSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedSubOption)}</div>}
-                        {selectedMiniSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedMiniSubOption)}</div>}
-                        {selectedMicroSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedMicroSubOption)}</div>}
+                {query &&
+                    <div className="flex wh" style={{ justifyContent: 'space-between' }}>
+                        <div className='heading2 wh captext'>Showing results for: {query}</div>
+                        <a className='hover' onClick={handleClear}>Clear</a>
+                    </div>}
+
+                {category &&
+                    <div className='flex wh' style={{ justifyContent: 'space-between' }}>
+                        <div className="flex-start wh">
+                            {selectedSupOption && <div className="heading2 captext">{convertPascalToReadable(selectedSupOption)}</div>}
+                            {selectedSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedSubOption)}</div>}
+                            {selectedMiniSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedMiniSubOption)}</div>}
+                            {selectedMicroSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedMicroSubOption)}</div>}
+                        </div>
+                        <a className='hover' onClick={handleClearCat}>Clear</a>
                     </div>
                 }
             </div>
+
             <div className="fpcont">
                 <div className="fpone">
                     <div className="filterbox">
                         <div className="heading2 wh">Price</div>
-                        <Slider value={price} onChange={priceHandler} valueLabelDisplay="auto" aria-labelledby='range-slide' min={0} max={100000} />
+                        <Slider value={vprice} onChange={(event, newPrice) => priceHandler(newPrice)} valueLabelDisplay="auto" aria-labelledby='range-slide' min={0} max={100000} />
                         <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                            <div className="minmaxbox heading2"> {price[0]}</div> <div className="heading2">To</div> <div className="minmaxbox heading2"> {price[1]}</div>
+                            <div className="minmaxbox heading2"> {vprice[0]}</div> <div className="heading2">To</div> <div className="minmaxbox heading2"> {vprice[1]}</div>
                         </div>
                     </div>
                     <div className="filterbox">
@@ -233,39 +235,31 @@ const FilterPage = () => {
                             <select onChange={handleSupOptionChange} className="box flex" value={selectedSupOption}>
                                 <option value="">Select category</option>
                                 {supOptions.map((option, index) => (
-                                    <option key={index} value={option}>{truncateAndConvertPascal(option)}</option>
+                                    <option key={index} value={option}>{option}</option>
                                 ))}
                             </select>
 
                             <select onChange={handleSubOptionChange} className="box flex" value={selectedSubOption}>
                                 <option value="">Select sub category</option>
                                 {subOptions[selectedSupOption] && subOptions[selectedSupOption].map((option, index) => (
-                                    <option key={index} value={option}>{truncateAndConvertPascal(option)}</option>
+                                    <option key={index} value={option}>{option}</option>
                                 ))}
                             </select>
 
                             <select onChange={handleMiniSubOptionChange} className="box flex" value={selectedMiniSubOption}>
                                 <option value="">Select an option</option>
                                 {miniSubOptions[selectedSubOption] && miniSubOptions[selectedSubOption].map((option, index) => (
-                                    <option key={index} value={option}>{truncateAndConvertPascal(option)}</option>
+                                    <option key={index} value={option}>{option}</option>
                                 ))}
                             </select>
 
                             <select onChange={handleMicroSubOptionChange} className="box flex" value={selectedMicroSubOption}>
                                 <option value="">Select sub option</option>
                                 {microSubOptions[selectedMiniSubOption] && microSubOptions[selectedMiniSubOption].map((option, index) => (
-                                    <option key={index} value={option}>{truncateAndConvertPascal(option)}</option>
+                                    <option key={index} value={option}>{option}</option>
                                 ))}
                             </select>
                         </div>
-                    </div>
-                    <div className="filterbox">
-                        <div className="heading2 wh" style={{ marginBottom: '5px' }}>Brands</div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Boat</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Sharptek</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Noise</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">BlueParrott</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Jbl</div></div>
                     </div>
                     <div className="filterbox">
                         <div className="heading2 wh" style={{ marginBottom: '5px' }}>Stock Location</div>
@@ -292,21 +286,21 @@ const FilterPage = () => {
                 </div>
                 <div className="fptwo">
                     <div className="shortby">
-                        <div className="heading2 wh">Healthy Snacks ( {filteredProducts.length} Items)</div>
+                        <div className="heading2 wh">Showing {numberOfElements} items out of {totalItems}</div>
                         <div className="flex" style={{ gap: '20px' }}>
                             <div className="heading2" style={{ whiteSpace: 'nowrap' }}>Short By</div>
-                            <select name="shortby" className='selectshort' value={sortBy} onChange={handleSortChange}>
-                                <option value="newest">Newest</option>
-                                <option value="oldest">Oldest</option>
-                                <option value="high">Price : High to Low</option>
-                                <option value="low">Price : Low to High</option>
+                            <select name="shortby" className='selectshort' value={sort} onChange={handleSortChange}>
+                                <option value="NEWEST">Newest</option>
+                                <option value="RELEVANCE">Relevance</option>
+                                <option value="PRICE_HIGH_TO_LOW">Price : High to Low</option>
+                                <option value="PRICE_LOW_TO_HIGH">Price : Low to High</option>
                             </select>
                         </div>
                     </div>
 
                     <div className="filteredProducts">
                         {
-                            filteredProducts.map((product, index) => (
+                            products.map((product, index) => (
                                 <a className='show-img-detail' key={index} href={`/product-details/${product.productId}`}>
                                     <img className='product-img-size' src={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} alt='img' />
                                     <div className='product-detail-info'>
@@ -324,6 +318,7 @@ const FilterPage = () => {
                     </div>
                 </div>
             </div>
+
             <div className="flex" style={{ gap: '10px' }}>
                 <button className='pagination-btn' onClick={() => handlePageChange(0)} disabled={page === 0}>
                     First Page
@@ -332,7 +327,7 @@ const FilterPage = () => {
                     Previous
                 </button>
 
-                {Array.from({ length: totalPages }, (_, index) => (
+                {pageNumbers.map(index => (
                     <button
                         key={index}
                         className={`pagination-btn ${index === page ? 'active' : ''}`}

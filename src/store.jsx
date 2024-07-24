@@ -7,7 +7,7 @@ import rootReducer from './Redux/rootReducer';
 
 const persistConfig = {
     key: 'root',
-    storage: storage,
+    storage: sessionStorage,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

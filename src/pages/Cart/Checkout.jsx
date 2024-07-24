@@ -13,7 +13,6 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { Helmet } from 'react-helmet-async';
-import { image } from '@cloudinary/url-gen/qualifiers/source';
 import axios from 'axios';
 const RAZORPAY_API_KEY = import.meta.env.VITE_RAZORPAY_API_KEY;
 
@@ -237,7 +236,7 @@ const Checkout = () => {
   //private data 
   const maskText = (text) => {
     if (text.length <= 4) {
-      return text; 
+      return text;
     }
     const maskedLength = text.length - 4;
     const maskedPart = '*'.repeat(maskedLength);
@@ -341,88 +340,73 @@ const Checkout = () => {
             </div>
           </div>
 
-          {
-            loading ? (
-              <div className="heading2">
-                Loading...
-              </div>
-            ) : error ? (
-              <div className="heading2">
-                {error}
-              </div>
-            ) : (
-              <>
-                {subCurrentPage === 1 && (
-                  <div className="checkout webdiv">
-                    <div className="heading3 wh">Cards</div>
-                    <select className='coupon' value={selectedCard.fullname || ''} onChange={handleCardChange}>
-                      <option value=''>Select a card</option>
-                      {cardDetails.map((card, index) => (
-                        <option key={index} value={card.fullname}>
-                          {card.fullname}
-                        </option>
-                      ))}
-                    </select>
-                    {selectedCard?.fullname && (
-                      <div className='flex-start wh' style={{ gap: '20px' }}>
-                        <CreditCardIcon style={{ width: '17px', color: 'gray' }} />
-                        <div className='descrip2'>{selectedCard.fullname}</div>
-                        <div className="descrip2">{maskText(selectedCard.cardNumber)}</div>
-                        <div className="descrip2">{selectedCard.expiryDate}</div>
-                      </div>
-                    )}
-                  </div>
-                )}
+          {subCurrentPage === 1 && (
+            <div className="checkout webdiv">
+              <div className="heading3 wh">Cards</div>
+              <select className='coupon' value={selectedCard.fullname || ''} onChange={handleCardChange}>
+                <option value=''>Select a card</option>
+                {cardDetails.map((card, index) => (
+                  <option key={index} value={card.fullname}>
+                    {card.fullname}
+                  </option>
+                ))}
+              </select>
+              {selectedCard?.fullname && (
+                <div className='flex-start wh' style={{ gap: '20px' }}>
+                  <CreditCardIcon style={{ width: '17px', color: 'gray' }} />
+                  <div className='descrip2'>{selectedCard.fullname}</div>
+                  <div className="descrip2">{maskText(selectedCard.cardNumber)}</div>
+                  <div className="descrip2">{selectedCard.expiryDate}</div>
+                </div>
+              )}
+            </div>
+          )}
 
-                {subCurrentPage === 2 && (
-                  <div className="checkout webdiv">
-                    <div className="heading3 wh">Bank accounts</div>
-                    <select className='coupon' value={selectedBank.accHolderName || ''} onChange={handleBankChange}>
-                      <option value=''>Select an account</option>
-                      {bankDetails.map((bank, index) => (
-                        <option key={index} value={bank.accHolderName}>
-                          {bank.accHolderName}
-                        </option>
-                      ))}
-                    </select>
-                    {selectedBank?.accHolderName && (
-                      <div className='flex-start wh' style={{ gap: '20px' }} >
-                        <AccountBalanceIcon style={{ width: '17px', color: 'gray' }} />
-                        <div className='descrip2'>{selectedBank.accHolderName}</div>
-                        <div className="descrip2">{maskText(selectedBank.accNo)}</div>
-                        <div className="descrip2">{selectedBank.bankName}</div>
-                        <div className="descrip2">{selectedBank.bankLocation}</div>
-                        <div className="descrip2">{selectedBank.ifsc}</div>
-                        <div className="descrip2">{selectedBank.swiftBIC}</div>
-                        <div className="descrip2">{selectedBank.iban}</div>
-                      </div>
-                    )}
-                  </div>
-                )}
+          {subCurrentPage === 2 && (
+            <div className="checkout webdiv">
+              <div className="heading3 wh">Bank accounts</div>
+              <select className='coupon' value={selectedBank.accHolderName || ''} onChange={handleBankChange}>
+                <option value=''>Select an account</option>
+                {bankDetails.map((bank, index) => (
+                  <option key={index} value={bank.accHolderName}>
+                    {bank.accHolderName}
+                  </option>
+                ))}
+              </select>
+              {selectedBank?.accHolderName && (
+                <div className='flex-start wh' style={{ gap: '20px' }} >
+                  <AccountBalanceIcon style={{ width: '17px', color: 'gray' }} />
+                  <div className='descrip2'>{selectedBank.accHolderName}</div>
+                  <div className="descrip2">{maskText(selectedBank.accNo)}</div>
+                  <div className="descrip2">{selectedBank.bankName}</div>
+                  <div className="descrip2">{selectedBank.bankLocation}</div>
+                  <div className="descrip2">{selectedBank.ifsc}</div>
+                  <div className="descrip2">{selectedBank.swiftBIC}</div>
+                  <div className="descrip2">{selectedBank.iban}</div>
+                </div>
+              )}
+            </div>
+          )}
 
-                {subCurrentPage === 3 && (
-                  <div className="checkout webdiv">
-                    <div className="heading3 wh">UPIs</div>
-                    <select className='coupon' value={selectedUpi.upi || ''} onChange={handleUpiChange}>
-                      <option value=''>Select a UPI</option>
-                      {upiDetails.map((upis, index) => (
-                        <option key={index} value={upis.upi}>
-                          {upis.upi}
-                        </option>
-                      ))}
-                    </select>
-                    {selectedUpi?.upi && (
-                      <div className='flex-start wh' style={{ gap: '20px' }} >
-                        <img src='https://res.cloudinary.com/dey1tujp8/image/upload/v1718266152/upi-id.1024x1024_xm8kjf.png' style={{ width: '17px', color: 'gray' }} alt='upi' />
-                        <div className='descrip2'>{selectedUpi.upi}</div>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </>
-            )
-          }
-
+          {subCurrentPage === 3 && (
+            <div className="checkout webdiv">
+              <div className="heading3 wh">UPIs</div>
+              <select className='coupon' value={selectedUpi.upi || ''} onChange={handleUpiChange}>
+                <option value=''>Select a UPI</option>
+                {upiDetails.map((upis, index) => (
+                  <option key={index} value={upis.upi}>
+                    {upis.upi}
+                  </option>
+                ))}
+              </select>
+              {selectedUpi?.upi && (
+                <div className='flex-start wh' style={{ gap: '20px' }} >
+                  <img src='https://res.cloudinary.com/dey1tujp8/image/upload/v1718266152/upi-id.1024x1024_xm8kjf.png' style={{ width: '17px', color: 'gray' }} alt='upi' />
+                  <div className='descrip2'>{selectedUpi.upi}</div>
+                </div>
+              )}
+            </div>
+          )}
 
           {subCurrentPage === 4 && (
             <div className="checkout webdiv">
