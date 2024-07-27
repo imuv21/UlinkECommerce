@@ -9,7 +9,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { fetchProducts } from '../Redux/productSlice';
+import { fetchProductsFour } from '../Redux/productSlice';
 import { fetchProductDetail } from '../Redux/productDetailSlice';
 import { addToCart } from '../Redux/cartSlice';
 import { fetchExchangeRates } from '../Redux/currencySlice';
@@ -18,10 +18,10 @@ import defaulImg from '../assets/default.jpg';
 import Loader from './Loader/Loader';
 const ProductCard = lazy(() => import('./ProductCard'));
 
-const Carousel = () => {
+const CarouselFour = () => {
 
     const dispatch = useDispatch();
-    const { products = [], status, error } = useSelector((state) => state.products);
+    const { productsFour = [], statusFour, errorFour } = useSelector((state) => state.products);
     const { product } = useSelector((state) => state.productDetail);
 
     const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
@@ -53,8 +53,6 @@ const Carousel = () => {
         const newValue = parseInt(e.target.value);
         setValue(newValue >= moq ? newValue.toString() : moq.toString());
     };
-
-
     const cartHandler = (id) => {
         if (!product) return;
         dispatch(addToCart({ productId: id, quantity: value }));
@@ -63,15 +61,13 @@ const Carousel = () => {
     };
 
 
-
     //pagination
-    const [category, setCategory] = useState('ConsumerElectronics');
-
+    const [category, setCategory] = useState('HomeGardenAndFurniture');
     useEffect(() => {
-        if (status === 'idle') {
-            dispatch(fetchProducts({ category }));
+        if (statusFour === 'idle') {
+            dispatch(fetchProductsFour({ category }));
         }
-    }, [dispatch, category, status]);
+    }, [dispatch, category, statusFour]);
 
 
     //cart popup
@@ -134,11 +130,11 @@ const Carousel = () => {
     }, [isClickedCart]);
 
 
-    if (status === 'loading') {
+    if (statusFour === 'loading') {
         return <div>Loading...</div>;
     }
-    if (status === 'failed') {
-        return <div>Error: {error}</div>;
+    if (statusFour === 'failed') {
+        return <div>Error: {errorFour}</div>;
     }
 
     const NextArrow = (props) => {
@@ -216,7 +212,7 @@ const Carousel = () => {
     return (
         <div className={`product-slider-cont ${isClickedCart ? 'clicked' : ''}`}>
             <Sliders {...settings}>
-                {Array.isArray(products) && products.map((pro) => (
+                {Array.isArray(productsFour) && productsFour.map((pro) => (
                     <div className='show-img-detail-sup' key={uuidv4()}>
                         <Suspense fallback={<Loader />}>
                             <ProductCard handleClickCart={handleClickCart} name={pro.productName} moq={pro.minOrderQuant} id={pro.productId} img={pro.images && pro.images.length > 0 ? pro.images[0].imageUrl : defaulImg} unitPrice={pro.unitPrice} currencyName={pro.currencyname} salePrice={pro.sellPrice} />
@@ -239,7 +235,7 @@ const Carousel = () => {
                         <div className="descrip2">Minimum Order Quantity: {product.minOrderQuant}</div>
                         <div className="heading2">Total Price: {currencySymbols[selectedCurrency]} {convertPrice(totalPrice, product.currencyname)} {selectedCurrency}</div>
                         <div className="plus-minus">
-                            <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={decrementValue}  /></div>
+                            <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={decrementValue} /></div>
                             <input className='pminput' type="number" value={value} onChange={handleInputChange} />
                             <div style={{ cursor: 'pointer' }}><AddCircleOutlineIcon onClick={incrementValue} /></div>
                         </div>
@@ -252,4 +248,4 @@ const Carousel = () => {
     );
 };
 
-export default Carousel;
+export default CarouselFour;

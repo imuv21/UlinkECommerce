@@ -56,7 +56,6 @@ const Header = () => {
     const interval = setInterval(() => {
       setShowFirst(prevShowFirst => !prevShowFirst);
     }, 5000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -68,7 +67,6 @@ const Header = () => {
   useEffect(() => {
     dispatch(fetchAddresses());
   }, [dispatch]);
-
   useEffect(() => {
     if (addresses.length > 0 && !selectedAddress) {
       const defaultAddress = addresses.find(addr => addr.isDefaultChecked);
@@ -151,47 +149,38 @@ const Header = () => {
     setIsFood(false);
     setIsOpen(false);
   };
-
   const handleClick = () => {
     closeAllPopups();
     setIsClicked(prevState => !prevState);
   };
-
   const handleClickCate = () => {
     closeAllPopups();
     setIsClickedCate(prevState => !prevState);
   };
-
   const handleClickTwo = () => {
     closeAllPopups();
     setIsClickedTwo(prevState => !prevState);
   };
-
   const handleClickAdd = () => {
     closeAllPopups();
     setIsClickedAdd(prevState => !prevState);
   };
-
   const handleConsumer = () => {
     closeAllPopups();
     setIsConsumer(prevState => !prevState);
   };
-
   const handleOffice = () => {
     closeAllPopups();
     setIsOffice(prevState => !prevState);
   };
-
   const handleFood = () => {
     closeAllPopups();
     setIsFood(prevState => !prevState);
   };
-
   const handleToggleDropdown = () => {
     closeAllPopups();
     setIsOpen(prevState => !prevState);
   };
-
   const handleClickOutside = (event) => {
 
     const popups = [
@@ -222,7 +211,6 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
   useEffect(() => {
     const handleScroll = () => {
       closeAllPopups();
@@ -296,7 +284,6 @@ const Header = () => {
       dispatch(logout());
     }
   };
-
   const convertPascalToReadable = (text) => {
     return text.replace(/([A-Z])/g, ' $1').trim();
   };
@@ -312,7 +299,6 @@ const Header = () => {
   const handleMouseLeave = () => {
     setHoveredOption(null);
   };
-
   const getPopupContent = (option) => {
     const handleOptionClick = (supOption, subOption = '', miniSubOption = '') => {
       navigate('/search-results', {
@@ -339,7 +325,6 @@ const Header = () => {
       </div>
     );
   };
-
   const getConsumerPopupContent = () => {
     return (
       <div className='cate-grid'>
@@ -360,7 +345,6 @@ const Header = () => {
       </div>
     );
   };
-
   const getOfficePopupContent = () => {
     return (
       <div className='cate-grid'>
@@ -381,7 +365,6 @@ const Header = () => {
       </div>
     );
   };
-
   const getFoodPopupContent = () => {
     return (
       <div className='cate-grid'>
@@ -405,19 +388,16 @@ const Header = () => {
 
   //search-bar
   const [query, setQuery] = useState('');
-
   const handleSearch = () => {
     if (query.trim()) {
       navigate(`/search-results?query=${query}`);
     }
   };
-
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       handleSearch();
     }
   };
-
   const truncateText = (text, maxLength) => {
     if (!text) return '';
     if (text.length <= maxLength) {

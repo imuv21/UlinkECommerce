@@ -135,8 +135,6 @@ const Checkout = () => {
   };
 
 
-
-
   const totalOrder = totalSellPrice + totalUnitGstPrice;
   const scrollRef = useRef(null);
   useEffect(() => {
@@ -146,9 +144,9 @@ const Checkout = () => {
   }, []);
 
 
-
   // payment methods 
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('razorpay');
+
   const razorpayHandler = async (amount, currency) => {
     console.log(amount, currency);
 
@@ -200,37 +198,75 @@ const Checkout = () => {
       setPaymentStatus('error');
     }
   };
+
+  // const nodepaypal = 'http://localhost:8000/paymentpaypal';
+  // const paypalHandler = async (amount, currency) => {
+  //   try {
+  //     const fPrice = Number(amount).toFixed(2);
+
+  //     let res = await axios.post(nodepaypal, {
+  //       price: fPrice,
+  //       currency: currency
+  //     });
+
+  //     let res = await axios.post(bspaypal, null, {
+  //       params: {
+  //         price: fPrice,
+  //         currency: currency,
+  //         description: 'Test Transaction'
+  //       }
+  //     });
+
+  //     if (res && res.data) {
+  //       let link = res.data.links[1].href
+  //       window.open(link, '_blank');
+  //     } else {
+  //       console.error("No approval URL returned");
+  //     }
+  //   } catch (error) {
+  //     console.error("Payment Error: ", error);
+  //   }
+  // };
+
   const paypalHandler = async (amount, currency) => {
     try {
       const fPrice = Number(amount).toFixed(2);
-      let res = await axios.post('http://localhost:8000/paymentpaypal', {
-        price: fPrice,
+      const successUrl = "http://localhost:5173/payment-success";
+      const cancelUrl = "http://localhost:5173/payment-failed";
+
+      const responsePaypal = await axios.post('http://api.ulinkit.com/api/paypal/payment/create', {
+        amount: fPrice,
+        description: "Test Transaction",
         currency: currency,
+        successUrl: successUrl,
+        cancelUrl: cancelUrl
       });
 
-      if (res && res.data) {
-        let link = res.data.links[1].href
-        window.location.href = link
+      if (responsePaypal && responsePaypal.data) {
+        let link = responsePaypal.data.url;
+        if (link) {
+          window.open(link, '_blank');
+        } else {
+          console.error("No approval URL returned");
+        }
       } else {
-        console.error("No approval URL returned");
+        console.error("No data returned from API");
       }
     } catch (error) {
-      console.error("Payment Error: ", error);
+      console.error("Payment Error: ", error.response ? error.response.data : error.message);
     }
   };
+
   const handlePaymentClick = () => {
-    const amount = convertPrice(totalOrder, currency);
-    const selectedCurrency = currency;
+    const PaymentAmount = convertPrice(totalOrder, currency);
+    const PaymentCurrency = selectedCurrency;
 
     if (selectedPaymentOption === 'paypal') {
-      paypalHandler(amount, selectedCurrency);
+      paypalHandler(PaymentAmount, PaymentCurrency);
     } else {
-      razorpayHandler(amount, selectedCurrency);
+      razorpayHandler(PaymentAmount, PaymentCurrency);
     }
   };
-
-
-
 
 
   //private data 

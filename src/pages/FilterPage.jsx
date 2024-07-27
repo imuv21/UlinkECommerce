@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Slider } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../Redux/productSlice';
+import { fetchFilterProducts } from '../Redux/filterProductSlice';
 import { fetchExchangeRates } from '../Redux/currencySlice';
 import currencySymbols from '../components/Schemas/currencySymbols';
 import defaulImg from '../assets/default.jpg';
@@ -16,21 +16,18 @@ const useQuery = () => {
 
 const FilterPage = () => {
 
-    const query = useQuery().get('query') || '';
     const navigate = useNavigate();
-    // const location = useLocation();
-    // const { supOption = '', subOption = '', miniSubOption = '' } = location.state || {};
-
     const dispatch = useDispatch();
-    const { products, status, error, currentPage, totalPages, totalItems, numberOfElements, pageSize, lastPage, isLast, hasNext, hasPrevious, isFirst, firstPage } = useSelector((state) => state.products);
+    const { filterProducts, status, error, currentPage, totalPages, totalItems, numberOfElements } = useSelector((state) => state.filterProducts);
     const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
     const exchangeRates = useSelector(state => state.currency.exchangeRates);
 
     //product fetch
-    const [page, setPage] = useState(currentPage);
+    const [page, setPage] = useState(currentPage || 0);
     const [size, setSize] = useState(15);
     const [sort, setSort] = useState('PRICE_HIGH_TO_LOW');
     const [category, setCategory] = useState('');
+    const [search, setSearch] = useState('');
     const [vprice, setVprice] = useState([0, 100000]);
     const minPrice = vprice[0];
     const maxPrice = vprice[1];
@@ -42,7 +39,7 @@ const FilterPage = () => {
 
     useEffect(() => {
         if (status === 'idle') {
-            dispatch(fetchProducts({ page, size, sort, category, minPrice, maxPrice }));
+            dispatch(fetchFilterProducts({ page, size, sort, category, minPrice, maxPrice }));
         }
     }, [status, dispatch, page, size, sort, category, minPrice, maxPrice]);
     useEffect(() => {
@@ -68,7 +65,7 @@ const FilterPage = () => {
 
     useEffect(() => {
         if (category) {
-            dispatch(fetchProducts({ page, size, sort, category, minPrice, maxPrice }));
+            dispatch(fetchFilterProducts({ page, size, sort, category, minPrice, maxPrice }));
         }
     }, [category, dispatch, page, size, sort, minPrice, maxPrice]);
 
@@ -76,17 +73,17 @@ const FilterPage = () => {
     const handlePageChange = (newPage) => {
         if (newPage >= 0 && newPage < totalPages) {
             setPage(newPage);
-            dispatch(fetchProducts({ page: newPage, size, sort, category, minPrice, maxPrice }));
+            dispatch(fetchFilterProducts({ page: newPage, size, sort, category, minPrice, maxPrice }));
         }
     };
     const handleSortChange = (e) => {
         setSort(e.target.value);
-        dispatch(fetchProducts({ page, size, sort: e.target.value, category, minPrice, maxPrice }));
+        dispatch(fetchFilterProducts({ page, size, sort: e.target.value, category, minPrice, maxPrice }));
     };
     const priceHandler = (newPrice) => {
         setVprice(newPrice);
         setTimeout(() => {
-            dispatch(fetchProducts({ page, size, sort, category, minPrice: newPrice[0], maxPrice: newPrice[1] }));
+            dispatch(fetchFilterProducts({ page, size, sort, category, minPrice: newPrice[0], maxPrice: newPrice[1] }));
         }, 2000);
     };
 
@@ -122,7 +119,7 @@ const FilterPage = () => {
         let startPage = Math.max(0, currentPage - 2);
         let endPage = Math.min(totalPages - 1, currentPage + 2);
 
-        // Ensure we always show the correct number of page buttons
+        // always show the correct number of page buttons
         if (endPage - startPage < maxPageButtons - 1) {
             if (startPage === 0) {
                 endPage = Math.min(totalPages - 1, startPage + maxPageButtons - 1);
@@ -148,6 +145,39 @@ const FilterPage = () => {
         return (priceInUSD * rate).toFixed(2);
     };
 
+    //clear query
+    const query = useQuery().get('query') || '';
+    useEffect(() => {
+        if (query) {
+            setSearch(query);
+            setPage(0);
+            setSize(null);
+            dispatch(fetchFilterProducts({ page: 0, size: null, sort, category, search: query, minPrice, maxPrice }));
+        }
+        console.log(filterProducts);
+    }, [query, dispatch, sort, category, minPrice, maxPrice, page ]);
+    const handleClear = () => {
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.delete('query');
+        navigate({
+            pathname: location.pathname,
+            search: searchParams.toString(),
+        });
+        setPage(0);
+        setSize(15);
+        setSearch('');
+        dispatch(fetchFilterProducts({ page: 0, size: 15, sort, category, search: '', minPrice, maxPrice }));
+    };
+
+    //clear category
+    const handleClearCat = () => {
+        setCategory('');
+        setSelectedSupOption('');
+        setSelectedSubOption('');
+        setSelectedMiniSubOption('');
+        setSelectedMicroSubOption('');
+        dispatch(fetchFilterProducts({ page, size, sort, category: '', minPrice, maxPrice }));
+    };
 
     //TruncateText
     const truncateText = (text, maxLength) => {
@@ -156,36 +186,11 @@ const FilterPage = () => {
         }
         return text.slice(0, maxLength) + '...';
     }
-    const truncateAndConvertPascal = (text, maxLength) => {
-        const readableText = text.replace(/([A-Z])/g, ' $1').trim();
-        if (readableText.length <= maxLength) {
-            return readableText;
-        }
-        return readableText.slice(0, maxLength) + '...';
-    };
     //spaced-text
     const convertPascalToReadable = (text) => {
         return text.replace(/([A-Z])/g, ' $1').trim();
     };
 
-    //clear query
-    const handleClear = () => {
-        const searchParams = new URLSearchParams(location.search);
-        searchParams.delete('query');
-        navigate({
-            pathname: location.pathname,
-            search: searchParams.toString(),
-        });
-    };
-
-    const handleClearCat = () => {
-        setCategory('');
-        setSelectedSupOption('');
-        setSelectedSubOption('');
-        setSelectedMiniSubOption('');
-        setSelectedMicroSubOption('');
-        dispatch(fetchProducts({ page, size, sort, category: '', minPrice, maxPrice }));
-    };
 
     if (status === 'loading') {
         return <div>Loading...</div>;
@@ -203,19 +208,20 @@ const FilterPage = () => {
             <div className="flexcol wh" style={{ gap: '10px' }}>
                 {query &&
                     <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                        <div className='heading2 wh captext'>Showing results for: {query}</div>
-                        <a className='hover' onClick={handleClear}>Clear</a>
-                    </div>}
+                        <div className='descrip2 wh captext'>Showing results for: &nbsp;&nbsp;&nbsp;&nbsp; {truncateText(query, 30)}</div>
+                        <a className='descrip2 hover' style={{ color: 'red'}} onClick={handleClear}>Clear</a>
+                    </div>
+                }
 
                 {category &&
                     <div className='flex wh' style={{ justifyContent: 'space-between' }}>
                         <div className="flex-start wh">
-                            {selectedSupOption && <div className="heading2 captext">{convertPascalToReadable(selectedSupOption)}</div>}
-                            {selectedSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedSubOption)}</div>}
-                            {selectedMiniSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedMiniSubOption)}</div>}
-                            {selectedMicroSubOption && <div className="heading2 captext">/ {convertPascalToReadable(selectedMicroSubOption)}</div>}
+                            {selectedSupOption && <div className="descrip2 captext">{convertPascalToReadable(selectedSupOption)}</div>}
+                            {selectedSubOption && <div className="descrip2 captext">/ {convertPascalToReadable(selectedSubOption)}</div>}
+                            {selectedMiniSubOption && <div className="descrip2 captext">/ {convertPascalToReadable(selectedMiniSubOption)}</div>}
+                            {selectedMicroSubOption && <div className="descrip2 captext">/ {convertPascalToReadable(selectedMicroSubOption)}</div>}
                         </div>
-                        <a className='hover' onClick={handleClearCat}>Clear</a>
+                        <a className='descrip2 hover' style={{ color: 'red'}} onClick={handleClearCat}>Clear</a>
                     </div>
                 }
             </div>
@@ -300,7 +306,7 @@ const FilterPage = () => {
 
                     <div className="filteredProducts">
                         {
-                            products.map((product, index) => (
+                            filterProducts.map((product, index) => (
                                 <a className='show-img-detail' key={index} href={`/product-details/${product.productId}`}>
                                     <img className='product-img-size' src={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} alt='img' />
                                     <div className='product-detail-info'>

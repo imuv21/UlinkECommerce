@@ -2,6 +2,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import AuthReducer from './AuthReducer';
 import productReducer from './productSlice';
+import filterProductSlice from './filterProductSlice';
 import addProductSlice from './addProductSlice';
 import otpReducer from './otpSlice';
 import sellerReducer from './sellerSlice';
@@ -22,9 +23,11 @@ import paymentMethodsReducer from './paymentMethods';
 import selectedPaymentMethodReducer from './selectedPaymentMethod';
 
 
+
 const rootReducer = combineReducers({
   auth: AuthReducer,
   products: productReducer,
+  filterProducts: filterProductSlice,
   otp: otpReducer,
   seller: sellerReducer,
   addproduct: addProductSlice,

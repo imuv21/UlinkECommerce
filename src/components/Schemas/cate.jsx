@@ -144,6 +144,7 @@ const miniSubOptions = {
   ToolsAndHardware: ["Fasteners", "FurnitureHardware", "HandTools", "HydraulicTools", "PowerTools", "ToolORganizers", "ToolParts", "ValvesPumpsAndPlumbing"],
 
 };
+
 const microSubOptions = {
 
   AmplifiersAndSpeakers: ["Amplifiers", "Boomboxes", "CeilingSpeakers", "ComputerSpeakers", "FloorStandSpeakers", "Loudspeakers", "MonitorSpeakers", "OutdoorSpeakers", "PortableSpeakers", "SoundbarSpeakers", "Subwoofers", "WallMountSpeakers"],
@@ -906,3 +907,4 @@ const microSubOptions = {
 };
 
 export { supOptions, subOptions, miniSubOptions, microSubOptions }
+

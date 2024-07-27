@@ -1,5 +1,14 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductDetail } from '../../Redux/productDetailSlice';
+import { addToCart } from '../../Redux/cartSlice';
+import { fetchExchangeRates } from '../../Redux/currencySlice';
+import axios from 'axios';
+import Loader from '../../components/Loader/Loader';
+import currencySymbols from '../../components/Schemas/currencySymbols';
+import { Helmet } from 'react-helmet-async';
+
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FlightIcon from '@mui/icons-material/Flight';
 import returned from '../../assets/returned.png';
@@ -7,87 +16,59 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import proDetail from '../../assets/proDetail.png';
 import boxx from '../../assets/boxx.png';
-import './cart.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductDetail } from '../../Redux/productDetailSlice';
-import { addToCart } from '../../Redux/cartSlice';
-import { fetchExchangeRates } from '../../Redux/currencySlice';
-import currencySymbols from '../../components/Schemas/currencySymbols';
-import { Helmet } from 'react-helmet-async';
-import axios from 'axios';
 import InfoIcon from '@mui/icons-material/Info';
-import Loader from '../../components/Loader/Loader';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import XIcon from '@mui/icons-material/X';
-
-
 import visa from '../../assets/visa.png';
 import mastercard from '../../assets/mastercard.png';
 import paypal from '../../assets/paypal.png';
 import upi from '../../assets/upi.png';
 import netbanking from '../../assets/netbanking.png';
+import './cart.css';
+
+
+
+
 const ProductDetails = () => {
 
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
     const { id } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { product, status, error } = useSelector((state) => state.productDetail);
     const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
     const exchangeRates = useSelector(state => state.currency.exchangeRates);
-    useEffect(() => {
-        dispatch(fetchProductDetail(id));
-        dispatch(fetchExchangeRates());
-    }, [dispatch, id]);
 
-    const rfqredirect = () => {
-        navigate('/rfq');
-    }
-
-
-    // Fetch currency options and exchange rates
-    const convertPrice = (price, fromCurrency) => {
-        const rate = exchangeRates[selectedCurrency];
-        if (!rate) return price;
-        const priceInUSD = price / exchangeRates[fromCurrency];
-        return (priceInUSD * rate).toFixed(2);
-    };
-
-
-    //plus-minus
     const [moq, setMoq] = useState(1);
     const [value, setValue] = useState(moq.toString());
-    const incrementValue = () => {
-        setValue(prevValue => (parseInt(prevValue) + 1).toString());
-    };
-    const decrementValue = () => {
-        setValue(prevValue => Math.max(parseInt(prevValue) - 1, moq).toString());
-    };
-    const handleInputChange = (e) => {
-        const newValue = parseInt(e.target.value);
-        setValue(newValue >= moq ? newValue.toString() : moq.toString());
-    };
-
-
-    //accordion-panel
     const [activeIndex, setActiveIndex] = useState(null);
-    const toggleProductAccordion = (index) => {
-        setActiveIndex(activeIndex === index ? null : index);
-    };
-
-
-    //img-change-slider moq discount
     const [selectedImage, setSelectedImage] = useState(null);
     const [salep, setSalep] = useState();
     const [unitp, setUnitp] = useState();
     const [discountPercentage, setDiscountPercentage] = useState(0);
     const [totalPrice, setTotalPrice] = useState(salep);
+    const [isHovered, setIsHovered] = useState(false);
+    const [backgroundPosition, setBackgroundPosition] = useState('0% 0%');
+    const [overlayPosition, setOverlayPosition] = useState({ x: 0, y: 0 });
+    const [rates, setRates] = useState({});
+    const [toCurrency, setToCurrency] = useState('USD');
+    const [convertedAmount, setConvertedAmount] = useState(0);
+
+    useEffect(() => {
+        dispatch(fetchProductDetail(id));
+        dispatch(fetchExchangeRates());
+    }, [dispatch, id]);
+
+    useEffect(() => {
+        axios.get('https://api.exchangerate-api.com/v4/latest/USD')
+            .then(response => setRates(response.data.rates))
+            .catch(error => console.error('Error fetching the exchange rates:', error));
+    }, []);
+
     useEffect(() => {
         if (product && product.image && product.image.length > 0) {
             setSelectedImage(product.image[0].imageUrl);
@@ -101,6 +82,7 @@ const ProductDetails = () => {
             setUnitp(product.unitPrice);
         }
     }, [product]);
+
     useEffect(() => {
         if (salep && unitp) {
             const discount = ((unitp - salep) / unitp) * 100;
@@ -111,23 +93,63 @@ const ProductDetails = () => {
             setTotalPrice((Tprice.toFixed(2)));
         }
     }, [salep, unitp, value]);
+
+    useEffect(() => {
+        if (product && product.sellPrice && product.currencyname) {
+            const fixedAmount = product.sellPrice;
+            const fromCurrency = product.currencyname;
+
+            if (rates[fromCurrency] && rates[toCurrency]) {
+                setConvertedAmount((fixedAmount * rates[toCurrency]) / rates[fromCurrency]);
+            }
+        }
+    }, [product, rates, toCurrency]);
+
+
+
+
+
+
+
+
+    // Fetch currency options and exchange rates
+    const convertPrice = (price, fromCurrency) => {
+        const rate = exchangeRates[selectedCurrency];
+        if (!rate) return price;
+        const priceInUSD = price / exchangeRates[fromCurrency];
+        return (priceInUSD * rate).toFixed(2);
+    };
+
+    //plus-minus
+    const incrementValue = () => {
+        setValue(prevValue => (parseInt(prevValue) + 1).toString());
+    };
+    const decrementValue = () => {
+        setValue(prevValue => Math.max(parseInt(prevValue) - 1, moq).toString());
+    };
+    const handleInputChange = (e) => {
+        const newValue = parseInt(e.target.value);
+        setValue(newValue >= moq ? newValue.toString() : moq.toString());
+    };
+
+    //accordion-panel
+    const toggleProductAccordion = (index) => {
+        setActiveIndex(activeIndex === index ? null : index);
+    };
+
     const handleImageClick = (image) => {
         setSelectedImage(image);
     };
 
-
     //image zoom functionality
-    const [isHovered, setIsHovered] = useState(false);
-    const [backgroundPosition, setBackgroundPosition] = useState('0% 0%');
-
     const handleMouseMove = (e) => {
         const { left, top, width, height } = e.target.getBoundingClientRect();
         const x = ((e.pageX - left) / width) * 100;
-        const y = ((e.pageY - top) / height) * 80;
+        const y = ((e.pageY - top) / height) * 100;
 
         setBackgroundPosition(`${x}% ${y}%`);
+        setOverlayPosition({ x: e.pageX - left, y: e.pageY - top });
     };
-
 
     //bullet-points
     const renderBulletPoints = (bulletPoints) => {
@@ -140,36 +162,31 @@ const ProductDetails = () => {
             </ul>
         );
     };
+
     const cartHandler = () => {
         if (!product) return;
         dispatch(addToCart({ productId: id, quantity: value }));
         alert(`${value} items added to cart successfully!`);
     };
+
     const convertPascalToReadable = (text) => {
         return text.replace(/([A-Z])/g, ' $1').trim();
     };
 
 
     //currency change
-    const [rates, setRates] = useState({});
-    const [toCurrency, setToCurrency] = useState('USD');
-    const [convertedAmount, setConvertedAmount] = useState(0);
+    // if (product && product.sellPrice && product.currencyname) {
+    //     const fixedAmount = product.sellPrice;
+    //     const fromCurrency = product.currencyname;
 
-    useEffect(() => {
-        axios.get('https://api.exchangerate-api.com/v4/latest/USD')
-            .then(response => setRates(response.data.rates))
-            .catch(error => console.error('Error fetching the exchange rates:', error));
-    }, []);
-    if (product && product.sellPrice && product.currencyname) {
-        const fixedAmount = product.sellPrice;
-        const fromCurrency = product.currencyname;
+    //     useEffect(() => {
+    //         if (rates[fromCurrency] && rates[toCurrency]) {
+    //             setConvertedAmount((fixedAmount * rates[toCurrency]) / rates[fromCurrency]);
+    //         }
+    //     }, [fixedAmount, fromCurrency, toCurrency, rates]);
+    // }
 
-        useEffect(() => {
-            if (rates[fromCurrency] && rates[toCurrency]) {
-                setConvertedAmount((fixedAmount * rates[toCurrency]) / rates[fromCurrency]);
-            }
-        }, [fixedAmount, fromCurrency, toCurrency, rates]);
-    }
+
     const handleToCurrencyChange = e => setToCurrency(e.target.value);
 
 
@@ -192,8 +209,9 @@ const ProductDetails = () => {
         window.open(shareUrl, '_blank');
     };
 
-
-
+    const rfqredirect = () => {
+        navigate('/rfq');
+    }
 
 
     if (status === 'loading') {
@@ -227,12 +245,16 @@ const ProductDetails = () => {
                             <div className="big-image" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} onMouseMove={handleMouseMove}>
                                 <div className="image-wrapper-big">
                                     <img src={selectedImage} alt="Big Image" className='zoomedimg' />
+                                    {isHovered && (
+                                        <div className="overlay-for-img" style={{ left: overlayPosition.x - 50, top: overlayPosition.y - 50, }}></div>
+                                    )}
                                 </div>
+                                {isHovered && (
+                                    <div className="popupzoom" style={{ backgroundImage: `url(${selectedImage})`, backgroundPosition: backgroundPosition }}>
+                                    </div>
+                                )}
                             </div>
-                            {isHovered && (
-                                <div className="popupzoom" style={{ backgroundImage: `url(${selectedImage})`, backgroundPosition: backgroundPosition }}>
-                                </div>
-                            )}
+
 
                             <div className="flex" style={{ width: '100%', padding: '10px', justifyContent: 'space-evenly', border: 'var(--border)' }}>
                                 {product.image && product.image.length > 0 && (
@@ -296,7 +318,7 @@ const ProductDetails = () => {
                                     <div className='descrip2'>Share it on :</div>
                                     < WhatsAppIcon onClick={() => handleShare('whatsapp')} />
                                     < FacebookIcon onClick={() => handleShare('facebook')} />
-                                    <XIcon onClick={() => handleShare('twitter')}  />
+                                    <XIcon onClick={() => handleShare('twitter')} />
                                 </div>
                             </div>
                         </div>

@@ -9,7 +9,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { fetchProducts } from '../Redux/productSlice';
+import { fetchProductsTwo } from '../Redux/productSlice';
 import { fetchProductDetail } from '../Redux/productDetailSlice';
 import { addToCart } from '../Redux/cartSlice';
 import { fetchExchangeRates } from '../Redux/currencySlice';
@@ -18,10 +18,10 @@ import defaulImg from '../assets/default.jpg';
 import Loader from './Loader/Loader';
 const ProductCard = lazy(() => import('./ProductCard'));
 
-const Carousel = () => {
+const CarouselTwo = () => {
 
     const dispatch = useDispatch();
-    const { products = [], status, error } = useSelector((state) => state.products);
+    const { productsTwo = [], statusTwo, errorTwo } = useSelector((state) => state.products);
     const { product } = useSelector((state) => state.productDetail);
 
     const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
@@ -54,7 +54,6 @@ const Carousel = () => {
         setValue(newValue >= moq ? newValue.toString() : moq.toString());
     };
 
-
     const cartHandler = (id) => {
         if (!product) return;
         dispatch(addToCart({ productId: id, quantity: value }));
@@ -65,13 +64,13 @@ const Carousel = () => {
 
 
     //pagination
-    const [category, setCategory] = useState('ConsumerElectronics');
+    const [category, setCategory] = useState('FoodAndBeverages');
 
     useEffect(() => {
-        if (status === 'idle') {
-            dispatch(fetchProducts({ category }));
+        if (statusTwo === 'idle') {
+            dispatch(fetchProductsTwo({ category }));
         }
-    }, [dispatch, category, status]);
+    }, [dispatch, category, statusTwo]);
 
 
     //cart popup
@@ -134,11 +133,11 @@ const Carousel = () => {
     }, [isClickedCart]);
 
 
-    if (status === 'loading') {
+    if (statusTwo === 'loading') {
         return <div>Loading...</div>;
     }
-    if (status === 'failed') {
-        return <div>Error: {error}</div>;
+    if (statusTwo === 'failed') {
+        return <div>Error: {errorTwo}</div>;
     }
 
     const NextArrow = (props) => {
@@ -216,7 +215,7 @@ const Carousel = () => {
     return (
         <div className={`product-slider-cont ${isClickedCart ? 'clicked' : ''}`}>
             <Sliders {...settings}>
-                {Array.isArray(products) && products.map((pro) => (
+                {Array.isArray(productsTwo) && productsTwo.map((pro) => (
                     <div className='show-img-detail-sup' key={uuidv4()}>
                         <Suspense fallback={<Loader />}>
                             <ProductCard handleClickCart={handleClickCart} name={pro.productName} moq={pro.minOrderQuant} id={pro.productId} img={pro.images && pro.images.length > 0 ? pro.images[0].imageUrl : defaulImg} unitPrice={pro.unitPrice} currencyName={pro.currencyname} salePrice={pro.sellPrice} />
@@ -252,4 +251,4 @@ const Carousel = () => {
     );
 };
 
-export default Carousel;
+export default CarouselTwo;

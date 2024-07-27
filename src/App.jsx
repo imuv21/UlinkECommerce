@@ -21,7 +21,9 @@ const RfqDetail = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/RfqDet
 const OrderPage = lazy(() => import('./pages/BuyerDashboard/OrderPage/OrderPage'));
 const ViewDetail = lazy(() => import('./pages/BuyerDashboard/OrderPage/ViewDetail/ViewDetail'));
 const CompanyProfile = lazy(() => import('./pages/BuyerDashboard/CompanyProfile/CompanyProfile'));
-const PaymentSuccess = lazy(() => import('./pages/Cart/PaymentSuccess'));
+const PaymentSuccess = lazy(() => import('./pages/Payment/PaymentSuccess'));
+const PaymentFailed = lazy(() => import('./pages/Payment/PaymentFailed'));
+const Response = lazy(() => import('./pages/Payment/Response'));
 
 //seller dashboard
 const SellerForm = lazy(() => import('./pages/SellerForm'));
@@ -186,6 +188,8 @@ function App() {
               <Route path='/checkout' element={<Checkout />} />
               <Route path='/company-profile' element={<CompanyProfile />} />
               <Route path='/payment-success' element={<PaymentSuccess />} />
+              <Route path='/payment-failed' element={<PaymentFailed />} />
+              <Route path='/payment-response' element={<Response />} />
             </Route>
 
           </Routes>
