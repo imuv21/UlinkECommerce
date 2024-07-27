@@ -16,7 +16,7 @@ const PaymentSuccess = () => {
         const payerId = urlParams.get('PayerID');
 
         if (paymentId && payerId) {
-            axios.get(`http://api.ulinkit.com/api/paypal/payment/success?paymentId=${paymentId}&PayerID=${payerId}`)
+            axios.get(`https://api.ulinkit.com/api/paypal/payment/success?paymentId=${paymentId}&PayerID=${payerId}`)
                 .then(response => {
                     console.log('Payment completed:', response.data);
                     const parsedData = JSON.parse(response.data.data);

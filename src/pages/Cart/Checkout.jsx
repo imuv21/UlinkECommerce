@@ -231,10 +231,10 @@ const Checkout = () => {
   const paypalHandler = async (amount, currency) => {
     try {
       const fPrice = Number(amount).toFixed(2);
-      const successUrl = "http://localhost:5173/payment-success";
-      const cancelUrl = "http://localhost:5173/payment-failed";
+      const successUrl = "https://www.ulinkit.com/payment-success";
+      const cancelUrl = "https://www.ulinkit.com/payment-failed";
 
-      const responsePaypal = await axios.post('http://api.ulinkit.com/api/paypal/payment/create', {
+      const responsePaypal = await axios.post('https://api.ulinkit.com/api/paypal/payment/create', {
         amount: fPrice,
         description: "Test Transaction",
         currency: currency,
