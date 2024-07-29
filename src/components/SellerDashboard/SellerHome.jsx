@@ -1,10 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import logo from '../../assets/logo.png';
-import img1 from '../../assets/img1.webp';
-import img2 from '../../assets/img2.webp';
-import img3 from '../../assets/img3.webp';
-import img4 from '../../assets/img4.webp';
-import img5 from '../../assets/img5.webp';
 import { v4 as uuidv4 } from 'uuid';
 import { Helmet } from 'react-helmet-async';
 import { useSelector, useDispatch } from 'react-redux';
@@ -12,6 +6,12 @@ import { setVerifiedSeller } from '../../Redux/AuthReducer';
 import { Link } from 'react-router-dom';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
+import logo from '../../assets/logo.png';
+import img1 from '../../assets/img1.webp';
+import img2 from '../../assets/img2.webp';
+import img3 from '../../assets/img3.webp';
+import img4 from '../../assets/img4.webp';
+import img5 from '../../assets/img5.webp';
 
 const SellerHome = () => {
 
@@ -99,13 +99,30 @@ const SellerHome = () => {
     ]);
 
     useEffect(() => {
-        const identityDocumentStatus = sellerprofile.documents.IDENTITY_DOCUMENT.status;
-        const tradeLicenseStatus = sellerprofile.documents.TRADE_LICENSE.status;
-        const allDocumentsVerified = identityDocumentStatus === 'VERIFIED' && tradeLicenseStatus === 'PENDING';
-        setSteps(prevSteps => prevSteps.map(step => 
-            step.step === 2 ? { ...step, completed: allDocumentsVerified } : step
-        ));
+        try {
+            if (sellerprofile && sellerprofile.documents) {
+                const { IDENTITY_DOCUMENT, TRADE_LICENSE } = sellerprofile.documents;
+                if (IDENTITY_DOCUMENT && TRADE_LICENSE) {
+                    const identityDocumentStatus = IDENTITY_DOCUMENT.status;
+                    const tradeLicenseStatus = TRADE_LICENSE.status;
+                    const allDocumentsVerified = identityDocumentStatus === 'VERIFIED' && tradeLicenseStatus === 'PENDING';
+                    setSteps(prevSteps => prevSteps.map(step => 
+                        step.step === 2 ? { ...step, completed: allDocumentsVerified } : step
+                    ));
+                } else {
+                    console.log('Documents data is missing');
+                }
+            } else {
+                console.log('Seller profile or documents are not defined');
+            }
+        } catch (error) {
+            console.log('Error updating steps:', error);
+        }
     }, [sellerprofile]);
+    
+
+
+
 
     useEffect(() => {
         const hasDefaultBank = bankDetails.some(bank => bank.defaultValue);

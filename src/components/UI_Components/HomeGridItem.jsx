@@ -4,7 +4,7 @@ import { fetchExchangeRates } from '../../Redux/currencySlice';
 import currencySymbols from '../Schemas/currencySymbols';
 
 
-const HomeGridItem = ({ name, id, img, salePrice, currencyName, key }) => {
+const HomeGridItem = ({ name, id, img, salePrice, currencyName }) => {
 
     const dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ const HomeGridItem = ({ name, id, img, salePrice, currencyName, key }) => {
     };
 
     return (
-        <a className="home-grid-item" href={`/product-details/${id}`} key={key}>
+        <a className="home-grid-item" href={`/product-details/${id}`}>
             <img src={img} alt="" />
             <div className="home-detail">
                 <div className="product-title">{name.length > 20 ? `${name.substring(0, 20)}...` : name}</div>

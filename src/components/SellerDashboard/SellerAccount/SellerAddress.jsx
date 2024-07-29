@@ -2,26 +2,21 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addAddress, fetchAddresses, updateAddress, deleteAddress, markDefaultAddress } from '../../../Redux/addressSlice';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+import { Helmet } from 'react-helmet-async';
 import { allCountries } from '../../Schemas/countryCodes';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import SailingIcon from '@mui/icons-material/Sailing';
-import axios from 'axios';
-import { Helmet } from 'react-helmet-async';
-import { useNavigate } from 'react-router-dom';
+
+
 
 const SellerAddress = () => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { addresses, status, error, markDefaultStatus, markDefaultError } = useSelector((state) => state.address);
-
-
-    useEffect(() => {
-        dispatch(fetchAddresses());
-    }, [dispatch]);
+    const { addresses, status, error } = useSelector((state) => state.address);
 
     const [countries, setCountries] = useState([]);
     const [selectedOrigin, setSelectedOrigin] = useState('');
@@ -43,6 +38,10 @@ const SellerAddress = () => {
     const [isDefaultChecked, setIsDefaultChecked] = useState(false);
     const [editingIndex, setEditingIndex] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+        dispatch(fetchAddresses());
+    }, [dispatch]);
 
 
     //select country form api
@@ -195,7 +194,7 @@ const SellerAddress = () => {
         return <div>Loading...</div>;
     }
     if (status === 'failed') {
-        return <div>Error: {error}</div>;
+        return <div>Error</div>;
     }
 
     return (
