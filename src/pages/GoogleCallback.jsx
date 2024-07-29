@@ -62,7 +62,7 @@ const GoogleCallback = () => {
             <Helmet>
                 <title>Choose your role</title>
             </Helmet>
-            <div className="login-cont">
+            <div className="google-callback">
                 <Link to='/' className="logo-otpform">
                     <img src={logo} alt="logo" />
                 </Link>

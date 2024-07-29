@@ -142,11 +142,7 @@ const Signup = () => {
                         <div className='flexcol cover'>
 
                             <div className="heading">Create your account</div>
-                            <div className='box loginwithgoogle flex'>
-                                <img src="https://res.cloudinary.com/dey1tujp8/image/upload/v1720605284/pngwing.com_kapijs.png" alt="google" />
-                                <div className="heading2">Register with Google</div>
-                            </div>
-                            <div className="flex or"><div className="line"></div><span style={{ margin: '0px 30px' }}>Or</span><div className="line"></div></div>
+                         
 
                             <form className="flexcol  gap" onSubmit={handleSubmit(onSubmit)}>
                                 <Controller name="role" control={control} defaultValue="" render={({ field }) => (
