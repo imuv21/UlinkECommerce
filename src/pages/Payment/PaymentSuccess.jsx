@@ -34,7 +34,6 @@ const PaymentSuccess = () => {
             </Helmet>
             <div className='flexcol paymentsuccess'>
                 <div className="heading">Order placed successfully!</div>
-                <Link className='btn2 box flex' style={{width : '200px'}} to="/">Back to Home</Link>
             </div>
         </Fragment>
     )

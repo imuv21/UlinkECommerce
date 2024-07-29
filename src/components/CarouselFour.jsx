@@ -61,7 +61,7 @@ const CarouselFour = () => {
     };
 
 
-    //pagination
+    //fetch products
     const [category, setCategory] = useState('HomeGardenAndFurniture');
     useEffect(() => {
         if (statusFour === 'idle') {

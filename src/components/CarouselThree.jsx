@@ -61,7 +61,7 @@ const CarouselThree = () => {
     };
 
 
-    //pagination
+    //fetch products
     const [category, setCategory] = useState('FashionAndAccessories');
     useEffect(() => {
         if (statusThree === 'idle') {

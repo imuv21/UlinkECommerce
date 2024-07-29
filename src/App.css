@@ -787,7 +787,7 @@ button:focus {
 
 /* login - signup */
 
-.loginwithgoogle{
+.loginwithgoogle {
   border: none;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
   padding: 0px;
@@ -796,7 +796,7 @@ button:focus {
   border-radius: var(--br2);
 }
 
-.loginwithgoogle img{
+.loginwithgoogle img {
   width: 24px;
   height: 24px;
 }
@@ -2129,10 +2129,11 @@ button:focus {
   width: 100px;
   height: 100px;
   background-color: rgba(105, 230, 255, 0.536);
-  background-image: 
+  background-image:
     linear-gradient(0deg, rgba(255, 255, 255, 0.5) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.5) 75%, transparent 75%, transparent),
     linear-gradient(90deg, rgba(255, 255, 255, 0.5) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.5) 75%, transparent 75%, transparent);
-  background-size: 6px 6px; /* Size of the pattern squares */
+  background-size: 6px 6px;
+  /* Size of the pattern squares */
   background-position: 0px 0px, 0px 0px;
   box-shadow: 0px 0px 5px rgba(152, 241, 255, 0.357);
   pointer-events: none;
@@ -2436,7 +2437,7 @@ button:focus {
 }
 
 /* Checkout styling  */
-.payop-box{
+.payop-box {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -2445,6 +2446,7 @@ button:focus {
   gap: 40px;
   padding: 10px;
 }
+
 .payment-option {
   display: flex;
   flex-direction: row;
@@ -2457,14 +2459,17 @@ button:focus {
   background: white;
   outline: 1px solid white;
 }
+
 .payment-option.selected {
   background: rgb(234, 234, 234);
   outline: 1px solid rgb(190, 190, 190);
 }
-.payment-option.selected img{
+
+.payment-option.selected img {
   filter: none;
 }
-.payment-option img{
+
+.payment-option img {
   filter: saturate(0);
   aspect-ratio: 4/1;
   object-fit: contain;
@@ -3174,7 +3179,7 @@ button:focus {
   gap: 20px;
 }
 
-.payment-response{
+.payment-response {
   width: 100%;
   background-color: white;
   padding: 40px 80px 40px 80px;
@@ -3184,14 +3189,16 @@ button:focus {
   align-items: start;
   justify-content: center;
 }
-.pr-flexbox{
+
+.pr-flexbox {
   display: flex;
   flex-direction: row;
   gap: 20px;
   align-items: center;
   justify-content: start;
 }
-.pr-flexboxcol{
+
+.pr-flexboxcol {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -3346,4 +3353,45 @@ button:focus {
 .allproduct::-webkit-scrollbar-thumb {
   background-color: var(--scroll);
   border-radius: var(--br1);
+}
+
+
+/* home-grid styling */
+.home-grid-flex{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+  background: rgb(224, 224, 224);
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+  background: white;
+}
+
+.home-grid-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.home-grid-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: fill;
+}
+
+.home-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  padding: 10px;
+  gap: 10px;
 }

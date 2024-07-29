@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 const Response = () => {
@@ -81,6 +81,7 @@ const Response = () => {
                     <div className='heading3'>Transactions</div>
                     {response.transactions.map((transaction, index) => renderTransaction(transaction, index))}
                 </div>
+                <Link className='btn2 box flex' style={{width : '200px'}} to="/">Back to Home</Link>
             </div>
         </Fragment>
 

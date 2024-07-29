@@ -64,7 +64,7 @@ const Carousel = () => {
 
 
 
-    //pagination
+    //fetch products
     const [category, setCategory] = useState('ConsumerElectronics');
 
     useEffect(() => {

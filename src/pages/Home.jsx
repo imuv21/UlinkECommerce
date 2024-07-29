@@ -10,6 +10,7 @@ import Carousel from '../components/Carousel';
 import CarouselTwo from '../components/CarouselTwo';
 import CarouselThree from '../components/CarouselThree';
 import CarouselFour from '../components/CarouselFour';
+import Square from '../components/UI_Components/Square';
 
 
 const Home = () => {
@@ -39,6 +40,7 @@ const Home = () => {
         <div className='discount-pages'>
           <img className='banner-width' src={summer} />
         </div>
+
         <div className='best-deals-product'>
           <div className=''>
             <h4>Consumer Electronics ({totalItems} items)</h4>
@@ -49,6 +51,8 @@ const Home = () => {
         </div>
 
         <Carousel />
+
+        <Square />
 
         <div className="heading3 wh">Food And Beverages ({totalItemsTwo} items)</div>
 
@@ -64,6 +68,9 @@ const Home = () => {
         <div className='discount-pages'>
           <img className='banner-width' src={DiscountCoupne} />
         </div>
+
+        <Square />
+        
         <div className="heading3 wh">Home Garden And Furniture ({totalItemsFour} items)</div>
 
         <CarouselFour />

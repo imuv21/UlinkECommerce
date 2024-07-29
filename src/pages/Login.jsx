@@ -76,7 +76,7 @@ const Login = () => {
             const response = await axios.get('https://api.ulinkit.com/api/login/google');
             if (response.status === 200) {
                 const redirectURL = response.data.redirectUrl;
-                window.open(redirectURL, '_blank'); 
+                window.open(redirectURL, '_self'); 
             }
         } catch (error) {
             console.log(error);

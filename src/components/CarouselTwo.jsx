@@ -63,7 +63,7 @@ const CarouselTwo = () => {
 
 
 
-    //pagination
+    //fetch products
     const [category, setCategory] = useState('FoodAndBeverages');
 
     useEffect(() => {
