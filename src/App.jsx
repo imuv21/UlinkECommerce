@@ -78,6 +78,7 @@ const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const PolicyComponent = lazy(() => import('./pages/PolicyComponent'));
 const FAQPage = lazy(() => import('./pages/FAQ/FAQPage'));
+const GoogleCallback = lazy(() => import('./pages/GoogleCallback'));
 
 //Other
 const Image = lazy(() => import('./components/Image'));
@@ -126,6 +127,7 @@ function App() {
               <Route path='/signup' element={<Signup />} />
               <Route path='/seller-form' element={<SellerForm />} />
               <Route path='/seller-center' element={<NewBecomeASeller />} />
+              <Route path='/google-callback' element={<GoogleCallback />} />
             </Route>
 
 

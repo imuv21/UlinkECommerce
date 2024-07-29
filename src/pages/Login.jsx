@@ -71,9 +71,19 @@ const Login = () => {
 
 
     //Login with google
-    const loginWithGoogle = () => {
-        window.open(`http://localhost:8000/auth/google/callback`, '_self');
-    }
+    const loginWithGoogle = async () => {
+        try {
+            const response = await axios.get('https://api.ulinkit.com/api/login/google');
+            if (response.status === 200) {
+                const redirectURL = response.data.redirectUrl;
+                window.open(redirectURL, '_blank'); 
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+   // http://localhost:3000/google-callback?code=4%2F0AcvDMrBEk2zFvQ16sBm1gfjT3KLHyfSZYS1W6Ciy8tYkt1Ib_jioWbEHSwShtPX1xXz-4g&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=2&prompt=consent
 
     //json lottie animation
     const options = {
