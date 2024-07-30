@@ -326,6 +326,13 @@ const Header = () => {
     );
   };
   const getConsumerPopupContent = () => {
+
+    const handleOptionClick = (supOption, subOption = '', miniSubOption = '') => {
+      navigate('/search-results', {
+        state: { supOption, subOption, miniSubOption }
+      });
+    };
+
     return (
       <div className='cate-grid'>
         {subOptions.ConsumerElectronics.slice(0, 3).map((subOption, index) => (
@@ -346,6 +353,13 @@ const Header = () => {
     );
   };
   const getOfficePopupContent = () => {
+
+    const handleOptionClick = (supOption, subOption = '', miniSubOption = '') => {
+      navigate('/search-results', {
+        state: { supOption, subOption, miniSubOption }
+      });
+    };
+
     return (
       <div className='cate-grid'>
         {subOptions.OfficeAndStationery.slice(0, 3).map((subOption, index) => (
@@ -366,6 +380,13 @@ const Header = () => {
     );
   };
   const getFoodPopupContent = () => {
+
+    const handleOptionClick = (supOption, subOption = '', miniSubOption = '') => {
+      navigate('/search-results', {
+        state: { supOption, subOption, miniSubOption }
+      });
+    };
+
     return (
       <div className='cate-grid'>
         {subOptions.FoodAndBeverages.slice(4, 7).map((subOption, index) => (

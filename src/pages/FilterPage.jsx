@@ -18,6 +18,9 @@ const FilterPage = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const catLocation = useLocation();
+    const { supOption, subOption, miniSubOption } = catLocation.state || {};
+
     const { filterProducts, status, error, currentPage, totalPages, totalItems, numberOfElements } = useSelector((state) => state.filterProducts);
     const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
     const exchangeRates = useSelector(state => state.currency.exchangeRates);
@@ -32,9 +35,9 @@ const FilterPage = () => {
     const minPrice = vprice[0];
     const maxPrice = vprice[1];
 
-    const [selectedSupOption, setSelectedSupOption] = useState('');
-    const [selectedSubOption, setSelectedSubOption] = useState('');
-    const [selectedMiniSubOption, setSelectedMiniSubOption] = useState('');
+    const [selectedSupOption, setSelectedSupOption] = useState(supOption || '');
+    const [selectedSubOption, setSelectedSubOption] = useState(subOption || '');
+    const [selectedMiniSubOption, setSelectedMiniSubOption] = useState(miniSubOption || '');
     const [selectedMicroSubOption, setSelectedMicroSubOption] = useState('');
 
     useEffect(() => {
@@ -241,28 +244,28 @@ const FilterPage = () => {
                             <select onChange={handleSupOptionChange} className="box flex" value={selectedSupOption}>
                                 <option value="">Select category</option>
                                 {supOptions.map((option, index) => (
-                                    <option key={index} value={option}>{option}</option>
+                                    <option key={index} value={option}>{convertPascalToReadable(option)}</option>
                                 ))}
                             </select>
 
                             <select onChange={handleSubOptionChange} className="box flex" value={selectedSubOption}>
                                 <option value="">Select sub category</option>
                                 {subOptions[selectedSupOption] && subOptions[selectedSupOption].map((option, index) => (
-                                    <option key={index} value={option}>{option}</option>
+                                    <option key={index} value={option}>{convertPascalToReadable(option)}</option>
                                 ))}
                             </select>
 
                             <select onChange={handleMiniSubOptionChange} className="box flex" value={selectedMiniSubOption}>
                                 <option value="">Select an option</option>
                                 {miniSubOptions[selectedSubOption] && miniSubOptions[selectedSubOption].map((option, index) => (
-                                    <option key={index} value={option}>{option}</option>
+                                    <option key={index} value={option}>{convertPascalToReadable(option)}</option>
                                 ))}
                             </select>
 
                             <select onChange={handleMicroSubOptionChange} className="box flex" value={selectedMicroSubOption}>
                                 <option value="">Select sub option</option>
                                 {microSubOptions[selectedMiniSubOption] && microSubOptions[selectedMiniSubOption].map((option, index) => (
-                                    <option key={index} value={option}>{option}</option>
+                                    <option key={index} value={option}>{convertPascalToReadable(option)}</option>
                                 ))}
                             </select>
                         </div>
