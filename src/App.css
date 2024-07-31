@@ -3373,7 +3373,7 @@ button:focus {
 
 
 /* home-grid styling */
-.home-grid-flex{
+.home-grid-flex {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -3410,4 +3410,300 @@ button:focus {
   justify-content: center;
   padding: 10px;
   gap: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* vipin's rfq marketplace styling */
+.padding-mark {
+  padding: 50px 80px 80px 80px;
+}
+
+.log-box-seller {
+  background: #e3e4e9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 20px 0px 0px;
+  border-radius: 2px;
+}
+
+.mark-flex {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.hole-item-flex {
+  padding: 10px 10px 10px 10px;
+}
+
+.info-icon {
+  font-size: 25px;
+  font-family: 600;
+  color: #007bff;
+}
+
+.rql {
+  font-size: 16px;
+  font-weight: 600;
+  color: #007bff;
+}
+
+.some-info {
+  padding: 5px 0px 0px 55px;
+  font-size: 15px;
+
+}
+
+.sli {
+  color: #fc7927;
+}
+
+.login-btn-button {
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  background: #fc7927;
+  color: #fff;
+  border-radius: 2px;
+}
+
+.manage-two-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0px 0px 0px;
+}
+
+.button-button {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.wth-btn {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: #fc7927;
+  border: none;
+  border-radius: 2px
+}
+
+.bid-req {
+  padding: 15px 0px 0px 0px;
+}
+
+.quatation-container {
+  display: flex;
+  justify-content: start;
+  gap: 20px;
+  padding: 20px 0px 0px 0px;
+
+}
+
+.quote-container-1 {
+  width: 15%;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.show-more-text-size {
+  font-size: 15px;
+}
+
+.quote-container-2 {
+  width: 85%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 20px;
+}
+
+.quote-search {
+  width: 50%;
+  padding: 5px;
+  border: none;
+  outline: none;
+  background-color: #ebebee;
+  border-radius: 3px;
+  display: flex;
+}
+
+.search-input-field-item {
+  width: 100%;
+  border: none;
+  background-color: #ebebee;
+
+}
+
+.search-input-field-item::placeholder {
+  font-size: 16px;
+}
+
+.search-input-icon {
+  font-size: 25px;
+  padding: 5px 0px 0px 0px;
+}
+
+.e-soon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.e-soon:hover {
+  background-color: #a6a1a1;
+  border-radius: 5px;
+  transition-duration: 1s;
+}
+
+.e-soon-status:hover {
+  background-color: #a6a1a1;
+  border-radius: 5px;
+  transition-duration: 1s;
+}
+
+.select-box-item-1 {
+  padding: 20px 0px 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+}
+
+.checkbox-box-box {
+  width: 17px;
+  height: 17px;
+}
+
+.exp-soon-color {
+  font-size: 15px;
+  color: #212834;
+}
+
+.border-line-add {
+  margin-top: 20px;
+  border: 1px solid rgb(197, 189, 189);
+}
+
+.e-soon-status {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.input-search-category {
+  margin-top: 20px;
+  border-radius: 5px;
+  background-color: #e4dbdb;
+}
+
+.input-search-category-width {
+  width: 100%;
+  background: #f1eded;
+  font-size: 15px;
+}
+
+.border-line-add-1 {
+  border: 1px solid black;
+}
+
+.quotes-list-submit-show {
+  width: 85%;
+}
+
+.quote-container-border {
+  margin-top: 20px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  border: 1px solid rgb(180, 178, 178);
+  padding: 20px 15px 20px 15px;
+  display: flex;
+  width: 100%;
+  justify-content: start;
+  border-radius: 5px;
+  background-color: #ffffff;
+  gap: 30px;
+}
+
+.quote-image-wdth {
+  width: 70px;
+  height: 70px;
+}
+
+.quote-title-product-name {
+  color: rgb(34, 34, 66);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.quote-image-container {
+  border: 1px solid rgb(216, 214, 214);
+  border-radius: 5px;
+  width: 100px;
+  height: 100px;
+  padding: 10px 5px 5px 15px;
+}
+
+.quote-details-info-gain {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  gap: 100px;
+  padding: 10px 0px 0px 0px;
+}
+
+.date-flex-item {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+}
+
+.deadline-time {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  width: 100%;
+}
+
+.recieve-quote-value {
+  margin-top: 20px;
+  padding: 5px 2px 5px 2px;
+  background: #efeff8;
+  border-radius: 5px;
+}
+
+.submit-quote-container {
+  margin-top: 20px;
+}
+
+.quote-submit-value {
+  width: 100%;
+  border: none;
+  background-color: #ff9857;
+  color: #fff;
+  font-weight: 600;
+}
+
+.date-font-size-inc {
+  font-size: 15px;
 }

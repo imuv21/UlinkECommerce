@@ -700,9 +700,9 @@ const Header = () => {
           <div className="sub-header-option">
             <DepartureBoardIcon /> <div className="sub-heading3">Express</div>
           </div>
-          <div className="sub-header-option">
+          <Link to="/rfqmarketplace" className="sub-header-option">
             <SendIcon /> <div className="sub-heading3">RFQ Marketplace</div>
-          </div>
+          </Link>
           <div className="sub-header-option">
             <BusinessCenterIcon /> <div className="sub-heading3">Enterprise</div>
           </div>

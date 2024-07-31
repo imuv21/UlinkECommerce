@@ -61,6 +61,7 @@ const OtpNumber = lazy(() => import('./pages/BuyerSeller/OtpNumber'));
 const OtpPassword = lazy(() => import('./pages/BuyerSeller/OtpPassword'));
 const UpdatePassword = lazy(() => import('./pages/BuyerSeller/UpdatePassword'));
 const OtpProfile = lazy(() => import('./pages/BuyerSeller/OtpProfile'));
+const Rfqmarketplace = lazy(() => import('./pages/BuyerSeller/Rfqmarketplace'));
 
 //public
 const Home = lazy(() => import("./pages/Home"));
@@ -111,6 +112,7 @@ function App() {
             <Route path='/become-a-seller' element={<BecomeASeller />} />
             <Route path='/commission-structure' element={<CommissionStructure />} />
             <Route path='/faq' element={<FAQPage />} />
+            <Route path="/rfqmarketplace" element={<Rfqmarketplace />} />
             
             
             {/* other */}
