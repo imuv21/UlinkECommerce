@@ -1,5 +1,5 @@
 
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addSingleSchema } from '../../Schemas/validationSchema';
@@ -9,6 +9,9 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import { fetchEditProduct, deleteImage, uploadImage, updateProduct } from '../../../Redux/updateProductSlice';
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import ClearIcon from '@mui/icons-material/Clear';
 
 const schema = yupResolver(addSingleSchema);
@@ -134,9 +137,13 @@ const EditSingle = () => {
 
         try {
             await dispatch(updateProduct({ productId, productData: data })).unwrap();
-            alert("Product updated successfully");
+          
+            toast(<div className='toaster'> < VerifiedIcon /> {`Product updated successfully`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } catch (error) {
-            console.error("Failed to update product:", error);
+          
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to update product`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } finally {
             setIsSubmitting(false);
             navigate('/seller-dashboard/product-list');
@@ -196,7 +203,9 @@ const EditSingle = () => {
         if (!file) return;
         const totalImages = images.length;
         if (totalImages >= 5) {
-            alert("You can only select a maximum of 5 images.");
+          
+            toast(<div className='toaster'> < NewReleasesIcon /> {`You can only select a maximum of 5 images`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             return;
         }
 
@@ -207,14 +216,18 @@ const EditSingle = () => {
         setImagesPreview(prevPreviews => [...prevPreviews, newImagePreview]);
 
         if (!productId) {
-            console.error('Product ID is missing');
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Product ID is missing`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             return;
         }
         try {
             await dispatch(uploadImage({ productId, file }));
-            alert('Image uploaded successfully');
+            toast(<div className='toaster'> < VerifiedIcon /> {`Image uploaded successfully`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } catch (error) {
-            console.error('Error uploading image:', error);
+          
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Error uploading image`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
 
@@ -234,10 +247,11 @@ const EditSingle = () => {
                 newPreviews.splice(index, 1);
                 return newPreviews;
             });
-            alert('Image deleted successfully');
+            toast(<div className='toaster'> < VerifiedIcon /> {`Image deleted successfully`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } else {
-            console.error('Error deleting image:', response.payload);
-            alert('Error deleting image');
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Error deleting image`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
 

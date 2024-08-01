@@ -11,23 +11,23 @@ import { businessSchema } from '../../Schemas/validationSchema';
 import { fetchSellerBusinessProfile, updateSellerBusinessProfile, updateSellerDocData, uploadDocument, uploadProfileImage, deleteSellerDocument } from '../../../Redux/sellerBusinessProfileSlice';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import { useNavigate } from 'react-router-dom';
+
 
 const schema = yupResolver(businessSchema);
 
 const SellerComProfile = () => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { sellerprofile, status, error, updateStatus, updateError } = useSelector((state) => state.sellerBusinessProfile);
+    const { sellerprofile } = useSelector((state) => state.sellerBusinessProfile);
     const [isSubmitting, setIsSubmitting] = useState(false);
     
-
     useEffect(() => {
         dispatch(fetchSellerBusinessProfile());
     }, [dispatch]);
-
 
     const { handleSubmit, control, formState: { errors } } = useForm({
         resolver: schema,
@@ -45,7 +45,8 @@ const SellerComProfile = () => {
                 await dispatch(uploadProfileImage(selectedImage));
             }
             await dispatch(updateSellerBusinessProfile(data));
-            alert('Profile updated successfully!');
+            toast(<div className='toaster'> < VerifiedIcon /> {`Profile updated successfully!`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } catch (error) {
             console.error('Error updating profile:', error);
         } finally {
@@ -187,15 +188,18 @@ const SellerComProfile = () => {
                 setDocErrors({});
                
             } catch (error) {
-                alert("Form submission failed. Please try again.");
+                toast(<div className='toaster'> < NewReleasesIcon /> {`Form submission failed. Please try again.`}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             } finally {
                 await dispatch(fetchSellerBusinessProfile());
-                alert("Form submitted successfully.");
+                toast(<div className='toaster'> < VerifiedIcon /> {`Form submitted successfully.`}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                 setIsSubmittingDoc(false);
                 setIsEditingDoc(false);
             }
         } else {
-            alert("Form submission failed. Please fix the errors.");
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Form submission failed. Please fix the errors.`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
 
@@ -267,7 +271,8 @@ const SellerComProfile = () => {
                 setFile({ file, name: file.name });
                 clearError(fieldName);
             } else {
-                alert('Invalid file format or size. Please upload a file within 10MB and with a JPG, JPEG, PNG, TIF, or PDF format.');
+                toast(<div className='toaster'> < NewReleasesIcon /> {`Invalid file format or size. Please upload a file within 10MB and with a JPG, JPEG, PNG, TIF, or PDF format.`}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
         }
     };
@@ -283,7 +288,8 @@ const SellerComProfile = () => {
             setDate(e.target.value);
             clearError(fieldName);
         } else {
-            alert('Please select a date from today or later.');
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Please select a date from today or later.`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
 

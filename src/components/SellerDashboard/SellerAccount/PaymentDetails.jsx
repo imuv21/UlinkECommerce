@@ -9,6 +9,9 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addBankDetails } from '../../../Redux/bankDetailsSlice';
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 const schema = yupResolver(bankSchema);
 
@@ -65,9 +68,12 @@ const PaymentDetails = () => {
 
         try {
             await dispatch(addBankDetails({ bankDetails })).unwrap();
-            alert('Bank details added successfully');
+            toast(<div className='toaster'> < VerifiedIcon /> {`Bank details added successfully`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } catch (err) {
-            console.error('Failed to update bank details:', err);
+         
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to update bank details`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } finally {
             setIsSubmitting(false);
             navigate('/seller-dashboard/payments');

@@ -5,6 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import { allCountries } from '../../Schemas/countryCodes';
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
@@ -16,7 +19,7 @@ import SailingIcon from '@mui/icons-material/Sailing';
 const SellerAddress = () => {
 
     const dispatch = useDispatch();
-    const { addresses, status, error } = useSelector((state) => state.address);
+    const { addresses, status } = useSelector((state) => state.address);
 
     const [countries, setCountries] = useState([]);
     const [selectedOrigin, setSelectedOrigin] = useState('');
@@ -137,7 +140,9 @@ const SellerAddress = () => {
                     await dispatch(markDefaultAddress(addressToUpdate.id));
                 }
                 await dispatch(fetchAddresses());
-                alert('Address updated successfully');
+             
+                toast(<div className='toaster'> < VerifiedIcon /> {`Address updated successfully`}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             } else {
                 response = await dispatch(addAddress(formData));
                 const newAddress = response.payload;
@@ -149,12 +154,15 @@ const SellerAddress = () => {
                     }
                 }
                 await dispatch(fetchAddresses());
-                alert('Address saved successfully');
+            
+                toast(<div className='toaster'> < VerifiedIcon /> {`Address saved successfully`}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
             setShowPopup(false);
             resetFormFields();
         } catch (error) {
-            console.error('Error saving address:', error);
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Error saving address`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } finally {
             setIsSubmitting(false);
         }

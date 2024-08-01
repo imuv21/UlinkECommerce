@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import InfoIcon from '@mui/icons-material/Info';
 import ClearIcon from '@mui/icons-material/Clear';
 
@@ -32,7 +34,8 @@ const AccessManagement = () => {
         e.preventDefault();
         const newValues = inputValue.split(',').map(val => val.trim()).filter(val => val);
         if (newValues.length === 0 || !role) {
-            alert("Please enter valid emails and select a role.");
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Please enter valid emails and select a role.`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             return;
         }
         setEmails(newValues);

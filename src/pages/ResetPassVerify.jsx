@@ -6,6 +6,9 @@ import { Helmet } from 'react-helmet-async';
 import { urls } from '../components/Schemas/images';
 import { useDispatch, useSelector } from 'react-redux';
 import { verifyForgotPassword } from '../Redux/forgotPasswordSlice';
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 const ResetPassVerify = () => {
     const dispatch = useDispatch();
@@ -55,17 +58,20 @@ const ResetPassVerify = () => {
         if (otp.length === 6) {
             try {
                 await dispatch(verifyForgotPassword({ otp, role, username })).unwrap();
-                alert('Password reset successfully! Please login with your new password.');
+                toast(<div className='toaster'> < VerifiedIcon /> {`Password reset successfully! Please login with your new password.`}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                 navigate('/login');
             } catch (err) {
-                alert('OTP verification failed: ' + (err.message || 'Unknown error'));
+                toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed: ${err.message || 'Unknown error'}`}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
         }
     };
 
     useEffect(() => {
         if (status === 'failed') {
-            alert('OTP verification failed: ' + error);
+            toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed: ${error}`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     }, [status, error]);
 

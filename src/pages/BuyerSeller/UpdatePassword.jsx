@@ -11,6 +11,9 @@ import animation from "../../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const schema = yupResolver(resetPasswordSchema);
 const ResetPassword = () => {
@@ -43,13 +46,16 @@ const ResetPassword = () => {
                 }
             );
             if (response.data.status) {
-                alert(response.data.message);
+                toast(<div className='toaster'> < VerifiedIcon /> {response.data.message}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                 navigate('/verify-update-password');
             } else {
-                alert("Failed to send OTP to update password!");
+                toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to send OTP to update password!`}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
         } catch (error) {
-            alert("Failed to send OTP to update password!");
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to send OTP to update password!`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
 

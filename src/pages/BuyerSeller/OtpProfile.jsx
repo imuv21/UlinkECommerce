@@ -7,6 +7,9 @@ import { urls } from '../../components/Schemas/images';
 import axios from 'axios';
 import { logout } from '../../Redux/AuthReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const OtpProfile = () => {
@@ -35,11 +38,15 @@ const OtpProfile = () => {
             if (response.status === 200) {
                 await handleLogout();
             }
-            alert(response.data.message);
+
+            toast(<div className='toaster'> < VerifiedIcon /> {response.data.message}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             return response.data;
         } catch (error) {
             console.error('OTP verification failed:', error); 
-            alert('OTP verification failed');
+            toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+            
             throw error;
         }
     };
@@ -53,7 +60,10 @@ const OtpProfile = () => {
                 }
             });
             if (response.status === 200) {
-                alert(response.data.message || 'Logged out successfully');
+              
+                toast(<div className='toaster'> < VerifiedIcon /> {response.data.message || 'Logged out successfully'}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+                
                 dispatch(logout());
                 navigate('/login');
             } else {
@@ -69,9 +79,9 @@ const OtpProfile = () => {
     const sellerForm = async (otp) => {
         try {
             const verificationResponse = await verifyOtp(otp);
-            
         } catch (error) {
-            alert('Failed to verify OTP!');
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to verify OTP!`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
 
@@ -136,10 +146,7 @@ const OtpProfile = () => {
             setTimerRunning(false);
         }
     }, [timeLeft]);
-    const handleResendClick = () => {
-        setTimeLeft(60);
-        setTimerRunning(true);
-    };
+   
 
     return (
         <Fragment>

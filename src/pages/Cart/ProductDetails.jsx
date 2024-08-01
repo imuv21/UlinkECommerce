@@ -8,6 +8,8 @@ import axios from 'axios';
 import Loader from '../../components/Loader/Loader';
 import currencySymbols from '../../components/Schemas/currencySymbols';
 import { Helmet } from 'react-helmet-async';
+import { toast } from 'react-hot-toast';
+
 
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FlightIcon from '@mui/icons-material/Flight';
@@ -28,7 +30,6 @@ import paypal from '../../assets/paypal.png';
 import upi from '../../assets/upi.png';
 import netbanking from '../../assets/netbanking.png';
 import './cart.css';
-
 
 
 
@@ -166,7 +167,8 @@ const ProductDetails = () => {
     const cartHandler = () => {
         if (!product) return;
         dispatch(addToCart({ productId: id, quantity: value }));
-        alert(`${value} items added to cart successfully!`);
+        toast(<div className='toaster'> < VerifiedIcon /> {`${value} items added to cart successfully!`}</div>, 
+            { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
     };
 
     const convertPascalToReadable = (text) => {

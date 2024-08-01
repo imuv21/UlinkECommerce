@@ -4,14 +4,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../components/Schemas/validationSchema';
 import { Link, useNavigate } from 'react-router-dom';
 import { urls } from '../components/Schemas/images';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { Helmet } from 'react-helmet-async';
-import animation from "../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { loginSuccess, loginFailure } from '../Redux/AuthReducer';
+import { toast } from 'react-hot-toast';
+import axios from 'axios';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import animation from "../assets/json/animation-signup.json";
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const schema = yupResolver(loginSchema);
@@ -50,17 +53,21 @@ const Login = () => {
             const user = { firstname, lastname, countryCode, wpcountrycode, countryOfoperation, whatsappnumber, currency, currencySymbol, country, role, email, number };
 
             dispatch(loginSuccess({ token, message, user }));
-            alert(`${status} : ${message}`);
+            toast(<div className='toaster'> < VerifiedIcon /> {`${status} : ${message}`}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+
             if (role === 'Seller') {
                 navigate('/seller-dashboard/seller-home');
             } else {
                 navigate('/');
             }
+
         } catch (error) {
+
             const message = error.response?.data?.message || 'Login failed!';
             const status = error.response?.data?.status || 'error';
             dispatch(loginFailure({ message }));
-            alert(`${status} : ${message}`);
+            toast(<div className='toaster'> < NewReleasesIcon /> {`${status} : ${message}`}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+        
         } finally {
             setIsSubmitting(false);
         }
@@ -79,11 +86,9 @@ const Login = () => {
                 window.open(redirectURL, '_self'); 
             }
         } catch (error) {
-            console.log(error);
+            toast(<div className='toaster'> < NewReleasesIcon />{error || 'Failed to login with Google'}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
-
-   // http://localhost:3000/google-callback?code=4%2F0AcvDMrBEk2zFvQ16sBm1gfjT3KLHyfSZYS1W6Ciy8tYkt1Ib_jioWbEHSwShtPX1xXz-4g&scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=2&prompt=consent
 
     //json lottie animation
     const options = {

@@ -6,6 +6,9 @@ import animation from "../../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const ForgotPassword = () => {
 
@@ -28,15 +31,17 @@ const ForgotPassword = () => {
                 }
             );
             if (response.data.status) {
-                alert(response.data.message);
+
+                toast(<div className='toaster'> < VerifiedIcon /> {response.data.message}</div>,
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                 navigate('/verify-update-password');
             } else {
-                console.error("Failed to send OTP verification mail");
-                alert("Failed to send OTP verification mail");
+                toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to send OTP verification mail`}</div>,
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
         } catch (error) {
-            console.error("Error updating password:", error);
-            alert("An error occurred while updating the email.");
+            toast(<div className='toaster'> < NewReleasesIcon /> {`An error occurred while updating the email.`}</div>,
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
         navigate('/verify-update-email');
     }

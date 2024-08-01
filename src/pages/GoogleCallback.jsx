@@ -7,6 +7,9 @@ import { loginSuccess, loginFailure } from '../Redux/AuthReducer';
 import { urls } from '../components/Schemas/images';
 import animation from "../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 const GoogleCallback = () => {
 
@@ -31,7 +34,7 @@ const GoogleCallback = () => {
                     const user = { firstname, lastname, countryCode, wpcountrycode, countryOfoperation, whatsappnumber, currency, currencySymbol, country, role, email, number };
 
                     dispatch(loginSuccess({ token, message, user }));
-                    alert(`${status} : ${message}`);
+                    toast(<div className='toaster'> < VerifiedIcon /> {status} : {message}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                     if (role === 'Seller') {
                         navigate('/seller-dashboard/seller-home');
                     } else {
@@ -42,7 +45,7 @@ const GoogleCallback = () => {
                     const message = error.response?.data?.message || 'Login failed!';
                     const status = error.response?.data?.status || 'error';
                     dispatch(loginFailure({ message }));
-                    alert(`${status} : ${message}`);
+                    toast(<div className='toaster'> < NewReleasesIcon /> {status} : {message}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                 });
         }
     }, [location, role]);

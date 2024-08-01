@@ -3,13 +3,16 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { resetPasswordSchema } from '../components/Schemas/validationSchema';
 import { forgotPassword } from '../Redux/forgotPasswordSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { urls } from '../components/Schemas/images';
 import { Helmet } from 'react-helmet-async';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import animation from "../assets/json/animation-signup.json";
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import { useLottie } from "lottie-react";
 const schema = yupResolver(resetPasswordSchema);
 const ResetPassword = () => {
@@ -48,10 +51,15 @@ const ResetPassword = () => {
         const { password, role, username } = formData;
         try {
             const resultAction = await dispatch(forgotPassword({ password, role, username })).unwrap();
-            alert('We have sent an OTP to your email. Please check your email and enter the OTP to reset your password.');
+         
+            toast(<div className='toaster'> < VerifiedIcon /> {`We have sent an OTP to your email. Please check your email and enter the OTP to reset your password.`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+
             navigate('/verify-reset-password');
         } catch (err) {
-            alert(`Failed to send OTP: ${err.message || 'Unknown error'}`);
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to send OTP: ${err.message || 'Unknown error'}`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+
         } finally {
             setIsSubmitting(false);
         }

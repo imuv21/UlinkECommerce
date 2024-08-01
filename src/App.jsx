@@ -3,6 +3,7 @@ import './Responsive.css';
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Toaster } from 'react-hot-toast';
 import Loader from './components/Loader/Loader';
 import Layout from './components/Layout';
 
@@ -97,6 +98,7 @@ function App() {
   return (
     <BrowserRouter>
       <Suspense fallback={<Loader />}>
+        <Toaster />
         <Layout>
           <Routes>
 
@@ -113,8 +115,8 @@ function App() {
             <Route path='/commission-structure' element={<CommissionStructure />} />
             <Route path='/faq' element={<FAQPage />} />
             <Route path="/rfqmarketplace" element={<Rfqmarketplace />} />
-            
-            
+
+
             {/* other */}
             <Route path='/img' element={<Image />} />
             <Route path='/trans' element={<Translator />} />

@@ -4,6 +4,8 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import SailingIcon from '@mui/icons-material/Sailing';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 const Shipping = () => {
 
@@ -130,6 +132,8 @@ const Shipping = () => {
 
 
     // Retrieve initial values from localStorage or set defaults
+   
+
     const initialFromTime = localStorage.getItem('fromTime') || '10 AM';
     const initialToTime = localStorage.getItem('toTime') || '10 PM';
     const [fromTime, setFromTime] = useState(initialFromTime);
@@ -161,6 +165,7 @@ const Shipping = () => {
         }
         return false;
     };
+
     const handleChange = (type, value) => {
         if (type === 'from') {
             if (isValidTimeRange(value, toTime)) {
@@ -168,7 +173,9 @@ const Shipping = () => {
                 localStorage.setItem('fromTime', value);
                 localStorage.setItem('selectedTime', JSON.stringify({ fromTime: value, toTime }));
             } else {
-                alert('Invalid time range');
+              
+                toast(<div className='toaster'> < NewReleasesIcon /> {`Invalid time range`}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
         } else {
             if (isValidTimeRange(fromTime, value)) {
@@ -176,10 +183,12 @@ const Shipping = () => {
                 localStorage.setItem('toTime', value);
                 localStorage.setItem('selectedTime', JSON.stringify({ fromTime, toTime: value }));
             } else {
-                alert('Invalid time range');
+                toast(<div className='toaster'> < NewReleasesIcon /> {`Invalid time range`}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
         }
     };
+
     // Saving the initial default values in localStorage
     useEffect(() => {
         localStorage.setItem('fromTime', fromTime);

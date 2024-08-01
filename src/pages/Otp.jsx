@@ -6,7 +6,10 @@ import { Helmet } from 'react-helmet-async';
 import { urls } from '../components/Schemas/images';
 import { useDispatch, useSelector } from 'react-redux';
 import { verifyOtp } from '../Redux/otpSlice';
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
+
 
 const Otp = () => {
 
@@ -15,7 +18,7 @@ const Otp = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { status, error, success } = useSelector((state) => state.otp);
+    const { status, error } = useSelector((state) => state.otp);
     const signupData = useSelector((state) => state.auth.signupData);
 
     // Focus management
@@ -60,14 +63,16 @@ const Otp = () => {
   //new useff
     useEffect(() => {
         if (status === 'succeeded') {
-            alert('OTP verified successfully!');
+            toast(<div className='toaster'> < VerifiedIcon /> {`OTP verified successfully!`}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+            
             if (signupData.role === 'Seller') {
                 navigate('/seller-form');
             } else {
                 navigate('/login');
             }
+
         } else if (status === 'failed') {
-            alert('OTP verification failed: ' + error);
+            toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed: ${error}`}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     }, [status, error, navigate]);
 

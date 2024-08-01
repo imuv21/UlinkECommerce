@@ -199,35 +199,6 @@ const Checkout = () => {
     }
   };
 
-  // const nodepaypal = 'http://localhost:8000/paymentpaypal';
-  // const paypalHandler = async (amount, currency) => {
-  //   try {
-  //     const fPrice = Number(amount).toFixed(2);
-
-  //     let res = await axios.post(nodepaypal, {
-  //       price: fPrice,
-  //       currency: currency
-  //     });
-
-  //     let res = await axios.post(bspaypal, null, {
-  //       params: {
-  //         price: fPrice,
-  //         currency: currency,
-  //         description: 'Test Transaction'
-  //       }
-  //     });
-
-  //     if (res && res.data) {
-  //       let link = res.data.links[1].href
-  //       window.open(link, '_blank');
-  //     } else {
-  //       console.error("No approval URL returned");
-  //     }
-  //   } catch (error) {
-  //     console.error("Payment Error: ", error);
-  //   }
-  // };
-
   const paypalHandler = async (amount, currency) => {
     try {
       const fPrice = Number(amount).toFixed(2);
@@ -245,7 +216,7 @@ const Checkout = () => {
       if (responsePaypal && responsePaypal.data) {
         let link = responsePaypal.data.url;
         if (link) {
-          window.open(link, '_blank');
+          window.open(link, '_self');
         } else {
           console.error("No approval URL returned");
         }

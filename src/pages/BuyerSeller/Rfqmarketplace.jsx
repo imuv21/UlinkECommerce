@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { TiInfoLarge } from "react-icons/ti";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import Image from '../../assets/OfficeStationary-remove.png';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+import { RxCross2 } from "react-icons/rx";
 
 
 const Rfqmarketplace = () => {
-
   const [expSelectedOpen, setExpSelectedOpen] = useState(false)
   const [statusOpen, setStatusOpen] = useState(false)
   const [categoriesOpen, setCategoriesOpen] = useState(false)
-  const [locationOpen, setLocationOpen] = useState(false)
-  const navigate = useNavigate()
+  const [locationOpen, setLocationOpen] = useState(false) 
+  const [rfqDetailOpen, setRfqDetailOpen] = useState(false)
 
-  //  search filter by category 
-  const [categorySearch, setCategorySearch] = useState('')
+
+//   redirect one page to another page
+   const navigate = useNavigate()
+
+//  search filter by category 
+  const [categorySearch, setCategorySearch] = useState('');
   const [locationSearch, setLocationSearch] = useState('');
-  const handleCategoryValue = (e) => {
-    setCategorySearch(e.target.value)
-  }
-
   const categories = [
     'Consumer Electronics',
     'Food & Beverages',
@@ -33,10 +33,9 @@ const Rfqmarketplace = () => {
     'Sports & Fitness',
     'Toys'
   ];
-
   const location = [
     'United Arab Emirates',
-    'India', ,
+    'India',
     'United States',
     'United Kingdom',
     'Australia',
@@ -45,20 +44,108 @@ const Rfqmarketplace = () => {
     'Spain',
     'Japan'
   ]
-
-  //  category Search heare
+  //  category Search here
+  const handleCategoryValue = (e) => {
+    setCategorySearch(e.target.value)
+  }
   const filterCategories = categories.filter(category => category.toLowerCase().includes(categorySearch.toLowerCase()))
   const handleLocationSearch = (e) => {
     setLocationSearch(e.target.value)
   }
-  const filterLocation = location.filter(locations => locations.toLowerCase().includes(locationSearch.toLowerCase()));
-
-
+  const filterLocation = location.filter(locations => locations.toLowerCase().includes(locationSearch.toLowerCase())); 
+  //  logic wise redirect in the login page
+  const handleOpenRfqDetail =() => {
+    console.log('handlerfqDetailOpen')
+    setRfqDetailOpen(!rfqDetailOpen)
+  }
+  //  handle the situation are handle the mainly contain the main container
   return (
     <>
+    <>
+    { rfqDetailOpen && ( 
+      <div className='box-container-shadow-show'>
+    <div className={`left-container-box ${rfqDetailOpen ? 'open' : ''}`} >
+     <div className='close-box-cross-icon'>
+     <RxCross2  onClick={() => setRfqDetailOpen(!rfqDetailOpen)}/>
+     </div>
+      <div className='rfq-details-titles-heading'>
+        <h3>RFQ Details</h3>
+      </div>
+      <div className='rfq-details-box-container-1'>
+        <div className='status-creted-expiry'>
+          <div>Status</div>
+          <div>Created On</div>
+          <div>RFQ expiry on</div>
+        </div>
+        <div className='status-creted-expiry'>
+          <div className='blue-quote-bg'>QUOTE SUBMITTED</div>
+          <div className='created-date-quote'>29/07/2024</div>
+          <div className='created-date-quote'>03/07/2024</div>
+        </div>
+        <div className='status-creted-expiry'>
+          <div>Number of quotes</div>
+          <div>RFQ ID</div>
+          <div>Location</div>
+        </div>
+        <div className='status-creted-expiry'>
+          <div className='no-of-quote'>2</div>
+          <div className='created-date-quote'>ULINK545446465</div>
+          <div className='created-date-quote'>United Arab Emirates</div>
+        </div>
+      </div>
+      <div className='rfq-details-titles-heading product-detail-info-box'>
+        <h3>Product Details</h3>
+      </div>
+      <div className='rfq-details-box-container-1'>
+        <div className='rfq-details-box-heading'>
+          <div className='flex-rfq-item'>
+            <h5>#</h5>
+            <h5>Product</h5>
+          </div>
+          <div className='flex-rfq-item'>
+            <h5>Quantity</h5>
+            <h5>Unit Target Price</h5>
+            <h5>Total Target Price</h5>
+        </div>
+        </div>
+        <div className='rfq-details-box-heading-1'>
+          <div className='flex-rfq-item'>
+            <h5>1</h5>
+            <div className='img-containers-box-rfq'></div>
+            <div><a>CORE I5 4590,4570 (4TH Generation) Processor 3.3 GHz Upto 3.7 GHz LGA 1150 Socket 4 Cores 4 Threads 6 MB Smart Cache</a></div>
+          </div>
+          <div className='flex-rfq-item gap-flex-rfq-item'>
+            <h5>100</h5>
+            <h5>Negotiable</h5>
+            <h5>-</h5>
+          </div>
+        </div>
+      </div>
+      <div className='rfq-details-titles-heading product-detail-info-box'>
+        <h3>Shipping Details</h3>
+      </div> 
+      <div className='rfq-details-box-container-1'>
+      <div className='status-creted-expiry'>
+          <div>Shipping Country</div>
+          <div>Shipping City</div>
+          <div>Shipping Terms</div>
+        </div>
+        <div className='status-creted-expiry'>
+          <div className='no-of-quote'>United Arab Emirates</div>
+          <div className='created-date-quote'>Dubai</div>
+          <div className='created-date-quote'>DoorToDoor</div>
+        </div>
+      </div> 
+      <div className='button-button button-button-2'>
+            <button className='wth-btn'>SUBMIT RFQ</button>
+      </div>   
+    </div>
+    </div>
+  )}
+    </>
       <div className='padding-mark'>
         <Helmet>
-          <title>Rfq Marketplace</title>
+          <title>Rfq Marketplace</title>         
         </Helmet>
         <div className='log-box-seller'>
           <div className='hole-item-flex'>
@@ -69,12 +156,11 @@ const Rfqmarketplace = () => {
               <p className='rql' >Please Login</p>
             </div>
             <div className='some-info'>
-              <p className='sli'>Log in as a seller to submit quotes to these RFQs
-              </p>
+              <p className='sli'>Log in as a seller to submit quotes to these RFQs.</p>
             </div>
           </div>
-          <div className='lg-button'>
-            <button className='login-btn-button' onClick={() => navigate('/login')}>Login</button>
+          <div className='lg-button'>          
+            <button className='login-btn-button' onClick={()=> navigate('/login')}>Login</button>
           </div>
         </div>
         <div className='manage-two-btn'>
@@ -84,6 +170,7 @@ const Rfqmarketplace = () => {
           </div>
           <div className='button-button'>
             <button className='wth-btn'>MANAGE RFQ</button>
+            {/*  product id create the value  */}            
             <button className='wth-btn'>CREATE RFQ</button>
           </div>
         </div>
@@ -99,6 +186,7 @@ const Rfqmarketplace = () => {
                 <div className='select-box-item-1'>
                   <input className='checkbox-box-box' type='checkbox' />
                   <h5 className='exp-soon-color '>EXPIRY SOON (21)</h5>
+
                 </div>
               )}
               <div className='border-line-add'></div>
@@ -122,7 +210,7 @@ const Rfqmarketplace = () => {
               )}
               <div className='border-line-add'></div>
             </>
-            <>
+            <>      
               <div onClick={() => setLocationOpen(!locationOpen)} className='e-soon-status'>
                 <p className='show-more-text-size'>Categories</p>
                 <MdOutlineArrowDropDown />
@@ -130,11 +218,10 @@ const Rfqmarketplace = () => {
               {locationOpen && (
                 <>
                   <div className='input-search-category'>
-                    <input type="text" placeholder='search....' className='input-search-category-width' onChange={handleCategoryValue} />
+                    <input type="text" placeholder='search....' className='input-search-category-width'  onChange={handleCategoryValue}/>
                   </div>
                   {/*  it will added the checkbox */}
                   {filterCategories.map((locations, index) => (
-
                     <div key={index} className='select-box-item-1'>
                       <input className='checkbox-box-box' type='checkbox' />
                       <h5 className='exp-soon-color'>{locations}</h5>
@@ -145,7 +232,7 @@ const Rfqmarketplace = () => {
               <div className='border-line-add'></div>
             </>
             <>
-              <div onClick={() => setCategoriesOpen(!categoriesOpen)} className='e-soon-status'>
+              <div onClick={() => setCategoriesOpen(!categoriesOpen)}  className='e-soon-status'>
                 <p className='show-more-text-size'>Location</p>
                 <MdOutlineArrowDropDown />
               </div>
@@ -182,7 +269,7 @@ const Rfqmarketplace = () => {
                 <img className='quote-image-wdth' src={Image} />
               </div>
               <div className='quote-details-info'>
-                <a className='quote-title-product-name'> CORE I5 4590,4570 (4TH Generation) Processor 3.3 GHz Upto 3.7 GHz LGA 1150 Socket 4 Cores 4 Threads 6 MB Smart Cache</a>
+                <a className='quote-title-product-name' onClick={ handleOpenRfqDetail} > CORE I5 4590,4570 (4TH Generation) Processor 3.3 GHz Upto 3.7 GHz LGA 1150 Socket 4 Cores 4 Threads 6 MB Smart Cache</a>
                 <div className='quote-details-info-gain'>
                   <div className='date-flex-item'>
                     <h4>Created Date:</h4>

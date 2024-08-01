@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,13 +11,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { allCountries } from '../../components/Schemas/countryCodes';
 import { profileSchema } from '../../components/Schemas/validationSchema';
 import { updateUserDetails } from '../../Redux/AuthReducer';
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 
 const schema = yupResolver(profileSchema);
 
 const Profile = () => {
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -44,9 +46,12 @@ const Profile = () => {
 
         try {
             await dispatch(updateUserDetails(profile)).unwrap();
-            alert('Profile updated successfully!');
+            toast(<div className='toaster'> < VerifiedIcon /> {`Profile updated successfully!`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } catch (error) {
-            console.error('Error updating profile:', error);
+        
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Error updating profile`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } finally {
             setIsSubmitting(false);  
             setIsEditing(false);

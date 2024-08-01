@@ -29,14 +29,17 @@ const OtpEmail = () => {
                 }
             );
             if (response.status === 200) {
-                alert('Your email has been updated. Please log in again to continue.');
+            
+                toast(<div className='toaster'> < VerifiedIcon /> {`Your email has been updated. Please log in again to continue.`}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                 await handleLogout();
             }
-            alert(response.data.message);
+           
             return response.data;
         } catch (error) {
-            console.error('OTP verification failed:', error); 
-            alert('OTP verification failed');
+            console.error('OTP verification failed:', error);
+            toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             throw error;
         }
     };
@@ -50,7 +53,9 @@ const OtpEmail = () => {
                 }
             });
             if (response.status === 200) {
-                alert(response.data.message || 'Logged out successfully');
+             
+                toast(<div className='toaster'> < VerifiedIcon /> {response.data.message || 'Logged out successfully'}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                 dispatch(logout());
                 navigate('/login');
             } else {
@@ -69,7 +74,8 @@ const OtpEmail = () => {
             
         } catch (error) {
             console.error('Failed to verify OTP or logout:', error);
-            alert('Failed to verify OTP');
+            toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
 

@@ -5,6 +5,9 @@ import { useLottie } from "lottie-react";
 import { Helmet } from 'react-helmet-async';
 import { urls } from '../../components/Schemas/images';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 const OtpNumber = () => {
 
@@ -25,7 +28,10 @@ const OtpNumber = () => {
     const verifyOtp = async (otp, username, role) => {
         try {
             const response = await axios.post(`http://ulinkit.eu-north-1.elasticbeanstalk.com/api/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
-            alert(`Response : ${response.data.message} And Email : ${username}`);
+
+            toast(<div className='toaster'> < VerifiedIcon /> {`Response : ${response.data.message} And Email : ${username}`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+
             return response.data;
         } catch (error) {
             console.error('OTP verification failed:', error);
@@ -46,7 +52,8 @@ const OtpNumber = () => {
                 navigate('/login');
             }
         } catch (error) {
-            alert('Failed to verify OTP: ' + error.message);
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to verify OTP: ${error.message}`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
 

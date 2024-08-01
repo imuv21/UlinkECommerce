@@ -14,6 +14,10 @@ import animation from "../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
 import { useDispatch } from 'react-redux';
 import { signupSuccess, signupFailure } from '../Redux/AuthReducer';
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
+
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const schema = yupResolver(signupSchema);
@@ -67,12 +71,12 @@ const Signup = () => {
 
             if (success) {
                 dispatch(signupSuccess({ signupData: updatedUserData, email, message }));
-                alert(`Signup successful. ${message}`);
+                toast(<div className='toaster'> < VerifiedIcon /> {`Signup successful. ${message}`}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                 navigate('/verify-email');
             }
         } catch (error) {
             dispatch(signupFailure({ message: error.response.data }));
-            alert(`Signup failed: ${error.response.data}, Email: ${formData.email}`);
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Signup failed: ${error.response.data} ${formData.email}`}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } finally {
             setIsSubmitting(false);
         }

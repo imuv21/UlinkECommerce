@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import animation from "../assets/json/animation-signup.json";
 import { useLottie } from "lottie-react";
@@ -11,7 +11,9 @@ import { urls } from '../components/Schemas/images';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateSellerDetails } from '../Redux/sellerSlice';
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 const schema = yupResolver(sellerSchema);
 
@@ -22,7 +24,7 @@ const SellerForm = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { status, error, success } = useSelector((state) => state.seller);
+    const { status, error } = useSelector((state) => state.seller);
     const signupData = useSelector((state) => state.auth.signupData);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [sellerData, setSellerData] = useState({});
@@ -52,11 +54,16 @@ const SellerForm = () => {
 
     useEffect(() => {
         if (status === 'succeeded') {
-            alert('Congrats! You have become a seller. Please login into your account.');
+            toast(<div className='toaster'> < VerifiedIcon /> {`Congrats! You have become a seller. Please login into your account.`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+
             setIsSubmitting(false);
             navigate('/login');
         } else if (status === 'failed') {
-            alert('Failed to update seller details: ' + error);
+          
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to update seller details: ${error}`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+
             setIsSubmitting(false);
         }
     }, [status, error, navigate]);

@@ -16,6 +16,7 @@ import { fetchExchangeRates, setSelectedCurrency } from '../../Redux/currencySli
 import { logout } from '../../Redux/AuthReducer';
 import { urls } from '../Schemas/images';
 import { supOptions, subOptions, miniSubOptions } from '../Schemas/cate';
+import { toast } from 'react-hot-toast';
 import currencySymbols from '../Schemas/currencySymbols';
 import countryFlags from '../Schemas/countryFlags';
 import countryNames from '../Schemas/countryNames';
@@ -274,7 +275,10 @@ const Header = () => {
       });
 
       if (response.status === 200) {
-        alert(response.data);
+
+        toast(<div className='toaster'> < VerifiedIcon /> {response.data}</div>, 
+          { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+
         if (isAuthenticated && user.role === 'Seller') {
           navigate('/seller-center');
         }

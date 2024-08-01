@@ -1,4 +1,4 @@
-import React, { Fragment, lazy, Suspense, useEffect, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import Loader from '../components/Loader/Loader';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -6,7 +6,6 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate, useParams } from 'react-router-dom'
 import ImageImport from '../components/Schemas/ImageImport';
-const Carousel = lazy(() => import('../components/Carousel'));
 const BrandCarousel = lazy(() => import('../components/BrandCarousel'));
 import Sliders from 'react-slick';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,9 +14,11 @@ import ProductCard from '../components/ProductCard';
 import defaulImg from '../assets/default.jpg';
 
 const CategoryPages = () => {
+
   const navigate = useNavigate()
   const { category } = useParams()
-  const [productShow, setProductShow] = useState([])
+  const [productShow, setProductShow] = useState([]);
+
   //  Electronic Object Image
   const sliderItems = [
     { image: ImageImport.Mobile, title: 'Mobile Phone' },
@@ -29,6 +30,7 @@ const CategoryPages = () => {
     { image: ImageImport.Router, title: 'Network' },
     { image: ImageImport.TV, title: 'Television' }
   ];
+
   //  Stationary Object Image
   const stationaryItems = [
     { image: ImageImport.GeneralSuppliers, name: 'General Suppliers' },
@@ -40,6 +42,7 @@ const CategoryPages = () => {
     { image: ImageImport.Desk, name: 'Desk & Supplies' },
     { image: ImageImport.WritingMaterial, name: 'Writing Material' }
   ];
+
   //  product show 
   const dispatch = useDispatch();
   // const { products } = useSelector((state) => state.products);
@@ -61,6 +64,7 @@ const CategoryPages = () => {
     }
     return text.slice(0, maxLength) + '...';
   }
+
   const NextArrow = (props) => {
     const { style, onClick } = props;
     return (
@@ -117,6 +121,7 @@ const CategoryPages = () => {
       }
     ],
   };
+
   //  conditionaly render the page 
   const renderPage = () => {
     const ShowAll = () => {
@@ -542,10 +547,10 @@ const CategoryPages = () => {
         )
     }
   }
+
   return (
     <>
       <Suspense fallback={<Loader />}>
-
         {renderPage()}
       </Suspense>
     </>

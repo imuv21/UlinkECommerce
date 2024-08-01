@@ -9,6 +9,9 @@ import { addProduct } from '../../../Redux/addProductSlice';
 import { useNavigate } from 'react-router-dom';
 import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../../Schemas/cate';
 import { Helmet } from 'react-helmet-async';
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 const schema = yupResolver(addSingleSchema);
 
@@ -34,7 +37,10 @@ const AddSingle = () => {
         const remainingSlots = 5 - totalImages;
 
         if (files.length > remainingSlots) {
-            alert("You can only select a maximum of 5 images. The excess files will be ignored.");
+        
+            toast(<div className='toaster'> < NewReleasesIcon /> {`You can only select a maximum of 5 images. The excess files will be ignored.`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+
             const selectedFiles = Array.from(files).slice(0, remainingSlots);
             setImages([...images, ...selectedFiles]);
         } else {
@@ -200,14 +206,19 @@ const AddSingle = () => {
 
             const response = await dispatch(addProduct(formData));
             if (response.type === 'product/addProduct/fulfilled') {
-                alert('Product added successfully!');
+             
+                toast(<div className='toaster'> < VerifiedIcon /> {`Product added successfully!`}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+
                 navigate('/seller-dashboard/product-list');
             } else {
-                console.log('Error in response:', response);
+                toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to add product`}</div>, 
+                    { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
 
         } catch (error) {
-            console.log(error);
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to add product`}</div>, 
+                { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } finally {
             setIsSubmitting(false);
         }

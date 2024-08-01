@@ -13,6 +13,8 @@ import { fetchProductsFour } from '../Redux/productSlice';
 import { fetchProductDetail } from '../Redux/productDetailSlice';
 import { addToCart } from '../Redux/cartSlice';
 import { fetchExchangeRates } from '../Redux/currencySlice';
+import { toast } from 'react-hot-toast';
+import VerifiedIcon from '@mui/icons-material/Verified';
 import currencySymbols from '../components/Schemas/currencySymbols';
 import defaulImg from '../assets/default.jpg';
 import Loader from './Loader/Loader';
@@ -56,7 +58,8 @@ const CarouselFour = () => {
     const cartHandler = (id) => {
         if (!product) return;
         dispatch(addToCart({ productId: id, quantity: value }));
-        alert(`${value} items added to cart successfully!`);
+        toast(<div className='toaster'> < VerifiedIcon /> {`${value} items added to cart successfully!`}</div>, 
+            { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         setIsClickedCart(false);
     };
 
