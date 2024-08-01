@@ -3,8 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import KeyIcon from '@mui/icons-material/Key';
 import { Link } from 'react-router-dom';
-import NewReleasesIcon from '@mui/icons-material/NewReleases';
-import VerifiedIcon from '@mui/icons-material/Verified';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
