@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Slider } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,20 +7,14 @@ import { fetchExchangeRates } from '../Redux/currencySlice';
 import currencySymbols from '../components/Schemas/currencySymbols';
 import defaulImg from '../assets/default.jpg';
 import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../components/Schemas/cate';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-//search-results
-const useQuery = () => {
-    return new URLSearchParams(useLocation().search);
-};
 
 const FilterPage = () => {
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const catLocation = useLocation();
     const { supOption, subOption, miniSubOption } = catLocation.state || {};
-
     const { filterProducts, status, error, currentPage, totalPages, totalItems, numberOfElements } = useSelector((state) => state.filterProducts);
     const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
     const exchangeRates = useSelector(state => state.currency.exchangeRates);
@@ -30,65 +24,78 @@ const FilterPage = () => {
     const [size, setSize] = useState(15);
     const [sort, setSort] = useState('PRICE_HIGH_TO_LOW');
     const [category, setCategory] = useState('');
-    const [search, setSearch] = useState('');
-    const [vprice, setVprice] = useState([0, 100000]);
-    const minPrice = vprice[0];
-    const maxPrice = vprice[1];
+    const [minPrice, setMinPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(100000);
+    const debounceTimeoutRef = useRef(null);
 
     const [selectedSupOption, setSelectedSupOption] = useState(supOption || '');
     const [selectedSubOption, setSelectedSubOption] = useState(subOption || '');
     const [selectedMiniSubOption, setSelectedMiniSubOption] = useState(miniSubOption || '');
     const [selectedMicroSubOption, setSelectedMicroSubOption] = useState('');
 
+    const memoizedCategory = useMemo(() => {
+        if (selectedSupOption && selectedSubOption && selectedMiniSubOption && selectedMicroSubOption) {
+            return selectedMicroSubOption;
+        } else if (selectedSupOption && selectedSubOption && selectedMiniSubOption) {
+            return selectedMiniSubOption;
+        } else if (selectedSupOption && selectedSubOption) {
+            return selectedSubOption;
+        } else if (selectedSupOption) {
+            return selectedSupOption;
+        } else {
+            return '';
+        }
+    }, [selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption]);
+
+    useEffect(() => {
+        setCategory(memoizedCategory);
+    }, [memoizedCategory]);
+
     useEffect(() => {
         if (status === 'idle') {
             dispatch(fetchFilterProducts({ page, size, sort, category, minPrice, maxPrice }));
         }
     }, [status, dispatch, page, size, sort, category, minPrice, maxPrice]);
+
     useEffect(() => {
         if (status === 'success' || status === 'failed') {
             setPage(currentPage);
         }
     }, [status, currentPage]);
 
-
-    useEffect(() => {
-        if (selectedSupOption && selectedSubOption && selectedMiniSubOption && selectedMicroSubOption) {
-            setCategory(selectedMicroSubOption);
-        } else if (selectedSupOption && selectedSubOption && selectedMiniSubOption) {
-            setCategory(selectedMiniSubOption);
-        } else if (selectedSupOption && selectedSubOption) {
-            setCategory(selectedSubOption);
-        } else if (selectedSupOption) {
-            setCategory(selectedSupOption);
-        } else {
-            setCategory('');
-        }
-    }, [selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption]);
-
     useEffect(() => {
         if (category) {
-            dispatch(fetchFilterProducts({ page, size, sort, category, minPrice, maxPrice }));
+            setPage(0);
+            setSize(15);
+            dispatch(fetchFilterProducts({ page: 0, size: 15, sort, category, minPrice, maxPrice }));
         }
-    }, [category, dispatch, page, size, sort, minPrice, maxPrice]);
+    }, [category, dispatch, sort, minPrice, maxPrice]);
 
     //pagination, sorting, price and category
-    const handlePageChange = (newPage) => {
+    const handlePageChange = useCallback((newPage) => {
         if (newPage >= 0 && newPage < totalPages) {
             setPage(newPage);
             dispatch(fetchFilterProducts({ page: newPage, size, sort, category, minPrice, maxPrice }));
         }
-    };
-    const handleSortChange = (e) => {
+    }, [dispatch, totalPages, size, sort, category, minPrice, maxPrice]);
+
+    const handleSortChange = useCallback((e) => {
         setSort(e.target.value);
         dispatch(fetchFilterProducts({ page, size, sort: e.target.value, category, minPrice, maxPrice }));
-    };
-    const priceHandler = (newPrice) => {
-        setVprice(newPrice);
-        setTimeout(() => {
+    }, [dispatch, page, size, category, minPrice, maxPrice]);
+
+    const priceHandler = useCallback((newPrice) => {
+        setMinPrice(newPrice[0]);
+        setMaxPrice(newPrice[1]);
+        if (debounceTimeoutRef.current) {
+            clearTimeout(debounceTimeoutRef.current);
+        }
+        debounceTimeoutRef.current = setTimeout(() => {
             dispatch(fetchFilterProducts({ page, size, sort, category, minPrice: newPrice[0], maxPrice: newPrice[1] }));
         }, 2000);
-    };
+    }, [dispatch, page, size, sort, category]);
+
+
 
     const handleSupOptionChange = (event) => {
         const selectedOption = event.target.value;
@@ -111,6 +118,16 @@ const FilterPage = () => {
     const handleMicroSubOptionChange = (event) => {
         const selectedOption = event.target.value;
         setSelectedMicroSubOption(selectedOption);
+    };
+    const handleClearCat = () => {
+        setCategory('');
+        setSelectedSupOption('');
+        setSelectedSubOption('');
+        setSelectedMiniSubOption('');
+        setSelectedMicroSubOption('');
+        setPage(0);
+        setSize(15);
+        dispatch(fetchFilterProducts({ page: 0, size: 15, sort, category: '', minPrice, maxPrice }));
     };
 
     // Function to get page numbers to display
@@ -148,41 +165,6 @@ const FilterPage = () => {
         return (priceInUSD * rate).toFixed(2);
     };
 
-    //clear query
-    const query = useQuery().get('query') || '';
-    useEffect(() => {
-        if (query) {
-            setSearch(query);
-            setPage(0);
-            setSize(null);
-            dispatch(fetchFilterProducts({ page: 0, size: null, sort, category, search: query, minPrice, maxPrice }));
-        }
-        console.log(filterProducts);
-    }, [query, dispatch, sort, category, minPrice, maxPrice, page ]);
-    const handleClear = () => {
-        const searchParams = new URLSearchParams(location.search);
-        searchParams.delete('query');
-        navigate({
-            pathname: location.pathname,
-            search: searchParams.toString(),
-        });
-        setPage(0);
-        setSize(15);
-        setSearch('');
-        dispatch(fetchFilterProducts({ page: 0, size: 15, sort, category, search: '', minPrice, maxPrice }));
-    };
-
-    //clear category
-    const handleClearCat = () => {
-        setCategory('');
-        setSelectedSupOption('');
-        setSelectedSubOption('');
-        setSelectedMiniSubOption('');
-        setSelectedMicroSubOption('');
-        dispatch(fetchFilterProducts({ page, size, sort, category: '', minPrice, maxPrice }));
-    };
-
-    //TruncateText
     const truncateText = (text, maxLength) => {
         if (text.length <= maxLength) {
             return text;
@@ -209,12 +191,6 @@ const FilterPage = () => {
                 <title>Search Results</title>
             </Helmet>
             <div className="flexcol wh" style={{ gap: '10px' }}>
-                {query &&
-                    <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                        <div className='descrip2 wh captext'>Showing results for: &nbsp;&nbsp;&nbsp;&nbsp; {truncateText(query, 30)}</div>
-                        <a className='descrip2 hover' style={{ color: 'red'}} onClick={handleClear}>Clear</a>
-                    </div>
-                }
 
                 {category &&
                     <div className='flex wh' style={{ justifyContent: 'space-between' }}>
@@ -224,7 +200,7 @@ const FilterPage = () => {
                             {selectedMiniSubOption && <div className="descrip2 captext">/ {convertPascalToReadable(selectedMiniSubOption)}</div>}
                             {selectedMicroSubOption && <div className="descrip2 captext">/ {convertPascalToReadable(selectedMicroSubOption)}</div>}
                         </div>
-                        <a className='descrip2 hover' style={{ color: 'red'}} onClick={handleClearCat}>Clear</a>
+                        <a className='descrip2 hover' style={{ color: 'red' }} onClick={handleClearCat}>Clear</a>
                     </div>
                 }
             </div>
@@ -233,10 +209,12 @@ const FilterPage = () => {
                 <div className="fpone">
                     <div className="filterbox">
                         <div className="heading2 wh">Price</div>
-                        <Slider value={vprice} onChange={(event, newPrice) => priceHandler(newPrice)} valueLabelDisplay="auto" aria-labelledby='range-slide' min={0} max={100000} />
+
+                        <Slider value={[minPrice, maxPrice]} onChange={(event, newPrice) => priceHandler(newPrice)} valueLabelDisplay="auto" aria-labelledby="range-slider" min={0} max={100000} />
                         <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                            <div className="minmaxbox heading2"> {vprice[0]}</div> <div className="heading2">To</div> <div className="minmaxbox heading2"> {vprice[1]}</div>
+                            <div className="minmaxbox heading2">{minPrice}</div> <div className="heading2">To</div> <div className="minmaxbox heading2">{maxPrice}</div>
                         </div>
+
                     </div>
                     <div className="filterbox">
                         <div className="heading2 wh" style={{ marginBottom: '5px' }}>Categories</div>
@@ -269,28 +247,6 @@ const FilterPage = () => {
                                 ))}
                             </select>
                         </div>
-                    </div>
-                    <div className="filterbox">
-                        <div className="heading2 wh" style={{ marginBottom: '5px' }}>Stock Location</div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">India</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">China</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Russia</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">UAE</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Japan</div></div>
-                    </div>
-                    <div className="filterbox">
-                        <div className="heading2 wh" style={{ marginBottom: '5px' }}>Gender</div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Women</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Men</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Unisex</div></div>
-                    </div>
-                    <div className="filterbox">
-                        <div className="heading2 wh" style={{ marginBottom: '5px' }}>Color</div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Blue</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Green</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Black</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">Red</div></div>
-                        <div className="checkbox"><input type="checkbox" /><div className="descrip2">White</div></div>
                     </div>
                 </div>
                 <div className="fptwo">
@@ -337,12 +293,7 @@ const FilterPage = () => {
                 </button>
 
                 {pageNumbers.map(index => (
-                    <button
-                        key={index}
-                        className={`pagination-btn ${index === page ? 'active' : ''}`}
-                        style={{ width: '50px' }}
-                        onClick={() => handlePageChange(index)}
-                    >
+                    <button key={index} className={`pagination-btn ${index === page ? 'active' : ''}`} style={{ width: '50px' }} onClick={() => handlePageChange(index)}>
                         {index + 1}
                     </button>
                 ))}

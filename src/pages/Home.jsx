@@ -11,6 +11,7 @@ import CarouselTwo from '../components/CarouselTwo';
 import CarouselThree from '../components/CarouselThree';
 import CarouselFour from '../components/CarouselFour';
 import Square from '../components/UI_Components/Square';
+import SquareTwo from '../components/UI_Components/SquareTwo';
 
 
 const Home = () => {
@@ -69,7 +70,7 @@ const Home = () => {
           <img className='banner-width' src={DiscountCoupne} />
         </div>
 
-        <Square />
+        <SquareTwo />
         
         <div className="heading3 wh">Home Garden And Furniture ({totalItemsFour} items)</div>
 

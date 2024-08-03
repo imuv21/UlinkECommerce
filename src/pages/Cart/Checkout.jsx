@@ -118,6 +118,18 @@ const Checkout = () => {
     dispatch(setSelectedPaymentMethod({ type: 'card', data: selectedCardData || {} }));
   };
 
+  const cardSubmit = () => {
+    alert("Card Submitted");
+  }
+
+  const netbankingSubmit = () => {
+    alert("Netbanking Submitted");
+  }
+
+  const upiSubmit = () => {
+    alert("Upi Submitted");
+  }
+
   const handleBankChange = (event) => {
     const selectedBankData = bankDetails.find(
       (bank) => bank.accHolderName === event.target.value
@@ -234,6 +246,12 @@ const Checkout = () => {
 
     if (selectedPaymentOption === 'paypal') {
       paypalHandler(PaymentAmount, PaymentCurrency);
+    } else if (selectedPaymentOption === 'card') {
+      cardSubmit();
+    } else if (selectedPaymentOption === 'netbanking') {
+      netbankingSubmit();
+    } else if (selectedPaymentOption === 'upi') {
+      upiSubmit();
     } else {
       razorpayHandler(PaymentAmount, PaymentCurrency);
     }
@@ -340,17 +358,17 @@ const Checkout = () => {
           <div className="checkout webdiv">
             <div className="heading wh">Choose a payment method</div>
             <div className="flex-start wh" style={{ gap: '20px' }}>
-              <button onClick={() => handleSubPageChange(1)} className={subCurrentPage === 1 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Card</div></button>
-              <button onClick={() => handleSubPageChange(2)} className={subCurrentPage === 2 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Net banking</div></button>
-              <button onClick={() => handleSubPageChange(3)} className={subCurrentPage === 3 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">UPI</div></button>
+              <button onClick={() => { handleSubPageChange(1); setSelectedPaymentOption('card') }} className={subCurrentPage === 1 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Card</div></button>
+              <button onClick={() => { handleSubPageChange(2); setSelectedPaymentOption('netbanking') }} className={subCurrentPage === 2 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Net banking</div></button>
+              <button onClick={() => { handleSubPageChange(3); setSelectedPaymentOption('upi') }} className={subCurrentPage === 3 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">UPI</div></button>
               <button onClick={() => handleSubPageChange(4)} className={subCurrentPage === 4 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Other Gateways</div></button>
             </div>
           </div>
 
           {subCurrentPage === 1 && (
             <div className="checkout webdiv">
-              <div className="heading3 wh">Cards</div>
-              <select className='coupon' value={selectedCard.fullname || ''} onChange={handleCardChange}>
+              <div className="heading3 wh">Card Details</div>
+              {/* <select className='coupon' value={selectedCard.fullname || ''} onChange={handleCardChange}>
                 <option value=''>Select a card</option>
                 {cardDetails.map((card, index) => (
                   <option key={index} value={card.fullname}>
@@ -365,14 +383,20 @@ const Checkout = () => {
                   <div className="descrip2">{maskText(selectedCard.cardNumber)}</div>
                   <div className="descrip2">{selectedCard.expiryDate}</div>
                 </div>
-              )}
+              )} */}
+              <form className='netbanking'>
+                <input className='box flex' type="text" placeholder='Enter cardholder name' autoComplete='off'/>
+                <input className='box flex' type="text" placeholder='Enter card number' autoComplete='off'/>
+                <input className='box flex' type="text" placeholder='Enter expiry date' autoComplete='off'/>
+                <input className='box flex' type="password" placeholder='Enter CVV' autoComplete='off'/>
+              </form>
             </div>
           )}
 
           {subCurrentPage === 2 && (
             <div className="checkout webdiv">
-              <div className="heading3 wh">Bank accounts</div>
-              <select className='coupon' value={selectedBank.accHolderName || ''} onChange={handleBankChange}>
+              <div className="heading3 wh">Bank Account Details</div>
+              {/* <select className='coupon' value={selectedBank.accHolderName || ''} onChange={handleBankChange}>
                 <option value=''>Select an account</option>
                 {bankDetails.map((bank, index) => (
                   <option key={index} value={bank.accHolderName}>
@@ -391,14 +415,25 @@ const Checkout = () => {
                   <div className="descrip2">{selectedBank.swiftBIC}</div>
                   <div className="descrip2">{selectedBank.iban}</div>
                 </div>
-              )}
+              )} */}
+              <form className='netbanking'>
+                <select className='box flex' id='bankSelection' name='bankSelection'>
+                  <option value=''>Select your bank</option>
+                  <option value='bank1'>Bank 1</option>
+                  <option value='bank2'>Bank 2</option>
+                </select>
+                <input className='box flex' type='text' placeholder='Enter account number' name='accountNumber' autoComplete='off'/>
+                <input className='box flex' type='text' placeholder='Enter account holder name' name='accountHolderName' autoComplete='off'/>
+                <input className='box flex' type='text' placeholder='Enter user ID/customer ID' name='userID' autoComplete='off'/>
+                <input className='box flex' type='password' placeholder='Enter transaction password' name='transactionPassword' autoComplete='off'/>
+              </form>
             </div>
           )}
 
           {subCurrentPage === 3 && (
             <div className="checkout webdiv">
-              <div className="heading3 wh">UPIs</div>
-              <select className='coupon' value={selectedUpi.upi || ''} onChange={handleUpiChange}>
+              <div className="heading3 wh">UPI Detail</div>
+              {/* <select className='coupon' value={selectedUpi.upi || ''} onChange={handleUpiChange}>
                 <option value=''>Select a UPI</option>
                 {upiDetails.map((upis, index) => (
                   <option key={index} value={upis.upi}>
@@ -411,7 +446,10 @@ const Checkout = () => {
                   <img src='https://res.cloudinary.com/dey1tujp8/image/upload/v1718266152/upi-id.1024x1024_xm8kjf.png' style={{ width: '17px', color: 'gray' }} alt='upi' />
                   <div className='descrip2'>{selectedUpi.upi}</div>
                 </div>
-              )}
+              )} */}
+              <form className='netbanking'>
+                <input className='box flex' type='text' placeholder='Enter UPI ID' name='upiId' autoComplete='off'/>
+              </form>
             </div>
           )}
 
@@ -457,14 +495,9 @@ const Checkout = () => {
               <div className="heading2"><span>{currencySymbols[selectedCurrency]} {convertPrice(totalOrder, currency)} {selectedCurrency}</span></div>
             </div>
 
-            {/* <div className={`flexcol wh topbottom`} style={{ gap: '10px' }}>
-              <button className='btn addtocart flex' onClick={() => razorpayHandler(convertPrice(totalSellPrice, currency), selectedCurrency)}><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>
-            </div> */}
-
             <div className={`flexcol wh topbottom`} style={{ gap: '10px' }}>
               <button className='btn addtocart flex' onClick={handlePaymentClick}><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>
             </div>
-
           </div>
         </div>
       </div>

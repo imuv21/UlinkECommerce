@@ -3,7 +3,7 @@ import axios from 'axios';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({
-    page = 0, size = 15, category = '' }) => {
+    page = 0, size = 20, category = '' }) => {
     const response = await axios.get(`${BASE_URL}/category/getproducts`, {
         params: { size, page, category }
     });
@@ -11,7 +11,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ({
 });
 
 export const fetchProductsTwo = createAsyncThunk('products/fetchProductsTwo', async ({
-    page = 0, size = 15, category = '' }) => {
+    page = 0, size = 20, category = '' }) => {
     const response = await axios.get(`${BASE_URL}/category/getproducts`, {
         params: { size, page, category }
     });
@@ -19,7 +19,7 @@ export const fetchProductsTwo = createAsyncThunk('products/fetchProductsTwo', as
 });
 
 export const fetchProductsThree = createAsyncThunk('products/fetchProductsThree', async ({
-    page = 0, size = 15, category = '' }) => {
+    page = 0, size = 20, category = '' }) => {
     const response = await axios.get(`${BASE_URL}/category/getproducts`, {
         params: { size, page, category }
     });
@@ -27,7 +27,7 @@ export const fetchProductsThree = createAsyncThunk('products/fetchProductsThree'
 });
 
 export const fetchProductsFour = createAsyncThunk('products/fetchProductsFour', async ({
-    page = 0, size = 15, category = '' }) => {
+    page = 0, size = 20, category = '' }) => {
     const response = await axios.get(`${BASE_URL}/category/getproducts`, {
         params: { size, page, category }
     });

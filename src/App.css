@@ -2453,6 +2453,17 @@ button:focus {
 }
 
 /* Checkout styling  */
+.netbanking{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.netbanking input{
+  width: 100%;
+}
 .payop-box {
   width: 100%;
   display: flex;
@@ -3376,7 +3387,7 @@ button:focus {
 .home-grid-flex {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   gap: 20px;
   padding: 20px;
@@ -3452,6 +3463,25 @@ button:focus {
 
 
 /* vipin's rfq marketplace styling */
+.button-button-2{
+  display: flex;
+  align-content: center;
+  justify-content: end;
+  margin-top: 20px;
+}
+.rfq-details-box-heading-1{
+  padding: 10px 10px 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px;
+}
+.addition-detain-info-box{
+  padding: 20px 20px 20px 20px;
+  line-height: 1.5rem;
+  font-size: 15px;
+}
+
 .padding-mark {
   padding: 50px 80px 80px 80px;
 }
@@ -3845,4 +3875,9 @@ backdrop-filter: blur(3px);
   align-items: center;
   justify-content: space-between;
   margin: 5px;
+}
+.addition-detain-info-box{
+  padding: 20px 20px 20px 20px;
+  line-height: 1.5rem;
+  font-size: 15px;
 }
