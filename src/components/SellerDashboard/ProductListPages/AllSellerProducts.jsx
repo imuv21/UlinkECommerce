@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState, Fragment, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,53 +9,52 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SearchIcon from '@mui/icons-material/Search';
 import empty from '../../../assets/empty.png';
 
-
 const AllSellerProducts = () => {
 
     const navigate = useNavigate();
-
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.user);
+    const { sellerProducts, loading, error, totalItems, totalPages, numberOfElements, isFirst, isLast, hasPrevious, hasNext } = useSelector((state) => state.sellerProducts);
 
-    const { sellerProducts, loading, error, pageSize } = useSelector((state) => state.sellerProducts);
-
-    const totalItems = 120;
     const [page, setPage] = useState(0);
-
+    const [size, setSize] = useState(20);
 
     useEffect(() => {
-        dispatch(fetchSellerProducts({ page }));
-        console.log(totalPages);
-    }, [dispatch, page]);
-
-    const totalPages = (totalItems / pageSize).toFixed(0);
+        dispatch(fetchSellerProducts({ page, size }));
+    }, [dispatch, page, size]);
 
     // pagination
-    const handlePreviousPage = () => {
-        if (page > 0) {
-            setPage(page - 1);
+    const handlePageChange = useCallback((newPage) => {
+        if (newPage >= 0 && newPage < totalPages) {
+            setPage(newPage);
         }
-    };
-    const handleNextPage = () => {
-        if (page < totalPages - 1) {
-            setPage(page + 1);
+    }, [dispatch, totalPages]);
+
+    const getPageNumbers = (currentPage, totalPages) => {
+        const pageNumbers = [];
+        const maxPageButtons = 5; // Number of page buttons to display at once
+
+        // Determine the start and end page numbers
+        let startPage = Math.max(0, currentPage - 2);
+        let endPage = Math.min(totalPages - 1, currentPage + 2);
+
+        // always show the correct number of page buttons
+        if (endPage - startPage < maxPageButtons - 1) {
+            if (startPage === 0) {
+                endPage = Math.min(totalPages - 1, startPage + maxPageButtons - 1);
+            } else if (endPage === totalPages - 1) {
+                startPage = Math.max(0, endPage - maxPageButtons + 1);
+            }
         }
+        for (let i = startPage; i <= endPage; i++) {
+            pageNumbers.push(i);
+        }
+        return pageNumbers;
     };
-    const handlePageClick = (pageNumber) => {
-        setPage(pageNumber);
-    };
-
-    //search
-    const [searchQuery, setSearchQuery] = useState('');
-    const handleSearchChange = (event) => {
-        setSearchQuery(event.target.value);
-    };
-    const filteredProducts = sellerProducts.filter((item) => 
-        item.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.category.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const pageNumbers = getPageNumbers(page, totalPages);
 
 
+    //edit and delete
     const handleEdit = (productId) => {
         dispatch(fetchEditProduct(productId)).unwrap().then(() => {
             navigate(`/editsingle/${productId}`);
@@ -63,7 +62,6 @@ const AllSellerProducts = () => {
             console.error('Failed to fetch product details:', error);
         });
     };
-
     const handleDelete = (productId) => {
         dispatch(deleteSellerProduct({ productId }))
     };
@@ -143,7 +141,7 @@ const AllSellerProducts = () => {
             </Helmet>
 
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                <div className="heading5">All Products({sellerProducts.length})</div> <Link to={getDashboardLink()} className='heading3'>Back</Link>
+                <div className="heading3">Showing {numberOfElements} of {totalItems} products </div> <Link to={getDashboardLink()} className='heading3'>Back</Link>
             </div>
 
             {showPopup && (
@@ -199,10 +197,10 @@ const AllSellerProducts = () => {
                     </Fragment>
                 ) : (
                     <Fragment>
-                        
+
                         <div className='searchBoxPronew'>
                             <div className="sfp_relative">
-                                <input type='text' className='searchinputPro' placeholder='Search for products...' value={searchQuery} onChange={handleSearchChange} />
+                                <input type='text' className='searchinputPro' placeholder='Search for products...' />
                                 <div className='searchbtnPro'><SearchIcon /></div>
                             </div>
                             <select name="reasons" className='searchselectPro'>
@@ -228,7 +226,7 @@ const AllSellerProducts = () => {
                             <div className="heading3">Visibility</div>
                             <div className="heading3">Action</div>
                         </div>
-                        {filteredProducts.map((item, index) => (
+                        {sellerProducts.map((item, index) => (
                             <div className="searchBoxPro2" key={item.productId}>
                                 <div>
                                     {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
@@ -262,25 +260,29 @@ const AllSellerProducts = () => {
                             </div>
                         ))}
 
-                        <div className="flexcol wh" style={{ marginTop: '20px'}} >
-                            <div className="flex" style={{ gap: '10px'}}>
-                                <button className='pagination-btn' style={{ width: '100px'}} onClick={handlePreviousPage} disabled={page === 0}>
+                        <div className="flexcol wh" style={{ marginTop: '20px' }} >
+                            <div className="flex" style={{ gap: '10px' }}>
+                                <button className='pagination-btn' onClick={() => handlePageChange(0)} disabled={isFirst}>
+                                    First Page
+                                </button>
+                                <button className='pagination-btn' onClick={() => handlePageChange(page - 1)} disabled={!hasPrevious}>
                                     Previous
                                 </button>
-                                <div className='flex' style={{ whiteSpace: 'nowrap'}}>
-                                    Page {page + 1} of {totalPages}
-                                </div>
-                                <button className='pagination-btn' style={{ width: '100px'}} onClick={handleNextPage} disabled={page >= totalPages - 1}>
+
+                                {pageNumbers.map(index => (
+                                    <button key={index} className={`pagination-btn ${index === page ? 'active' : ''}`} style={{ width: '50px' }} onClick={() => handlePageChange(index)}>
+                                        {index + 1}
+                                    </button>
+                                ))}
+
+                                <button className='pagination-btn' onClick={() => handlePageChange(page + 1)} disabled={!hasNext}>
                                     Next
                                 </button>
+                                <button className='pagination-btn' onClick={() => handlePageChange(totalPages - 1)} disabled={isLast}>
+                                    Last Page
+                                </button>
                             </div>
-                            {/* <div className='flex'>
-                                {Array.from({ length: totalPages }, (_, index) => (
-                                    <button key={index} onClick={() => handlePageClick(index)}> {index + 1} </button>
-                                ))}
-                            </div> */}
                         </div>
-
                     </Fragment>
                 )}
             </div>

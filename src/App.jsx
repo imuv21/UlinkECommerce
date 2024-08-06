@@ -74,7 +74,7 @@ const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 const Guidelines = lazy(() => import('./pages/Guidelines/Guidelines'));
 const Checkout = lazy(() => import('./pages/Cart/Checkout'));
 const Cart = lazy(() => import('./pages/Cart/Cart'));
-const FilterPage = lazy(() => import('./pages/FilterPage'));
+const RoughFP = lazy(() => import('./pages/RoughFP'));
 const CategoryPages = lazy(() => import('./pages/CategoryPages'));
 const TermsAndConditions = lazy(() => import('./pages/TermsAndConditions'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -106,7 +106,7 @@ function App() {
             <Route path='/guidelines' element={<Guidelines />} />
             <Route path='/product-details/:id' element={<ProductDetails />} />
             <Route path='/' element={<Home />} />
-            <Route path='/search-results' element={<FilterPage />} />
+            <Route path='/search-results' element={<RoughFP />} />
             <Route path='/category-pages/:category' element={<CategoryPages />} />
             <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
             <Route path='/privacy-policy' element={<PrivacyPolicy />} />

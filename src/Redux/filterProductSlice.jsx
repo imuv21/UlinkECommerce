@@ -46,7 +46,6 @@ const filterProductSlice = createSlice({
                 state.totalPages = action.payload.totalPages;
                 state.pageSize = action.payload.pageSize;
                 state.numberOfElements = action.payload.numberOfElements;
-
                 state.lastPage = action.payload.lastPage;
                 state.isLast = action.payload.isLast;
                 state.hasNext = action.payload.hasNext;

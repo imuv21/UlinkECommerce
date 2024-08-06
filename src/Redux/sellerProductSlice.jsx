@@ -3,17 +3,25 @@ import axios from 'axios';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const initialState = {
+
     sellerProducts: [],
     totalItems: 0,
     currentPage: 0,
+    pageSize: 0,
+    totalPages: 0,
+    numberOfElements: 0,
+    isFirst: true,
+    isLast: false,
+    hasPrevious: false,
+    hasNext: true,
+
     loading: false,
     error: null,
-    pageSize: 20,
 };
 
 export const fetchSellerProducts = createAsyncThunk(
     'sellerProducts/fetchSellerProducts',
-    async ({ page }, { getState , rejectWithValue }) => {
+    async ({ page, size }, { getState , rejectWithValue }) => {
         try {
             const { auth } = getState();
             const token = auth.token;
@@ -22,7 +30,8 @@ export const fetchSellerProducts = createAsyncThunk(
                     Authorization: `Bearer ${token}`,
                 },
                 params: {
-                    page: page
+                    page: page,
+                    size: size
                 }
             });
             return response.data;
@@ -67,10 +76,10 @@ const sellerProductSlice = createSlice({
             .addCase(fetchSellerProducts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.sellerProducts = action.payload.data;
+                state.numberOfElements = action.payload.numberOfElements;
                 state.totalItems = action.payload.totalItems;
                 state.currentPage = action.payload.currentPage;
                 state.totalPages = action.payload.totalPages;
-
                 state.pageSize = action.payload.pageSize;
                 state.isFirst = action.payload.isFirst;
                 state.isLast = action.payload.isLast;

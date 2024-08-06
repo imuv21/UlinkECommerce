@@ -1,19 +1,19 @@
-import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Slider } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchFilterProducts } from '../Redux/filterProductSlice';
 import { fetchExchangeRates } from '../Redux/currencySlice';
+import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../components/Schemas/cate';
+import { Slider } from '@mui/material';
 import currencySymbols from '../components/Schemas/currencySymbols';
 import defaulImg from '../assets/default.jpg';
-import { supOptions, subOptions, miniSubOptions, microSubOptions } from '../components/Schemas/cate';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 const useQuery = () => {
     return new URLSearchParams(useLocation().search);
 };
 
-const FilterPage = () => {
+const RoughFP = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -25,13 +25,12 @@ const FilterPage = () => {
 
     //product fetch
     const [page, setPage] = useState(currentPage || 0);
-    const [size, setSize] = useState(15);
-    const [sort, setSort] = useState('PRICE_HIGH_TO_LOW');
     const [category, setCategory] = useState('');
     const [search, setSearch] = useState('');
+    const query = useQuery().get('query') || '';
+    const [sort, setSort] = useState('PRICE_HIGH_TO_LOW');
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(100000);
-    const debounceTimeoutRef = useRef(null);
 
     const [selectedSupOption, setSelectedSupOption] = useState(supOption || '');
     const [selectedSubOption, setSelectedSubOption] = useState(subOption || '');
@@ -52,94 +51,46 @@ const FilterPage = () => {
         }
     }, [selectedSupOption, selectedSubOption, selectedMiniSubOption, selectedMicroSubOption]);
 
-    useEffect(() => {
-        setCategory(memoizedCategory);
-    }, [memoizedCategory]);
 
     useEffect(() => {
-        if (status === 'success' || status === 'failed') {
-            setPage(currentPage);
+        if (query && !memoizedCategory) {
+            setSearch(query);
+            setCategory('');
+        } else if (memoizedCategory && !query) {
+            setCategory(memoizedCategory);
+            setSearch('');
+        } else if (query && memoizedCategory) {
+            setCategory(memoizedCategory);
+            setSearch(query);
         }
-    }, [status, currentPage]);
+        setPage(0);
+    }, [query, memoizedCategory]);
 
     useEffect(() => {
-        if (category && !search) {
-            dispatch(fetchFilterProducts({ page, size, sort, category, search, minPrice, maxPrice }));
-        }
-    }, [sort, minPrice, maxPrice, dispatch, category, page, size]);
+        dispatch(fetchFilterProducts({ page, sort, category: memoizedCategory, search: query || search, minPrice, maxPrice }));
+    }, [page, sort, memoizedCategory, search, query, dispatch]);
 
-    //pagination, sorting, price and category
-    const handlePageChange = useCallback((newPage) => {
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            dispatch(fetchFilterProducts({ page, sort, category: memoizedCategory, search: query || search, minPrice, maxPrice }));
+        }, 1500);
+
+        return () => clearTimeout(delayDebounceFn);
+    }, [minPrice, maxPrice, dispatch]);
+
+
+    //pagination
+    const handlePageChange = (newPage) => {
         if (newPage >= 0 && newPage < totalPages) {
             setPage(newPage);
-            dispatch(fetchFilterProducts({ page: newPage, size, sort, category, search, minPrice, maxPrice }));
         }
-    }, [dispatch, totalPages, size, sort, category, search, minPrice, maxPrice]);
-
-    const handleSortChange = useCallback((e) => {
-        setSort(e.target.value);
-        dispatch(fetchFilterProducts({ page, size, sort: e.target.value, category, search, minPrice, maxPrice }));
-    }, [dispatch, page, size, category, search, minPrice, maxPrice]);
-
-    const priceHandler = useCallback((newPrice) => {
-        setMinPrice(newPrice[0]);
-        setMaxPrice(newPrice[1]);
-        if (debounceTimeoutRef.current) {
-            clearTimeout(debounceTimeoutRef.current);
-        }
-        debounceTimeoutRef.current = setTimeout(() => {
-            dispatch(fetchFilterProducts({ page, size, sort, category, search, minPrice: newPrice[0], maxPrice: newPrice[1] }));
-        }, 2000);
-    }, [dispatch, setMinPrice, setMaxPrice]);
-
-
-
-    const handleSupOptionChange = (event) => {
-        const selectedOption = event.target.value;
-        setSelectedSupOption(selectedOption);
-        setSelectedSubOption('');
-        setSelectedMiniSubOption('');
-        setSelectedMicroSubOption('');
     };
-    const handleSubOptionChange = (event) => {
-        const selectedOption = event.target.value;
-        setSelectedSubOption(selectedOption);
-        setSelectedMiniSubOption('');
-        setSelectedMicroSubOption('');
-    };
-    const handleMiniSubOptionChange = (event) => {
-        const selectedOption = event.target.value;
-        setSelectedMiniSubOption(selectedOption);
-        setSelectedMicroSubOption('');
-    };
-    const handleMicroSubOptionChange = (event) => {
-        const selectedOption = event.target.value;
-        setSelectedMicroSubOption(selectedOption);
-    };
-    const handleClearCat = () => {
-        setCategory('');
-        setSelectedSupOption('');
-        setSelectedSubOption('');
-        setSelectedMiniSubOption('');
-        setSelectedMicroSubOption('');
-        setSearch('');
-        setPage(0);
-        setSize(15);
-        setMaxPrice(100000);
-        setMinPrice(0);
-        dispatch(fetchFilterProducts({ page: 0, size: 15, sort, category: '', search: '', minPrice : 0, maxPrice : 100000 }));
-    };
-
-    // Function to get page numbers to display
     const getPageNumbers = (currentPage, totalPages) => {
         const pageNumbers = [];
         const maxPageButtons = 5; // Number of page buttons to display at once
-
-        // Determine the start and end page numbers
         let startPage = Math.max(0, currentPage - 2);
         let endPage = Math.min(totalPages - 1, currentPage + 2);
 
-        // always show the correct number of page buttons
         if (endPage - startPage < maxPageButtons - 1) {
             if (startPage === 0) {
                 endPage = Math.min(totalPages - 1, startPage + maxPageButtons - 1);
@@ -154,6 +105,68 @@ const FilterPage = () => {
     };
     const pageNumbers = getPageNumbers(page, totalPages);
 
+    //price handling
+    const priceHandler = (newPrice) => {
+        setMinPrice(newPrice[0]);
+        setMaxPrice(newPrice[1]);
+    };
+
+    //sorting
+    const handleSortChange = (e) => {
+        setSort(e.target.value);
+        setPage(0);
+    };
+
+    //category
+    const handleSupOptionChange = (event) => {
+        const selectedOption = event.target.value;
+        setSelectedSupOption(selectedOption);
+        setSelectedSubOption('');
+        setSelectedMiniSubOption('');
+        setSelectedMicroSubOption('');
+        setPage(0);
+    };
+    const handleSubOptionChange = (event) => {
+        const selectedOption = event.target.value;
+        setSelectedSubOption(selectedOption);
+        setSelectedMiniSubOption('');
+        setSelectedMicroSubOption('');
+        setPage(0);
+    };
+    const handleMiniSubOptionChange = (event) => {
+        const selectedOption = event.target.value;
+        setSelectedMiniSubOption(selectedOption);
+        setSelectedMicroSubOption('');
+        setPage(0);
+    };
+    const handleMicroSubOptionChange = (event) => {
+        const selectedOption = event.target.value;
+        setSelectedMicroSubOption(selectedOption);
+        setPage(0);
+    };
+    const handleClearCat = () => {
+        setSelectedSupOption('');
+        setSelectedSubOption('');
+        setSelectedMiniSubOption('');
+        setSelectedMicroSubOption('');
+        setCategory('');
+        setPage(0);
+        setSearch(query);
+    };
+
+    //search clear
+    const handleClear = () => {
+        const searchParams = new URLSearchParams(window.location.search);
+        searchParams.delete('query');
+        navigate({
+            pathname: window.location.pathname,
+            search: searchParams.toString(),
+        });
+        setSearch('');
+        setPage(0);
+        setCategory(memoizedCategory);
+    };
+
     //currency
     useEffect(() => {
         dispatch(fetchExchangeRates());
@@ -165,47 +178,16 @@ const FilterPage = () => {
         return (priceInUSD * rate).toFixed(2);
     };
 
-
-    //clear query
-    const query = useQuery().get('query') || '';
-    useEffect(() => {
-        if (query && !category) {
-            setSearch(query);
-            setPage(0);
-            setSize(15);
-            setCategory('');
-            setMaxPrice(100000);
-            setMinPrice(0);
-            dispatch(fetchFilterProducts({ page: 0, size: 15, sort, category: '', search: query, minPrice : 0, maxPrice : 100000 }));
-        }
-    }, [query, dispatch, sort, minPrice, maxPrice]);
-
-    const handleClear = () => {
-        const searchParams = new URLSearchParams(window.location.search); // Updated to window.location
-        searchParams.delete('query');
-        navigate({
-            pathname: window.location.pathname, // Updated to window.location
-            search: searchParams.toString(),
-        });
-        setPage(0);
-        setSize(15);
-        setSearch('');
-        setMaxPrice(100000);
-        setMinPrice(0);
-        dispatch(fetchFilterProducts({ page: 0, size: 15, sort, category: '', search: '', minPrice : 0, maxPrice : 100000 }));
-    };
-
+    //spaced-text
     const truncateText = (text, maxLength) => {
         if (text.length <= maxLength) {
             return text;
         }
         return text.slice(0, maxLength) + '...';
     }
-    //spaced-text
     const convertPascalToReadable = (text) => {
         return text.replace(/([A-Z])/g, ' $1').trim();
     };
-
 
     if (status === 'loading') {
         return <div>Loading...</div>;
@@ -213,7 +195,6 @@ const FilterPage = () => {
     if (status === 'failed') {
         return <div>Error: {error}</div>;
     }
-
 
     return (
         <div className="flexcol wh product-detail">
@@ -242,15 +223,15 @@ const FilterPage = () => {
 
             <div className="fpcont">
                 <div className="fpone">
+
                     <div className="filterbox">
                         <div className="heading2 wh">Price</div>
-
                         <Slider value={[minPrice, maxPrice]} onChange={(event, newPrice) => priceHandler(newPrice)} valueLabelDisplay="auto" aria-labelledby="range-slider" min={0} max={100000} />
                         <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                             <div className="minmaxbox heading2">{minPrice}</div> <div className="heading2">To</div> <div className="minmaxbox heading2">{maxPrice}</div>
                         </div>
-
                     </div>
+
                     <div className="filterbox">
                         <div className="heading2 wh" style={{ marginBottom: '5px' }}>Categories</div>
                         <div className="filterselect">
@@ -283,7 +264,9 @@ const FilterPage = () => {
                             </select>
                         </div>
                     </div>
+
                 </div>
+
                 <div className="fptwo">
                     <div className="shortby">
                         <div className="heading2 wh">Showing {numberOfElements} items out of {totalItems}</div>
@@ -344,4 +327,4 @@ const FilterPage = () => {
     )
 }
 
-export default FilterPage
+export default RoughFP
