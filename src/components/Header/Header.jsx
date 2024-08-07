@@ -634,7 +634,7 @@ const Header = () => {
             <ListIcon />
           </div>
 
-          <div ref={isClickedCateRef} className={`sub-heading3 flex icon-container ${isClickedCate ? 'clicked' : ''}`} onClick={handleClickCate} onMouseLeave={handleMouseLeave} style={{ gap: '10px' }}>
+          <div ref={isClickedCateRef} className={`sub-heading3 cate-menu flex icon-container ${isClickedCate ? 'clicked' : ''}`} onClick={handleClickCate} onMouseLeave={handleMouseLeave} style={{ gap: '10px' }}>
             <MenuIcon />   All Categories
             {isClickedCate && (
               <div ref={popupisClickedCateRef} className="popup cate_forntend">

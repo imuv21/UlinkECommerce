@@ -909,6 +909,11 @@
   gap: 20px;
 }
 
+@media  screen and (max-width: 1234px) {
+  .cate-icon{
+    display: none;
+  }
+}
 
 @media screen and (max-width: 800px) {
   .search-input2 {
@@ -916,7 +921,35 @@
   }
 }
 
+@media screen and (max-width: 750px) {
+  .sub-header-option{
+    display: none;
+  }
+}
+
 @media screen and (max-width: 710px) {
+
+  .offer {
+    flex-direction: row;
+    gap: 5px;
+    padding: 5px 10px;
+  }
+  .offer2 {
+    padding: 5px 10px;
+  }
+  .gwm, .fcb {
+    font-size: 12px;
+  }
+  .offer-text {
+    font-size: 12px;
+  }
+  .coupn {
+    font-size: 12px;
+  }
+
+  .cate-menu .MuiSvgIcon-root{
+    display: none;
+  }
   .sup-header-option {
     gap: 10px;
   }
@@ -996,17 +1029,5 @@
 }
 
 @media screen and (max-width: 500px) {
-  .offer {
-    flex-direction: column;
-    gap: 5px;
-    padding: 5px 10px;
-  }
-
-  .offer-text {
-    font-size: 12px;
-  }
-
-  .coupn {
-    font-size: 12px;
-  }
+  
 }
