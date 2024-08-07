@@ -223,11 +223,10 @@ const RoughFP = () => {
 
             <div className="fpcont">
                 <div className="fpone">
-
                     <div className="filterbox">
                         <div className="heading2 wh">Price</div>
-                        <Slider value={[minPrice, maxPrice]} onChange={(event, newPrice) => priceHandler(newPrice)} valueLabelDisplay="auto" aria-labelledby="range-slider" min={0} max={100000} />
-                        <div className="flex wh" style={{ justifyContent: 'space-between' }}>
+                        <Slider className='price-handler' value={[minPrice, maxPrice]} onChange={(event, newPrice) => priceHandler(newPrice)} valueLabelDisplay="auto" aria-labelledby="range-slider" min={0} max={100000} />
+                        <div className="flex wh" style={{ justifyContent: 'space-between', gap: '5px' }}>
                             <div className="minmaxbox heading2">{minPrice}</div> <div className="heading2">To</div> <div className="minmaxbox heading2">{maxPrice}</div>
                         </div>
                     </div>
@@ -264,7 +263,6 @@ const RoughFP = () => {
                             </select>
                         </div>
                     </div>
-
                 </div>
 
                 <div className="fptwo">
@@ -302,26 +300,32 @@ const RoughFP = () => {
                 </div>
             </div>
 
-            <div className="flex" style={{ gap: '10px' }}>
-                <button className='pagination-btn' onClick={() => handlePageChange(0)} disabled={page === 0}>
-                    First Page
-                </button>
-                <button className='pagination-btn' onClick={() => handlePageChange(page - 1)} disabled={page === 0}>
-                    Previous
-                </button>
-
-                {pageNumbers.map(index => (
-                    <button key={index} className={`pagination-btn ${index === page ? 'active' : ''}`} style={{ width: '50px' }} onClick={() => handlePageChange(index)}>
-                        {index + 1}
+            <div className="pagination">
+                <div className="flex wh" style={{ gap: '10px' }}>
+                    <button className='pagination-btn' onClick={() => handlePageChange(0)} disabled={page === 0}>
+                        First Page
                     </button>
-                ))}
+                    <button className='pagination-btn' onClick={() => handlePageChange(page - 1)} disabled={page === 0}>
+                        Previous
+                    </button>
+                </div>
 
-                <button className='pagination-btn' onClick={() => handlePageChange(page + 1)} disabled={page === totalPages - 1}>
-                    Next
-                </button>
-                <button className='pagination-btn' onClick={() => handlePageChange(totalPages - 1)} disabled={page === totalPages - 1}>
-                    Last Page
-                </button>
+                <div className="flex wh" style={{ gap: '10px' }}>
+                    {pageNumbers.map(index => (
+                        <button key={index} className={`pagination-btn ${index === page ? 'active' : ''}`} onClick={() => handlePageChange(index)}>
+                            {index + 1}
+                        </button>
+                    ))}
+                </div>
+
+                <div className="flex wh" style={{ gap: '10px' }}>
+                    <button className='pagination-btn' onClick={() => handlePageChange(page + 1)} disabled={page === totalPages - 1}>
+                        Next
+                    </button>
+                    <button className='pagination-btn' onClick={() => handlePageChange(totalPages - 1)} disabled={page === totalPages - 1}>
+                        Last Page
+                    </button>
+                </div>
             </div>
         </div>
     )
