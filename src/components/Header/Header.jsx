@@ -108,6 +108,10 @@ const Header = () => {
 
 
   //popups handling 
+  const [isSearchClick, setIsSearchClick] = useState(false);
+  const isSearchClickRef = useRef(null);
+  const popupisSearchClickRef = useRef(null);
+
   const [isOpen, setIsOpen] = useState(false);
   const isOpenRef = useRef(null);
   const popupisOpenRef = useRef(null);
@@ -141,6 +145,7 @@ const Header = () => {
   const popupisFoodRef = useRef(null);
 
   const closeAllPopups = () => {
+    setIsSearchClick(false);
     setIsClicked(false);
     setIsClickedCate(false);
     setIsClickedTwo(false);
@@ -149,6 +154,12 @@ const Header = () => {
     setIsOffice(false);
     setIsFood(false);
     setIsOpen(false);
+  };
+
+
+  const handleSearchClick = () => {
+    closeAllPopups();
+    setIsSearchClick(prevState => !prevState);
   };
   const handleClick = () => {
     closeAllPopups();
@@ -193,6 +204,7 @@ const Header = () => {
       { containerRef: isOfficeRef, popupRef: popupisOfficeRef },
       { containerRef: isFoodRef, popupRef: popupisFoodRef },
       { containerRef: isOpenRef, popupRef: popupisOpenRef },
+      { containerRef: isSearchClickRef, popupRef: popupisSearchClickRef },
     ];
 
     const clickedInsideAny = popups.some(({ containerRef, popupRef }) =>
@@ -276,7 +288,7 @@ const Header = () => {
 
       if (response.status === 200) {
 
-        toast(<div className='toaster'> < VerifiedIcon /> {response.data}</div>, 
+        toast(<div className='toaster'> < VerifiedIcon /> {response.data}</div>,
           { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
 
         if (isAuthenticated && user.role === 'Seller') {
@@ -460,10 +472,10 @@ const Header = () => {
             <div ref={isClickedAddRef} className={`icon-container ${isClickedAdd ? 'clicked' : ''}`} onClick={handleClickAdd}>
               <div className="flex">
                 <LocationOnIcon style={{ color: 'gray' }} />
-                <div className="flexcol-start">
+                <div className="location">
                   {user.role === 'Buyer' && <div className="descrip">Deliver to</div>}
                   {user.role === 'Seller' && <div className="descrip">Stock location</div>}
-                  {selectedAddress && <div className='descrip'>{truncateText(selectedAddress?.address, 10)}..</div>}
+                  {selectedAddress && <div className='descrip'>&nbsp;{truncateText(selectedAddress?.address, 10)}..</div>}
                 </div>
               </div>
 
@@ -526,7 +538,7 @@ const Header = () => {
             )}
           </div>
 
-          <div className="search-input2">
+          <div className="search-input2 search-none">
             <input type='text' name="query_search" value={query} onChange={(e) => setQuery(e.target.value)} onKeyPress={handleKeyPress} placeholder='Search Ulinkit...' />
             <span>
               <SearchIcon onClick={handleSearch} />
@@ -535,6 +547,20 @@ const Header = () => {
         </div>
 
         <div className="flex head-start">
+
+          <div ref={isSearchClickRef} className={`Search-cont icon-container ${isSearchClick ? 'clicked' : ''}`} onClick={handleSearchClick}>
+            <SearchIcon />
+            {isSearchClick && (
+              <div ref={popupisSearchClickRef} className="popup searchclick">
+                <div className="search-input-popup">
+                  <input type='text' name="query_search" value={query} onChange={(e) => setQuery(e.target.value)} onKeyPress={handleKeyPress} placeholder='Search Ulinkit...' />
+                  <span>
+                    <SearchIcon onClick={handleSearch} />
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
 
           {isAuthenticated ? (
             <div className='heading2 usernameheader' style={{ whiteSpace: 'nowrap', textTransform: 'capitalize' }}>Hi {user.firstname} </div>
@@ -568,24 +594,24 @@ const Header = () => {
                       {user.firstname} {user.lastname}
                     </div>
 
-                    {user.role === 'Seller' ? ( isVerifiedSeller ? (
-                        <div className="warning-btn2 flex"> <VerifiedIcon style={{ width: '13px' }} />
-                          Verified Seller
-                        </div>
-                      ) : (
-                        <div className="warning-btn3 flex"> <NewReleasesIcon style={{ width: '13px' }} />
-                          Unverified Seller
-                        </div>
-                      )
-                    ) : user.role === 'Buyer' ? ( isVerifiedBuyer ? (
-                        <div className="warning-btn2 flex"> <VerifiedIcon style={{ width: '13px' }} />
-                          Verified Buyer
-                        </div>
-                      ) : (
-                        <div className="warning-btn3 flex"> <NewReleasesIcon style={{ width: '13px' }} />
-                          Unverified Buyer
-                        </div>
-                      )
+                    {user.role === 'Seller' ? (isVerifiedSeller ? (
+                      <div className="warning-btn2 flex"> <VerifiedIcon style={{ width: '13px' }} />
+                        Verified Seller
+                      </div>
+                    ) : (
+                      <div className="warning-btn3 flex"> <NewReleasesIcon style={{ width: '13px' }} />
+                        Unverified Seller
+                      </div>
+                    )
+                    ) : user.role === 'Buyer' ? (isVerifiedBuyer ? (
+                      <div className="warning-btn2 flex"> <VerifiedIcon style={{ width: '13px' }} />
+                        Verified Buyer
+                      </div>
+                    ) : (
+                      <div className="warning-btn3 flex"> <NewReleasesIcon style={{ width: '13px' }} />
+                        Unverified Buyer
+                      </div>
+                    )
                     ) : null}
                   </div>
 

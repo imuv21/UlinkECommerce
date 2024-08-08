@@ -2030,6 +2030,14 @@ button:focus {
 /* cart styling */
 /* Product details styling */
 
+.moq-gst{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 3px;
+}
+
 .shareicons .MuiSvgIcon-root {
   width: 18px;
   color: gray;
@@ -2065,7 +2073,7 @@ button:focus {
 }
 
 .plus-minus {
-  width: 100%;
+  width: 150px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -2073,6 +2081,13 @@ button:focus {
   padding: 3px 10px 0px 10px;
   border: 1px solid rgb(198, 198, 198);
   border-radius: var(--br2);
+}
+.plus-minus div{
+  cursor: pointer;
+}
+
+.plus-minus div .MuiSvgIcon-root{
+  width: 22px;
 }
 
 .pdcol {
@@ -2132,8 +2147,9 @@ button:focus {
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 0px;
+  padding: 2px;
   font-size: 16px;
+  cursor: text;
 }
 
 .topbottom {
@@ -2337,12 +2353,13 @@ button:focus {
 
 /* Cart styling */
 .cart_page {
-  padding: 40px 120px 40px 120px;
+  padding: 40px 80px 40px 80px;
   gap: 30px;
   height: 100vh;
 }
 
 .cart_cont {
+  width: 100%;
   display: flex;
   align-items: start;
   justify-content: center;
@@ -2393,8 +2410,8 @@ button:focus {
   gap: 10px;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  justify-content: space-between;
   padding: 10px;
 }
 
@@ -2421,12 +2438,21 @@ button:focus {
 }
 
 .cartPrice {
-  width: 25%;
+  width: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: end;
   gap: 10px;
+}
+
+.totalPrice{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  white-space: nowrap;
 }
 
 .remove {

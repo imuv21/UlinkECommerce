@@ -104,6 +104,14 @@
   z-index: 2;
 }
 
+.searchclick {
+  padding: 10px;
+  width: 230px;
+  top: 70px;
+  right: 60px;
+  height: fit-content;
+}
+
 .account {
   padding: 20px 12px 10px 12px;
   width: 230px;
@@ -119,7 +127,7 @@
   max-height: 220px;
   overflow-y: auto;
   top: 100px;
-  left: 160px;
+  left: 300px;
 }
 
 .cate_forntend {
@@ -166,7 +174,7 @@
   left: 350px;
 }
 
-.cate-icon .MuiSvgIcon-root{
+.cate-icon .MuiSvgIcon-root {
   width: 15px;
   height: 15px;
   color: white;
@@ -196,6 +204,42 @@
   width: 100%;
   padding-bottom: 10px;
   border-bottom: 1px solid rgb(200, 200, 200);
+}
+
+.search-input-popup {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+}
+
+.search-input-popup input {
+  padding: 10px;
+  border: 1px solid #004c6f;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.search-input-popup span {
+  position: absolute;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  right: 0px;
+  cursor: pointer;
+  background-color: var(--CodeOne);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 100%;
+}
+
+.search-input-popup span .MuiSvgIcon-root {
+  width: 22px;
+  height: 22px;
+  color: white;
 }
 
 .popupbox:last-child {
@@ -909,8 +953,21 @@
   gap: 20px;
 }
 
-@media  screen and (max-width: 1234px) {
-  .cate-icon{
+.location {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.Search-cont {
+  display: none;
+}
+
+@media screen and (max-width: 1234px) {
+  .cate-icon {
     display: none;
   }
 }
@@ -922,34 +979,59 @@
 }
 
 @media screen and (max-width: 750px) {
-  .sub-header-option{
+  .sub-header-option {
     display: none;
   }
 }
 
 @media screen and (max-width: 710px) {
 
+  .account {
+    top: 65px;
+    right: 10px;
+  }
+
+  .address-relative {
+    top: 70px;
+    left: 70px;
+  }
+
+  .cate_forntend {
+    top: 110px;
+    left: 10px;
+  }
+
+  .location .descrip {
+    font-size: 10px;
+  }
+
   .offer {
     flex-direction: row;
     gap: 5px;
     padding: 5px 10px;
   }
+
   .offer2 {
     padding: 5px 10px;
   }
-  .gwm, .fcb {
+
+  .gwm,
+  .fcb {
     font-size: 12px;
   }
+
   .offer-text {
     font-size: 12px;
   }
+
   .coupn {
     font-size: 12px;
   }
 
-  .cate-menu .MuiSvgIcon-root{
+  .cate-menu .MuiSvgIcon-root {
     display: none;
   }
+
   .sup-header-option {
     gap: 10px;
   }
@@ -980,6 +1062,22 @@
     color: gray;
   }
 
+  .search-input-popup input {
+    padding: 5px 10px;
+    border-radius: 16px;
+  }
+
+  .search-input-popup span {
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+  }
+
+  .search-input-popup span .MuiSvgIcon-root {
+    width: 18px;
+    height: 18px;
+    color: gray;
+  }
+
   .dropdown-flag {
     width: fit-content;
   }
@@ -987,10 +1085,11 @@
   .dropdown-flag-header {
     padding: 5px 10px;
     border-radius: 16px;
+    border: none;
   }
 
   .headerflex {
-    gap: 10px;
+    justify-content: start;
   }
 
   .flagname .descrip {
@@ -1034,5 +1133,19 @@
 }
 
 @media screen and (max-width: 500px) {
-  
+  .search-none {
+    display: none;
+  }
+
+  .Search-cont {
+    display: block;
+  }
+
+  .location{
+    display: none;
+  }
+
+  .headerflex{
+    gap: 0px;
+  }
 }

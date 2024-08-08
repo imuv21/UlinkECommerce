@@ -159,12 +159,11 @@ const Checkout = () => {
   // payment methods 
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('razorpay');
 
-  const razorpayHandler = async (amount, currency) => {
-    console.log(amount, currency);
-
+  const razorpayHandler = async (price, currency) => {
     try {
-      const rpPrice = Number(amount).toFixed(2);
-      const response = await axios.post('https://api.ulinkit.com/api/payment/test/get-transaction', { amount: rpPrice, currency });
+      const amount = Number(price).toFixed(2);
+      console.log(amount, currency);
+      const response = await axios.post('https://api.ulinkit.com/api/payment/test/get-transaction', { amount: amount, currency: currency });
       const order = response.data;
 
       const options = {

@@ -118,7 +118,8 @@ const Cart = () => {
       <div className="flex wh">
         <div className="heading wh">My Cart ({totalItems})</div>
       </div>
-      <div className="cart_cont wh">
+      <div className="cart_cont">
+
         <div className="cartcol_one" tabIndex={0} ref={scrollRef}>
           {cartItems.length === 0 ? (
             <p>Your cart is empty.</p>
@@ -143,18 +144,21 @@ const Cart = () => {
                       <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{`${parseFloat(((item.unitPrice - item.sellPrice) / item.unitPrice) * 100).toFixed(2)}% OFF`}</span>
                       <span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbols[selectedCurrency]} {convertPrice(item.sellPrice, currency)} {selectedCurrency}</span>
                     </div>
-                    <div className="flexcol-start" style={{ gap: '3px' }}>
-                      <div className="descrip">Min order quantity: {item.minOrderQuant}</div>
+                    <div className="moq-gst">
+                      <div className="descrip">Min Order Quantity: {item.minOrderQuant}</div>
                       <div className="descrip">GST: {currencySymbols[selectedCurrency]} {convertPrice(item.gst, currency)} {selectedCurrency}</div>
                     </div>
                   </div>
 
                   <div className="cartPrice">
-                    <div className="heading2">Total : {currencySymbols[selectedCurrency]} {convertPrice(item.totalAmount, currency)} {selectedCurrency}</div>
-                    <div className="plus-minus webdiv" style={{ width: '150px' }}>
-                      <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={(e) => decrementValue(e, item.productId, item.minOrderQuant)} /></div>
+                    <div className="totalPrice">
+                      <div className="heading2">Total :</div>
+                      <div className='heading2'> {currencySymbols[selectedCurrency]} {convertPrice(item.totalAmount, currency)} {selectedCurrency}</div>
+                    </div>
+                    <div className="plus-minus webdiv">
+                      <div><RemoveCircleOutlineIcon onClick={(e) => decrementValue(e, item.productId, item.minOrderQuant)} /></div>
                       <input className='pminput' type="number" value={quantities[item.productId]} onChange={(e) => handleInputChange(e, item.productId, item.minOrderQuant)} />
-                      <div style={{ cursor: 'pointer' }}><AddCircleOutlineIcon onClick={(e) => incrementValue(e, item.productId)} /></div>
+                      <div><AddCircleOutlineIcon onClick={(e) => incrementValue(e, item.productId)} /></div>
                     </div>
                     <button className='remove flex' onClick={(e) => remove(e, item.productId)}><RemoveShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Remove</div></button>
                   </div>
@@ -163,6 +167,7 @@ const Cart = () => {
             </Fragment>
           )}
         </div>
+
         <div className="cartcol_two">
           <div className="sel-box" style={{ gap: '10px' }}>
             <div className="heading3">Cart Summary</div>
@@ -179,6 +184,7 @@ const Cart = () => {
             </div>
           </div>
         </div>
+
       </div>
     </div>
   )

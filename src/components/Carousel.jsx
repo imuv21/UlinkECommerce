@@ -204,6 +204,8 @@ const Carousel = () => {
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 1,
+                    nextArrow: null,
+                    prevArrow: null,
                 },
             },
             {
@@ -211,6 +213,8 @@ const Carousel = () => {
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
+                    nextArrow: null,
+                    prevArrow: null,
                 },
             },
         ],

@@ -103,6 +103,8 @@ const CategorySection = () => {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
+          nextArrow: null,
+          prevArrow: null,
         },
       },
       {
@@ -110,6 +112,8 @@ const CategorySection = () => {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          nextArrow: null,
+          prevArrow: null,
         },
       },
     ],
