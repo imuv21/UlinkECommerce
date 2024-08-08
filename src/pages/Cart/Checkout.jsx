@@ -246,6 +246,8 @@ const Checkout = () => {
 
     if (selectedPaymentOption === 'paypal') {
       paypalHandler(PaymentAmount, PaymentCurrency);
+    } else if (selectedPaymentOption === 'razorpay'){
+      razorpayHandler(PaymentAmount, PaymentCurrency);
     } else if (selectedPaymentOption === 'card') {
       cardSubmit();
     } else if (selectedPaymentOption === 'netbanking') {
