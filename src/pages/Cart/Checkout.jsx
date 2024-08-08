@@ -163,7 +163,8 @@ const Checkout = () => {
     console.log(amount, currency);
 
     try {
-      const response = await axios.post('https://api.ulinkit.com/api/payment/test/get-transaction', { amount, currency });
+      const rpPrice = Number(amount).toFixed(2);
+      const response = await axios.post('https://api.ulinkit.com/api/payment/test/get-transaction', { amount: rpPrice, currency });
       const order = response.data;
 
       const options = {
