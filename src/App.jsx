@@ -166,6 +166,7 @@ function App() {
             <Route element={<Protector isAuthenticated={isAuthenticated} redirect='/' />}>
               <Route path="/profile" element={<Profile />} />
               <Route path="/my-addresses" element={<SellerAddress />} />
+              
               <Route path="/update-email" element={<UpdateEmail />} />
               <Route path="/verify-update-email" element={<OtpEmail />} />
               <Route path="/update-number" element={<UpdateNumber />} />

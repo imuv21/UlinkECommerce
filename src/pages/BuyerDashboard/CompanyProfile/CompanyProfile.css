@@ -1,9 +1,10 @@
 .responsive{
-    padding: 20px 100px 0px 100px;
+    padding: 30px 30px 30px 30px;
 }
 .company-border{
     border: 1px solid #dddddd;
     margin-top: 10px;
+    border-radius: 5px;
 }
 .company-padding{
     padding: 30px 20px 0px 20px;
@@ -23,9 +24,10 @@
     color: #fff;
     border-radius: 2px; 
 }
+/*  only this class name are not resoponsive the com */
 .name-logo{
     padding: 30px ;
-    width: 7%;
+     width: 90px;
     height: 1%;
     border: 1px solid black;
     border-radius: 50%;
@@ -143,7 +145,6 @@ padding-bottom: 10px;
     color: #555;
     word-break: break-word;
 }
-
 .company-padding {
     padding: 20px;
 }
@@ -166,22 +167,18 @@ padding-bottom: 10px;
     justify-content: space-between;
     width: 50%;
     margin-top: 10px;
-   padding: 5px;
     border: 1px solid black;
     background: rgb(225, 220, 220);
-    
 }
 .dow{
     font-size: 25px;
     gap: 10px;
 }
-
 /* Add Documents here */
 .show-flex-item {
     display:flex ;
     flex-wrap: wrap;
     justify-content: space-between;
-   
     text-align: flex;
     margin: 10px;
     padding: 10px;
@@ -189,7 +186,7 @@ padding-bottom: 10px;
     box-sizing: border-box;
 }
 .show-flex-item div{
-    width:   200px;
+    width: 200px;
 }
 .status-css{
    width: 100px;
@@ -198,5 +195,63 @@ padding-bottom: 10px;
    border-radius: 5px;
    background: #FC904C;
    color: #fff;
+}
+/*  add the media query her for the laptop and mobile and tablet view */
+/*  write here the media query for the mobile  */
+@media (min-width: 320px ) and (max-width: 768px ){
+    .responsive{
+       padding:  10px 5px 0px 5px;
+    }
+    .name-logo{
+        padding: 30px 30px 30px 30px;
+        width: 90px;
+    }
+    .edit-detail-button{
+        font-size: 14px;
+    }
+    .company-detail-names {
+       gap: 20px;
+    }
+    .credit-Edit{
+        width: 25%;
+        padding: 10px 0px 0px 0px;
+    }
+    .show-flex-item {
+       margin: 0px;
+       line-height: 1.5rem;
+    }
+    .form-width{
+        width: 100%;
+    }
+    .custom-datepicker-widths {
+        width: 270px; 
+    }
+    .company-profile-detail{
+        align-items: start;
+    }
+    .trade-license{
+     display: none;
+    }
+    .file-upload-sections{
+        width: 100%;
+    }
+    .trade-expiry-dates{
+        width: 100%;
+    }
+    .licence{
+        padding: 0px;
+     }
+     #file-upload-input{
+        width: 100vh;
+     }
+     .file-formate{
+       width: 100%;
+    }
+   .trade-license-file{
+    gap: 0px;
+    }
+    .file-upload{
+        width: 100%;
+    }
 }
 

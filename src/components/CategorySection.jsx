@@ -73,44 +73,55 @@ const CategorySection = () => {
       {
         breakpoint: 1300,
         settings: {
-          slidesToShow: 6,
+          slidesToShow: 8,
           slidesToScroll: 2,
         },
       },
       {
-        breakpoint: 1150,
+        breakpoint: 1124,
         settings: {
-          slidesToShow: 5,
+          slidesToShow: 7,
           slidesToScroll: 2,
         },
       },
       {
         breakpoint: 1000,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 7,
           slidesToScroll: 2,
         },
       },
       {
-        breakpoint: 800,
+        breakpoint: 810,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
+          slidesToShow: 6,
+          slidesToScroll: 2,
+          nextArrow: null,
+          prevArrow: null,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 4,
           slidesToScroll: 1,
           nextArrow: null,
           prevArrow: null,
         },
       },
       {
-        breakpoint: 380,
+        breakpoint: 410,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          nextArrow: null,
+          prevArrow: null,
+        },
+      },
+      {
+        breakpoint: 320,
+        settings: {
+          slidesToShow: 3,
           slidesToScroll: 1,
           nextArrow: null,
           prevArrow: null,
@@ -118,6 +129,8 @@ const CategorySection = () => {
       },
     ],
   };
+
+
 
   return (
     <div className='category-section'>

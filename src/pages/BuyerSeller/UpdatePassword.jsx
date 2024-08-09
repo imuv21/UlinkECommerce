@@ -46,15 +46,15 @@ const ResetPassword = () => {
                 }
             );
             if (response.data.status) {
-                toast(<div className='toaster'> < VerifiedIcon /> {response.data.message}</div>, 
+                toast(<div className='toaster'> < VerifiedIcon /> {response.data.message}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                 navigate('/verify-update-password');
             } else {
-                toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to send OTP to update password!`}</div>, 
+                toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to send OTP to update password!`}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
         } catch (error) {
-            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to send OTP to update password!`}</div>, 
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to send OTP to update password!`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
@@ -71,7 +71,7 @@ const ResetPassword = () => {
             <Helmet>
                 <title>Update Your Password</title>
             </Helmet>
-            <div className="login-cont">
+            <div className="login-cont hvh">
 
                 <Link to='/' className="logo-otpform">
                     <img src={logo} alt="logo" />
@@ -96,8 +96,11 @@ const ResetPassword = () => {
                                 </span>
                             </div>
                             {errors.confirmPass && <div className='error'>{errors.confirmPass.message}</div>}
-                            <button className='btn box flex' type='submit'><div className="heading2">Set Password</div></button>
-                            <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>
+                            <div className="flexcol wh" style={{gap: '5px'}}>
+                                <button className='btn box flex' type='submit'><div className="heading2">Set Password</div></button>
+                                <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>
+                            </div>
+
                         </form>
                     </div>
                 </div>

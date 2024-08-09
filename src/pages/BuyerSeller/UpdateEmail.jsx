@@ -58,7 +58,7 @@ const ForgotPassword = () => {
             <Helmet>
                 <title>Update Email Address</title>
             </Helmet>
-            <div className="login-cont">
+            <div className="login-cont hvh">
 
                 <Link to='/' className="logo-otpform">
                     <img src={logo} alt="logo" />
@@ -69,8 +69,11 @@ const ForgotPassword = () => {
                         <div className="heading">Update Email Address</div>
                         <div className="flexcol gap">
                             <input type='email' className="box flex" placeholder='Enter a new email' autoComplete='email' value={email} onChange={(e) => setEmail(e.target.value)} />
-                            <button className='btn box flex' onClick={updateEmail} type='submit'><div className="heading2">Send OTP</div></button>
-                            <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>
+                            <div className="flexcol wh" style={{ gap: '5px' }}>
+                                <button className='btn box flex' onClick={updateEmail} type='submit'><div className="heading2">Send OTP</div></button>
+                                <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>
+                            </div>
+
                             <div className="descrip">We will send an OTP to your email</div>
                         </div>
                     </div>

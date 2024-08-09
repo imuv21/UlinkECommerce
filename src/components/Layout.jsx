@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
         location.pathname === '/verify-email' || location.pathname === '/seller-form' || location.pathname === '/update-email' || location.pathname === '/update-number' ||
         location.pathname === '/update-password' || location.pathname === '/verify-update-email' || location.pathname === '/verify-update-number' || location.pathname === '/update-password' ||
         location.pathname === '/verify-update-password' || location.pathname === '/sellerform' || location.pathname === '/payment-success' || location.pathname === '/payment-failed' ||
-        location.pathname === '/google-callback' || location.pathname === '/payment-response') {
+        location.pathname === '/google-callback' || location.pathname === '/payment-response' || location.pathname === '/verify-update-profile') {
         return <>{children}</>;
     }
 

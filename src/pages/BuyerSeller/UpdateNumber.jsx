@@ -61,7 +61,7 @@ const UpdateNumber = () => {
             <Helmet>
                 <title>Update Mobile Number</title>
             </Helmet>
-            <div className="login-cont">
+            <div className="login-cont hvh">
 
                 <Link to='/' className="logo-otpform">
                     <img src={logo} alt="logo" />
@@ -90,9 +90,11 @@ const UpdateNumber = () => {
                             <Controller name="mobile" control={control} defaultValue="" render={({ field }) => <input value={updateUserNumber.mobile || ''} onChange={handleChange} className="box flex" autoComplete='off' placeholder='Enter your phone number' {...field} />} />
                             {errors.mobile && <div className="error">{errors.mobile.message}</div>}
 
+                            <div className="flexcol wh" style={{ gap: '5px'}}>
+                                <button className='btn box flex' type='submit'><div className="heading2">Send OTP</div></button>
+                                <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>
+                            </div>
 
-                            <button className='btn box flex' type='submit'><div className="heading2">Send OTP</div></button>
-                            <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>
                             <div className="descrip">We will send an OTP to your number</div>
                         </form>
                     </div>

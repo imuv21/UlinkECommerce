@@ -14,6 +14,8 @@ import { useSelector } from 'react-redux';
 import { fetchBusinessProfile, updateBusinessProfile } from '../../../Redux/businessProfileSlice';
 import { updateCreditInfo, fetchCreditInfo } from '../../../Redux/creditInfoSlice';
 import { uploadBuyerDocument, fetchUploadFile, updateBuyerInfo, deleteUploadFile } from '../../../Redux/uploadBuyerDocSlice';
+//  Show the toast notification when the user submit the any data or document 
+import { toast } from 'react-hot-toast';
 
 const CompanyProfile = () => {
     const dispatch = useDispatch();
@@ -29,6 +31,8 @@ const CompanyProfile = () => {
     const [open, setOpen] = useState(false);
     const [addDoc, setAddDoc] = useState(true);
 
+
+
     // lisence file upload here
     const [fileUpload, setFileUpload] = useState(true);
     const [selectedfile, setSelectedFile] = useState({ file: null, name: '', path: '', size: '', id: "" });
@@ -42,7 +46,7 @@ const CompanyProfile = () => {
     const [declaration, setDeclaration] = useState(true);
     const [selectedDeclaration, setSelectedDeclaration] = useState({ file: null, name: '', path: '', size: '', id: '' });
     //  documentPath all state
-    const [filePath, setFilePath] = useState('') 
+    const [filePath, setFilePath] = useState('')
     const [identityPath, setIdentityPath] = useState('')
     const [gstPath, setGstPath] = useState('')
     const [declarationPath, setDeclarationPath] = useState('')
@@ -85,7 +89,7 @@ const CompanyProfile = () => {
                     selectedidentityFile: identityDoc?.filename || prevState.selectedidentityFile,
                     selectedVatCertificate: gstCertDoc?.filename || prevState.selectedVatCertificate,
                     selectedDeclaration: declarationDoc?.filename || prevState.selectedDeclaration,
-                
+
                     tradeNumber: doc.TRADE_LICENSE?.documentNumber || prevState.tradeNumber,
                     enddate: doc.TRADE_LICENSE?.expiryDate || prevState.enddate,
                     expirydate: doc.IDENTITY_DOCUMENT?.expiryDate || prevState.expirydate,
@@ -99,7 +103,7 @@ const CompanyProfile = () => {
                 return newState;
             }, [doc]);
 
-     
+
             setSelectedFile(prevState => ({
                 ...prevState,
                 file: tradeLicenseDoc,
@@ -136,10 +140,10 @@ const CompanyProfile = () => {
     }, [doc]);
     const handlefileData = async (e) => {
         e.preventDefault();
-         const tradeLicenseDoc = 'TRADE_LICENSE';
-         const identityDoc = 'IDENTITY_DOCUMENT';
-         const gstCertDoc = 'GST_CERTIFICATE';
-         const declarationDoc = 'DECLARATION_CERTIFICATE';
+        const tradeLicenseDoc = 'TRADE_LICENSE';
+        const identityDoc = 'IDENTITY_DOCUMENT';
+        const gstCertDoc = 'GST_CERTIFICATE';
+        const declarationDoc = 'DECLARATION_CERTIFICATE';
         const tradeLicense = {
             documentName: uploadFileUpload.selectedfile,
             documentNumber: uploadFileUpload.tradeNumber,
@@ -174,6 +178,7 @@ const CompanyProfile = () => {
         console.log("Documents:", documentInfo);
         try {
             const resultAction = await dispatch(updateBuyerInfo(documentInfo)).unwrap();
+            toast.success('File data updated successfully')
             console.log('File data updated successfully:', resultAction);
             setUploadFileUpload({
                 selectedfile: '',
@@ -186,13 +191,12 @@ const CompanyProfile = () => {
                 identityNumber: '',
                 gstNumber: '',
             })
-           setAddDoc(true)
-           dispatch(fetchUploadFile())
+            setAddDoc(true)
+            dispatch(fetchUploadFile())
         }
         catch (error) {
             console.log("Error in updating file data", error)
         }
-      
     };
     const handleCancel = () => {
         setAddDoc(true)
@@ -203,11 +207,13 @@ const CompanyProfile = () => {
         if (selectedDeclaration) {
             // Dispatch upload action
             dispatch(uploadBuyerDocument({ file: selectedDeclaration, docType: 'DECLARATION_CERTIFICATE' }))
-               setUploadFileUpload((prevState)=> ({
-                 ...prevState,
-                 selectedDeclaration: selectedDeclaration.name
-               }))
-              setDeclaration(true)
+            toast.success('Successfully Declaration File Upload')
+            setUploadFileUpload((prevState) => ({
+                ...prevState,
+                selectedDeclaration: selectedDeclaration.name
+
+            }))
+            setDeclaration(true)
         }
     };
     //  Vat certificate logic here
@@ -215,6 +221,7 @@ const CompanyProfile = () => {
         const selectedVatCertificate = e.target.files[0];
         if (selectedVatCertificate) {
             dispatch(uploadBuyerDocument({ file: selectedVatCertificate, docType: 'GST_CERTIFICATE' }));
+            toast.success('Successfully Vat Certificate File Upload')
             setUploadFileUpload((prevState) => ({
                 ...prevState,
                 selectedVatCertificate: selectedVatCertificate.name
@@ -227,6 +234,7 @@ const CompanyProfile = () => {
         const selectedidentityFile = e.target.files[0];
         if (selectedidentityFile) {
             dispatch(uploadBuyerDocument({ file: selectedidentityFile, docType: 'IDENTITY_DOCUMENT' }))
+            toast.success('Successfully Identity File Upload')
             setUploadFileUpload((prevState) => ({
                 ...prevState,
                 selectedidentityFile: selectedidentityFile.name
@@ -239,6 +247,7 @@ const CompanyProfile = () => {
         const selectedfile = e.target.files[0];
         if (selectedfile) {
             dispatch(uploadBuyerDocument({ file: selectedfile, docType: 'TRADE_LICENSE' }))
+            toast.success('Successfully Trade License File Upload')
             setUploadFileUpload((prevState) => ({
                 ...prevState,
                 selectedfile: selectedfile.name,
@@ -387,6 +396,9 @@ const CompanyProfile = () => {
         link.click();
         document.body.removeChild(link);
     };
+
+
+
     const deleteDecleration = async (fileData) => {
         if (!fileData || !fileData.id) {
             console.log('File Data is null or undefined', fileData);
@@ -431,7 +443,6 @@ const CompanyProfile = () => {
             console.log('Failed to delete file: ', error);
         }
     };
-    // Decleration of the Vat
     // Credit Data 
     const { credit } = useSelector(state => state.creditInfo);
     const [dateEstablished, setDateEstablished] = useState(new Date());
@@ -440,6 +451,8 @@ const CompanyProfile = () => {
         dateEstablished: '',
         annualTurnover: ""
     });
+    //  check the coditon are not allowed here
+
     const { profile, status, error } = useSelector(state => state.businessProfile);
     const token = useSelector((state) => state.auth.token);
     const [formdata, setFormData] = useState({
@@ -455,14 +468,16 @@ const CompanyProfile = () => {
     });
     const CompanyDataSubmit = (e) => {
         e.preventDefault();
-        dispatch(updateBusinessProfile(formdata, token)).then(()=> {
+        dispatch(updateBusinessProfile(formdata, token)).then(() => {
             dispatch(fetchBusinessProfile(token))
+            //  here the show notification message when the user succesfuuly updated the message th show are notification
+            toast.success("Successfully Updated Company Profiles")``
         })
         setProfileDetail(false);
         console.log(formdata);
     };
     useEffect(() => {
-            dispatch(fetchBusinessProfile(token ));
+        dispatch(fetchBusinessProfile(token));
     }, [dispatch, token]);
     useEffect(() => {
         console.log("Status: ", status);
@@ -483,8 +498,6 @@ const CompanyProfile = () => {
         }
     }, [status, profile, error]);
 
-   
-   
     const CompanyData = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
@@ -504,6 +517,7 @@ const CompanyProfile = () => {
     const creditSubmit = (e) => {
         e.preventDefault();
         dispatch(updateCreditInfo(creditInfoData, token));
+        toast.success("Credit Data Submit Successfully")
         setCreditInfo(false);
     };
     useEffect(() => {
@@ -848,8 +862,9 @@ const CompanyProfile = () => {
                                             <div>
                                                 {fileUpload && uploadFileUpload.selectedfile ? (
                                                     <div className='file-upload'>
+                                                        {/*  I want add the content and on emore container */}
                                                         <label htmlFor='file-upload-input'>
-                                                            <h3>{uploadFileUpload.selectedfile}</h3>
+                                                            <h3 className='file-name-show-here'>{uploadFileUpload.selectedfile}</h3>
                                                         </label>
                                                         <input
                                                             id='file-upload-input'
@@ -869,7 +884,6 @@ const CompanyProfile = () => {
                                                     <div className='file-upload-sections'>
                                                         <input type='file' accept='' onChange={handlefileupload} name='tradeLicense' />
                                                     </div>
-
                                                 )}
                                             </div>
                                         </div>
@@ -1008,7 +1022,6 @@ const CompanyProfile = () => {
                                                     <div className='file-upload-sections'>
                                                         <input type='file' accept='' onChange={handleDeclaration} name='declaration' />
                                                     </div>
-
                                                 )}
                                             </div>
                                         </div>

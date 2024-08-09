@@ -151,7 +151,7 @@ const OtpPassword = () => {
             <Helmet>
                 <title>Verify Your Email</title>
             </Helmet>
-            <div className="login-cont">
+            <div className="login-cont hvh">
 
                 <Link to='/' className="logo-otpform">
                     <img src={logo} alt="logo" />
