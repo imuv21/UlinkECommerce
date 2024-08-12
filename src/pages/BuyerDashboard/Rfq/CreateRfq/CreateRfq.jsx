@@ -198,7 +198,7 @@ const CreateRfq = () => {
                     </div>
                 </div>
             )}
-            <div className='mt'>
+            <div className='responsive'>
                 <div className='userDashboard'>
                     <h1 className='user-titles pay-title bor-1'>Create a new RFQ</h1>
                 </div>
@@ -353,7 +353,7 @@ const CreateRfq = () => {
                                 </div>
                                 <div className='card-inputs '>
                                     <label>Addition Information</label><br></br>
-                                    <input type='text' className='card-input-value mt-top' name="additionalinfo" value={additionalDetail.additionalinfo} onChange={handleDetail} />
+                                    <input type='text' className='card-input-value mt-top' name="additionalinfo" value={additionalDetail.additionalinfo} onChange={handleDetail} placeholder='Additional Infor Add' />
                                 </div>
                             </div>
                         </div>

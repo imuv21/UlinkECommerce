@@ -21,7 +21,8 @@ const PaymentSuccess = () => {
                     console.log('Payment completed:', response.data);
                     const parsedData = JSON.parse(response.data.data);
                     setResponse(parsedData);
-                    navigate('/payment-response', { state: { response: parsedData } });
+                    // navigate('/payment-response', { state: { response: parsedData } });
+                    navigate('/orders');
                 })
                 .catch(error => console.error('Error completing payment:', error));
         }

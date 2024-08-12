@@ -1,5 +1,9 @@
 .ml-rule{
-    margin-left: 10px;
+    /* margin-left: 10px; */
+}
+ 
+ .responsive{
+    padding: 30px 30px 30px 30px ;
 }
 .dounload{
     display: flex;
@@ -49,7 +53,7 @@
     font-size: 17px;
     font-weight: 600;
     cursor: pointer;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 
 }
 .ml-left{
@@ -69,9 +73,9 @@
 .mt-top{
     margin-top: 10px;
 }
-.ml-left{
-    margin-left: 10px;
-}
+/* .ml-left{
+    /* margin-left: 10px; */
+} */
 .date{
     width:100% ; 
 }
@@ -117,8 +121,8 @@
     margin-left: 80px;
 }
 .background-Changer{
-    width: 100vw;
-    height: 100vh;
+   width: 100vw;
+   height: 100%;
     top: 0;
     left: 0;
     right: 0;
@@ -165,7 +169,6 @@
     padding: 10px;
     height: auto;
 }
-
 .add-card-btn{
     display: flex;
     align-items: center;
@@ -192,31 +195,24 @@
     border: 2px solid #3770bf;
   color: #fff;
 }
-.userDashboard {
-    margin-top: 120px;
-    padding: 10px;
-}
+
 .bor-1{
     height: auto;
-     width: 85%;
-     margin-left: 100px;
+     width: 100%;
+     /* margin-left: 100px; */
      border-radius: 5px;  
     }
-  
-
-
 .roles-text{
-    margin: auto 100px;
-    padding: 20px;
+    padding:  20px 0px 20px 0px;
     font-size: 15px;
 }
 .pay-note{
-    margin-left: 70px;
+  
     color: gray;
 }
 .border-1{
     border: 1px solid #dddddd;
-     margin: auto 85px;   
+     /* margin: auto 85px;    */
  }
  .card-table{
     display: flex;
@@ -259,5 +255,68 @@
     width: 100%;
 }
 .btn-cancel{
-    width: 10%;
+ width: 10%;
+}
+/*  add the media query for the mobile device */
+@media(max-width: 700px){
+    .card-table-du{
+      width: 100%;
+      padding: 10px 0px 0px 0px;
+    }
+    .responsive{
+        padding: 10px 5px 10px 5px;
+    }
+    .card-table{
+     display: block;
+    }
+    .font-size{
+        font-size: 16px;
+    }
+    .crete-rfq-item{
+     display: block;
+        width: 100%;
+    }
+    .input-width-change{
+        width: 100%;
+    }
+    .c-s-c{
+       display: block;
+       width: 100%;
+    }
+    .card-inputs-filed{
+      display: block;
+        padding: 0px 0px 0px 0px;
+    }
+    .card-inputs{
+       width: 100%;
+    }
+    .bor-1{
+     font-size: 22px;
+   }
+   .btn-cancel{
+    width: 100%;
+   }
+   
+   /*  add here dialog box */
+   .invite-more{
+     width: 100%;
+}
+}
+
+@media(max-width: 800px){
+    .responsive{
+        padding: 10px 5px 10px 5px;
+    }
+    .font-size{
+        font-size: 18px;
+    }
+    .rfq-img{
+        width: 40px;
+        height: 40px;
+     }
+    .btn-cancel{
+        width: 100%;
+    }
+   
+
 }

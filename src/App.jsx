@@ -119,7 +119,6 @@ function App() {
 
             {/* other */}
             <Route path='/img' element={<Image />} />
-            <Route path='/trans' element={<Translator />} />
 
 
             {/* Without authentication */}
@@ -197,6 +196,7 @@ function App() {
               <Route path='/payment-success' element={<PaymentSuccess />} />
               <Route path='/payment-failed' element={<PaymentFailed />} />
               <Route path='/payment-response' element={<Response />} />
+              <Route path='/orders' element={<Translator />} />
             </Route>
 
           </Routes>

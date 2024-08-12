@@ -13,11 +13,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 const Cart = () => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { items: cart, totalSellPrice, totalUnitGstPrice, currency, status, error } = useSelector((state) => state.cart);
+  const { items: cart, totalSellPrice, totalSellGstPrice, currency, status, error } = useSelector((state) => state.cart);
   const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
   const exchangeRates = useSelector(state => state.currency.exchangeRates);
+  const subTotal = totalSellPrice + totalSellGstPrice;
 
   useEffect(() => {
     dispatch(fetchCart());
@@ -108,6 +110,17 @@ const Cart = () => {
     return text.slice(0, maxLength) + '...';
   }
 
+  // GST calculator
+  // let priceuv = 100;
+  // let gstuv = 18; //percent
+  // let quantityuv = 4;
+
+  // let totalPriceWithGST = [(priceuv * quantityuv) + ((gstuv * priceuv * quantityuv) / 100)];
+  // let totalGST = [totalPriceWithGST - (priceuv * quantityuv)];
+
+
+
+
 
 
   return (
@@ -116,6 +129,8 @@ const Cart = () => {
         <title>Cart</title>
       </Helmet>
       <div className="flex wh">
+        {/* <div className="heading2">here : {totalPriceWithGST}</div>
+        <div className="heading2">here gst only : {totalGST}</div> */}
         <div className="heading wh">My Cart ({totalItems})</div>
       </div>
       <div className="cart_cont">
@@ -146,7 +161,7 @@ const Cart = () => {
                     </div>
                     <div className="moq-gst">
                       <div className="descrip">Min Order Quantity: {item.minOrderQuant}</div>
-                      <div className="descrip">GST: {currencySymbols[selectedCurrency]} {convertPrice(item.gst, currency)} {selectedCurrency}</div>
+                      <div className="descrip">GST: {item.gst}</div>
                     </div>
                   </div>
 
@@ -177,7 +192,11 @@ const Cart = () => {
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Total Tax</span></div>
-              <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalUnitGstPrice, currency)} {selectedCurrency}</span></div>
+              <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalSellGstPrice, currency)} {selectedCurrency}</span></div>
+            </div>
+            <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
+              <div className="heading2"><span>Subtotal</span></div>
+              <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(subTotal, currency)} {selectedCurrency}</span></div>
             </div>
             <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
               <button className='btn addtocart flex' onClick={checkout}><ShoppingCartCheckoutIcon style={{ width: '15px' }} /><div className="heading2">Checkout</div></button>

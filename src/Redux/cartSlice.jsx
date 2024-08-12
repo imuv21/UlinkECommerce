@@ -6,7 +6,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 const initialState = {
     items: [],
     totalSellPrice: 0,
-    totalUnitGstPrice: 0,
+    totalSellGstPrice: 0,
     currency: '',
     currencySymbol: '',
     status: 'idle',
@@ -126,7 +126,7 @@ const cartSlice = createSlice({
                 state.status = 'succeeded';
                 state.items = action.payload.cartItems;
                 state.totalSellPrice = action.payload.totalSellPrice;
-                state.totalUnitGstPrice = action.payload.totalUnitGstPrice;
+                state.totalSellGstPrice = action.payload.totalSellGstPrice;
                 state.currency = action.payload.currency;
                 state.currencySymbol = action.payload.currencySymbol;
             })
@@ -141,7 +141,7 @@ const cartSlice = createSlice({
                 state.status = 'succeeded';
                 state.items = state.items.filter(item => item.productId !== action.meta.arg);
                 state.totalSellPrice = action.payload.totalSellPrice;
-                state.totalUnitGstPrice = action.payload.totalUnitGstPrice;
+                state.totalSellGstPrice = action.payload.totalSellGstPrice;
                 state.currency = action.payload.currency;
                 state.currencySymbol = action.payload.currencySymbol;
             })
@@ -162,7 +162,7 @@ const cartSlice = createSlice({
                     state.items.push(updatedCartItem); 
                 }
                 state.totalSellPrice = action.payload.totalSellPrice;
-                state.totalUnitGstPrice = action.payload.totalUnitGstPrice;
+                state.totalSellGstPrice = action.payload.totalSellGstPrice;
                 state.currency = action.payload.currency;
                 state.currencySymbol = action.payload.currencySymbol;
                 console.log('Cart item updated:', state.items[index]);

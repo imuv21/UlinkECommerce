@@ -19,8 +19,9 @@ const RAZORPAY_API_KEY = import.meta.env.VITE_RAZORPAY_API_KEY;
 const Checkout = () => {
 
   const dispatch = useDispatch();
-  const { totalSellPrice, totalUnitGstPrice, currency } = useSelector((state) => state.cart);
+  const { totalSellPrice, totalSellGstPrice, currency } = useSelector((state) => state.cart);
   const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
   const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
   const exchangeRates = useSelector(state => state.currency.exchangeRates);
 
@@ -147,7 +148,7 @@ const Checkout = () => {
   };
 
 
-  const totalOrder = totalSellPrice + totalUnitGstPrice;
+  const totalOrder = totalSellPrice + totalSellGstPrice;
   const scrollRef = useRef(null);
   useEffect(() => {
     if (scrollRef.current) {
@@ -211,22 +212,42 @@ const Checkout = () => {
     }
   };
 
-  const paypalHandler = async (amount, currency) => {
-    try {
-      const fPrice = Number(amount).toFixed(2);
-      const successUrl = "https://www.ulinkit.com/payment-success";
-      const cancelUrl = "https://www.ulinkit.com/payment-failed";
+  // const fPrice = Number(amount).toFixed(2);
+  // const successUrl = "https://www.ulinkit.com/payment-success";
+  // const cancelUrl = "https://www.ulinkit.com/payment-failed";
 
-      const responsePaypal = await axios.post('https://api.ulinkit.com/api/paypal/payment/create', {
-        amount: fPrice,
-        description: "Test Transaction",
-        currency: currency,
-        successUrl: successUrl,
-        cancelUrl: cancelUrl
+  // const responsePaypal = await axios.post('https://api.ulinkit.com/api/paypal/payment/create', {
+  //   amount: fPrice,
+  //   description: "Test Transaction",
+  //   currency: currency,
+  //   successUrl: successUrl,
+  //   cancelUrl: cancelUrl
+  // });
+
+  const paypalHandler = async () => {
+    try {
+
+      if (!selectedShippingAddress || !selectedShippingAddress.id) {
+        throw new Error("Shipping address or address ID is undefined");
+      }
+      const addressId = selectedShippingAddress.id;
+      if (isNaN(Number(addressId))) {
+        throw new Error("Invalid address ID format. It should be a numeric value.");
+      }
+      if (!selectedCurrency){
+        throw new Error("Currency is undefined");
+      }
+
+      const responsePaypal = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(selectedCurrency)}&address=${encodeURIComponent(addressId)}&gateway=PAYPAL`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
 
       if (responsePaypal && responsePaypal.data) {
-        let link = responsePaypal.data.url;
+        console.log("Full Response Data:", responsePaypal.data);
+        let link = responsePaypal.data.data.url;
+        console.log("Link:", link); 
         if (link) {
           window.open(link, '_self');
         } else {
@@ -246,7 +267,7 @@ const Checkout = () => {
 
     if (selectedPaymentOption === 'paypal') {
       paypalHandler(PaymentAmount, PaymentCurrency);
-    } else if (selectedPaymentOption === 'razorpay'){
+    } else if (selectedPaymentOption === 'razorpay') {
       razorpayHandler(PaymentAmount, PaymentCurrency);
     } else if (selectedPaymentOption === 'card') {
       cardSubmit();
@@ -387,10 +408,10 @@ const Checkout = () => {
                 </div>
               )} */}
               <form className='netbanking'>
-                <input className='box flex' type="text" placeholder='Enter cardholder name' autoComplete='off'/>
-                <input className='box flex' type="text" placeholder='Enter card number' autoComplete='off'/>
-                <input className='box flex' type="text" placeholder='Enter expiry date' autoComplete='off'/>
-                <input className='box flex' type="password" placeholder='Enter CVV' autoComplete='off'/>
+                <input className='box flex' type="text" placeholder='Enter cardholder name' autoComplete='off' />
+                <input className='box flex' type="text" placeholder='Enter card number' autoComplete='off' />
+                <input className='box flex' type="text" placeholder='Enter expiry date' autoComplete='off' />
+                <input className='box flex' type="password" placeholder='Enter CVV' autoComplete='off' />
               </form>
             </div>
           )}
@@ -424,10 +445,10 @@ const Checkout = () => {
                   <option value='bank1'>Bank 1</option>
                   <option value='bank2'>Bank 2</option>
                 </select>
-                <input className='box flex' type='text' placeholder='Enter account number' name='accountNumber' autoComplete='off'/>
-                <input className='box flex' type='text' placeholder='Enter account holder name' name='accountHolderName' autoComplete='off'/>
-                <input className='box flex' type='text' placeholder='Enter user ID/customer ID' name='userID' autoComplete='off'/>
-                <input className='box flex' type='password' placeholder='Enter transaction password' name='transactionPassword' autoComplete='off'/>
+                <input className='box flex' type='text' placeholder='Enter account number' name='accountNumber' autoComplete='off' />
+                <input className='box flex' type='text' placeholder='Enter account holder name' name='accountHolderName' autoComplete='off' />
+                <input className='box flex' type='text' placeholder='Enter user ID/customer ID' name='userID' autoComplete='off' />
+                <input className='box flex' type='password' placeholder='Enter transaction password' name='transactionPassword' autoComplete='off' />
               </form>
             </div>
           )}
@@ -450,7 +471,7 @@ const Checkout = () => {
                 </div>
               )} */}
               <form className='netbanking'>
-                <input className='box flex' type='text' placeholder='Enter UPI ID' name='upiId' autoComplete='off'/>
+                <input className='box flex' type='text' placeholder='Enter UPI ID' name='upiId' autoComplete='off' />
               </form>
             </div>
           )}
@@ -489,7 +510,7 @@ const Checkout = () => {
               </div>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading2">Total Tax</div>
-                <div className="heading2">{currencySymbols[selectedCurrency]} {convertPrice(totalUnitGstPrice, currency)} {selectedCurrency}</div>
+                <div className="heading2">{currencySymbols[selectedCurrency]} {convertPrice(totalSellGstPrice, currency)} {selectedCurrency}</div>
               </div>
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
