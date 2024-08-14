@@ -158,14 +158,31 @@ const Checkout = () => {
 
 
   // payment methods 
+  // const amount = Number(price).toFixed(2);
+  // console.log(amount, currency);
+  // const response = await axios.post('https://api.ulinkit.com/api/payment/test/get-transaction', { amount: amount, currency: currency });
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('razorpay');
 
-  const razorpayHandler = async (price, currency) => {
+  const razorpayHandler = async () => {
     try {
-      const amount = Number(price).toFixed(2);
-      console.log(amount, currency);
-      const response = await axios.post('https://api.ulinkit.com/api/payment/test/get-transaction', { amount: amount, currency: currency });
-      const order = response.data;
+      if (!selectedShippingAddress || !selectedShippingAddress.id) {
+        throw new Error("Shipping address or address ID is undefined");
+      }
+      const addressId = selectedShippingAddress.id;
+      if (isNaN(Number(addressId))) {
+        throw new Error("Invalid address ID format. It should be a numeric value.");
+      }
+      if (!selectedCurrency) {
+        throw new Error("Currency is undefined");
+      }
+
+      const response = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(selectedCurrency)}&address=${encodeURIComponent(addressId)}&gateway=RAZORPAY`, {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const order = response.data.data;
 
       const options = {
         key: RAZORPAY_API_KEY,
@@ -183,7 +200,7 @@ const Checkout = () => {
           contact: user.number
         },
         notes: {
-          address: selectedShippingAddress || selectedBillingAddress
+          address: selectedShippingAddress
         },
         theme: {
           color: "#00aaff"
@@ -234,7 +251,7 @@ const Checkout = () => {
       if (isNaN(Number(addressId))) {
         throw new Error("Invalid address ID format. It should be a numeric value.");
       }
-      if (!selectedCurrency){
+      if (!selectedCurrency) {
         throw new Error("Currency is undefined");
       }
 
@@ -247,7 +264,7 @@ const Checkout = () => {
       if (responsePaypal && responsePaypal.data) {
         console.log("Full Response Data:", responsePaypal.data);
         let link = responsePaypal.data.data.url;
-        console.log("Link:", link); 
+        console.log("Link:", link);
         if (link) {
           window.open(link, '_self');
         } else {

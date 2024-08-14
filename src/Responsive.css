@@ -44,6 +44,16 @@
 
 @media screen and (max-width: 1100px) {
 
+    /* become-a-seller */
+
+    .svg-bg {
+        display: none;
+    }
+
+    .sellmore {
+        display: flex;
+    }
+
     /* home page */
     .home-grid:nth-child(4) {
         display: none;
@@ -101,6 +111,14 @@
     /* home page */
     .home-grid:nth-child(3) {
         display: none;
+    }
+}
+
+@media screen and (max-width: 800px) {
+
+    /* commission page  */
+    .commission-logo {
+        width: 200px;
     }
 }
 
@@ -188,6 +206,53 @@
 
 @media screen and (max-width: 710px) {
 
+    /* profile page */
+    .profileinput {
+        width: 100%;
+    }
+
+    .handleditdelete {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .handleditdelete .MuiSvgIcon-root {
+        width: 15px;
+    }
+
+    .addressbox {
+        gap: 20px;
+        background-color: white;
+        border-radius: var(--br1);
+        border: var(--border);
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: space-between;
+        padding: 20px;
+    }
+
+    .constaddresswithicons {
+        gap: 10px;
+        background-color: var(--CodeThree);
+        border-radius: var(--br1);
+        border: var(--border);
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .box,
+    .box2,
+    .box3 {
+        padding: 5px;
+        font-size: 10px !important;
+    }
+
     /* login page  */
     .signupcont {
         width: 100%;
@@ -200,18 +265,109 @@
         gap: 20px;
     }
 
+    /* commission page  */
+    .commission-logo {
+        width: 150px;
+    }
+
+    .cs-box {
+        gap: 0px;
+    }
+
+    /* faq page */
+
+    .responsive-text {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    /* become a seller page */
+    .italic {
+        position: relative;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 20px;
+    }
+
+    .italic::after,
+    .italic::before {
+        content: '"';
+        position: absolute;
+        font-size: 60px;
+        color: #888;
+    }
+
+
+    .italic::before {
+        top: 10px;
+        left: -30px;
+    }
+
+    .sellmore {
+        width: 100%;
+        padding: 40px 20px;
+    }
+
+    .confidencetrade {
+        width: 80%;
+        text-align: center;
+        line-height: 22px !important;
+    }
+
+    .sellmore .heading5 {
+        line-height: 22px !important;
+    }
+
+    .perfect-grid {
+        width: 100%;
+        display: grid;
+        gap: 20px;
+        padding: 20px;
+        grid-template-columns: auto auto;
+    }
+
+    .perfect-grid2 {
+        width: 100%;
+        display: grid;
+        gap: 30px;
+        padding: 10px;
+        grid-template-columns: auto;
+    }
+
 
     /* common styling */
 
     .heading {
-        font-size: 18px !important;
-        font-weight: 600;
-        text-transform: capitalize;
+        font-size: 16px !important;
     }
 
     .heading2 {
-        font-size: 13px !important;
+        font-size: 12px !important;
         font-weight: 400;
+    }
+
+    .heading4 {
+        font-size: 25px;
+    }
+
+    .heading5 {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 0px;
+    }
+
+    .heading3 {
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .descrip2 {
+        font-size: 10px;
+        line-height: 15px;
+        color: gray;
     }
 }
 
@@ -324,6 +480,7 @@
         padding: 20px;
         gap: 10px;
     }
+
     .home-alt3 div {
         font-size: 12px;
     }
@@ -440,6 +597,32 @@
 }
 
 @media(min-width: 320px) and (max-width: 480px) {
+
+    .addresswithicons {
+        width: 100%;
+        gap: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+    }
+
+    /* commission page  */
+    .toggle-btns {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .commission-logo {
+        display: none;
+    }
+
+    .search-faq input {
+        padding: 10px;
+        border: 1px solid #004c6f;
+        border-radius: 6px;
+        width: 250px;
+    }
 
     /* filter page */
     .shortby {

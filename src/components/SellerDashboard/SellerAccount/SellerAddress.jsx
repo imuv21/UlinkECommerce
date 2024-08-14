@@ -140,8 +140,8 @@ const SellerAddress = () => {
                     await dispatch(markDefaultAddress(addressToUpdate.id));
                 }
                 await dispatch(fetchAddresses());
-             
-                toast(<div className='toaster'> < VerifiedIcon /> {`Address updated successfully`}</div>, 
+
+                toast(<div className='toaster'> < VerifiedIcon /> {`Address updated successfully`}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             } else {
                 response = await dispatch(addAddress(formData));
@@ -154,14 +154,14 @@ const SellerAddress = () => {
                     }
                 }
                 await dispatch(fetchAddresses());
-            
-                toast(<div className='toaster'> < VerifiedIcon /> {`Address saved successfully`}</div>, 
+
+                toast(<div className='toaster'> < VerifiedIcon /> {`Address saved successfully`}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
             setShowPopup(false);
             resetFormFields();
         } catch (error) {
-            toast(<div className='toaster'> < NewReleasesIcon /> {`Error saving address`}</div>, 
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Error saving address`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } finally {
             setIsSubmitting(false);
@@ -210,7 +210,7 @@ const SellerAddress = () => {
             <Helmet>
                 <title>My Addresses</title>
             </Helmet>
-            <div className="productlist3">
+            <div className="addressbox">
                 <div className="flexcol" style={{ gap: '20px' }}>
                     <div className="heading wh">My Addresses</div>
                     <div className="heading2 wh">Provide information on your billing address and where you would like your items to be picked up from. <br /> We need your stock pickup location details in order to calculate accurate shipping rates. <br /> For verification you must add a default address.</div>
@@ -225,33 +225,37 @@ const SellerAddress = () => {
                 ) : (
                     <Fragment>
                         {addresses.map((address) => (
-                            <div className="productlist4" key={uuidv4()}>
+                            <div className="constaddresswithicons" key={uuidv4()}>
                                 <div className="flexcol-start" style={{ gap: '10px' }}>
-                                    <div className="flex" style={{ gap: '20px' }}>
+                                    <div className="addresswithicons">
                                         <div className="heading3">{address.address}</div>
-                                        {address.isLocationChecked && <div className='warning-btn' style={{ padding: '2px 10px'}}>Shipping</div>}
-                                        {address.isBillingChecked && <div className='warning-btn2' style={{ padding: '2px 10px'}}>Billing</div>}
-                                        {address.isDefaultChecked && <div className='warning-btn4' style={{ padding: '2px 10px'}}>Default</div>}
+                                        {address.isLocationChecked && <div className='warning-btn' style={{ padding: '2px 10px' }}>Shipping</div>}
+                                        {address.isBillingChecked && <div className='warning-btn2' style={{ padding: '2px 10px' }}>Billing</div>}
+                                        {address.isDefaultChecked && <div className='warning-btn4' style={{ padding: '2px 10px' }}>Default</div>}
                                     </div>
-                                    <div className="flex" style={{ gap: '10px' }}>
+                                    <div className="addresswithicons">
                                         {address.selectedOrigin && <div className='descrip2'>{address.selectedOrigin}</div>}
                                         {address.city && <div className='descrip2'>{address.city}</div>}
                                         {address.area && <div className='descrip2'>Area: {address.area.length > 15 ? `${address.area.substring(0, 15)}...` : address.area}</div>}
                                         {address.street && <div className='descrip2'>Street: {address.street} {address.street.length > 15 ? `${address.street.substring(0, 15)}...` : address.street}</div>}
                                     </div>
-                                    <div className="flex" style={{ gap: '10px' }}>
+                                    <div className="addresswithicons">
                                         {address.office && <div className='descrip2'>Building/Office: {address.office.length > 15 ? `${address.office.substring(0, 15)}...` : address.office}</div>}
                                         {address.pobox && <div className='descrip2'>Pobox: {address.pobox}</div>}
                                         {address.postCode && <div className='descrip2'>Post code: {address.postCode}</div>}
                                     </div>
-                                    <div className="flex" style={{ gap: '20px' }}>
-                                        {(address.phoneNumber && address.selectedCountry) && <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;+{address.selectedCountry + " " + address.phoneNumber}</div>}
-                                        {address.airport && <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.airport}</div>}
-                                        {address.seaport && <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{address.seaport}</div>}
+                                    <div className="addresswithicons">
+                                        {(address.phoneNumber && address.selectedCountry) &&
+                                            <div className='flex' style={{ gap: '5px' }}>
+                                                <LocalPhoneIcon style={{ height: '15px', width: '15px' }} />   <div className="descrip2">{address.selectedCountry + " " + address.phoneNumber}</div>
+                                            </div>
+                                        }
+                                        {address.airport && <div className='flex' style={{ gap: '5px' }} ><LocalAirportIcon style={{ height: '15px', width: '15px' }} /> <div className="descrip2">{address.airport}</div></div>}
+                                        {address.seaport && <div className='flex' style={{ gap: '5px' }} ><SailingIcon style={{ height: '15px', width: '15px' }} /> <div className="descrip2">{address.seaport}</div></div>}
                                     </div>
                                 </div>
                                 {(!address.isDefaultChecked) &&
-                                    <div className="flexcol" style={{ gap: '20px' }}>
+                                    <div className="handleditdelete">
                                         <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditAddress(address.id)} />
                                         <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteAddress(address.id)} />
                                     </div>

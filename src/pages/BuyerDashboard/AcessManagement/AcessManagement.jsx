@@ -9,8 +9,7 @@ const AcessManagement = () => {
     const [inviteBox, setInviteBox] = useState(false);
     const [userRole, setUserRole] =  useState('')
     const [sendEmail, setSendEmail] = useState('')
-
-
+    
     const handleInviteUser = () => {
         setInviteBox(true)
     }
@@ -40,9 +39,8 @@ const AcessManagement = () => {
                             </div>
                             <div className=''> <p className='info-details invite-quote'>Use this section to invite members to your organisation. You can also set user permissions.</p></div>
                             <div className=' invite-email'>
-                                <label >Enter Email</label><br></br>
+                                <label  >Enter Email</label><br></br>
                                 <input type='email' name='cardemail' className='card-input-value width-input' placeholder='Enter email' value={sendEmail} onChange={(e)=> setSendEmail(e.target.value)} />
-
                             </div>
                             <div className=' invite-email'>
                                 <label >User Role*</label><br></br>
@@ -71,7 +69,7 @@ const AcessManagement = () => {
                     </div>
                 )}
             </div>
-            <div className='mt'>
+            <div className='responsive'>
                 <div className='flex-space-beetwen'>
                     <div className='message-titles-heading1'>
                         <h1 className='user-title  heading-2 title-size title-opacity'>Access Management</h1>
@@ -79,13 +77,11 @@ const AcessManagement = () => {
                     <div className='message-titles-heading1'>
                         <button className='create-btn invite-btn ' onClick={handleInviteUser}>INVITE USER</button>
                     </div>
-
                 </div>
                 <div className='note  notes change-notes'>
                     <FcInfo className='warnings' />
                     <p className='paragraph-4'>International mobile numbers cannot be used to log in <Link to='/roles'> <span className='learn-btn'>Learn More About Roles</span></Link></p>
                 </div>
-
                 <div className='nav-section'>
                     <div className='nav-section-items'>
                         Name
@@ -117,8 +113,6 @@ const AcessManagement = () => {
                     </div>
                     <div className='nav-section-items nav-section-item'>
                         <p className='user-name'>Admin</p>
-
-
                     </div>
                     <div className='nav-section-items nav-section-item'>
                         <p className='user-name'>Active</p>
@@ -134,5 +128,4 @@ const AcessManagement = () => {
         </Fragment>
     )
 }
-
 export default AcessManagement

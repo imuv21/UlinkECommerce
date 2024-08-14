@@ -96,37 +96,36 @@ const CommissionStructure = () => {
                 <title>Ulink's Commission Structure</title>
             </Helmet>
             <div className="flexcol wh home commission">
-                <div className="flex wh">
-                    <div className="flexcol-start wh" style={{ gap: '20px' }}>
+                <div className="cs-box4">
+                    <div className="cs-box3">
                         <div className="heading4 wh">Ulink's commission structure</div>
                         <div className="descrip2 wh" style={{ color: 'white' }}>At Ulink you can register for free, and you will only ever pay a small commission on actual sales. No hidden fees. It's simple: your success is our success!</div>
                         <button onClick={signup} className='btn box flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Register now</div></button>
                     </div>
-                    <div className="flexcol">
+                    <div className="cs-box2">
                         <img className='commission-logo' src={logo} alt="logo" />
                     </div>
                 </div>
-                <div className="flexcol wh commission-box" style={{ gap: '10px', backgroundColor: 'white' }}>
-                    <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                        <div className="fee heading2">FREE</div>
-                    </div>
+                <div className="flexcol wh commission-box">
+                    <div className="fee heading2">FREE</div>
                     <div className="heading3 wh">Registration</div>
                     <div className="heading3 wh">Become a registered seller on the leading business buying platform in the world:</div>
-                    <div className="heading2 wh list">Register your company</div>
-                    <div className="heading2 wh list">List an unlimited number of products</div>
-                    <div className="heading2 wh list">Get our expert support with uploading your products</div>
-                    <div className="heading2 wh list">Expand your company's online presence and showcase your products</div>
-
-
-                    <div className="flex wh" style={{ justifyContent: 'space-between', marginTop: '30px' }}>
-                        <div className="fee heading2">STANDARD FEE %</div>
+                    <div className="cs-box">
+                        <div className="heading2 list">Register your company</div>
+                        <div className="heading2 list">List an unlimited number of products</div>
+                        <div className="heading2 list">Get our expert support with uploading your products</div>
+                        <div className="heading2 list">Expand your company's online presence and showcase your products</div>
                     </div>
+
+                    <div className="fee heading2" style={{ marginTop: '30px' }}>STANDARD FEE %</div>
                     <div className="heading3 wh">Sell on Ulink</div>
                     <div className="heading3 wh">Use all the features that will save you time and money, whilst increasing your sales:</div>
-                    <div className="heading2 wh list">Get access to the market with 500+ million business people</div>
-                    <div className="heading2 wh list">Make sales at set prices, or allow buyers to negotiate directly with you</div>
-                    <div className="heading2 wh list">Pay commission only when you make a sale</div>
-                    <div className="heading2 wh list">For sellers outside the UAE it means they don’t need a local office and import license.</div>
+                    <div className="cs-box">
+                        <div className="heading2 list">Get access to the market with 500+ million business people</div>
+                        <div className="heading2 list">Make sales at set prices, or allow buyers to negotiate directly with you</div>
+                        <div className="heading2 list">Pay commission only when you make a sale</div>
+                        <div className="heading2 list">For sellers outside the UAE it means they don’t need a local office and import license.</div>
+                    </div>
                 </div>
 
                 <div className="flexcol wh" style={{ gap: '10px' }}>

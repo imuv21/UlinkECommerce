@@ -174,9 +174,9 @@ const ProductList = () => {
 
             <div className="productlist">
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
-                    <button onClick={() => handlePageChange(1)} className={currentPage === 1 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">All Products ({sellerProducts.length})</div></button>
+                    <button onClick={() => handlePageChange(1)} className={currentPage === 1 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">All Products ({sellerProducts?.length || 0})</div></button>
                     <button onClick={() => handlePageChange(2)} className={currentPage === 2 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Approved (0)</div></button>
-                    <button onClick={() => handlePageChange(3)} className={currentPage === 3 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Pending Approval ({sellerProducts.length})</div></button>
+                    <button onClick={() => handlePageChange(3)} className={currentPage === 3 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Pending Approval ({sellerProducts?.length || 0})</div></button>
                     <button onClick={() => handlePageChange(4)} className={currentPage === 4 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Rejected (0)</div></button>
                     <button onClick={() => handlePageChange(5)} className={currentPage === 5 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Archived (0)</div></button>
                     <button onClick={() => handlePageChange(6)} className={currentPage === 6 ? 'toggle-active btn-toggle box3 flex' : 'btn-toggle box3 flex'}><div className="heading2">Draft (0)</div></button>
@@ -211,16 +211,7 @@ const ProductList = () => {
                             </select>
                         </div>
                         <div className='allproduct'>
-
-                            {sellerProducts && sellerProducts.length === 0 ? (
-                                <Fragment>
-                                    <div className="productlist">
-                                        <img src={empty} className='productlist-img' alt="empty box" />
-                                        <div className="heading">You do not have any products in this list</div>
-                                        <div className="descrip2">This is where you will be able to view and manage your products</div>
-                                    </div>
-                                </Fragment>
-                            ) : (
+                            {(sellerProducts && sellerProducts.length > 0) ? (
                                 <Fragment>
                                     <div className="searchBoxPro2 grid-head">
                                         <div className="heading3">Image</div>
@@ -235,7 +226,7 @@ const ProductList = () => {
                                         <div className="heading3">Action</div>
                                     </div>
 
-                                    {sellerProducts && sellerProducts.map((item, index) => (
+                                    {sellerProducts.map((item, index) => (
                                         <div className="searchBoxPro2" key={item.productId}>
                                             <div>
                                                 {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
@@ -254,7 +245,6 @@ const ProductList = () => {
                                             <div className="heading2"><span className='download-btn' onClick={() => handleAddAddress(index)}> {calculateCostPerUnit(item)}{user.currencySymbol} </span></div>
                                             <div className="heading2" style={{ whiteSpace: 'nowrap' }}>
                                                 <div className="flexcol" style={{ gap: '2px' }}>
-                                                    {/* <span style={{ fontWeight: 'bold' }}>{item.availableQuantity}</span> */}
                                                     <span style={{ fontWeight: 'bold' }}>3</span>
                                                     <span style={{ fontSize: '12px' }}>MOQ is {item.minOrderQuant}</span>
                                                 </div>
@@ -270,8 +260,17 @@ const ProductList = () => {
                                     ))}
                                     <Link to="/all-products" className="descrip hoverr" style={{ marginTop: '10px' }}>See all products</Link>
                                 </Fragment>
+                            ) : (
+                                <Fragment>
+                                    <div className="productlist">
+                                        <img src={empty} className='productlist-img' alt="empty box" />
+                                        <div className="heading">You do not have any products in this list</div>
+                                        <div className="descrip2">This is where you will be able to view and manage your products</div>
+                                    </div>
+                                </Fragment>
                             )}
                         </div>
+
                     </Fragment>
                 )}
                 {currentPage === 2 && (
@@ -313,16 +312,7 @@ const ProductList = () => {
                             </select>
                         </div>
                         <div className='allproduct'>
-
-                            {sellerProducts && sellerProducts.length === 0 ? (
-                                <Fragment>
-                                    <div className="productlist">
-                                        <img src={empty} className='productlist-img' alt="empty box" />
-                                        <div className="heading">You do not have any products in this list</div>
-                                        <div className="descrip2">This is where you will be able to view and manage your products</div>
-                                    </div>
-                                </Fragment>
-                            ) : (
+                            {(sellerProducts && sellerProducts.length > 0) ? (
                                 <Fragment>
                                     <div className="searchBoxPro2 grid-head">
                                         <div className="heading3">Image</div>
@@ -337,7 +327,7 @@ const ProductList = () => {
                                         <div className="heading3">Action</div>
                                     </div>
 
-                                    {sellerProducts && sellerProducts.map((item, index) => (
+                                    {sellerProducts.map((item, index) => (
                                         <div className="searchBoxPro2" key={item.productId}>
                                             <div>
                                                 {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
@@ -356,7 +346,6 @@ const ProductList = () => {
                                             <div className="heading2"><span className='download-btn' onClick={() => handleAddAddress(index)}> {calculateCostPerUnit(item)}{user.currencySymbol} </span></div>
                                             <div className="heading2" style={{ whiteSpace: 'nowrap' }}>
                                                 <div className="flexcol" style={{ gap: '2px' }}>
-                                                    {/* <span style={{ fontWeight: 'bold' }}>{item.availableQuantity}</span> */}
                                                     <span style={{ fontWeight: 'bold' }}>3</span>
                                                     <span style={{ fontSize: '12px' }}>MOQ is {item.minOrderQuant}</span>
                                                 </div>
@@ -371,6 +360,14 @@ const ProductList = () => {
                                         </div>
                                     ))}
                                     <Link to="/all-products" className="descrip hoverr" style={{ marginTop: '10px' }}>See all products</Link>
+                                </Fragment>
+                            ) : (
+                                <Fragment>
+                                    <div className="productlist">
+                                        <img src={empty} className='productlist-img' alt="empty box" />
+                                        <div className="heading">You do not have any products in this list</div>
+                                        <div className="descrip2">This is where you will be able to view and manage your products</div>
+                                    </div>
                                 </Fragment>
                             )}
                         </div>
@@ -423,7 +420,6 @@ const ProductList = () => {
                                 <div className="heading2 flexcol"><EditNoteIcon style={{ cursor: 'pointer' }} /><DeleteIcon style={{ cursor: 'pointer' }} /> </div>
                             </div>
                         </div>
-
                     </Fragment>
                 )}
                 {currentPage === 5 && (
@@ -473,7 +469,6 @@ const ProductList = () => {
                                 <div className="heading2 flexcol"><EditNoteIcon style={{ cursor: 'pointer' }} /><DeleteIcon style={{ cursor: 'pointer' }} /> </div>
                             </div>
                         </div>
-
                     </Fragment>
                 )}
                 {currentPage === 6 && (
@@ -519,7 +514,6 @@ const ProductList = () => {
                                 <div className="heading2 flexcol"><EditNoteIcon style={{ cursor: 'pointer' }} /><DeleteIcon style={{ cursor: 'pointer' }} /> </div>
                             </div>
                         </div>
-
                     </Fragment>
                 )}
             </div>

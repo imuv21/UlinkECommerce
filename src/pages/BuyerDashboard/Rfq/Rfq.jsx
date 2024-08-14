@@ -4,20 +4,20 @@ import './Rfq.css'
 import { CiSearch } from 'react-icons/ci'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Document from '../../../assets/document-icon.png'
+import Document from '../../../assets/documentphoto-removebg.png'
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 const Rfq = () => {
-    const [active, setActive] = useState(false)
+    const [active, setActive] = useState(true)
     const [rfqDataShow, setRfqDataShow] = useState(true)
     const [startdates, setStartDates] = useState(new Date(null));
     const [finishDates, setFinishDates] = useState(new Date(null))
     const [open, setOpen] = useState(false);
     const [rfqDataStored, setRfqDataStored] = useState([])
 
-//    data access here code
+    //    data access here code
     const location = useLocation()
     const rfqData = location.state;
 
@@ -25,17 +25,17 @@ const Rfq = () => {
     const addproduct = rfqData?.addproduct || [];
     const startdate = rfqData?.updateadditonalDetail?.startdate;
     console.log("startdate:", startdate);
- 
-//     //  local Storage for storing the data
+
+    //     //  local Storage for storing the data
     const rfqDataStore = JSON.stringify(rfqData);
     localStorage.setItem('rfqData', rfqDataStore)
-   //  Retrive the data from the local storage
+    //  Retrive the data from the local storage
 
-   useEffect(() => {
-    const rfqDatasay = localStorage.getItem('rfqData');
-    const rfqData = JSON.parse(rfqDatasay);
-    setRfqDataStored(rfqData);
-}, []);
+    useEffect(() => {
+        const rfqDatasay = localStorage.getItem('rfqData');
+        const rfqData = JSON.parse(rfqDatasay);
+        setRfqDataStored(rfqData);
+    }, []);
     const checkActive = (e) => {
         e.preventDefault()
         setActive(false)
@@ -47,7 +47,7 @@ const Rfq = () => {
         setRfqDataShow(false)
     }
     const handleFocus = () => {
-        
+
         setOpen(true);
     };
     const handleBlur = () => {
@@ -59,11 +59,16 @@ const Rfq = () => {
     const handleBlures = () => {
         setOpen(false);
     };
+    //  if the active container is empty then show then the close button is displayed
+
+
+    //  add the condition value added the new document are uploaded the file its value
+
     const generateId = () => {
         const alphabet = 'ULINK'
         let id = 'ULINK'
         // genrate first three character
-       
+
         // generate random number
         const numbers = '0123456789'
         for (let i = 0; i < 7; i++) {
@@ -98,7 +103,7 @@ const Rfq = () => {
             <Helmet>
                 <title>Requests For Quotations</title>
             </Helmet>
-            <div className='mt buyer-message'>
+            <div className='responsive '>
                 <div className='flex-space-beetwen'>
                     <div className='message-titles-heading1'>
                         <h1 className='user-title  heading-2 title-size'>My Requests for Quotations</h1>
@@ -118,13 +123,16 @@ const Rfq = () => {
                         <DatePicker selected={startdates}
                             onChange={(startdates) => setStartDates(startdates)}
                             onFocus={handleFocus}
-                            onBlur={handleBlur} placeholderText='From (creation)' />
+                            onBlur={handleBlur} placeholderText='From (creation)'
+                        />
                     </div>
                     <div className='calender'>
                         <DatePicker selected={finishDates}
                             onChange={(finishDates) => setFinishDates(finishDates)}
                             onFocus={handleFocuses}
-                            onBlur={handleBlures} d placeholderText='To (creation)' />
+                            onBlur={handleBlures} placeholderText='To (creation)'
+
+                        />
                     </div>
                     <select className='order-status status-width status-width-border' placeholder="All Status">
                         <option>All Status</option>
@@ -134,11 +142,13 @@ const Rfq = () => {
                         <option>Cancelled</option>
                         <option>Rejected</option>
                     </select>
-                    <div className='message-titles-heading1'>
-                        <button className='filter-btn  filter-margin'>Apply Filter</button>
-                    </div>
-                    <div className='message-titles-heading1'>
-                        <p className='paragraph-3 '>Clear Filter</p>
+                    <div className='filter-flex-data-value'>
+                        <div className='message-titles-heading1'>
+                            <button className='filter-btn  filter-margin'>Apply Filter</button>
+                        </div>
+                        <div className='message-titles-heading1'>
+                            <p className='paragraph-3 '>Clear Filter</p>
+                        </div>
                     </div>
                 </div>
                 <div className='two-item item-change'>
@@ -151,8 +161,9 @@ const Rfq = () => {
                         <img src={Document} className='rfq-icon' />
                         <button className='rfq-btns'>CREATE RFQ</button>
                     </div>
-                )} 
+                )}
             </div>
+          <div className='responsive'>
             {rfqDataStored && rfqData && rfqData.addproduct && (
                 <div className="table-container">
                     <div className='table-containers-head'>
@@ -185,7 +196,10 @@ const Rfq = () => {
                         <div className=''><Link to='/rfq-detail'>View Detail</Link></div>
                     </div>
                 </div>
+        
             )}
+            </div>
+        
         </Fragment>
     )
 }

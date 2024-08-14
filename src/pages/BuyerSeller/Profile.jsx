@@ -110,10 +110,10 @@ const Profile = () => {
                     <form className="profile-sel-box" onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><AccountCircleIcon /> <div className="heading3">My Profile</div></div>
                         {isEditing ? (
-                            <div className="flex" style={{ gap: '50px', justifyContent: 'start', width: '30%' }}>
+                            <div className="flex profileinput" style={{ gap: '50px', justifyContent: 'start'}}>
                                 <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
                                     <div className="flex wh" style={{ gap: '30px' }}>
-                                        <Controller name="firstname" control={control} defaultValue={user.firstname || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your first name' {...field} />} />
+                                        <Controller name="firstname" control={control} defaultValue={user.firstname || ''} render={({ field }) => <input autoComplete='off' className="box  flex" placeholder='Enter your first name' {...field} />} />
                                         <Controller name="lastname" control={control} defaultValue={user.lastname || ''} render={({ field }) => <input autoComplete='off' className="box flex" placeholder='Enter your last name' {...field} />} />
                                     </div>
 
@@ -131,7 +131,7 @@ const Profile = () => {
 
                                     <div className='flex wh' style={{ gap: '30px' }}>
                                         <Controller name="wpcountrycode" control={control} defaultValue={user.wpcountrycode || ''} render={({ field }) => (
-                                            <select className="box flex" value={user.wpcountrycode || ''} onChange={handleCountryChange}  {...field}>
+                                            <select className="box  flex" value={user.wpcountrycode || ''} onChange={handleCountryChange}  {...field}>
                                                 <option value="">Country code</option>
                                                 {ccode.map(country => (
                                                     <option key={country.iso2} value={country.dialCode}>
@@ -141,7 +141,7 @@ const Profile = () => {
                                             </select>
                                         )}
                                         />
-                                        <Controller name="whatsappnumber" control={control} defaultValue={user.whatsappnumber || ''} render={({ field }) => <input className="box flex" autoComplete='off' placeholder='Enter your whatsapp number' {...field} />} />
+                                        <Controller name="whatsappnumber" control={control} defaultValue={user.whatsappnumber || ''} render={({ field }) => <input className="box  flex" autoComplete='off' placeholder='Enter your whatsapp number' {...field} />} />
                                     </div>
 
                                     {(errors.whatsappnumber || errors.wpcountrycode) &&

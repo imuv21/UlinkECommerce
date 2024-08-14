@@ -542,6 +542,37 @@ button:focus {
 
 
 /* become a seller */
+.toggle-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.confidencetrade {
+  width: 80%;
+  text-align: center;
+}
+
+.howitworks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.sellmore {
+  display: none;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 100%;
+  padding: 50px 120px;
+  gap: 20px;
+  background-color: var(--bgClr-2);
+}
+
 .svg-bg {
   display: flex;
   align-items: start;
@@ -554,6 +585,26 @@ button:focus {
   background-position: 50% calc(100% - (-150px));
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.svg-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  width: 100%;
+  gap: 20px;
+}
+
+.svgifimation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+
+.gifimation {
+  width: 70%;
 }
 
 .svg-bg-signup {
@@ -570,17 +621,12 @@ button:focus {
   filter: drop-shadow(3px 3px 3px black);
 }
 
-.svg-content {
-  width: 100%;
-}
-
 .perfect-grid {
   width: 100%;
   display: grid;
   gap: 20px;
   padding: 20px;
   grid-template-columns: auto auto auto auto;
-  /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); */
 }
 
 .ulink-img {
@@ -614,7 +660,7 @@ button:focus {
   display: grid;
   gap: 30px;
   padding: 10px;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: auto auto;
 }
 
 .trade div {
@@ -727,6 +773,38 @@ button:focus {
 }
 
 /* commission-structure */
+.cs-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 5px;
+  width: 100%;
+}
+
+.cs-box2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cs-box3 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 15px;
+  width: 100%;
+}
+
+.cs-box4 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 20px;
+}
+
 .commission {
   background: url('./assets/awesome.svg');
   background-position: top;
@@ -737,17 +815,21 @@ button:focus {
 .commission-logo {
   aspect-ratio: 4/3.5;
   object-fit: contain;
-  width: 50%;
+  width: 300px;
   filter: drop-shadow(5px 5px 5px var(--CodeTwo));
 }
 
 .commission-box {
+  align-items: start;
   padding: 20px;
+  gap: 10px;
   border: var(--border);
   border-radius: var(--br1);
+  background-color: white;
 }
 
 .list {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: start;
@@ -757,7 +839,9 @@ button:focus {
 
 .list::before {
   content: '\2022';
-  font-size: 40px;
+  width: fit-content;
+  height: fit-content;
+  font-size: 20px;
 }
 
 .fee {
@@ -866,10 +950,11 @@ button:focus {
   margin: auto;
 }
 
-.hvh{
+.hvh {
   height: 100vh !important;
 }
-.googlecallback{
+
+.googlecallback {
   justify-content: start !important;
 }
 
@@ -914,12 +999,30 @@ button:focus {
   outline: 1px solid blue;
 }
 
+.addresswithicons {
+  width: 100%;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.handleditdelete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+
 .box {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
   padding: 10px;
   width: 100%;
   gap: 10px;
   border-radius: var(--br2);
+  white-space: nowrap;
 }
 
 .box2 {
@@ -928,6 +1031,7 @@ button:focus {
   width: 100%;
   gap: 10px;
   border-radius: var(--br2);
+  white-space: nowrap;
 }
 
 .box3 {
@@ -935,6 +1039,7 @@ button:focus {
   width: fit-content;
   gap: 10px;
   border-radius: var(--br2);
+  white-space: nowrap;
 }
 
 .tcenter {
@@ -991,12 +1096,13 @@ button:focus {
 }
 
 /* pagination btns */
-.pagination{
+.pagination {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
 }
+
 .pagination-btn {
   width: 100px;
   color: var(--CodeTwo);
@@ -1230,6 +1336,10 @@ button:focus {
   justify-content: center;
   padding: 20px;
   gap: 10px;
+}
+
+.profileinput {
+  width: 70%;
 }
 
 .profile {
@@ -1466,6 +1576,32 @@ button:focus {
   padding: 20px;
 }
 
+.addressbox {
+  gap: 20px;
+  background-color: white;
+  border-radius: var(--br1);
+  border: var(--border);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.constaddresswithicons {
+  gap: 10px;
+  background-color: var(--CodeThree);
+  border-radius: var(--br1);
+  border: var(--border);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+}
+
 .productlist4 {
   gap: 20px;
   background-color: var(--CodeThree);
@@ -1624,6 +1760,7 @@ button:focus {
 .popup-child {
   border: 1px solid black;
   width: 35%;
+  min-width: 330px;
   height: auto;
   padding: 15px;
   background-color: #fff;
@@ -2023,7 +2160,7 @@ button:focus {
 /* cart styling */
 /* Product details styling */
 
-.moq-gst{
+.moq-gst {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2075,11 +2212,12 @@ button:focus {
   border: 1px solid rgb(198, 198, 198);
   border-radius: var(--br2);
 }
-.plus-minus div{
+
+.plus-minus div {
   cursor: pointer;
 }
 
-.plus-minus div .MuiSvgIcon-root{
+.plus-minus div .MuiSvgIcon-root {
   width: 22px;
 }
 
@@ -2439,7 +2577,7 @@ button:focus {
   gap: 10px;
 }
 
-.totalPrice{
+.totalPrice {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -2478,7 +2616,7 @@ button:focus {
 }
 
 /* Checkout styling  */
-.netbanking{
+.netbanking {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -2486,9 +2624,11 @@ button:focus {
   justify-content: center;
   gap: 10px;
 }
-.netbanking input{
+
+.netbanking input {
   width: 100%;
 }
+
 .payop-box {
   width: 100%;
   display: flex;
@@ -2617,7 +2757,7 @@ button:focus {
 
 
 /* filter - page styling */
-.price-handler{
+.price-handler {
   padding: 0px !important;
 }
 
@@ -2775,7 +2915,7 @@ button:focus {
   width: 100%;
   height: 100%;
   object-fit: contain;
- 
+
 }
 
 .best-deals {
@@ -3457,7 +3597,7 @@ button:focus {
 
 
 /* toaster syling */
-.toaster{
+.toaster {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -3495,20 +3635,22 @@ button:focus {
 
 
 /* vipin's rfq marketplace styling */
-.button-button-2{
+.button-button-2 {
   display: flex;
   align-content: center;
   justify-content: end;
   margin-top: 20px;
 }
-.rfq-details-box-heading-1{
+
+.rfq-details-box-heading-1 {
   padding: 10px 10px 10px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 5px;
 }
-.addition-detain-info-box{
+
+.addition-detain-info-box {
   padding: 20px 20px 20px 20px;
   line-height: 1.5rem;
   font-size: 15px;
@@ -3798,29 +3940,33 @@ button:focus {
 .left-container-box {
   border: 1px solid black;
   width: 60%;
-  padding: 30px 30px 20px 20px ;
+  padding: 30px 30px 20px 20px;
   background: #fff;
   position: fixed;
   top: 0;
-  left: 40%; 
+  left: 40%;
   height: 100%;
-  opacity: 0; 
-  transform: translateX(-100%); 
-  transition: opacity 0.4s, transform 0.4s; 
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 0.4s, transform 0.4s;
 }
+
 .left-container-box.open {
   opacity: 1;
-  transform: translateX(0); 
-  animation: slideInFromRight 0.4s ease-in-out forwards; 
+  transform: translateX(0);
+  animation: slideInFromRight 0.4s ease-in-out forwards;
 }
+
 @keyframes slideInFromRight {
   0% {
     transform: translateX(100%);
   }
+
   100% {
     transform: translateX(0);
   }
 }
+
 .box-container-shadow-show {
   width: 100vw;
   height: 100vh;
@@ -3829,47 +3975,56 @@ button:focus {
   right: 0;
   bottom: 0;
   position: fixed;
-backdrop-filter: blur(3px);
- background: #74737380; 
+  backdrop-filter: blur(3px);
+  background: #74737380;
 }
-.close-box-cross-icon{
+
+.close-box-cross-icon {
   text-align: end;
   font-size: 25px;
   font-weight: 600;
   cursor: pointer;
 }
-.rfq-details-box-container-1{
+
+.rfq-details-box-container-1 {
   margin-top: 20px;
   border: 1px solid rgb(216, 212, 212);
   border-radius: 5px;
 }
-.status-creted-expiry{
+
+.status-creted-expiry {
   padding: 10px 10px 10px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
- font-weight: 600;
- font-size: 15px;
+  font-weight: 600;
+  font-size: 15px;
 }
-.status-creted-expiry > div {
+
+.status-creted-expiry>div {
   flex: 1;
 }
-.blue-quote-bg{
+
+.blue-quote-bg {
   font-size: 12px;
   border-radius: 2px;
   color: #81b1f4;
 }
-.created-date-quote{
- font-size: 13px;
- font-weight: 100;
+
+.created-date-quote {
+  font-size: 13px;
+  font-weight: 100;
 }
-.no-of-quote{
+
+.no-of-quote {
   font-weight: 200;
 }
-.product-detail-info-box{
+
+.product-detail-info-box {
   margin-top: 20px;
 }
-.rfq-details-box-heading{
+
+.rfq-details-box-heading {
   padding: 10px 10px 10px 10px;
   display: flex;
   align-items: center;
@@ -3877,38 +4032,45 @@ backdrop-filter: blur(3px);
   margin: 5px;
   background-color: #e9e3e3;
 }
-.flex-rfq-item{
+
+.flex-rfq-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
 }
-.gap-flex-rfq-item{
- gap: 100px;
+
+.gap-flex-rfq-item {
+  gap: 100px;
 }
-.img-containers-box-rfq{
+
+.img-containers-box-rfq {
   border: 1px solid rgb(171, 167, 167);
-  padding: 20px 20px 20px 20px ;
+  padding: 20px 20px 20px 20px;
 }
-.rfq-details-box-heading > div > h5,
-.rfq-details-box-heading > div > div > a {
+
+.rfq-details-box-heading>div>h5,
+.rfq-details-box-heading>div>div>a {
   flex: 1;
- 
+
 }
-.button-button-2{
+
+.button-button-2 {
   display: flex;
   align-content: center;
   justify-content: end;
   margin-top: 20px;
 }
-.rfq-details-box-heading-1{
+
+.rfq-details-box-heading-1 {
   padding: 10px 10px 10px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 5px;
 }
-.addition-detain-info-box{
+
+.addition-detain-info-box {
   padding: 20px 20px 20px 20px;
   line-height: 1.5rem;
   font-size: 15px;

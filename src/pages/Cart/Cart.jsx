@@ -16,7 +16,7 @@ const Cart = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { items: cart, totalSellPrice, totalSellGstPrice, currency, status, error } = useSelector((state) => state.cart);
+  const { items: cart, totalSellPrice, totalSellGstPrice, currency, currencySymbol, error } = useSelector((state) => state.cart);
   const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
   const exchangeRates = useSelector(state => state.currency.exchangeRates);
   const subTotal = totalSellPrice + totalSellGstPrice;
@@ -111,15 +111,12 @@ const Cart = () => {
   }
 
   // GST calculator
-  // let priceuv = 100;
-  // let gstuv = 18; //percent
-  // let quantityuv = 4;
+  let priceuv = 85.10;
+  let gstuv = 28; //percent
+  let quantityuv = 2;
 
-  // let totalPriceWithGST = [(priceuv * quantityuv) + ((gstuv * priceuv * quantityuv) / 100)];
-  // let totalGST = [totalPriceWithGST - (priceuv * quantityuv)];
-
-
-
+  let totalPriceWithGST = [(priceuv * quantityuv) + ((gstuv * priceuv * quantityuv) / 100)];
+  let totalGST = [totalPriceWithGST - (priceuv * quantityuv)];
 
 
 
@@ -129,8 +126,8 @@ const Cart = () => {
         <title>Cart</title>
       </Helmet>
       <div className="flex wh">
-        {/* <div className="heading2">here : {totalPriceWithGST}</div>
-        <div className="heading2">here gst only : {totalGST}</div> */}
+        {/* <div className="heading2">Total (AUD) : {totalPriceWithGST}</div>
+        <div className="heading2">Total GST (AUD) : {totalGST}</div> */}
         <div className="heading wh">My Cart ({totalItems})</div>
       </div>
       <div className="cart_cont">
@@ -155,9 +152,9 @@ const Cart = () => {
                       {truncateText(item.itemName, 50)}
                     </a>
                     <div className="flex" style={{ gap: '15px' }}>
-                      <span className='descrip2' style={{ textDecoration: 'line-through' }}>{currencySymbols[selectedCurrency]} {convertPrice(item.unitPrice, currency)} {selectedCurrency}</span>
+                      <span className='descrip2' style={{ textDecoration: 'line-through' }}>{currencySymbol} {item.unitPrice} {currency}</span>
                       <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{`${parseFloat(((item.unitPrice - item.sellPrice) / item.unitPrice) * 100).toFixed(2)}% OFF`}</span>
-                      <span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbols[selectedCurrency]} {convertPrice(item.sellPrice, currency)} {selectedCurrency}</span>
+                      <span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbol} {item.sellPrice} {currency}</span>
                     </div>
                     <div className="moq-gst">
                       <div className="descrip">Min Order Quantity: {item.minOrderQuant}</div>
@@ -168,7 +165,8 @@ const Cart = () => {
                   <div className="cartPrice">
                     <div className="totalPrice">
                       <div className="heading2">Total :</div>
-                      <div className='heading2'> {currencySymbols[selectedCurrency]} {convertPrice(item.totalAmount, currency)} {selectedCurrency}</div>
+                      <div className="heading2"><span>{currencySymbol} {item.totalAmount} {currency}</span></div>
+                      {/* <div className='heading2'> {currencySymbols[selectedCurrency]} {convertPrice(item.totalAmount, currency)} {selectedCurrency}</div> */}
                     </div>
                     <div className="plus-minus webdiv">
                       <div><RemoveCircleOutlineIcon onClick={(e) => decrementValue(e, item.productId, item.minOrderQuant)} /></div>
@@ -188,15 +186,18 @@ const Cart = () => {
             <div className="heading3">Cart Summary</div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Total Price</span></div>
-              <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</span></div>
+              <div className="heading2"><span>{currencySymbol} {totalSellPrice} {currency}</span></div>
+              {/* <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</span></div> */}
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Total Tax</span></div>
-              <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalSellGstPrice, currency)} {selectedCurrency}</span></div>
+              <div className="heading2"><span>{currencySymbol} {totalSellGstPrice} {currency}</span></div>
+              {/* <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalSellGstPrice, currency)} {selectedCurrency}</span></div> */}
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Subtotal</span></div>
-              <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(subTotal, currency)} {selectedCurrency}</span></div>
+              <div className="heading2"><span>{currencySymbol} {subTotal} {currency}</span></div>
+              {/* <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(subTotal, currency)} {selectedCurrency}</span></div> */}
             </div>
             <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
               <button className='btn addtocart flex' onClick={checkout}><ShoppingCartCheckoutIcon style={{ width: '15px' }} /><div className="heading2">Checkout</div></button>

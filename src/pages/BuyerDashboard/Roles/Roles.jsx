@@ -4,14 +4,13 @@ import Wrong from '../../../assets/wrong.png'
 import './Roles.css';
 import { Helmet } from 'react-helmet-async';
 
-
 const Roles = () => {
     return (
         <Fragment>
             <Helmet>
                 <title>Rules And Permissions</title>
             </Helmet>
-            <div className='mt'>
+            <div className='responsive'>
                 <div className='userDashboard'>
                     <h1 className='user-titles pay-title rules-left'>Rules and Permissions</h1>
                     <p className='paragraph-5'>Use roles to set custom permissions for each person that has access to your business account. You decide who is permitted to do what. Roles are not permanent and can be changed by any Admin account.</p>
