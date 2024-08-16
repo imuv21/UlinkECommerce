@@ -111,13 +111,13 @@ const Cart = () => {
   }
 
   // GST calculator
-  let priceuv = 85.10;
-  let gstuv = 28; //percent
-  let quantityuv = 2;
+  // let priceuv = 78.58;
+  // let gstuv = 28; //percent
+  // let quantityuv = 2;
 
-  let totalPriceWithGST = [(priceuv * quantityuv) + ((gstuv * priceuv * quantityuv) / 100)];
-  let totalGST = [totalPriceWithGST - (priceuv * quantityuv)];
-
+  // let totalPriceWithGST = [(priceuv * quantityuv) + ((gstuv * priceuv * quantityuv) / 100)];
+  // let totalGST = [totalPriceWithGST - (priceuv * quantityuv)];
+  // let totalPrice = totalPriceWithGST - totalGST;
 
 
   return (
@@ -127,11 +127,11 @@ const Cart = () => {
       </Helmet>
       <div className="flex wh">
         {/* <div className="heading2">Total (AUD) : {totalPriceWithGST}</div>
-        <div className="heading2">Total GST (AUD) : {totalGST}</div> */}
+        <div className="heading2">Total GST (AUD) : {totalGST}</div>
+        <div className="heading2">Total Price with gst (AUD) : {totalPrice}</div> */}
         <div className="heading wh">My Cart ({totalItems})</div>
       </div>
       <div className="cart_cont">
-
         <div className="cartcol_one" tabIndex={0} ref={scrollRef}>
           {cartItems.length === 0 ? (
             <p>Your cart is empty.</p>
@@ -204,7 +204,6 @@ const Cart = () => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   )

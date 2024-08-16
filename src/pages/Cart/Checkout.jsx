@@ -19,11 +19,12 @@ const RAZORPAY_API_KEY = import.meta.env.VITE_RAZORPAY_API_KEY;
 const Checkout = () => {
 
   const dispatch = useDispatch();
-  const { totalSellPrice, totalSellGstPrice, currency } = useSelector((state) => state.cart);
+  const { totalSellPrice, totalSellGstPrice, currency, currencySymbol } = useSelector((state) => state.cart);
   const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
   const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
   const exchangeRates = useSelector(state => state.currency.exchangeRates);
+  const subTotal = totalSellPrice + totalSellGstPrice;
 
   useEffect(() => {
     dispatch(fetchExchangeRates());
@@ -147,8 +148,6 @@ const Checkout = () => {
     dispatch(setSelectedPaymentMethod({ type: 'upi', data: selectedUpiData || {} }));
   };
 
-
-  const totalOrder = totalSellPrice + totalSellGstPrice;
   const scrollRef = useRef(null);
   useEffect(() => {
     if (scrollRef.current) {
@@ -172,11 +171,11 @@ const Checkout = () => {
       if (isNaN(Number(addressId))) {
         throw new Error("Invalid address ID format. It should be a numeric value.");
       }
-      if (!selectedCurrency) {
+      if (!currency) {
         throw new Error("Currency is undefined");
       }
 
-      const response = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(selectedCurrency)}&address=${encodeURIComponent(addressId)}&gateway=RAZORPAY`, {}, {
+      const response = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(currency)}&address=${encodeURIComponent(addressId)}&gateway=RAZORPAY`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -251,11 +250,11 @@ const Checkout = () => {
       if (isNaN(Number(addressId))) {
         throw new Error("Invalid address ID format. It should be a numeric value.");
       }
-      if (!selectedCurrency) {
+      if (!currency) {
         throw new Error("Currency is undefined");
       }
 
-      const responsePaypal = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(selectedCurrency)}&address=${encodeURIComponent(addressId)}&gateway=PAYPAL`, {}, {
+      const responsePaypal = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(currency)}&address=${encodeURIComponent(addressId)}&gateway=PAYPAL`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -279,8 +278,8 @@ const Checkout = () => {
   };
 
   const handlePaymentClick = () => {
-    const PaymentAmount = convertPrice(totalOrder, currency);
-    const PaymentCurrency = selectedCurrency;
+    const PaymentAmount = subTotal;
+    const PaymentCurrency = currency;
 
     if (selectedPaymentOption === 'paypal') {
       paypalHandler(PaymentAmount, PaymentCurrency);
@@ -319,7 +318,11 @@ const Checkout = () => {
       <div className="flex wh">
         <div className="heading wh">Checkout</div>
       </div>
+
+
+
       <div className="cart_cont wh">
+
         <div className="cartcol_one" tabIndex={0} ref={scrollRef}>
           <div className="webdiv checkout">
             <div className="heading wh">Your addresses</div>
@@ -506,8 +509,8 @@ const Checkout = () => {
               </div>
             </div>
           )}
-
         </div>
+
         <div className="cartcol_two">
           <div className="sel-box" style={{ gap: '10px' }}>
             <div className="flex wh bbottom" style={{ padding: '10px 0px' }}>
@@ -519,7 +522,7 @@ const Checkout = () => {
             <div className="flexcol wh" style={{ gap: '10px' }}>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading2">Total Price</div>
-                <div className="heading2">{currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</div>
+                <div className="heading2">{currencySymbol} {totalSellPrice} {currency}</div>
               </div>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading2">Shipping</div>
@@ -527,12 +530,12 @@ const Checkout = () => {
               </div>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading2">Total Tax</div>
-                <div className="heading2">{currencySymbols[selectedCurrency]} {convertPrice(totalSellGstPrice, currency)} {selectedCurrency}</div>
+                <div className="heading2">{currencySymbol} {totalSellGstPrice} {currency}</div>
               </div>
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Subtotal</span></div>
-              <div className="heading2"><span>{currencySymbols[selectedCurrency]} {convertPrice(totalOrder, currency)} {selectedCurrency}</span></div>
+              <div className="heading2"><span>{currencySymbol} {subTotal} {currency}</span></div>
             </div>
 
             <div className={`flexcol wh topbottom`} style={{ gap: '10px' }}>
@@ -540,6 +543,7 @@ const Checkout = () => {
             </div>
           </div>
         </div>
+
       </div>
     </div>
   )
