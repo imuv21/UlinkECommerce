@@ -156,10 +156,7 @@ const Checkout = () => {
   }, []);
 
 
-  // payment methods 
-  // const amount = Number(price).toFixed(2);
-  // console.log(amount, currency);
-  // const response = await axios.post('https://api.ulinkit.com/api/payment/test/get-transaction', { amount: amount, currency: currency });
+  //razorpay
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('razorpay');
 
   const razorpayHandler = async () => {
@@ -185,8 +182,8 @@ const Checkout = () => {
 
       const options = {
         key: RAZORPAY_API_KEY,
-        amount: order.amount,
-        currency: order.currency,
+        // amount: order.amount,
+        // currency: order.currency,
         name: `${user.firstname} ${user.lastname}`,
         description: "Test Transaction",
         image: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
@@ -215,11 +212,14 @@ const Checkout = () => {
   const handleRazorpayCallback = async (response) => {
     console.log(response);
     try {
-      await axios.post('https://api.ulinkit.com/api/payment/test/callback', {
+      await axios.post('https://api.ulinkit.com/api/payment/callback', {
         paymentId: response.razorpay_payment_id,
         orderId: response.razorpay_order_id,
-        signature: response.razorpay_signature,
-        gateway: 'RAZORPAY'
+        signature: response.razorpay_signature
+      }, {
+        params: {
+          gateway: 'RAZORPAY' 
+        }
       });
       setPaymentStatus('success');
     } catch (error) {
@@ -318,7 +318,6 @@ const Checkout = () => {
       <div className="flex wh">
         <div className="heading wh">Checkout</div>
       </div>
-
 
 
       <div className="cart_cont wh">
