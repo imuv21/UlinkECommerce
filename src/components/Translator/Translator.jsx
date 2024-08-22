@@ -8,6 +8,35 @@ import defaulImg from '../../assets/default.jpg';
 
 const Translator = () => {
 
+    const formattedDateAndTime = (dateAndTimeString) => {
+        const dateObject = new Date(dateAndTimeString);
+
+        const timeString = dateObject.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            hour12: true
+        });
+
+        const dateString = dateObject.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        });
+
+        return `${timeString} -- ${dateString}`;
+    }
+
+  
+
+
+
+
+
+
+
+
+
     const dispatch = useDispatch();
     const orders = useSelector(selectOrders);
     const loading = useSelector(selectOrdersLoading);
@@ -52,7 +81,7 @@ const Translator = () => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-    
+
 
 
     return (
@@ -73,7 +102,7 @@ const Translator = () => {
                             </div>
                             <div className='heading2'>Total Price : {order.currencySymbol} {order.totalPrice} {order.currency} </div>
                             <div className='heading2'>Status : {order.status}</div>
-                            <div className="heading2">Date : {order.orderDate || 'N/A'}</div>
+                            <div className="heading2">Time & Date : {formattedDateAndTime(order.orderDate) || 'N/A'}</div>
                             <div className="heading2">Products : {order.orderItems.length}</div>
                             <div className="orderProducts">
                                 {order.orderItems.map((product) => (
