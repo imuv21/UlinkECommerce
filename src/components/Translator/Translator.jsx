@@ -102,7 +102,7 @@ const Translator = () => {
                             <div className="heading2">Time & Date : {formattedDateAndTime(order.orderDate) || 'N/A'}</div>
                             <div className='heading2'>Status : {order.status}</div>
                             
-                            {/* <div className="heading2">Products : {order.orderItems.length}</div>
+                            <div className="heading2">Products : {order.orderItems.length}</div>
                             <div className="orderProducts">
                                 {order.orderItems.map((product) => (
                                     <div className="product" key={product.productId}>
@@ -114,7 +114,7 @@ const Translator = () => {
                                         </div>
                                     </div>
                                 ))}
-                            </div> */}
+                            </div>
                         </div>
                     ))
                 ) : (
