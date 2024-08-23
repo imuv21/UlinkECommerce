@@ -22,6 +22,7 @@ import uploadBuyerDocSlice from './uploadBuyerDocSlice';
 import paymentMethodsReducer from './paymentMethods';
 import selectedPaymentMethodReducer from './selectedPaymentMethod';
 import ordersSlice from './ordersSlice';
+import invoiceSlice from './invoiceSlice';
 
 
 
@@ -47,7 +48,8 @@ const rootReducer = combineReducers({
   uploadBuyerDoc: uploadBuyerDocSlice,
   paymentMethods: paymentMethodsReducer,
   selectedPaymentMethod: selectedPaymentMethodReducer,
-  orders: ordersSlice
+  orders: ordersSlice,
+  invoices: invoiceSlice,
 });
 
 export default rootReducer;

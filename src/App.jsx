@@ -19,12 +19,13 @@ const Roles = lazy(() => import('./pages/BuyerDashboard/Roles/Roles'));
 const CreateRfq = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/CreateRfq'));
 const ReviewConfirm = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/ReviewConfirm/ReviewConfirm'));
 const RfqDetail = lazy(() => import('./pages/BuyerDashboard/Rfq/CreateRfq/RfqDetail/RfqDetail'));
-const OrderPage = lazy(() => import('./pages/BuyerDashboard/OrderPage/OrderPage'));
+const OrderDetails = lazy(() => import('./pages/Cart/OrderDetails'));
 const ViewDetail = lazy(() => import('./pages/BuyerDashboard/OrderPage/ViewDetail/ViewDetail'));
 const CompanyProfile = lazy(() => import('./pages/BuyerDashboard/CompanyProfile/CompanyProfile'));
 const PaymentSuccess = lazy(() => import('./pages/Payment/PaymentSuccess'));
 const PaymentFailed = lazy(() => import('./pages/Payment/PaymentFailed'));
 const Response = lazy(() => import('./pages/Payment/Response'));
+const OrderPage = lazy(() => import('./pages/BuyerDashboard/OrderPage/OrderPage'));
 
 //seller dashboard
 const SellerForm = lazy(() => import('./pages/SellerForm'));
@@ -188,7 +189,6 @@ function App() {
               <Route path='/createrfq' element={<CreateRfq />} />
               <Route path='/review-confirm' element={<ReviewConfirm />} />
               <Route path='/rfq-detail' element={<RfqDetail />} />
-              <Route path='/order-page' element={<OrderPage />} />
               <Route path='/view-detail' element={<ViewDetail />} />
               <Route path='/cart' element={<Cart />} />
               <Route path='/checkout' element={<Checkout />} />
@@ -197,6 +197,8 @@ function App() {
               <Route path='/payment-failed' element={<PaymentFailed />} />
               <Route path='/payment-response' element={<Response />} />
               <Route path='/orders' element={<Translator />} />
+              <Route path='/order-details/:orderId' element={<OrderDetails />} />
+              <Route path='/order-page' element={<OrderPage />} />
             </Route>
 
           </Routes>

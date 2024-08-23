@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { fetchOrders, selectOrders, selectOrdersLoading, selectOrdersError, cancelOrder, selectCancelError, selectCancelSuccess } from '../../Redux/ordersSlice';
-import './Translator.css';
-import defaulImg from '../../assets/default.jpg';
 
 
 const Translator = () => {
@@ -27,17 +26,8 @@ const Translator = () => {
         return `${timeString} -- ${dateString}`;
     }
 
-  
-
-
-
-
-
-
-
-
-
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const orders = useSelector(selectOrders);
     const loading = useSelector(selectOrdersLoading);
     const error = useSelector(selectOrdersError);
@@ -79,6 +69,10 @@ const Translator = () => {
         }
     };
 
+    const orderDetail = (orderId) => {
+        navigate(`/order-details/${orderId}`);
+    }
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
@@ -96,14 +90,19 @@ const Translator = () => {
                         <div className={`order ${order.status === 'PLACED' ? 'order-placed' : 'order-cancelled'}`} key={order.orderId}>
                             <div className="orderBtn">
                                 <div className='heading2'>Order ID : {order.orderId}</div>
-                                <button className="remove flex" disabled={isCanceling && cancelingOrderId === order.orderId || order.status === 'CANCELLED'} onClick={() => handleCancelOrder(order.orderId)}>
-                                    {isCanceling && cancelingOrderId === order.orderId ? "Cancelling..." : order.status === "CANCELLED" ? "Cancelled" : "Cancel"}
-                                </button>
+
+                                <div className="orderBtnCont">
+                                    <button className="remove flex" disabled={isCanceling && cancelingOrderId === order.orderId || order.status === 'CANCELLED'} onClick={() => handleCancelOrder(order.orderId)}>
+                                        {isCanceling && cancelingOrderId === order.orderId ? "Cancelling..." : order.status === "CANCELLED" ? "Cancelled" : "Cancel"}
+                                    </button>
+                                    <button className='btn box flex' onClick={() => orderDetail(order.orderId)}>View</button>
+                                </div>
                             </div>
-                            <div className='heading2'>Total Price : {order.currencySymbol} {order.totalPrice} {order.currency} </div>
-                            <div className='heading2'>Status : {order.status}</div>
+                            <div className='heading2'>Total Price : {order.currencySymbol} {Number(order.totalPrice).toFixed(2)} {order.currency} </div>
                             <div className="heading2">Time & Date : {formattedDateAndTime(order.orderDate) || 'N/A'}</div>
-                            <div className="heading2">Products : {order.orderItems.length}</div>
+                            <div className='heading2'>Status : {order.status}</div>
+                            
+                            {/* <div className="heading2">Products : {order.orderItems.length}</div>
                             <div className="orderProducts">
                                 {order.orderItems.map((product) => (
                                     <div className="product" key={product.productId}>
@@ -115,11 +114,11 @@ const Translator = () => {
                                         </div>
                                     </div>
                                 ))}
-                            </div>
+                            </div> */}
                         </div>
                     ))
                 ) : (
-                    <p>No orders found</p>
+                    <div className='heading2'>No orders found</div>
                 )}
             </div>
         </div>
