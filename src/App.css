@@ -4103,6 +4103,21 @@ button:focus {
   border: var(--border);
   border-radius: var(--br2);
 }
+.orderDetail2{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.orderDetail2 img{
+  object-fit: contain;
+  width: 100px;
+  height: auto;
+}
 
 .orderDetailSub {
   width: 100%;
@@ -4120,9 +4135,21 @@ button:focus {
   align-items: start;
   justify-content: center;
   padding: 10px;
-  gap: 8px;
+  gap: 5px;
   border: var(--border);
   border-radius: var(--br2);
+}
+
+.dotLine{
+  height: 3px; 
+  background: repeating-linear-gradient(
+    to right,
+    black 0,
+    black 8px, /* Size of each dot */
+    transparent 8px, /* Space between dots */
+    transparent 12px
+  );
+  width: 100%; 
 }
 
 .order-placed {
