@@ -21,9 +21,12 @@ export const fetchInvoices = createAsyncThunk('invoices/fetchInvoices', async (o
 const invoiceSlice = createSlice({
     name: 'invoices',
     initialState: {
-        invoices: null,
         loading: false,
-        error: null
+        error: null,
+
+        buyer: null,
+        address: null,
+        orderDetails: null,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -35,6 +38,10 @@ const invoiceSlice = createSlice({
             .addCase(fetchInvoices.fulfilled, (state, action) => {
                 state.loading = false;
                 state.invoices = action.payload.data;
+
+                state.buyer = action.payload.data.buyer;
+                state.address = action.payload.data.address;
+                state.orderDetails = action.payload.data.orderDetails;
             })
             .addCase(fetchInvoices.rejected, (state, action) => {
                 state.loading = false;

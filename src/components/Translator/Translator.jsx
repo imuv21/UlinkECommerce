@@ -125,7 +125,7 @@ const Translator = () => {
                                     <button className="remove flex" disabled={isCanceling && cancelingOrderId === order.orderId || order.status === 'CANCELLED'} onClick={() => handleCancelOrder(order.orderId)}>
                                         {isCanceling && cancelingOrderId === order.orderId ? "Cancelling..." : order.status === "CANCELLED" ? "Cancelled" : "Cancel"}
                                     </button>
-                                    <button className='btn box flex' onClick={() => orderDetail(order.orderId)}>View</button>
+                                    <button className='btn box flex' onClick={() => orderDetail(order.orderId)} style={{ display: order.status === "CANCELLED" ? 'none' : 'flex'}}>View</button>
                                 </div>
                             </div>
                             <div className='heading2'>Total Price : {order.currencySymbol} {Number(order.totalPrice).toFixed(2)} {order.currency} </div>

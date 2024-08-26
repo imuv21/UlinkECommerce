@@ -5,14 +5,13 @@ import { fetchInvoices } from '../../Redux/invoiceSlice';
 import { useParams } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import defaulImg from '../../assets/default.jpg';
 import { urls } from '../../components/Schemas/images';
 
 const OrderDetails = () => {
 
     const dispatch = useDispatch();
     const { orderId } = useParams();
-    const { invoices, loading, error } = useSelector((state) => state.invoices);
+    const { buyer, address, orderDetails, loading, error } = useSelector((state) => state.invoices);
 
     useEffect(() => {
         if (orderId) {
@@ -91,15 +90,22 @@ const OrderDetails = () => {
 
     //images
     const logo = urls[0];
-    const { orderDetails, address, buyer } = invoices;
 
-    const TotlTax = orderDetails.orderItems.reduce((acc, item) => {
-        return acc + item.totalTax;
-    }, 0);
+    const calculateTotlTax = () => {
+        if (orderDetails && orderDetails.orderItems && orderDetails.orderItems.length > 0) {
+            const totalTax = orderDetails.orderItems.reduce((acc, item) => {
+                return acc + Number(item.totalTax);
+            }, 0);
+            return totalTax.toFixed(2);
+        }
+        return "0.00";
+    };
+
+
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-    if (!invoices) return <p>No data available</p>;
+    if (!buyer || !orderDetails || !address) return <p>No data available</p>;
 
 
     return (
@@ -137,11 +143,10 @@ const OrderDetails = () => {
                         <div className='heading2'>Post Code : {address.postCode || 'Null'}</div>
                     </div>
 
-                    <div className='heading3'>Order Items ({orderDetails.orderItems.length})</div>
+                    <div className='heading3'>Order Items ({(orderDetails && orderDetails.orderItems && orderDetails.orderItems.length) && orderDetails.orderItems.length})</div>
                     <div className="orderProducts">
-                        {orderDetails.orderItems && orderDetails.orderItems.length > 0 ? orderDetails.orderItems.map((item) => (
+                        {orderDetails && orderDetails.orderItems && orderDetails.orderItems.length > 0 ? orderDetails.orderItems.map((item) => (
                             <div className="product" key={item.itemId}>
-                                {/* <img className='imgProItem' src={item.imageUrl ? item.imageUrl : defaulImg} alt={item.itemName.length > 18 ? `${item.itemName.substring(0, 18)}...` : item.itemName} /> */}
                                 <div className="productDetail">
                                     <div className="descrip">{item.itemName.length > 18 ? `${item.itemName.substring(0, 18)}...` : item.itemName}</div>
                                     <div className="descrip">Quantity : {item.quantity}</div>
@@ -155,7 +160,7 @@ const OrderDetails = () => {
                     <div className="orderDetailSub">
                         <div className="heading2">Buyer Name : {buyer}</div>
                         <div className="heading2">Subtotal : {Number(orderDetails.totalSellPrice).toFixed(2)}</div>
-                        <div className="heading2">Total Tax : {Number(TotlTax).toFixed(2)}</div>
+                        <div className="heading2">Total Tax : {calculateTotlTax()}</div>
                         <div className='heading2'>Total Price : {orderDetails.currencySymbol} {Number(orderDetails.totalPrice).toFixed(2)} {orderDetails.currency}</div>
                         <div className='heading2'>Time & Date : {formattedDateAndTime(orderDetails.orderDate) || 'N/A'}</div>
                         <div className="descrip">Thank you for buying from Ulinkit.com</div>
@@ -169,9 +174,9 @@ const OrderDetails = () => {
 
                     <div className="heading2">I, {buyer}, have placed the order for</div>
 
-                    <div className='heading3'>Order Items ({orderDetails.orderItems.length})</div>
+                    <div className='heading3'>Order Items ({(orderDetails && orderDetails.orderItems && orderDetails.orderItems.length) && orderDetails.orderItems.length})</div>
                     <div className="orderProducts">
-                        {orderDetails.orderItems && orderDetails.orderItems.length > 0 ? orderDetails.orderItems.map((item) => (
+                        {orderDetails && orderDetails.orderItems && orderDetails.orderItems.length > 0 ? orderDetails.orderItems.map((item) => (
                             <div className="product" key={item.itemId}>
                                 <div className="productDetail">
                                     <div className="descrip">{item.itemName.length > 18 ? `${item.itemName.substring(0, 18)}...` : item.itemName}</div>
