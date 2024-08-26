@@ -176,7 +176,7 @@ const OrderDetails = () => {
                                 <div className="productDetail">
                                     <div className="descrip">{item.itemName.length > 18 ? `${item.itemName.substring(0, 18)}...` : item.itemName}</div>
                                     <div className="descrip">Quantity : {item.quantity}</div>
-                                    <div className="descrip">Price : {item.currencySymbol} {Number(item.itemPrice).toFixed(2)}  {item.currency}</div>
+                                    <div className="descrip">Price : {item.currencySymbol} {Number(item.itemPrice).toFixed(2)} {item.currency}</div>
                                     <div className="descrip">GST : {item.gst}</div>
                                 </div>
                             </div>

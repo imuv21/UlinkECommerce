@@ -152,28 +152,28 @@ const AllSellerProducts = () => {
                             <div className="popbox">
                                 <div className="heading wh">Revenue Calculator</div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Unit Price</div><div className='bbox'>{selectedItem.unitPrice}{user.currencySymbol}</div>
+                                    <div className="heading2">Unit Price</div><div className='bbox'>{Number(selectedItem.unitPrice).toFixed(2)} {user.currencySymbol}</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Shipping Charges</div><div className='bbox'>0{user.currencySymbol}</div>
+                                    <div className="heading2">Shipping Charges</div><div className='bbox'>0 {user.currencySymbol}</div>
                                 </div>
                                 <div className="popboxdivs">
                                     <div className="heading2">Discount</div><div className='bbox'>{calculateDiscountPercentage()}</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Sale Price</div><div className='bbox'>{selectedItem.sellPrice}{user.currencySymbol}</div>
+                                    <div className="heading2">Sale Price</div><div className='bbox'>{Number(selectedItem.sellPrice).toFixed(2)} {user.currencySymbol}</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Ulinkit Fee</div><div className='bbox'>{calculateUlinkFee()}{user.currencySymbol}</div>
+                                    <div className="heading2">Ulinkit Fee</div><div className='bbox'>{calculateUlinkFee()} {user.currencySymbol}</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Taxes on Fee</div><div className='bbox'>{selectedItem.gst}{user.currencySymbol}</div>
+                                    <div className="heading2">Taxes on Fee</div><div className='bbox'>{selectedItem.gst} {user.currencySymbol}</div>
                                 </div>
                                 <div className="popboxdivs">
                                     <div className="heading2">Marketing Fee</div><div className='bbox'>{selectedItem.commision}%</div>
                                 </div>
                                 <div className="popboxdivs">
-                                    <div className="heading2">Cost Per Unit</div><div className='bbox'>{calculateCostPerUnit(selectedItem)}{user.currencySymbol}</div>
+                                    <div className="heading2">Cost Per Unit</div><div className='bbox'>{calculateCostPerUnit(selectedItem)} {user.currencySymbol}</div>
                                 </div>
 
                                 <div className="flex" style={{ gap: '20px' }}>
@@ -239,15 +239,15 @@ const AllSellerProducts = () => {
                                 </div>
                                 <div className="heading2">
                                     <div className="flex" style={{ gap: '5px' }}>
-                                        <span style={{ textDecoration: 'line-through', color: 'gray' }}>{user.currencySymbol}{item.unitPrice}</span>-<span style={{ fontWeight: 'bold' }}>{user.currencySymbol}{item.sellPrice}</span>
+                                        <span style={{ textDecoration: 'line-through', color: 'gray' }}>{user.currencySymbol} {item.unitPrice}</span>-<span style={{ fontWeight: 'bold' }}>{user.currencySymbol} {item.sellPrice}</span>
                                     </div>
                                 </div>
-                                <div className="heading2"><span className='download-btn' onClick={() => handleAddAddress(index)}> {calculateCostPerUnit(item)}{user.currencySymbol} </span></div>
+                                <div className="heading2"><span className='download-btn' onClick={() => handleAddAddress(index)}> {calculateCostPerUnit(item)} {user.currencySymbol} </span></div>
                                 <div className="heading2" style={{ whiteSpace: 'nowrap' }}>
                                     <div className="flexcol" style={{ gap: '2px' }}>
                                         {/* <span style={{ fontWeight: 'bold' }}>{item.availableQuantity}</span> */}
                                         <span style={{ fontWeight: 'bold' }}>3</span>
-                                        <span style={{ fontSize: '12px' }}>MOQ is {item.minOrderQuant}</span>
+                                        <span style={{ fontSize: '12px', display: 'none' }}>MOQ is {item.minOrderQuant}</span>
                                     </div>
                                 </div>
                                 <div className="heading2">{item.status}</div>

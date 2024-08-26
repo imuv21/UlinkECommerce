@@ -110,7 +110,7 @@ const Translator = () => {
                                         <div className="productDetail">
                                             <div className="descrip">{product.itemName.length > 18 ? `${product.itemName.substring(0, 18)}...` : product.itemName}</div>
                                             <div className="descrip">Quantity : {product.quantity}</div>
-                                            <div className="descrip">Price : {product.currencySymbol} {(product.itemPrice).toFixed(2)} {product.currency}</div>
+                                            <div className="descrip">Price : {product.currencySymbol} {Number(product.itemPrice).toFixed(2)} {product.currency}</div>
                                         </div>
                                     </div>
                                 ))}

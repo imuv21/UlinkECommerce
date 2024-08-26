@@ -100,8 +100,7 @@ const CarouselTwo = () => {
 
     useEffect(() => {
         if (product && product.minOrderQuant) {
-            setMoq(product.minOrderQuant);
-            setValue(product.minOrderQuant.toString());
+            setValue(moq.toString());
         }
         if (product && product.sellPrice && product.unitPrice) {
             setSalep(product.sellPrice);
@@ -242,7 +241,7 @@ const CarouselTwo = () => {
                             <span className='descrip2'>{currencySymbols[selectedCurrency]} {convertPrice(product.sellPrice, product.currencyname)} {selectedCurrency}</span> <span className='descrip'>per piece</span>
                         </div>
                         <div className="line-out"></div>
-                        <div className="descrip2">Minimum Order Quantity: {product.minOrderQuant}</div>
+                        <div className="descrip2" style={{display : 'none'}}>Minimum Order Quantity: {product.minOrderQuant}</div>
                         <div className="heading2">Total Price: {currencySymbols[selectedCurrency]} {convertPrice(totalPrice, product.currencyname)} {selectedCurrency}</div>
                         <div className="plus-minus">
                             <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={decrementValue}  /></div>

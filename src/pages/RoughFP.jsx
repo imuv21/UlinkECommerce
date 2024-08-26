@@ -291,7 +291,7 @@ const RoughFP = () => {
                                             <p className='product-discount'> {currencySymbols[selectedCurrency]} {convertPrice(product.unitPrice, product.currencyname)} {selectedCurrency} </p>
                                             <span className='discount-percentage'>{(((product.unitPrice - product.sellPrice) / product.unitPrice) * 100).toFixed(2)}% OFF</span>
                                         </div>
-                                        <p className='product-quantity'>Min Order: {product.minOrderQuant} peace</p>
+                                        <p className='product-quantity' style={{display : 'none'}}>Min Order: {product.minOrderQuant} peace</p>
                                     </div>
                                 </a>
                             ))

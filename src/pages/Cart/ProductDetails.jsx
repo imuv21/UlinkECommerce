@@ -75,8 +75,7 @@ const ProductDetails = () => {
             setSelectedImage(product.image[0].imageUrl);
         }
         if (product && product.minOrderQuant) {
-            setMoq(product.minOrderQuant);
-            setValue(product.minOrderQuant.toString());
+            setValue(moq.toString());
         }
         if (product && product.sellPrice && product.unitPrice) {
             setSalep(product.sellPrice);
@@ -105,11 +104,6 @@ const ProductDetails = () => {
             }
         }
     }, [product, rates, toCurrency]);
-
-
-
-
-
 
 
 
@@ -175,22 +169,7 @@ const ProductDetails = () => {
         return text.replace(/([A-Z])/g, ' $1').trim();
     };
 
-
-    //currency change
-    // if (product && product.sellPrice && product.currencyname) {
-    //     const fixedAmount = product.sellPrice;
-    //     const fromCurrency = product.currencyname;
-
-    //     useEffect(() => {
-    //         if (rates[fromCurrency] && rates[toCurrency]) {
-    //             setConvertedAmount((fixedAmount * rates[toCurrency]) / rates[fromCurrency]);
-    //         }
-    //     }, [fixedAmount, fromCurrency, toCurrency, rates]);
-    // }
-
-
     const handleToCurrencyChange = e => setToCurrency(e.target.value);
-
 
     const pageLink = `https://www.ulinkit.com/product-details/${id}`;
     const handleShare = (platform) => {
@@ -301,7 +280,6 @@ const ProductDetails = () => {
                                     <span style={{ fontWeight: 'bold', fontSize: '22px' }}>{currencySymbols[selectedCurrency]} {convertPrice(product.sellPrice, product.currencyname)} {selectedCurrency}</span>
 
                                     <span style={{ fontWeight: 'normal', fontSize: '14px', fontWeight: 600 }}>
-                                        {/* {fixedAmount} {fromCurrency}  */}
                                         Converted to {convertedAmount.toFixed(2)}
                                         <select style={{ padding: '0px' }} value={toCurrency} onChange={handleToCurrencyChange}>
                                             {Object.keys(rates).map(currency => (
@@ -372,7 +350,7 @@ const ProductDetails = () => {
                                     <input className='pminput' type="number" value={value} onChange={handleInputChange} />
                                     <div style={{ cursor: 'pointer' }}><AddCircleOutlineIcon onClick={incrementValue} /></div>
                                 </div>
-                                <div className="descrip2">Minimum order quantity : {product.minOrderQuant}</div>
+                                <div className="descrip2" style={{ display : 'none'}}>Minimum order quantity : {product.minOrderQuant}</div>
                             </div>
 
                             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>

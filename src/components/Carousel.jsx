@@ -55,8 +55,6 @@ const Carousel = () => {
         const newValue = parseInt(e.target.value);
         setValue(newValue >= moq ? newValue.toString() : moq.toString());
     };
-
-
     const cartHandler = (id) => {
         if (!product) return;
         dispatch(addToCart({ productId: id, quantity: value }));
@@ -64,7 +62,6 @@ const Carousel = () => {
             { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         setIsClickedCart(false);
     };
-
 
 
     //fetch products
@@ -101,8 +98,7 @@ const Carousel = () => {
 
     useEffect(() => {
         if (product && product.minOrderQuant) {
-            setMoq(product.minOrderQuant);
-            setValue(product.minOrderQuant.toString());
+            setValue(moq.toString());
         }
         if (product && product.sellPrice && product.unitPrice) {
             setSalep(product.sellPrice);
@@ -243,7 +239,7 @@ const Carousel = () => {
                             <span className='descrip2'>{currencySymbols[selectedCurrency]} {convertPrice(product.sellPrice, product.currencyname)} {selectedCurrency}</span> <span className='descrip'>per piece</span>
                         </div>
                         <div className="line-out"></div>
-                        <div className="descrip2">Minimum Order Quantity: {product.minOrderQuant}</div>
+                        <div className="descrip2" style={{display : 'none'}}>Minimum Order Quantity: {product.minOrderQuant}</div>
                         <div className="heading2">Total Price: {currencySymbols[selectedCurrency]} {convertPrice(totalPrice, product.currencyname)} {selectedCurrency}</div>
                         <div className="plus-minus">
                             <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={decrementValue}  /></div>

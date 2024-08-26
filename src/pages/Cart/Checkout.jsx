@@ -5,15 +5,19 @@ import { fetchPaymentDetails } from '../../Redux/paymentMethods';
 import { fetchAddresses } from '../../Redux/addressSlice';
 import { setSelectedAddress } from '../../Redux/selectedAddress';
 import { setSelectedPaymentMethod } from '../../Redux/selectedPaymentMethod';
+import { Helmet } from 'react-helmet-async';
+import { toast } from 'react-hot-toast';
+import axios from 'axios';
 import currencySymbols from '../../components/Schemas/currencySymbols';
+
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocalAirportIcon from '@mui/icons-material/LocalAirport';
 import SailingIcon from '@mui/icons-material/Sailing';
 import PaymentIcon from '@mui/icons-material/Payment';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import { Helmet } from 'react-helmet-async';
-import axios from 'axios';
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
+
 const RAZORPAY_API_KEY = import.meta.env.VITE_RAZORPAY_API_KEY;
 
 const Checkout = () => {
@@ -157,7 +161,7 @@ const Checkout = () => {
 
 
   //razorpay
-  const [selectedPaymentOption, setSelectedPaymentOption] = useState('razorpay');
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState('card');
 
   const razorpayHandler = async () => {
     try {
@@ -200,6 +204,12 @@ const Checkout = () => {
         },
         theme: {
           color: "#00aaff"
+        },
+        modal: {
+          escape: false,
+          ondismiss: () => {
+            toast(<div className='toaster'> < NewReleasesIcon /> Payment failed</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+          }
         }
       };
 
@@ -218,7 +228,7 @@ const Checkout = () => {
         signature: response.razorpay_signature
       }, {
         params: {
-          gateway: 'RAZORPAY' 
+          gateway: 'RAZORPAY'
         }
       });
       setPaymentStatus('success');
@@ -227,18 +237,6 @@ const Checkout = () => {
       setPaymentStatus('error');
     }
   };
-
-  // const fPrice = Number(amount).toFixed(2);
-  // const successUrl = "https://www.ulinkit.com/payment-success";
-  // const cancelUrl = "https://www.ulinkit.com/payment-failed";
-
-  // const responsePaypal = await axios.post('https://api.ulinkit.com/api/paypal/payment/create', {
-  //   amount: fPrice,
-  //   description: "Test Transaction",
-  //   currency: currency,
-  //   successUrl: successUrl,
-  //   cancelUrl: cancelUrl
-  // });
 
   const paypalHandler = async () => {
     try {
@@ -521,7 +519,7 @@ const Checkout = () => {
             <div className="flexcol wh" style={{ gap: '10px' }}>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading2">Total Price</div>
-                <div className="heading2">{currencySymbol} {totalSellPrice} {currency}</div>
+                <div className="heading2">{currencySymbol} {Number(totalSellPrice).toFixed(2)} {currency}</div>
               </div>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading2">Shipping</div>
@@ -529,12 +527,12 @@ const Checkout = () => {
               </div>
               <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading2">Total Tax</div>
-                <div className="heading2">{currencySymbol} {totalSellGstPrice} {currency}</div>
+                <div className="heading2">{currencySymbol} {Number(totalSellGstPrice).toFixed(2)} {currency}</div>
               </div>
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Subtotal</span></div>
-              <div className="heading2"><span>{currencySymbol} {subTotal} {currency}</span></div>
+              <div className="heading2"><span>{currencySymbol} {Number(subTotal).toFixed(2)} {currency}</span></div>
             </div>
 
             <div className={`flexcol wh topbottom`} style={{ gap: '10px' }}>

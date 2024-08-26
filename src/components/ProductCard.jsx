@@ -41,7 +41,7 @@ const ProductCard = ({ name, id, img, unitPrice, salePrice, moq, currencyName, h
           <p className='product-discount'> {currencySymbols[selectedCurrency]} {convertPrice(unitPriceNum, currencyName)} {selectedCurrency} </p>
           <span className='discount-percentage'>{discountPercentage.toFixed(2)}% OFF</span>
         </div>
-        <p className='product-quantity'>Min Order: {moq} peace</p>
+        <p className='product-quantity' style={{display : 'none'}}>Min Order: {moq} peace</p>
       </div>
     </a>
   )

@@ -32,7 +32,8 @@ const Cart = () => {
     const priceInUSD = price / exchangeRates[fromCurrency];
     return (priceInUSD * rate).toFixed(2);
   };
-
+  
+  const [moq, setMoq] = useState(1);
   const [quantities, setQuantities] = useState({});
 
   useEffect(() => {
@@ -58,23 +59,23 @@ const Cart = () => {
     dispatch(updateCartItem({ productId, quantity: newQuantities[productId] }));
   };
 
-  const decrementValue = (e, productId, minOrderQuant) => {
+  const decrementValue = (e, productId, moq) => {
     e.stopPropagation();
     const newQuantities = {
       ...quantities,
-      [productId]: Math.max((quantities[productId] || 0) - 1, minOrderQuant),
+      [productId]: Math.max((quantities[productId] || 0) - 1, moq),
     };
     console.log('Decrementing quantity:', newQuantities[productId]);
     setQuantities(newQuantities);
     dispatch(updateCartItem({ productId, quantity: newQuantities[productId] }));
   };
 
-  const handleInputChange = (e, productId, minOrderQuant) => {
+  const handleInputChange = (e, productId, moq) => {
     e.stopPropagation();
     const newValue = parseInt(e.target.value, 10);
     const newQuantities = {
       ...quantities,
-      [productId]: newValue >= minOrderQuant ? newValue : minOrderQuant,
+      [productId]: newValue >= moq ? newValue : moq,
     };
     console.log('Changing quantity via input:', newQuantities[productId]);
     setQuantities(newQuantities);
@@ -152,12 +153,12 @@ const Cart = () => {
                       {truncateText(item.itemName, 50)}
                     </a>
                     <div className="flex" style={{ gap: '15px' }}>
-                      <span className='descrip2' style={{ textDecoration: 'line-through' }}>{currencySymbol} {item.unitPrice} {currency}</span>
+                      <span className='descrip2' style={{ textDecoration: 'line-through' }}>{currencySymbol} {Number(item.unitPrice).toFixed(2)} {currency}</span>
                       <span style={{ fontWeight: 'bold', fontSize: '14px', color: 'limegreen' }}>{`${parseFloat(((item.unitPrice - item.sellPrice) / item.unitPrice) * 100).toFixed(2)}% OFF`}</span>
-                      <span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbol} {item.sellPrice} {currency}</span>
+                      <span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbol} {Number(item.sellPrice).toFixed(2)} {currency}</span>
                     </div>
                     <div className="moq-gst">
-                      <div className="descrip">Min Order Quantity: {item.minOrderQuant}</div>
+                      <div className="descrip" style={{display : 'none'}}>Min Order Quantity: {item.minOrderQuant}</div>
                       <div className="descrip">GST: {item.gst}</div>
                     </div>
                   </div>
@@ -165,12 +166,12 @@ const Cart = () => {
                   <div className="cartPrice">
                     <div className="totalPrice">
                       <div className="heading2">Total :</div>
-                      <div className="heading2"><span>{currencySymbol} {item.totalAmount} {currency}</span></div>
+                      <div className="heading2"><span>{currencySymbol} {Number(item.totalAmount).toFixed(2)} {currency}</span></div>
                       {/* <div className='heading2'> {currencySymbols[selectedCurrency]} {convertPrice(item.totalAmount, currency)} {selectedCurrency}</div> */}
                     </div>
                     <div className="plus-minus webdiv">
-                      <div><RemoveCircleOutlineIcon onClick={(e) => decrementValue(e, item.productId, item.minOrderQuant)} /></div>
-                      <input className='pminput' type="number" value={quantities[item.productId]} onChange={(e) => handleInputChange(e, item.productId, item.minOrderQuant)} />
+                      <div><RemoveCircleOutlineIcon onClick={(e) => decrementValue(e, item.productId, moq)} /></div>
+                      <input className='pminput' type="number" value={quantities[item.productId]} onChange={(e) => handleInputChange(e, item.productId, moq)} />
                       <div><AddCircleOutlineIcon onClick={(e) => incrementValue(e, item.productId)} /></div>
                     </div>
                     <button className='remove flex' onClick={(e) => remove(e, item.productId)}><RemoveShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Remove</div></button>
@@ -186,17 +187,17 @@ const Cart = () => {
             <div className="heading3">Cart Summary</div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Total Price</span></div>
-              <div className="heading2"><span>{currencySymbol} {totalSellPrice} {currency}</span></div>
+              <div className="heading2"><span>{currencySymbol} {Number(totalSellPrice).toFixed(2)} {currency}</span></div>
               {/* <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalSellPrice, currency)} {selectedCurrency}</span></div> */}
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Total Tax</span></div>
-              <div className="heading2"><span>{currencySymbol} {totalSellGstPrice} {currency}</span></div>
+              <div className="heading2"><span>{currencySymbol} {Number(totalSellGstPrice).toFixed(2)} {currency}</span></div>
               {/* <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(totalSellGstPrice, currency)} {selectedCurrency}</span></div> */}
             </div>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Subtotal</span></div>
-              <div className="heading2"><span>{currencySymbol} {subTotal} {currency}</span></div>
+              <div className="heading2"><span>{currencySymbol} {Number(subTotal).toFixed(2)} {currency}</span></div>
               {/* <div className="heading2"><span> {currencySymbols[selectedCurrency]} {convertPrice(subTotal, currency)} {selectedCurrency}</span></div> */}
             </div>
             <div className="flexcol wh topbottom" style={{ gap: '10px' }}>
