@@ -1,45 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchOrders, selectOrders, selectOrdersLoading, selectOrdersError, cancelOrder, selectCancelError, selectCancelSuccess } from '../../Redux/ordersSlice';
+import { fetchOrders, cancelOrder, selectCancelError, selectCancelSuccess } from '../../Redux/ordersSlice';
 
 
 const Translator = () => {
 
-    const formattedDateAndTime = (dateAndTimeString) => {
-        const dateObject = new Date(dateAndTimeString);
-
-        const timeString = dateObject.toLocaleTimeString("en-US", {
-            hour: "numeric",
-            minute: "numeric",
-            second: "numeric",
-            hour12: true
-        });
-
-        const dateString = dateObject.toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit"
-        });
-
-        return `${timeString} -- ${dateString}`;
-    }
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const orders = useSelector(selectOrders);
-    const loading = useSelector(selectOrdersLoading);
-    const error = useSelector(selectOrdersError);
+    const { orders, loading, error, totalItems, totalPages, numberOfElements, hasNext, hasPrevious, isFirst, isLast } = useSelector((state) => state.orders);
 
     const cancelError = useSelector(selectCancelError);
     const cancelSuccess = useSelector(selectCancelSuccess);
     const [isCanceling, setIsCanceling] = useState(false);
     const [cancelingOrderId, setCancelingOrderId] = useState(null);
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(10);
 
     useEffect(() => {
-        dispatch(fetchOrders());
-    }, [dispatch]);
+        dispatch(fetchOrders({ page, size }));
+    }, [dispatch, page, size]);
 
     useEffect(() => {
         if (isCanceling && cancelingOrderId !== null) {
@@ -73,6 +54,55 @@ const Translator = () => {
         navigate(`/order-details/${orderId}`);
     }
 
+    const formattedDateAndTime = (dateAndTimeString) => {
+        const dateObject = new Date(dateAndTimeString);
+
+        const timeString = dateObject.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            hour12: true
+        });
+
+        const dateString = dateObject.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        });
+
+        return `${timeString} -- ${dateString}`;
+    }
+
+    // pagination
+    const handlePageChange = useCallback((newPage) => {
+        if (newPage >= 0 && newPage < totalPages) {
+            setPage(newPage);
+        }
+    }, [dispatch, totalPages]);
+
+    const getPageNumbers = (currentPage, totalPages) => {
+        const pageNumbers = [];
+        const maxPageButtons = 5; // Number of page buttons to display at once
+
+        // Determine the start and end page numbers
+        let startPage = Math.max(0, currentPage - 2);
+        let endPage = Math.min(totalPages - 1, currentPage + 2);
+
+        // always show the correct number of page buttons
+        if (endPage - startPage < maxPageButtons - 1) {
+            if (startPage === 0) {
+                endPage = Math.min(totalPages - 1, startPage + maxPageButtons - 1);
+            } else if (endPage === totalPages - 1) {
+                startPage = Math.max(0, endPage - maxPageButtons + 1);
+            }
+        }
+        for (let i = startPage; i <= endPage; i++) {
+            pageNumbers.push(i);
+        }
+        return pageNumbers;
+    };
+    const pageNumbers = getPageNumbers(page, totalPages);
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
@@ -84,9 +114,9 @@ const Translator = () => {
                 <title>Orders</title>
             </Helmet>
             <div className="orderPage">
-                <div className="heading wh">Orders ({(orders && orders.length) && orders.filter((order) => order.status !== 'CANCELLED').length})</div>
+                <div className="heading wh">Showing {numberOfElements} of {totalItems} orders</div>
                 {orders && orders.length > 0 ? (
-                    orders.filter((order) => order.status !== 'CANCELLED').map((order) => (
+                    orders.map((order) => (
                         <div className={`order ${order.status === 'PLACED' ? 'order-placed' : 'order-cancelled'}`} key={order.orderId}>
                             <div className="orderBtn">
                                 <div className='heading2'>Order ID : {order.orderId}</div>
@@ -101,7 +131,7 @@ const Translator = () => {
                             <div className='heading2'>Total Price : {order.currencySymbol} {Number(order.totalPrice).toFixed(2)} {order.currency} </div>
                             <div className="heading2">Time & Date : {formattedDateAndTime(order.orderDate) || 'N/A'}</div>
                             <div className='heading2'>Status : {order.status}</div>
-                            
+
                             <div className="heading2">Products : {order.orderItems.length}</div>
                             <div className="orderProducts">
                                 {order.orderItems.map((product) => (
@@ -120,6 +150,32 @@ const Translator = () => {
                 ) : (
                     <div className='heading2'>No orders found</div>
                 )}
+
+                {(orders && orders.length > 0) &&
+                    (<div className="flexcol wh" style={{ marginTop: '20px' }} >
+                        <div className="flex" style={{ gap: '10px' }}>
+                            <button className='pagination-btn' onClick={() => handlePageChange(0)} disabled={isFirst}>
+                                First Page
+                            </button>
+                            <button className='pagination-btn' onClick={() => handlePageChange(page - 1)} disabled={!hasPrevious}>
+                                Previous
+                            </button>
+
+                            {pageNumbers.map(index => (
+                                <button key={index} className={`pagination-btn ${index === page ? 'active' : ''}`} style={{ width: '50px' }} onClick={() => handlePageChange(index)}>
+                                    {index + 1}
+                                </button>
+                            ))}
+
+                            <button className='pagination-btn' onClick={() => handlePageChange(page + 1)} disabled={!hasNext}>
+                                Next
+                            </button>
+                            <button className='pagination-btn' onClick={() => handlePageChange(totalPages - 1)} disabled={isLast}>
+                                Last Page
+                            </button>
+                        </div>
+                    </div>)
+                }
             </div>
         </div>
     )
