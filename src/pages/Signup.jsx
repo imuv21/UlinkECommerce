@@ -145,7 +145,7 @@ const Signup = () => {
                     <div className='signupform'>
                         <div className='flexcol cover'>
 
-                            <div className="heading">Create your account</div>
+                            <h1 className="heading">Create your account</h1>
                          
 
                             <form className="flexcol  gap" onSubmit={handleSubmit(onSubmit)}>
@@ -157,7 +157,7 @@ const Signup = () => {
                                     </select>
                                 )}
                                 />
-                                {errors.role && <div className='error'>{errors.role.message}</div>}
+                                {errors.role && <p className='error'>{errors.role.message}</p>}
 
                                 <div className="flex wh" style={{ gap: '30px' }}>
                                     <Controller name="firstname" control={control} defaultValue="" render={({ field }) => <input value={userData.firstname || ''} onChange={handleChange} autoComplete='off' className="box flex" placeholder='Enter your first name' {...field} />} />
@@ -167,17 +167,17 @@ const Signup = () => {
                                 {(errors.firstname || errors.lastname) &&
                                     <div className="flex wh">
                                         <div className="flex wh">
-                                            <div className='error'>{errors.firstname?.message}</div>
+                                            <p className='error'>{errors.firstname?.message}</p>
                                         </div>
                                         <div className="flex wh" style={{ justifyContent: 'space-around' }}>
-                                            <div className='error'>{errors.lastname?.message}</div>
+                                            <p className='error'>{errors.lastname?.message}</p>
                                         </div>
                                     </div>
                                 }
 
 
                                 <Controller name="email" control={control} defaultValue="" render={({ field }) => <input value={userData.email || ''} onChange={handleChange} className="box flex" autoComplete='email' placeholder='Enter your email' {...field} />} />
-                                {errors.email && <div className='error'>{errors.email.message}</div>}
+                                {errors.email && <p className='error'>{errors.email.message}</p>}
 
 
 
@@ -200,15 +200,15 @@ const Signup = () => {
                                 {(errors.countryCode || errors.mobile) &&
                                     <div className="flex wh">
                                         <div className="flex wh">
-                                            <div className='error'>{errors.countryCode?.message}</div>
+                                            <p className='error'>{errors.countryCode?.message}</p>
                                         </div>
                                         <div className="flex wh" style={{ justifyContent: 'space-around' }}>
-                                            <div className='error'>{errors.mobile?.message}</div>
+                                            <p className='error'>{errors.mobile?.message}</p>
                                         </div>
                                     </div>
                                 }
                                 <div className="flex" style={{ width: '100%', gap: '10px', justifyContent: 'start' }}>
-                                    <input type="checkbox" style={{ cursor: 'pointer' }} checked={isChecked} onChange={handleCheckboxChange} /><div className="heading2">My whatsapp number is different</div>
+                                    <input type="checkbox" style={{ cursor: 'pointer' }} checked={isChecked} onChange={handleCheckboxChange} /><p className="heading2">My whatsapp number is different</p>
                                 </div>
                                 {isChecked && (
                                     <div className='flex wh' style={{ gap: '30px' }}>
@@ -231,7 +231,7 @@ const Signup = () => {
                                         <div className="flex wh">
                                         </div>
                                         <div className="flex wh" style={{ justifyContent: 'space-around' }}>
-                                            <div className='error'>{errors.whatsappnumber?.message}</div>
+                                            <p className='error'>{errors.whatsappnumber?.message}</p>
                                         </div>
                                     </div>
                                 }
@@ -243,7 +243,7 @@ const Signup = () => {
                                         {passwordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
                                     </span>
                                 </div>
-                                {errors.password && <div className='error'>{errors.password.message}</div>}
+                                {errors.password && <p className='error'>{errors.password.message}</p>}
 
                                 <div className="search-input">
                                     <Controller name="confirmPass" control={control} defaultValue="" render={({ field }) => <input type={conPasswordVisible ? "text" : "password"} value={userData.confirmPass || ''} onChange={handleChange} className="box flex" autoComplete="new-password" placeholder='Enter password again' {...field} />} />
@@ -251,7 +251,7 @@ const Signup = () => {
                                         {conPasswordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
                                     </span>
                                 </div>
-                                {errors.confirmPass && <div className='error'>{errors.confirmPass.message}</div>}
+                                {errors.confirmPass && <p className='error'>{errors.confirmPass.message}</p>}
 
                                 <Controller name="country" value={selectedOp} onChange={operationSelectChange} control={control} defaultValue="" render={({ field }) => (
                                     <select className="box flex" value={userData.country || ''} onChange={handleChange}  {...field} >
@@ -262,11 +262,11 @@ const Signup = () => {
                                     </select>
                                 )}
                                 />
-                                {errors.country && <div className='error'>{errors.country.message}</div>}
+                                {errors.country && <p className='error'>{errors.country.message}</p>}
 
                                 <button className='btn box flex' type='submit'><div className="heading2" disabled={isSubmitting}>{isSubmitting ? 'Signing up...' : 'Sign up'}</div></button>
-                                <div className="descrip">By registering you agree to the user Terms & Conditions and Privacy Policy</div>
-                                <div className="heading2" style={{ color: 'var(--btnClr)' }}>Already have an account? <span className='hoverr' onClick={login}>Click here</span></div>
+                                <p className="descrip">By registering you agree to the user Terms & Conditions and Privacy Policy</p>
+                                <p className="heading2" style={{ color: 'var(--btnClr)' }}>Already have an account? <span className='hoverr' onClick={login}>Click here</span></p>
 
 
                             </form>

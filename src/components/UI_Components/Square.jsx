@@ -21,10 +21,10 @@ const Square = () => {
 
 
   if (statusTwo === 'loading') {
-    return <div>Loading...</div>;
+    return <p>Loading...</p>;
   }
   if (statusTwo === 'failed') {
-    return <div>Error: {errorTwo}</div>;
+    return <p>Error: {errorTwo}</p>;
   }
 
 

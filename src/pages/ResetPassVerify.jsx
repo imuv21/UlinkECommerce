@@ -116,8 +116,8 @@ const ResetPassVerify = () => {
                 </Link>
                 <div className="signupcont">
                     <div className='flexcol cover'>
-                        <div className="heading tcenter">Verify your email</div>
-                        <div className="heading2 tcenter">We have sent the OTP to your email.<br />Enter the OTP to reset your password.</div>
+                        <h1 className="heading tcenter">Verify your email</h1>
+                        <p className="heading2 tcenter">We have sent the OTP to your email.<br />Enter the OTP to reset your password.</p>
                         <div className="flex gap">
                             {otpDigits.map((digit, index) => (
                                 <input

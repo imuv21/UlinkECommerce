@@ -32,7 +32,7 @@ const ProductCard = ({ name, id, img, unitPrice, salePrice, moq, currencyName, h
 
   return (
     <a className={`show-img-detail-sub`} href={`/product-details/${id}`}>
-      <img className='product-img-size' src={img} alt='img' />
+      <img className='product-img-size' src={img} alt={`${name}_${id}`} />
      { isAuthenticated && user.role === 'Buyer' && <div className="add-to-cart-icon" onClick={(event) => handleClickCart(event, id)}><AddShoppingCartIcon /></div>}
       <div className='product-detail-info'>
         <p className='product-title'>{name.length > 20 ? `${name.substring(0, 20)}...` : name}</p>

@@ -118,9 +118,9 @@ const SellerForm = () => {
 
                 <div className="signupcont">
                     <form className='flexcol cover' onSubmit={handleSubmit(onSubmit)}>
-                        <div className="heading">Create your seller profile</div>
+                        <h1 className="heading">Create your seller profile</h1>
                         <Controller name="companyname" control={control} defaultValue="" render={({ field }) => <input value={sellerData.companyname || ''} onChange={handleChange} autoComplete="off" className="box flex" placeholder='Enter company name' {...field} />} />
-                        {errors.companyname && <div className='error'>{errors.companyname.message}</div>}
+                        {errors.companyname && <p className='error'>{errors.companyname.message}</p>}
                         <Controller name="countryOfoperation" value={selectedOp} onChange={operationSelectChange} control={control} defaultValue="" render={({ field }) => (
                             <select className="box flex" value={sellerData.countryOfoperation || ''} onChange={handleChange}  {...field} >
                                 <option value="">Country of operation</option>
@@ -130,9 +130,9 @@ const SellerForm = () => {
                             </select>
                         )}
                         />
-                        {errors.countryOfoperation && <div className='error'>{errors.countryOfoperation.message}</div>}
+                        {errors.countryOfoperation && <p className='error'>{errors.countryOfoperation.message}</p>}
                         <button className='btn box flex' type='submit' disabled={isSubmitting}><div className="heading2">{isSubmitting ? 'Submitting...' : 'Submit'}</div></button>
-                        <div className="descrip">By registering you agree to the user <Link>Terms & Conditions</Link> and <Link>Privacy Policy</Link></div>
+                        <p className="descrip">By registering you agree to the user <Link>Terms & Conditions</Link> and <Link>Privacy Policy</Link></p>
                     </form>
                 </div>
 

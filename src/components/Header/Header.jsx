@@ -329,13 +329,13 @@ const Header = () => {
             <div className='subpop-options underline' onClick={() => handleOptionClick(option, subOption)} >
               {convertPascalToReadable(subOption)}
             </div>
-            <div className="cate-options">
+            <p className="cate-options">
               {miniSubOptions[subOption].slice(0, 18).map((miniSubOption, miniIndex) => (
-                <div className='sub-cate-options' key={miniIndex} onClick={() => handleOptionClick(option, subOption, miniSubOption)}>
+                <p className='sub-cate-options' key={miniIndex} onClick={() => handleOptionClick(option, subOption, miniSubOption)}>
                   {convertPascalToReadable(miniSubOption)}
-                </div>
+                </p>
               ))}
-            </div>
+            </p>
           </div>
         ))}
       </div>
@@ -356,13 +356,13 @@ const Header = () => {
             <div className='subpop-options underline' onClick={() => handleOptionClick("ConsumerElectronics", subOption)}>
               {convertPascalToReadable(subOption)}
             </div>
-            <div className="cate-options">
+            <p className="cate-options">
               {miniSubOptions[subOption].map((miniSubOption, miniIndex) => (
-                <div className='sub-cate-options' key={miniIndex} onClick={() => handleOptionClick("ConsumerElectronics", subOption, miniSubOption)}>
+                <p className='sub-cate-options' key={miniIndex} onClick={() => handleOptionClick("ConsumerElectronics", subOption, miniSubOption)}>
                   {convertPascalToReadable(miniSubOption)}
-                </div>
+                </p>
               ))}
-            </div>
+            </p>
           </div>
         ))}
       </div>
@@ -383,13 +383,13 @@ const Header = () => {
             <div className='subpop-options underline' onClick={() => handleOptionClick("OfficeAndStationery", subOption)}>
               {convertPascalToReadable(subOption)}
             </div>
-            <div className="cate-options">
+            <p className="cate-options">
               {miniSubOptions[subOption].map((miniSubOption, miniIndex) => (
-                <div className='sub-cate-options' key={miniIndex} onClick={() => handleOptionClick("OfficeAndStationery", subOption, miniSubOption)}>
+                <p className='sub-cate-options' key={miniIndex} onClick={() => handleOptionClick("OfficeAndStationery", subOption, miniSubOption)}>
                   {convertPascalToReadable(miniSubOption)}
-                </div>
+                </p>
               ))}
-            </div>
+            </p>
           </div>
         ))}
       </div>
@@ -410,13 +410,13 @@ const Header = () => {
             <div className='subpop-options underline' onClick={() => handleOptionClick("FoodAndBeverages", subOption)}>
               {convertPascalToReadable(subOption)}
             </div>
-            <div className="cate-options">
+            <p className="cate-options">
               {miniSubOptions[subOption].map((miniSubOption, miniIndex) => (
-                <div className='sub-cate-options' key={miniIndex} onClick={() => handleOptionClick("FoodAndBeverages", subOption, miniSubOption)}>
+                <p className='sub-cate-options' key={miniIndex} onClick={() => handleOptionClick("FoodAndBeverages", subOption, miniSubOption)}>
                   {convertPascalToReadable(miniSubOption)}
-                </div>
+                </p>
               ))}
-            </div>
+            </p>
           </div>
         ))}
       </div>
@@ -452,13 +452,13 @@ const Header = () => {
 
       {showFirst ? (
         <div className="offer">
-          <div className='offer-text bounce-in-top'>Get 20% OFF on your first order.</div>
-          <div className="coupn bounce-in-bottom">ULINKITFIRST20</div>
+          <p className='offer-text bounce-in-top'>Get 20% OFF on your first order.</p>
+          <p className="coupn bounce-in-bottom">ULINKITFIRST20</p>
         </div>
       ) : (
         <div className="offer2">
-          <div className="gwm slide-in-left">Global Wholesale Marketplace</div>
-          <div className="fcb slide-in-right">For Cross-Border</div>
+          <p className="gwm slide-in-left">Global Wholesale Marketplace</p>
+          <p className="fcb slide-in-right">For Cross-Border</p>
         </div>
       )}
 

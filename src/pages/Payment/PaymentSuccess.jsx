@@ -33,9 +33,9 @@ const PaymentSuccess = () => {
             <Helmet>
                 <title>Payment Success</title>
             </Helmet>
-            <div className='flexcol paymentsuccess'>
-                <div className="heading">Order placed successfully!</div>
-            </div>
+            <article className='flexcol paymentsuccess'>
+                <h1 className="heading">Order placed successfully!</h1>
+            </article>
         </Fragment>
     )
 }

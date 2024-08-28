@@ -60,65 +60,66 @@ const Footer = () => {
 
     <Fragment>
       <div className="supContFooter">
-        <div className="footer-section">
-          <div className="footer">
-            <h3 className="footer-title">By On Ulinkit</h3>
+        <article className="footer-section">
+          <section className="footer">
+            <h1 className="footer-title">By On Ulinkit</h1>
             <div className="item-list">
               <Link className="itemLink">Source of Ulinkit</Link>
               <Link className="itemLink">All Category</Link>
               <Link className="itemLink">All Brands</Link>
               <Link className="itemLink">Product</Link>
             </div>
-          </div>
-          <div className="footer">
-            <h3 className="footer-title">Sell on Ulinkit</h3>
+          </section>
+          <section className="footer">
+            <h1 className="footer-title">Sell on Ulinkit</h1>
             <div className="item-list">
               <Link className="itemLink">Start selling</Link>
               <Link className="itemLink">Webinar & EBooks</Link>
               <Link className="itemLink">Ulink Logistics</Link>
               <Link className="itemLink">Product listing policy</Link>
             </div>
-          </div>
-          <div className="footer">
-            <h3 className="footer-title">About Ulinkit</h3>
+          </section>
+          <section className="footer">
+            <h1 className="footer-title">About Ulinkit</h1>
             <div className="item-list">
               <Link className="itemLink">About us</Link>
               <Link className="itemLink">Press</Link>
               <Link className="itemLink">Careers</Link>
               <Link className="itemLink">Blog</Link>
             </div>
-          </div>
-          <div className="footer">
-            <h3 className="footer-title">Help & Contact</h3>
+          </section>
+          <section className="footer">
+            <h1 className="footer-title">Help & Contact</h1>
             <div className="item-list">
               <Link className="itemLink">Help</Link>
               <Link className="itemLink">Contact us</Link>
               <Link to="/faq" className="itemLink">FAQs</Link>
               <Link to="/terms-and-conditions" className="itemLink">Terms and Conditions</Link>
             </div>
-          </div>
-          <div className="footer">
-            <h3 className="footer-title">Ulink Services</h3>
+          </section>
+          <section className="footer">
+            <h1 className="footer-title">Ulink Services</h1>
             <div className="item-list">
               <Link className="itemLink">Buy-back Program</Link>
               <Link className="itemLink">Terms and Conditions</Link>
               <Link className="itemLink">Return and refund policy</Link>
               <Link className="itemLink">Payment Method</Link>
             </div>
-          </div>
-          <div className="footer">
-            <h3 className="footer-title">Procurement</h3>
+          </section>
+          <section className="footer">
+            <h1 className="footer-title">Procurement</h1>
             <div className="item-list">
               <Link className="itemLink">Enterprises</Link>
               <Link className="itemLink">Terms and Conditions</Link>
               <Link className="itemLink">Return and refund policy</Link>
               <Link className="itemLink">Payment Method</Link>
             </div>
-          </div>
-        </div>
+          </section>
+        </article>
+
         <div className="footer-nav">
-          <div className="fsecone">
-            <h3 className="footer-title2">Stay Updated</h3>
+          <section className="fsecone">
+            <h1 className="footer-title2">Stay Updated</h1>
             <form className={`flex subscribe ${isClickedFooter ? 'clicked' : ''}`} onSubmit={handleClickFooter}>
               <input type="text" name="email_updates" className="box flex" placeholder="Enter your email to get updates" value={newsEmail} onChange={(e) => setNewsEmail(e.target.value)} required />
 
@@ -129,7 +130,7 @@ const Footer = () => {
               {isClickedFooter && (
                 <div className="footer-popup footer-subscribe">
                   <div className="wrapper-footer">
-                    <div className='thankyoutext'>Thank you !</div>
+                    <p className='thankyoutext'>Thank you !</p>
                     <div className="flexcol wh">
                       <p>Thanks for subscribing to our news letter. </p>
                       <p>You should receive a confirmation email soon. </p>
@@ -139,21 +140,22 @@ const Footer = () => {
                 </div>
               )}
             </form>
-          </div>
+          </section>
 
-          <div className="supfsectwo">
-            <div className="fsectwo">
-              <h3 className="footer-title2">Connect With Us</h3>
+          <article className="supfsectwo">
+            <section className="fsectwo">
+              <h1 className="footer-title2">Connect With Us</h1>
               <div className="flex" style={{ gap: '10px' }}>
                 <img src={whatsapp} style={{ width: '30px' }} alt="whatsapp" />
                 <div className="flexcol" style={{ gap: '2px' }}>
-                  <div className="number">+91 8750518844</div>
-                  <div className="whtext">Chat On WhatsApp</div>
+                  <p className="number">+91 8750518844</p>
+                  <p className="whtext">Chat On WhatsApp</p>
                 </div>
               </div>
-            </div>
-            <div className="fsectwo">
-              <h3 className="footer-title2">Follow Us On</h3>
+            </section>
+
+            <section className="fsectwo">
+              <h1 className="footer-title2">Follow Us On</h1>
               <div className="flex" style={{ gap: '20px' }}>
                 <a href="https://www.facebook.com/profile.php?id=61559396105110" target="_blank" rel="noopener noreferrer">
                   <FacebookIcon />
@@ -171,8 +173,8 @@ const Footer = () => {
                   <XIcon />
                 </a>
               </div>
-            </div>
-          </div>
+            </section>
+          </article>
         </div>
         <div className="footerfooter">
           <div className="ffone">

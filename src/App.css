@@ -369,7 +369,7 @@ button:focus {
 
 .home-alt3 {
   padding: 60px 80px;
-  gap: 20px;
+  gap: 10px;
   align-items: start;
 }
 
@@ -2971,6 +2971,7 @@ button:focus {
 
 .show-all-product {
   transition: var(--trans);
+  white-space: nowrap;
 }
 
 .show-all-product:hover {

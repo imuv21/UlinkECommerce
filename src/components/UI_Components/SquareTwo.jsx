@@ -21,10 +21,10 @@ const SquareTwo = () => {
 
 
   if (statusFour === 'loading') {
-    return <div>Loading...</div>;
+    return <p>Loading...</p>;
   }
   if (statusFour === 'failed') {
-    return <div>Error: {errorFour}</div>;
+    return <p>Error: {errorFour}</p>;
   }
 
 

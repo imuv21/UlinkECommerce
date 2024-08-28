@@ -114,12 +114,12 @@ const Translator = () => {
                 <title>Orders</title>
             </Helmet>
             <div className="orderPage">
-                <div className="heading wh">Showing {numberOfElements} of {totalItems} orders</div>
+                <p className="heading wh">Showing {numberOfElements} of {totalItems} orders</p>
                 {orders && orders.length > 0 ? (
                     orders.map((order) => (
                         <div className={`order ${order.status === 'PLACED' ? 'order-placed' : 'order-cancelled'}`} key={order.orderId}>
                             <div className="orderBtn">
-                                <div className='heading2'>Order ID : {order.orderId}</div>
+                                <p className='heading2'>Order ID : {order.orderId}</p>
 
                                 <div className="orderBtnCont">
                                     <button className="remove flex" disabled={isCanceling && cancelingOrderId === order.orderId || order.status === 'CANCELLED'} onClick={() => handleCancelOrder(order.orderId)}>
@@ -128,19 +128,19 @@ const Translator = () => {
                                     <button className='btn box flex' onClick={() => orderDetail(order.orderId)} style={{ display: order.status === "CANCELLED" ? 'none' : 'flex'}}>View</button>
                                 </div>
                             </div>
-                            <div className='heading2'>Total Price : {order.currencySymbol} {Number(order.totalPrice).toFixed(2)} {order.currency} </div>
-                            <div className="heading2">Time & Date : {formattedDateAndTime(order.orderDate) || 'N/A'}</div>
-                            <div className='heading2'>Status : {order.status}</div>
+                            <p className='heading2'>Total Price : {order.currencySymbol} {Number(order.totalPrice).toFixed(2)} {order.currency} </p>
+                            <p className="heading2">Time & Date : {formattedDateAndTime(order.orderDate) || 'N/A'}</p>
+                            <p className='heading2'>Status : {order.status}</p>
 
-                            <div className="heading2">Products : {order.orderItems.length}</div>
+                            <p className="heading2">Products : {order.orderItems.length}</p>
                             <div className="orderProducts">
                                 {order.orderItems.map((product) => (
                                     <div className="product" key={product.productId}>
                                         <img src={product.imageUrl ? product.imageUrl : defaulImg} alt={product.itemName.length > 18 ? `${product.itemName.substring(0, 18)}...` : product.itemName} />
                                         <div className="productDetail">
-                                            <div className="descrip">{product.itemName.length > 18 ? `${product.itemName.substring(0, 18)}...` : product.itemName}</div>
-                                            <div className="descrip">Quantity : {product.quantity}</div>
-                                            <div className="descrip">Price : {product.currencySymbol} {Number(product.itemPrice).toFixed(2)} {product.currency}</div>
+                                            <p className="descrip">{product.itemName.length > 18 ? `${product.itemName.substring(0, 18)}...` : product.itemName}</p>
+                                            <p className="descrip">Quantity : {product.quantity}</p>
+                                            <p className="descrip">Price : {product.currencySymbol} {Number(product.itemPrice).toFixed(2)} {product.currency}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -148,7 +148,7 @@ const Translator = () => {
                         </div>
                     ))
                 ) : (
-                    <div className='heading2'>No orders found</div>
+                    <p className='heading2'>No orders found</p>
                 )}
 
                 {(orders && orders.length > 0) &&

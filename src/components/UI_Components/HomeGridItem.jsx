@@ -27,10 +27,10 @@ const HomeGridItem = ({ name, id, img, salePrice, currencyName }) => {
 
     return (
         <a className="home-grid-item" href={`/product-details/${id}`}>
-            <img src={img} alt="" />
+            <img src={img} alt={`${name}_${id}`} />
             <div className="home-detail">
-                <div className="product-title">{name.length > 20 ? `${name.substring(0, 15)}...` : name}</div>
-                <div className="product-price">{currencySymbols[selectedCurrency]} {convertPrice(salePriceNum, currencyName)} {selectedCurrency}/ piece </div>
+                <p className="product-title">{name.length > 20 ? `${name.substring(0, 15)}...` : name}</p>
+                <p className="product-price">{currencySymbols[selectedCurrency]} {convertPrice(salePriceNum, currencyName)} {selectedCurrency}/ piece </p>
             </div>
         </a>
     )

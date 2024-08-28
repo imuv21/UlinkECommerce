@@ -121,8 +121,8 @@ const Otp = () => {
 
                 <div className="signupcont">
                     <div className='flexcol cover'>
-                        <div className="heading tcenter">Verify your email</div>
-                        <div className="heading2 tcenter">We have sent the OTP to {signupData.email} <br />Enter the OTP to verify your email.</div>
+                        <h1 className="heading tcenter">Verify your email</h1>
+                        <p className="heading2 tcenter">We have sent the OTP to {signupData.email} <br />Enter the OTP to verify your email.</p>
                         <div className="flex gap">
 
                             {otpDigits.map((digit, index) => (

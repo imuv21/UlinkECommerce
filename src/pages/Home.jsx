@@ -36,33 +36,29 @@ const Home = () => {
       </Helmet>
       <Slider />
       <div className="flexcol wh home">
-        <div className="heading3 wh">Categories</div>
+        <p className="heading3 wh">Categories</p>
         <CategorySection />
         <div className='discount-pages'>
-          <img className='banner-width' src={summer} />
+          <img className='banner-width' src={summer} alt='summer' />
         </div>
 
         <div className='best-deals-product'>
-          <div className=''>
-            <h4>Consumer Electronics ({totalItems} items)</h4>
-          </div>
-          <div className=''>
-            <h4 className='show-all-product' onClick={ShowAll}>Show All</h4>
-          </div>
+          <p className="heading3 wh">Consumer Electronics ({totalItems} items)</p>
+          <p className='show-all-product' onClick={ShowAll}>Show All</p>
         </div>
 
         <Carousel />
 
         <Square />
 
-        <div className="heading3 wh">Food And Beverages ({totalItemsTwo} items)</div>
+        <p className="heading3 wh">Food And Beverages ({totalItemsTwo} items)</p>
 
         <CarouselTwo />
 
         <div className='discount-pages'>
           <img className='banner-width' src={Banner1} />
         </div>
-        <div className="heading3 wh">Fashion And Accessories ({totalItemsThree} items)</div>
+        <p className="heading3 wh">Fashion And Accessories ({totalItemsThree} items)</p>
 
         <CarouselThree />
 
@@ -71,15 +67,15 @@ const Home = () => {
         </div>
 
         <SquareTwo />
-        
-        <div className="heading3 wh">Home Garden And Furniture ({totalItemsFour} items)</div>
+
+        <p className="heading3 wh">Home Garden And Furniture ({totalItemsFour} items)</p>
 
         <CarouselFour />
 
         <div className='discount-pages'>
           <img className='banner-width' src={Banners} />
         </div>
-        <div className="heading3 wh">Top Brands</div>
+        <p className="heading3 wh">Top Brands</p>
         <InfSlider />
       </div>
 

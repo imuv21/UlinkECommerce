@@ -72,7 +72,7 @@ const GoogleCallback = () => {
 
                 <div className="signupcont">
                     <div className='flexcol cover'>
-                        <div className="heading">Choose your role</div>
+                        <h1 className="heading">Choose your role</h1>
                         <form className="flexcol gap">
                             <select name="role" className="box flex" value={role} onChange={handleRoleChange} required>
                                 <option value="">Login as a...</option>
@@ -80,7 +80,7 @@ const GoogleCallback = () => {
                                 <option value="Seller">Seller</option>
                             </select>
                         </form>
-                        {role && <div>Loging as {role}...</div>}
+                        {role && <p>Loging as {role}...</p>}
                     </div>
                 </div>
 

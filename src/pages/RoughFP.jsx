@@ -204,17 +204,17 @@ const RoughFP = () => {
             <div className="flexcol wh" style={{ gap: '10px' }}>
                 {query &&
                     <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                        <div className='descrip2 wh captext'>Showing results for: &nbsp;&nbsp;&nbsp;&nbsp; {truncateText(query, 30)}</div>
+                        <p className='descrip2 wh captext'>Showing results for: &nbsp;&nbsp;&nbsp;&nbsp; {truncateText(query, 30)}</p>
                         <a className='descrip2 hover' style={{ color: 'red' }} onClick={handleClear}>Clear</a>
                     </div>
                 }
                 {category &&
                     <div className='flex wh' style={{ justifyContent: 'space-between' }}>
                         <div className="flex-start wh">
-                            {selectedSupOption && <div className="descrip2 captext">{convertPascalToReadable(selectedSupOption)}</div>}
-                            {selectedSubOption && <div className="descrip2 captext">/ {convertPascalToReadable(selectedSubOption)}</div>}
-                            {selectedMiniSubOption && <div className="descrip2 captext">/ {convertPascalToReadable(selectedMiniSubOption)}</div>}
-                            {selectedMicroSubOption && <div className="descrip2 captext">/ {convertPascalToReadable(selectedMicroSubOption)}</div>}
+                            {selectedSupOption && <p className="descrip2 captext">{convertPascalToReadable(selectedSupOption)}</p>}
+                            {selectedSubOption && <p className="descrip2 captext">/ {convertPascalToReadable(selectedSubOption)}</p>}
+                            {selectedMiniSubOption && <p className="descrip2 captext">/ {convertPascalToReadable(selectedMiniSubOption)}</p>}
+                            {selectedMicroSubOption && <p className="descrip2 captext">/ {convertPascalToReadable(selectedMicroSubOption)}</p>}
                         </div>
                         <a className='descrip2 hover' style={{ color: 'red' }} onClick={handleClearCat}>Clear</a>
                     </div>
@@ -267,7 +267,7 @@ const RoughFP = () => {
 
                 <div className="fptwo">
                     <div className="shortby">
-                        <div className="heading2 wh">Showing {numberOfElements} items out of {totalItems}</div>
+                        <p className="heading2 wh">Showing {numberOfElements} items out of {totalItems}</p>
                         <div className="flex" style={{ gap: '20px' }}>
                             <div className="heading2" style={{ whiteSpace: 'nowrap' }}>Short By</div>
                             <select name="shortby" className='selectshort' value={sort} onChange={handleSortChange}>
@@ -283,7 +283,7 @@ const RoughFP = () => {
                         {
                             filterProducts.map((product, index) => (
                                 <a className='show-img-detail' key={index} href={`/product-details/${product.productId}`}>
-                                    <img className='product-img-size' src={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} alt='img' />
+                                    <img className='product-img-size' src={product.images && product.images.length > 0 ? product.images[0].imageUrl : defaulImg} alt={product.productName} />
                                     <div className='product-detail-info'>
                                         <p className='product-title'>{truncateText(product.productName, 20)} </p>
                                         <p className='product-price'>{currencySymbols[selectedCurrency]} {convertPrice(product.sellPrice, product.currencyname)} {selectedCurrency}/ piece incl value</p>

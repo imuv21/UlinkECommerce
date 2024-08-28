@@ -78,7 +78,7 @@ const ResetPassword = () => {
 
                 <div className="signupcont">
                     <div className='flexcol cover'>
-                        <div className="heading">Reset your password</div>
+                        <h1 className="heading">Reset your password</h1>
                         <form className="flexcol gap" onSubmit={handleSubmit(onSubmit)}>
 
                             <Controller name="role" control={control} defaultValue="" render={({ field }) => (
@@ -89,10 +89,10 @@ const ResetPassword = () => {
                                 </select>
                             )}
                             />
-                            {errors.role && <div className='error'>{errors.role.message}</div>}
+                            {errors.role && <p className='error'>{errors.role.message}</p>}
 
                             <Controller name="username" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter your email' autoComplete="email" {...field} />} />
-                            {errors.email && <div className='error'>{errors.username.message}</div>}
+                            {errors.email && <p className='error'>{errors.username.message}</p>}
 
                             <div className="search-input">
                                 <Controller name="password" control={control} defaultValue="" render={({ field }) => <input type={passwordVisible ? "text" : "password"} autoComplete="new-password" className="box flex" placeholder='Enter a new password' {...field} />} />
@@ -100,7 +100,7 @@ const ResetPassword = () => {
                                     {passwordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
                                 </span>
                             </div>
-                            {errors.password && <div className='error'>{errors.password.message}</div>}
+                            {errors.password && <p className='error'>{errors.password.message}</p>}
 
                             <div className="search-input">
                                 <Controller name="confirmPass" control={control} defaultValue="" render={({ field }) => <input type={conPasswordVisible ? "text" : "password"} autoComplete="new-password" className="box flex" placeholder='Enter the password again' {...field} />} />
@@ -108,7 +108,7 @@ const ResetPassword = () => {
                                     {conPasswordVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
                                 </span>
                             </div>
-                            {errors.confirmPass && <div className='error'>{errors.confirmPass.message}</div>}
+                            {errors.confirmPass && <p className='error'>{errors.confirmPass.message}</p>}
                             <button className='btn box flex' type='submit' disabled={isSubmitting}><div className="heading2">{isSubmitting ? 'Sending OTP...' : 'Send OTP'}</div></button>
                         </form>
                     </div>

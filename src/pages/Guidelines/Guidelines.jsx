@@ -183,24 +183,24 @@ const Guidelines = () => {
             <Helmet>
                 <title>Guidelines for seller</title>
             </Helmet>
-            <div className="guide-banner-cont">
+            <article className="guide-banner-cont">
                 <img className='guideBanner' src={banner} alt="banner" />
                 <div className="responsive-text">
                     <div className="flexcol" style={{ gap: '20px' }}>
-                        <div className="heading4">Upload and update your product catalogue</div>
-                        <div className="heading5 clrwhite">Step-by-step guide for sellers</div>
+                        <h1 className="heading4">Upload and update your product catalogue</h1>
+                        <h2 className="heading5 clrwhite">Step-by-step guide for sellers</h2>
                     </div>
                 </div>
-            </div>
+            </article>
 
-            <div className="flexcol-start wh home">
-                <div className="heading5">1. Guidelines for product listing</div>
+            <article className="flexcol-start wh home">
+                <h1 className="heading5">1. Guidelines for product listing</h1>
                 <div className="flexcol wh">
                     {
                         gpl.map((item, index) => (
                             <Fragment>
                                 <div className={`accordion-guide ${activeIndex === (index + 1) ? 'active' : ''}`} onClick={() => toggleGuideAccordion(index + 1)}>
-                                    <div className="heading3">{item.title}</div>
+                                    <p className="heading3">{item.title}</p>
                                 </div>
                                 <div className="panel-guide" style={{ maxHeight: activeIndex === (index + 1) ? '800px' : '0' }}>
                                     {item.panel}
@@ -210,13 +210,13 @@ const Guidelines = () => {
                     }
                 </div>
 
-                <div className="heading5">2. Product approval criteria</div>
+                <h2 className="heading5">2. Product approval criteria</h2>
                 <div className="flexcol wh">
                     {
                         pac.map((item, index) => (
                             <Fragment>
                                 <div className={`accordion-guide ${activeIndex === (index + 6) ? 'active' : ''}`} onClick={() => toggleGuideAccordion(index + 6)}>
-                                    <div className="heading3">{item.title}</div>
+                                    <p className="heading3">{item.title}</p>
                                 </div>
                                 <div className="panel-guide" style={{ maxHeight: activeIndex === (index + 6) ? '800px' : '0' }}>
                                     {item.panel}
@@ -226,13 +226,12 @@ const Guidelines = () => {
                     }
                 </div>
 
-                <div className="heading5">3. Attend the webinar on how to upload your products</div>
-                <div className="heading2">Do you have questions about uploading your catalogue on Tradeling? Or do you simply need a first-hand demonstration showing how to upload products?
+                <h3 className="heading5">3. Attend the webinar on how to upload your products</h3>
+                <h4 className="heading2">Do you have questions about uploading your catalogue on Tradeling? Or do you simply need a first-hand demonstration showing how to upload products?
                     Join our free 1-hour webinar, where our experts will show you how to do it and start selling!
-                </div>
+                </h4>
                 <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Register Now</div></button>
-
-            </div>
+            </article>
         </Fragment>
     )
 }

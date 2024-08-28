@@ -9,10 +9,10 @@ const PaymentFailed = () => {
             <Helmet>
                 <title>Payment Failed</title>
             </Helmet>
-            <div className='flexcol paymentsuccess'>
-                <div className="heading">Payment Failed!</div>
+            <article className='flexcol paymentsuccess'>
+                <h1 className="heading">Payment Failed!</h1>
                 <Link className='btn2 box flex' style={{width : '200px'}} to="/">Back to Home</Link>
-            </div>
+            </article>
         </Fragment>
     )
 }
