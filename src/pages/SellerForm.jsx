@@ -38,7 +38,7 @@ const SellerForm = () => {
         const username = signupData.email;
         const password = signupData.password;
         const updatedSellerData = { ...sellerData, ...formData };
-        
+
         dispatch(updateSellerDetails({ username, password, sellerData: updatedSellerData }));
     };
 
@@ -54,14 +54,14 @@ const SellerForm = () => {
 
     useEffect(() => {
         if (status === 'succeeded') {
-            toast(<div className='toaster'> < VerifiedIcon /> {`Congrats! You have become a seller. Please login into your account.`}</div>, 
+            toast(<div className='toaster'> < VerifiedIcon /> {`Congrats! You have become a seller. Please login into your account.`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
 
             setIsSubmitting(false);
             navigate('/login');
         } else if (status === 'failed') {
-          
-            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to update seller details: ${error}`}</div>, 
+
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to update seller details: ${error}`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
 
             setIsSubmitting(false);
@@ -69,7 +69,7 @@ const SellerForm = () => {
     }, [status, error, navigate]);
 
 
-    
+
 
 
 
@@ -108,13 +108,15 @@ const SellerForm = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Create your seller profile</title>
+                <title>Create your seller profile on Ulinkit | Ulinkit - Grow Your Business Online</title>
+                <meta name="description" content="Fill out the seller form to join Ulinkit as a seller. Expand your business by reaching more customers with our secure and easy-to-use online platform." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-form" />
             </Helmet>
             <div className="login-cont hvh">
 
-                 <Link to='/' className="logo-otpform">
+                <Link to='/' className="logo-otpform">
                     <img src={logo} alt="logo" />
-                 </Link>
+                </Link>
 
                 <div className="signupcont">
                     <form className='flexcol cover' onSubmit={handleSubmit(onSubmit)}>

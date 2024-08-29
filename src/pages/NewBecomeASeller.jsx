@@ -75,8 +75,9 @@ const BecomeASeller = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Seller Center</title>
-                <meta name="Sell more! Unlock the global market." content="Easily sell to the all over the globe without opening a local office. Tens of thousands of verified wholesale buyers are only a few clicks away." />
+                <title>Become A Seller</title>
+                <meta name="description" content="Easily sell to the all over the globe without opening a local office. Tens of thousands of verified wholesale buyers are only a few clicks away." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-center" />
             </Helmet>
 
             <article className="svg-bg">

@@ -63,7 +63,9 @@ const GoogleCallback = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Choose your role</title>
+                <title>Login with Google | Ulinkit - Quick and Secure Access</title>
+                <meta name="description" content="Login to Ulinkit using your Google account for fast, secure, and convenient access to your shopping experience. Enjoy seamless online shopping with just one click." />
+                <link rel="canonical" href="https://www.ulinkit.com/google-callback" />
             </Helmet>
             <div className="login-cont hvh googlecallback">
                 <Link to='/' className="logo-otpform">

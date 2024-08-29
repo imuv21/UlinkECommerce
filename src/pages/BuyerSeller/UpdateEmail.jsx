@@ -56,7 +56,9 @@ const ForgotPassword = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Update Email Address</title>
+                <title>Update Your Email Address | Ulinkit - Keep Your Contact Information Current</title>
+                <meta name="description" content="Update your email address on Ulinkit to ensure you receive important notifications and stay connected. Keep your account information accurate and up-to-date." />
+                <link rel="canonical" href="https://www.ulinkit.com/update-email" />
             </Helmet>
             <div className="login-cont hvh">
 

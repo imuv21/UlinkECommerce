@@ -62,7 +62,9 @@ const Response = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Payment Details</title>
+                <title>Payment Details | Ulinkit - Review Your Payment Information</title>
+                <meta name="description" content="Review and confirm your payment details on Ulinkit. Ensure all information is correct for a smooth and secure transaction process during checkout." />
+                <link rel="canonical" href="https://www.ulinkit.com/payment-response" />
             </Helmet>
             <article className="payment-response">
                 <h1 className="heading">Payment Details</h1>
@@ -81,7 +83,7 @@ const Response = () => {
                     <h2 className='heading3'>Transactions</h2>
                     {response.transactions.map((transaction, index) => renderTransaction(transaction, index))}
                 </section>
-                <Link className='btn2 box flex' style={{width : '200px'}} to="/">Back to Home</Link>
+                <Link className='btn2 box flex' style={{ width: '200px' }} to="/">Back to Home</Link>
             </article>
         </Fragment>
 

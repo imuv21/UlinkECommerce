@@ -137,7 +137,9 @@ const AllSellerProducts = () => {
         <div className="flexcol wh product-detail">
 
             <Helmet>
-                <title>All Products</title>
+                <title>All Products | Ulinkit - Explore Our Full Range of Offerings</title>
+                <meta name="description" content="Browse through all products available on Ulinkit. Discover a diverse range of items, compare options, and find exactly what you need at competitive prices." />
+                <link rel="canonical" href="https://www.ulinkit.com/all-products" />
             </Helmet>
 
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>

@@ -39,9 +39,11 @@ const AddMulti = () => {
 
 
     return (
-        <div className='flexcol seller-home-cont' style={{ gap: '20px' }}   tabIndex={0} ref={scrollRef}>
+        <div className='flexcol seller-home-cont' style={{ gap: '20px' }} tabIndex={0} ref={scrollRef}>
             <Helmet>
-                <title>Add Multiple Products</title>
+                <title>Add Multiple Products | Ulinkit - Bulk Upload Your Inventory</title>
+                <meta name="description" content="Easily add multiple products to your Ulinkit store in bulk. Streamline your inventory management and quickly update your product listings with our efficient upload tools." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/add-products-bulk" />
             </Helmet>
             <h1 className="heading">Add Multiple Products</h1>
             <h2 className="descrip2">Use the upload center to upload/edit products and images</h2>
@@ -49,7 +51,7 @@ const AddMulti = () => {
             <article className="perfect-grid-flex">
                 <section onClick={upload} className="productflex">
                     <div className="flexcol big-svg"><CloudUploadIcon /></div>
-                    <div className="flexcol-start" style={{gap: '10px'}}>
+                    <div className="flexcol-start" style={{ gap: '10px' }}>
                         <h1 className="heading3">Upload multiple products</h1>
                         <h2 className="descrip2">Used for uploading multiple products at a time via one or several template files</h2>
                         <div className="flex small-svg">
@@ -60,7 +62,7 @@ const AddMulti = () => {
                 </section>
                 <section onClick={edit} className="productflex">
                     <div className="flexcol big-svg"><EditNoteIcon /></div>
-                    <div className="flexcol-start" style={{gap: '10px'}}>
+                    <div className="flexcol-start" style={{ gap: '10px' }}>
                         <h1 className="heading3">Edit multiple products</h1>
                         <h2 className="descrip2">Use this option to update all or selected products by using our excel template</h2>
                         <div className="flex small-svg">
@@ -70,8 +72,8 @@ const AddMulti = () => {
                     </div>
                 </section>
                 <section onClick={archive} className="productflex">
-                    <div className="flexcol big-svg"><ArchiveIcon  /></div>
-                    <div className="flexcol-start" style={{gap: '10px'}}>
+                    <div className="flexcol big-svg"><ArchiveIcon /></div>
+                    <div className="flexcol-start" style={{ gap: '10px' }}>
                         <h1 className="heading3">Archive multiple products</h1>
                         <h2 className="descrip2">Use this option to archive products by using excel template</h2>
                         <div className="flex small-svg">

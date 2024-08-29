@@ -5,7 +5,9 @@ const PolicyComponent = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Return, Refund and Cancellation Policy</title>
+                <title>Return, Refund, and Cancellation Policy | Ulinkit - Hassle-Free Shopping Experience</title>
+                <meta name="description" content="Learn about Ulinkit's Return, Refund, and Cancellation Policy. Find out how we ensure customer satisfaction with easy returns, quick refunds, and flexible order cancellations." />
+                <link rel="canonical" href="https://www.ulinkit.com/return-policy" />
             </Helmet>
             <div className="flexcol wh home-alt3">
                 <h1 className='heading5'>RETURN, REFUND and CANCELLATION POLICY</h1>

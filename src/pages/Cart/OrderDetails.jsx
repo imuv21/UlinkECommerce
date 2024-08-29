@@ -111,7 +111,9 @@ const OrderDetails = () => {
     return (
         <div className="flexcol wh product-detail">
             <Helmet>
-                <title>Order Details</title>
+                <title>Order Details | Ulinkit - Review Your Order Invoice</title>
+                <meta name="description" content="View detailed invoice information for your order on Ulinkit. Access a comprehensive breakdown of your purchase, including itemized costs and shipping details." />
+                <link rel="canonical" href="https://www.ulinkit.com/order-details" />
             </Helmet>
             <div className="orderDetail">
                 <div className="orderBtn">

@@ -59,7 +59,9 @@ const UpdateNumber = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Update Mobile Number</title>
+                <title>Update Your Phone Number | Ulinkit - Keep Your Contact Information Current</title>
+                <meta name="description" content="Update your phone number on Ulinkit to ensure we have the latest contact information for your account. Stay connected and secure with updated contact details." />
+                <link rel="canonical" href="https://www.ulinkit.com/update-number" />
             </Helmet>
             <div className="login-cont hvh">
 
@@ -90,7 +92,7 @@ const UpdateNumber = () => {
                             <Controller name="mobile" control={control} defaultValue="" render={({ field }) => <input value={updateUserNumber.mobile || ''} onChange={handleChange} className="box flex" autoComplete='off' placeholder='Enter your phone number' {...field} />} />
                             {errors.mobile && <p className="error">{errors.mobile.message}</p>}
 
-                            <div className="flexcol wh" style={{ gap: '5px'}}>
+                            <div className="flexcol wh" style={{ gap: '5px' }}>
                                 <button className='btn box flex' type='submit'><div className="heading2">Send OTP</div></button>
                                 <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>
                             </div>

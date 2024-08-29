@@ -181,7 +181,9 @@ const Guidelines = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Guidelines for seller</title>
+                <title>Guidelines | Ulinkit - Best Practices for a Smooth Experience</title>
+                <meta name="description" content="Review Ulinkit's guidelines for a smooth and enjoyable experience on our platform. Follow our best practices for account management, product listings, and customer interactions." />
+                <link rel="canonical" href="https://www.ulinkit.com/guidelines" />
             </Helmet>
             <article className="guide-banner-cont">
                 <img className='guideBanner' src={banner} alt="banner" />

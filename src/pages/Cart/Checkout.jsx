@@ -311,7 +311,9 @@ const Checkout = () => {
   return (
     <div className="flexcol wh cart_page">
       <Helmet>
-        <title>Checkout</title>
+        <title>Checkout | Ulinkit - Complete Your Purchase Securely</title>
+        <meta name="description" content="Finalize your purchase on Ulinkit with our secure checkout process. Review your order, enter payment details, and confirm shipping information for a smooth transaction." />
+        <link rel="canonical" href="https://www.ulinkit.com/checkout" />
       </Helmet>
       <article className="flex wh">
         <h1 className="heading wh">Checkout</h1>

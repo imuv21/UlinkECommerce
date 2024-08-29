@@ -51,13 +51,13 @@ const ResetPassword = () => {
         const { password, role, username } = formData;
         try {
             const resultAction = await dispatch(forgotPassword({ password, role, username })).unwrap();
-         
-            toast(<div className='toaster'> < VerifiedIcon /> {`We have sent an OTP to your email. Please check your email and enter the OTP to reset your password.`}</div>, 
+
+            toast(<div className='toaster'> < VerifiedIcon /> {`We have sent an OTP to your email. Please check your email and enter the OTP to reset your password.`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
 
             navigate('/verify-reset-password');
         } catch (err) {
-            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to send OTP: ${err.message || 'Unknown error'}`}</div>, 
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to send OTP: ${err.message || 'Unknown error'}`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
 
         } finally {
@@ -68,7 +68,9 @@ const ResetPassword = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Reset Password</title>
+                <title>Reset Your Password | Ulinkit - Secure Your Account</title>
+                <meta name="description" content="Reset your Ulinkit password to regain access to your account. Follow the simple steps to ensure your account remains secure and protected." />
+                <link rel="canonical" href="https://www.ulinkit.com/forgot-password" />
             </Helmet>
             <div className="login-cont hvh">
 

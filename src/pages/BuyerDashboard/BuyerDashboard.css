@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+up
 /*  Buyer section is responsive */
 
 .p-responsive{
@@ -89,8 +89,9 @@
 }
 
 .upload-document-title {
-  font-size: 18px;
-  font-weight: 600px;
+  /* font-size: 18px;
+  font-weight: 600; */
+  
 }
 
 .document-container {
@@ -326,6 +327,9 @@
     display: inline-block;
     width: 100%;
   }
+  /* .upload-document-title{
+
+  } */
   .document-container-1 {
     width: 100%;
   }

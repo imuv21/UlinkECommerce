@@ -93,7 +93,9 @@ const CommissionStructure = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Ulink's Commission Structure</title>
+                <title>Commission Structure | Ulinkit - Understand Your Earnings</title>
+                <meta name="description" content="Learn about Ulinkit's commission structure for sellers. Get detailed information on how commissions are calculated and maximize your earnings on our platform." />
+                <link rel="canonical" href="https://www.ulinkit.com/commission-structure" />
             </Helmet>
             <div className="flexcol wh home commission">
                 <article className="cs-box4">

@@ -81,7 +81,7 @@ const UploadProducts = () => {
     };
     const getMarginValue = (option) => {
         switch (option) {
-           
+
             case "ConsumerElectronics":
                 return 2.5;
             case "FashionAndAccessories":
@@ -110,7 +110,7 @@ const UploadProducts = () => {
                 return 5;
             case "ToolsAndHomeImprovement":
                 return 5;
-           
+
             default:
                 return 0;
         }
@@ -178,7 +178,7 @@ const UploadProducts = () => {
     const handleDownload = () => {
         let filename = '';
         switch (selectedSupOption) {
-         
+
             case "ConsumerElectronics":
                 filename = "Ulinkit-template-common.xlsx";
                 break;
@@ -221,7 +221,7 @@ const UploadProducts = () => {
             case "ToolsAndHomeImprovement":
                 filename = "Ulinkit-template-common.xlsx";
                 break;
-          
+
             default:
                 filename = "Ulinkit-template-common.xlsx";
         }
@@ -240,7 +240,9 @@ const UploadProducts = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
-                <title>Upload Products</title>
+                <title>Add Multiple Products | Ulinkit - Bulk Upload Your Inventory</title>
+                <meta name="description" content="Bulk upload multiple products to your Ulinkit store. Efficiently add new items, update details, and manage your inventory with our streamlined tools for mass product addition." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/upload-products-bulk" />
             </Helmet>
             <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={back} />&nbsp;&nbsp;Upload Products</div>
             <div className="flex seller-home">

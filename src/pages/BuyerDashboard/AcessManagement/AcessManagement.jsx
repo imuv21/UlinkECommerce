@@ -7,31 +7,33 @@ import { RxCross2 } from 'react-icons/rx';
 const AcessManagement = () => {
 
     const [inviteBox, setInviteBox] = useState(false);
-    const [userRole, setUserRole] =  useState('')
+    const [userRole, setUserRole] = useState('')
     const [sendEmail, setSendEmail] = useState('')
-    
+
     const handleInviteUser = () => {
         setInviteBox(true)
     }
-    const handleUserRole = (e)=>{
-       setUserRole(e.target.value)
-       setInviteBox(true)
+    const handleUserRole = (e) => {
+        setUserRole(e.target.value)
+        setInviteBox(true)
     }
-    const handleCloseInvite=()=>{
+    const handleCloseInvite = () => {
         setInviteBox(false)
     }
     return (
         <Fragment>
-           <Helmet>
-                <title>Access Management</title>
-            </Helmet>
+            <Helmet>
+            <title>Access Management | Ulinkit - Secure Online Shopping Platform</title>
+            <meta name="description" content="Manage and view your Ulinkit account access permissions. Control which parts of your account are accessible, update security settings, and ensure your account remains secure." />
+            <link rel="canonical" href="https://www.ulinkit.com/access-management" />
+        </Helmet>
             <div>
                 {inviteBox && (
                     <div className='background-Changer'>
                         <div className=" invite-more ">
                             <div className='card-info-bank invite-user '>
                                 <div className='card-title invite-title'>
-                                    <h3 className=" card-title-tittles">Invite User</h3>
+                                    <h1 className=" card-title-tittles  heading-css-2 ">Invite User</h1>
                                 </div>
                                 <div className='card-title'>
                                     <RxCross2 className='cross-icon' onClick={handleCloseInvite} />
@@ -40,26 +42,26 @@ const AcessManagement = () => {
                             <div className=''> <p className='info-details invite-quote'>Use this section to invite members to your organisation. You can also set user permissions.</p></div>
                             <div className=' invite-email'>
                                 <label  >Enter Email</label><br></br>
-                                <input type='email' name='cardemail' className='card-input-value width-input' placeholder='Enter email' value={sendEmail} onChange={(e)=> setSendEmail(e.target.value)} />
+                                <input type='email' name='cardemail' className='card-input-value width-input' placeholder='Enter email' value={sendEmail} onChange={(e) => setSendEmail(e.target.value)} />
                             </div>
                             <div className=' invite-email'>
                                 <label >User Role*</label><br></br>
                                 <div className='user-role-choose '>
-                                    <input type='radio' name={userRole}  onChange={handleUserRole}/>
+                                    <input type='radio' name={userRole} onChange={handleUserRole} />
                                     <p className='paragraph-4'> Admin</p>
                                 </div>
                                 <p className='info-details invite-quotes'>Manage orders + buy items + manage roles and permissions</p>
                             </div>
-                            <div className=' invite-email'> 
+                            <div className=' invite-email'>
                                 <div className='user-role-choose '>
-                                <input type='radio' name={userRole}onChange={handleUserRole}/>
+                                    <input type='radio' name={userRole} onChange={handleUserRole} />
                                     <p className='paragraph-4'> Superviser</p>
                                 </div>
                                 <p className='info-details invite-quotes'>Manage orders + buy items + manage roles and permissions</p>
                             </div>
                             <div className=' invite-email'>
                                 <div className='user-role-choose '>
-                                <input type='radio' name={userRole} onChange={handleUserRole}/>
+                                    <input type='radio' name={userRole} onChange={handleUserRole} />
                                     <p className='paragraph-4'>User</p>
                                 </div>
                                 <p className='info-details invite-quotes'>Manage orders + buy items + manage roles and permissions</p>

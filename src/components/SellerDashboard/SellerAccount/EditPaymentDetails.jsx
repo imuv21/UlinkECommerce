@@ -96,7 +96,7 @@ const EditPaymentDetails = () => {
         setIsSubmitting(true);
 
         const bankDetails = {
-            id: id, 
+            id: id,
             accHolderName: data.accHolderName,
             accNo: data.accNo,
             bankLocation: data.bankLocation,
@@ -116,11 +116,11 @@ const EditPaymentDetails = () => {
 
         try {
             await dispatch(updateBankDetails({ id: id, bankDetails })).unwrap();
-            toast(<div className='toaster'> < VerifiedIcon /> {`Bank details updated successfully`}</div>, 
+            toast(<div className='toaster'> < VerifiedIcon /> {`Bank details updated successfully`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } catch (err) {
-          
-            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to update bank details`}</div>, 
+
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to update bank details`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } finally {
             setIsSubmitting(false);
@@ -135,7 +135,9 @@ const EditPaymentDetails = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
-                <title>Update Bank Account</title>
+                <title>Update Bank Account | Ulinkit - Manage Your Payment Information</title>
+                <meta name="description" content="Update your bank account details on Ulinkit to ensure accurate and timely transactions. Keep your payment information current for a seamless financial management experience." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/edit-bank-account" />
             </Helmet>
             <div className="heading flex">
                 <ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={backtopayment} />&nbsp;&nbsp;Update your account

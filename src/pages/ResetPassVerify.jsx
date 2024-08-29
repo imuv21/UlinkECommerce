@@ -58,11 +58,11 @@ const ResetPassVerify = () => {
         if (otp.length === 6) {
             try {
                 await dispatch(verifyForgotPassword({ otp, role, username })).unwrap();
-                toast(<div className='toaster'> < VerifiedIcon /> {`Password reset successfully! Please login with your new password.`}</div>, 
+                toast(<div className='toaster'> < VerifiedIcon /> {`Password reset successfully! Please login with your new password.`}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                 navigate('/login');
             } catch (err) {
-                toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed: ${err.message || 'Unknown error'}`}</div>, 
+                toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed: ${err.message || 'Unknown error'}`}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
         }
@@ -70,7 +70,7 @@ const ResetPassVerify = () => {
 
     useEffect(() => {
         if (status === 'failed') {
-            toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed: ${error}`}</div>, 
+            toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed: ${error}`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     }, [status, error]);
@@ -108,7 +108,9 @@ const ResetPassVerify = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Verify Your Email</title>
+                <title>Verify Your Email | Ulinkit - Secure Your Account</title>
+                <meta name="description" content="Verify your email address to reset your password and enhance your account security. Stay protected while shopping online." />
+                <link rel="canonical" href="https://www.ulinkit.com/verify-reset-password" />
             </Helmet>
             <div className="login-cont hvh">
                 <Link to='/' className="logo-otpform">
@@ -132,7 +134,7 @@ const ResetPassVerify = () => {
                             ))}
                         </div>
                         <button className='btn box flex' onClick={handleSubmit}>Verify OTP</button>
-                        <button className='resend' style={{display: 'none'}} disabled={timerRunning} onClick={handleResendClick}>
+                        <button className='resend' style={{ display: 'none' }} disabled={timerRunning} onClick={handleResendClick}>
                             {timerRunning ? `Resend OTP in ${timeLeft}` : "Resend OTP"}
                         </button>
                     </div>

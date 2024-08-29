@@ -33,7 +33,9 @@ const ArchiveUploads = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
-                <title>Products Archive</title>
+                <title>Products Archive | Ulinkit - Explore Archived Product Listings</title>
+                <meta name="description" content="Browse through archived product listings on Ulinkit. Review past products, view details, and manage your inventory history from a comprehensive archive." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/archive-products" />
             </Helmet>
             <h1 className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={back} />&nbsp;&nbsp;Products Archival</h1>
             <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
@@ -57,7 +59,7 @@ const ArchiveUploads = () => {
 
                     <div className="file-input wh">
                         <label htmlFor="file-upload" className="custom-file-upload flex">
-                           <AdsClickIcon />Click to upload
+                            <AdsClickIcon />Click to upload
                         </label>
                         <input id="file-upload" type="file" onChange={updateFileName} />
                         <span id="file-name" className="file-name heading2"></span>

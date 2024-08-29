@@ -161,7 +161,7 @@ const ProductDetails = () => {
     const cartHandler = () => {
         if (!product) return;
         dispatch(addToCart({ productId: id, quantity: value }));
-        toast(<div className='toaster'> < VerifiedIcon /> {`${value} items added to cart successfully!`}</div>, 
+        toast(<div className='toaster'> < VerifiedIcon /> {`${value} items added to cart successfully!`}</div>,
             { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
     };
 
@@ -211,7 +211,9 @@ const ProductDetails = () => {
         <div className="flexcol wh product-detail">
 
             <Helmet>
-                <title>Product Details</title>
+                <title>Product Details | Ulinkit - Explore Top-Quality Products</title>
+                <meta name="description" content="Discover detailed information about the product on Ulinkit. View specifications, images, pricing, and reviews to make an informed purchase decision." />
+                <link rel="canonical" href="https://www.ulinkit.com/product-details" />
             </Helmet>
 
             <Fragment>
@@ -350,7 +352,7 @@ const ProductDetails = () => {
                                     <input className='pminput' type="number" value={value} onChange={handleInputChange} />
                                     <div style={{ cursor: 'pointer' }}><AddCircleOutlineIcon onClick={incrementValue} /></div>
                                 </div>
-                                <p className="descrip2" style={{ display : 'none'}}>Minimum order quantity : {product.minOrderQuant}</p>
+                                <p className="descrip2" style={{ display: 'none' }}>Minimum order quantity : {product.minOrderQuant}</p>
                             </div>
 
                             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>

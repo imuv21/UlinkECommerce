@@ -73,9 +73,13 @@ const BuyerDashboard = () => {
   //   Steps wise varification
   return (
     <Fragment>
+
       <Helmet>
-        <title>Buyer Dashboard</title>
-      </Helmet>
+            <title>Buyer Dashboard | Ulinkit - Manage Your Account</title>
+            <meta name="description" content="Access your Ulinkit buyer dashboard to view recent orders, manage your account settings, payment methods, and much more. Stay in control of your online shopping experience." />
+            <link rel="canonical" href="https://www.ulinkit.com/buyer-dashboard" />
+        </Helmet>
+
       {/* invite usre */}
       <div>
         {inviteMore && (
@@ -129,10 +133,10 @@ const BuyerDashboard = () => {
         {/* Upload Document */}
         <div className="upload-document-responsivness">
           <div className="upload-document">
-            <h1 className="upload-document-title">Complete these steps to verify your business</h1>
+            <h3 className="upload-document-title">Complete these steps to verify your business</h3>
             <div className="document-container">
               <div className="document-container-1">
-                <h1 className="upload-document-title">Upload business documents</h1>
+                <h3 className="upload-document-title">Upload business documents</h3>
                 <div className="upload-document-info">
                   <FcDocument className="doc-icons" />
                   <p>Provide your Personal Identification Document, Business Registration Document, and VAT Certificate</p>
@@ -140,7 +144,7 @@ const BuyerDashboard = () => {
                 <button className="uploadbtns" onClick={uploadDocument}>UPLOAD DOCUMENTS</button>
               </div>
               <div className="document-container-1 invite-user-responsive">
-                <h1 className="upload-document-title">Invite members from your company</h1>
+                <h3 className="upload-document-title">Invite members from your company</h3>
                 <div className="upload-document-info">
                   <PiUsersThreeLight className="doc-icons" />
                   <p>Provide your Personal Identification Document, Business Registration Document, and VAT Certificate</p>

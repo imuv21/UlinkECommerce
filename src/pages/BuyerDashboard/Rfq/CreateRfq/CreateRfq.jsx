@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { LuArrowDownToLine, LuArrowUpFromLine } from "react-icons/lu";
 import './CreateRfq.css'
 import DatePicker from "react-datepicker";
@@ -168,15 +168,18 @@ const CreateRfq = () => {
     }
     return (
         <>
-           <Helmet>
-                <title>Create A New RFQ</title>
-            </Helmet>
+        <Fragment>
+       <Helmet>
+            <title>Request for Quote (RFQ) | Ulinkit - Get Quotes for Products and Services</title>
+            <meta name="description" content="Submit a Request for Quote (RFQ) on Ulinkit to get personalized quotes for products and services. Provide your requirements and receive competitive pricing from suppliers." />
+            <link rel="canonical" href="https://www.ulinkit.com/createrfq" />
+        </Helmet>
             {uploadFile && (
                 <div className='background-Changer'>
                     <div className='invite-more'>
                         <div className='card-infos-bank'>
                             <div className='card-title'>
-                                <h3 className=" card-title-tittles">Upload Document</h3>
+                                <h1 className=" card-title-tittles">Upload Document</h1>
                             </div>
                             <div className='card-title'>
                                 <RxCross2 className='cross-icon' onClick={handleCancelUpload} />
@@ -227,7 +230,7 @@ const CreateRfq = () => {
                                 return (
                                     <div className='crete-rfq-item' key={id}>
                                         <div className='rfq-item-input'>
-                                            <img src={value.img} className='rfq-img' name="img"></img>
+                                            <img src={value.img} className='rfq-img' name="img" alt={value.pname}></img>
                                         </div>
                                         <div className='rfq-item-input input-width-change'>
                                             <label>Product Name*</label><br></br>
@@ -364,6 +367,7 @@ const CreateRfq = () => {
                     </form>
                 </div>
             </div>
+            </Fragment>
         </>
     )
 }

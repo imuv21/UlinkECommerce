@@ -15,7 +15,9 @@ const Permissions = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
-                <title>Roles and Permissions</title>
+                <title>Roles and Permissions | Ulinkit - Define User Access Levels</title>
+                <meta name="description" content="Define and manage roles and permissions on Ulinkit. Customize user access levels to ensure appropriate access to features and maintain security across your platform." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/permissions" />
             </Helmet>
             <article className="flex-start wh" style={{ gap: '5px' }}>
                 <ArrowBackIosNewIcon style={{ cursor: 'pointer', marginTop: '7px' }} onClick={accessback} />
@@ -37,31 +39,31 @@ const Permissions = () => {
                         <div className="ac-item">Invite and deactivate accounts</div>
                         <div className="ac-item2"><CloseIcon /></div>
                         <div className="ac-item2"><CloseIcon /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                     <div className='access-col2'>
                         <div className="ac-item">Assign roles</div>
                         <div className="ac-item2"><CloseIcon /></div>
                         <div className="ac-item2"><CloseIcon /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                     <div className='access-col2'>
                         <div className="ac-item">Edit company details</div>
                         <div className="ac-item2"><CloseIcon /></div>
                         <div className="ac-item2"><CloseIcon /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                     <div className='access-col2'>
                         <div className="ac-item">Update financial details</div>
                         <div className="ac-item2"><CloseIcon /></div>
                         <div className="ac-item2"><CloseIcon /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                     <div className='access-col2'>
                         <div className="ac-item">Edit addresses and shipping preferences</div>
                         <div className="ac-item2"><CloseIcon /></div>
                         <div className="ac-item2"><CloseIcon /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                 </div>
             </article>
@@ -78,13 +80,13 @@ const Permissions = () => {
                         <div className="ac-item">Request full order cancellation</div>
                         <div className="ac-item2"><CloseIcon /></div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                     <div className='access-col2'>
                         <div className="ac-item">Request partial order cancellation</div>
                         <div className="ac-item2"><CloseIcon /></div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                 </div>
             </article>
@@ -101,19 +103,19 @@ const Permissions = () => {
                         <div className="ac-item">View all messages and leads</div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                     <div className='access-col2'>
                         <div className="ac-item">Respond to all messages and leads</div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                     <div className='access-col2'>
                         <div className="ac-item">Archive leads</div>
                         <div className="ac-item2"><CloseIcon /></div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                 </div>
             </article>
@@ -130,13 +132,13 @@ const Permissions = () => {
                         <div className="ac-item">Fulfil orders</div>
                         <div className="ac-item2"><CloseIcon /></div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                     <div className='access-col2'>
                         <div className="ac-item">View orders</div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                 </div>
             </article>
@@ -153,19 +155,19 @@ const Permissions = () => {
                         <div className="ac-item">View product inventory</div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                     <div className='access-col2'>
                         <div className="ac-item">Upload products</div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                     <div className='access-col2'>
                         <div className="ac-item">Upload media</div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                 </div>
             </article>
@@ -182,13 +184,13 @@ const Permissions = () => {
                         <div className="ac-item">Create promotions</div>
                         <div className="ac-item2"><CloseIcon /></div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                     <div className='access-col2'>
                         <div className="ac-item">View promotions</div>
                         <div className="ac-item2"><CloseIcon /></div>
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
-                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
+                        <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>
                     </div>
                 </div>
             </article>

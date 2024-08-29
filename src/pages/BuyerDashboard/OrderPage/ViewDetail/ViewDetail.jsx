@@ -25,14 +25,16 @@ const ViewDetail = () => {
   return (
     <>
       <Helmet>
-        <title>Order Detail</title>
+        <title>Order Details | Ulinkit - View Your Order Information</title>
+        <meta name="description" content="View detailed information about your order on Ulinkit. Check order status, items purchased, shipping details, and more to stay updated on your order." />
+        <link rel="canonical" href="https://www.ulinkit.com/view-detail" />
       </Helmet>
       {invoices && (
         <div className='background-Changer'>
           <div className='card-methodes'>
             <div className='card-infos-bank'>
               <div className='card-title'>
-                <img className='logo-main-img' src={logo}></img>
+                <img className='logo-main-img' src={logo} alt='logo'/>
               </div>
               <div className='card-title'>
                 <SlPrinter className='cross-icon ' onClick={handlePrinter} />
@@ -49,7 +51,6 @@ const ViewDetail = () => {
             <div>
               <p className='dis paragraph-6 p-1'> Order Id: 54544451154454448</p>
               <p className='dis  pt '>Thank you for buying from Ulinkit.com</p>
-
             </div>
             <div className='invoice-border'>
               <div className='invoice-flex dis '>
@@ -229,7 +230,7 @@ const ViewDetail = () => {
         </div>
         <div className='list-item  order-statuses bor-1 list-item-status'>
           <div className='item-lists'>
-            <img className='rfq-image' src='https://images-na.ssl-images-amazon.com/images/I/71WGsXRgQrL._AC_UL232_SR232,232_.jpg' />
+            <img className='rfq-image' src='https://images-na.ssl-images-amazon.com/images/I/71WGsXRgQrL._AC_UL232_SR232,232_.jpg' alt='product-ima' />
             <p className='p-width '>2024 Mobile Phones A14 pro max 6.8Inches 16GB+1TB phone 4G Smartphone Unlock Android Blue,16g x5</p>
           </div>
           <div className='item-list'>

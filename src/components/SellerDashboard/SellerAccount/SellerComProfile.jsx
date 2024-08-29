@@ -24,7 +24,7 @@ const SellerComProfile = () => {
     const dispatch = useDispatch();
     const { sellerprofile } = useSelector((state) => state.sellerBusinessProfile);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    
+
     useEffect(() => {
         dispatch(fetchSellerBusinessProfile());
     }, [dispatch]);
@@ -45,7 +45,7 @@ const SellerComProfile = () => {
                 await dispatch(uploadProfileImage(selectedImage));
             }
             await dispatch(updateSellerBusinessProfile(data));
-            toast(<div className='toaster'> < VerifiedIcon /> {`Profile updated successfully!`}</div>, 
+            toast(<div className='toaster'> < VerifiedIcon /> {`Profile updated successfully!`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -186,19 +186,19 @@ const SellerComProfile = () => {
                 dispatch(updateSellerDocData({ documentType: 'TRADE_LICENSE', documentData: tradeLicenseData }));
                 dispatch(updateSellerDocData({ documentType: 'IDENTITY_DOCUMENT', documentData: identityDocData }));
                 setDocErrors({});
-               
+
             } catch (error) {
-                toast(<div className='toaster'> < NewReleasesIcon /> {`Form submission failed. Please try again.`}</div>, 
+                toast(<div className='toaster'> < NewReleasesIcon /> {`Form submission failed. Please try again.`}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             } finally {
                 await dispatch(fetchSellerBusinessProfile());
-                toast(<div className='toaster'> < VerifiedIcon /> {`Form submitted successfully.`}</div>, 
+                toast(<div className='toaster'> < VerifiedIcon /> {`Form submitted successfully.`}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                 setIsSubmittingDoc(false);
                 setIsEditingDoc(false);
             }
         } else {
-            toast(<div className='toaster'> < NewReleasesIcon /> {`Form submission failed. Please fix the errors.`}</div>, 
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Form submission failed. Please fix the errors.`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
@@ -271,7 +271,7 @@ const SellerComProfile = () => {
                 setFile({ file, name: file.name });
                 clearError(fieldName);
             } else {
-                toast(<div className='toaster'> < NewReleasesIcon /> {`Invalid file format or size. Please upload a file within 10MB and with a JPG, JPEG, PNG, TIF, or PDF format.`}</div>, 
+                toast(<div className='toaster'> < NewReleasesIcon /> {`Invalid file format or size. Please upload a file within 10MB and with a JPG, JPEG, PNG, TIF, or PDF format.`}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
         }
@@ -288,7 +288,7 @@ const SellerComProfile = () => {
             setDate(e.target.value);
             clearError(fieldName);
         } else {
-            toast(<div className='toaster'> < NewReleasesIcon /> {`Please select a date from today or later.`}</div>, 
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Please select a date from today or later.`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
@@ -302,7 +302,9 @@ const SellerComProfile = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
-                <title>Company Profile</title>
+                <title>Company Profile | Ulinkit - Manage Your Business Information</title>
+                <meta name="description" content="View and update your company profile on Ulinkit. Manage your business details, contact information, and branding to enhance your presence on our platform." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/seller-company-profile" />
             </Helmet>
             <div className="procont">
 

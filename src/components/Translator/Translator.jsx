@@ -111,7 +111,9 @@ const Translator = () => {
     return (
         <div className="flexcol wh product-detail">
             <Helmet>
-                <title>Orders</title>
+                <title>View Your Orders | Ulinkit - Track and Manage Your Online Orders</title>
+                <meta name="description" content="View and manage your orders on Ulinkit. Track order status, access detailed invoices, and stay updated on your online shopping with ease." />
+                <link rel="canonical" href="https://www.ulinkit.com/orders" />
             </Helmet>
             <div className="orderPage">
                 <p className="heading wh">Showing {numberOfElements} of {totalItems} orders</p>
@@ -125,7 +127,7 @@ const Translator = () => {
                                     <button className="remove flex" disabled={isCanceling && cancelingOrderId === order.orderId || order.status === 'CANCELLED'} onClick={() => handleCancelOrder(order.orderId)}>
                                         {isCanceling && cancelingOrderId === order.orderId ? "Cancelling..." : order.status === "CANCELLED" ? "Cancelled" : "Cancel"}
                                     </button>
-                                    <button className='btn box flex' onClick={() => orderDetail(order.orderId)} style={{ display: order.status === "CANCELLED" ? 'none' : 'flex'}}>View</button>
+                                    <button className='btn box flex' onClick={() => orderDetail(order.orderId)} style={{ display: order.status === "CANCELLED" ? 'none' : 'flex' }}>View</button>
                                 </div>
                             </div>
                             <p className='heading2'>Total Price : {order.currencySymbol} {Number(order.totalPrice).toFixed(2)} {order.currency} </p>

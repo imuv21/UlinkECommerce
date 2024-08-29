@@ -149,7 +149,9 @@ const OtpPassword = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Verify Your Email</title>
+                <title>Verify Your Email Address | Ulinkit - Secure Your Account</title>
+                <meta name="description" content="Change your password by verifying your email address. Ensure your account's security and gain full access to our online shopping features." />
+                <link rel="canonical" href="https://www.ulinkit.com/verify-update-password" />
             </Helmet>
             <div className="login-cont hvh">
 

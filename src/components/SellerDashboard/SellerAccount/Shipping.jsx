@@ -132,7 +132,7 @@ const Shipping = () => {
 
 
     // Retrieve initial values from localStorage or set defaults
-   
+
 
     const initialFromTime = localStorage.getItem('fromTime') || '10 AM';
     const initialToTime = localStorage.getItem('toTime') || '10 PM';
@@ -173,8 +173,8 @@ const Shipping = () => {
                 localStorage.setItem('fromTime', value);
                 localStorage.setItem('selectedTime', JSON.stringify({ fromTime: value, toTime }));
             } else {
-              
-                toast(<div className='toaster'> < NewReleasesIcon /> {`Invalid time range`}</div>, 
+
+                toast(<div className='toaster'> < NewReleasesIcon /> {`Invalid time range`}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
         } else {
@@ -183,7 +183,7 @@ const Shipping = () => {
                 localStorage.setItem('toTime', value);
                 localStorage.setItem('selectedTime', JSON.stringify({ fromTime, toTime: value }));
             } else {
-                toast(<div className='toaster'> < NewReleasesIcon /> {`Invalid time range`}</div>, 
+                toast(<div className='toaster'> < NewReleasesIcon /> {`Invalid time range`}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
         }
@@ -201,7 +201,9 @@ const Shipping = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
-                <title>Shipping Preferences</title>
+                <title>Shipping Preferences | Ulinkit - Customize Your Shipping Options</title>
+                <meta name="description" content="Set and manage your shipping preferences on Ulinkit. Customize delivery options, select preferred carriers, and ensure your orders are shipped according to your preferences." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/shipping-preferences" />
             </Helmet>
             <h1 className="heading">Shipping Preferences</h1>
 

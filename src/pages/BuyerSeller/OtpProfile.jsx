@@ -151,7 +151,9 @@ const OtpProfile = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Verify Your Email</title>
+                <title>Verify Your Email Address | Ulinkit - Secure Your Account</title>
+                <meta name="description" content="Update your profile by verifying your email address. Ensure your account's security and gain full access to our online shopping features." />
+                <link rel="canonical" href="https://www.ulinkit.com/verify-update-profile" />
             </Helmet>
             <div className="login-cont hvh">
 

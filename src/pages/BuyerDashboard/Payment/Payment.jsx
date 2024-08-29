@@ -41,7 +41,7 @@ const Payment = () => {
         dispatch(fetchPaymentDetails());
     }, [dispatch]);
 
-  
+
     //banks popup form
     const handleAddBank = () => {
         setBankName('');
@@ -260,13 +260,15 @@ const Payment = () => {
     return (
         <div className="flexcol wh product-detail">
             <Helmet>
-                <title>Payment Management</title>
+                <title>Payment Management | Ulinkit - Manage Your Payment Methods</title>
+                <meta name="description" content="Manage your payment methods on Ulinkit. View payment history, add new payment methods, update billing information, and ensure your transactions are secure." />
+                <link rel="canonical" href="https://www.ulinkit.com/payment" />
             </Helmet>
             <div className="flex wh">
-                <div className="heading2 wh captext">My Account / Payment Management</div>
+                <h1 className="heading2 wh captext">My Account / Payment Management</h1>
             </div>
             <div className="flex wh">
-                <div className="heading wh">Payment Management</div>
+                <h1 className="heading wh">Payment Management</h1>
             </div>
 
             <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
@@ -280,7 +282,7 @@ const Payment = () => {
                     <div className="productlist3">
                         <div className="flexcol" style={{ gap: '20px' }}>
                             <div className="heading wh">My Cards ({cardDetails.length})</div>
-                            <div className="heading2 wh">Add your cards here. You can select your card by which you want to pay on the checkout page.</div>
+                            <p className="heading2 wh">Add your cards here. You can select your card by which you want to pay on the checkout page.</p>
                         </div>
                         <div className="flexcol" style={{ gap: '20px' }}>
                             <button onClick={handleAddCard} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Add New Card</div></button>
@@ -340,7 +342,7 @@ const Payment = () => {
                     <div className="productlist3">
                         <div className="flexcol" style={{ gap: '20px' }}>
                             <div className="heading wh">Bank Details ({bankDetails.length})</div>
-                            <div className="heading2 wh">Add your bank accounts here. You can select your account by which you want to pay on the checkout page.</div>
+                            <p className="heading2 wh">Add your bank accounts here. You can select your account by which you want to pay on the checkout page.</p>
                         </div>
                         <div className="flexcol" style={{ gap: '20px' }}>
                             <button onClick={handleAddBank} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Add New Account</div></button>
@@ -404,7 +406,7 @@ const Payment = () => {
                     <div className="productlist3">
                         <div className="flexcol" style={{ gap: '20px' }}>
                             <div className="heading wh">UPIs ({upiDetails.length})</div>
-                            <div className="heading2 wh">Add your UPIs here. You can select your upi by which you want to pay on the checkout page.</div>
+                            <p className="heading2 wh">Add your UPIs here. You can select your upi by which you want to pay on the checkout page.</p>
                         </div>
                         <div className="flexcol" style={{ gap: '20px' }}>
                             <button onClick={handleAddUpi} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Add New UPI</div></button>

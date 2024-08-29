@@ -5,9 +5,12 @@ import { Helmet } from 'react-helmet-async';
 const BuyerMessage = () => {
   return (
     <Fragment>
+  
       <Helmet>
-        <title>Messages</title>
-      </Helmet>
+            <title>Buyer Message Dashboard | Ulinkit - Manage Your Messages</title>
+            <meta name="description" content="Access and manage your messages on Ulinkit. Stay updated with your orders, seller communications, and notifications in your buyer message dashboard." />
+            <link rel="canonical" href="https://www.ulinkit.com/buyer-message" />
+        </Helmet>
       <div className='mt buyer-message'>
         <div className='flex-space-beetwen'>
           <div className='message-titles-heading1'>

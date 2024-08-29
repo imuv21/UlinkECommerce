@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import './RfqDetail.css';
 import { Helmet } from 'react-helmet-async';
 
@@ -18,10 +18,14 @@ const RfqDetail = () => {
         return id
     }
     return (
+        <Fragment>
+         <Helmet>
+            <title>RFQ Details | Ulinkit - View Your Request for Quote Information</title>
+            <meta name="description" content="View detailed information about your Request for Quote (RFQ) on Ulinkit. Review the RFQ summary, product details, and submission status for your request." />
+            <link rel="canonical" href="https://www.ulinkit.com/rfq-detail" />
+        </Helmet>
         <div className='mt'>
-            <Helmet>
-                <title>RFQ Details</title>
-            </Helmet>
+            
             <div className=' bor-1 border-p'>
                 <div className='border-p'>
                     <h1 className='user-title  heading-2 ml-left  size'>RFQ Details</h1>
@@ -74,6 +78,7 @@ const RfqDetail = () => {
                 </div>
             </div>
         </div>
+        </Fragment>
     )
 }
 export default RfqDetail

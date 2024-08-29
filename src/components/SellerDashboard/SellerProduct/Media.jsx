@@ -53,7 +53,9 @@ const Media = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '30px' }}>
             <Helmet>
-                <title>Media</title>
+                <title>Media Library | Ulinkit - Manage Your Images and Files</title>
+                <meta name="description" content="Access and manage your media library on Ulinkit. Upload, organize, and edit images and files for use in your product listings and marketing materials." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/media" />
             </Helmet>
             <h1 className="heading">Media</h1>
             <h2 className="descrip2">Use the upload center to upload/edit product and images</h2>

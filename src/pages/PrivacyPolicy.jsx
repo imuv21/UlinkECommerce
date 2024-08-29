@@ -5,7 +5,9 @@ const PrivacyPolicy = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Privacy Policy</title>
+                <title>Privacy Policy | Ulinkit - Protecting Your Personal Information</title>
+                <meta name="description" content="Review Ulinkit's Privacy Policy to understand how we collect, use, and safeguard your personal information. Your privacy is our priority in ensuring a secure online shopping experience." />
+                <link rel="canonical" href="https://www.ulinkit.com/privacy-policy" />
             </Helmet>
 
             <article className="flexcol wh home-alt3">

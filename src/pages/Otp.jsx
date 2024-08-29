@@ -57,14 +57,14 @@ const Otp = () => {
         }
     };
     useEffect(() => {
-        otpInputs.current[0].focus(); 
+        otpInputs.current[0].focus();
     }, []);
 
-  //new useff
+    //new useff
     useEffect(() => {
         if (status === 'succeeded') {
             toast(<div className='toaster'> < VerifiedIcon /> {`OTP verified successfully!`}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
-            
+
             if (signupData.role === 'Seller') {
                 navigate('/seller-form');
             } else {
@@ -111,7 +111,9 @@ const Otp = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Verify Your Email</title>
+                <title>Verify Your Email | Ulinkit - Secure Your Account</title>
+                <meta name="description" content="Verify your email address to complete your Ulinkit account setup and enhance your account security. Stay protected while shopping online." />
+                <link rel="canonical" href="https://www.ulinkit.com/verify-email" />
             </Helmet>
             <div className="login-cont hvh">
 
@@ -138,7 +140,7 @@ const Otp = () => {
                             ))}
 
                         </div>
-                        <button className='resend' style={{display: 'none'}} disabled={timerRunning} onClick={handleResendClick}>
+                        <button className='resend' style={{ display: 'none' }} disabled={timerRunning} onClick={handleResendClick}>
                             {timerRunning ? `Resend OTP in ${timeLeft}` : "Resend OTP"}
                         </button>
                     </div>

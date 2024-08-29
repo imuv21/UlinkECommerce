@@ -24,7 +24,6 @@ const NextArrow = (props) => {
     </div>
   );
 };
-
 const PrevArrow = (props) => {
   const { style, onClick } = props;
   return (
@@ -33,16 +32,13 @@ const PrevArrow = (props) => {
     </div>
   );
 };
-
 const CategorySection = () => {
-
   const Sports = 'https://res.cloudinary.com/dey1tujp8/image/upload/v1720425339/sports_zeupv6.png';
   const BabyCenter = 'https://res.cloudinary.com/dey1tujp8/image/upload/v1720425339/babycentrecircularbaner_plo459.png';
   const Toys = 'https://res.cloudinary.com/dey1tujp8/image/upload/v1720425339/toys_vogv6y.png';
   const HomeGarden = 'https://res.cloudinary.com/dey1tujp8/image/upload/v1720425339/homegarden_qqednm.png';
   const PetAnimal = 'https://res.cloudinary.com/dey1tujp8/image/upload/v1720425339/petanimal_simecj.png';
   const Automotive = 'https://res.cloudinary.com/dey1tujp8/image/upload/v1720425339/automotivecircularbanner_tq5nrd.png';
-
   const categories = [
     { name: 'Trending Product', image: Discount, link: '/category-pages/trending' },
     { name: 'Consumer Electronic', image: Electronic, link: '/category-pages/electronic' },
@@ -60,7 +56,6 @@ const CategorySection = () => {
     { name: 'Toys', image: Toys, link: '/category-pages/toys' },
     { name: 'Refurbished', image: Refurbish, link: '/category-pages/refurbish' },
   ];
-
   const settings = {
     dots: false,
     infinite: false,
@@ -129,16 +124,13 @@ const CategorySection = () => {
       },
     ],
   };
-
-
-
   return (
     <div className='category-section'>
       <Slider {...settings}>
         {categories.map((category, index) => (
           <Link to={category.link} key={index} className='category-image'>
             <div className="category-image-sub">
-              <img className='img-aspect' src={category.image} alt={category.name}></img>
+              <img className='img-aspect' src={category.image} alt={category.name}/>
               <div className='cate-title'>
                 <p className='category-img-title'>{category.name}</p>
               </div>
@@ -149,5 +141,4 @@ const CategorySection = () => {
     </div>
   );
 };
-
 export default CategorySection;

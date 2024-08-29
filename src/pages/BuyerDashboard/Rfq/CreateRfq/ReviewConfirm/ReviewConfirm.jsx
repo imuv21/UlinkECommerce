@@ -25,10 +25,12 @@ const ReviewConfirm = () => {
     //  save data from the local storege
     return (
         <div>
-            <Helmet>
-                <title>Review And Confirm RFQ Details</title>
-            </Helmet>
-            <Fragment>
+           <Helmet>
+            <title>Review and Confirm RFQ | Ulinkit - Verify Your Request for Quote</title>
+            <meta name="description" content="Review and confirm your Request for Quote (RFQ) details on Ulinkit. Ensure all information is correct before finalizing your request for quotes from suppliers." />
+            <link rel="canonical" href="https://www.ulinkit.com/review-confirm" />
+        </Helmet>
+            <Fragment>  
                 <div className='mt'>
                     <div className='border-5 border-p'>
                         <div className='border-p'>

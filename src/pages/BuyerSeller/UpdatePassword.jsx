@@ -69,7 +69,9 @@ const ResetPassword = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Update Your Password</title>
+                <title>Update Your Password | Ulinkit - Secure Your Account</title>
+                <meta name="description" content="Update your Ulinkit password to enhance account security. Follow the simple steps to set a new password and keep your account safe from unauthorized access." />
+                <link rel="canonical" href="https://www.ulinkit.com/update-password" />
             </Helmet>
             <div className="login-cont hvh">
 
@@ -96,7 +98,7 @@ const ResetPassword = () => {
                                 </span>
                             </div>
                             {errors.confirmPass && <p className='error'>{errors.confirmPass.message}</p>}
-                            <div className="flexcol wh" style={{gap: '5px'}}>
+                            <div className="flexcol wh" style={{ gap: '5px' }}>
                                 <button className='btn box flex' type='submit'><div className="heading2">Set Password</div></button>
                                 <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>
                             </div>

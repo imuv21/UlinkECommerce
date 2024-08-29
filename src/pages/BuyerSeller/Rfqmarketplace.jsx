@@ -182,7 +182,11 @@ const Rfqmarketplace = () => {
       </>
       <div className='padding-mark'>
         <Helmet>
-          <title>Rfq Marketplace</title>
+          <title>RFQ Marketplace | Request for Quotation Platform for B2B Procurement</title>
+          <meta
+            name="description"
+            content="Explore our RFQ Marketplace to connect with verified suppliers. Submit your Request for Quotation (RFQ) and get competitive quotes from multiple vendors. Simplify your procurement process today." />
+          <link rel='canonical' href="https://www.ulinkit.com/rfqmarketplace" />
         </Helmet>
         {isBuyer || isNotLoggedIn && (
           <div className='log-box-seller'>
@@ -204,7 +208,7 @@ const Rfqmarketplace = () => {
         )}
         <div className='manage-two-btn'>
           <div className=''>
-            <h2>RFQ Marketplace</h2>
+            <h1 className='heading-css'>RFQ Marketplace</h1>
             <p className='bid-req'>Explore and bid on Requests For Quotations of verified wholesale buyers from around the world.</p>
           </div>
           {isBuyer || isNotLoggedIn && (
@@ -451,7 +455,7 @@ const Rfqmarketplace = () => {
             </div>
             <div className='quote-container-border'>
               <div className='quote-image-container'>
-                <img className='quote-image-wdth' src={Image} />
+                <img className='quote-image-wdth' src={Image}  alt='productImg'/>
               </div>
               <div className='quote-details-info'>
                 <a className='quote-title-product-name'> CORE I5 4590,4570 (4TH Generation) Processor 3.3 GHz Upto 3.7 GHz LGA 1150 Socket 4 Cores 4 Threads 6 MB Smart Cache</a>

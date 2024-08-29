@@ -35,8 +35,12 @@ const OrderPage = () => {
     }
     return (
         <div className='mt position bor-1'>
-             <Helmet>
-                <title>Orders</title>
+
+            <Helmet>
+                <title>Order Management | Ulinkit - Track and Manage Your Orders</title>
+                <meta name="description" content="View and manage your orders on Ulinkit. Track order statuses, view order details, and handle returns or cancellations directly from your order management dashboard." />
+                <link rel="canonical" href="https://www.ulinkit.com/order-page" />
+
             </Helmet>
             <div className='userDashboard'>
                 <h1 className='user-titles pay-title '>Orders</h1>
@@ -128,7 +132,7 @@ const OrderPage = () => {
                         </div>
                         <div className='order-status'>
                             <div className='first-dis'>
-                                <img className='rfq-image' src='https://images-na.ssl-images-amazon.com/images/I/71WGsXRgQrL._AC_UL232_SR232,232_.jpg' />
+                                <img className='rfq-image' src='https://images-na.ssl-images-amazon.com/images/I/71WGsXRgQrL._AC_UL232_SR232,232_.jpg' alt='product' />
                                 <p className='paragraph-2'>2024 Mobile Phones A14 pro max 6.8Inches 16GB+1TB phone 4G Smartphone Unlock Android Blue,16g x5</p>
                             </div>
                             <div className='second-dis'>
@@ -163,7 +167,7 @@ const OrderPage = () => {
                         </div>
                         <div className='order-status'>
                             <div className='first-dis'>
-                                <img className='rfq-image' src='https://images-na.ssl-images-amazon.com/images/I/71fizOWwhFL._AC_UL232_SR232,232_.jpg' />
+                                <img className='rfq-image' src='https://images-na.ssl-images-amazon.com/images/I/71fizOWwhFL._AC_UL232_SR232,232_.jpg' alt='product' />
                                 <p className='paragraph-2'>2024 Mobile Phones A14 pro max 6.8Inches 16GB+1TB phone 4G Smartphone Unlock Android Blue,16g x5</p>
                             </div>
                             <div className='second-dis'>
@@ -198,7 +202,7 @@ const OrderPage = () => {
                         </div>
                         <div className='order-status'>
                             <div className='first-dis'>
-                                <img className='rfq-image' src='https://images-na.ssl-images-amazon.com/images/I/81nve2MR2aL._AC_UL232_SR232,232_.jpg' />
+                                <img className='rfq-image' src='https://images-na.ssl-images-amazon.com/images/I/81nve2MR2aL._AC_UL232_SR232,232_.jpg' alt='product' />
                                 <p className='paragraph-2'>2024 Mobile Phones A14 pro max 6.8Inches 16GB+1TB phone 4G Smartphone Unlock Android Blue,16g x5</p>
                             </div>
                             <div className='second-dis'>
@@ -233,7 +237,7 @@ const OrderPage = () => {
                         </div>
                         <div className='order-status'>
                             <div className='first-dis'>
-                                <img className='rfq-image' src='https://m.media-amazon.com/images/I/814hp8QMsjL._AC_SY741_.jpg' />
+                                <img className='rfq-image' src='https://m.media-amazon.com/images/I/814hp8QMsjL._AC_SY741_.jpg' alt='product' />
                                 <p className='paragraph-2'>2024 Mobile Phones A14 pro max 6.8Inches 16GB+1TB phone 4G Smartphone Unlock Android Blue,16g x5</p>
                             </div>
                             <div className='second-dis'>
@@ -268,7 +272,7 @@ const OrderPage = () => {
                         </div>
                         <div className='order-status'>
                             <div className='first-dis'>
-                                <img className='rfq-image' src='https://m.media-amazon.com/images/I/814hp8QMsjL._AC_SY741_.jpg' />
+                                <img className='rfq-image' src='https://m.media-amazon.com/images/I/814hp8QMsjL._AC_SY741_.jpg' alt='product' />
                                 <p className='paragraph-2'>2024 Mobile Phones A14 pro max 6.8Inches 16GB+1TB phone 4G Smartphone Unlock Android Blue,16g x5</p>
                             </div>
                             <div className='second-dis'>
@@ -303,7 +307,7 @@ const OrderPage = () => {
                         </div>
                         <div className='order-status'>
                             <div className='first-dis'>
-                                <img className='rfq-image' src='https://m.media-amazon.com/images/I/814hp8QMsjL._AC_SY741_.jpg' />
+                                <img className='rfq-image' src='https://m.media-amazon.com/images/I/814hp8QMsjL._AC_SY741_.jpg' alt='product' />
                                 <p className='paragraph-2'>2024 Mobile Phones A14 pro max 6.8Inches 16GB+1TB phone 4G Smartphone Unlock Android Blue,16g x5</p>
                             </div>
                             <div className='second-dis'>

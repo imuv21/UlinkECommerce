@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import './CompanyProfile.css'
 import { CiCircleInfo } from "react-icons/ci";
 import { IoDocumentTextOutline } from "react-icons/io5";
@@ -14,8 +14,8 @@ import { useSelector } from 'react-redux';
 import { fetchBusinessProfile, updateBusinessProfile } from '../../../Redux/businessProfileSlice';
 import { updateCreditInfo, fetchCreditInfo } from '../../../Redux/creditInfoSlice';
 import { uploadBuyerDocument, fetchUploadFile, updateBuyerInfo, deleteUploadFile } from '../../../Redux/uploadBuyerDocSlice';
-//  Show the toast notification when the user submit the any data or document 
 import { toast } from 'react-hot-toast';
+import { Helmet } from 'react-helmet-async';
 
 const CompanyProfile = () => {
     const dispatch = useDispatch();
@@ -581,461 +581,469 @@ const CompanyProfile = () => {
     const user = useSelector((state) => state.auth.user);
     return (
         <>
-            <div className='responsive'>
-                <div className='company-heading'>
-                    <h2>Company</h2>
-                </div>
-                <div className='company-border'>
-                    <div className='company-padding'>
-                        {/* Bussiness Profile Form */}
-                        {profileDetail ? (
-                            <div className='company-profile-Form'>
-                                <div className='company-profile-names'>
-                                    <h4>Business Profile</h4>
-                                    <p className='file-formate'>This is the address your business is registered to.</p>
-                                </div>
-                                <form onSubmit={CompanyDataSubmit}>
-                                    <div className='Bussines-Form'>
-                                        <div className='Bussiness-form-data'>
-                                            <label>Company Name*</label><br></br>
-                                            <input className='trade-expiry-dates form-width' type="text" placeholder='company name' name='companyName' value={formdata.companyName} onChange={CompanyData} />
-                                        </div>
-                                        <div className='Bussiness-form-data'>
-                                            <label>Bussiness Type*</label><br></br>
-                                            <input className='trade-expiry-dates form-width' type="text" placeholder='bussiness type ' name='businessType' value={formdata.businessType} onChange={CompanyData} />
-                                        </div>
-                                        <div className='Bussiness-form-data'>
-                                            <label>Billing Email Address</label><br></br>
-                                            <input className='trade-expiry-dates form-width' type="text" placeholder='billing email address' name='billingEmail' value={formdata.billingEmail} onChange={CompanyData} />
-                                        </div>
-                                        <div className='Bussiness-form-data'>
-                                            <label>Billing number or name</label><br></br>
-                                            <input className='trade-expiry-dates form-width' type="text" placeholder='billing number' name='billingNumber' value={formdata.billingNumber} onChange={CompanyData} />
-                                        </div>
-                                        <div className='Bussiness-form-data'>
-                                            <label>Enter Street Name</label><br></br>
-                                            <input className='trade-expiry-dates form-width' type="text" placeholder='street' name='streetName' value={formdata.streetName} onChange={CompanyData} />
-                                        </div>
-                                        {/* country state and city */}
-                                        <div className='Bussiness-form-data'>
-                                            <label className=''>Country</label><br></br>
-                                            <select onChange={(e) => handleCountry(e)} className=' trade-expiry-dates form-width' name="country">
-                                                <option value=''>Select Country</option>
-                                                {country.map(items => <option key={items} value={getCountry}>{items}</option>)}
-                                            </select>
-                                        </div>
-                                        <div className='Bussiness-form-data'>
-                                            <label>State</label><br></br>
-                                            <select onChange={(e) => handleState(e)} className=' trade-expiry-dates form-width' name='state'>
-                                                <option value=''>Select State</option>
-                                                {getState.map(items => <option key={items} value={selectedState}>{items}</option>)}
-                                            </select>
-                                        </div>
-                                        <div className='Bussiness-form-data'>
-                                            <label>City</label><br></br>
-                                            <select onChange={(e) => handleCity(e)} className=' trade-expiry-dates form-width' name='city'>
-                                                <option value=''>Select City</option>
-                                                {cities.map((items, index) => <option key={index} value={items.name}>{items.name}</option>)}
-                                            </select>
-                                        </div>
-                                        <div className='Bussiness-form-data '>
-                                            <label>PO Box Number</label><br></br>
-                                            <input className='trade-expiry-dates form-width' type="text" placeholder='po box' name='poBoxNumber' value={formdata.poBoxNumber} onChange={CompanyData} />
-                                        </div>
-                                    </div>
-                                    <div className='savecancels'>
-                                        <button className='sv' type='submit'>Update</button>
-                                        <button type='button' onClick={() => setProfileDetail(false)}>Cancel</button>
-                                    </div>
-                                </form>
-                            </div>
-                        ) : (
-                            <div className='show-company-form'>
-                                <div className='company-profile-buyer'>
-                                    <div className='company-profile-name'>
+            <Fragment>
+                <Helmet>
+                    <title>Company Profile Dashboard | Ulinkit - Manage Your Business Details</title>
+                    <meta name="description" content="Manage your company's profile on Ulinkit. Update business information, contact details, and other essential company data to ensure your profile is always up-to-date." />
+                    <link rel="canonical" href="https://www.ulinkit.com/company-profile" />
+                </Helmet>
+                <div className='responsive'>
+                    <div className='company-heading'>
+                        <h1 className='heading-css'>Company</h1>
+                    </div>
+                    <div className='company-border'>
+                        <div className='company-padding'>
+                            {/* Bussiness Profile Form */}
+                            {profileDetail ? (
+                                <div className='company-profile-Form'>
+                                    <div className='company-profile-names'>
                                         <h4>Business Profile</h4>
+                                        <p className='file-formate'>This is the address your business is registered to.</p>
                                     </div>
-                                    <div className='company-profile-name'>
-                                        <button className='edit-detail-button' onClick={() => setProfileDetail(true)}>Edit Detail</button>
-                                    </div>
-                                </div>
-                                <div className='company-profile-logo'>
-                                    {/* I want show only the first caracter and second first caracter */}
-                                    <h3 className='name-logo'>{user.firstname.charAt(0)}{user.lastname.charAt(0)}</h3>
-                                </div>
-                                {/* {status === 'loading' && <p>Loading...</p>}
-                                {error && <p>Error:  {JSON.stringify(error)}</p>} */}
-                                <div className=''>
-                                    <div className='company-detail-names'>
-                                        <p className='company-name'>Company Name:</p>
-                                        <p className='company-names '>{profile?.companyName}</p>
-                                    </div>
-                                    <div className='company-detail-names'>
-                                        <p className='company-name'>Bussiness Type:</p>
-                                        <p className='company-names'>{profile?.businessType}</p>
-                                    </div>
-                                    <div className='company-detail-names'>
-                                        <p className='company-name'> Billing Email Address:</p>
-                                        <p className='company-names'>{profile?.billingEmail}</p>
-                                    </div>
-                                    <div className='company-detail-names'>
-                                        <p className='company-name'>Billing Number:</p>
-                                        <p className='company-names'>{profile?.billingNumber}</p>
-                                    </div>
-                                    <div className='company-detail-names'>
-                                        <p className='company-name'>Street Name:</p>
-                                        <p className='company-names'>{profile?.streetName}</p>
-                                    </div>
-                                    <div className='company-detail-names'>
-                                        <p className='company-name'>Country:</p>
-                                        <p className='company-names'>{profile?.country}</p>
-                                    </div>
-                                    <div className='company-detail-names'>
-                                        <p className='company-name'>State:</p>
-                                        <p className='company-names'>{profile?.state}</p>
-                                    </div>
-                                    <div className='company-detail-names'>
-                                        <p className='company-name'>City:</p>
-                                        <p className='company-names'>{profile?.city}</p>
-                                    </div>
-                                    <div className='company-detail-names'>
-                                        <p className='company-name'>PO Box Number:</p>
-                                        <p className='company-names'>{profile?.poBoxNumber}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
-            <div className='responsive'>
-                <div className='company-border'>
-                    <div className='company-padding'>
-                        <div className='company-profile-buyer'>
-                            <div className='company-profile-name'>
-                                <CiCircleInfo className='info-icons' />
-                                <h4>Credit Information</h4>
-                            </div>
-                        </div>
-                        <div className='company-profile-logo'>
-                            <p className='credit-info-detail'>This additional information will be used when assessing your eligibility for Credit Line.</p>
-                        </div>
-                        <>
-                            <div>
-                                {creditInfo ? (
-                                    <div className='Bussines-Form'>
-                                        <form onSubmit={creditSubmit}>
+                                    <form onSubmit={CompanyDataSubmit}>
+                                        <div className='Bussines-Form'>
                                             <div className='Bussiness-form-data'>
-                                                <label>Number of employeses*</label><br></br>
-                                                <input className='trade-expiry-dates form-width' type="text" placeholder='number of employse' name='numberOfEmployees' value={creditInfoData.numberOfEmployees} onChange={creditInfoShow} />
+                                                <label>Company Name*</label><br></br>
+                                                <input className='trade-expiry-dates form-width' type="text" placeholder='company name' name='companyName' value={formdata.companyName} onChange={CompanyData} />
                                             </div>
                                             <div className='Bussiness-form-data'>
-                                                <label>Date Established*</label><br></br>
-                                                <DatePicker name="dateEstablished" selected={dateEstablished || null}
-                                                    onChange={(data) => {
-                                                        const formattedDate = data.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
-                                                        setCreditInfoData(prevState => ({
-                                                            ...prevState,
-                                                            dateEstablished: formattedDate
-                                                        }));
-                                                        setDateEstablished(data);
-                                                    }}
-                                                    onFocus={handleFocus}
-                                                    minDate={new Date()}
-                                                    onBlur={handleBlur} placeholderText='Expire Date'
-                                                    className='card-input-value date trade-expiry-date  custom-datepicker-widths' />
+                                                <label>Bussiness Type*</label><br></br>
+                                                <input className='trade-expiry-dates form-width' type="text" placeholder='bussiness type ' name='businessType' value={formdata.businessType} onChange={CompanyData} />
                                             </div>
                                             <div className='Bussiness-form-data'>
-                                                <label>Anual Turnover*</label><br></br>
-                                                <input className='trade-expiry-dates form-width' type="text" placeholder='anual turnover' name='annualTurnover' value={creditInfoData.annualTurnover} onChange={creditInfoShow} />
+                                                <label>Billing Email Address</label><br></br>
+                                                <input className='trade-expiry-dates form-width' type="text" placeholder='billing email address' name='billingEmail' value={formdata.billingEmail} onChange={CompanyData} />
                                             </div>
-                                            <div className='savecancels'>
-                                                <button className='sv' type='submit'>Update</button>
-                                                <button type='button' onClick={() => setCreditInfo(false)}>Cancel</button>
+                                            <div className='Bussiness-form-data'>
+                                                <label>Billing number or name</label><br></br>
+                                                <input className='trade-expiry-dates form-width' type="text" placeholder='billing number' name='billingNumber' value={formdata.billingNumber} onChange={CompanyData} />
                                             </div>
-                                        </form>
-                                    </div>
-                                ) : (
-                                    <>
-                                        <div className='company-profile-detail'>
-                                            <div className='company-detail-name'>
-                                                <p className='company-name'>Number Of Employes:</p>
-                                                <p className='company-name'>Data Established:</p>
-                                                <p className='company-name'>Anual Turnover :</p>
+                                            <div className='Bussiness-form-data'>
+                                                <label>Enter Street Name</label><br></br>
+                                                <input className='trade-expiry-dates form-width' type="text" placeholder='street' name='streetName' value={formdata.streetName} onChange={CompanyData} />
                                             </div>
-                                            <div className='company-detail-name'>
-                                                <p className='company-names'>{creditInfoData.numberOfEmployees}</p>
-                                                <p className='company-names'>{new Date(creditInfoData.dateEstablished).toLocaleDateString()}</p>
-                                                <p className='company-names'>{creditInfoData.annualTurnover}</p>
+                                            {/* country state and city */}
+                                            <div className='Bussiness-form-data'>
+                                                <label className=''>Country</label><br></br>
+                                                <select onChange={(e) => handleCountry(e)} className=' trade-expiry-dates form-width' name="country">
+                                                    <option value=''>Select Country</option>
+                                                    {country.map(items => <option key={items} value={getCountry}>{items}</option>)}
+                                                </select>
+                                            </div>
+                                            <div className='Bussiness-form-data'>
+                                                <label>State</label><br></br>
+                                                <select onChange={(e) => handleState(e)} className=' trade-expiry-dates form-width' name='state'>
+                                                    <option value=''>Select State</option>
+                                                    {getState.map(items => <option key={items} value={selectedState}>{items}</option>)}
+                                                </select>
+                                            </div>
+                                            <div className='Bussiness-form-data'>
+                                                <label>City</label><br></br>
+                                                <select onChange={(e) => handleCity(e)} className=' trade-expiry-dates form-width' name='city'>
+                                                    <option value=''>Select City</option>
+                                                    {cities.map((items, index) => <option key={index} value={items.name}>{items.name}</option>)}
+                                                </select>
+                                            </div>
+                                            <div className='Bussiness-form-data '>
+                                                <label>PO Box Number</label><br></br>
+                                                <input className='trade-expiry-dates form-width' type="text" placeholder='po box' name='poBoxNumber' value={formdata.poBoxNumber} onChange={CompanyData} />
                                             </div>
                                         </div>
-                                        <div className='credit-Edit'>
-                                            <button className='edit-detail-button' onClick={() => setCreditInfo(true)}>Edit</button>
+                                        <div className='savecancels'>
+                                            <button className='sv' type='submit'>Update</button>
+                                            <button type='button' onClick={() => setProfileDetail(false)}>Cancel</button>
                                         </div>
-                                    </>
-                                )}
-                            </div>
-                        </>
-                    </div>
-                </div>
-            </div>
-            {/* Save doucument value here */}
-            <>
-                {addDoc ? (
-                    <div className='responsive'>
-                        <div className='company-border'>
-                            <div className='company-padding'>
-                                <div className='company-profile-buyer'>
-                                    <div className='company-profile-name'>
-                                        <h4>Add your business documents</h4>
-                                    </div>
-                                    <div className='company-profile-name'>
-                                        <button className='edit-detail-button' onClick={() => setAddDoc(false)}>Add Document</button>
-                                    </div>
+                                    </form>
                                 </div>
-                                <div className='company-profile-logo'>
-                                    <p className='credit-info-detail'>Business documents let us verify you as a real business and allow you to interact with features of the site.</p>
-                                </div>
-                                {/* yaha se karna hai */}
-                                <div className='show-flex'>
-                                    <div className='show-flex-item'>
-                                        <div><h4 className='credit-info-details'>Trade License:</h4></div>
-                                        <div><p className='credit-info-details'>{uploadFileUpload.tradeNumber}</p></div>
-                                        <div>
-                                            <p className='credit-info-details'>Expiry Date:</p>
-                                            <div className='credit-info-details'><p>{uploadFileUpload.enddate}</p></div>
-                                        </div>
-                                        <div><p className='credit-info-details status-css'>{document.status === 'Approved' ? 'Approved' : 'Pending'}</p></div>
-                                        <div><p className='credit-info-details' onClick={dwnload}>Download</p></div>
-                                    </div>
-                                    <div className='show-flex-item'>
-                                        <div><h4 className='credit-info-details'>Identity Certificate:</h4></div>
-                                        <div><p className='credit-info-details'>{uploadFileUpload.identityNumber}</p></div>
-                                        <div><p className='credit-info-details'>Expiry Date:</p>
-                                            <div className='credit-info-details'><p>{uploadFileUpload.expirydate}</p></div>
-                                        </div>
-                                        <div><p className='credit-info-details status-css'>{uploadFileUpload.status === 'Approved' ? 'Approved' : 'Pending'}</p></div>
-                                        <div><p className='credit-info-details' onClick={dwnloadIden}>Download</p></div>
-                                    </div>
-                                    <div className='show-flex-item'>
-                                        <div><h4 className='credit-info-details'>VAT/GST Certificate:</h4></div>
-                                        <div><p className='credit-info-details'>{uploadFileUpload.gstNumber}</p></div>
-                                        <div><p className='credit-info-details'>-</p>
-                                            <div className='credit-info-details'><p></p></div>
-                                        </div>
-                                        <div><p className='credit-info-details status-css'>{uploadFileUpload.status === 'Approved' ? 'Approved' : 'Pending'}</p></div>
-                                        <div><p className='credit-info-details' onClick={dwnloadGST}>Download</p></div>
-                                    </div>
-                                    <div className='show-flex-item'>
-                                        <div><h4 className='credit-info-details'>Declaration Certificate:</h4></div>
-                                        <div><p className='credit-info-details'>-</p></div>
-                                        <div><p className='credit-info-details'>-</p>
-                                            <div className='credit-info-details'><p></p></div>
-                                        </div>
-                                        <div><p className='credit-info-details status-css'>{uploadFileUpload.status === 'Apporved' ? 'Approved' : 'Pending'}</p></div>
-                                        <div><p className='credit-info-details' onClick={dwnloadDecl}>Download</p></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ) : (
-                    <div className='responsive'>
-                        <div className='company-border'>
-                            <form onSubmit={handlefileData}>
-                                <div className='company-padding'>
+                            ) : (
+                                <div className='show-company-form'>
                                     <div className='company-profile-buyer'>
                                         <div className='company-profile-name'>
-                                            <h4>Bussiness Documents</h4>
+                                            <h4>Business Profile</h4>
+                                        </div>
+                                        <div className='company-profile-name'>
+                                            <button className='edit-detail-button' onClick={() => setProfileDetail(true)}>Edit Detail</button>
                                         </div>
                                     </div>
                                     <div className='company-profile-logo'>
-                                        <p className='credit-info-detail'>We need the following documents to verify your business and give you access to all Tradeling features. We will get in touch with you when these documents need to be renewed.</p>
+                                        {/* I want show only the first caracter and second first caracter */}
+                                        <h3 className='name-logo'>{user.firstname.charAt(0)}{user.lastname.charAt(0)}</h3>
                                     </div>
-                                    <div className='company-profile-detail trade-license-file'>
-                                        <div className='company-detail-name'>
-                                            <IoDocumentTextOutline className='trade-license' />
+                                    <div className=''>
+                                        <div className='company-detail-names'>
+                                            <p className='company-name'>Company Name:</p>
+                                            <p className='company-names '>{profile?.companyName}</p>
                                         </div>
-                                        <div className='company-detail-name'>
-                                            <h4>Trade License / Company Incorporation Certificate</h4>
-                                            <p className='file-formate'>Upload a copy of your Trade Licence. This lets us verify you as an official business. This can be a JPG, PNG, PDF, JPEG, TIF Or Any Other Formate Upload Doc</p>
-                                            <div>
-                                                {fileUpload && uploadFileUpload.selectedfile ? (
-                                                    <div className='file-upload'>
-                                                        {/*  I want add the content and on emore container */}
-                                                        <label htmlFor='file-upload-input'>
-                                                            <h3 className='file-name-show-here'>{uploadFileUpload.selectedfile}</h3>
-                                                        </label>
-                                                        <input
-                                                            id='file-upload-input'
-                                                            type='file'
-                                                            accept=" "
-                                                            style={{ display: 'none' }}
-                                                        />
-                                                        <div className='dow'>
-                                                            <MdOutlineFileDownload onClick={() => {
-                                                                console.log('Downloading file:', filePath);
-                                                                downloadFile(filePath);
-                                                            }} />
-                                                            <AiOutlineDelete onClick={() => handleDelete(selectedfile)} />
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <div className='file-upload-sections'>
-                                                        <input type='file' accept='' onChange={handlefileupload} name='tradeLicense' />
-                                                    </div>
-                                                )}
-                                            </div>
+                                        <div className='company-detail-names'>
+                                            <p className='company-name'>Bussiness Type:</p>
+                                            <p className='company-names'>{profile?.businessType}</p>
                                         </div>
-                                    </div>
-                                    <div className='licence'>
-                                        <div className='card-inputs expiry-title'>
-                                            <label className='expiry-title'> Expiry Date*</label><br></br>
-                                            <DatePicker name="enddate" selected={enddate}
-                                                onChange={(data) => {
-                                                    setEndDate(data);
-                                                    setUploadFileUpload({ ...uploadFileUpload, enddate: data.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' }) });
-                                                }}
-                                                value={uploadFileUpload.enddate}
-                                                onFocus={handleFocus}
-                                                minDate={new Date()}
-                                                onBlur={handleBlur} placeholderText='Expire Date'
-                                                className='card-input-value date trade-expiry-date  custom-datepicker-width '
-                                                disabled={fileUpload ? false : true} />
+                                        <div className='company-detail-names'>
+                                            <p className='company-name'> Billing Email Address:</p>
+                                            <p className='company-names'>{profile?.billingEmail}</p>
                                         </div>
-                                        <div className='expiry-title'>
-                                            <label className='expiry-title'> Trade Licence Number*</label><br></br>
-                                            <input type='number' onChange={handlefileValue} value={uploadFileUpload.tradeNumber} name='tradeNumber' className='card-input-value trade-expiry-dates' placeholder='Trade Number' disabled={fileUpload ? false : true} />
+                                        <div className='company-detail-names'>
+                                            <p className='company-name'>Billing Number:</p>
+                                            <p className='company-names'>{profile?.billingNumber}</p>
                                         </div>
-                                    </div>
-                                    <div className='company-profile-detail trade-license-file'>
-                                        <div className='company-detail-name'>
-                                            <PiIdentificationCardDuotone className='trade-license' />
+                                        <div className='company-detail-names'>
+                                            <p className='company-name'>Street Name:</p>
+                                            <p className='company-names'>{profile?.streetName}</p>
                                         </div>
-                                        <div className='company-detail-name'>
-                                            <h4>Identity Document </h4>
-                                            <p className='file-formate'>Your  ID lets us verify your Trade Licence. We need this to confirm you are a representative of the business.  Alternatively you can upload a copy of your passport </p>
-                                            <div>
-                                                {identityFileUpload && uploadFileUpload.selectedidentityFile ? (
-                                                    <div className='file-upload'>
-                                                        <label htmlFor='file-upload-input'>
-                                                            <h3>{uploadFileUpload.selectedidentityFile}</h3>
-                                                        </label>
-                                                        <input
-                                                            id='file-upload-input'
-                                                            type='file'
-                                                            accept=''
-                                                            style={{ display: 'none' }} />
-                                                        <div className='dow'>
-                                                            <MdOutlineFileDownload onClick={() => dounloadIdentity(identityPath)} />
-                                                            <AiOutlineDelete onClick={() => handleIdentityDelete(selectedidentityFile)} />
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <div className='file-upload-sections'>
-                                                        <input type='file' accept='' onChange={handleIdentiyfile} name='identity' />
-                                                    </div>
-                                                )}
-                                            </div>
+                                        <div className='company-detail-names'>
+                                            <p className='company-name'>Country:</p>
+                                            <p className='company-names'>{profile?.country}</p>
                                         </div>
-                                    </div>
-                                    <div className='licence'>
-                                        <div className='card-inputs expiry-title'>
-                                            <label className='expiry-title'> Expiry Date*</label><br></br>
-                                            <DatePicker name="expirydate" selected={expirydate}
-                                                onChange={(data) => {
-                                                    setExpiryDate(data);
-                                                    setUploadFileUpload({ ...uploadFileUpload, expirydate: data.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' }) });
-                                                }}
-                                                value={uploadFileUpload.expirydate}
-                                                onFocus={handleFocus}
-                                                onBlur={handleBlur} placeholderText='Expire Date'
-                                                minDate={new Date()}
-                                                className='card-input-value date trade-expiry-date custom-datepicker-width ' disabled={identityFileUpload ? false : true} />
+                                        <div className='company-detail-names'>
+                                            <p className='company-name'>State:</p>
+                                            <p className='company-names'>{profile?.state}</p>
                                         </div>
-                                        <div className='expiry-title'>
-                                            <label className='expiry-title'> Identity Document Number*</label><br></br>
-                                            <input type='number' onChange={handlefileValue} value={uploadFileUpload.identityNumber} name='identityNumber' className='card-input-value trade-expiry-dates' placeholder='Identiy Number' disabled={identityFileUpload ? false : true} />
+                                        <div className='company-detail-names'>
+                                            <p className='company-name'>City:</p>
+                                            <p className='company-names'>{profile?.city}</p>
                                         </div>
-                                    </div>
-                                    <div className='company-profile-detail trade-license-file'>
-                                        <div className='company-detail-name'>
-                                            <PiCertificateLight className='trade-license' />
-                                        </div>
-                                        <div className='company-detail-name'>
-                                            <h4>VAT Certificate / GST Certifiacte </h4>
-                                            <p className='file-formate'>Your VAT Certificate / GST Certificate contains information needed for Ulinkit to provide you with invoices. Upload a copy of your VAT Certificate / GST Certificate</p>
-                                            <div>
-                                                {vatcertificate && uploadFileUpload.selectedVatCertificate ? (
-                                                    <div className='file-upload'>
-                                                        <label htmlFor='file-upload-input'>
-                                                            <h3>{uploadFileUpload.selectedVatCertificate}</h3>
-                                                        </label>
-                                                        <input
-                                                            id='file-upload-input'
-                                                            type='file'
-                                                            accept=''
-                                                            style={{ display: 'none' }} />
-                                                        <div className='dow'>
-                                                            <MdOutlineFileDownload onClick={() => dounloadgst(gstPath)} />
-                                                            <AiOutlineDelete onClick={() => DeleteVat(selectedVatCertificate)} />
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <div className='file-upload-sections'>
-                                                        <input className='' type='file' accept='' onChange={handleVatCertificate} name='vatCertificate' />
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className='licence'>
-                                        <div className='expiry-title'>
-                                            <label className='expiry-title'> VAT Certificate Number / GST Certificate Number *</label><br></br>
-                                            <input type='number' onChange={handlefileValue} value={uploadFileUpload.gstNumber} name='gstNumber' className='card-input-value trade-expiry-dates' placeholder='VAT Number' disabled={vatcertificate ? false : true} />
-                                        </div>
-                                    </div>
-                                    <div className='company-profile-detail trade-license-file'>
-                                        <div className='company-detail-name'>
-                                            <PiCertificateLight className='trade-license' />
-                                        </div>
-                                        <div className='company-detail-name'>
-                                            <h4>Declaration of VAT Exemption (Resellers)</h4>
-                                            <p className='file-formate'>Upload a copy of your VAT/GST Exempted Reseller Certificate. This lets us verify you as an exempted byuer. This can be a JPG, PNG, PDF, JPEG, TIF. Or Any Formate </p>
-                                            <div>
-                                                {declaration && uploadFileUpload.selectedDeclaration ? (
-                                                    <div className='file-upload'>
-                                                        <label htmlFor='file-upload-input'>
-                                                            <h3>{uploadFileUpload.selectedDeclaration}</h3>
-                                                        </label>
-                                                        <input
-                                                            id='file-upload-input'
-                                                            type='file'
-                                                            accept=''
-                                                            style={{ display: 'none' }} />
-                                                        <div className='dow'>
-                                                            <MdOutlineFileDownload onClick={() => dounloaddecleration(declarationPath)} />
-                                                            <AiOutlineDelete onClick={() => deleteDecleration(selectedDeclaration)} />
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <div className='file-upload-sections'>
-                                                        <input type='file' accept='' onChange={handleDeclaration} name='declaration' />
-                                                    </div>
-                                                )}
-                                            </div>
+                                        <div className='company-detail-names'>
+                                            <p className='company-name'>PO Box Number:</p>
+                                            <p className='company-names'>{profile?.poBoxNumber}</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div className='savecancel'>
-                                    <button type='submit' className='sv'>Save</button>
-                                    <button onClick={handleCancel} >Cancel</button>
-                                </div>
-                            </form>
+                            )}
                         </div>
                     </div>
-                )}
-            </>
+                </div>
+                <div className='responsive'>
+                    <div className='company-border'>
+                        <div className='company-padding'>
+                            <div className='company-profile-buyer'>
+                                <div className='company-profile-name'>
+                                    <CiCircleInfo className='info-icons' />
+                                    <h4>Credit Information</h4>
+                                </div>
+                            </div>
+                            <div className='company-profile-logo'>
+                                <p className='credit-info-detail'>This additional information will be used when assessing your eligibility for Credit Line.</p>
+                            </div>
+                            <>
+                                <div>
+                                    {creditInfo ? (
+                                        <div className='Bussines-Form'>
+                                            <form onSubmit={creditSubmit}>
+                                                <div className='Bussiness-form-data'>
+                                                    <label>Number of employeses*</label><br></br>
+                                                    <input className='trade-expiry-dates form-width' type="text" placeholder='number of employse' name='numberOfEmployees' value={creditInfoData.numberOfEmployees} onChange={creditInfoShow} />
+                                                </div>
+                                                <div className='Bussiness-form-data'>
+                                                    <label>Date Established*</label><br></br>
+                                                    <DatePicker name="dateEstablished" selected={dateEstablished || null}
+                                                        onChange={(data) => {
+                                                            const formattedDate = data.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                                                            setCreditInfoData(prevState => ({
+                                                                ...prevState,
+                                                                dateEstablished: formattedDate
+                                                            }));
+                                                            setDateEstablished(data);
+                                                        }}
+                                                        onFocus={handleFocus}
+                                                        minDate={new Date()}
+                                                        onBlur={handleBlur} placeholderText='Expire Date'
+                                                        className='card-input-value date trade-expiry-date  custom-datepicker-widths' />
+                                                </div>
+                                                <div className='Bussiness-form-data'>
+                                                    <label>Anual Turnover*</label><br></br>
+                                                    <input className='trade-expiry-dates form-width' type="text" placeholder='anual turnover' name='annualTurnover' value={creditInfoData.annualTurnover} onChange={creditInfoShow} />
+                                                </div>
+                                                <div className='savecancels'>
+                                                    <button className='sv' type='submit'>Update</button>
+                                                    <button type='button' onClick={() => setCreditInfo(false)}>Cancel</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <div className='company-profile-detail'>
+                                                <div className='company-detail-name'>
+                                                    <p className='company-name'>Number Of Employes:</p>
+                                                    <p className='company-name'>Data Established:</p>
+                                                    <p className='company-name'>Anual Turnover :</p>
+                                                </div>
+                                                <div className='company-detail-name'>
+                                                    <p className='company-names'>{creditInfoData.numberOfEmployees}</p>
+                                                    <p className='company-names'>{new Date(creditInfoData.dateEstablished).toLocaleDateString()}</p>
+                                                    <p className='company-names'>{creditInfoData.annualTurnover}</p>
+                                                </div>
+                                            </div>
+                                            <div className='credit-Edit'>
+                                                <button className='edit-detail-button' onClick={() => setCreditInfo(true)}>Edit</button>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            </>
+                        </div>
+                    </div>
+                </div>
+                {/* Save doucument value here */}
+                <>
+                    {addDoc ? (
+                        <div className='responsive'>
+                            <div className='company-border'>
+                                <div className='company-padding'>
+                                    <div className='company-profile-buyer'>
+                                        <div className='company-profile-name'>
+                                            <h4>Add your business documents</h4>
+                                        </div>
+                                        <div className='company-profile-name'>
+                                            <button className='edit-detail-button' onClick={() => setAddDoc(false)}>Add Document</button>
+                                        </div>
+                                    </div>
+                                    <div className='company-profile-logo'>
+                                        <p className='credit-info-detail'>Business documents let us verify you as a real business and allow you to interact with features of the site.</p>
+                                    </div>
+                                    {/* yaha se karna hai */}
+                                    <div className='show-flex'>
+                                        <div className='show-flex-item'>
+                                            <div><h4 className='credit-info-details'>Trade License:</h4></div>
+                                            <div><p className='credit-info-details'>{uploadFileUpload.tradeNumber}</p></div>
+                                            <div>
+                                                <p className='credit-info-details'>Expiry Date:</p>
+                                                <div className='credit-info-details'><p>{uploadFileUpload.enddate}</p></div>
+                                            </div>
+                                            <div><p className='credit-info-details status-css'>{document.status === 'Approved' ? 'Approved' : 'Pending'}</p></div>
+                                            <div><p className='credit-info-details' onClick={dwnload}>Download</p></div>
+                                        </div>
+                                        <div className='show-flex-item'>
+                                            <div><h4 className='credit-info-details'>Identity Certificate:</h4></div>
+                                            <div><p className='credit-info-details'>{uploadFileUpload.identityNumber}</p></div>
+                                            <div><p className='credit-info-details'>Expiry Date:</p>
+                                                <div className='credit-info-details'><p>{uploadFileUpload.expirydate}</p></div>
+                                            </div>
+                                            <div><p className='credit-info-details status-css'>{uploadFileUpload.status === 'Approved' ? 'Approved' : 'Pending'}</p></div>
+                                            <div><p className='credit-info-details' onClick={dwnloadIden}>Download</p></div>
+                                        </div>
+                                        <div className='show-flex-item'>
+                                            <div><h4 className='credit-info-details'>VAT/GST Certificate:</h4></div>
+                                            <div><p className='credit-info-details'>{uploadFileUpload.gstNumber}</p></div>
+                                            <div><p className='credit-info-details'>-</p>
+                                                <div className='credit-info-details'><p></p></div>
+                                            </div>
+                                            <div><p className='credit-info-details status-css'>{uploadFileUpload.status === 'Approved' ? 'Approved' : 'Pending'}</p></div>
+                                            <div><p className='credit-info-details' onClick={dwnloadGST}>Download</p></div>
+                                        </div>
+                                        <div className='show-flex-item'>
+                                            <div><h4 className='credit-info-details'>Declaration Certificate:</h4></div>
+                                            <div><p className='credit-info-details'>-</p></div>
+                                            <div><p className='credit-info-details'>-</p>
+                                                <div className='credit-info-details'><p></p></div>
+                                            </div>
+                                            <div><p className='credit-info-details status-css'>{uploadFileUpload.status === 'Apporved' ? 'Approved' : 'Pending'}</p></div>
+                                            <div><p className='credit-info-details' onClick={dwnloadDecl}>Download</p></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className='responsive'>
+                            <div className='company-border'>
+                                <form onSubmit={handlefileData}>
+                                    <div className='company-padding'>
+                                        <div className='company-profile-buyer'>
+                                            <div className='company-profile-name'>
+                                                <h4>Bussiness Documents</h4>
+                                            </div>
+                                        </div>
+                                        <div className='company-profile-logo'>
+                                            <p className='credit-info-detail'>We need the following documents to verify your business and give you access to all Tradeling features. We will get in touch with you when these documents need to be renewed.</p>
+                                        </div>
+                                        <div className='company-profile-detail trade-license-file'>
+                                            <div className='company-detail-name'>
+                                                <IoDocumentTextOutline className='trade-license' />
+                                            </div>
+                                            <div className='company-detail-name'>
+                                                <h4>Trade License / Company Incorporation Certificate</h4>
+                                                <p className='file-formate'>Upload a copy of your Trade Licence. This lets us verify you as an official business. This can be a JPG, PNG, PDF, JPEG, TIF Or Any Other Formate Upload Doc</p>
+                                                <div>
+                                                    {fileUpload && uploadFileUpload.selectedfile ? (
+                                                        <div className='file-upload'>
+                                                            {/*  I want add the content and on emore container */}
+                                                            <label htmlFor='file-upload-input'>
+                                                                <h3 className='file-name-show-here'>{uploadFileUpload.selectedfile}</h3>
+                                                            </label>
+                                                            <input
+                                                                id='file-upload-input'
+                                                                type='file'
+                                                                accept=" "
+                                                                style={{ display: 'none' }}
+                                                            />
+                                                            <div className='dow'>
+                                                                <MdOutlineFileDownload onClick={() => {
+                                                                    console.log('Downloading file:', filePath);
+                                                                    downloadFile(filePath);
+                                                                }} />
+                                                                <AiOutlineDelete onClick={() => handleDelete(selectedfile)} />
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <div className='file-upload-sections'>
+                                                            <input type='file' accept='' onChange={handlefileupload} name='tradeLicense' />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='licence'>
+                                            <div className='card-inputs expiry-title'>
+                                                <label className='expiry-title'> Expiry Date*</label><br></br>
+                                                <DatePicker name="enddate" selected={enddate}
+                                                    onChange={(data) => {
+                                                        setEndDate(data);
+                                                        setUploadFileUpload({ ...uploadFileUpload, enddate: data.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' }) });
+                                                    }}
+                                                    value={uploadFileUpload.enddate}
+                                                    onFocus={handleFocus}
+                                                    minDate={new Date()}
+                                                    onBlur={handleBlur} placeholderText='Expire Date'
+                                                    className='card-input-value date trade-expiry-date  custom-datepicker-width '
+                                                    disabled={fileUpload ? false : true} />
+                                            </div>
+                                            <div className='expiry-title'>
+                                                <label className='expiry-title'> Trade Licence Number*</label><br></br>
+                                                <input type='number' onChange={handlefileValue} value={uploadFileUpload.tradeNumber} name='tradeNumber' className='card-input-value trade-expiry-dates' placeholder='Trade Number' disabled={fileUpload ? false : true} />
+                                            </div>
+                                        </div>
+                                        <div className='company-profile-detail trade-license-file'>
+                                            <div className='company-detail-name'>
+                                                <PiIdentificationCardDuotone className='trade-license' />
+                                            </div>
+                                            <div className='company-detail-name'>
+                                                <h4>Identity Document </h4>
+                                                <p className='file-formate'>Your  ID lets us verify your Trade Licence. We need this to confirm you are a representative of the business.  Alternatively you can upload a copy of your passport </p>
+                                                <div>
+                                                    {identityFileUpload && uploadFileUpload.selectedidentityFile ? (
+                                                        <div className='file-upload'>
+                                                            <label htmlFor='file-upload-input'>
+                                                                <h3>{uploadFileUpload.selectedidentityFile}</h3>
+                                                            </label>
+                                                            <input
+                                                                id='file-upload-input'
+                                                                type='file'
+                                                                accept=''
+                                                                style={{ display: 'none' }} />
+                                                            <div className='dow'>
+                                                                <MdOutlineFileDownload onClick={() => dounloadIdentity(identityPath)} />
+                                                                <AiOutlineDelete onClick={() => handleIdentityDelete(selectedidentityFile)} />
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <div className='file-upload-sections'>
+                                                            <input type='file' accept='' onChange={handleIdentiyfile} name='identity' />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='licence'>
+                                            <div className='card-inputs expiry-title'>
+                                                <label className='expiry-title'> Expiry Date*</label><br></br>
+                                                <DatePicker name="expirydate" selected={expirydate}
+                                                    onChange={(data) => {
+                                                        setExpiryDate(data);
+                                                        setUploadFileUpload({ ...uploadFileUpload, expirydate: data.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' }) });
+                                                    }}
+                                                    value={uploadFileUpload.expirydate}
+                                                    onFocus={handleFocus}
+                                                    onBlur={handleBlur} placeholderText='Expire Date'
+                                                    minDate={new Date()}
+                                                    className='card-input-value date trade-expiry-date custom-datepicker-width ' disabled={identityFileUpload ? false : true} />
+                                            </div>
+                                            <div className='expiry-title'>
+                                                <label className='expiry-title'> Id
+
+
+                                                    waentity Document Number*</label><br></br>
+                                                <input type='number' onChange={handlefileValue} value={uploadFileUpload.identityNumber} name='identityNumber' className='card-input-value trade-expiry-dates' placeholder='Identiy Number' disabled={identityFileUpload ? false : true} />
+                                            </div>
+                                        </div>
+                                        <div className='company-profile-detail trade-license-file'>
+                                            <div className='company-detail-name'>
+                                                <PiCertificateLight className='trade-license' />
+                                            </div>
+                                            <div className='company-detail-name'>
+                                                <h4>VAT Certificate / GST Certifiacte </h4>
+                                                <p className='file-formate'>Your VAT Certificate / GST Certificate contains information needed for Ulinkit to provide you with invoices. Upload a copy of your VAT Certificate / GST Certificate</p>
+                                                <div>
+                                                    {vatcertificate && uploadFileUpload.selectedVatCertificate ? (
+                                                        <div className='file-upload'>
+                                                            <label htmlFor='file-upload-input'>
+                                                                <h3>{uploadFileUpload.selectedVatCertificate}</h3>
+                                                            </label>
+                                                            <input
+                                                                id='file-upload-input'
+                                                                type='file'
+                                                                accept=''
+                                                                style={{ display: 'none' }} />
+                                                            <div className='dow'>
+                                                                <MdOutlineFileDownload onClick={() => dounloadgst(gstPath)} />
+                                                                <AiOutlineDelete onClick={() => DeleteVat(selectedVatCertificate)} />
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <div className='file-upload-sections'>
+                                                            <input className='' type='file' accept='' onChange={handleVatCertificate} name='vatCertificate' />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className='licence'>
+                                            <div className='expiry-title'>
+                                                <label className='expiry-title'> VAT Certificate Number / GST Certificate Number *</label><br></br>
+                                                <input type='number' onChange={handlefileValue} value={uploadFileUpload.gstNumber} name='gstNumber' className='card-input-value trade-expiry-dates' placeholder='VAT Number' disabled={vatcertificate ? false : true} />
+                                            </div>
+                                        </div>
+                                        <div className='company-profile-detail trade-license-file'>
+                                            <div className='company-detail-name'>
+                                                <PiCertificateLight className='trade-license' />
+                                            </div>
+                                            <div className='company-detail-name'>
+                                                <h4>Declaration of VAT Exemption (Resellers)</h4>
+                                                <p className='file-formate'>Upload a copy of your VAT/GST Exempted Reseller Certificate. This lets us verify you as an exempted byuer. This can be a JPG, PNG, PDF, JPEG, TIF. Or Any Formate </p>
+                                                <div>
+                                                    {declaration && uploadFileUpload.selectedDeclaration ? (
+                                                        <div className='file-upload'>
+                                                            <label htmlFor='file-upload-input'>
+                                                                <h3>{uploadFileUpload.selectedDeclaration}</h3>
+                                                            </label>
+                                                            <input
+                                                                id='file-upload-input'
+                                                                type='file'
+                                                                accept=''
+                                                                style={{ display: 'none' }} />
+                                                            <div className='dow'>
+                                                                <MdOutlineFileDownload onClick={() => dounloaddecleration(declarationPath)} />
+                                                                <AiOutlineDelete onClick={() => deleteDecleration(selectedDeclaration)} />
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <div className='file-upload-sections'>
+                                                            <input type='file' accept='' onChange={handleDeclaration} name='declaration' />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className='savecancel'>
+                                        <button type='submit' className='sv'>Save</button>
+                                        <button onClick={handleCancel} >Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    )}
+                </>
+            </Fragment>
         </>
     );
 }

@@ -31,7 +31,9 @@ const PaymentSuccess = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Payment Success</title>
+                <title>Payment Success | Ulinkit - Thank You for Your Purchase</title>
+                <meta name="description" content="Your payment was successful! Thank you for shopping with Ulinkit. Check your order details and enjoy your purchase with our secure and efficient online platform." />
+                <link rel="canonical" href="https://www.ulinkit.com/payment-success" />
             </Helmet>
             <article className='flexcol paymentsuccess'>
                 <h1 className="heading">Order placed successfully!</h1>

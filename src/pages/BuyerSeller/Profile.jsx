@@ -44,14 +44,14 @@ const Profile = () => {
 
         try {
             await dispatch(updateUserDetails(profile)).unwrap();
-            toast(<div className='toaster'> < VerifiedIcon /> {`Profile updated successfully!`}</div>, 
+            toast(<div className='toaster'> < VerifiedIcon /> {`Profile updated successfully!`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } catch (error) {
-        
-            toast(<div className='toaster'> < NewReleasesIcon /> {`Error updating profile`}</div>, 
+
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Error updating profile`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } finally {
-            setIsSubmitting(false);  
+            setIsSubmitting(false);
             setIsEditing(false);
         }
     };
@@ -98,7 +98,9 @@ const Profile = () => {
     return (
         <div className="flexcol wh product-detail">
             <Helmet>
-                <title>My Profile</title>
+                <title>Your Profile | Ulinkit - Manage Your Account Information</title>
+                <meta name="description" content="View and update your personal information on Ulinkit. Manage your account details, preferences, and settings for a personalized shopping experience." />
+                <link rel="canonical" href="https://www.ulinkit.com/profile" />
             </Helmet>
             <article className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <h1 className="heading5">My Profile</h1> <Link to={getDashboardLink()} className='heading3'>Back</Link>
@@ -110,7 +112,7 @@ const Profile = () => {
                     <form className="profile-sel-box" onSubmit={handleSubmit(onSubmit)}>
                         <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><AccountCircleIcon /> <div className="heading3">My Profile</div></div>
                         {isEditing ? (
-                            <div className="flex profileinput" style={{ gap: '50px', justifyContent: 'start'}}>
+                            <div className="flex profileinput" style={{ gap: '50px', justifyContent: 'start' }}>
                                 <div className="flexcol wh" style={{ alignItems: 'start', gap: '10px' }}>
                                     <div className="flex wh" style={{ gap: '30px' }}>
                                         <Controller name="firstname" control={control} defaultValue={user.firstname || ''} render={({ field }) => <input autoComplete='off' className="box  flex" placeholder='Enter your first name' {...field} />} />
@@ -170,7 +172,7 @@ const Profile = () => {
                         )}
                         {isEditing ? (
                             <div className="flex" style={{ gap: '20px' }}>
-                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }}  disabled={isSubmitting}> {isSubmitting ? 'Saving...' : 'Save'}</button>
+                                <button className="btn flex box" type='submit' style={{ width: '100px', cursor: 'pointer' }} disabled={isSubmitting}> {isSubmitting ? 'Saving...' : 'Save'}</button>
                                 <button className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={cancel}>Cancel</button>
                             </div>
                         ) : (

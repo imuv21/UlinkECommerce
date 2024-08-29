@@ -68,11 +68,11 @@ const PaymentDetails = () => {
 
         try {
             await dispatch(addBankDetails({ bankDetails })).unwrap();
-            toast(<div className='toaster'> < VerifiedIcon /> {`Bank details added successfully`}</div>, 
+            toast(<div className='toaster'> < VerifiedIcon /> {`Bank details added successfully`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } catch (err) {
-         
-            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to update bank details`}</div>, 
+
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to update bank details`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } finally {
             setIsSubmitting(false);
@@ -97,7 +97,9 @@ const PaymentDetails = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
-                <title>Add A Bank Account</title>
+                <title>Add a Bank Account | Ulinkit - Set Up Your Payment Information</title>
+                <meta name="description" content="Add a new bank account to your Ulinkit profile for seamless transactions. Ensure your payment information is up-to-date for accurate and timely financial operations." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/add-a-bank-account" />
             </Helmet>
             <h1 className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={backtopayment} />&nbsp;&nbsp;Add a new account</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="productlist2">
@@ -151,7 +153,7 @@ const PaymentDetails = () => {
                 </div>
 
                 <div className="flex" style={{ gap: '20px' }}>
-                    <button type='submit' className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2"  disabled={isSubmitting}> {isSubmitting ? 'Saving...' : 'Save'} </div></button>
+                    <button type='submit' className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2" disabled={isSubmitting}> {isSubmitting ? 'Saving...' : 'Save'} </div></button>
                     <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Cancel</div></button>
                 </div>
             </form>

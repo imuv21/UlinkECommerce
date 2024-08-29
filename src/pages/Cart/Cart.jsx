@@ -32,7 +32,7 @@ const Cart = () => {
     const priceInUSD = price / exchangeRates[fromCurrency];
     return (priceInUSD * rate).toFixed(2);
   };
-  
+
   const [moq, setMoq] = useState(1);
   const [quantities, setQuantities] = useState({});
 
@@ -124,7 +124,9 @@ const Cart = () => {
   return (
     <div className="flexcol wh cart_page">
       <Helmet>
-        <title>Cart</title>
+        <title>Your Cart | Ulinkit - Review and Manage Your Items</title>
+        <meta name="description" content="View and manage the items in your cart on Ulinkit. Review product details, adjust quantities, and proceed to checkout for a seamless shopping experience." />
+        <link rel="canonical" href="https://www.ulinkit.com/cart" />
       </Helmet>
       <article className="flex wh">
         {/* <div className="heading2">Total (AUD) : {totalPriceWithGST}</div>
@@ -158,7 +160,7 @@ const Cart = () => {
                       <span style={{ fontWeight: 'bold', fontSize: '15px' }}>{currencySymbol} {Number(item.sellPrice).toFixed(2)} {currency}</span>
                     </div>
                     <div className="moq-gst">
-                      <div className="descrip" style={{display : 'none'}}>Min Order Quantity: {item.minOrderQuant}</div>
+                      <div className="descrip" style={{ display: 'none' }}>Min Order Quantity: {item.minOrderQuant}</div>
                       <div className="descrip">GST: {item.gst}</div>
                     </div>
                   </div>

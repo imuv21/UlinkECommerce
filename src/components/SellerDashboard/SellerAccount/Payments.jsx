@@ -48,7 +48,9 @@ const Payments = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
-                <title>Payment Details</title>
+                <title>Payment Details | Ulinkit - Review and Confirm Your Payment Information</title>
+                <meta name="description" content="Review and confirm your payment details on Ulinkit. Ensure all information is accurate for a smooth and secure transaction process during checkout." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/payments" />
             </Helmet>
             <h1 className="heading flex">Payment Details</h1>
 
@@ -84,7 +86,7 @@ const Payments = () => {
                                 <div className="flexcol-start" style={{ gap: '10px' }}>
                                     <div className="flex" style={{ gap: '20px' }}>
                                         <div className="heading3">{bank.bankName}</div>
-                                        {bank.defaultValue && <div className='warning-btn4' style={{ padding: '2px 10px'}}>Default</div>}
+                                        {bank.defaultValue && <div className='warning-btn4' style={{ padding: '2px 10px' }}>Default</div>}
                                     </div>
                                     <div className="flex" style={{ gap: '10px' }}>
                                         <div className='descrip2'>Location: {bank.bankLocation}</div>

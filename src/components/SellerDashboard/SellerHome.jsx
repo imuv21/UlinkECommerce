@@ -106,7 +106,7 @@ const SellerHome = () => {
                     const identityDocumentStatus = IDENTITY_DOCUMENT.status;
                     const tradeLicenseStatus = TRADE_LICENSE.status;
                     const allDocumentsVerified = identityDocumentStatus === 'VERIFIED' && tradeLicenseStatus === 'PENDING';
-                    setSteps(prevSteps => prevSteps.map(step => 
+                    setSteps(prevSteps => prevSteps.map(step =>
                         step.step === 2 ? { ...step, completed: allDocumentsVerified } : step
                     ));
                 } else {
@@ -119,7 +119,7 @@ const SellerHome = () => {
             console.log('Error updating steps:', error);
         }
     }, [sellerprofile]);
-    
+
 
 
 
@@ -277,7 +277,9 @@ const SellerHome = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
-                <title>Seller Dashboard</title>
+                <title>Seller Dashboard | Ulinkit - Manage Your Store and Sales</title>
+                <meta name="description" content="Access your seller dashboard on Ulinkit to manage your store, track sales, and monitor performance. Get insights and tools to optimize your online business effectively." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/seller-home" />
             </Helmet>
 
             {isAuthenticated && (
@@ -397,7 +399,7 @@ const SellerHome = () => {
                                 {isAuthenticated && (
                                     <div className="heading3 name">{user.firstname} {user.lastname}</div>
                                 )}
-                                { isVerifiedSeller ?
+                                {isVerifiedSeller ?
                                     (<div className="warning-btn2 flex"><VerifiedIcon style={{ width: '13px' }} />Verified Seller</div>) :
                                     (<div className="warning-btn3 flex"><NewReleasesIcon style={{ width: '13px' }} />Unverified Seller</div>)
                                 }

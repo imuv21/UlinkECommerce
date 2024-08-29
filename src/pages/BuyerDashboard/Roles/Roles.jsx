@@ -7,9 +7,11 @@ import { Helmet } from 'react-helmet-async';
 const Roles = () => {
     return (
         <Fragment>
-            <Helmet>
-                <title>Rules And Permissions</title>
-            </Helmet>
+              <Helmet>
+            <title>Rules and Permissions | Ulinkit - Manage Your Access and Permissions</title>
+            <meta name="description" content="View and manage your rules and permissions on Ulinkit. Understand your access levels, roles, and what actions you can perform within the system." />
+            <link rel="canonical" href="https://www.ulinkit.com/roles" />
+        </Helmet>
             <div className='responsive'>
                 <div className='userDashboard'>
                     <h1 className='user-titles pay-title rules-left'>Rules and Permissions</h1>
@@ -28,50 +30,50 @@ const Roles = () => {
                     <div className='border-1 bor-1 management-border' >
                         <div className='card-details-table'>
                             <div className='table-1'>Invite and deactivate accounts</div>
-                            <div className='table-1'><img className='true' src={True}></img></div>
-                            <div className='table-1'><img className='wrong' src={Wrong}></img></div>
+                            <div className='table-1'><img className='true' src={True} alt='true'></img></div>
+                            <div className='table-1'><img className='wrong' src={Wrong } alt='wrong'></img></div>
                             <div className='table-1'>
-                            <img className='wrong' src={Wrong}></img>
+                            <img className='wrong' src={Wrong} alt='wrong'/>
                             </div>
                         </div>
                     </div>
                     <div className='border-1 bor-1 management-border'>
                         <div className='card-details-table'>
                             <div className='table-1'>Assign roles</div>
-                            <div className='table-1'><img className='true' src={True}></img></div>
-                            <div className='table-1'><img className='wrong' src={Wrong}></img></div>
+                            <div className='table-1'><img className='true' src={True} alt='true'></img></div>
+                            <div className='table-1'><img className='wrong' src={Wrong} alt='wrong'></img></div>
                             <div className='table-1'>
-                            <img className='wrong' src={Wrong}></img>
+                            <img className='wrong' src={Wrong} alt='wrong'/>
                             </div>
                         </div>
                     </div>
                     <div className='border-1 bor-1 management-border'>
                         <div className='card-details-table'>
                             <div className='table-1'>Edit business documents</div>
-                            <div className='table-1'><img className='true' src={True}></img></div>
-                            <div className='table-1'><img className='wrong' src={Wrong}></img></div>
+                            <div className='table-1'><img className='true' src={True} alt='true'></img></div>
+                            <div className='table-1'><img className='wrong' src={Wrong} alt='wrong'></img></div>
                             <div className='table-1'>
-                            <img className='wrong' src={Wrong}></img>
+                            <img className='wrong' src={Wrong} alt='wrong'/>
                             </div>
                         </div>
                     </div>
                     <div className='border-1 bor-1 management-border'>
                         <div className='card-details-table'>
                             <div className='table-1'>Edit company details</div>
-                            <div className='table-1'><img className='true' src={True}></img></div>
-                            <div className='table-1'><img className='wrong' src={Wrong}></img></div>
+                            <div className='table-1'><img className='true' src={True} alt='true'></img></div>
+                            <div className='table-1'><img className='wrong' src={Wrong} alt='worng'></img></div>
                             <div className='table-1'>
-                            <img className='wrong' src={Wrong}></img>
+                            <img className='wrong' src={Wrong} alt='wrong'/>
                             </div>
                         </div>
                     </div>
                     <div className='border-1 bor-1 management-border'>
                         <div className='card-details-table'>
                             <div className='table-1'>Update financial details</div>
-                            <div className='table-1'><img className='true' src={True}></img></div>
-                            <div className='table-1'><img className='wrong' src={Wrong}></img></div>
+                            <div className='table-1'><img className='true' src={True} alt='true'></img></div>
+                            <div className='table-1'><img className='wrong' src={Wrong} alt='wrong'></img></div>
                             <div className='table-1'>
-                            <img className='wrong' src={Wrong}></img>
+                            <img className='wrong' src={Wrong} alt='wrong'/>
                             </div>
                         </div>
                     </div>
@@ -91,7 +93,7 @@ const Roles = () => {
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'>
-                            <img className='wrong' src={Wrong}></img>
+                            <img className='wrong' src={Wrong} alt='wrong'/>
                             </div>
                         </div>
                     </div>
@@ -101,7 +103,7 @@ const Roles = () => {
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'>
-                            <img className='wrong' src={Wrong}></img>
+                            <img className='wrong' src={Wrong} alt='wrong'/>
                             </div>
                         </div>
                     </div>
@@ -120,27 +122,27 @@ const Roles = () => {
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'>
-                            <img className='true' src={True}></img>
+                            <img className='true' src={True} alt='true'/>
                             </div>
                         </div>
                     </div>
                     <div className='border-1 bor-1 management-border'>
                         <div className='card-details-table'>
                             <div className='table-1'>Respond to all messages and enquiries</div>
-                            <div className='table-1'><img className='true' src={True}></img></div>
-                            <div className='table-1'><img className='true' src={True}></img></div>
+                            <div className='table-1'><img className='true' src={True} alt='true'></img></div>
+                            <div className='table-1'><img className='true' src={True} alt='true'></img></div>
                             <div className='table-1'>
-                            <img className='true' src={True}></img>
+                            <img className='true' src={True} alt='true'/>
                             </div>
                         </div>
                     </div>
                     <div className='border-1 bor-1 management-border'>
                         <div className='card-details-table'>
                             <div className='table-1'>Archive enquiries</div>
-                            <div className='table-1'><img className='true' src={True}></img></div>
-                            <div className='table-1'><img className='true' src={True}></img></div>
+                            <div className='table-1'><img className='true' src={True} alt='true'></img></div>
+                            <div className='table-1'><img className='true' src={True}  alt='true'></img></div>
                             <div className='table-1'>
-                            <img className='wrong' src={Wrong}></img>
+                            <img className='wrong' src={Wrong} alt='true'/>
                             </div>
                         </div>
                     </div>
@@ -159,7 +161,7 @@ const Roles = () => {
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'>
-                            <img className='true' src={True}></img>
+                            <img className='true' src={True} alt='true'/>
                             </div>
                         </div>
                     </div>
@@ -169,7 +171,7 @@ const Roles = () => {
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'>
-                            <img className='true' src={True}></img>
+                            <img className='true' src={True} alt='true'/>
                             </div>
                         </div>
                     </div>
@@ -179,7 +181,7 @@ const Roles = () => {
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'>
-                            <img className='wrong' src={Wrong}></img>
+                            <img className='wrong' src={Wrong} alt='true'/>
                             </div>
                         </div>
                     </div>
@@ -189,7 +191,7 @@ const Roles = () => {
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'><img className='true' src={True}></img></div>
                             <div className='table-1'>
-                            <img className='wrong' src={Wrong}></img>
+                            <img className='wrong' src={Wrong} alt='true'/>
                             </div>
                         </div>
                     </div>

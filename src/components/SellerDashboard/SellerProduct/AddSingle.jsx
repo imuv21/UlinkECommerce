@@ -37,8 +37,8 @@ const AddSingle = () => {
         const remainingSlots = 5 - totalImages;
 
         if (files.length > remainingSlots) {
-        
-            toast(<div className='toaster'> < NewReleasesIcon /> {`You can only select a maximum of 5 images. The excess files will be ignored.`}</div>, 
+
+            toast(<div className='toaster'> < NewReleasesIcon /> {`You can only select a maximum of 5 images. The excess files will be ignored.`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
 
             const selectedFiles = Array.from(files).slice(0, remainingSlots);
@@ -206,25 +206,25 @@ const AddSingle = () => {
 
             const response = await dispatch(addProduct(formData));
             if (response.type === 'product/addProduct/fulfilled') {
-             
-                toast(<div className='toaster'> < VerifiedIcon /> {`Product added successfully!`}</div>, 
+
+                toast(<div className='toaster'> < VerifiedIcon /> {`Product added successfully!`}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
 
                 navigate('/seller-dashboard/product-list');
             } else {
-                toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to add product`}</div>, 
+                toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to add product`}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             }
 
         } catch (error) {
-            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to add product`}</div>, 
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to add product`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         } finally {
             setIsSubmitting(false);
         }
     };
 
-    
+
 
     const [singleFormData, setSingleFormData] = useState({});
     const handleChange = (e) => {
@@ -290,7 +290,9 @@ const AddSingle = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }} tabIndex={0} ref={scrollRef} >
             <Helmet>
-                <title>Add Single Product</title>
+                <title>Add Single Product | Ulinkit - List a New Product</title>
+                <meta name="description" content="Add a new product to your Ulinkit store. Provide product details, images, and pricing information to list your item and reach customers effectively." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/add-single-product" />
             </Helmet>
             <h1 className="heading">Add New Products</h1>
             <h2 className="descrip2">Fill out the form below to add a new product to your product list</h2>

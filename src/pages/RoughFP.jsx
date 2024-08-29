@@ -199,7 +199,9 @@ const RoughFP = () => {
     return (
         <div className="flexcol wh product-detail">
             <Helmet>
-                <title>Search Results</title>
+                <title>Search Results | Ulinkit - Find Top Products at Great Prices</title>
+                <meta name="description" content="Explore the search results on Ulinkit for the best deals and top-quality products. Discover a wide range of items tailored to your preferences." />
+                <link rel="canonical" href="https://www.ulinkit.com/search-results" />
             </Helmet>
             <div className="flexcol wh" style={{ gap: '10px' }}>
                 {query &&
@@ -291,7 +293,7 @@ const RoughFP = () => {
                                             <p className='product-discount'> {currencySymbols[selectedCurrency]} {convertPrice(product.unitPrice, product.currencyname)} {selectedCurrency} </p>
                                             <span className='discount-percentage'>{(((product.unitPrice - product.sellPrice) / product.unitPrice) * 100).toFixed(2)}% OFF</span>
                                         </div>
-                                        <p className='product-quantity' style={{display : 'none'}}>Min Order: {product.minOrderQuant} peace</p>
+                                        <p className='product-quantity' style={{ display: 'none' }}>Min Order: {product.minOrderQuant} peace</p>
                                     </div>
                                 </a>
                             ))

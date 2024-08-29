@@ -29,7 +29,7 @@ const OtpNumber = () => {
         try {
             const response = await axios.post(`http://ulinkit.eu-north-1.elasticbeanstalk.com/api/verifyOtp?otp=${otp}&username=${username}&role=${role}`);
 
-            toast(<div className='toaster'> < VerifiedIcon /> {`Response : ${response.data.message} And Email : ${username}`}</div>, 
+            toast(<div className='toaster'> < VerifiedIcon /> {`Response : ${response.data.message} And Email : ${username}`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
 
             return response.data;
@@ -52,7 +52,7 @@ const OtpNumber = () => {
                 navigate('/login');
             }
         } catch (error) {
-            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to verify OTP: ${error.message}`}</div>, 
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Failed to verify OTP: ${error.message}`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
@@ -131,7 +131,9 @@ const OtpNumber = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Verify Your Number</title>
+                <title>Verify Your Phone Number | Ulinkit - Secure Your Account</title>
+                <meta name="description" content="Verify your phone number to complete your Ulinkit account setup. Enhance your account security and enjoy a seamless shopping experience with added protection." />
+                <link rel="canonical" href="https://www.ulinkit.com/verify-update-number" />
             </Helmet>
             <div className="login-cont hvh">
 
@@ -161,7 +163,7 @@ const OtpNumber = () => {
                         <button className='resend' style={{ display: 'none' }} disabled={timerRunning} onClick={handleResendClick}>
                             {timerRunning ? `Resend OTP in ${timeLeft}` : "Resend OTP"}
                         </button>
-                        <Link to={'/profile'} className=' box flex'><div className="heading2" style={{color: 'gray'}}>Cancel</div></Link>
+                        <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>
                     </article>
                 </div>
 

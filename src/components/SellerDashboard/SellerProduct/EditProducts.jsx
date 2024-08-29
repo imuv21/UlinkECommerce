@@ -1,4 +1,4 @@
-import React, { useRef, useEffect} from 'react'
+import React, { useRef, useEffect } from 'react'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import TipsAndUpdatesIcon from '@mui/icons-material/TipsAndUpdates';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
@@ -28,7 +28,9 @@ const EditProducts = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
-                <title>Edit Multiple Products</title>
+                <title>Edit Products | Ulinkit - Update Your Product Listings</title>
+                <meta name="description" content="Modify and update your product listings on Ulinkit. Adjust details, images, and pricing to keep your product information accurate and up-to-date." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/edit-products-bulk" />
             </Helmet>
             <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={back} />&nbsp;&nbsp;Edit Products</div>
             <div className="flex seller-home">
@@ -38,7 +40,7 @@ const EditProducts = () => {
                         <p className="heading2">
                             Filter your products to do a partial product edit.
                         </p>
-                        <div className="flex wh" style={{gap: '20px'}}>
+                        <div className="flex wh" style={{ gap: '20px' }}>
                             <select className="box flex" name="availability" id="availability">
                                 <option value="">Availability</option>
                                 <option value="buyer">In stock</option>
@@ -50,7 +52,7 @@ const EditProducts = () => {
                                 <option value="seller">Offline</option>
                             </select>
                         </div>
-                        <div className="flex wh" style={{gap: '20px', justifyContent: 'start'}}>
+                        <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                             <div className="heading2">Status :</div>
                             <div className="flex"><input type="checkbox" />&nbsp;&nbsp;All</div>
                             <div className="flex"><input type="checkbox" />&nbsp;&nbsp;Pending</div>

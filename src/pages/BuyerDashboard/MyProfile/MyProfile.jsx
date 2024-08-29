@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { Fragment, useEffect, useRef } from 'react'
 import './MyProfile.css'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
@@ -115,9 +115,12 @@ const MyProfile = () => {
   }
   return (
     <>
-      <Helmet>
-        <title>My Profile</title>
-      </Helmet>
+    <Fragment>
+    <Helmet>
+            <title>Profile Management | Ulinkit - Manage Your Personal Information</title>
+            <meta name="description" content="Access and manage your personal profile on Ulinkit. Update your contact information, change your password, and review your account settings all from one place." />
+            <link rel="canonical" href="https://www.ulinkit.com/myprofile" />
+        </Helmet>
       {/* Email Container */}
       <div className='show-container-update-Email'>
         {openEmail && (
@@ -287,6 +290,7 @@ const MyProfile = () => {
       </div>
       <ToastContainer />
       {/* Security info */}
+      </Fragment>
     </>
   )
 }

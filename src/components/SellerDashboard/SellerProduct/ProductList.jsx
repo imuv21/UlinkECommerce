@@ -119,7 +119,9 @@ const ProductList = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
-                <title>Products List</title>
+                <title>Product List | Ulinkit - Browse All Available Products</title>
+                <meta name="description" content="Explore the complete list of products available on Ulinkit. Find detailed information, compare options, and discover a wide range of items to suit your needs." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/product-list" />
             </Helmet>
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <h1 className="heading">Products List</h1>

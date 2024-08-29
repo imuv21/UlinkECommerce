@@ -9,7 +9,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 const AccessManagement = () => {
 
-    
+
     const [showAccessPopup, setShowAccessPopup] = useState(false);
     const inviteUsers = () => {
         setShowAccessPopup(true);
@@ -34,7 +34,7 @@ const AccessManagement = () => {
         e.preventDefault();
         const newValues = inputValue.split(',').map(val => val.trim()).filter(val => val);
         if (newValues.length === 0 || !role) {
-            toast(<div className='toaster'> < NewReleasesIcon /> {`Please enter valid emails and select a role.`}</div>, 
+            toast(<div className='toaster'> < NewReleasesIcon /> {`Please enter valid emails and select a role.`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             return;
         }
@@ -55,7 +55,9 @@ const AccessManagement = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
-                <title>Access Management</title>
+                <title>Access Management | Ulinkit - Control User Permissions and Access</title>
+                <meta name="description" content="Manage user permissions and access levels on Ulinkit. Configure roles and control access to various features to ensure secure and efficient operation of your account." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-dashboard/access-management" />
             </Helmet>
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="heading5">Access Management</div> <button onClick={inviteUsers} className='btn box flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}>Invite Users</button>

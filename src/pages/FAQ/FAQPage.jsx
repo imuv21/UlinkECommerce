@@ -358,7 +358,9 @@ const FAQPage = () => {
   return (
     <Fragment>
       <Helmet>
-        <title>FAQs - Ulinkit</title>
+        <title>Frequently Asked Questions (FAQ) | Ulinkit - Get Your Answers</title>
+        <meta name="description" content="Find answers to common questions about Ulinkit. Our FAQ page covers topics on account management, orders, payments, and more to help you navigate our platform with ease." />
+        <link rel="canonical" href="https://www.ulinkit.com/faq" />
       </Helmet>
       <article className="guide-banner-cont">
         <img className='faqBanner' src="https://res.cloudinary.com/dey1tujp8/image/upload/v1719055436/pexels-mart-production-7709189_nhkyis.jpg" alt="banner" />

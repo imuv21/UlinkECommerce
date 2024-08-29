@@ -4,7 +4,9 @@ import { Helmet } from 'react-helmet-async';
 const TermsAndConditions = () => (
     <Fragment>
         <Helmet>
-            <title>Terms And Conditions</title>
+            <title>Terms and Conditions | Ulinkit - Your Trusted Online Shopping Platform</title>
+            <meta name="description" content="Read the Terms and Conditions of Ulinkit. Understand our policies on shopping, returns, payments, and more to ensure a secure and transparent online shopping experience." />
+            <link rel="canonical" href="https://www.ulinkit.com/terms-and-conditions" />
         </Helmet>
 
         <div className="flexcol wh home-alt3">

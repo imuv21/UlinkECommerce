@@ -29,16 +29,16 @@ const OtpEmail = () => {
                 }
             );
             if (response.status === 200) {
-            
-                toast(<div className='toaster'> < VerifiedIcon /> {`Your email has been updated. Please log in again to continue.`}</div>, 
+
+                toast(<div className='toaster'> < VerifiedIcon /> {`Your email has been updated. Please log in again to continue.`}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                 await handleLogout();
             }
-           
+
             return response.data;
         } catch (error) {
             console.error('OTP verification failed:', error);
-            toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed`}</div>, 
+            toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
             throw error;
         }
@@ -53,8 +53,8 @@ const OtpEmail = () => {
                 }
             });
             if (response.status === 200) {
-             
-                toast(<div className='toaster'> < VerifiedIcon /> {response.data.message || 'Logged out successfully'}</div>, 
+
+                toast(<div className='toaster'> < VerifiedIcon /> {response.data.message || 'Logged out successfully'}</div>,
                     { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
                 dispatch(logout());
                 navigate('/login');
@@ -71,10 +71,10 @@ const OtpEmail = () => {
     const sellerForm = async (otp) => {
         try {
             const verificationResponse = await verifyOtp(otp);
-            
+
         } catch (error) {
             console.error('Failed to verify OTP or logout:', error);
-            toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed`}</div>, 
+            toast(<div className='toaster'> < NewReleasesIcon /> {`OTP verification failed`}</div>,
                 { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
     };
@@ -153,7 +153,9 @@ const OtpEmail = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Verify Your Email</title>
+                <title>Verify Your Email Address | Ulinkit - Secure Your Account</title>
+                <meta name="description" content="Complete your Ulinkit account setup by verifying your email address. Ensure your account's security and gain full access to our online shopping features." />
+                <link rel="canonical" href="https://www.ulinkit.com/verify-update-email" />
             </Helmet>
             <div className="login-cont hvh">
 
@@ -183,7 +185,7 @@ const OtpEmail = () => {
                         <button className='resend' style={{ display: 'none' }} disabled={timerRunning} onClick={handleResendClick}>
                             {timerRunning ? `Resend OTP in ${timeLeft}` : "Resend OTP"}
                         </button>
-                        <Link to={'/profile'} className=' box flex'><div className="heading2" style={{color: 'gray'}}>Cancel</div></Link>
+                        <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>
                     </div>
                 </article>
 

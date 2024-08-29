@@ -25,8 +25,8 @@ const Rfq = () => {
     const addproduct = rfqData?.addproduct || [];
     const startdate = rfqData?.updateadditonalDetail?.startdate;
     console.log("startdate:", startdate);
-
-    //     //  local Storage for storing the data
+  
+    //  local Storage for storing the data
     const rfqDataStore = JSON.stringify(rfqData);
     localStorage.setItem('rfqData', rfqDataStore)
     //  Retrive the data from the local storage
@@ -59,11 +59,7 @@ const Rfq = () => {
     const handleBlures = () => {
         setOpen(false);
     };
-    //  if the active container is empty then show then the close button is displayed
-
-
     //  add the condition value added the new document are uploaded the file its value
-
     const generateId = () => {
         const alphabet = 'ULINK'
         let id = 'ULINK'
@@ -76,11 +72,11 @@ const Rfq = () => {
         }
         return id
     }
+    
     // calculate the negotiable value
     const calculateTotalPrice = () => {
         let totalPrice = 0;
         let hasNegotiable = false;
-
         // Iterate over each product
         addproduct.forEach(product => {
             // If the product price is negotiable, set a flag
@@ -101,7 +97,9 @@ const Rfq = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Requests For Quotations</title>
+                <title>My RFQ | Ulinkit - Manage Your Requests for Quotes</title>
+                <meta name="description" content="View and manage your Requests for Quotation (RFQ) on Ulinkit. Track the status of your requests, view details, and get updates on your quotations." />
+                <link rel="canonical" href="https://www.ulinkit.com/rfq" />
             </Helmet>
             <div className='responsive '>
                 <div className='flex-space-beetwen'>
@@ -131,7 +129,6 @@ const Rfq = () => {
                             onChange={(finishDates) => setFinishDates(finishDates)}
                             onFocus={handleFocuses}
                             onBlur={handleBlures} placeholderText='To (creation)'
-
                         />
                     </div>
                     <select className='order-status status-width status-width-border' placeholder="All Status">
@@ -158,48 +155,46 @@ const Rfq = () => {
                 {active && (
                     <div className='rfq-message-show'>
                         <p className='rfq-value'>{active}</p>
-                        <img src={Document} className='rfq-icon' />
+                        <img src={Document} className='rfq-icon' alt='document' />
                         <button className='rfq-btns'>CREATE RFQ</button>
                     </div>
                 )}
             </div>
-          <div className='responsive'>
-            {rfqDataStored && rfqData && rfqData.addproduct && (
-                <div className="table-container">
-                    <div className='table-containers-head'>
-                        <div className=''>RFQ ID</div>
-                        <div className='product-name'>Product Name</div>
-                        <div className=''>Quotes</div>
-                        <div className=''>Total Target</div>
-                        <div className=''>Created On</div>
-                        <div className=''>Status</div>
-                        <div className=''>Action</div>
-                    </div>
-                    <div className='table-containers-heads vor'>
-                        <div className=''>{generateId()}</div>
-                        <div className='img-flex data-width '>
-                            <div className='img-data'>
-                                {rfqData.addproduct.slice(0, Math.min(rfqData.addproduct.length, 4)).map((item, index) => (
-                                    <img key={index} className='image-width' src={item.img} alt={`Product ${index + 1}`} />
-                                ))}
-                            </div>
-                            <div className=''>
-                                {rfqData.addproduct.slice(0, Math.min(rfqData.addproduct.length, 4)).map((item, index) => (
-                                    <p key={index}>{item.pname}</p>
-                                ))}
-                            </div>
+            <div className='responsive'>
+                {rfqDataStored && rfqData && rfqData.addproduct && (
+                    <div className="table-container">
+                        <div className='table-containers-head'>
+                            <div className=''>RFQ ID</div>
+                            <div className='product-name'>Product Name</div>
+                            <div className=''>Quotes</div>
+                            <div className=''>Total Target</div>
+                            <div className=''>Created On</div>
+                            <div className=''>Status</div>
+                            <div className=''>Action</div>
                         </div>
-                        <div className=''>0</div>
-                        <div className=''>{calculateTotalPrice()}</div>
-                        <div className=''>{rfqData.updateadditonalDetail.startdate.toLocaleDateString()}</div>
-                        <div className=''>Pending Quotes</div>
-                        <div className=''><Link to='/rfq-detail'>View Detail</Link></div>
+                        <div className='table-containers-heads vor'>
+                            <div className=''>{generateId()}</div>
+                            <div className='img-flex data-width '>
+                                <div className='img-data'>
+                                    {rfqData.addproduct.slice(0, Math.min(rfqData.addproduct.length, 4)).map((item, index) => (
+                                        <img key={index} className='image-width' src={item.img} alt={`Product ${index + 1}`} />
+                                    ))}
+                                </div>
+                                <div className=''>
+                                    {rfqData.addproduct.slice(0, Math.min(rfqData.addproduct.length, 4)).map((item, index) => (
+                                        <p key={index}>{item.pname}</p>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className=''>0</div>
+                            <div className=''>{calculateTotalPrice()}</div>
+                            <div className=''>{rfqData.updateadditonalDetail.startdate.toLocaleDateString()}</div>
+                            <div className=''>Pending Quotes</div>
+                            <div className=''><Link to='/rfq-detail'>View Detail</Link></div>
+                        </div>
                     </div>
-                </div>
-        
-            )}
+                )}
             </div>
-        
         </Fragment>
     )
 }

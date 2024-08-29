@@ -208,7 +208,9 @@ const SellerAddress = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
             <Helmet>
-                <title>My Addresses</title>
+                <title>My Addresses | Ulinkit - Manage Your Shipping Information</title>
+                <meta name="description" content="View and manage your saved addresses on Ulinkit. Add new addresses, update existing ones, and streamline your shipping process for a better shopping experience." />
+                <link rel="canonical" href="https://www.ulinkit.com/my-addresses" />
             </Helmet>
             <div className="addressbox">
                 <div className="flexcol" style={{ gap: '20px' }}>

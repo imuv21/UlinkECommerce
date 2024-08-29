@@ -1,6 +1,9 @@
 .responsive{
     padding: 30px 30px 30px 30px;
 }
+.heading-css{
+    font-size: 28px;
+}
 .company-border{
     border: 1px solid #dddddd;
     margin-top: 10px;

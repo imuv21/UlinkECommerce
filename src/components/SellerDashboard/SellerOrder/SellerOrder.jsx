@@ -22,8 +22,10 @@ const SellerOrder = () => {
 
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}>
-             <Helmet>
-                <title>Orders</title>
+            <Helmet>
+                <title>Seller Orders | Ulinkit - Manage Your Incoming Orders</title>
+                <meta name="description" content="View and manage your incoming orders on Ulinkit. Track order status, update fulfillment, and handle customer requests efficiently through your seller dashboard." />
+                <link rel="canonical" href="https://www.ulinkit.com/seller-order" />
             </Helmet>
             <article className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <h1 className="heading">My Orders</h1>
@@ -39,7 +41,7 @@ const SellerOrder = () => {
                 </div>
                 {currentPage === 1 && (
                     <Fragment>
-                        <form className='searchBoxPro' style={{display: 'none'}} onSubmit={searchSubmitHandler}>
+                        <form className='searchBoxPro' style={{ display: 'none' }} onSubmit={searchSubmitHandler}>
                             <input type='text' className='searchinputPro' placeholder='Search for orders...' onChange={(e) => setKeyword(e.target.value)} />
                             <button type='submit' className='searchbtnPro'><SearchIcon /></button>
                             <select name="reasons" className='searchselectPro'>
@@ -122,7 +124,7 @@ const SellerOrder = () => {
                 )}
                 {currentPage === 3 && (
                     <Fragment>
-                        <form className='searchBoxPro' style={{display: 'none'}} onSubmit={searchSubmitHandler}>
+                        <form className='searchBoxPro' style={{ display: 'none' }} onSubmit={searchSubmitHandler}>
                             <input type='text' className='searchinputPro' placeholder='Search for products...' onChange={(e) => setKeyword(e.target.value)} />
                             <button type='submit' className='searchbtnPro'><SearchIcon /></button>
 
@@ -173,7 +175,7 @@ const SellerOrder = () => {
                 )}
                 {currentPage === 4 && (
                     <Fragment>
-                        <form className='searchBoxPro' style={{display: 'none'}} onSubmit={searchSubmitHandler}>
+                        <form className='searchBoxPro' style={{ display: 'none' }} onSubmit={searchSubmitHandler}>
                             <input type='text' className='searchinputPro' placeholder='Search for products...' onChange={(e) => setKeyword(e.target.value)} />
                             <button type='submit' className='searchbtnPro'><SearchIcon /></button>
                             <select name="reasons" className='searchselectPro'>
@@ -228,7 +230,7 @@ const SellerOrder = () => {
                 )}
                 {currentPage === 5 && (
                     <Fragment>
-                        <form className='searchBoxPro' style={{display: 'none'}} onSubmit={searchSubmitHandler}>
+                        <form className='searchBoxPro' style={{ display: 'none' }} onSubmit={searchSubmitHandler}>
                             <input type='text' className='searchinputPro' placeholder='Search for products...' onChange={(e) => setKeyword(e.target.value)} />
                             <button type='submit' className='searchbtnPro'><SearchIcon /></button>
                             <select name="reasons" className='searchselectPro'>
@@ -283,7 +285,7 @@ const SellerOrder = () => {
                 )}
                 {currentPage === 6 && (
                     <Fragment>
-                        <form className='searchBoxPro' style={{display: 'none'}} onSubmit={searchSubmitHandler}>
+                        <form className='searchBoxPro' style={{ display: 'none' }} onSubmit={searchSubmitHandler}>
                             <input type='text' className='searchinputPro' placeholder='Search for products...' onChange={(e) => setKeyword(e.target.value)} />
                             <button type='submit' className='searchbtnPro'><SearchIcon /></button>
 

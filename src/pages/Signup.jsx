@@ -133,7 +133,9 @@ const Signup = () => {
     return (
         <Fragment>
             <Helmet>
-                <title>Create Your Account</title>
+                <title>Create Your Ulinkit Account | Ulinkit - Join Our Secure Online Shopping Platform</title>
+                <meta name="description" content="Sign up for Ulinkit to create your account and start shopping online. Enjoy a secure and personalized shopping experience with top-quality products and great deals." />
+                <link rel="canonical" href="https://www.ulinkit.com/signup" />
             </Helmet>
             <div className="login-cont hvh">
 
@@ -146,7 +148,7 @@ const Signup = () => {
                         <div className='flexcol cover'>
 
                             <h1 className="heading">Create your account</h1>
-                         
+
 
                             <form className="flexcol  gap" onSubmit={handleSubmit(onSubmit)}>
                                 <Controller name="role" control={control} defaultValue="" render={({ field }) => (

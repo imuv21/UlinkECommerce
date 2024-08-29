@@ -270,7 +270,9 @@ const EditSingle = () => {
     return (
         <div className='flexcol seller-home-cont' style={{ gap: '20px' }}  >
             <Helmet>
-                <title>Edit The Product</title>
+                <title>Edit Products | Ulinkit - Update Your Product Listings</title>
+                <meta name="description" content="Modify and update your product listings on Ulinkit. Adjust details, images, and pricing to keep your product information accurate and up-to-date." />
+                <link rel="canonical" href="https://www.ulinkit.com/editsingle" />
             </Helmet>
             <div className="heading">Edit Product</div>
 
