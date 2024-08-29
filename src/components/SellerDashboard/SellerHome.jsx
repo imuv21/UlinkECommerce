@@ -281,22 +281,22 @@ const SellerHome = () => {
             </Helmet>
 
             {isAuthenticated && (
-                <div className="heading">Hi {user.firstname}, Welcome to Ulinkit!</div>
+                <p className="heading">Hi {user.firstname}, Welcome to Ulinkit!</p>
             )}
 
             <div className="flex seller-home">
-                <div className="flexcol shone">
-                    <div className="sel-box" style={{ display: 'none' }}>
+                <article className="flexcol shone">
+                    <section className="sel-box" style={{ display: 'none' }}>
                         <div className="flexcol score2 wh">
-                            <div className="heading3">Upload your products to start your journey</div>
-                            <div className="decrip2">Before we populate your dashboard with your sale analytics, please upload your products so you can start selling.</div>
+                            <h1 className="heading3">Upload your products to start your journey</h1>
+                            <h2 className="decrip2">Before we populate your dashboard with your sale analytics, please upload your products so you can start selling.</h2>
                             <div className="flex wh">
                                 <div className="flex score wh">
                                     <div className='quick flex wh' style={{ height: '100px' }}>
                                         <div className="flex wh">
                                             <div className="flexcol wh">
-                                                <div className="heading3 wh">Add single product</div>
-                                                <div className="descrip2 wh">Add one product at a time</div>
+                                                <h3 className="heading3 wh">Add single product</h3>
+                                                <h4 className="descrip2 wh">Add one product at a time</h4>
                                             </div>
                                         </div>
                                         <svg className='svg' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"><path fillRule="evenodd" clipRule="evenodd" d="M4.25 12a.75.75 0 0 1 .75-.75h14a.75.75 0 0 1 0 1.5H5a.75.75 0 0 1-.75-.75Z" fill="currentColor"></path><path fillRule="evenodd" clipRule="evenodd" d="M19.53 11.47a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 1 1-1.06-1.06l5-5a.75.75 0 0 1 1.06 0Z" fill="currentColor"></path><path fillRule="evenodd" clipRule="evenodd" d="M13.47 6.47a.75.75 0 0 1 1.06 0l5 5a.75.75 0 1 1-1.06 1.06l-5-5a.75.75 0 0 1 0-1.06Z" fill="currentColor"></path></svg>
@@ -306,8 +306,8 @@ const SellerHome = () => {
                                     <div className='quick flex wh' style={{ height: '100px' }}>
                                         <div className="flex wh">
                                             <div className="flexcol wh">
-                                                <div className="heading3 wh">Add multiple products</div>
-                                                <div className="descrip2 wh">Add multiple products at a time by using our excel template</div>
+                                                <h5 className="heading3 wh">Add multiple products</h5>
+                                                <p className="descrip2 wh">Add multiple products at a time by using our excel template</p>
                                             </div>
                                         </div>
                                         <svg className='svg' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"><path fillRule="evenodd" clipRule="evenodd" d="M4.25 12a.75.75 0 0 1 .75-.75h14a.75.75 0 0 1 0 1.5H5a.75.75 0 0 1-.75-.75Z" fill="currentColor"></path><path fillRule="evenodd" clipRule="evenodd" d="M19.53 11.47a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 1 1-1.06-1.06l5-5a.75.75 0 0 1 1.06 0Z" fill="currentColor"></path><path fillRule="evenodd" clipRule="evenodd" d="M13.47 6.47a.75.75 0 0 1 1.06 0l5 5a.75.75 0 1 1-1.06 1.06l-5-5a.75.75 0 0 1 0-1.06Z" fill="currentColor"></path></svg>
@@ -315,13 +315,13 @@ const SellerHome = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
 
-                    <div className="sel-box" style={{ display: allStepsCompleted ? 'none' : 'flex' }}>
+                    <section className="sel-box" style={{ display: allStepsCompleted ? 'none' : 'flex' }}>
                         <div className="flex wh">
                             <div className="step-verification" style={{ borderRight: '1px solid rgb(222, 222, 222)' }}>
-                                <div className="heading2">Complete these steps to start selling</div>
+                                <h1 className="heading2">Complete these steps to start selling</h1>
                                 {steps.map((step, index) => (
                                     <div key={step.step} className={`step ${step.completed ? 'completed' : ''}`}>
                                         {step.completed ? <span className="checkmark">✔</span> : <span className="number">{step.step}</span>}
@@ -333,8 +333,8 @@ const SellerHome = () => {
                                 filteredStepProcess.map((item) => (
                                     <div className="bank-detail" key={item.id}>
                                         <img style={{ width: '40px', height: '40px' }} src={item.icon} alt="step-icon" />
-                                        <div className="heading3">{item.title}</div>
-                                        <div className="heading2">{item.description}</div>
+                                        <p className="heading3">{item.title}</p>
+                                        <p className="heading2">{item.description}</p>
                                         <Link to={item.link} className="btn box flex" style={{ width: '200px', padding: '7px 10px' }} type="submit">
                                             <div className="heading2">{item.btn}</div>
                                         </Link>
@@ -342,23 +342,23 @@ const SellerHome = () => {
                                 ))
                             ) : (
                                 <div className="bank-detail">
-                                    <div className="heading3 wh" style={{ textAlign: 'center', color: 'green' }}>Congratulations! <br /> You are a verified seller now!</div>
+                                    <h2 className="heading3 wh" style={{ textAlign: 'center', color: 'green' }}>Congratulations! <br /> You are a verified seller now!</h2>
                                 </div>
                             )}
                         </div>
-                    </div>
+                    </section>
 
 
-                    <div className="flex wh" style={{ gap: '30px' }}>
+                    <section className="flex wh" style={{ gap: '30px' }}>
                         <div className="sel-box">
                             <div className="flexcol score2 wh">
-                                <div className="heading3">Top viewed products from other sellers</div>
+                                <h1 className="heading3">Top viewed products from other sellers</h1>
                                 <div className="flexcol wh" style={{ gap: '10px' }}>
                                     {
                                         tvps.map((item) => (
                                             <div key={uuidv4()} className="flex tvstps wh">
                                                 <img src={item.img} className='product-image' alt="product" />
-                                                <div className="descrip wh">{item.title}</div>
+                                                <p className="descrip wh">{item.title}</p>
                                                 <a className='linkey2' href='#' >Add to your catalogue</a>
                                             </div>
                                         ))
@@ -369,13 +369,13 @@ const SellerHome = () => {
 
                         <div className="sel-box">
                             <div className="flexcol score2 wh">
-                                <div className="heading3">Top selling products from other sellers</div>
+                                <h2 className="heading3">Top selling products from other sellers</h2>
                                 <div className="flexcol wh" style={{ gap: '10px' }}>
                                     {
                                         tsps.map((item) => (
                                             <div key={uuidv4()} className="flex tvstps wh">
                                                 <img src={item.img} className='product-image' alt="product" />
-                                                <div className="descrip wh">{item.title}</div>
+                                                <p className="descrip wh">{item.title}</p>
                                                 <a className='linkey2' href='#' >Add to your catalogue</a>
                                             </div>
                                         ))
@@ -383,9 +383,8 @@ const SellerHome = () => {
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                </div>
+                    </section>
+                </article>
 
                 <div className="flexcol shtwo" tabIndex={0} ref={scrollRef}>
 
@@ -415,55 +414,55 @@ const SellerHome = () => {
                             <img src={logo} className='logo' alt="logo" />
                         </div>
                         <div className="flexcol score wh">
-                            <div className="descrip2">
+                            <p className="descrip2">
                                 Collection of educational resources and training materials to empower Ulink sellers with the needed knowledge and skills.
-                            </div>
+                            </p>
                             <button className='btn box flex' type='submit'><div className="heading2">GO TO ACADEMY</div></button>
                         </div>
                     </div>
 
-                    <div className="sel-box">
+                    <article className="sel-box">
                         <div className="flexcol score wh">
-                            <div className="heading3 wh">Finance center</div>
-                            <div className="descrip2 wh">Our minimum rating requirement for displaying an overall seller score has not been reached.</div>
+                            <h1 className="heading3 wh">Finance center</h1>
+                            <h2 className="descrip2 wh">Our minimum rating requirement for displaying an overall seller score has not been reached.</h2>
                             <Link to='/seller-dashboard/payments' className="linc wh">Update bank details&nbsp;&nbsp;</Link>
                         </div>
-                    </div>
+                    </article>
 
-                    <div className="sel-box">
+                    <article className="sel-box">
                         <div className="flexcol score wh">
-                            <div className="heading3 wh">Quick links</div>
+                            <h1 className="heading3 wh">Quick links</h1>
                             {
                                 quickLinks.map((item) => (
                                     <Link to={item.link} key={uuidv4()} className='quick flex wh'>
                                         <div className="flex">
-                                            <div className="heading3">{item.title}</div>
+                                            <p className="heading3">{item.title}</p>
                                         </div>
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"><path fillRule="evenodd" clipRule="evenodd" d="M4.25 12a.75.75 0 0 1 .75-.75h14a.75.75 0 0 1 0 1.5H5a.75.75 0 0 1-.75-.75Z" fill="currentColor"></path><path fillRule="evenodd" clipRule="evenodd" d="M19.53 11.47a.75.75 0 0 1 0 1.06l-5 5a.75.75 0 1 1-1.06-1.06l5-5a.75.75 0 0 1 1.06 0Z" fill="currentColor"></path><path fillRule="evenodd" clipRule="evenodd" d="M13.47 6.47a.75.75 0 0 1 1.06 0l5 5a.75.75 0 1 1-1.06 1.06l-5-5a.75.75 0 0 1 0-1.06Z" fill="currentColor"></path></svg>
                                     </Link>
                                 ))
                             }
                         </div>
-                    </div>
+                    </article>
 
-                    <div className="sel-box">
+                    <article className="sel-box">
                         <div className="flexcol score wh">
-                            <div className="heading3 wh">Inquiries</div>
-                            <div className="descrip2 wh">Inquiries on your products and submitted quotations.</div>
+                            <h1 className="heading3 wh">Inquiries</h1>
+                            <h2 className="descrip2 wh">Inquiries on your products and submitted quotations.</h2>
                             <div className="flexcol score2 wh" style={{ backgroundColor: '#f9f8f8' }}>
-                                <div className="descrip2">
+                                <p className="descrip2">
                                     You don't have any inquiries.
-                                </div>
+                                </p>
                                 <div className="descrip2">
                                     <a href="">Upload products</a> or <a href="">submit quotations</a> to RFQs to receive negotiation inquiries.
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </article>
 
-                    <div className="sel-box">
+                    <article className="sel-box">
                         <div className="flexcol score wh">
-                            <div className="heading3 wh">Most searched keywords</div>
+                            <h1 className="heading3 wh">Most searched keywords</h1>
                             {
                                 keywords.map((item) => (
                                     <div key={uuidv4()} className='flex keywords wh'>
@@ -476,7 +475,7 @@ const SellerHome = () => {
                                 ))
                             }
                         </div>
-                    </div>
+                    </article>
                 </div>
             </div>
         </div>

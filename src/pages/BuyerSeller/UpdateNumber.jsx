@@ -67,9 +67,9 @@ const UpdateNumber = () => {
                     <img src={logo} alt="logo" />
                 </Link>
 
-                <div className="signupcont">
+                <article className="signupcont">
                     <div className='flexcol cover'>
-                        <div className="heading">Update Mobile Number</div>
+                        <h1 className="heading">Update Mobile Number</h1>
                         <form className="flexcol gap" onSubmit={handleSubmit(onSubmit)}>
 
 
@@ -84,21 +84,21 @@ const UpdateNumber = () => {
                                 </select>
                             )}
                             />
-                            {errors.countryCode && <div className="error">{errors.countryCode.message}</div>}
+                            {errors.countryCode && <p className="error">{errors.countryCode.message}</p>}
 
 
                             <Controller name="mobile" control={control} defaultValue="" render={({ field }) => <input value={updateUserNumber.mobile || ''} onChange={handleChange} className="box flex" autoComplete='off' placeholder='Enter your phone number' {...field} />} />
-                            {errors.mobile && <div className="error">{errors.mobile.message}</div>}
+                            {errors.mobile && <p className="error">{errors.mobile.message}</p>}
 
                             <div className="flexcol wh" style={{ gap: '5px'}}>
                                 <button className='btn box flex' type='submit'><div className="heading2">Send OTP</div></button>
                                 <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>
                             </div>
 
-                            <div className="descrip">We will send an OTP to your number</div>
+                            <p className="descrip">We will send an OTP to your number</p>
                         </form>
                     </div>
-                </div>
+                </article>
 
                 <div className="svg-bg-signup">
                     <div style={{ width: '80%' }}>

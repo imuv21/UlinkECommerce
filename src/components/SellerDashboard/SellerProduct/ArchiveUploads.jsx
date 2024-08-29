@@ -35,7 +35,7 @@ const ArchiveUploads = () => {
             <Helmet>
                 <title>Products Archive</title>
             </Helmet>
-            <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={back} />&nbsp;&nbsp;Products Archival</div>
+            <h1 className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={back} />&nbsp;&nbsp;Products Archival</h1>
             <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                 <button onClick={() => handlePageChange(1)} style={{ width: 'fit-content' }} className={currentPage === 1 ? 'toggle-active btn-toggle box2 flex' : 'btn-toggle box2 flex'}><div className="heading2">View upload product archives</div></button>
                 <button onClick={() => handlePageChange(2)} style={{ width: 'fit-content' }} className={currentPage === 2 ? 'toggle-active btn-toggle box2 flex' : 'btn-toggle box2 flex'}><div className="heading2">Update/Upload</div></button>
@@ -44,16 +44,16 @@ const ArchiveUploads = () => {
             {currentPage === 1 && (
                 <div className="productlist">
                     <img src={empty} alt="empty box" />
-                    <div className="heading5">No Record Found</div>
+                    <p className="heading5">No Record Found</p>
                 </div>
             )}
             {currentPage === 2 && (
-                <div className="productlist2">
-                    <div className="heading3 wh">Download images upload template</div>
-                    <div className="heading2 wh">Click download button to download images upload template</div>
+                <article className="productlist2">
+                    <h1 className="heading3 wh">Download images upload template</h1>
+                    <h2 className="heading2 wh">Click download button to download images upload template</h2>
                     <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><CloudDownloadIcon /><div className="heading2">Download product archival upload template</div></button>
-                    <div className="heading3 wh">Upload images template</div>
-                    <div className="heading2 wh">When you have your template(s) filled out, click the button below to upload the products for archival.</div>
+                    <h3 className="heading3 wh">Upload images template</h3>
+                    <h4 className="heading2 wh">When you have your template(s) filled out, click the button below to upload the products for archival.</h4>
 
                     <div className="file-input wh">
                         <label htmlFor="file-upload" className="custom-file-upload flex">
@@ -63,7 +63,7 @@ const ArchiveUploads = () => {
                         <span id="file-name" className="file-name heading2"></span>
                     </div>
                     <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><CloudUploadIcon /><div className="heading2">Upload</div></button>
-                </div>
+                </article>
             )}
         </div>
     )

@@ -308,7 +308,7 @@ const SellerComProfile = () => {
 
                 <div className="flexcol" style={{ gap: '20px' }}>
                     <form className="profile-sel-box" onSubmit={handleSubmit(onSubmit)}>
-                        <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><BusinessIcon /> <div className="heading">Business Profile</div></div>
+                        <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><BusinessIcon /> <h1 className="heading">Business Profile</h1></div>
                         {isEditing ? (
                             <div className="flex" style={{ gap: '50px', justifyContent: 'start', width: '30%' }}>
 
@@ -411,19 +411,19 @@ const SellerComProfile = () => {
                         ) : (
                             <div className="btn flex box" type='button' style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClick}>Edit</div>
                         )}
-                        <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><div className="heading2"> <div className="descrip2">To change your company name please contact Ulinkit at support@ulinkit.com</div> </div></div>
+                        <div className="flex wh" style={{ gap: '10px', justifyContent: 'start' }}><div className="heading2"> <p className="descrip2">To change your company name please contact Ulinkit at support@ulinkit.com</p> </div></div>
                     </form>
 
                     <form className="profile-sel-box" onSubmit={handleDoc}>
                         <div className="flexcol wh" style={{ gap: '5px' }}>
                             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                                 <div className="flex" style={{ gap: '10px' }}>
-                                    <DescriptionIcon /> <div className="heading">Add Your Business Documents</div>
+                                    <DescriptionIcon /> <h2 className="heading">Add Your Business Documents</h2>
                                 </div>
                                 {!isEditingDoc && <div className="btn flex box" style={{ width: '100px', cursor: 'pointer' }} onClick={handleEditClickDoc}> {sellerprofile ? 'Edit' : 'Add'} </div>}
                             </div>
                             {isEditingDoc && <div className="flex-start" style={{ gap: '5px', justifyContent: 'start', width: '100%' }}>
-                                <div className="descrip2">We need the following documents to verify your business and give you access to all Tradeling features. We will get in touch with you when these documents need to be renewed.</div>
+                                <p className="descrip2">We need the following documents to verify your business and give you access to all Tradeling features. We will get in touch with you when these documents need to be renewed.</p>
                             </div>}
                         </div>
 
@@ -529,8 +529,8 @@ const SellerComProfile = () => {
                         ) : (
                             <div className="flexcol-start wh" style={{ gap: '20px' }}>
                                 <div className="flexcol-start wh" style={{ gap: '5px' }}>
-                                    <div className="heading2">Business documents let us verify you as a real business and allow you to interact with features of the site.</div>
-                                    <div className="heading2">To change your business documents please contact Ulinkit at support@ulinkit.com</div>
+                                    <h3 className="heading2">Business documents let us verify you as a real business and allow you to interact with features of the site.</h3>
+                                    <h4 className="heading2">To change your business documents please contact Ulinkit at support@ulinkit.com</h4>
                                 </div>
 
                                 {sellerprofile && sellerprofile.documents &&

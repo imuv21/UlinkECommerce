@@ -247,10 +247,10 @@ const UploadProducts = () => {
                 <div className="flexcol shone">
 
                     <div className="sel-box2">
-                        <div className="heading3">1. Select categories</div>
-                        <div className="heading2">
+                        <p className="heading3">1. Select categories</p>
+                        <p className="heading2">
                             After selecting categories, please download and fill the template below.
-                        </div>
+                        </p>
                         <div className="flex">
                             <select onChange={handleSupOptionChange} >
                                 <option value="">Select an option</option>
@@ -285,17 +285,17 @@ const UploadProducts = () => {
                         </div>
                     </div>
                     <div className="sel-box2">
-                        <div className="heading3">2. Download template</div>
-                        <div className="heading2">
+                        <p className="heading3">2. Download template</p>
+                        <p className="heading2">
                             Download and fill this template.
-                        </div>
+                        </p>
                         <button disabled={!isSubmitEnabled} onClick={handleDownload} className='upBtns' >Download template&nbsp;&nbsp;<DownloadIcon /></button>
                     </div>
                     <div className="sel-box2">
-                        <div className="heading3">3. Upload template</div>
-                        <div className="heading2">
+                        <p className="heading3">3. Upload template</p>
+                        <p className="heading2">
                             Upload the template here.
-                        </div>
+                        </p>
                         <input type="file" id="fileInput" disabled={!isSubmitEnabled} style={{ display: 'none' }} onChange={handleUpload} />
                         <label htmlFor="fileInput" className='upBtns'>
                             Upload template&nbsp;&nbsp;<UploadIcon />
@@ -306,9 +306,9 @@ const UploadProducts = () => {
                 <div className="flexcol shtwo" tabIndex={0} ref={scrollRef}>
                     <div className="sel-box2">
                         <div className="heading3 flex"><TipsAndUpdatesIcon />&nbsp;&nbsp;Bulk product update</div>
-                        <div className="heading2">
+                        <p className="heading2">
                             Learn how to upload your products and media in bulk by using a template.
-                        </div>
+                        </p>
                         <div className='download-btn' onClick={learnMore}>Learn more</div>
                     </div>
                 </div>

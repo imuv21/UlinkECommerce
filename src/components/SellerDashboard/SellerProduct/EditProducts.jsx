@@ -34,10 +34,10 @@ const EditProducts = () => {
             <div className="flex seller-home">
                 <div className="flexcol shone">
                     <div className="sel-box2">
-                        <div className="heading3">1. Select the type of products you want to edit</div>
-                        <div className="heading2">
+                        <p className="heading3">1. Select the type of products you want to edit</p>
+                        <p className="heading2">
                             Filter your products to do a partial product edit.
-                        </div>
+                        </p>
                         <div className="flex wh" style={{gap: '20px'}}>
                             <select className="box flex" name="availability" id="availability">
                                 <option value="">Availability</option>
@@ -60,28 +60,28 @@ const EditProducts = () => {
                         <button className='upBtns'>Category&nbsp;&nbsp;<ManageSearchIcon /></button>
                     </div>
                     <div className="sel-box2">
-                        <div className="heading3">2. Select the type of template</div>
-                        <div className="heading2">
+                        <p className="heading3">2. Select the type of template</p>
+                        <p className="heading2">
                             Select attribute groups to customize your template. You can select multiple attribute groups.
-                        </div>
+                        </p>
                         <button className='upBtns'>Export Template&nbsp;&nbsp;<SystemUpdateAltIcon /></button>
                     </div>
                     <div className="sel-box2">
-                        <div className="heading3">3. Upload template</div>
-                        <div className="heading2">
+                        <p className="heading3">3. Upload template</p>
+                        <p className="heading2">
                             When you have your template(s) filled out, click the buttom below to upload the products.
                             You can also upload the files clicking on Upload Center on the Menu bar.
-                        </div>
+                        </p>
                         <button className='upBtns'>Upload Template&nbsp;&nbsp;<UploadIcon /></button>
                     </div>
                 </div>
 
                 <div className="flexcol shtwo" tabIndex={0} ref={scrollRef}>
                     <div className="sel-box2">
-                        <div className="heading3 flex"><TipsAndUpdatesIcon />&nbsp;&nbsp;Bulk product update</div>
-                        <div className="heading2">
+                        <p className="heading3 flex"><TipsAndUpdatesIcon />&nbsp;&nbsp;Bulk product update</p>
+                        <p className="heading2">
                             Learn how to update the existing products in bulk.
-                        </div>
+                        </p>
                         <div onClick={learnMore} className='download-btn'>Learn more</div>
                     </div>
                 </div>

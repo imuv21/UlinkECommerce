@@ -64,9 +64,9 @@ const ForgotPassword = () => {
                     <img src={logo} alt="logo" />
                 </Link>
 
-                <div className="signupcont">
+                <article className="signupcont">
                     <div className='flexcol cover'>
-                        <div className="heading">Update Email Address</div>
+                        <h1 className="heading">Update Email Address</h1>
                         <div className="flexcol gap">
                             <input type='email' className="box flex" placeholder='Enter a new email' autoComplete='email' value={email} onChange={(e) => setEmail(e.target.value)} />
                             <div className="flexcol wh" style={{ gap: '5px' }}>
@@ -74,10 +74,10 @@ const ForgotPassword = () => {
                                 <Link to={'/profile'} className=' box flex'><div className="heading2" style={{ color: 'gray' }}>Cancel</div></Link>
                             </div>
 
-                            <div className="descrip">We will send an OTP to your email</div>
+                            <p className="descrip">We will send an OTP to your email</p>
                         </div>
                     </div>
-                </div>
+                </article>
 
                 <div className="svg-bg-signup">
                     <div style={{ width: '80%' }}>

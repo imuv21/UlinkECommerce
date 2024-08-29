@@ -17,15 +17,15 @@ const Permissions = () => {
             <Helmet>
                 <title>Roles and Permissions</title>
             </Helmet>
-            <div className="flex-start wh" style={{ gap: '5px' }}>
+            <article className="flex-start wh" style={{ gap: '5px' }}>
                 <ArrowBackIosNewIcon style={{ cursor: 'pointer', marginTop: '7px' }} onClick={accessback} />
                 <div className="flexcol-start wh" style={{ gap: '5px' }}>
-                    <div className="heading5">Roles and Permissions</div>
-                    <div className="descrip">Use roles to set custom permissions for each person that has access to your business account. You decide who is permitted to do what. Roles are not permanent and can be changed by any Admin account.</div>
+                    <h1 className="heading5">Roles and Permissions</h1>
+                    <h2 className="descrip">Use roles to set custom permissions for each person that has access to your business account. You decide who is permitted to do what. Roles are not permanent and can be changed by any Admin account.</h2>
                 </div>
-            </div>
-            <div className="access-sel-box">
-                <div className="heading">Management</div>
+            </article>
+            <article className="access-sel-box">
+                <h1 className="heading">Management</h1>
                 <div className="access2">
                     <div className='access-col2'>
                         <div className="heading-ac">Permissions</div>
@@ -64,9 +64,9 @@ const Permissions = () => {
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
                     </div>
                 </div>
-            </div>
-            <div className="access-sel-box">
-                <div className="heading">Payment</div>
+            </article>
+            <article className="access-sel-box">
+                <h1 className="heading">Payment</h1>
                 <div className="access2">
                     <div className='access-col2'>
                         <div className="heading-ac">Permissions</div>
@@ -87,9 +87,9 @@ const Permissions = () => {
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
                     </div>
                 </div>
-            </div>
-            <div className="access-sel-box">
-                <div className="heading">Messages & Leads</div>
+            </article>
+            <article className="access-sel-box">
+                <h1 className="heading">Messages & Leads</h1>
                 <div className="access2">
                     <div className='access-col2'>
                         <div className="heading-ac">Permissions</div>
@@ -116,9 +116,9 @@ const Permissions = () => {
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
                     </div>
                 </div>
-            </div>
-            <div className="access-sel-box">
-                <div className="heading">Orders</div>
+            </article>
+            <article className="access-sel-box">
+                <h1 className="heading">Orders</h1>
                 <div className="access2">
                     <div className='access-col2'>
                         <div className="heading-ac">Permissions</div>
@@ -139,9 +139,9 @@ const Permissions = () => {
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
                     </div>
                 </div>
-            </div>
-            <div className="access-sel-box">
-                <div className="heading">Inventory</div>
+            </article>
+            <article className="access-sel-box">
+                <h1 className="heading">Inventory</h1>
                 <div className="access2">
                     <div className='access-col2'>
                         <div className="heading-ac">Permissions</div>
@@ -168,9 +168,9 @@ const Permissions = () => {
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
                     </div>
                 </div>
-            </div>
-            <div className="access-sel-box">
-                <div className="heading">Promotions</div>
+            </article>
+            <article className="access-sel-box">
+                <h1 className="heading">Promotions</h1>
                 <div className="access2">
                     <div className='access-col2'>
                         <div className="heading-ac">Permissions</div>
@@ -191,7 +191,7 @@ const Permissions = () => {
                         <div className="ac-item2"><DoneIcon style={{ color: 'green' }} /></div>  
                     </div>
                 </div>
-            </div>
+            </article>
         </div>
     )
 }

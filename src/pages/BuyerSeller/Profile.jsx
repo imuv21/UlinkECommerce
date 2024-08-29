@@ -100,9 +100,9 @@ const Profile = () => {
             <Helmet>
                 <title>My Profile</title>
             </Helmet>
-            <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                <div className="heading5">My Profile</div> <Link to={getDashboardLink()} className='heading3'>Back</Link>
-            </div>
+            <article className="flex wh" style={{ justifyContent: 'space-between' }}>
+                <h1 className="heading5">My Profile</h1> <Link to={getDashboardLink()} className='heading3'>Back</Link>
+            </article>
 
             {isAuthenticated && (
                 <div className="procont">
@@ -121,10 +121,10 @@ const Profile = () => {
                                     {(errors.firstname || errors.lastname) &&
                                         <div className="flex wh">
                                             <div className="flex wh">
-                                                <div className='error'>{errors.firstname?.message}</div>
+                                                <p className='error'>{errors.firstname?.message}</p>
                                             </div>
                                             <div className="flex wh">
-                                                <div className='error'>{errors.lastname?.message}</div>
+                                                <p className='error'>{errors.lastname?.message}</p>
                                             </div>
                                         </div>
                                     }
@@ -147,10 +147,10 @@ const Profile = () => {
                                     {(errors.whatsappnumber || errors.wpcountrycode) &&
                                         <div className="flex wh">
                                             <div className="flex wh">
-                                                <div className='error'>{errors.wpcountrycode?.message}</div>
+                                                <p className='error'>{errors.wpcountrycode?.message}</p>
                                             </div>
                                             <div className="flex wh" style={{ justifyContent: 'space-around' }}>
-                                                <div className='error'>{errors.whatsappnumber?.message}</div>
+                                                <p className='error'>{errors.whatsappnumber?.message}</p>
                                             </div>
                                         </div>
                                     }

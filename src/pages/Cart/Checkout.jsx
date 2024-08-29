@@ -313,18 +313,19 @@ const Checkout = () => {
       <Helmet>
         <title>Checkout</title>
       </Helmet>
-      <div className="flex wh">
-        <div className="heading wh">Checkout</div>
-      </div>
+      <article className="flex wh">
+        <h1 className="heading wh">Checkout</h1>
+      </article>
 
 
       <div className="cart_cont wh">
 
-        <div className="cartcol_one" tabIndex={0} ref={scrollRef}>
-          <div className="webdiv checkout">
-            <div className="heading wh">Your addresses</div>
+        <article className="cartcol_one" tabIndex={0} ref={scrollRef}>
+          <section className="webdiv checkout">
 
-            <div className="heading3 wh">Shipping address</div>
+            <h1 className="heading wh">Your addresses</h1>
+            <h2 className="heading3 wh">Shipping address</h2>
+
             <select className='coupon' value={selectedShippingAddress?.address || ''} onChange={handleAddressShippingChange} disabled={selectedShippingAddress && selectedBillingAddress}>
               <option value=''>Select shipping address</option>
               {shippingAddresses.map((address, index) => (
@@ -341,13 +342,13 @@ const Checkout = () => {
                   {selectedShippingAddress.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
                 </div>
                 <div className="flex" style={{ gap: '10px' }}>
-                  <div className='descrip2'>{selectedShippingAddress.selectedOrigin}</div>
-                  <div className='descrip2'>{selectedShippingAddress.city}</div>
-                  <div className='descrip2'>{selectedShippingAddress.area}</div>
-                  <div className='descrip2'>{selectedShippingAddress.street}</div>
-                  <div className='descrip2'>{selectedShippingAddress.office}</div>
-                  <div className='descrip2'>Pobox: {selectedShippingAddress.pobox}</div>
-                  <div className='descrip2'>Post code: {selectedShippingAddress.postCode}</div>
+                  <p className='descrip2'>{selectedShippingAddress.selectedOrigin}</p>
+                  <p className='descrip2'>{selectedShippingAddress.city}</p>
+                  <p className='descrip2'>{selectedShippingAddress.area}</p>
+                  <p className='descrip2'>{selectedShippingAddress.street}</p>
+                  <p className='descrip2'>{selectedShippingAddress.office}</p>
+                  <p className='descrip2'>Pobox: {selectedShippingAddress.pobox}</p>
+                  <p className='descrip2'>Post code: {selectedShippingAddress.postCode}</p>
                 </div>
                 <div className="flex" style={{ gap: '20px' }}>
                   <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.phoneNumber}</div>
@@ -359,7 +360,7 @@ const Checkout = () => {
 
             {selectedShippingAddress && !(selectedShippingAddress.isBillingChecked && selectedShippingAddress.isLocationChecked) && (
               <>
-                <div className="heading3 wh">Billing address</div>
+                <h3 className="heading3 wh">Billing address</h3>
                 <select className='coupon' id="billingAddressSelect" value={selectedBillingAddress?.address || ''} onChange={handleAddressBillingChange} disabled={!selectedShippingAddress || selectedBillingAddress}>
                   <option value=''>Select billing address</option>
                   {addresses.filter(address => address.isBillingChecked).map((address, index) => (
@@ -377,13 +378,13 @@ const Checkout = () => {
                   {selectedBillingAddress.isBillingChecked && <div className='descrip warning-btn2'>Billing</div>}
                 </div>
                 <div className="flex" style={{ gap: '10px' }}>
-                  <div className='descrip2'>{selectedBillingAddress.selectedOrigin}</div>
-                  <div className='descrip2'>{selectedBillingAddress.city}</div>
-                  <div className='descrip2'>{selectedBillingAddress.area}</div>
-                  <div className='descrip2'>{selectedBillingAddress.street}</div>
-                  <div className='descrip2'>{selectedBillingAddress.office}</div>
-                  <div className='descrip2'>Pobox: {selectedBillingAddress.pobox}</div>
-                  <div className='descrip2'>Post code: {selectedBillingAddress.postCode}</div>
+                  <p className='descrip2'>{selectedBillingAddress.selectedOrigin}</p>
+                  <p className='descrip2'>{selectedBillingAddress.city}</p>
+                  <p className='descrip2'>{selectedBillingAddress.area}</p>
+                  <p className='descrip2'>{selectedBillingAddress.street}</p>
+                  <p className='descrip2'>{selectedBillingAddress.office}</p>
+                  <p className='descrip2'>Pobox: {selectedBillingAddress.pobox}</p>
+                  <p className='descrip2'>Post code: {selectedBillingAddress.postCode}</p>
                 </div>
                 <div className="flex" style={{ gap: '20px' }}>
                   <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.phoneNumber}</div>
@@ -393,21 +394,21 @@ const Checkout = () => {
               </div>
             )}
 
-          </div>
+          </section>
 
-          <div className="checkout webdiv">
-            <div className="heading wh">Choose a payment method</div>
+          <section className="checkout webdiv">
+            <h1 className="heading wh">Choose a payment method</h1>
             <div className="flex-start wh" style={{ gap: '20px' }}>
               <button onClick={() => { handleSubPageChange(1); setSelectedPaymentOption('card') }} className={subCurrentPage === 1 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Card</div></button>
               <button onClick={() => { handleSubPageChange(2); setSelectedPaymentOption('netbanking') }} className={subCurrentPage === 2 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Net banking</div></button>
               <button onClick={() => { handleSubPageChange(3); setSelectedPaymentOption('upi') }} className={subCurrentPage === 3 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">UPI</div></button>
               <button onClick={() => handleSubPageChange(4)} className={subCurrentPage === 4 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Other Gateways</div></button>
             </div>
-          </div>
+          </section>
 
           {subCurrentPage === 1 && (
-            <div className="checkout webdiv">
-              <div className="heading3 wh">Card Details</div>
+            <section className="checkout webdiv">
+              <h1 className="heading3 wh">Card Details</h1>
               {/* <select className='coupon' value={selectedCard.fullname || ''} onChange={handleCardChange}>
                 <option value=''>Select a card</option>
                 {cardDetails.map((card, index) => (
@@ -419,7 +420,7 @@ const Checkout = () => {
               {selectedCard?.fullname && (
                 <div className='flex-start wh' style={{ gap: '20px' }}>
                   <CreditCardIcon style={{ width: '17px', color: 'gray' }} />
-                  <div className='descrip2'>{selectedCard.fullname}</div>
+                  <p className='descrip2'>{selectedCard.fullname}</p>
                   <div className="descrip2">{maskText(selectedCard.cardNumber)}</div>
                   <div className="descrip2">{selectedCard.expiryDate}</div>
                 </div>
@@ -430,12 +431,12 @@ const Checkout = () => {
                 <input className='box flex' type="text" placeholder='Enter expiry date' autoComplete='off' />
                 <input className='box flex' type="password" placeholder='Enter CVV' autoComplete='off' />
               </form>
-            </div>
+            </section>
           )}
 
           {subCurrentPage === 2 && (
-            <div className="checkout webdiv">
-              <div className="heading3 wh">Bank Account Details</div>
+            <section className="checkout webdiv">
+              <h1 className="heading3 wh">Bank Account Details</h1>
               {/* <select className='coupon' value={selectedBank.accHolderName || ''} onChange={handleBankChange}>
                 <option value=''>Select an account</option>
                 {bankDetails.map((bank, index) => (
@@ -447,7 +448,7 @@ const Checkout = () => {
               {selectedBank?.accHolderName && (
                 <div className='flex-start wh' style={{ gap: '20px' }} >
                   <AccountBalanceIcon style={{ width: '17px', color: 'gray' }} />
-                  <div className='descrip2'>{selectedBank.accHolderName}</div>
+                  <p className='descrip2'>{selectedBank.accHolderName}</p>
                   <div className="descrip2">{maskText(selectedBank.accNo)}</div>
                   <div className="descrip2">{selectedBank.bankName}</div>
                   <div className="descrip2">{selectedBank.bankLocation}</div>
@@ -467,12 +468,12 @@ const Checkout = () => {
                 <input className='box flex' type='text' placeholder='Enter user ID/customer ID' name='userID' autoComplete='off' />
                 <input className='box flex' type='password' placeholder='Enter transaction password' name='transactionPassword' autoComplete='off' />
               </form>
-            </div>
+            </section>
           )}
 
           {subCurrentPage === 3 && (
-            <div className="checkout webdiv">
-              <div className="heading3 wh">UPI Detail</div>
+            <section className="checkout webdiv">
+              <h1 className="heading3 wh">UPI Detail</h1>
               {/* <select className='coupon' value={selectedUpi.upi || ''} onChange={handleUpiChange}>
                 <option value=''>Select a UPI</option>
                 {upiDetails.map((upis, index) => (
@@ -484,18 +485,18 @@ const Checkout = () => {
               {selectedUpi?.upi && (
                 <div className='flex-start wh' style={{ gap: '20px' }} >
                   <img src='https://res.cloudinary.com/dey1tujp8/image/upload/v1718266152/upi-id.1024x1024_xm8kjf.png' style={{ width: '17px', color: 'gray' }} alt='upi' />
-                  <div className='descrip2'>{selectedUpi.upi}</div>
+                  <p className='descrip2'>{selectedUpi.upi}</p>
                 </div>
               )} */}
               <form className='netbanking'>
                 <input className='box flex' type='text' placeholder='Enter UPI ID' name='upiId' autoComplete='off' />
               </form>
-            </div>
+            </section>
           )}
 
           {subCurrentPage === 4 && (
-            <div className="checkout webdiv">
-              <div className="heading3 wh">Other Gateways</div>
+            <section className="checkout webdiv">
+              <h1 className="heading3 wh">Other Gateways</h1>
               <div className="payop-box">
                 <div className={`payment-option ${selectedPaymentOption === 'razorpay' ? 'selected' : ''}`} onClick={() => setSelectedPaymentOption('razorpay')}>
                   <img src="https://res.cloudinary.com/dey1tujp8/image/upload/v1720262856/pngwing.com_pcirhd.png" alt="Razorpay" />
@@ -504,14 +505,14 @@ const Checkout = () => {
                   <img src="https://res.cloudinary.com/dey1tujp8/image/upload/v1720262856/pngwing.com_1_mjjcxi.png" alt="Paypal" />
                 </div>
               </div>
-            </div>
+            </section>
           )}
-        </div>
+        </article>
 
         <div className="cartcol_two">
-          <div className="sel-box" style={{ gap: '10px' }}>
+          <article className="sel-box" style={{ gap: '10px' }}>
             <div className="flex wh bbottom" style={{ padding: '10px 0px' }}>
-              <div className="heading3">Order Summary</div>
+              <h1 className="heading3">Order Summary</h1>
             </div>
             <div className="flex wh" style={{ padding: '10px 0px', gap: '10px' }}>
               <input type="text" placeholder='Enter coupon code' className='coupon' /> <button className='btn couponbtn flex'>Apply</button>
@@ -538,7 +539,7 @@ const Checkout = () => {
             <div className={`flexcol wh topbottom`} style={{ gap: '10px' }}>
               <button className='btn addtocart flex' onClick={handlePaymentClick}><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>
             </div>
-          </div>
+          </article>
         </div>
 
       </div>

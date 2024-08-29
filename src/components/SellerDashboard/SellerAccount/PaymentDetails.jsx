@@ -99,12 +99,12 @@ const PaymentDetails = () => {
             <Helmet>
                 <title>Add A Bank Account</title>
             </Helmet>
-            <div className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={backtopayment} />&nbsp;&nbsp;Add a new account</div>
+            <h1 className="heading flex"><ArrowBackIosNewIcon style={{ cursor: 'pointer' }} onClick={backtopayment} />&nbsp;&nbsp;Add a new account</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="productlist2">
-                <div className="heading3 wh">Account information</div>
-                <div className="heading2 wh">This helps us to gather the right bank information from you.</div>
+                <h2 className="heading3 wh">Account information</h2>
+                <h3 className="heading2 wh">This helps us to gather the right bank information from you.</h3>
                 <Controller name="bankName" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter bank name' {...field} />} />
-                {errors.bankName && <div className='error'>{errors.bankName?.message}</div>}
+                {errors.bankName && <p className='error'>{errors.bankName?.message}</p>}
                 <Controller name="bankLocation" value={selectedOrigin} onChange={originSelectChange} control={control} defaultValue="" render={({ field }) => (
                     <select className="box flex" {...field} >
                         <option value="">Select bank location</option>
@@ -114,30 +114,30 @@ const PaymentDetails = () => {
                     </select>
                 )}
                 />
-                {errors.bankLocation && <div className='error'>{errors.bankLocation?.message}</div>}
+                {errors.bankLocation && <p className='error'>{errors.bankLocation?.message}</p>}
 
                 <Controller name="iban" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter IBAN number' {...field} />} />
-                {errors.iban && <div className='error'>{errors.iban?.message}</div>}
+                {errors.iban && <p className='error'>{errors.iban?.message}</p>}
 
                 <Controller name="accNo" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter account number' {...field} />} />
-                {errors.accNo && <div className='error'>{errors.accNo?.message}</div>}
+                {errors.accNo && <p className='error'>{errors.accNo?.message}</p>}
 
                 <Controller name="accHolderName" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder="Enter account holder's name" {...field} />} />
-                {errors.accHolderName && <div className='error'>{errors.accHolderName?.message}</div>}
+                {errors.accHolderName && <p className='error'>{errors.accHolderName?.message}</p>}
 
                 <Controller name="swiftbic" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder="Enter swift/BIC code" {...field} />} />
-                {errors.swiftbic && <div className='error'>{errors.swiftbic?.message}</div>}
+                {errors.swiftbic && <p className='error'>{errors.swiftbic?.message}</p>}
 
                 <Controller name="ifsc" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder="Enter IFSC code" {...field} />} />
-                {errors.ifsc && <div className='error'>{errors.ifsc?.message}</div>}
+                {errors.ifsc && <p className='error'>{errors.ifsc?.message}</p>}
 
                 <div className="flex wh">
                     <input type="checkbox" name='check' checked={isChecked} onChange={handleCheckboxChange} />&nbsp;&nbsp;<div className="heading2 wh">I want to specify an intermediary bank</div>
                 </div>
                 {isChecked && (
                     <Fragment>
-                        <div className="heading3 wh">Intermediary bank details</div>
-                        <div className="heading2 wh">Intermediary banks route your money to where ever you are.</div>
+                        <h4 className="heading3 wh">Intermediary bank details</h4>
+                        <h5 className="heading2 wh">Intermediary banks route your money to where ever you are.</h5>
 
                         <Controller name='ibankName' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary bank name' {...field} />} />
                         <Controller name='iiban' control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Intermediary IBAN' {...field} />} />
@@ -147,7 +147,7 @@ const PaymentDetails = () => {
                     </Fragment>
                 )}
                 <div className="flex wh">
-                    <input type="checkbox" name='defaultValue' checked={isdefault} onChange={handleDefaultChange} />&nbsp;&nbsp;<div className="heading2 wh">Set bank details as default</div>
+                    <input type="checkbox" name='defaultValue' checked={isdefault} onChange={handleDefaultChange} />&nbsp;&nbsp;<p className="heading2 wh">Set bank details as default</p>
                 </div>
 
                 <div className="flex" style={{ gap: '20px' }}>

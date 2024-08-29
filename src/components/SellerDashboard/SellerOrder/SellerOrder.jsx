@@ -25,9 +25,9 @@ const SellerOrder = () => {
              <Helmet>
                 <title>Orders</title>
             </Helmet>
-            <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                <div className="heading">My Orders</div>
-            </div>
+            <article className="flex wh" style={{ justifyContent: 'space-between' }}>
+                <h1 className="heading">My Orders</h1>
+            </article>
 
             <div className="productlist">
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
@@ -105,8 +105,8 @@ const SellerOrder = () => {
 
                         <div className="productlist">
                             <img src={empty} className='productlist-img' alt="empty box" />
-                            <div className="heading">You do not have any products in this state</div>
-                            <div className="descrip2">This is where you will be able to view and manage your products</div>
+                            <p className="heading">You do not have any products in this state</p>
+                            <p className="descrip2">This is where you will be able to view and manage your products</p>
                         </div>
 
                     </Fragment>
@@ -115,8 +115,8 @@ const SellerOrder = () => {
                     <Fragment>
                         <div className="productlist">
                             <img src={empty} className='productlist-img' alt="empty box" />
-                            <div className="heading">You do not have any products in this state</div>
-                            <div className="descrip2">This is where you will be able to view and manage your products</div>
+                            <p className="heading">You do not have any products in this state</p>
+                            <p className="descrip2">This is where you will be able to view and manage your products</p>
                         </div>
                     </Fragment>
                 )}
@@ -166,10 +166,9 @@ const SellerOrder = () => {
 
                         <div className="productlist">
                             <img src={empty} className='productlist-img' alt="empty box" />
-                            <div className="heading">You do not have any products in this state</div>
-                            <div className="descrip2">This is where you will be able to view and manage your products</div>
+                            <p className="heading">You do not have any products in this state</p>
+                            <p className="descrip2">This is where you will be able to view and manage your products</p>
                         </div>
-
                     </Fragment>
                 )}
                 {currentPage === 4 && (
@@ -222,10 +221,9 @@ const SellerOrder = () => {
 
                         <div className="productlist">
                             <img src={empty} className='productlist-img' alt="empty box" />
-                            <div className="heading">You do not have any products in this state</div>
-                            <div className="descrip2">This is where you will be able to view and manage your products</div>
+                            <p className="heading">You do not have any products in this state</p>
+                            <p className="descrip2">This is where you will be able to view and manage your products</p>
                         </div>
-
                     </Fragment>
                 )}
                 {currentPage === 5 && (
@@ -278,8 +276,8 @@ const SellerOrder = () => {
 
                         <div className="productlist">
                             <img src={empty} className='productlist-img' alt="empty box" />
-                            <div className="heading">You do not have any products in this state</div>
-                            <div className="descrip2">This is where you will be able to view and manage your products</div>
+                            <p className="heading">You do not have any products in this state</p>
+                            <p className="descrip2">This is where you will be able to view and manage your products</p>
                         </div>
                     </Fragment>
                 )}
@@ -329,8 +327,8 @@ const SellerOrder = () => {
 
                         <div className="productlist">
                             <img src={empty} className='productlist-img' alt="empty box" />
-                            <div className="heading">You do not have any products in this state</div>
-                            <div className="descrip2">This is where you will be able to view and manage your products</div>
+                            <p className="heading">You do not have any products in this state</p>
+                            <p className="descrip2">This is where you will be able to view and manage your products</p>
                         </div>
                     </Fragment>
                 )}

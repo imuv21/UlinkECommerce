@@ -212,8 +212,8 @@ const SellerAddress = () => {
             </Helmet>
             <div className="addressbox">
                 <div className="flexcol" style={{ gap: '20px' }}>
-                    <div className="heading wh">My Addresses</div>
-                    <div className="heading2 wh">Provide information on your billing address and where you would like your items to be picked up from. <br /> We need your stock pickup location details in order to calculate accurate shipping rates. <br /> For verification you must add a default address.</div>
+                    <h1 className="heading wh">My Addresses</h1>
+                    <h2 className="heading2 wh">Provide information on your billing address and where you would like your items to be picked up from. <br /> We need your stock pickup location details in order to calculate accurate shipping rates. <br /> For verification you must add a default address.</h2>
                 </div>
                 <div className="flexcol" style={{ gap: '20px' }}>
                     <button onClick={handleAddAddress} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Add New Address</div></button>
@@ -221,7 +221,7 @@ const SellerAddress = () => {
             </div>
             <div className="productlist2">
                 {addresses.length === 0 ? (
-                    <div className="heading3">Address list is empty</div>
+                    <p className="heading3">Address list is empty</p>
                 ) : (
                     <Fragment>
                         {addresses.map((address) => (
@@ -270,7 +270,7 @@ const SellerAddress = () => {
                     <form className='popup-child' onSubmit={handleSubmit}>
                         <div style={{ height: '500px', overflow: 'auto' }}>
                             <div className="popupform">
-                                <div className="heading wh">Add New Address</div>
+                                <h3 className="heading wh">Add New Address</h3>
                                 <input type="text" placeholder='Enter address' className="box flex" value={address} onChange={(e) => setAddress(e.target.value)} />
                                 <select className="box flex" value={selectedOrigin} onChange={originSelectChange} name='country'>
                                     <option value="">Select Country</option>

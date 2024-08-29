@@ -63,7 +63,7 @@ const AccessManagement = () => {
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                 <div className="flex" style={{ gap: '10px' }}>
                     <InfoIcon style={{ color: 'gray' }} />
-                    <div className="descrip">Ulinkit values your security. Please only add users to your account that you trust with your business information. <br /> Roles allow you to customize the experience and permissions of accounts invited to your business.</div>
+                    <p className="descrip">Ulinkit values your security. Please only add users to your account that you trust with your business information. <br /> Roles allow you to customize the experience and permissions of accounts invited to your business.</p>
                 </div>
                 <Link to='/seller-dashboard/permissions' className='hoverr'>Learn more about roles</Link>
             </div>
@@ -100,7 +100,7 @@ const AccessManagement = () => {
                     <form className='popup-child' onSubmit={sendInvite}>
                         <div className="popupform">
                             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                                <div className="heading wh">Invite Users</div>  <ClearIcon style={{ cursor: 'pointer' }} onClick={closeAccessPopup} />
+                                <p className="heading wh">Invite Users</p>  <ClearIcon style={{ cursor: 'pointer' }} onClick={closeAccessPopup} />
                             </div>
                             <input type="text" className="box flex" value={inputValue} onChange={handleInputChange} placeholder="Enter emails (separated by commas)" required />
                             <select className='box flex' value={role} onChange={handleRole} style={{ zIndex: '999' }} name="role" id="role" required>

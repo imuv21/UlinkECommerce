@@ -199,7 +199,7 @@ const ProductDetails = () => {
         return <Loader />;
     }
     if (status === 'failed') {
-        return <div>Error: {error}</div>;
+        return <p>Error: {error}</p>;
     }
     if (!product) {
         return null;
@@ -215,9 +215,9 @@ const ProductDetails = () => {
             </Helmet>
 
             <Fragment>
-                <div className="flex wh">
-                    <div className="heading2 wh">{`${convertPascalToReadable(product.selectedSupOption)} > ${convertPascalToReadable(product.selectedSubOption)} > ${convertPascalToReadable(product.selectedMiniSubOption)} > ${convertPascalToReadable(product.selectedMicroSubOption)}`}</div>
-                </div>
+                <article className="flex wh">
+                    <h1 className="heading2 wh">{`${convertPascalToReadable(product.selectedSupOption)} > ${convertPascalToReadable(product.selectedSubOption)} > ${convertPascalToReadable(product.selectedMiniSubOption)} > ${convertPascalToReadable(product.selectedMicroSubOption)}`}</h1>
+                </article>
 
                 <div className="pdcont">
                     <div className="pdcol pdcol_one">
@@ -267,8 +267,8 @@ const ProductDetails = () => {
                         </div>
                     </div>
                     <div className="pdcol pdcol_two">
-                        <div className="heading2 wh captext">Brand : {product.brandName}</div>
-                        <div className="heading wh captext">{product.productName}</div>
+                        <p className="heading2 wh captext">Brand : {product.brandName}</p>
+                        <p className="heading wh captext">{product.productName}</p>
                         <div className="sel-box" style={{ gap: '20px' }}>
                             <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>
                                 <div className="flex" style={{ gap: '15px' }}>
@@ -312,31 +312,31 @@ const ProductDetails = () => {
                             <img src={netbanking} alt="netbanking" />
                         </div>
 
-                        <div className="heading3 wh">About this item</div>
+                        <p className="heading3 wh">About this item</p>
                         {product.bulletPoints && renderBulletPoints(product.bulletPoints)}
 
                         <div className="flexcol wh">
                             <div className={`accordion-pd ${activeIndex === 1 ? 'active' : ''}`} onClick={() => toggleProductAccordion(1)}>
-                                <div className="heading3 flex"><img src={proDetail} className='img-big' alt="" />&nbsp;&nbsp;Product details</div>
+                                <div className="heading3 flex"><img src={proDetail} className='img-big' alt="pro-detail" />&nbsp;&nbsp;Product details</div>
                             </div>
                             <div className="panel-pd" style={{ maxHeight: activeIndex === 1 ? '300px' : '0' }}>
                                 <div className="flexcol wh" style={{ padding: '10px', alignItems: 'start' }}>
-                                    <div className="descrip2 captext" >Brand: {product.brandName}</div>
-                                    <div className="descrip2 captext" >Country of origin: {product.origin}</div>
-                                    <div className="descrip2 captext">Storage temperature:{product.temperature}</div>
-                                    <div className="descrip2 captext">Unit size: {product.size}</div>
-                                    <div className="descrip2 captext">Number of packs in one carton: {product.unitsPerCarton}</div>
-                                    <div className="descrip2 captext">Min. Order Quantity: {product.minOrderQuant}</div>
+                                    <p className="descrip2 captext">Brand: {product.brandName}</p>
+                                    <p className="descrip2 captext">Country of origin: {product.origin}</p>
+                                    <p className="descrip2 captext">Storage temperature:{product.temperature}</p>
+                                    <p className="descrip2 captext">Unit size: {product.size}</p>
+                                    <p className="descrip2 captext">Number of packs in one carton: {product.unitsPerCarton}</p>
+                                    <p className="descrip2 captext">Min. Order Quantity: {product.minOrderQuant}</p>
                                 </div>
                             </div>
 
                             <div className={`accordion-pd ${activeIndex === 2 ? 'active' : ''}`} onClick={() => toggleProductAccordion(2)}>
-                                <div className="heading3 flex"><img src={boxx} className='img-big' alt="" />&nbsp;&nbsp;Stock dimensions</div>
+                                <div className="heading3 flex"><img src={boxx} className='img-big' alt="box" />&nbsp;&nbsp;Stock dimensions</div>
                             </div>
                             <div className="panel-pd" style={{ maxHeight: activeIndex === 2 ? '300px' : '0' }}>
                                 <div className="flexcol wh" style={{ padding: '10px', alignItems: 'start' }}>
-                                    <div className="descrip2 captext" >Carton dimensions (LWH): {product.cartonLgh} {product.cartonLghUnit} x {product.cartonWdh} {product.cartonWdhUnit} x {product.cartonHgt} {product.cartonHgtUnit}</div>
-                                    <div className="descrip2 captext" >Carton weight: {product.cartonWgt} {product.cartonWgtUnit} </div>
+                                    <p className="descrip2 captext">Carton dimensions (LWH): {product.cartonLgh} {product.cartonLghUnit} x {product.cartonWdh} {product.cartonWdhUnit} x {product.cartonHgt} {product.cartonHgtUnit}</p>
+                                    <p className="descrip2 captext">Carton weight: {product.cartonWgt} {product.cartonWgtUnit} </p>
                                 </div>
                             </div>
                         </div>
@@ -344,22 +344,22 @@ const ProductDetails = () => {
                     <div className="pdcol pdcol_three">
                         <div className="sel-box pdthree_one" style={{ gap: '20px' }}>
                             <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>
-                                <div className="heading3">Order quantity</div>
+                                <p className="heading3">Order quantity</p>
                                 <div className="plus-minus">
                                     <div style={{ cursor: 'pointer' }}><RemoveCircleOutlineIcon onClick={decrementValue} /></div>
                                     <input className='pminput' type="number" value={value} onChange={handleInputChange} />
                                     <div style={{ cursor: 'pointer' }}><AddCircleOutlineIcon onClick={incrementValue} /></div>
                                 </div>
-                                <div className="descrip2" style={{ display : 'none'}}>Minimum order quantity : {product.minOrderQuant}</div>
+                                <p className="descrip2" style={{ display : 'none'}}>Minimum order quantity : {product.minOrderQuant}</p>
                             </div>
 
                             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
-                                <div className="heading2"><span>Total Price</span></div>
+                                <p className="heading2"><span>Total Price</span></p>
                                 <div className="heading2"><span>{currencySymbols[selectedCurrency]} {convertPrice(totalPrice, product.currencyname)} {selectedCurrency}</span></div>
                             </div>
 
                             <div className="flexcol wh" style={{ gap: '10px' }}>
-                                {isAuthenticated && user.role === 'Seller' && (<div className="descrip2 flex" style={{ gap: '10px' }}><InfoIcon style={{ color: 'gray' }} />To purchase products, please log in using your Buyer account.</div>)}
+                                {isAuthenticated && user.role === 'Seller' && (<p className="descrip2 flex" style={{ gap: '10px' }}><InfoIcon style={{ color: 'gray' }} />To purchase products, please log in using your Buyer account.</p>)}
                                 {isAuthenticated && user.role === 'Buyer' && (
                                     <Fragment>
                                         <button className='btn2 addtocart flex' onClick={cartHandler}><AddShoppingCartIcon style={{ width: '15px' }} /><div className="heading2">Add to cart</div></button>
@@ -367,7 +367,7 @@ const ProductDetails = () => {
                                     </Fragment>
                                 )}
                                 {!isAuthenticated && (
-                                    <div className="descrip2 flex" style={{ gap: '10px' }}><InfoIcon style={{ color: 'gray' }} />To purchase products, please login/signup using your Buyer account.</div>
+                                    <p className="descrip2 flex" style={{ gap: '10px' }}><InfoIcon style={{ color: 'gray' }} />To purchase products, please login/signup using your Buyer account.</p>
                                 )}
                             </div>
                         </div>
@@ -382,20 +382,20 @@ const ProductDetails = () => {
                                     <div className="heading2"><span>Ex Works</span></div>
                                 </div>
                                 <div className="flexcol wh bbottom" style={{ alignItems: 'start', padding: '10px 0px' }}>
-                                    <div className="heading2 flex" style={{ gap: '5px' }}><img src={returned} className='img' /><span>Returns</span></div>
-                                    <div className="descrip2"><Link to="/return-policy" className='hoverr'>Read seller's return policy</Link></div>
+                                    <div className="heading2 flex" style={{ gap: '5px' }}><img src={returned} className='img' alt='returned' /><span>Returns</span></div>
+                                    <p className="descrip2"><Link to="/return-policy" className='hoverr'>Read seller's return policy</Link></p>
                                 </div>
 
                                 <div className="flexcol wh" style={{ alignItems: 'start', paddingTop: '10px' }}>
-                                    <div className="descrip2">Final price, delivery dates and additional shipping options will be shown at checkout.</div>
+                                    <p className="descrip2">Final price, delivery dates and additional shipping options will be shown at checkout.</p>
                                 </div>
                             </div>
                         </div>
                         <div className="sel-box pdthree_three" style={{ gap: '20px' }}>
                             <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>
-                                <div className="heading3">Seller information</div>
+                                <p className="heading3">Seller information</p>
                                 <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                                    <div className="descrip2">{product.seller.name}</div>
+                                    <p className="descrip2">{product.seller.name}</p>
                                     {product.seller.isVerified ? (<div className="warning-btn2 flex"><VerifiedIcon style={{ width: '13px' }} />Verified</div>)
                                         : (<div className="warning-btn3 flex"><NewReleasesIcon style={{ width: '13px' }} />Unverified</div>)}
                                 </div>
@@ -408,62 +408,62 @@ const ProductDetails = () => {
                     </div>
                 </div>
 
-                <div className="flexcol wh">
-                    <div className="heading wh">Overview</div>
-                </div>
+                <article className="flexcol wh">
+                    <h1 className="heading wh">Overview</h1>
+                </article>
 
                 <div className="overview">
                     <div className="overview_one">
-                        {(product.sku || product.sku === 0) && <div className="over-heading"><div>SKU</div> <div className='captext'>{product.sku}</div></div>}
-                        {product.specifications && <div className="over-heading"><div>Specifications</div> <div className='captext'>{product.specifications}</div></div>}
-                        {product.avgBatteryLife && <div className="over-heading"><div>Average battery life</div> <div className='captext'>{product.avgBatteryLife}</div></div>}
-                        {product.connectivityType && <div className="over-heading"><div>Connectivity type</div> <div className='captext'>{product.connectivityType}</div></div>}
-                        {product.opSystem && <div className="over-heading"><div>Operating system</div> <div className='captext'>{product.opSystem}</div></div>}
-                        {product.portType && <div className="over-heading"><div>Port type</div> <div className='captext'>{product.portType}</div></div>}
-                        {product.availability && <div className="over-heading"><div>Availability</div> <div className='captext'>{product.availability}</div></div>}
-                        {product.PrivateLabel && <div className="over-heading"><div>Private label</div> <div className='captext'>{product.PrivateLabel}</div></div>}
-                        {product.origin && <div className="over-heading"><div>Country of origin</div> <div className='captext'>{product.origin}</div></div>}
-                        {product.StockLocation && <div className="over-heading"><div>Stock location</div> <div className='captext'>{product.StockLocation}</div></div>}
-                        {product.temperature && <div className="over-heading"><div>Temperature</div> <div className='captext'>{product.temperature}</div></div>}
-                        {product.gender && <div className="over-heading"><div>Gender</div> <div className='captext'>{product.gender}</div></div>}
-                        {product.shelflife && <div className="over-heading"><div>Shelf life</div> <div className='captext'>{product.shelflife}</div></div>}
-                        {product.ingredients && <div className="over-heading"><div>Ingredients</div> <div className='captext'>{product.ingredients}</div></div>}
-                        {product.material && <div className="over-heading"><div>Material</div> <div className='captext'>{product.material}</div></div>}
-                        {product.compatibility && <div className="over-heading"><div>Compatibility</div> <div className='captext'>{product.compatibility}</div></div>}
-                        {product.memoryStorage && <div className="over-heading"><div>Memory storage</div> <div className='captext'>{product.memoryStorage}</div></div>}
-                        {product.version && <div className="over-heading"><div>Version</div> <div className='captext'>{product.version}</div></div>}
+                        {(product.sku || product.sku === 0) && <p className="over-heading"><div>SKU</div> <div className='captext'>{product.sku}</div></p>}
+                        {product.specifications && <p className="over-heading"><div>Specifications</div> <div className='captext'>{product.specifications}</div></p>}
+                        {product.avgBatteryLife && <p className="over-heading"><div>Average battery life</div> <div className='captext'>{product.avgBatteryLife}</div></p>}
+                        {product.connectivityType && <p className="over-heading"><div>Connectivity type</div> <div className='captext'>{product.connectivityType}</div></p>}
+                        {product.opSystem && <p className="over-heading"><div>Operating system</div> <div className='captext'>{product.opSystem}</div></p>}
+                        {product.portType && <p className="over-heading"><div>Port type</div> <div className='captext'>{product.portType}</div></p>}
+                        {product.availability && <p className="over-heading"><div>Availability</div> <div className='captext'>{product.availability}</div></p>}
+                        {product.PrivateLabel && <p className="over-heading"><div>Private label</div> <div className='captext'>{product.PrivateLabel}</div></p>}
+                        {product.origin && <p className="over-heading"><div>Country of origin</div> <div className='captext'>{product.origin}</div></p>}
+                        {product.StockLocation && <p className="over-heading"><div>Stock location</div> <div className='captext'>{product.StockLocation}</div></p>}
+                        {product.temperature && <p className="over-heading"><div>Temperature</div> <div className='captext'>{product.temperature}</div></p>}
+                        {product.gender && <p className="over-heading"><div>Gender</div> <div className='captext'>{product.gender}</div></p>}
+                        {product.shelflife && <p className="over-heading"><div>Shelf life</div> <div className='captext'>{product.shelflife}</div></p>}
+                        {product.ingredients && <p className="over-heading"><div>Ingredients</div> <div className='captext'>{product.ingredients}</div></p>}
+                        {product.material && <p className="over-heading"><div>Material</div> <div className='captext'>{product.material}</div></p>}
+                        {product.compatibility && <p className="over-heading"><div>Compatibility</div> <div className='captext'>{product.compatibility}</div></p>}
+                        {product.memoryStorage && <p className="over-heading"><div>Memory storage</div> <div className='captext'>{product.memoryStorage}</div></p>}
+                        {product.version && <p className="over-heading"><div>Version</div> <div className='captext'>{product.version}</div></p>}
                     </div>
                     <div className="overview_one">
-                        {product.colors && <div className="over-heading"><div>Color</div> <div className='captext'>{product.colors}</div></div>}
-                        {(product.productLgh && product.dimensionUnit) && <div className="over-heading"><div>Item length</div> <div className='captext'>{product.productLgh} {product.dimensionUnit}</div></div>}
-                        {(product.productWdh && product.dimensionUnit) && <div className="over-heading"><div>Item width</div> <div className='captext'>{product.productWdh} {product.dimensionUnit}</div></div>}
-                        {(product.productHgt && product.dimensionUnit) && <div className="over-heading"><div>Item height</div> <div className='captext'>{product.productHgt} {product.dimensionUnit}</div></div>}
-                        {(product.productWgt && product.productWgtUnit) && <div className="over-heading"><div>Item weight</div> <div className='captext'>{product.productWgt} {product.productWgtUnit}</div></div>}
-                        {product.screenSize && <div className="over-heading"><div>Screen size</div> <div className='captext'>{product.screenSize}</div></div>}
-                        {product.ram && <div className="over-heading"><div>RAM</div> <div className='captext'>{product.ram}</div></div>}
-                        {product.lensType && <div className="over-heading"><div>Lens type</div><div className='captext'>{product.lensType}</div></div>}
-                        {product.fitSize && <div className="over-heading"><div>Fit size</div> <div className='captext'>{product.fitSize}</div></div>}
-                        {product.form && <div className="over-heading"><div>Form</div> <div className='captext'>{product.form}</div></div>}
-                        {product.skinType && <div className="over-heading"><div>Skin type</div> <div className='captext'>{product.skinType}</div></div>}
-                        {product.voltage && <div className="over-heading"><div>Voltage</div> <div className='captext'>{product.voltage}</div></div>}
-                        {product.power && <div className="over-heading"><div>Power</div> <div className='captext'>{product.power}</div></div>}
-                        {product.powerPlugType && <div className="over-heading"><div>Power plug type</div> <div className='captext'>{product.powerPlugType}</div></div>}
-                        {product.condition && <div className="over-heading"><div>Condition</div> <div className='captext'>{product.condition}</div></div>}
-                        {product.pattern && <div className="over-heading"><div>Pattern</div> <div className='captext'>{product.pattern}</div></div>}
-                        {product.flavor && <div className="over-heading"><div>Flavor</div> <div className='captext'>{product.flavor}</div></div>}
-                        {product.petSize && <div className="over-heading"><div>Pet size</div> <div className='captext'>{product.petSize}</div></div>}
-                        {product.ageRange && <div className="over-heading"><div>Age range</div> <div className='captext'>{product.ageRange}</div></div>}
-                        {product.powerSource && <div className="over-heading"><div>Power source</div> <div className='captext'>{product.powerSource}</div></div>}
+                        {product.colors && <p className="over-heading"><div>Color</div> <div className='captext'>{product.colors}</div></p>}
+                        {(product.productLgh && product.dimensionUnit) && <p className="over-heading"><div>Item length</div> <div className='captext'>{product.productLgh} {product.dimensionUnit}</div></p>}
+                        {(product.productWdh && product.dimensionUnit) && <p className="over-heading"><div>Item width</div> <div className='captext'>{product.productWdh} {product.dimensionUnit}</div></p>}
+                        {(product.productHgt && product.dimensionUnit) && <p className="over-heading"><div>Item height</div> <div className='captext'>{product.productHgt} {product.dimensionUnit}</div></p>}
+                        {(product.productWgt && product.productWgtUnit) && <p className="over-heading"><div>Item weight</div> <div className='captext'>{product.productWgt} {product.productWgtUnit}</div></p>}
+                        {product.screenSize && <p className="over-heading"><div>Screen size</div> <div className='captext'>{product.screenSize}</div></p>}
+                        {product.ram && <p className="over-heading"><div>RAM</div> <div className='captext'>{product.ram}</div></p>}
+                        {product.lensType && <p className="over-heading"><div>Lens type</div><div className='captext'>{product.lensType}</div></p>}
+                        {product.fitSize && <p className="over-heading"><div>Fit size</div> <div className='captext'>{product.fitSize}</div></p>}
+                        {product.form && <p className="over-heading"><div>Form</div> <div className='captext'>{product.form}</div></p>}
+                        {product.skinType && <p className="over-heading"><div>Skin type</div> <div className='captext'>{product.skinType}</div></p>}
+                        {product.voltage && <p className="over-heading"><div>Voltage</div> <div className='captext'>{product.voltage}</div></p>}
+                        {product.power && <p className="over-heading"><div>Power</div> <div className='captext'>{product.power}</div></p>}
+                        {product.powerPlugType && <p className="over-heading"><div>Power plug type</div> <div className='captext'>{product.powerPlugType}</div></p>}
+                        {product.condition && <p className="over-heading"><div>Condition</div> <div className='captext'>{product.condition}</div></p>}
+                        {product.pattern && <p className="over-heading"><div>Pattern</div> <div className='captext'>{product.pattern}</div></p>}
+                        {product.flavor && <p className="over-heading"><div>Flavor</div> <div className='captext'>{product.flavor}</div></p>}
+                        {product.petSize && <p className="over-heading"><div>Pet size</div> <div className='captext'>{product.petSize}</div></p>}
+                        {product.ageRange && <p className="over-heading"><div>Age range</div> <div className='captext'>{product.ageRange}</div></p>}
+                        {product.powerSource && <p className="over-heading"><div>Power source</div> <div className='captext'>{product.powerSource}</div></p>}
                     </div>
                 </div>
 
-                <div className="flexcol wh">
-                    <div className="heading wh">Product description</div>
-                </div>
+                <article className="flexcol wh">
+                    <h1 className="heading wh">Product description</h1>
+                </article>
 
-                <div className="descrip2 flexstart captext wh">
+                <p className="descrip2 flexstart captext wh">
                     {product.addInfo}
-                </div>
+                </p>
             </Fragment>
 
         </div>

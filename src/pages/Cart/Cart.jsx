@@ -126,12 +126,12 @@ const Cart = () => {
       <Helmet>
         <title>Cart</title>
       </Helmet>
-      <div className="flex wh">
+      <article className="flex wh">
         {/* <div className="heading2">Total (AUD) : {totalPriceWithGST}</div>
         <div className="heading2">Total GST (AUD) : {totalGST}</div>
         <div className="heading2">Total Price with gst (AUD) : {totalPrice}</div> */}
-        <div className="heading wh">My Cart ({totalItems})</div>
-      </div>
+        <h1 className="heading wh">My Cart ({totalItems})</h1>
+      </article>
       <div className="cart_cont">
         <div className="cartcol_one" tabIndex={0} ref={scrollRef}>
           {cartItems.length === 0 ? (
@@ -144,7 +144,7 @@ const Cart = () => {
                     {item.image && item.image.imageUrl ? (
                       <img src={item.image.imageUrl} alt={item.image.imageName} />
                     ) : (
-                      <div>No Image Available</div>
+                      <p>No Image Available</p>
                     )}
                   </a>
 
@@ -182,9 +182,9 @@ const Cart = () => {
           )}
         </div>
 
-        <div className="cartcol_two">
+        <article className="cartcol_two">
           <div className="sel-box" style={{ gap: '10px' }}>
-            <div className="heading3">Cart Summary</div>
+            <h1 className="heading3">Cart Summary</h1>
             <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
               <div className="heading2"><span>Total Price</span></div>
               <div className="heading2"><span>{currencySymbol} {Number(totalSellPrice).toFixed(2)} {currency}</span></div>
@@ -204,7 +204,7 @@ const Cart = () => {
               <button className='btn addtocart flex' onClick={checkout}><ShoppingCartCheckoutIcon style={{ width: '15px' }} /><div className="heading2">Checkout</div></button>
             </div>
           </div>
-        </div>
+        </article>
       </div>
     </div>
   )

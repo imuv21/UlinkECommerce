@@ -50,29 +50,29 @@ const Payments = () => {
             <Helmet>
                 <title>Payment Details</title>
             </Helmet>
-            <div className="heading flex">Payment Details</div>
+            <h1 className="heading flex">Payment Details</h1>
 
-            <div className="productlist3">
+            <article className="productlist3">
                 <div className="flexcol" style={{ gap: '20px' }}>
-                    <div className="heading3 wh">Payoneer</div>
-                    <div className="heading2 wh">Make payments easy – link your payoneer account. <span className="hoverr" onClick={learn}>Learn more</span></div>
+                    <h2 className="heading3 wh">Payoneer</h2>
+                    <h3 className="heading2 wh">Make payments easy – link your payoneer account. <span className="hoverr" onClick={learn}>Learn more</span></h3>
                 </div>
                 <div className="flexcol" style={{ gap: '20px' }}>
                     <button onClick={payoneer} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Sign Up To Payoneer</div></button>
                     <div className="descrip">Already have an account? <span onClick={signinpayoneer} className='hoverr'>Sign in</span></div>
                 </div>
-            </div>
+            </article>
 
-            <div className="productlist3">
+            <article className="productlist3">
                 <div className="flexcol" style={{ gap: '20px' }}>
-                    <div className="flex wh"><AccountBalanceIcon />&nbsp;&nbsp;<div className="heading3 wh">Add a bank account</div></div>
+                    <h1 className="flex wh"><AccountBalanceIcon />&nbsp;&nbsp;<div className="heading3 wh">Add a bank account</div></h1>
 
-                    <div className="heading2 wh">Providing this bank account information allows us to deposit payments into your account, including payouts from orders</div>
+                    <h2 className="heading2 wh">Providing this bank account information allows us to deposit payments into your account, including payouts from orders</h2>
                 </div>
                 <div className="flexcol" style={{ gap: '20px' }}>
                     <button className='btn box2 flex' onClick={addbank} style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Add New Account</div></button>
                 </div>
-            </div>
+            </article>
 
             <div className="productlist2">
                 {loading && <p>Loading...</p>}
@@ -107,7 +107,7 @@ const Payments = () => {
                         ))}
                     </Fragment>
                 ) : (
-                    <div className="heading3">Bank account list is empty</div>
+                    <p className="heading3">Bank account list is empty</p>
                 ))}
             </div>
 

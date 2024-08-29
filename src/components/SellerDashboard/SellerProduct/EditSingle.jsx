@@ -259,11 +259,11 @@ const EditSingle = () => {
 
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <p>Loading...</p>;
     }
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return <p>Error: {error}</p>;
     }
 
 
@@ -275,38 +275,38 @@ const EditSingle = () => {
             <div className="heading">Edit Product</div>
 
             <form className="productlist2" onSubmit={handleSubmit(onSubmit)}>
-                <div className="heading3">Basic information</div>
+                <p className="heading3">Basic information</p>
                 <Controller name="bulletPoints" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter bullet points (separated by full stop)...' {...field} />} />
-                {errors.bulletPoints && <div className='error'>{errors.bulletPoints?.message}</div>}
+                {errors.bulletPoints && <p className='error'>{errors.bulletPoints?.message}</p>}
 
                 <Controller name="productName" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter product name' {...field} />} />
-                {errors.productName && <div className='error'>{errors.productName?.message}</div>}
+                {errors.productName && <p className='error'>{errors.productName?.message}</p>}
                 <Controller name="brandName" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter brand name' {...field} />} />
-                {errors.brandName && <div className='error'>{errors.brandName?.message}</div>}
+                {errors.brandName && <p className='error'>{errors.brandName?.message}</p>}
 
                 <Controller name="keyWords" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder="Enter keywords (separated by comma)..." {...field} />} />
-                {errors.keyWords && <div className='error'>{errors.keyWords?.message}</div>}
+                {errors.keyWords && <p className='error'>{errors.keyWords?.message}</p>}
 
 
 
-                <div className="heading3">Variant information</div>
+                <p className="heading3">Variant information</p>
                 <div className="flex-start wh" style={{ gap: '10px' }}>
                     <Controller name="variantColor" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter product color' {...field} />} />
                     <Controller name="variantSize" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter product size' {...field} />} />
                 </div>
 
 
-                <div className="heading3">Description</div>
+                <p className="heading3">Description</p>
                 <Controller name="addInfo" control={control} defaultValue="" render={({ field }) => <textarea className="box flex" rows={10} placeholder="Enter description..." {...field}></textarea>} />
 
 
-                <div className="heading3">Images and videos</div>
-                <div className="heading2">
+                <p className="heading3">Images and videos</p>
+                <p className="heading2">
                     Add images and videos of your product to engage customers.
                     Images should be square with minimum allowed dimensions to be 500x500 pixels.
                     Allowed file extensions are (png, bmp, jpeg, and jpg)
                     and allowed video extensions are (mp4, mpeg and webp).
-                </div>
+                </p>
 
 
                 <div className="edit-file-input-container">
@@ -326,8 +326,8 @@ const EditSingle = () => {
 
 
 
-                <div className="heading3">Product identifiers</div>
-                <div className="heading2">Enter barcode type and number for improved search/visibility of your product.</div>
+                <p className="heading3">Product identifiers</p>
+                <p className="heading2">Enter barcode type and number for improved search/visibility of your product.</p>
                 <Controller name="barcode" control={control} defaultValue="" render={({ field }) => (
                     <select className="box flex" {...field}>
                         <option value="">Select barcode type</option>
@@ -343,10 +343,10 @@ const EditSingle = () => {
                 <Controller name="barcodeNum" control={control} defaultValue="" render={({ field }) => <input type='text' className="box flex" placeholder='Enter barcode number' {...field} />} />
 
                 <Controller name="sku" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter SKU' {...field} />} />
-                {errors.sku && <div className='error'>{errors.sku?.message}</div>}
+                {errors.sku && <p className='error'>{errors.sku?.message}</p>}
 
 
-                <div className="heading3">Packaging</div>
+                <p className="heading3">Packaging</p>
                 <Controller name="unitsPerCarton" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter units per carton' {...field} />} />
 
                 <div className="flex wh" style={{ gap: '20px' }}>
@@ -389,16 +389,16 @@ const EditSingle = () => {
                 {(errors.avgLeadTime || errors.transportationMode) &&
                     <div className="flex wh">
                         <div className="flex wh">
-                            <div className='error'>{errors.avgLeadTime?.message}</div>
+                            <p className='error'>{errors.avgLeadTime?.message}</p>
                         </div>
                         <div className="flex wh">
-                            <div className='error'>{errors.transportationMode?.message}</div>
+                            <p className='error'>{errors.transportationMode?.message}</p>
                         </div>
                     </div>
                 }
 
-                <div className="heading3">Carton dimensions & weight</div>
-                <div className="heading2">Enter the dimensions and weight of the carton to help calculate shipping rate. These measurements are for the product's shipping container.</div>
+                <p className="heading3">Carton dimensions & weight</p>
+                <p className="heading2">Enter the dimensions and weight of the carton to help calculate shipping rate. These measurements are for the product's shipping container.</p>
                 <div className="flex wh" style={{ gap: '20px' }}>
                     <Controller name="cartonWgt" control={control} defaultValue="" render={({ field }) => <input className="box flex" type='number' placeholder='Enter carton weight' {...field} />} />
                     <Controller name="cartonWgtUnit" control={control} defaultValue="" render={({ field }) =>
@@ -446,8 +446,8 @@ const EditSingle = () => {
                 </div>
 
 
-                <div className="heading3">Product dimensions & weight</div>
-                <div className="heading2">These attributes provide information about the product's dimensions and weight.</div>
+                <p className="heading3">Product dimensions & weight</p>
+                <p className="heading2">These attributes provide information about the product's dimensions and weight.</p>
                 <div className="flex wh" style={{ gap: '20px' }}>
                     <Controller name="productWgt" control={control} defaultValue="" render={({ field }) => <input className="box flex" type='number' placeholder='Enter product weight' {...field} />} />
                     <Controller name="productWgtUnit" control={control} defaultValue="" render={({ field }) =>
@@ -479,7 +479,7 @@ const EditSingle = () => {
 
 
 
-                <div className="heading3">Pricing</div>
+                <p className="heading3">Pricing</p>
                 <Controller name="unitmeasure" control={control} defaultValue="" render={({ field }) => (
                     <select className="box flex" {...field}>
                         <option value="">Select unit of measure</option>
@@ -500,36 +500,36 @@ const EditSingle = () => {
                 />
 
 
-                <div className="heading3">Product inventory</div>
-                <div className="heading2">Enter the available quantity of your product</div>
+                <p className="heading3">Product inventory</p>
+                <p className="heading2">Enter the available quantity of your product</p>
                 <Controller name="availableQuantity" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter available quantity' {...field} />} />
-                {errors.availableQuantity && <div className='error'>{errors.availableQuantity?.message}</div>}
+                {errors.availableQuantity && <p className='error'>{errors.availableQuantity?.message}</p>}
                 <Controller name="minOrderQuant" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter minimum order quantity' {...field} />} />
-                {errors.minOrderQuant && <div className='error'>{errors.minOrderQuant?.message}</div>}
+                {errors.minOrderQuant && <p className='error'>{errors.minOrderQuant?.message}</p>}
 
 
-                <div className="heading3">Price list</div>
-                <div className="heading2">Add pricing to your product. You can also create bulk pricing rules to offer price discounts based on quantity breaks.</div>
+                <p className="heading3">Price list</p>
+                <p className="heading2">Add pricing to your product. You can also create bulk pricing rules to offer price discounts based on quantity breaks.</p>
 
                 <div className="flexcol wh">
                     <div className="pricelist">
-                        <div className='pldiv bg-clr'><div className="heading3">Unit price</div></div>
-                        <div className='pldiv bg-clr'><div className="heading3">Sale price (optional)</div></div>
+                        <div className='pldiv bg-clr'><p className="heading3">Unit price</p></div>
+                        <div className='pldiv bg-clr'><p className="heading3">Sale price (optional)</p></div>
                     </div>
 
                     <div className="pricelist">
                         <div className='pldiv'>
                             <div className="flex">
-                                <div className="heading2">{user.currency}</div>
+                                <p className="heading2">{user.currency}</p>
                                 <Controller name="unitPrice" control={control} defaultValue="" render={({ field }) => <input placeholder='Enter unit price' {...field} />} />
                             </div>
-                            {errors.unitPrice && <div className='error'>{errors.unitPrice?.message}</div>}
+                            {errors.unitPrice && <p className='error'>{errors.unitPrice?.message}</p>}
                         </div>
                         <div className='pldiv'>
                             <div className="flex">
-                                <div className="heading2">{user.currency}</div>
+                                <p className="heading2">{user.currency}</p>
                                 <Controller name="sellPrice" control={control} defaultValue="" render={({ field }) => <input placeholder='Enter sale price' {...field} />} />
-                                {errors.sellPrice && <div className='error'>{errors.sellPrice?.message}</div>}
+                                {errors.sellPrice && <p className='error'>{errors.sellPrice?.message}</p>}
                             </div>
                         </div>
                     </div>
@@ -537,7 +537,7 @@ const EditSingle = () => {
 
 
 
-                <div className="heading3">Shipping details</div>
+                <p className="heading3">Shipping details</p>
                 <div className="flex wh" style={{ gap: '20px' }}>
                     <Controller name="readytoship" control={control} defaultValue="" render={({ field }) => (
                         <select className="box flex" {...field}>
@@ -600,15 +600,15 @@ const EditSingle = () => {
                 {(errors.origin || errors.StockLocation) &&
                     <div className="flex wh">
                         <div className="flex wh">
-                            <div className='error'>{errors.origin?.message}</div>
+                            <p className='error'>{errors.origin?.message}</p>
                         </div>
                         <div className="flex wh">
-                            <div className='error'>{errors.StockLocation?.message}</div>
+                            <p className='error'>{errors.StockLocation?.message}</p>
                         </div>
                     </div>
                 }
 
-                <div className="heading3">Additional details</div>
+                <p className="heading3">Additional details</p>
                 <Controller name="ean" control={control} defaultValue="" render={({ field }) => <input className="box flex" placeholder='Enter EAN (European article number)' {...field} />} />
                 <Controller name="dgrGoods" control={control} defaultValue="" render={({ field }) => (
                     <select className="box flex" {...field}>
@@ -618,7 +618,7 @@ const EditSingle = () => {
                     </select>
                 )}
                 />
-                {errors.dgrGoods && <div className='error'>{errors.dgrGoods?.message}</div>}
+                {errors.dgrGoods && <p className='error'>{errors.dgrGoods?.message}</p>}
                 <Controller name="incoterm" control={control} defaultValue="" render={({ field }) =>
                     <select className="box flex" {...field}>
                         <option value="">Select incoterm</option>
@@ -845,9 +845,9 @@ const EditSingle = () => {
 
 
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
-                    <button className='btn box2 flex' type='button' onClick={handleCancel} style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><div className="heading2">Cancel</div></button>
+                    <button className='btn box2 flex' type='button' onClick={handleCancel} style={{ width: 'fit-content', backgroundColor: 'var(--CodeTwo)' }}><p className="heading2">Cancel</p></button>
                     <button className='btn box2 flex' type='submit' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }} disabled={isSubmitting}>
-                        <div className="heading2">{isSubmitting ? 'Updating...' : 'Update'}</div>
+                        <p className="heading2">{isSubmitting ? 'Updating...' : 'Update'}</p>
                     </button>
                 </div>
             </form>

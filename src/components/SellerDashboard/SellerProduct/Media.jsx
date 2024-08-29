@@ -55,8 +55,8 @@ const Media = () => {
             <Helmet>
                 <title>Media</title>
             </Helmet>
-            <div className="heading">Media</div>
-            <div className="descrip2">Use the upload center to upload/edit product and images</div>
+            <h1 className="heading">Media</h1>
+            <h2 className="descrip2">Use the upload center to upload/edit product and images</h2>
             <div className="flexcol wh" style={{ gap: '10px', alignItems: 'start' }}>
                 <div className="flex wh" style={{ gap: '20px', justifyContent: 'start' }}>
                     <button onClick={() => handlePageChange(1)} style={{ width: '200px' }} className={currentPage === 1 ? 'toggle-active btn-toggle box2 flex' : 'btn-toggle box2 flex'}><div className="heading2">Media Bank</div></button>
@@ -66,7 +66,7 @@ const Media = () => {
                 {currentPage === 1 && (
                     <Fragment>
                         <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                            <div className="descrip2">Manage the photos, videos and document uploads</div>
+                            <h3 className="descrip2">Manage the photos, videos and document uploads</h3>
                             <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Upload Grouped Media</div></button>
                         </div>
                         <div className="flex" style={{ justifyContent: 'space-between', gap: '20px' }}>
@@ -86,8 +86,8 @@ const Media = () => {
                             <Fragment>
                                 <div className="productlist">
                                     <img src={empty} className='productlist-img' alt="empty box" />
-                                    <div className="heading5">No media found</div>
-                                    <div className="descrip2">There are no media items matching the criteria</div>
+                                    <p className="heading5">No media found</p>
+                                    <p className="descrip2">There are no media items matching the criteria</p>
                                 </div>
                             </Fragment>
                         ) : (
@@ -122,16 +122,16 @@ const Media = () => {
                         {subCurrentPage === 1 && (
                             <div className="productlist">
                                 <img src={empty} className='productlist-img' alt="empty box" />
-                                <div className="heading5">No record found</div>
+                                <p className="heading5">No record found</p>
                             </div>
                         )}
                         {subCurrentPage === 2 && (
                             <div className="productlist2">
-                                <div className="heading">Download images upload template</div>
-                                <div className="descrip2">Click download button to download images upload template</div>
+                                <h4 className="heading">Download images upload template</h4>
+                                <p className="descrip2">Click download button to download images upload template</p>
                                 <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Download Images</div></button>
-                                <div className="heading">Upload image templates</div>
-                                <div className="descrip2">When you have your templates filled out, click the button below to upload the products.</div>
+                                <h5 className="heading">Upload image templates</h5>
+                                <p className="descrip2">When you have your templates filled out, click the button below to upload the products.</p>
                                 <div className="flex wh" style={{ justifyContent: 'space-between' }}>
                                     <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Upload</div></button>
                                     <div className="flex" style={{ gap: '20px' }}>

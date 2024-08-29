@@ -95,7 +95,6 @@ const SideNav = () => {
                         <Link to="seller-company-profile" className="option">Company profile</Link>
                         <Link to="/profile" className="option">My account</Link>
                         <Link to="shipping-preferences" className="option">Shipping preferences</Link>
-                        <Link to="my-addresses" className="option">My addresses</Link>
                         <Link to="payments" className="option">Payments</Link>
                     </div>
 

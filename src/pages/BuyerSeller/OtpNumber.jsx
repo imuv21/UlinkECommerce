@@ -140,9 +140,9 @@ const OtpNumber = () => {
                 </Link>
 
                 <div className="signupcont">
-                    <div className='flexcol cover'>
-                        <div className="heading tcenter">Verify your number</div>
-                        <div className="heading2 tcenter">We have sent the OTP to 435787547387 <br />Enter the OTP to verify your number.</div>
+                    <article className='flexcol cover'>
+                        <h1 className="heading tcenter">Verify your number</h1>
+                        <h2 className="heading2 tcenter">We have sent the OTP to 435787547387 <br />Enter the OTP to verify your number.</h2>
                         <div className="flex gap">
 
                             {otpDigits.map((digit, index) => (
@@ -162,7 +162,7 @@ const OtpNumber = () => {
                             {timerRunning ? `Resend OTP in ${timeLeft}` : "Resend OTP"}
                         </button>
                         <Link to={'/profile'} className=' box flex'><div className="heading2" style={{color: 'gray'}}>Cancel</div></Link>
-                    </div>
+                    </article>
                 </div>
 
                 <div className="svg-bg-signup">

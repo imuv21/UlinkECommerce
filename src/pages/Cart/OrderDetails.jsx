@@ -115,11 +115,11 @@ const OrderDetails = () => {
             </Helmet>
             <div className="orderDetail">
                 <div className="orderBtn">
-                    <div className='heading3'>Order Details for {orderDetails.orderId}</div>
+                    <p className='heading3'>Order Details for {orderDetails.orderId}</p>
                     <button className='btn box flex' onClick={download}>Download Invoice</button>
                 </div>
 
-                <div className="orderDetail2">
+                <article className="orderDetail2">
                     <img src={logo} alt="ulinkit logo" />
 
                     <div className="orderDetailSub">
@@ -132,7 +132,7 @@ const OrderDetails = () => {
                     <div className="dotLine"></div>
 
                     <div className="orderDetailSub">
-                        <div className="heading2">Order ID : {orderDetails.orderId}</div>
+                        <h1 className="heading2">Order ID : {orderDetails.orderId}</h1>
                     </div>
 
                     <div className="order">
@@ -143,7 +143,8 @@ const OrderDetails = () => {
                         <div className='heading2'>Post Code : {address.postCode || 'Null'}</div>
                     </div>
 
-                    <div className='heading3'>Order Items ({(orderDetails && orderDetails.orderItems && orderDetails.orderItems.length) && orderDetails.orderItems.length})</div>
+                    <h2 className='heading3'>Order Items ({(orderDetails && orderDetails.orderItems && orderDetails.orderItems.length) && orderDetails.orderItems.length})</h2>
+
                     <div className="orderProducts">
                         {orderDetails && orderDetails.orderItems && orderDetails.orderItems.length > 0 ? orderDetails.orderItems.map((item) => (
                             <div className="product" key={item.itemId}>
@@ -168,13 +169,13 @@ const OrderDetails = () => {
 
                     <div className="dotLine"></div>
 
-                    <div className="heading wh flex">
+                    <p className="heading wh flex">
                         Ulinkit.com Declaration Letter To Whomsoever It May Concern
-                    </div>
+                    </p>
 
-                    <div className="heading2">I, {buyer}, have placed the order for</div>
+                    <p className="heading2">I, {buyer}, have placed the order for</p>
 
-                    <div className='heading3'>Order Items ({(orderDetails && orderDetails.orderItems && orderDetails.orderItems.length) && orderDetails.orderItems.length})</div>
+                    <p className='heading3'>Order Items ({(orderDetails && orderDetails.orderItems && orderDetails.orderItems.length) && orderDetails.orderItems.length})</p>
                     <div className="orderProducts">
                         {orderDetails && orderDetails.orderItems && orderDetails.orderItems.length > 0 ? orderDetails.orderItems.map((item) => (
                             <div className="product" key={item.itemId}>
@@ -195,10 +196,10 @@ const OrderDetails = () => {
                         <div className="heading2">{address.area || 'Null'}, {address.street || 'Null'}, {address.office || 'Null'}</div>
                     </div>
 
-                    <div className="heading2">
+                    <p className="heading2">
                         I hereby confirm that above goods are being purchased for my internal or personal purpose and not for re-sale. I further understand and agree to Ulinkits terms and conditions of sale available at Ulinkit.com or upon request.
-                    </div>
-                </div>
+                    </p>
+                </article>
             </div>
         </div>
     );

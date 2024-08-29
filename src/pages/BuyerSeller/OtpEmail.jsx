@@ -161,10 +161,10 @@ const OtpEmail = () => {
                     <img src={logo} alt="logo" />
                 </Link>
 
-                <div className="signupcont">
+                <article className="signupcont">
                     <div className='flexcol cover'>
-                        <div className="heading tcenter">Verify your email</div>
-                        <div className="heading2 tcenter">Enter the OTP to verify your email.</div>
+                        <h1 className="heading tcenter">Verify your email</h1>
+                        <h2 className="heading2 tcenter">Enter the OTP to verify your email.</h2>
                         <div className="flex gap">
 
                             {otpDigits.map((digit, index) => (
@@ -185,7 +185,7 @@ const OtpEmail = () => {
                         </button>
                         <Link to={'/profile'} className=' box flex'><div className="heading2" style={{color: 'gray'}}>Cancel</div></Link>
                     </div>
-                </div>
+                </article>
 
                 <div className="svg-bg-signup">
                     <div style={{ width: '80%' }}>

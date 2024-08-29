@@ -122,11 +122,11 @@ const ProductList = () => {
                 <title>Products List</title>
             </Helmet>
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                <div className="heading">Products List</div>
+                <h1 className="heading">Products List</h1>
                 <button onClick={addsingle} className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Add Single Product</div></button>
             </div>
             <div className="flex wh" style={{ justifyContent: 'space-between' }}>
-                <div className="descrip2">Find and manage your uploaded products here</div>
+                <h2 className="descrip2">Find and manage your uploaded products here</h2>
                 <a href='../assets/json/GOT.epub' className='download-btn' download target='_blank'>DOWNLOAD REJECTION REASONS</a>
             </div>
 
@@ -231,12 +231,12 @@ const ProductList = () => {
                                             <div>
                                                 {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
                                             </div>
-                                            <div className="heading2 download-btn" onClick={() => productDetail(item.productId)} style={{ whiteSpace: 'nowrap' }}>
+                                            <p className="heading2 download-btn" onClick={() => productDetail(item.productId)} style={{ whiteSpace: 'nowrap' }}>
                                                 {item.productName.length > 15 ? `${item.productName.substring(0, 15)}...` : item.productName}
-                                            </div>
-                                            <div className="heading2">
+                                            </p>
+                                            <p className="heading2">
                                                 {item.category.length > 15 ? `${item.category.substring(0, 15)}...` : item.category}
-                                            </div>
+                                            </p>
                                             <div className="heading2">
                                                 <div className="flex" style={{ gap: '5px' }}>
                                                     <span style={{ textDecoration: 'line-through', color: 'gray' }}>{user.currencySymbol} {item.unitPrice}</span>-<span style={{ fontWeight: 'bold' }}>{user.currencySymbol} {item.sellPrice}</span>
@@ -264,21 +264,20 @@ const ProductList = () => {
                                 <Fragment>
                                     <div className="productlist">
                                         <img src={empty} className='productlist-img' alt="empty box" />
-                                        <div className="heading">You do not have any products in this list</div>
-                                        <div className="descrip2">This is where you will be able to view and manage your products</div>
+                                        <p className="heading">You do not have any products in this list</p>
+                                        <p className="descrip2">This is where you will be able to view and manage your products</p>
                                     </div>
                                 </Fragment>
                             )}
                         </div>
-
                     </Fragment>
                 )}
                 {currentPage === 2 && (
                     <Fragment>
                         <div className="productlist">
                             <img src={empty} className='productlist-img' alt="empty box" />
-                            <div className="heading">You do not have any products in this state</div>
-                            <div className="descrip2">This is where you will be able to view and manage your products</div>
+                            <p className="heading">You do not have any products in this state</p>
+                            <p className="descrip2">This is where you will be able to view and manage your products</p>
                         </div>
                     </Fragment>
                 )}
@@ -332,12 +331,12 @@ const ProductList = () => {
                                             <div>
                                                 {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
                                             </div>
-                                            <div className="heading2 download-btn" onClick={() => productDetail(item.productId)} style={{ whiteSpace: 'nowrap' }}>
+                                            <p className="heading2 download-btn" onClick={() => productDetail(item.productId)} style={{ whiteSpace: 'nowrap' }}>
                                                 {item.productName.length > 15 ? `${item.productName.substring(0, 15)}...` : item.productName}
-                                            </div>
-                                            <div className="heading2">
+                                            </p>
+                                            <p className="heading2">
                                                 {item.category.length > 15 ? `${item.category.substring(0, 15)}...` : item.category}
-                                            </div>
+                                            </p>
                                             <div className="heading2">
                                                 <div className="flex" style={{ gap: '5px' }}>
                                                     <span style={{ textDecoration: 'line-through', color: 'gray' }}>{user.currencySymbol}{item.unitPrice}</span>-<span style={{ fontWeight: 'bold' }}>{user.currencySymbol}{item.sellPrice}</span>
@@ -365,8 +364,8 @@ const ProductList = () => {
                                 <Fragment>
                                     <div className="productlist">
                                         <img src={empty} className='productlist-img' alt="empty box" />
-                                        <div className="heading">You do not have any products in this list</div>
-                                        <div className="descrip2">This is where you will be able to view and manage your products</div>
+                                        <p className="heading">You do not have any products in this list</p>
+                                        <p className="descrip2">This is where you will be able to view and manage your products</p>
                                     </div>
                                 </Fragment>
                             )}

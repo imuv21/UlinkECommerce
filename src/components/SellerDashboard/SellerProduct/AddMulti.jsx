@@ -43,52 +43,52 @@ const AddMulti = () => {
             <Helmet>
                 <title>Add Multiple Products</title>
             </Helmet>
-            <div className="heading">Add Multiple Products</div>
-            <div className="descrip2">Use the upload center to upload/edit products and images</div>
+            <h1 className="heading">Add Multiple Products</h1>
+            <h2 className="descrip2">Use the upload center to upload/edit products and images</h2>
 
-            <div className="perfect-grid-flex">
-                <div onClick={upload} className="productflex">
+            <article className="perfect-grid-flex">
+                <section onClick={upload} className="productflex">
                     <div className="flexcol big-svg"><CloudUploadIcon /></div>
                     <div className="flexcol-start" style={{gap: '10px'}}>
-                        <div className="heading3">Upload multiple products</div>
-                        <div className="descrip2">Used for uploading multiple products at a time via one or several template files</div>
+                        <h1 className="heading3">Upload multiple products</h1>
+                        <h2 className="descrip2">Used for uploading multiple products at a time via one or several template files</h2>
                         <div className="flex small-svg">
                             <TipsAndUpdatesIcon />&nbsp;&nbsp;
                             <div onClick={learnMore} className='download-btn'>Learn more</div>
                         </div>
                     </div>
-                </div>
-                <div onClick={edit} className="productflex">
+                </section>
+                <section onClick={edit} className="productflex">
                     <div className="flexcol big-svg"><EditNoteIcon /></div>
                     <div className="flexcol-start" style={{gap: '10px'}}>
-                        <div className="heading3">Edit multiple products</div>
-                        <div className="descrip2">Use this option to update all or selected products by using our excel template</div>
+                        <h1 className="heading3">Edit multiple products</h1>
+                        <h2 className="descrip2">Use this option to update all or selected products by using our excel template</h2>
                         <div className="flex small-svg">
                             <TipsAndUpdatesIcon />&nbsp;&nbsp;
                             <div onClick={learnMore} className='download-btn'>Learn more</div>
                         </div>
                     </div>
-                </div>
-                <div onClick={archive} className="productflex">
+                </section>
+                <section onClick={archive} className="productflex">
                     <div className="flexcol big-svg"><ArchiveIcon  /></div>
                     <div className="flexcol-start" style={{gap: '10px'}}>
-                        <div className="heading3">Archive multiple products</div>
-                        <div className="descrip2">Use this option to archive products by using excel template</div>
+                        <h1 className="heading3">Archive multiple products</h1>
+                        <h2 className="descrip2">Use this option to archive products by using excel template</h2>
                         <div className="flex small-svg">
                             <TipsAndUpdatesIcon />&nbsp;&nbsp;
                             <div onClick={learnMore} className='download-btn'>Learn more</div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </section>
+            </article>
 
-            <div className="heading">Upload List</div>
-            <div className="productlist">
+            <p className="heading">Upload List</p>
+            <article className="productlist">
                 <img src={empty} className='productlist-img' alt="empty box" />
-                <div className="heading">Upload your products</div>
-                <div className="descrip2">This is where you’ll upload your products and see the upload history</div>
+                <h1 className="heading">Upload your products</h1>
+                <h2 className="descrip2">This is where you’ll upload your products and see the upload history</h2>
                 <button className='btn box2 flex' style={{ width: 'fit-content', backgroundColor: 'var(--CodeOne)' }}><div className="heading2">Start Your Upload</div></button>
-            </div>
+            </article>
         </div>
     )
 }
