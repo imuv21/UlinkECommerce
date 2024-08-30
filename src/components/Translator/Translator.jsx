@@ -154,21 +154,26 @@ const Translator = () => {
                 )}
 
                 {(orders && orders.length > 0) &&
-                    (<div className="flexcol wh" style={{ marginTop: '20px' }} >
-                        <div className="flex" style={{ gap: '10px' }}>
+                    (<div className="pagination">
+
+                        <div className="flex wh" style={{ gap: '10px' }}>
                             <button className='pagination-btn' onClick={() => handlePageChange(0)} disabled={isFirst}>
                                 First Page
                             </button>
                             <button className='pagination-btn' onClick={() => handlePageChange(page - 1)} disabled={!hasPrevious}>
                                 Previous
                             </button>
+                        </div>
 
+                        <div className="flex wh" style={{ gap: '10px' }}>
                             {pageNumbers.map(index => (
-                                <button key={index} className={`pagination-btn ${index === page ? 'active' : ''}`} style={{ width: '50px' }} onClick={() => handlePageChange(index)}>
+                                <button key={index} className={`pagination-btn ${index === page ? 'active' : ''}`} onClick={() => handlePageChange(index)}>
                                     {index + 1}
                                 </button>
                             ))}
+                        </div>
 
+                        <div className="flex wh" style={{ gap: '10px' }}>
                             <button className='pagination-btn' onClick={() => handlePageChange(page + 1)} disabled={!hasNext}>
                                 Next
                             </button>
@@ -176,6 +181,7 @@ const Translator = () => {
                                 Last Page
                             </button>
                         </div>
+
                     </div>)
                 }
             </div>

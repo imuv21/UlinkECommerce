@@ -355,20 +355,20 @@ const Payment = () => {
                             <Fragment>
                                 {bankDetails.map((bank, index) => (
                                     <div className="productlist4" key={uuidv4()}>
-                                        <div className="flexcol-start" style={{ gap: '20px' }}>
-                                            <div className="flex" style={{ gap: '20px' }}>
+                                        <div className="flexcol-start" style={{ gap: '10px' }}>
+                                            <div className="flex" style={{ gap: '10px' }}>
                                                 <div className='descrip2' style={{ textTransform: 'uppercase', fontWeight: '600' }}>{bank.bankName}</div>
                                                 <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.accHolderName}</div>
                                                 <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.accNo}</div>
                                             </div>
-                                            <div className="flex" style={{ gap: '20px' }}>
+                                            <div className="flex" style={{ gap: '10px' }}>
                                                 <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.ifsc}</div>
                                                 <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.bankLocation}</div>
                                                 <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.swiftBIC}</div>
                                                 <div className='descrip2' style={{ textTransform: 'uppercase' }}>{bank.iban}</div>
                                             </div>
                                         </div>
-                                        <div className="flexcol" style={{ gap: '20px' }}>
+                                        <div className="flexcol" style={{ gap: '10px' }}>
                                             <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEditBank(index)} />
                                             <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDeleteBank(index)} />
                                         </div>

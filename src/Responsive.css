@@ -206,6 +206,25 @@
 
 @media screen and (max-width: 710px) {
 
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        background-color: white;
+        width: 100%;
+    }
+    .card-grid-item{
+        padding: 5px;
+    }
+
+    .addressfontsize div {
+        font-size: 10px;
+    }
+
+    .addressfontsize div .MuiSvgIcon-root {
+        font-size: 10px;
+    }
+
     /* profile page */
     .profileinput {
         width: 100%;
@@ -425,6 +444,14 @@
 
 @media screen and (max-width: 600px) {
 
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 5px;
+        background-color: white;
+        width: 100%;
+    }
+
     .login-cont {
         padding: 20px;
         gap: 20px;
@@ -474,6 +501,22 @@
 }
 
 @media screen and (max-width: 500px) {
+
+    .card{
+        gap: 10px;
+    }
+
+    .orderBtnCont {
+        flex-direction: column;
+    }
+
+    .payment-btn {
+        width: 100px;
+    }
+
+    .payment-option img {
+        width: 90px;
+    }
 
     .add-to-cart-wrapper-footer {
         width: 300px;
@@ -711,6 +754,16 @@
 }
 
 @media (min-width: 320px) and (max-width: 399px) {
+
+    .orderBtn {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        justify-content: center;
+        gap: 10px;
+    }
+
     .img-aspect {
         width: 70px;
         /*  check the condition here */

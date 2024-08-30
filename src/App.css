@@ -2616,6 +2616,26 @@ button:focus {
 }
 
 /* Checkout styling  */
+.paymentmethoddiv{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.paymentmethoddiv div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.addressfontsize div{
+  font-size: 15px;
+}
+.addressfontsize div .MuiSvgIcon-root{
+  font-size: 15px;
+}
 .netbanking {
   width: 100%;
   display: flex;
@@ -2703,6 +2723,7 @@ button:focus {
   width: 150px;
   gap: 10px;
   border-radius: var(--br2);
+  white-space: nowrap;
 }
 
 .payment-active {

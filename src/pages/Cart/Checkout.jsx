@@ -352,10 +352,10 @@ const Checkout = () => {
                   <p className='descrip2'>Pobox: {selectedShippingAddress.pobox}</p>
                   <p className='descrip2'>Post code: {selectedShippingAddress.postCode}</p>
                 </div>
-                <div className="flex" style={{ gap: '20px' }}>
-                  <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.phoneNumber}</div>
-                  <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.airport}</div>
-                  <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedShippingAddress.seaport}</div>
+                <div className="flex addressfontsize" style={{ gap: '20px' }}>
+                  <div className='flex'><LocalPhoneIcon />&nbsp;&nbsp;{selectedShippingAddress.phoneNumber}</div>
+                  <div className='flex'><LocalAirportIcon />&nbsp;&nbsp;{selectedShippingAddress.airport}</div>
+                  <div className='flex'><SailingIcon />&nbsp;&nbsp;{selectedShippingAddress.seaport}</div>
                 </div>
               </div>
             )}
@@ -388,10 +388,10 @@ const Checkout = () => {
                   <p className='descrip2'>Pobox: {selectedBillingAddress.pobox}</p>
                   <p className='descrip2'>Post code: {selectedBillingAddress.postCode}</p>
                 </div>
-                <div className="flex" style={{ gap: '20px' }}>
-                  <div className='flex'><LocalPhoneIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.phoneNumber}</div>
-                  <div className='flex'><LocalAirportIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.airport}</div>
-                  <div className='flex'><SailingIcon style={{ height: '15px', width: '15px' }} />&nbsp;&nbsp;{selectedBillingAddress.seaport}</div>
+                <div className="flex addressfontsize" style={{ gap: '20px' }}>
+                  <div className='flex'><LocalPhoneIcon />&nbsp;&nbsp;{selectedBillingAddress.phoneNumber}</div>
+                  <div className='flex'><LocalAirportIcon />&nbsp;&nbsp;{selectedBillingAddress.airport}</div>
+                  <div className='flex'><SailingIcon />&nbsp;&nbsp;{selectedBillingAddress.seaport}</div>
                 </div>
               </div>
             )}
@@ -400,11 +400,15 @@ const Checkout = () => {
 
           <section className="checkout webdiv">
             <h1 className="heading wh">Choose a payment method</h1>
-            <div className="flex-start wh" style={{ gap: '20px' }}>
-              <button onClick={() => { handleSubPageChange(1); setSelectedPaymentOption('card') }} className={subCurrentPage === 1 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Card</div></button>
-              <button onClick={() => { handleSubPageChange(2); setSelectedPaymentOption('netbanking') }} className={subCurrentPage === 2 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Net banking</div></button>
-              <button onClick={() => { handleSubPageChange(3); setSelectedPaymentOption('upi') }} className={subCurrentPage === 3 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">UPI</div></button>
-              <button onClick={() => handleSubPageChange(4)} className={subCurrentPage === 4 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Other Gateways</div></button>
+            <div className="paymentmethoddiv">
+              <div>
+                <button onClick={() => { handleSubPageChange(1); setSelectedPaymentOption('card') }} className={subCurrentPage === 1 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Card</div></button>
+                <button onClick={() => { handleSubPageChange(2); setSelectedPaymentOption('netbanking') }} className={subCurrentPage === 2 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Net banking</div></button>
+              </div>
+              <div>
+                <button onClick={() => { handleSubPageChange(3); setSelectedPaymentOption('upi') }} className={subCurrentPage === 3 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">UPI</div></button>
+                <button onClick={() => handleSubPageChange(4)} className={subCurrentPage === 4 ? 'payment-active payment-btn' : 'payment-btn'}><div className="heading2">Other Gateways</div></button>
+              </div>
             </div>
           </section>
 
