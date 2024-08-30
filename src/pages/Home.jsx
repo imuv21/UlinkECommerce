@@ -58,14 +58,14 @@ const Home = () => {
         <CarouselTwo />
 
         <div className='discount-pages'>
-          <img className='banner-width' src={Banner1} />
+          <img className='banner-width' src={Banner1} alt='banner' />
         </div>
         <p className="heading3 wh">Fashion And Accessories ({totalItemsThree} items)</p>
 
         <CarouselThree />
 
         <div className='discount-pages'>
-          <img className='banner-width' src={DiscountCoupne} />
+          <img className='banner-width' src={DiscountCoupne} alt='banner' />
         </div>
 
         <SquareTwo />
@@ -75,7 +75,7 @@ const Home = () => {
         <CarouselFour />
 
         <div className='discount-pages'>
-          <img className='banner-width' src={Banners} />
+          <img className='banner-width' src={Banners} alt="banner" />
         </div>
         <p className="heading3 wh">Top Brands</p>
         <InfSlider />
