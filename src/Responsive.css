@@ -475,6 +475,10 @@
 
 @media screen and (max-width: 500px) {
 
+    .add-to-cart-wrapper-footer {
+        width: 300px;
+    }
+
     /* terms pages  */
     .home-alt3 {
         padding: 20px;

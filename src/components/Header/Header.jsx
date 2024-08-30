@@ -53,12 +53,40 @@ const Header = () => {
 
   //animation
   const [showFirst, setShowFirst] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const offerRef = useRef(null);
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      setShowFirst(prevShowFirst => !prevShowFirst);
-    }, 5000);
-    return () => clearInterval(interval);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (offerRef.current) {
+      observer.observe(offerRef.current);
+    }
+
+    return () => {
+      if (offerRef.current) {
+        observer.unobserve(offerRef.current);
+      }
+    };
   }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const interval = setInterval(() => {
+      setShowFirst((prevShowFirst) => !prevShowFirst);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isVisible]);
+
+
 
 
   //select address
@@ -450,17 +478,20 @@ const Header = () => {
   return (
     <Fragment>
 
-      {showFirst ? (
-        <div className="offer">
-          <p className='offer-text bounce-in-top'>Get 20% OFF on your first order.</p>
-          <p className="coupn bounce-in-bottom">ULINKITFIRST20</p>
-        </div>
-      ) : (
-        <div className="offer2">
-          <p className="gwm slide-in-left">Global Wholesale Marketplace</p>
-          <p className="fcb slide-in-right">For Cross-Border</p>
-        </div>
-      )}
+      <div ref={offerRef}>
+        {showFirst ? (
+          <div className="offer">
+            <p className='offer-text bounce-in-top'>Get 20% OFF on your first order.</p>
+            <p className="coupn bounce-in-bottom">ULINKITFIRST20</p>
+          </div>
+        ) : (
+          <div className="offer2">
+            <p className="gwm slide-in-left">Global Wholesale Marketplace</p>
+            <p className="fcb slide-in-right">For Cross-Border</p>
+          </div>
+        )}
+      </div>
+
 
       <div className='header'>
         <div className="flex head-start">
