@@ -29,6 +29,7 @@ const Checkout = () => {
   const selectedCurrency = useSelector(state => state.currency.selectedCurrency);
   const exchangeRates = useSelector(state => state.currency.exchangeRates);
   const subTotal = totalSellPrice + totalSellGstPrice;
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     dispatch(fetchExchangeRates());
@@ -162,18 +163,38 @@ const Checkout = () => {
 
   //razorpay
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('card');
+  const [addressId, setAddressId] = useState(0);
 
   const razorpayHandler = async () => {
+
     try {
+
       if (!selectedShippingAddress || !selectedShippingAddress.id) {
-        throw new Error("Shipping address or address ID is undefined");
+        toast(<div className='toaster'> < NewReleasesIcon /> Shipping address is not found!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+        setSending(false);
+        return;
       }
-      const addressId = selectedShippingAddress.id;
+
+      if (selectedShippingAddress.isBillingChecked && selectedShippingAddress.isLocationChecked) {
+        setAddressId(selectedShippingAddress.id);
+      } else {
+        if (!selectedBillingAddress) {
+          toast(<div className='toaster'> < NewReleasesIcon /> Billing address is not found!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+          setSending(false);
+          return;
+        }
+        setAddressId(selectedShippingAddress.id);
+      }
+
       if (isNaN(Number(addressId))) {
-        throw new Error("Invalid address ID format. It should be a numeric value.");
+        toast(<div className='toaster'> < NewReleasesIcon /> Invalid address ID format. It should be a numeric value!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+        setSending(false);
+        return;
       }
       if (!currency) {
-        throw new Error("Currency is undefined");
+        toast(<div className='toaster'> < NewReleasesIcon /> Currency is undefined!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+        setSending(false);
+        return;
       }
 
       const response = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(currency)}&address=${encodeURIComponent(addressId)}&gateway=RAZORPAY`, {}, {
@@ -186,8 +207,6 @@ const Checkout = () => {
 
       const options = {
         key: RAZORPAY_API_KEY,
-        // amount: order.amount,
-        // currency: order.currency,
         name: `${user.firstname} ${user.lastname}`,
         description: "Test Transaction",
         image: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
@@ -200,7 +219,8 @@ const Checkout = () => {
           contact: user.number
         },
         notes: {
-          address: selectedShippingAddress
+          address: selectedShippingAddress || 'Test address',
+          billingAddress: selectedBillingAddress || 'Test address',
         },
         theme: {
           color: "#00aaff"
@@ -209,6 +229,7 @@ const Checkout = () => {
           escape: false,
           ondismiss: () => {
             toast(<div className='toaster'> < NewReleasesIcon /> Payment failed</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+            setSending(false);
           }
         }
       };
@@ -219,6 +240,7 @@ const Checkout = () => {
       console.error('Error in razorpay gateway', error);
     }
   };
+
   const handleRazorpayCallback = async (response) => {
     console.log(response);
     try {
@@ -232,6 +254,7 @@ const Checkout = () => {
         }
       });
       setPaymentStatus('success');
+      setSending(false);
     } catch (error) {
       console.error('Error handling Razorpay callback', error);
       setPaymentStatus('error');
@@ -239,17 +262,35 @@ const Checkout = () => {
   };
 
   const paypalHandler = async () => {
+
     try {
 
       if (!selectedShippingAddress || !selectedShippingAddress.id) {
-        throw new Error("Shipping address or address ID is undefined");
+        toast(<div className='toaster'> < NewReleasesIcon /> Shipping address is not found!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+        setSending(false);
+        return;
       }
-      const addressId = selectedShippingAddress.id;
+
+      if (selectedShippingAddress.isBillingChecked && selectedShippingAddress.isLocationChecked) {
+        setAddressId(selectedShippingAddress.id);
+      } else {
+        if (!selectedBillingAddress) {
+          toast(<div className='toaster'> < NewReleasesIcon /> Billing address is not found!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+          setSending(false);
+          return;
+        }
+        setAddressId(selectedShippingAddress.id);
+      }
+
       if (isNaN(Number(addressId))) {
-        throw new Error("Invalid address ID format. It should be a numeric value.");
+        toast(<div className='toaster'> < NewReleasesIcon /> Invalid address ID format. It should be a numeric value!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+        setSending(false);
+        return;
       }
       if (!currency) {
-        throw new Error("Currency is undefined");
+        toast(<div className='toaster'> < NewReleasesIcon /> Currency is undefined!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+        setSending(false);
+        return;
       }
 
       const responsePaypal = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(currency)}&address=${encodeURIComponent(addressId)}&gateway=PAYPAL`, {}, {
@@ -264,18 +305,27 @@ const Checkout = () => {
         console.log("Link:", link);
         if (link) {
           window.open(link, '_self');
+          setSending(false);
         } else {
-          console.error("No approval URL returned");
+          toast(<div className='toaster'> < NewReleasesIcon /> No approval URL returned!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
       } else {
-        console.error("No data returned from API");
+        toast(<div className='toaster'> < NewReleasesIcon /> No data returned from API!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
       }
     } catch (error) {
       console.error("Payment Error: ", error.response ? error.response.data : error.message);
+      toast(<div className='toaster'> < NewReleasesIcon /> Something went wrong!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
     }
   };
 
   const handlePaymentClick = () => {
+
+    if (sending) return;
+
+    if (!subTotal && !currency) {
+      return toast(<div className='toaster'> < NewReleasesIcon /> Subtotal or currency is not found!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+    }
+    setSending(true);
     const PaymentAmount = subTotal;
     const PaymentCurrency = currency;
 
@@ -365,7 +415,7 @@ const Checkout = () => {
                 <h3 className="heading3 wh">Billing address</h3>
                 <select className='coupon' id="billingAddressSelect" value={selectedBillingAddress?.address || ''} onChange={handleAddressBillingChange} disabled={!selectedShippingAddress || selectedBillingAddress}>
                   <option value=''>Select billing address</option>
-                  {addresses.filter(address => address.isBillingChecked).map((address, index) => (
+                  {addresses.filter(address => (address.isBillingChecked && !address.isLocationChecked)).map((address, index) => (
                     <option key={index} value={address.address}>
                       {address.address}
                     </option>
@@ -543,7 +593,7 @@ const Checkout = () => {
             </div>
 
             <div className={`flexcol wh topbottom`} style={{ gap: '10px' }}>
-              <button className='btn addtocart flex' onClick={handlePaymentClick}><PaymentIcon style={{ width: '17px' }} /><div className="heading2">Make payment</div></button>
+              <button className='btn addtocart flex' onClick={handlePaymentClick} disabled={sending}><PaymentIcon style={{ width: '17px' }} /><div className="heading2">{sending ? 'Sending...' : 'Make Payment'}</div></button>
             </div>
           </article>
         </div>

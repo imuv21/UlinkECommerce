@@ -118,7 +118,7 @@ const Translator = () => {
             <div className="orderPage">
                 <p className="heading wh">Showing {numberOfElements} of {totalItems} orders</p>
                 {orders && orders.length > 0 ? (
-                    orders.map((order) => (
+                    orders.filter((order => order.status === 'PLACED')).map((order) => (
                         <div className={`order ${order.status === 'PLACED' ? 'order-placed' : 'order-cancelled'}`} key={order.orderId}>
                             <div className="orderBtn">
                                 <p className='heading2'>Order ID : {order.orderId}</p>
