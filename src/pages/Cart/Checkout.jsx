@@ -94,7 +94,6 @@ const Checkout = () => {
   const [selectedCard, setSelectedCard] = useState({});
   const [selectedBank, setSelectedBank] = useState({});
   const [selectedUpi, setSelectedUpi] = useState({});
-
   useEffect(() => {
     dispatch(fetchPaymentDetails());
   }, [dispatch]);
@@ -163,7 +162,7 @@ const Checkout = () => {
 
   //razorpay
   const [selectedPaymentOption, setSelectedPaymentOption] = useState('card');
-  const [addressId, setAddressId] = useState(0);
+  const [addressId, setAddressId] = useState(null);
 
   const razorpayHandler = async () => {
 
@@ -175,18 +174,21 @@ const Checkout = () => {
         return;
       }
 
+      const currentAddressId = selectedShippingAddress.id;
+
       if (selectedShippingAddress.isBillingChecked && selectedShippingAddress.isLocationChecked) {
-        setAddressId(selectedShippingAddress.id);
+        setAddressId(currentAddressId);
+        console.log('this is address id : ', currentAddressId);
       } else {
         if (!selectedBillingAddress) {
           toast(<div className='toaster'> < NewReleasesIcon /> Billing address is not found!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
           setSending(false);
           return;
         }
-        setAddressId(selectedShippingAddress.id);
+        setAddressId(currentAddressId);
       }
 
-      if (isNaN(Number(addressId))) {
+      if (isNaN(Number(currentAddressId))) {
         toast(<div className='toaster'> < NewReleasesIcon /> Invalid address ID format. It should be a numeric value!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         setSending(false);
         return;
@@ -197,7 +199,7 @@ const Checkout = () => {
         return;
       }
 
-      const response = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(currency)}&address=${encodeURIComponent(addressId)}&gateway=RAZORPAY`, {}, {
+      const response = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(currency)}&address=${encodeURIComponent(currentAddressId)}&gateway=RAZORPAY`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -271,18 +273,21 @@ const Checkout = () => {
         return;
       }
 
+      const currentAddressId = selectedShippingAddress.id;
+
       if (selectedShippingAddress.isBillingChecked && selectedShippingAddress.isLocationChecked) {
-        setAddressId(selectedShippingAddress.id);
+        setAddressId(currentAddressId);
+        console.log('this is address id : ', currentAddressId);
       } else {
         if (!selectedBillingAddress) {
           toast(<div className='toaster'> < NewReleasesIcon /> Billing address is not found!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
           setSending(false);
           return;
         }
-        setAddressId(selectedShippingAddress.id);
+        setAddressId(currentAddressId);
       }
 
-      if (isNaN(Number(addressId))) {
+      if (isNaN(Number(currentAddressId))) {
         toast(<div className='toaster'> < NewReleasesIcon /> Invalid address ID format. It should be a numeric value!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         setSending(false);
         return;
@@ -293,7 +298,7 @@ const Checkout = () => {
         return;
       }
 
-      const responsePaypal = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(currency)}&address=${encodeURIComponent(addressId)}&gateway=PAYPAL`, {}, {
+      const responsePaypal = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(currency)}&address=${encodeURIComponent(currentAddressId)}&gateway=PAYPAL`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -305,16 +310,17 @@ const Checkout = () => {
         console.log("Link:", link);
         if (link) {
           window.open(link, '_self');
-          setSending(false);
         } else {
           toast(<div className='toaster'> < NewReleasesIcon /> No approval URL returned!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         }
       } else {
         toast(<div className='toaster'> < NewReleasesIcon /> No data returned from API!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
       }
+      setSending(false);
     } catch (error) {
       console.error("Payment Error: ", error.response ? error.response.data : error.message);
       toast(<div className='toaster'> < NewReleasesIcon /> Something went wrong!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
+      setSending(false);
     }
   };
 
@@ -325,7 +331,9 @@ const Checkout = () => {
     if (!subTotal && !currency) {
       return toast(<div className='toaster'> < NewReleasesIcon /> Subtotal or currency is not found!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
     }
+
     setSending(true);
+
     const PaymentAmount = subTotal;
     const PaymentCurrency = currency;
 
