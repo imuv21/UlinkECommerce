@@ -87,6 +87,7 @@ const GoogleCallback = lazy(() => import('./pages/GoogleCallback'));
 const Image = lazy(() => import('./components/Image'));
 const Translator = lazy(() => import('./components/Translator/Translator'));
 const Protector = lazy(() => import('./components/Protector'));
+const SitemapRedirect = lazy(() => import('./components/SitemapRedirect'));
 
 
 function App() {
@@ -117,10 +118,9 @@ function App() {
             <Route path='/faq' element={<FAQPage />} />
             <Route path="/rfqmarketplace" element={<Rfqmarketplace />} />
 
-
             {/* other */}
+            <Route path="/sitemap.xml" element={<SitemapRedirect />} />
             <Route path='/img' element={<Image />} />
-
 
             {/* Without authentication */}
             <Route element={<Protector isAuthenticated={!isAuthenticated} redirect='/' />}>
@@ -133,7 +133,6 @@ function App() {
               <Route path='/seller-center' element={<NewBecomeASeller />} />
               <Route path='/google-callback' element={<GoogleCallback />} />
             </Route>
-
 
             {/* Seller dashboard */}
             <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRole="Seller" redirect='/seller-center' />}>
@@ -161,7 +160,6 @@ function App() {
               </Route>
             </Route>
 
-
             {/* Both seller and buyer */}
             <Route element={<Protector isAuthenticated={isAuthenticated} redirect='/' />}>
               <Route path="/profile" element={<Profile />} />
@@ -175,7 +173,6 @@ function App() {
               <Route path="/verify-update-profile" element={<OtpProfile />} />
               <Route path="/update-password" element={<UpdatePassword />} />
             </Route>
-
 
             {/* Buyer dashboard */}
             <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRole="Buyer" redirect='/' />}>
