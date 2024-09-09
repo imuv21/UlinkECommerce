@@ -26,6 +26,8 @@ const PaymentSuccess = lazy(() => import('./pages/Payment/PaymentSuccess'));
 const PaymentFailed = lazy(() => import('./pages/Payment/PaymentFailed'));
 const Response = lazy(() => import('./pages/Payment/Response'));
 const OrderPage = lazy(() => import('./pages/BuyerDashboard/OrderPage/OrderPage'));
+const Translator = lazy(() => import('./components/Translator/Translator'));
+
 
 //seller dashboard
 const SellerForm = lazy(() => import('./pages/SellerForm'));
@@ -53,6 +55,7 @@ const AccessManagement = lazy(() => import('./components/SellerDashboard/Access/
 const Permissions = lazy(() => import('./components/SellerDashboard/Access/Permissions'));
 const AllSellerProducts = lazy(() => import('./components/SellerDashboard/ProductListPages/AllSellerProducts'));
 
+
 //Both seller and buyer
 const Profile = lazy(() => import('./pages/BuyerSeller/Profile'));
 const SellerAddress = lazy(() => import('./components/SellerDashboard/SellerAccount/SellerAddress'));
@@ -64,6 +67,7 @@ const OtpPassword = lazy(() => import('./pages/BuyerSeller/OtpPassword'));
 const UpdatePassword = lazy(() => import('./pages/BuyerSeller/UpdatePassword'));
 const OtpProfile = lazy(() => import('./pages/BuyerSeller/OtpProfile'));
 const Rfqmarketplace = lazy(() => import('./pages/BuyerSeller/Rfqmarketplace'));
+
 
 //public
 const Home = lazy(() => import("./pages/Home"));
@@ -83,11 +87,11 @@ const PolicyComponent = lazy(() => import('./pages/PolicyComponent'));
 const FAQPage = lazy(() => import('./pages/FAQ/FAQPage'));
 const GoogleCallback = lazy(() => import('./pages/GoogleCallback'));
 
+//Admin
+const AdminLogin = lazy(() => import('./admin/AdminLogin'));
+
 //Other
-const Image = lazy(() => import('./components/Image'));
-const Translator = lazy(() => import('./components/Translator/Translator'));
 const Protector = lazy(() => import('./components/Protector'));
-const SitemapRedirect = lazy(() => import('./components/SitemapRedirect'));
 
 
 function App() {
@@ -118,10 +122,6 @@ function App() {
             <Route path='/faq' element={<FAQPage />} />
             <Route path="/rfqmarketplace" element={<Rfqmarketplace />} />
 
-            {/* other */}
-            <Route path="/sitemap.xml" element={<SitemapRedirect />} />
-            <Route path='/img' element={<Image />} />
-
             {/* Without authentication */}
             <Route element={<Protector isAuthenticated={!isAuthenticated} redirect='/' />}>
               <Route path='/login' element={<Login />} />
@@ -132,7 +132,19 @@ function App() {
               <Route path='/seller-form' element={<SellerForm />} />
               <Route path='/seller-center' element={<NewBecomeASeller />} />
               <Route path='/google-callback' element={<GoogleCallback />} />
+
+              <Route path='/admin/login' element={<AdminLogin />} />
             </Route>
+
+            {/* Admin */}
+            {/* <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRole="Admin" redirect='/admin/login' />}>
+              <Route path="/seller-order" element={<SellerOrder />} />
+            </Route> */}
+
+            {/* Manager */}
+            {/* <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRole="Manager" redirect='/admin/login' />}>
+              <Route path="/seller-order" element={<SellerOrder />} />
+            </Route> */}
 
             {/* Seller dashboard */}
             <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRole="Seller" redirect='/seller-center' />}>
@@ -198,7 +210,7 @@ function App() {
               <Route path='/order-page' element={<OrderPage />} />
             </Route>
 
-            {/* not found */}
+            {/* other */}
             <Route path='*' element={<div className="flexcol wh" style={{ height: '100vh' }}>Path does not exist!</div>} />
 
           </Routes>
