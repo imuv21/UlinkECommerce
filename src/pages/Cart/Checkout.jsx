@@ -193,13 +193,13 @@ const Checkout = () => {
         setSending(false);
         return;
       }
-      if (!currency) {
+      if (!selectedCurrency) {
         toast(<div className='toaster'> < NewReleasesIcon /> Currency is undefined!</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'red' }, className: 'failed', ariaProps: { role: 'status', 'aria-live': 'polite' } });
         setSending(false);
         return;
       }
 
-      const response = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(currency)}&address=${encodeURIComponent(currentAddressId)}&gateway=RAZORPAY`, {}, {
+      const response = await axios.post(`https://api.ulinkit.com/api/place-order?currency=${encodeURIComponent(selectedCurrency)}&address=${encodeURIComponent(currentAddressId)}&gateway=RAZORPAY`, {}, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -599,6 +599,12 @@ const Checkout = () => {
               <div className="heading2"><span>Subtotal</span></div>
               <div className="heading2"><span>{currencySymbol} {Number(subTotal).toFixed(2)} {currency}</span></div>
             </div>
+            {selectedPaymentOption === 'razorpay' &&
+              <div className="flex wh topbottom" style={{ justifyContent: 'space-between', padding: '10px 0px' }}>
+                <div className="heading2"><span>Pay in </span></div>
+                <div className="heading2"><span>{currencySymbols[selectedCurrency]} {convertPrice(subTotal, currency)} {selectedCurrency}</span></div>
+              </div>
+            }
 
             <div className={`flexcol wh topbottom`} style={{ gap: '10px' }}>
               <button className='btn addtocart flex' onClick={handlePaymentClick} disabled={sending}><PaymentIcon style={{ width: '17px' }} /><div className="heading2">{sending ? 'Sending...' : 'Make Payment'}</div></button>
@@ -609,6 +615,6 @@ const Checkout = () => {
       </div>
     </div>
   )
-}
+};
 
 export default Checkout
