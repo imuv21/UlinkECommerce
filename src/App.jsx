@@ -166,7 +166,7 @@ function App() {
             <Route element={<Protector isAuthenticated={isAuthenticated} redirect='/' />}>
               <Route path="/profile" element={<Profile />} />
               <Route path="/my-addresses" element={<SellerAddress />} />
-              
+
               <Route path="/update-email" element={<UpdateEmail />} />
               <Route path="/verify-update-email" element={<OtpEmail />} />
               <Route path="/update-number" element={<UpdateNumber />} />
@@ -200,6 +200,9 @@ function App() {
               <Route path='/order-details/:orderId' element={<OrderDetails />} />
               <Route path='/order-page' element={<OrderPage />} />
             </Route>
+
+            {/* not found */}
+            <Route path='*' element={<div className="flexcol wh" style={{ height: '100vh' }}>Path does not exist!</div>} />
 
           </Routes>
         </Layout>
