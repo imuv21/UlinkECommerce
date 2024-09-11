@@ -15,11 +15,12 @@
   --CodeThree: #f9f8f8;
   --bgClr-2: #eeeeee;
   --border: 1px solid #dddddd;
+  --adminBG: #f1f4fa;
   --br1: 6px;
   --br2: 3px;
   --cardwidth: 200px;
   --scroll: rgb(213, 213, 213);
-}
+} 
 
 * {
   margin: 0px;
@@ -2616,7 +2617,7 @@ button:focus {
 }
 
 /* Checkout styling  */
-.paymentmethoddiv{
+.paymentmethoddiv {
   width: 100%;
   display: flex;
   align-items: center;
@@ -2624,18 +2625,22 @@ button:focus {
   flex-wrap: wrap;
   gap: 20px;
 }
-.paymentmethoddiv div{
+
+.paymentmethoddiv div {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
 }
-.addressfontsize div{
+
+.addressfontsize div {
   font-size: 15px;
 }
-.addressfontsize div .MuiSvgIcon-root{
+
+.addressfontsize div .MuiSvgIcon-root {
   font-size: 15px;
 }
+
 .netbanking {
   width: 100%;
   display: flex;
@@ -4125,7 +4130,8 @@ button:focus {
   border: var(--border);
   border-radius: var(--br2);
 }
-.orderDetail2{
+
+.orderDetail2 {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -4135,7 +4141,7 @@ button:focus {
   padding: 20px;
 }
 
-.orderDetail2 img{
+.orderDetail2 img {
   object-fit: contain;
   width: 100px;
   height: auto;
@@ -4162,16 +4168,16 @@ button:focus {
   border-radius: var(--br2);
 }
 
-.dotLine{
-  height: 3px; 
-  background: repeating-linear-gradient(
-    to right,
-    black 0,
-    black 8px, /* Size of each dot */
-    transparent 8px, /* Space between dots */
-    transparent 12px
-  );
-  width: 100%; 
+.dotLine {
+  height: 3px;
+  background: repeating-linear-gradient(to right,
+      black 0,
+      black 8px,
+      /* Size of each dot */
+      transparent 8px,
+      /* Space between dots */
+      transparent 12px);
+  width: 100%;
 }
 
 .order-placed {
@@ -4242,4 +4248,45 @@ button:focus {
   gap: 1px;
   padding: 5px;
   background-color: var(--bgClr-2);
+}
+
+
+
+/* admin panel */
+/*  Admin navabar */
+
+.admin-navbar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: var(--adminBG);
+}
+
+.admin-nav-items {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.admin-search {
+  width: 100%;
+  border-radius: var(--br2);
+  background-color: #e0e3e8;
+}
+
+.icon-size {
+  font-size: 43px;
+  cursor: pointer;
+}
+
+.admin-profile-img {
+  border: 2px solid black;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
 }

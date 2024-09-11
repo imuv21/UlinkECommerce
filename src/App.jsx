@@ -91,7 +91,7 @@ const GoogleCallback = lazy(() => import('./pages/GoogleCallback'));
 //Admin
 const AdminLayout = lazy(() => import('./admin/adminDashboard/AdminLayout'));
 const AdminLogin = lazy(() => import('./admin/AdminLogin'));
-const Bla = lazy(() => import('./admin/Bla'));
+const AdminOrder = lazy(() => import('./admin/AdminOrder'));
 const AdLayout = lazy(() => import('./admin/adminDashboard/AdLayout'));
 
 //Other
@@ -128,7 +128,7 @@ function App() {
 
             <Route path="/admin-dashboard" element={<AdminLayout />}>
               <Route path="admin-login" element={<AdLayout><AdminLogin /></AdLayout>} />
-              <Route path="bla" element={<AdLayout><Bla /></AdLayout>} />
+              <Route path="admin-order" element={<AdLayout><AdminOrder /></AdLayout>} />
             </Route>
 
             {/* Without authentication */}

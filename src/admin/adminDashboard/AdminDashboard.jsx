@@ -37,10 +37,10 @@ const AdminDashboard = () => {
                         <Link to="" className="option">Media</Link>
                     </div>
 
-                    <Link to="bla" className={`accordion ${activeIndex === 3 ? 'active' : ''}`} onClick={() => { handleOptionClick('Option17'); toggleAccordion(3) }}>
+                    <Link to="admin-order" className={`accordion ${activeIndex === 3 ? 'active' : ''}`} onClick={() => { handleOptionClick('Option17'); toggleAccordion(3) }}>
                         <div className='flex' style={{ gap: '20px' }}>
                             <svg className='svg' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img"><path fillRule="evenodd" clipRule="evenodd" d="M2.62 6.58c-.238.412-.37.886-.37 1.379v8.082c0 .983.524 1.89 1.375 2.383l7 4.04c.851.491 1.9.491 2.75 0l7-4.04a2.749 2.749 0 0 0 1.375-2.382V7.959a2.75 2.75 0 0 0-1.375-2.382l-7-4.04a2.751 2.751 0 0 0-2.75 0L7.148 3.543a.75.75 0 0 0-.047.027L3.625 5.577A2.746 2.746 0 0 0 2.62 6.58Zm1.88.224 3-1.732 7.5 4.33-3 1.732-7.5-4.33ZM9 4.206l7.5 4.33 3-1.732-6.875-3.968a1.252 1.252 0 0 0-1.25 0L9 4.206Zm6.74 8.654v-2.153l-2.99 1.726v8.66l6.875-3.968a1.25 1.25 0 0 0 .625-1.083V8.103l-3.01 1.738v3.019a.75.75 0 0 1-1.5 0ZM3.75 8.103l7.5 4.33v8.66l-6.875-3.968a1.252 1.252 0 0 1-.625-1.084V8.103Zm2.626 6.488a.75.75 0 1 0-.752 1.298l3.04 1.76a.75.75 0 0 0 .752-1.298l-3.04-1.76Z" fill="currentColor"></path></svg>
-                            <div className="heading2">Bla Bla</div>
+                            <div className="heading2">Orders</div>
                         </div>
                     </Link>
 
