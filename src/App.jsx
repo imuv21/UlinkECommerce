@@ -8,6 +8,7 @@ import Loader from './components/Loader/Loader';
 import Layout from './components/Layout';
 
 
+
 //buyer dashboard
 const BuyerDashboard = lazy(() => import('./pages/BuyerDashboard/BuyerDashboard'));
 const BuyerMessage = lazy(() => import('./pages/BuyerDashboard/BuyerMassage/BuyerMessage'));
@@ -88,7 +89,10 @@ const FAQPage = lazy(() => import('./pages/FAQ/FAQPage'));
 const GoogleCallback = lazy(() => import('./pages/GoogleCallback'));
 
 //Admin
+const AdminLayout = lazy(() => import('./admin/adminDashboard/AdminLayout'));
 const AdminLogin = lazy(() => import('./admin/AdminLogin'));
+const Bla = lazy(() => import('./admin/Bla'));
+const AdLayout = lazy(() => import('./admin/adminDashboard/AdLayout'));
 
 //Other
 const Protector = lazy(() => import('./components/Protector'));
@@ -121,6 +125,11 @@ function App() {
             <Route path='/commission-structure' element={<CommissionStructure />} />
             <Route path='/faq' element={<FAQPage />} />
             <Route path="/rfqmarketplace" element={<Rfqmarketplace />} />
+
+            <Route path="/admin-dashboard" element={<AdminLayout />}>
+              <Route path="admin-login" element={<AdLayout><AdminLogin /></AdLayout>} />
+              <Route path="bla" element={<AdLayout><Bla /></AdLayout>} />
+            </Route>
 
             {/* Without authentication */}
             <Route element={<Protector isAuthenticated={!isAuthenticated} redirect='/' />}>

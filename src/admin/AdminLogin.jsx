@@ -93,7 +93,6 @@ const AdminLogin = () => {
             </Helmet>
 
             <div className="login-cont hvh">
-
                 <Link to='/' className="logo-otpform">
                     <img src={logo} alt="logo" />
                 </Link>
@@ -138,7 +137,6 @@ const AdminLogin = () => {
                         {View}
                     </div>
                 </div>
-
             </div>
 
         </Fragment>
