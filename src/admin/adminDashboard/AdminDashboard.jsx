@@ -1,9 +1,12 @@
 import React, { useState, Fragment } from 'react';
-import '../../components/SideNav/SideNav.css';
+import './admin.css';
 import { Link } from 'react-router-dom';
+import { urls } from '../../components/Schemas/images';
 
 const AdminDashboard = () => {
 
+    //images
+    const logo = urls[0];
     const [activeIndex, setActiveIndex] = useState(null);
     const toggleAccordion = (index) => {
         setActiveIndex(activeIndex === index ? null : index);
@@ -11,10 +14,15 @@ const AdminDashboard = () => {
 
     return (
         <Fragment>
-            <div className='flex seller-dash'>
+            <div className='flex seller-dash admindashboard'>
                 <div className='flexcol sidenav'>
+
+                    <div className='adminLogo'>
+                        <img src={logo} alt="logo" />
+                    </div>
+
                     <Link to="admin-login" className={`accordion ${activeIndex === 1 ? 'active' : ''}`} onClick={() => { toggleAccordion(1) }}>
-                        <div  className='flex' style={{ gap: '20px' }}>
+                        <div className='flex' style={{ gap: '20px' }}>
                             <svg className='svg' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
                                 <path fillRule="evenodd" clipRule="evenodd" d="M10.762 2.763a1.749 1.749 0 0 1 2.475 0l6.707 6.707a2.75 2.75 0 0 1 .806 1.944V20a.75.75 0 0 1-.75.75h-5.5a.75.75 0 0 1-.75-.75v-4.5a1.75 1.75 0 1 0-3.5 0V20a.75.75 0 0 1-.75.75H4a.75.75 0 0 1-.75-.75v-8.586c0-.729.29-1.429.806-1.944l6.706-6.707Zm1.415 1.06a.249.249 0 0 0-.353 0L5.116 10.53a1.25 1.25 0 0 0-.366.883v7.836h4V15.5a3.25 3.25 0 1 1 6.5 0v3.75h4v-7.836c0-.33-.132-.649-.366-.883l-6.707-6.707Z" fill="currentColor"></path>
                             </svg>
