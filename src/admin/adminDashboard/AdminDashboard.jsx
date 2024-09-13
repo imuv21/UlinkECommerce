@@ -35,14 +35,12 @@ const AdminDashboard = () => {
                             <svg className='svg' viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" role="img">
                                 <path fillRule="evenodd" clipRule="evenodd" d="M9.5 3.75c-.69 0-1.25.56-1.25 1.25v5c0 .69.56 1.25 1.25 1.25h5c.69 0 1.25-.56 1.25-1.25V5c0-.69-.56-1.25-1.25-1.25h-5ZM6.75 10c0 .45.108.875.3 1.25H5A2.75 2.75 0 0 0 2.25 14v5A2.75 2.75 0 0 0 5 21.75h5c.788 0 1.499-.331 2-.862.501.53 1.212.862 2 .862h5A2.75 2.75 0 0 0 21.75 19v-5A2.75 2.75 0 0 0 19 11.25h-2.05c.192-.375.3-.8.3-1.25V5a2.75 2.75 0 0 0-2.75-2.75h-5A2.75 2.75 0 0 0 6.75 5v5ZM5 12.75h5c.69 0 1.25.56 1.25 1.25v5c0 .69-.56 1.25-1.25 1.25H5c-.69 0-1.25-.56-1.25-1.25v-5c0-.69.56-1.25 1.25-1.25ZM12.75 14c0-.69.56-1.25 1.25-1.25h5c.69 0 1.25.56 1.25 1.25v5c0 .69-.56 1.25-1.25 1.25h-5c-.69 0-1.25-.56-1.25-1.25v-5ZM6 17.25a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5H6ZM9.25 9a.75.75 0 0 1 .75-.75h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 9.25 9ZM15 17.25a.75.75 0 0 0 0 1.5h2a.75.75 0 0 0 0-1.5h-2Z" fill="currentColor"></path>
                             </svg>
-                            <div className="heading2">Product Catalogue</div>
+                            <div className="heading2">User Management</div>
                         </div>
                     </button>
                     <div className="panel" style={{ maxHeight: activeIndex === 2 ? '300px' : '0' }}>
-                        <Link to="" className="option">Add single product</Link>
-                        <Link to="" className="option">Add multiple product</Link>
-                        <Link to="" className="option">Products list</Link>
-                        <Link to="" className="option">Media</Link>
+                        <Link to="buyer-list" className="option">Buyer List</Link>
+                        <Link to="seller-list" className="option">Seller List</Link>
                     </div>
 
                     <Link to="admin-order" className={`accordion ${activeIndex === 3 ? 'active' : ''}`} onClick={() => { handleOptionClick('Option17'); toggleAccordion(3) }}>
