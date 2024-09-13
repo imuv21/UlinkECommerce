@@ -38,7 +38,6 @@ const AdminLogin = () => {
         navigate('/forgot-password');
     }
 
-
     const [loggedUser, setLoggedUser] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
@@ -55,8 +54,8 @@ const AdminLogin = () => {
             dispatch(loginSuccess({ token, message, user }));
             toast(<div className='toaster'> < VerifiedIcon /> {`${status} : ${message}`}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
 
-            if (role === 'Seller') {
-                navigate('/seller-dashboard/seller-home');
+            if (role === 'Admin') {
+                navigate('/admin-dashboard/warehouse');
             } else {
                 navigate('/');
             }

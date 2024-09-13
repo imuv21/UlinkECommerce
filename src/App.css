@@ -4507,32 +4507,23 @@ button:focus {
   align-items: center;
   justify-content: start;
 }
-
-.order-title-box:nth-child(8) {
+.second-last-box-title, .second-last-box-list {
   width: 150px;
 }
-
-.order-list-box:nth-child(8) {
+.last-box-title {
   width: 150px;
 }
-
-.order-title-box:nth-child(10) {
-  width: 150px;
-}
-
-.order-list-box:nth-child(10) {
+.last-box-list{
   width: 150px;
   gap: 5px;
   justify-content: space-between;
 }
-
 .order-list-box .MuiSvgIcon-root {
   width: 20px;
   height: 20px;
   filter: drop-shadow(1px 1px 1px rgb(81, 81, 81));
 }
-
-.order-list-box:nth-child(10) div {
+.last-box-list div {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4540,3 +4531,16 @@ button:focus {
   border-radius: 5px;
   cursor: pointer;
 }
+.divshake1{
+  background-color: rgb(255, 255, 159);
+}
+.divshake2{
+  background-color: rgb(164, 255, 159);
+}
+.divshake3{
+  background-color: rgb(255, 188, 159);
+}
+
+
+
+

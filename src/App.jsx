@@ -95,6 +95,7 @@ const AdminOrder = lazy(() => import('./admin/AdminOrder'));
 const AdLayout = lazy(() => import('./admin/adminDashboard/AdLayout'));
 const BuyerList = lazy(() => import('./admin/BuyerList'));
 const SellerList = lazy(() => import('./admin/SellerList'));
+const AdminWarehouse = lazy(() => import('./admin/AdminWarehouse'));
 
 //Other
 const Protector = lazy(() => import('./components/Protector'));
@@ -133,6 +134,7 @@ function App() {
               <Route path="admin-order" element={<AdLayout><AdminOrder /></AdLayout>} />
               <Route path="buyer-list" element={<AdLayout><BuyerList /></AdLayout>} />
               <Route path="seller-list" element={<AdLayout><SellerList /></AdLayout>} />
+              <Route path="warehouse" element={<AdLayout><AdminWarehouse /></AdLayout>} />
             </Route>
 
             {/* Without authentication */}
