@@ -55,9 +55,11 @@ const AdminLogin = () => {
             toast(<div className='toaster'> < VerifiedIcon /> {`${status} : ${message}`}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
 
             if (role === 'Admin') {
-                navigate('/admin-dashboard/warehouse');
+                navigate('/admin-dashboard/admin-order');
+            } else if (role === 'Manager') {
+                navigate('/admin-dashboard/admin-order');
             } else {
-                navigate('/');
+                navigate('/admin-dashboard/admin-order');
             }
 
         } catch (error) {
@@ -88,7 +90,7 @@ const AdminLogin = () => {
             <Helmet>
                 <title>Login to Your Ulinkit Account | Ulinkit - Secure Online Shopping Platform</title>
                 <meta name="description" content="Login to Ulinkit to access your account, manage orders, and enjoy a seamless online shopping experience with top-quality products at great prices." />
-                <link rel="canonical" href="https://www.ulinkit.com/admin/login" />
+                <link rel="canonical" href="https://www.ulinkit.com/admin-login" />
             </Helmet>
 
             <div className="login-cont hvh">

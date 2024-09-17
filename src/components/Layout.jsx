@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
         location.pathname === '/verify-update-password' || location.pathname === '/sellerform' || location.pathname === '/payment-success' || location.pathname === '/payment-failed' ||
         location.pathname === '/google-callback' || location.pathname === '/payment-response' || location.pathname === '/verify-update-profile' || location.pathname === '/admin/login' ||
 
-        location.pathname === '/admin-dashboard/admin-order' || location.pathname === '/admin-dashboard/admin-login' || location.pathname === '/admin-dashboard/buyer-list' ||
+        location.pathname === '/admin-dashboard/admin-order' || location.pathname === '/admin-login' || location.pathname === '/admin-dashboard/buyer-list' ||
         location.pathname === '/admin-dashboard/seller-list' || location.pathname === '/admin-dashboard/warehouse') {
 
         return <>{children}</>;

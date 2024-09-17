@@ -129,15 +129,7 @@ function App() {
             <Route path='/faq' element={<FAQPage />} />
             <Route path="/rfqmarketplace" element={<Rfqmarketplace />} />
 
-            <Route path="/admin-dashboard" element={<AdminLayout />}>
-              <Route path="admin-login" element={<AdLayout><AdminLogin /></AdLayout>} />
-              <Route path="admin-order" element={<AdLayout><AdminOrder /></AdLayout>} />
-              <Route path="buyer-list" element={<AdLayout><BuyerList /></AdLayout>} />
-              <Route path="seller-list" element={<AdLayout><SellerList /></AdLayout>} />
-              <Route path="warehouse" element={<AdLayout><AdminWarehouse /></AdLayout>} />
-            </Route>
-
-            {/* Without authentication */}
+            {/*Without authentication */}
             <Route element={<Protector isAuthenticated={!isAuthenticated} redirect='/' />}>
               <Route path='/login' element={<Login />} />
               <Route path='/verify-email' element={<Otp />} />
@@ -148,21 +140,21 @@ function App() {
               <Route path='/seller-center' element={<NewBecomeASeller />} />
               <Route path='/google-callback' element={<GoogleCallback />} />
 
-              <Route path='/admin/login' element={<AdminLogin />} />
+              <Route path="/admin-login" element={<AdminLogin />} />
             </Route>
 
-            {/* Admin */}
-            {/* <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRole="Admin" redirect='/admin/login' />}>
-              <Route path="/seller-order" element={<SellerOrder />} />
-            </Route> */}
-
-            {/* Manager */}
-            {/* <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRole="Manager" redirect='/admin/login' />}>
-              <Route path="/seller-order" element={<SellerOrder />} />
-            </Route> */}
+            {/* Both admin and manager */}
+            <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Admin', 'Manager']} redirect='/admin-login' />}>
+              <Route path="/admin-dashboard" element={<AdminLayout />}>
+                <Route path="admin-order" element={<AdLayout><AdminOrder /></AdLayout>} />
+                <Route path="buyer-list" element={<AdLayout><BuyerList /></AdLayout>} />
+                <Route path="seller-list" element={<AdLayout><SellerList /></AdLayout>} />
+                <Route path="warehouse" element={<AdLayout><AdminWarehouse /></AdLayout>} />
+              </Route>
+            </Route>
 
             {/* Seller dashboard */}
-            <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRole="Seller" redirect='/seller-center' />}>
+            <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Seller']} redirect='/seller-center' />}>
               <Route path='/editsingle/:productId' element={<EditSingle />} />
               <Route path="/seller-order" element={<SellerOrder />} />
               <Route path="/all-products" element={<AllSellerProducts />} />
@@ -188,7 +180,7 @@ function App() {
             </Route>
 
             {/* Both seller and buyer */}
-            <Route element={<Protector isAuthenticated={isAuthenticated} redirect='/' />}>
+            <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Seller', 'Buyer']} redirect='/' />}>
               <Route path="/profile" element={<Profile />} />
               <Route path="/my-addresses" element={<SellerAddress />} />
 
@@ -202,7 +194,7 @@ function App() {
             </Route>
 
             {/* Buyer dashboard */}
-            <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRole="Buyer" redirect='/' />}>
+            <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Buyer']} redirect='/' />}>
               <Route path='/buyer-dashboard' element={<BuyerDashboard />} />
               <Route path='/buyer-message' element={<BuyerMessage />} />
               <Route path='/rfq' element={<Rfq />} />
