@@ -55,16 +55,6 @@ const Login = () => {
             dispatch(loginSuccess({ token, message, user }));
             toast(<div className='toaster'> < VerifiedIcon /> {`${status} : ${message}`}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
 
-            if (role === 'Seller') {
-                navigate('/seller-dashboard/seller-home');
-            } else if (role === 'Buyer') {
-                navigate('/');
-            } else if (role === 'Admin' || 'Manager') {
-                navigate('/admin-dashboard/admin-order');
-            } else {
-                navigate('/');
-            }
-
         } catch (error) {
 
             const message = error.response?.data?.message || 'Login failed!';

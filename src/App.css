@@ -357,6 +357,28 @@ button:focus {
 
 
 /* home styling */
+/* home popup  */
+
+.homepopup{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.homepopup-btn{
+  background-color: red;
+  color: white;
+}
+
 .home {
   padding: 60px 20px;
   gap: 30px;

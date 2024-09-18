@@ -41,7 +41,10 @@ const AdminLogin = () => {
     const [loggedUser, setLoggedUser] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { handleSubmit, control, formState: { errors } } = useForm({ resolver: schema });
-    const onSubmit = async (formData) => {
+
+    const onSubmit = async (formData, event) => {
+
+        event.preventDefault();
         if (isSubmitting) return;
         setIsSubmitting(true);
         const updatedLoggedUser = { ...loggedUser, ...formData };
@@ -54,9 +57,7 @@ const AdminLogin = () => {
             dispatch(loginSuccess({ token, message, user }));
             toast(<div className='toaster'> < VerifiedIcon /> {`${status} : ${message}`}</div>, { duration: 3000, position: 'top-center', style: { padding: '3px', color: 'rgb(0, 189, 0)' }, className: 'success', ariaProps: { role: 'status', 'aria-live': 'polite' } });
 
-            if (role === 'Admin') {
-                navigate('/admin-dashboard/admin-order');
-            } else if (role === 'Manager') {
+            if (role === 'Admin' || 'Manager') {
                 navigate('/admin-dashboard/admin-order');
             } else {
                 navigate('/admin-dashboard/admin-order');

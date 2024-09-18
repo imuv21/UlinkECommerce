@@ -99,6 +99,7 @@ const AdminWarehouse = lazy(() => import('./admin/AdminWarehouse'));
 
 //Other
 const Protector = lazy(() => import('./components/Protector'));
+const AdminProtector = lazy(() => import('./components/AdminProtector'));
 
 
 function App() {
@@ -116,9 +117,9 @@ function App() {
           <Routes>
 
             {/* public */}
+            <Route path='/' element={<Home />} />
             <Route path='/guidelines' element={<Guidelines />} />
             <Route path='/product-details/:id' element={<ProductDetails />} />
-            <Route path='/' element={<Home />} />
             <Route path='/search-results' element={<RoughFP />} />
             <Route path='/category-pages/:category' element={<CategoryPages />} />
             <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
@@ -139,12 +140,15 @@ function App() {
               <Route path='/seller-form' element={<SellerForm />} />
               <Route path='/seller-center' element={<NewBecomeASeller />} />
               <Route path='/google-callback' element={<GoogleCallback />} />
+            </Route>
 
+            {/*Admin without authentication */}
+            <Route element={<AdminProtector isAuthenticated={!isAuthenticated} />}>
               <Route path="/admin-login" element={<AdminLogin />} />
             </Route>
 
             {/* Both admin and manager */}
-            <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Admin', 'Manager']} redirect='/admin-login' />}>
+            <Route element={<AdminProtector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Admin', 'Manager']} />}>
               <Route path="/admin-dashboard" element={<AdminLayout />}>
                 <Route path="admin-order" element={<AdLayout><AdminOrder /></AdLayout>} />
                 <Route path="buyer-list" element={<AdLayout><BuyerList /></AdLayout>} />

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { slider } from '../components/Schemas/images';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ import CarouselThree from '../components/CarouselThree';
 import CarouselFour from '../components/CarouselFour';
 import Square from '../components/UI_Components/Square';
 import SquareTwo from '../components/UI_Components/SquareTwo';
+import Popup from '../components/Popup';
 
 
 const Home = () => {
@@ -21,9 +22,20 @@ const Home = () => {
   const DiscountCoupne = slider[8];
   const Banners = slider[7];
   const summer = slider[11];
-
   const { totalItems, totalItemsTwo, totalItemsThree, totalItemsFour } = useSelector((state) => state.products);
+  const [showPopup, setShowPopup] = useState(false);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPopup(true);
+    }, 3000);
+
+    return () => clearTimeout(timer); 
+  }, []);
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
 
   const ShowAll = () => {
     navigate('/search-results')
@@ -31,12 +43,15 @@ const Home = () => {
 
   return (
     <Fragment>
+
       <Helmet>
         <title>Ulinkit - Your Global Marketplace for Products and Services</title>
         <meta name="description" content="Discover a world of products and services on Ulinkit. Shop from various categories, explore deals, and enjoy a seamless shopping experience." />
         <link rel="canonical" href="https://www.ulinkit.com/" />
       </Helmet>
+
       <Slider />
+
       <div className="flexcol wh home">
         <p className="heading3 wh">Categories</p>
         <CategorySection />
@@ -80,6 +95,8 @@ const Home = () => {
         <p className="heading3 wh">Top Brands</p>
         <InfSlider />
       </div>
+
+      {showPopup && <Popup onClose={closePopup} />}
 
     </Fragment>
   )
