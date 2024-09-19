@@ -1,42 +1,65 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdDeleteOutline } from "react-icons/md";
 import { TbEdit } from "react-icons/tb";
 import { HiOutlineEye } from "react-icons/hi2";
 import { CiSearch } from "react-icons/ci";
 import { IoChevronBack } from "react-icons/io5";
 import { IoChevronForwardSharp } from "react-icons/io5";
+import { useDispatch, useSelector } from 'react-redux';
+import { getBuyerList } from '../Redux/buyerListSlice';
+
 
 const BuyerList = () => {
 
-    const [searchItem, setSearchItem] = useState('')
-    const [filteredList, setFilteredList] = useState([])
 
-    //  show the user List item value in table
-    const userList = [
-        { userId: 1, userName: 'Vipin Kumar', userEmail: 'vipinkm1654@gmail.com', userRole: 'Buyer', },
-        { userId: 2, userName: 'Rajesh Kumar', userEmail: 'vipinkm1654@gmail.com', userRole: 'suyer', },
-        { userId: 3, userName: 'Hello Kumar', userEmail: 'vipinkm1654@gmail.com', userRole: 'Buyer', },
-        { userId: 4, userName: 'Puneet Kumar', userEmail: 'vipinkm1654@gmail.com', userRole: 'Buyer', },
-        { userId: 5, userName: 'Advanture Kumar', userEmail: 'vipinkm1654@gmail.com', userRole: 'suyer', },
-        { userId: 4, userName: 'Puneet Kumar', userEmail: 'vipinkm1654@gmail.com', userRole: 'Buyer', },
-    ]
-    //  check the condition
-    const handleSearchItem = (e) => {
-        setSearchItem(e.target.value)
-        const filteredList = userList.filter((user) => {
-            return user.userName.toLowerCase().includes(e.target.value.toLowerCase()) ||
-                user.userEmail.toLowerCase().includes(e.target.value.toLowerCase()) ||
-                user.userRole.toLowerCase().includes(e.target.value) ||
-                user.userId.toString().includes(e.target.value.toLowerCase())
-        })
-        setFilteredList(filteredList)
+    const [searchItem, setSearchItem] = useState('');
+    const [filteredItem, setFilteredItem] = useState([]);
+
+    //   accessing the element login 
+    const { data, status, error } = useSelector((state) => state.buyerList || { data: {} });
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getBuyerList());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (data) {
+            console.log('Buyer Data:', data);  // Log the data to verify structure
+        }
+    }, [data]);
+
+//  filter search item for the category wise data
+
+useEffect(() => {
+    if(data?.BUYER){
+        const filtered = data.BUYER.filter((user) => 
+             user.firstname.toLowerCase().includes(searchItem.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchItem.toLowerCase()) ||
+            user.id.toString().includes(searchItem) ||
+            user.country.toLowerCase().includes(searchItem.toLowerCase())
+        );
+        setFilteredItem(filtered);
     }
+}, [searchItem, data])
+
+const handleSearchItme = (e)=> {
+    setSearchItem(e.target.value)
+}
     const UserDelete = (userId) => {
-        const UpdateList = userList.filter((user) => user.userId !== userId)
-        console.log(UpdateList)
+        console.log(userId)
     }
-    //  add the human value added the main condition value
+
+    if (status === 'loading') {
+        return <div>Loading...</div>;
+    }
+
+    if (status === 'failed') {
+        return <div>Error: {error}</div>;
+    }
+
+    // Ensure data.BUYER is accessed correctly
+    const buyers = filteredItem.length > 0 ? filteredItem : data?.BUYER || [];
     return (
         <div className='buyer-list-container'>
             <div className='admin-user-dashboard'>
@@ -44,7 +67,7 @@ const BuyerList = () => {
                     <h3>Buyer List</h3>
                     <div className='user-item'>
                         <CiSearch className='user-search-input' />
-                        <input type='text' value={searchItem} onChange={handleSearchItem} className='buyer-search' placeholder='Search...' />
+                        <input type='text' className='buyer-search' value={searchItem} placeholder='Search...'  onChange={handleSearchItme} />
                     </div>
                 </div>
                 {/*  user role field show the  */}
@@ -52,37 +75,25 @@ const BuyerList = () => {
                     <div className='user-list'>Buyer Id</div>
                     <div className='user-list'>Name</div>
                     <div className='user-list'>Email</div>
-                    <div className='user-list'>Role</div>
+                    <div className='user-list'>Country</div>
                     <div className='user-list'>Action</div>
                 </div>
-                {filteredList.length > 0 ? (
-                    filteredList.map((item, id) => (
-                        <div key={id} className='user-list-item'>
-                            <div className='user-list-size'>{item.userId}</div>
-                            <div className='user-list-size'>{item.userName}</div>
-                            <div className='user-list-size'>{item.userEmail}</div>
-                            <div className='user-list-size'>{item.userRole}</div>
-                            <div className='user-list-size  date-flex-item '>
-                                <HiOutlineEye className='action-icon-size' />
-                                <TbEdit className='action-icon-size' />
-                                <MdDeleteOutline className='action-icon-size' />
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    userList.map((item, id) => (
-                        <div key={id} className='user-list-item'>
-                            <div className='user-list-size'>{item.userId}</div>
-                            <div className='user-list-size'>{item.userName}</div>
-                            <div className='user-list-size'>{item.userEmail}</div>
-                            <div className='user-list-size'>{item.userRole}</div>
-                            <div className='user-list-size date-flex-item '>
+                {buyers.length > 0 ? (
+                    buyers.map((user) => (
+                        <div key={user.id} className='user-list-item'>
+                            <div className='user-list-size'>{user.id}</div>
+                            <div className='user-list-size'>{user.firstname} {user.lastname}</div>
+                            <div className='user-list-size'>{user.email}</div>
+                            <div className='user-list-size'>{user.country}</div>
+                            <div className='user-list-size date-flex-item'>
                                 <HiOutlineEye className='action-icon-size' />
                                 <TbEdit className='action-icon-size' />
                                 <MdDeleteOutline className='action-icon-size' onClick={() => UserDelete(item.userId)} />
                             </div>
                         </div>
                     ))
+                ) : (
+                    <p>No buyers found.</p>
                 )}
                 {/*  pagination */}
                 <div className='user-pagination-item'>

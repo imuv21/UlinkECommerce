@@ -1,45 +1,58 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CiSearch } from 'react-icons/ci'
 import { HiOutlineEye } from 'react-icons/hi2'
 import { IoChevronBack, IoChevronForwardSharp } from 'react-icons/io5';
 import { MdDeleteOutline } from 'react-icons/md'
 import { TbEdit } from "react-icons/tb";
+import { getSellerDetail } from '../Redux/sellerListSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const SellerList = () => {
 
+  const dispatch = useDispatch()
+   const {data, status, error} = useSelector((state) => state.sellerList || {data: {}});
+
+   
   const [searchItem, setSearchItem] = useState('')
   const [filteredSeller, setFilteredSeller] = useState([])
 
-  //  seller detail list
-  const sellerList = [
-    { sellerId: 1, sellerName: 'Vipin Kumar', sellerEmail: 'vipinkm1654@gmail.com', sellerRole: 'Buyer', },
-    { sellerId: 2, sellerName: 'Rajesh Kumar', sellerEmail: 'vipinkm1654@gmail.com', sellerRole: 'suyer', },
-    { sellerId: 3, sellerName: 'Hello Kumar', sellerEmail: 'vipinkm1654@gmail.com', sellerRole: 'Buyer', },
-    { sellerId: 4, sellerName: 'Puneet Kumar', sellerEmail: 'vipinkm1654@gmail.com', sellerRole: 'Buyer', },
-    { sellerId: 5, sellerName: 'Advanture Kumar', sellerEmail: 'vipinkm1654@gmail.com', sellerRole: 'suyer', },
-
-  ]
-
   // Add here the filtered condition value
-
-  const handleSeller = (e) => {
-    setSearchItem(e.target.value)
-    const filteredSeller = sellerList.filter((seller) => {
-      return seller.sellerId.toString().includes(e.target.value) ||
-        seller.sellerEmail.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        seller.sellerName.toLowerCase().includes(e.target.value.toLowerCase()) ||
-        seller.sellerRole.toLowerCase().includes(e.target.value.toLowerCase())
-
-    })
-    setFilteredSeller(filteredSeller)
-  }
+  useEffect(()=> {
+    dispatch(getSellerDetail())
+  },[dispatch])
   // seller delete item
-
+  
+   useEffect(() => {
+    if(data) {
+      console.log('Seller Data:', data)
+    }
+   }, [data])
+//  check the condition
+  useEffect (() => {
+    if(data?.SELLER) {
+        const filtereds =  data.SELLER.filter((user) => 
+          user.firstname.toLowerCase().includes(searchItem.toLowerCase()) ||
+          user.email.toLowerCase().includes(searchItem.toLowerCase())||
+          user.country.toLowerCase().includes(searchItem.toLowerCase())||
+          user.id.toString().includes(searchItem)
+    );
+    setFilteredSeller(filtereds);
+    }
+  }, [searchItem, data])
 
   const sellerDelete = (sellerId) => {
-    const UpdateSellerList = sellerList.filter((seller) => seller.sellerId !== sellerId)
-    console.log(UpdateSellerList)
+     console.log(sellerId)
   }
+
+  if(status === 'loading'){
+    return <div>Loading...</div>
+  }
+  if(status === 'failed'){
+    return <div>Error: {error}</div>
+  }
+
+  const seller = filteredSeller.length > 0 ? filteredSeller : data?.SELLER || [];
   return (
     <div className='buyer-list-container'>
       <div className='admin-user-dashboard'>
@@ -47,7 +60,7 @@ const SellerList = () => {
           <h3>Seller List</h3>
           <div className='user-item'>
             <CiSearch className='user-search-input' />
-            <input type='text' value={searchItem} onChange={handleSeller} className='buyer-search' placeholder='Search...' />
+            <input type='text' value={searchItem}  onChange={(e) => setSearchItem(e.target.value)} className='buyer-search' placeholder='Search...' />
           </div>
         </div>
         {/*  user role field show the  */}
@@ -58,34 +71,24 @@ const SellerList = () => {
           <div className='user-list'>Role</div>
           <div className='user-list'>Action</div>
         </div>
-        {filteredSeller.length > 0 ? (
-          filteredSeller.map((sellerDetail, id) => (
-            <div key={id} className='user-list-item'>
-              <div className='user-list-size'>{sellerDetail.sellerId}</div>
-              <div className='user-list-size'>{sellerDetail.sellerName}</div>
-              <div className='user-list-size'>{sellerDetail.sellerEmail}</div>
-              <div className='user-list-size'>{sellerDetail.sellerRole}</div>
+        {seller.length > 0 ? (
+          seller.map((sellerDetail, id) => (
+            <div key={sellerDetail.id} className='user-list-item'>
+              <div className='user-list-size'>{sellerDetail.id}</div>
+              <div className='user-list-size'>{sellerDetail.firstname} {sellerDetail.lastname}</div>
+              <div className='user-list-size'>{sellerDetail.email}</div>
+              <div className='user-list-size'>{sellerDetail.country}</div>
               <div className='user-list-size  date-flex-item '>
                 <HiOutlineEye className='action-icon-size' />
                 <TbEdit className='action-icon-size' />
-                <MdDeleteOutline className='action-icon-size' />
+                <MdDeleteOutline className='action-icon-size' onClick={sellerDelete(id)}/>
               </div>
             </div>
           ))
         ) : (
-          sellerList.map((sellerDetail, id) => (
-            <div key={id} className='user-list-item'>
-              <div className='user-list-size'>{sellerDetail.sellerId}</div>
-              <div className='user-list-size'>{sellerDetail.sellerName}</div>
-              <div className='user-list-size'>{sellerDetail.sellerEmail}</div>
-              <div className='user-list-size'>{sellerDetail.sellerRole}</div>
-              <div className='user-list-size date-flex-item '>
-                <HiOutlineEye className='action-icon-size' />
-                <TbEdit className='action-icon-size' />
-                <MdDeleteOutline className='action-icon-size' onClick={() => sellerDelete(item.userId)} />
-              </div>
-            </div>
-          ))
+          <div className='user-list-item'>
+            <p>No user found</p>
+          </div>
         )}
         {/*  pagination */}
         <div className='user-pagination-item'>

@@ -3,7 +3,6 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 import Profile from '../../assets/user.jpg';
 
-
 const AdminHeader = () => {
   return (
     <div className='admin-navbar'>
