@@ -184,7 +184,6 @@ const Header = () => {
     setIsOpen(false);
   };
 
-
   const handleSearchClick = () => {
     closeAllPopups();
     setIsSearchClick(prevState => !prevState);
@@ -221,6 +220,8 @@ const Header = () => {
     closeAllPopups();
     setIsOpen(prevState => !prevState);
   };
+
+
   const handleClickOutside = (event) => {
 
     const popups = [
@@ -244,7 +245,6 @@ const Header = () => {
       closeAllPopups();
     }
   };
-
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
 
@@ -328,6 +328,7 @@ const Header = () => {
       dispatch(logout());
     }
   };
+  
   const convertPascalToReadable = (text) => {
     return text.replace(/([A-Z])/g, ' $1').trim();
   };
