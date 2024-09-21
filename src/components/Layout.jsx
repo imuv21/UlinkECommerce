@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
         location.pathname === '/google-callback' || location.pathname === '/payment-response' || location.pathname === '/verify-update-profile' || location.pathname === '/admin/login' ||
 
         location.pathname === '/admin-dashboard/admin-order' || location.pathname === '/admin-login' || location.pathname === '/admin-dashboard/buyer-list' ||
-        location.pathname === '/admin-dashboard/seller-list' || location.pathname === '/admin-dashboard/warehouse') {
+        location.pathname === '/admin-dashboard/seller-list' || location.pathname === '/admin-dashboard/warehouse' || location.pathname.startsWith('/admin-dashboard/buyer-detail/') || location.pathname === '/admin-dashboard/buyer-detail') {
 
         return <>{children}</>;
     }

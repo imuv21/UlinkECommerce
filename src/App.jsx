@@ -96,6 +96,7 @@ const AdLayout = lazy(() => import('./admin/adminDashboard/AdLayout'));
 const BuyerList = lazy(() => import('./admin/BuyerList'));
 const SellerList = lazy(() => import('./admin/SellerList'));
 const AdminWarehouse = lazy(() => import('./admin/AdminWarehouse'));
+const BuyerDetail = lazy(() => import('./admin/BuyerDetail'));
 
 //Other
 const Protector = lazy(() => import('./components/Protector'));
@@ -154,6 +155,7 @@ function App() {
                 <Route path="buyer-list" element={<AdLayout><BuyerList /></AdLayout>} />
                 <Route path="seller-list" element={<AdLayout><SellerList /></AdLayout>} />
                 <Route path="warehouse" element={<AdLayout><AdminWarehouse /></AdLayout>} />
+                <Route path='buyer-detail/:id' element={<AdLayout><BuyerDetail/></AdLayout>} />
               </Route>
             </Route>
 

@@ -77,7 +77,7 @@ const SellerList = () => {
             <div className='user-list'>Seller Id</div>
             <div className='user-list'>Name</div>
             <div className='user-list'>Email</div>
-            <div className='user-list'>Role</div>
+            <div className='user-list'>Country</div>
             <div className='user-list'>Action</div>
           </div>
           {seller.length > 0 ? (
