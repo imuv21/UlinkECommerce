@@ -18,7 +18,7 @@ import Popup from '../components/Popup';
 const Home = () => {
 
   const navigate = useNavigate();
-  const Banner1 = slider[12];
+  const Banner1 = slider[10];
   const DiscountCoupne = slider[8];
   const Banners = slider[7];
   const summer = slider[11];

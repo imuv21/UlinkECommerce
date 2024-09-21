@@ -216,48 +216,48 @@ const ProductList = () => {
                             {(sellerProducts && sellerProducts.length > 0) ? (
                                 <Fragment>
                                     <div className="searchBoxPro2 grid-head">
+                                        <div className="heading3">Action</div>
                                         <div className="heading3">Image</div>
                                         <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Product Name</div>
                                         <div className="heading3">Category</div>
                                         <div className="heading3">Price</div>
                                         <div className="heading3">Fee Preview</div>
                                         <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Available Quantity</div>
-                                        <div className="heading3">Status</div>
                                         <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Created / Updated</div>
+                                        <div className="heading3">Status</div>
                                         <div className="heading3">Visibility</div>
-                                        <div className="heading3">Action</div>
                                     </div>
 
                                     {sellerProducts.map((item, index) => (
                                         <div className="searchBoxPro2" key={item.productId}>
-                                            <div>
-                                                {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
-                                            </div>
-                                            <p className="heading2 download-btn" onClick={() => productDetail(item.productId)} style={{ whiteSpace: 'nowrap' }}>
-                                                {item.productName.length > 15 ? `${item.productName.substring(0, 15)}...` : item.productName}
-                                            </p>
-                                            <p className="heading2">
-                                                {item.category.length > 15 ? `${item.category.substring(0, 15)}...` : item.category}
-                                            </p>
-                                            <div className="heading2">
-                                                <div className="flex" style={{ gap: '5px' }}>
-                                                    <span style={{ textDecoration: 'line-through', color: 'gray' }}>{user.currencySymbol} {item.unitPrice}</span>-<span style={{ fontWeight: 'bold' }}>{user.currencySymbol} {item.sellPrice}</span>
-                                                </div>
-                                            </div>
-                                            <div className="heading2"><span className='download-btn' onClick={() => handleAddAddress(index)}> {calculateCostPerUnit(item)}{user.currencySymbol} </span></div>
-                                            <div className="heading2" style={{ whiteSpace: 'nowrap' }}>
-                                                <div className="flexcol" style={{ gap: '2px' }}>
-                                                    <span style={{ fontWeight: 'bold' }}>3</span>
-                                                    <span style={{ fontSize: '12px', display: 'none' }}>MOQ is {item.minOrderQuant}</span>
-                                                </div>
-                                            </div>
-                                            <div className="heading2">{item.status}</div>
-                                            <div className="heading2" style={{ whiteSpace: 'nowrap' }}>{new Date(item.updatedDate).toLocaleString()}</div>
-                                            <div className="heading2">{item.visibility}</div>
                                             <div className="heading2 flexcol">
                                                 <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEdit(item.productId)} />
                                                 <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDelete(item.productId)} />
                                             </div>
+                                            <div>
+                                                {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
+                                            </div>
+                                            <div className="heading2 download-btn" onClick={() => productDetail(item.productId)} style={{ whiteSpace: 'nowrap' }}>
+                                                {item.productName.length > 15 ? `${item.productName.substring(0, 15)}...` : item.productName}
+                                            </div>
+                                            <div className="heading2">
+                                                {item.category.length > 15 ? `${item.category.substring(0, 15)}...` : item.category}
+                                            </div>
+                                            <div className="heading2">
+                                                <div className="flex" style={{ gap: '5px', borderBottom: 'none' }}>
+                                                    <span style={{ textDecoration: 'line-through', color: 'gray' }}>{user.currencySymbol} {Number(item.unitPrice).toFixed(2)}</span>-<span style={{ fontWeight: 'bold' }}>{user.currencySymbol} {Number(item.sellPrice).toFixed(2)}</span>
+                                                </div>
+                                            </div>
+                                            <div className="heading2"><span className='download-btn' onClick={() => handleAddAddress(index)}> {calculateCostPerUnit(item)}{user.currencySymbol} </span></div>
+                                            <div className="heading2" style={{ whiteSpace: 'nowrap' }}>
+                                                <div className="flexcol" style={{ gap: '2px', borderBottom: 'none' }}>
+                                                    <span style={{ fontWeight: 'bold' }}>3</span>
+                                                    <span style={{ fontSize: '12px', display: 'none' }}>MOQ is {item.minOrderQuant}</span>
+                                                </div>
+                                            </div>
+                                            <div className="heading2" style={{ whiteSpace: 'nowrap' }}>{new Date(item.updatedDate).toLocaleString()}</div>
+                                            <div className="heading2">{item.status}</div>
+                                            <div className="heading2">{item.visibility}</div>
                                         </div>
                                     ))}
                                     <Link to="/all-products" className="descrip hoverr" style={{ marginTop: '10px' }}>See all products</Link>
@@ -316,48 +316,48 @@ const ProductList = () => {
                             {(sellerProducts && sellerProducts.length > 0) ? (
                                 <Fragment>
                                     <div className="searchBoxPro2 grid-head">
+                                        <div className="heading3">Action</div>
                                         <div className="heading3">Image</div>
                                         <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Product Name</div>
                                         <div className="heading3">Category</div>
                                         <div className="heading3">Price</div>
                                         <div className="heading3">Fee Preview</div>
                                         <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Available Quantity</div>
-                                        <div className="heading3">Status</div>
                                         <div className="heading3" style={{ whiteSpace: 'nowrap' }}>Created / Updated</div>
+                                        <div className="heading3">Status</div>
                                         <div className="heading3">Visibility</div>
-                                        <div className="heading3">Action</div>
                                     </div>
 
                                     {sellerProducts.map((item, index) => (
                                         <div className="searchBoxPro2" key={item.productId}>
-                                            <div>
-                                                {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
-                                            </div>
-                                            <p className="heading2 download-btn" onClick={() => productDetail(item.productId)} style={{ whiteSpace: 'nowrap' }}>
-                                                {item.productName.length > 15 ? `${item.productName.substring(0, 15)}...` : item.productName}
-                                            </p>
-                                            <p className="heading2">
-                                                {item.category.length > 15 ? `${item.category.substring(0, 15)}...` : item.category}
-                                            </p>
-                                            <div className="heading2">
-                                                <div className="flex" style={{ gap: '5px' }}>
-                                                    <span style={{ textDecoration: 'line-through', color: 'gray' }}>{user.currencySymbol}{item.unitPrice}</span>-<span style={{ fontWeight: 'bold' }}>{user.currencySymbol}{item.sellPrice}</span>
-                                                </div>
-                                            </div>
-                                            <div className="heading2"><span className='download-btn' onClick={() => handleAddAddress(index)}> {calculateCostPerUnit(item)}{user.currencySymbol} </span></div>
-                                            <div className="heading2" style={{ whiteSpace: 'nowrap' }}>
-                                                <div className="flexcol" style={{ gap: '2px' }}>
-                                                    <span style={{ fontWeight: 'bold' }}>3</span>
-                                                    <span style={{ fontSize: '12px' }}>MOQ is {item.minOrderQuant}</span>
-                                                </div>
-                                            </div>
-                                            <div className="heading2">{item.status}</div>
-                                            <div className="heading2" style={{ whiteSpace: 'nowrap' }}>{new Date(item.updatedDate).toLocaleString()}</div>
-                                            <div className="heading2">{item.visibility}</div>
                                             <div className="heading2 flexcol">
                                                 <EditNoteIcon style={{ cursor: 'pointer' }} onClick={() => handleEdit(item.productId)} />
                                                 <DeleteIcon style={{ cursor: 'pointer' }} onClick={() => handleDelete(item.productId)} />
                                             </div>
+                                            <div>
+                                                {item.imageUrl && <img className='imgPro' src={item.imageUrl} alt={item.imageName} />}
+                                            </div>
+                                            <div className="heading2 download-btn" onClick={() => productDetail(item.productId)} style={{ whiteSpace: 'nowrap' }}>
+                                                {item.productName.length > 15 ? `${item.productName.substring(0, 15)}...` : item.productName}
+                                            </div>
+                                            <div className="heading2">
+                                                {item.category.length > 15 ? `${item.category.substring(0, 15)}...` : item.category}
+                                            </div>
+                                            <div className="heading2">
+                                                <div className="flex" style={{ gap: '5px', borderBottom: 'none' }}>
+                                                    <span style={{ textDecoration: 'line-through', color: 'gray' }}>{user.currencySymbol} {Number(item.unitPrice).toFixed(2)}</span>-<span style={{ fontWeight: 'bold' }}>{user.currencySymbol} {Number(item.sellPrice).toFixed(2)}</span>
+                                                </div>
+                                            </div>
+                                            <div className="heading2"><span className='download-btn' onClick={() => handleAddAddress(index)}> {calculateCostPerUnit(item)}{user.currencySymbol} </span></div>
+                                            <div className="heading2" style={{ whiteSpace: 'nowrap' }}>
+                                                <div className="flexcol" style={{ gap: '2px', borderBottom: 'none' }}>
+                                                    <span style={{ fontWeight: 'bold' }}>3</span>
+                                                    <span style={{ fontSize: '12px', display: 'none' }}>MOQ is {item.minOrderQuant}</span>
+                                                </div>
+                                            </div>
+                                            <div className="heading2" style={{ whiteSpace: 'nowrap' }}>{new Date(item.updatedDate).toLocaleString()}</div>
+                                            <div className="heading2">{item.status}</div>
+                                            <div className="heading2">{item.visibility}</div>
                                         </div>
                                     ))}
                                     <Link to="/all-products" className="descrip hoverr" style={{ marginTop: '10px' }}>See all products</Link>
@@ -378,7 +378,7 @@ const ProductList = () => {
                     <Fragment>
                         <form className='searchBoxPro' onSubmit={searchSubmitHandler}>
                             <input type='text' className='searchinputPro' placeholder='Search for products...' onChange={(e) => setKeyword(e.target.value)} />
-                            <button type='submit' className='searchbtnPro'><SearchIcon /></button>
+                            <button type='submit' className='searchbtnPro' style={{ display: 'none' }}><SearchIcon /></button>
                             <select name="reasons" className='searchselectPro'>
                                 <option value="">Rejection reasons</option>
                                 <option value="one">one</option>
@@ -427,7 +427,7 @@ const ProductList = () => {
                     <Fragment>
                         <form className='searchBoxPro' onSubmit={searchSubmitHandler}>
                             <input type='text' className='searchinputPro' placeholder='Search for products...' onChange={(e) => setKeyword(e.target.value)} />
-                            <button type='submit' className='searchbtnPro'><SearchIcon /></button>
+                            <button type='submit' className='searchbtnPro' style={{ display: 'none' }}><SearchIcon /></button>
                             <select name="reasons" className='searchselectPro'>
                                 <option value="">Status</option>
                                 <option value="one">one</option>
@@ -476,7 +476,7 @@ const ProductList = () => {
                     <Fragment>
                         <form className='searchBoxPro' onSubmit={searchSubmitHandler}>
                             <input type='text' className='searchinputPro' placeholder='Search for products...' onChange={(e) => setKeyword(e.target.value)} />
-                            <button type='submit' className='searchbtnPro'><SearchIcon /></button>
+                            <button type='submit' className='searchbtnPro' style={{ display: 'none' }}><SearchIcon /></button>
 
                             <select name="reasons" className='searchselectPro'>
                                 <option value="">Category</option>

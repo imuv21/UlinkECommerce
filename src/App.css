@@ -262,7 +262,7 @@ button:focus {
 
 .searchBoxPro2 {
   display: grid;
-  grid-template-columns: 150px 200px 200px 200px 200px 200px 200px 200px 200px 70px;
+  grid-template-columns: 70px 120px 200px 170px 240px 130px 160px 200px 140px 130px;
   gap: 0px;
   width: 100%;
 }
@@ -274,7 +274,7 @@ button:focus {
   justify-content: center;
   text-align: center;
   gap: 20px;
-  border-bottom: 1px solid var(--bgClr-2);
+  border-bottom: 1px solid rgb(181, 181, 181);
 }
 
 .searchBoxPro3 {
@@ -1782,6 +1782,7 @@ button:focus {
   bottom: 0;
   position: fixed;
   backdrop-filter: brightness(0.5) blur(1px);
+  z-index: 10;
 }
 
 .popup-child {
