@@ -4676,8 +4676,8 @@ button:focus {
 }
 .last-box-list{
   width: 150px;
-  gap: 5px;
-  justify-content: space-between;
+  gap: 10px;
+  justify-content: start;
 }
 .order-list-box .MuiSvgIcon-root {
   width: 20px;
@@ -4692,6 +4692,7 @@ button:focus {
   border-radius: 5px;
   cursor: pointer;
 }
+
 .divshake1{
   background-color: rgb(255, 255, 159);
 }

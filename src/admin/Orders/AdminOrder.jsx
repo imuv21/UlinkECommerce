@@ -4,49 +4,29 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from 'react-redux';
+import { allOrders } from '../../Redux/OrderAdminSlice';
+import { useNavigate } from 'react-router-dom';
 
 const AdminOrder = () => {
 
-  const orders = [
-    {
-      orderId: "ORD123456",
-      createdAt: "2024-09-01T14:30:00Z",
-      customer: "John Doe",
-      priority: "High",
-      total: "$150.00",
-      paymentStatus: "Paid",
-      items: 4,
-      deliveryNumber: "DEL789012",
-      orderStatus: "Shipped"
-    },
-    {
-      orderId: "ORD123457",
-      createdAt: "2024-09-02T09:15:00Z",
-      customer: "Jane Smith",
-      priority: "Medium",
-      total: "$200.00",
-      paymentStatus: "Pending",
-      items: 8,
-      deliveryNumber: "DEL789013",
-      orderStatus: "Processing"
-    },
-    {
-      orderId: "ORD123458",
-      createdAt: "2024-09-03T11:45:00Z",
-      customer: "Alice Johnson",
-      priority: "Low",
-      total: "$80.00",
-      paymentStatus: "Paid",
-      items: 6,
-      deliveryNumber: "DEL789014",
-      orderStatus: "Delivered"
-    }
-  ];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { orders, loading, error } = useSelector((state) => state.orderAdmin);
+
+  const seeOrders = (id) => {
+    console.log(id);
+    navigate(`/admin-dashboard/all-orders/${id}`);
+  }
 
   const [counts, setCounts] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
   const ends = [100, 150, 200, 250, 300, 350, 400, 450];
   const duration = 1000;
   const numberRef = useRef(null);
+
+  useEffect(() => {
+    dispatch(allOrders());
+  }, [dispatch]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -159,7 +139,7 @@ const AdminOrder = () => {
 
         <div className="admin-orders">
           <div className="order-nav">
-            <div className="heading3 fontGray">All Orders List</div>
+            <div className="heading3 fontGray">All Orders</div>
             <select name="" id="">
               <option value="">Select</option>
               <option value="">This Month</option>
@@ -200,44 +180,49 @@ const AdminOrder = () => {
             </div>
           </div>
 
-          {orders && orders.map((order) => (
-            <div className="admin-order-title" key={uuidv4()}>
-              <div className="order-list-box">
-                <div className="descrip">{order.orderId}</div>
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p>Error: {error}</p>
+          ) : (
+            orders && Object.values(orders).map((order) => (
+              <div className="admin-order-title" key={uuidv4()}>
+                <div className="order-list-box">
+                  <div className="descrip">{order.id}</div>
+                </div>
+                <div className="order-list-box">
+                  <div className="descrip">{"Order Date"}</div>
+                </div>
+                <div className="order-list-box">
+                  <div className="descrip">{order.name}</div>
+                </div>
+                <div className="order-list-box">
+                  <div className="descrip">{"Priority"}</div>
+                </div>
+                <div className="order-list-box">
+                  <div className="descrip">{"Total Amount"}</div>
+                </div>
+                <div className="order-list-box">
+                  <div className="descrip">{"Payment Status"}</div>
+                </div>
+                <div className="order-list-box">
+                  <div className="descrip">{order.noOfOrders}</div>
+                </div>
+                <div className="order-list-box second-last-box-list">
+                  <div className="descrip">{"Delivery Number"}</div>
+                </div>
+                <div className="order-list-box">
+                  <div className="descrip">{"Order Status"}</div>
+                </div>
+                <div className="order-list-box last-box-list">
+                  <div className='divshake1' onClick={() => seeOrders(order.id)}><VisibilityIcon style={{ color: 'rgb(233, 218, 0)' }} /></div>
+                  <div className='divshake3'><DeleteIcon style={{ color: 'rgb(250, 47, 47)' }} /></div>
+                </div>
               </div>
-              <div className="order-list-box">
-                <div className="descrip">{order.createdAt}</div>
-              </div>
-              <div className="order-list-box">
-                <div className="descrip">{order.customer}</div>
-              </div>
-              <div className="order-list-box">
-                <div className="descrip">{order.priority}</div>
-              </div>
-              <div className="order-list-box">
-                <div className="descrip">{order.total}</div>
-              </div>
-              <div className="order-list-box">
-                <div className="descrip">{order.paymentStatus}</div>
-              </div>
-              <div className="order-list-box">
-                <div className="descrip">{order.items}</div>
-              </div>
-              <div className="order-list-box second-last-box-list">
-                <div className="descrip">{order.deliveryNumber}</div>
-              </div>
-              <div className="order-list-box">
-                <div className="descrip">{order.orderStatus}</div>
-              </div>
-              <div className="order-list-box last-box-list">
-                <div className='divshake1'><VisibilityIcon style={{ color: 'rgb(233, 218, 0)' }} /></div>
-                <div className='divshake2'><BorderColorIcon style={{ color: 'rgb(12, 233, 0)' }} /></div>
-                <div className='divshake3'><DeleteIcon style={{ color: 'rgb(250, 47, 47)' }} /></div>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
+
         </div>
-        
       </div>
     </Fragment>
   )

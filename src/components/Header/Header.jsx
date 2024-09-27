@@ -687,7 +687,6 @@ const Header = () => {
 
       <div className="sub-header">
         <div className="sup-header-option">
-
           <div className='header-burger' onClick={toggleMobileMenu} >
             <ListIcon />
           </div>
@@ -752,7 +751,6 @@ const Header = () => {
               </div>
             )}
           </div>
-
         </div>
 
         <div className="sup-header-option">

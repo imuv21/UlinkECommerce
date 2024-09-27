@@ -26,6 +26,7 @@ import invoiceSlice from './invoiceSlice';
 import buyerListSlice from './buyerListSlice';
 import sellerListSlice from './sellerListSlice';
 import buyerFullSlice from './buyerFullSlice';
+import OrderAdminSlice from './OrderAdminSlice';
 
 
 
@@ -55,7 +56,8 @@ const rootReducer = combineReducers({
   invoices: invoiceSlice,
   buyerList: buyerListSlice,
   sellerList: sellerListSlice,
-  buyerFull: buyerFullSlice
+  buyerFull: buyerFullSlice,
+  orderAdmin: OrderAdminSlice,
 });
 
 export default rootReducer;

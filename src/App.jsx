@@ -91,7 +91,8 @@ const GoogleCallback = lazy(() => import('./pages/GoogleCallback'));
 //Admin
 const AdminLayout = lazy(() => import('./admin/adminDashboard/AdminLayout'));
 const AdminLogin = lazy(() => import('./admin/AdminLogin'));
-const AdminOrder = lazy(() => import('./admin/AdminOrder'));
+const AdminOrder = lazy(() => import('./admin/Orders/AdminOrder'));
+const Orders = lazy(() => import('./admin/Orders/Orders'));
 const AdLayout = lazy(() => import('./admin/adminDashboard/AdLayout'));
 const BuyerList = lazy(() => import('./admin/BuyerList'));
 const SellerList = lazy(() => import('./admin/SellerList'));
@@ -152,6 +153,7 @@ function App() {
             <Route element={<AdminProtector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Admin', 'Manager']} />}>
               <Route path="/admin-dashboard" element={<AdminLayout />}>
                 <Route path="admin-order" element={<AdLayout><AdminOrder /></AdLayout>} />
+                <Route path="all-orders/:id" element={<AdLayout><Orders/></AdLayout>} />
                 <Route path="buyer-list" element={<AdLayout><BuyerList /></AdLayout>} />
                 <Route path="seller-list" element={<AdLayout><SellerList /></AdLayout>} />
                 <Route path="warehouse" element={<AdLayout><AdminWarehouse /></AdLayout>} />
