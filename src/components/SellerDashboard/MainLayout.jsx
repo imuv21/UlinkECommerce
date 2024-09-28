@@ -4,9 +4,9 @@ import SideNav from '../SideNav/SideNav';
 
 const MainLayout = () => {
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', alignItems: 'start', justifyContent: 'start', width: '100%' }}>
       <SideNav />
-      <div style={{ width: '85%' }}>
+      <div style={{ width: '80%' }}>
         <Outlet />
       </div>
     </div>

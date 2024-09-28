@@ -115,121 +115,119 @@ function App() {
     <BrowserRouter>
       <Suspense fallback={<Loader />}>
         <Toaster />
-        <Layout>
-          <Routes>
+        <Routes>
 
-            {/* public */}
-            <Route path='/' element={<Home />} />
-            <Route path='/guidelines' element={<Guidelines />} />
-            <Route path='/product-details/:id' element={<ProductDetails />} />
-            <Route path='/search-results' element={<RoughFP />} />
-            <Route path='/category-pages/:category' element={<CategoryPages />} />
-            <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
-            <Route path='/privacy-policy' element={<PrivacyPolicy />} />
-            <Route path='/return-policy' element={<PolicyComponent />} />
-            <Route path='/become-a-seller' element={<BecomeASeller />} />
-            <Route path='/commission-structure' element={<CommissionStructure />} />
-            <Route path='/faq' element={<FAQPage />} />
-            <Route path="/rfqmarketplace" element={<Rfqmarketplace />} />
+          {/* public */}
+          <Route path='/' element={<Layout><Home /></Layout>} />
+          <Route path='/guidelines' element={<Layout><Guidelines /></Layout>} />
+          <Route path='/product-details/:id' element={<Layout><ProductDetails /></Layout>} />
+          <Route path='/search-results' element={<Layout><RoughFP /></Layout>} />
+          <Route path='/category-pages/:category' element={<Layout><CategoryPages /></Layout>} />
+          <Route path='/terms-and-conditions' element={<Layout><TermsAndConditions /></Layout>} />
+          <Route path='/privacy-policy' element={<Layout><PrivacyPolicy /></Layout>} />
+          <Route path='/return-policy' element={<Layout><PolicyComponent /></Layout>} />
+          <Route path='/become-a-seller' element={<Layout><BecomeASeller /></Layout>} />
+          <Route path='/commission-structure' element={<Layout><CommissionStructure /></Layout>} />
+          <Route path='/faq' element={<Layout><FAQPage /></Layout>} />
+          <Route path="/rfqmarketplace" element={<Layout><Rfqmarketplace /></Layout>} />
 
-            {/*Without authentication */}
-            <Route element={<Protector isAuthenticated={!isAuthenticated} redirect='/' />}>
-              <Route path='/login' element={<Login />} />
-              <Route path='/verify-email' element={<Otp />} />
-              <Route path='/verify-reset-password' element={<ResetPassVerify />} />
-              <Route path='/forgot-password' element={<ResetPassword />} />
-              <Route path='/signup' element={<Signup />} />
-              <Route path='/seller-form' element={<SellerForm />} />
-              <Route path='/seller-center' element={<NewBecomeASeller />} />
-              <Route path='/google-callback' element={<GoogleCallback />} />
+          {/*Without authentication */}
+          <Route element={<Protector isAuthenticated={!isAuthenticated} redirect='/' />}>
+            <Route path='/login' element={<Login />} />
+            <Route path='/verify-email' element={<Otp />} />
+            <Route path='/verify-reset-password' element={<ResetPassVerify />} />
+            <Route path='/forgot-password' element={<ResetPassword />} />
+            <Route path='/signup' element={<Signup />} />
+            <Route path='/seller-form' element={<SellerForm />} />
+            <Route path='/seller-center' element={<Layout><NewBecomeASeller /></Layout>} />
+            <Route path='/google-callback' element={<GoogleCallback />} />
+          </Route>
+
+          {/*Admin without authentication */}
+          <Route element={<AdminProtector isAuthenticated={!isAuthenticated} />}>
+            <Route path="/admin-login" element={<AdminLogin />} />
+          </Route>
+
+          {/* Both admin and manager */}
+          <Route element={<AdminProtector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Admin', 'Manager']} />}>
+            <Route path="/admin-dashboard" element={<AdminLayout />}>
+              <Route path="admin-order" element={<AdLayout><AdminOrder /></AdLayout>} />
+              <Route path="all-orders/:id" element={<AdLayout><Orders /></AdLayout>} />
+              <Route path="buyer-list" element={<AdLayout><BuyerList /></AdLayout>} />
+              <Route path="seller-list" element={<AdLayout><SellerList /></AdLayout>} />
+              <Route path="warehouse" element={<AdLayout><AdminWarehouse /></AdLayout>} />
+              <Route path='buyer-detail/:id' element={<AdLayout><BuyerDetail /></AdLayout>} />
             </Route>
+          </Route>
 
-            {/*Admin without authentication */}
-            <Route element={<AdminProtector isAuthenticated={!isAuthenticated} />}>
-              <Route path="/admin-login" element={<AdminLogin />} />
+          {/* Seller dashboard */}
+          <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Seller']} redirect='/seller-center' />}>
+            <Route path='/editsingle/:productId' element={<Layout><EditSingle /></Layout>} />
+            <Route path="/seller-order" element={<Layout><SellerOrder /></Layout>} />
+            <Route path="/all-products" element={<Layout><AllSellerProducts /></Layout>} />
+
+            <Route path="/seller-dashboard" element={<Layout><MainLayout /></Layout>}>
+              <Route path="add-single-product" element={<AddSingle />} />
+              <Route path="add-products-bulk" element={<AddMulti />} />
+              <Route path="upload-products-bulk" element={<UploadProducts />} />
+              <Route path="edit-products-bulk" element={<EditProducts />} />
+              <Route path="archive-products" element={<ArchiveUploads />} />
+              <Route path="product-list" element={<ProductList />} />
+              <Route path="media" element={<Media />} />
+              <Route path="seller-home" element={<SellerHome />} />
+              <Route path="access-management" element={<AccessManagement />} />
+              <Route path="permissions" element={<Permissions />} />
+              <Route path="seller-orders" element={<SellerOrder />} />
+              <Route path="shipping-preferences" element={<Shipping />} />
+              <Route path="payments" element={<Payments />} />
+              <Route path="add-a-bank-account" element={<PaymentDetails />} />
+              <Route path="edit-bank-account/:id" element={<EditPaymentDetails />} />
+              <Route path="seller-company-profile" element={<SellerComProfile />} />
             </Route>
+          </Route>
 
-            {/* Both admin and manager */}
-            <Route element={<AdminProtector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Admin', 'Manager']} />}>
-              <Route path="/admin-dashboard" element={<AdminLayout />}>
-                <Route path="admin-order" element={<AdLayout><AdminOrder /></AdLayout>} />
-                <Route path="all-orders/:id" element={<AdLayout><Orders/></AdLayout>} />
-                <Route path="buyer-list" element={<AdLayout><BuyerList /></AdLayout>} />
-                <Route path="seller-list" element={<AdLayout><SellerList /></AdLayout>} />
-                <Route path="warehouse" element={<AdLayout><AdminWarehouse /></AdLayout>} />
-                <Route path='buyer-detail/:id' element={<AdLayout><BuyerDetail/></AdLayout>} />
-              </Route>
-            </Route>
+          {/* Both seller and buyer */}
+          <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Seller', 'Buyer']} redirect='/' />}>
+            <Route path="/profile" element={<Layout><Profile /></Layout>} />
+            <Route path="/my-addresses" element={<Layout><SellerAddress /></Layout>} />
 
-            {/* Seller dashboard */}
-            <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Seller']} redirect='/seller-center' />}>
-              <Route path='/editsingle/:productId' element={<EditSingle />} />
-              <Route path="/seller-order" element={<SellerOrder />} />
-              <Route path="/all-products" element={<AllSellerProducts />} />
+            <Route path="/update-email" element={<UpdateEmail />} />
+            <Route path="/verify-update-email" element={<OtpEmail />} />
+            <Route path="/update-number" element={<UpdateNumber />} />
+            <Route path="/verify-update-number" element={<OtpNumber />} />
+            <Route path="/verify-update-password" element={<OtpPassword />} />
+            <Route path="/verify-update-profile" element={<OtpProfile />} />
+            <Route path="/update-password" element={<UpdatePassword />} />
+          </Route>
 
-              <Route path="/seller-dashboard" element={<MainLayout />}>
-                <Route path="add-single-product" element={<AddSingle />} />
-                <Route path="add-products-bulk" element={<AddMulti />} />
-                <Route path="upload-products-bulk" element={<UploadProducts />} />
-                <Route path="edit-products-bulk" element={<EditProducts />} />
-                <Route path="archive-products" element={<ArchiveUploads />} />
-                <Route path="product-list" element={<ProductList />} />
-                <Route path="media" element={<Media />} />
-                <Route path="seller-home" element={<SellerHome />} />
-                <Route path="access-management" element={<AccessManagement />} />
-                <Route path="permissions" element={<Permissions />} />
-                <Route path="seller-orders" element={<SellerOrder />} />
-                <Route path="shipping-preferences" element={<Shipping />} />
-                <Route path="payments" element={<Payments />} />
-                <Route path="add-a-bank-account" element={<PaymentDetails />} />
-                <Route path="edit-bank-account/:id" element={<EditPaymentDetails />} />
-                <Route path="seller-company-profile" element={<SellerComProfile />} />
-              </Route>
-            </Route>
+          {/* Buyer dashboard */}
+          <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Buyer']} redirect='/' />}>
+            <Route path='/buyer-dashboard' element={<Layout><BuyerDashboard /></Layout>} />
+            <Route path='/buyer-message' element={<Layout><BuyerMessage /></Layout>} />
+            <Route path='/rfq' element={<Layout><Rfq /></Layout>} />
+            <Route path='/myprofile' element={<Layout><MyProfile /></Layout>} />
+            <Route path='/access-management' element={<Layout><AcessManagement /></Layout>} />
+            <Route path='/payment' element={<Layout><Payment /></Layout>} />
+            <Route path='/roles' element={<Layout><Roles /></Layout>} />
+            <Route path='/createrfq' element={<Layout><CreateRfq /></Layout>} />
+            <Route path='/review-confirm' element={<Layout><ReviewConfirm /></Layout>} />
+            <Route path='/rfq-detail' element={<Layout><RfqDetail /></Layout>} />
+            <Route path='/view-detail' element={<Layout><ViewDetail /></Layout>} />
+            <Route path='/cart' element={<Layout><Cart /></Layout>} />
+            <Route path='/checkout' element={<Layout><Checkout /></Layout>} />
+            <Route path='/company-profile' element={<Layout><CompanyProfile /></Layout>} />
+            <Route path='/payment-success' element={<Layout><PaymentSuccess /></Layout>} />
+            <Route path='/payment-failed' element={<Layout><PaymentFailed /></Layout>} />
+            <Route path='/payment-response' element={<Layout><Response /></Layout>} />
+            <Route path='/orders' element={<Layout><Translator /></Layout>} />
+            <Route path='/order-details/:orderId' element={<Layout><OrderDetails /></Layout>} />
+            <Route path='/order-page' element={<Layout><OrderPage /></Layout>} />
+          </Route>
 
-            {/* Both seller and buyer */}
-            <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Seller', 'Buyer']} redirect='/' />}>
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/my-addresses" element={<SellerAddress />} />
+          {/* other */}
+          <Route path='*' element={<div className="flexcol wh" style={{ height: '100vh' }}>Path does not exist!</div>} />
 
-              <Route path="/update-email" element={<UpdateEmail />} />
-              <Route path="/verify-update-email" element={<OtpEmail />} />
-              <Route path="/update-number" element={<UpdateNumber />} />
-              <Route path="/verify-update-number" element={<OtpNumber />} />
-              <Route path="/verify-update-password" element={<OtpPassword />} />
-              <Route path="/verify-update-profile" element={<OtpProfile />} />
-              <Route path="/update-password" element={<UpdatePassword />} />
-            </Route>
-
-            {/* Buyer dashboard */}
-            <Route element={<Protector isAuthenticated={isAuthenticated} role={userRole} requiredRoles={['Buyer']} redirect='/' />}>
-              <Route path='/buyer-dashboard' element={<BuyerDashboard />} />
-              <Route path='/buyer-message' element={<BuyerMessage />} />
-              <Route path='/rfq' element={<Rfq />} />
-              <Route path='/myprofile' element={<MyProfile />} />
-              <Route path='/access-management' element={<AcessManagement />} />
-              <Route path='/payment' element={<Payment />} />
-              <Route path='/roles' element={<Roles />} />
-              <Route path='/createrfq' element={<CreateRfq />} />
-              <Route path='/review-confirm' element={<ReviewConfirm />} />
-              <Route path='/rfq-detail' element={<RfqDetail />} />
-              <Route path='/view-detail' element={<ViewDetail />} />
-              <Route path='/cart' element={<Cart />} />
-              <Route path='/checkout' element={<Checkout />} />
-              <Route path='/company-profile' element={<CompanyProfile />} />
-              <Route path='/payment-success' element={<PaymentSuccess />} />
-              <Route path='/payment-failed' element={<PaymentFailed />} />
-              <Route path='/payment-response' element={<Response />} />
-              <Route path='/orders' element={<Translator />} />
-              <Route path='/order-details/:orderId' element={<OrderDetails />} />
-              <Route path='/order-page' element={<OrderPage />} />
-            </Route>
-
-            {/* other */}
-            <Route path='*' element={<div className="flexcol wh" style={{ height: '100vh' }}>Path does not exist!</div>} />
-
-          </Routes>
-        </Layout>
+        </Routes>
       </Suspense>
     </BrowserRouter>
   )
