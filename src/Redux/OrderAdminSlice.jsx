@@ -52,7 +52,7 @@ export const allOrders = createAsyncThunk(
 
 export const allOrdersTwo = createAsyncThunk(
     'orderAdmin/allOrdersTwo',
-    async ({id}, { getState, rejectWithValue }) => {
+    async ({id, page, size}, { getState, rejectWithValue }) => {
         try {
             const { auth } = getState();
             const token = auth.token;
@@ -60,7 +60,7 @@ export const allOrdersTwo = createAsyncThunk(
                 Authorization: `Bearer ${token}`,
             };
             const response = await axios.get(
-                `${BASE_URL}/admin/get-user-orders?id=${id}`,
+                `${BASE_URL}/admin/get-user-orders?id=${id}&page=${page}&size=${size}`,
                 { headers }
             );
             return response.data;

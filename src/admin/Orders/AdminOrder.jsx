@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { allOrders } from '../../Redux/OrderAdminSlice';
 import { useNavigate } from 'react-router-dom';
@@ -186,7 +185,7 @@ const AdminOrder = () => {
             <p>Error: {error}</p>
           ) : (
             orders && Object.values(orders).map((order) => (
-              <div className="admin-order-title" key={uuidv4()}>
+              <div className="admin-order-title" key={order.id}>
                 <div className="order-list-box">
                   <div className="descrip">{order.id}</div>
                 </div>
@@ -215,13 +214,12 @@ const AdminOrder = () => {
                   <div className="descrip">{"Order Status"}</div>
                 </div>
                 <div className="order-list-box last-box-list">
-                  <div className='divshake1' onClick={() => seeOrders(order.id)}><VisibilityIcon style={{ color: 'rgb(233, 218, 0)' }} /></div>
+                  <div className='divshake1' onClick={() => {seeOrders(order.id)}}><VisibilityIcon style={{ color: 'rgb(233, 218, 0)' }} /></div>
                   <div className='divshake3'><DeleteIcon style={{ color: 'rgb(250, 47, 47)' }} /></div>
                 </div>
               </div>
             ))
           )}
-
         </div>
       </div>
     </Fragment>
