@@ -12,15 +12,13 @@ import { useDispatch, useSelector } from 'react-redux';
 const SellerList = () => {
 
   const dispatch = useDispatch()
-  const { data, status, error } = useSelector((state) => state.sellerList || { data: {} });
-
 
   const [searchItem, setSearchItem] = useState('')
   const [filteredSeller, setFilteredSeller] = useState([])
+  const { data = [], status, error, currentPage = 0, totalPages = 1 } = useSelector((state) => state.sellerList || {});
 
-  // Add here the filtered condition value
   useEffect(() => {
-    dispatch(getSellerDetail())
+    dispatch(getSellerDetail({ userType: 'SELLER', page: 0, pageSize: 10 }));
   }, [dispatch])
   // seller delete item
 
@@ -31,8 +29,8 @@ const SellerList = () => {
   }, [data])
   //  check the condition
   useEffect(() => {
-    if (data?.SELLER) {
-      const filtereds = data.SELLER.filter((user) =>
+    if (data && data.length) {
+      const filtereds = data.filter((user) =>
         user.firstname.toLowerCase().includes(searchItem.toLowerCase()) ||
         user.email.toLowerCase().includes(searchItem.toLowerCase()) ||
         user.country.toLowerCase().includes(searchItem.toLowerCase()) ||
@@ -46,6 +44,14 @@ const SellerList = () => {
     console.log(sellerId)
   }
 
+  //  pagination
+  const handlePreviousPage = () => {
+    dispatch(getSellerDetail({ userType: 'SELLER', page: currentPage - 1, pageSize: 10 }))
+  }
+  const handleNextPage = () => {
+    dispatch(getSellerDetail({ userType: 'SELLER', page: currentPage + 1, pageSize: 10 }))
+  }
+
   if (status === 'loading') {
     return <div>Loading...</div>
   }
@@ -53,7 +59,7 @@ const SellerList = () => {
     return <div>Error: {error}</div>
   }
 
-  const seller = filteredSeller.length > 0 ? filteredSeller : data?.SELLER || [];
+  const seller = filteredSeller.length > 0 ? filteredSeller : data;
 
   return (
     <Fragment>
@@ -101,12 +107,9 @@ const SellerList = () => {
           )}
           {/*  pagination */}
           <div className='user-pagination-item'>
-            <IoChevronBack className='user-pagination-icon' />
-            <p className='user-pagination-count'>1</p>
-            <p className='user-pagination-count' >2</p>
-            <p className='user-pagination-count' >3</p>
-            <p className='user-pagination-count'>4</p>
-            <IoChevronForwardSharp className='user-pagination-icon' />
+            <IoChevronBack className='user-pagination-icon' onClick={handlePreviousPage} disabled={currentPage === 0} />
+            <p className='user-pagination-count'>{currentPage + 1} of {totalPages}</p>
+            <IoChevronForwardSharp className='user-pagination-icon' onClick={handleNextPage} disabled={currentPage >= totalPages - 1} />
           </div>
         </div>
       </div>

@@ -2,15 +2,19 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
+
 //  create a async thunk
 export const getBuyerList = createAsyncThunk(
     'buyerList/getBuyerList'
-    , async (_, { getState, rejectWithValue}) => {
+    , async ({userType = 'BUYER', page = 0, pageSize = 10},{ getState, rejectWithValue}) => {
         try {
             const {auth: {token: authToken}}= getState();
             const response = await axios.get(`${BASE_URL}/admin/get-user`, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
+                },
+                params: {
+                    userType, page,  pageSize
                 }
             });
             console.log(response.data)
@@ -25,12 +29,16 @@ export const getBuyerList = createAsyncThunk(
 const buyerListSlice = createSlice({
     name: 'buyerList',
     initialState: {
-        data: null,
+        data: [],
         status: 'idle',
         message: '',
         error: null,
+        currentPage: 0,
+        totalItems: 0,
+        totalPages: 1,
+        pageSize: 10
     },
-    
+
     reducers: {},
     extraReducers: (builder) => {
         builder
@@ -42,14 +50,17 @@ const buyerListSlice = createSlice({
         })
         .addCase(getBuyerList.fulfilled, (state, action) => {
             state.status = 'succeeded';
-            console.log('Data fetched:', action.payload.data)
-            state.data = action.payload.data;
-            //  fetched data is successfully
-         
-            state.message = 'Buyer list is fetching successfullly';
+            const fetchedData = action.payload.data.data; 
+            state.data = fetchedData; 
+            state.currentPage = action.payload.data.currentPage; 
+            state.totalItems = action.payload.data.totalItems; 
+            state.totalPages = action.payload.data.totalPages; 
+            state.pageSize = action.payload.data.pageSize; 
+            state.message = 'Buyer list fetched successfully';
             state.error = null;
-            console.log('Buyer list fetched successfully')
+         
         })
+        
         .addCase(getBuyerList.rejected, (state, action) => {
             state.status ='failed' ;
             state.message = 'Buyer list fetched failed';

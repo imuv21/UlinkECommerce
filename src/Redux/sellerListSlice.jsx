@@ -5,13 +5,16 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const getSellerDetail = createAsyncThunk(
     'sellerList/getSellerDetail',
-    async (_, { getState, rejectWithValue }) => {
+    async ({userType = 'SELLER', page = 0, pageSize = 7}, { getState, rejectWithValue }) => {
         try {
             const { auth: { token: authToken } } = getState();
             const response = await axios.get(`${BASE_URL}/admin/get-user`, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
+                params: {
+                    userType, page, pageSize
+                }
             });
             console.log(response.data);
             return response.data;
@@ -25,10 +28,14 @@ export const getSellerDetail = createAsyncThunk(
 const sellerListSlice = createSlice({
     name: 'sellerList',
     initialState: {
-        data: null,
+        data: [],
         status: 'idle',
         message: '',
         error: null,
+        currentPage: 0,
+        totalItems: 0,
+        totalPages: 0,
+        pageSize: 10,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -41,11 +48,17 @@ const sellerListSlice = createSlice({
             })
             .addCase(getSellerDetail.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                console.log('Seller Data fetched:', action.payload.data);
-                state.data = action.payload.data;
-                state.message = 'Seller list fetched successfully';
+                const fetchedData = action.payload.data.data;
+                console.log('Data fetched:', fetchedData);
+                state.data = fetchedData;
+                state.currentPage = action.payload.data.currentPage;
+                state.totalItems = action.payload.data.totalItems;
+                state.totalPages = action.payload.data.totalPages;
+                state.pageSize = action.payload.data.pageSize;
+                state.message = 'Seller list fetched succesfully';
                 state.error = null;
-                console.log('Seller detail fetched successfully');
+                console.log('Seller list fetched successfully');
+
             })
             .addCase(getSellerDetail.rejected, (state, action) => {
                 state.status = 'failed';

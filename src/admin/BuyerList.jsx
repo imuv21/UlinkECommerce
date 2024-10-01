@@ -14,13 +14,15 @@ import { useNavigate } from 'react-router-dom';
 const BuyerList = () => {
     const [searchItem, setSearchItem] = useState('');
     const [filteredItem, setFilteredItem] = useState([]);
+   
+   
+    const { data = [], status, error, currentPage = 0, totalPages= 1 } = useSelector((state) => state.buyerList || {} );
 
-
-    const { data, status, error } = useSelector((state) => state.buyerList || { data: {} });
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(getBuyerList());
+        dispatch(getBuyerList({userType: 'BUYER', page: 0, pageSize: 10}));
     }, [dispatch]);
+
 
     useEffect(() => {
         if (data) {
@@ -30,8 +32,8 @@ const BuyerList = () => {
 
     //  filter search item for the category wise data
     useEffect(() => {
-        if (data?.BUYER) {
-            const filtered = data.BUYER.filter((user) =>
+        if (data && data.length) {
+            const filtered = data.filter((user) =>
                 user.firstname.toLowerCase().includes(searchItem.toLowerCase()) ||
                 user.email.toLowerCase().includes(searchItem.toLowerCase()) ||
                 user.id.toString().includes(searchItem) ||
@@ -52,6 +54,15 @@ const BuyerList = () => {
     const UserDelete = (userId) => {
         console.log(userId)
     }
+    //  next and prev button
+
+    const handlePreviousPage =()=> {
+        dispatch(getBuyerList({userType: 'BUYER', page: currentPage -1, pageSize: 10}))
+    }
+    const handleNextPage = () => {
+        dispatch(getBuyerList({userType: 'BUYER', page: currentPage + 1, pageSize: 10}))
+    }
+
     if (status === 'loading') {
         return <div>Loading...</div>;
     }
@@ -60,7 +71,9 @@ const BuyerList = () => {
         return <div>Error: {error}</div>;
     }
 
-    const buyers = filteredItem.length > 0 ? filteredItem : data?.BUYER || [];
+    
+
+    const buyers = filteredItem.length > 0 ? filteredItem : data;
     return (
         <div className='buyer-list-container'>
             <div className='admin-user-dashboard'>
@@ -98,12 +111,9 @@ const BuyerList = () => {
                 )}
                 {/*  pagination */}
                 <div className='user-pagination-item'>
-                    <IoChevronBack className='user-pagination-icon' />
-                    <p className='user-pagination-count'>1</p>
-                    <p className='user-pagination-count' >2</p>
-                    <p className='user-pagination-count' >3</p>
-                    <p className='user-pagination-count'>4</p>
-                    <IoChevronForwardSharp className='user-pagination-icon' />
+                    <IoChevronBack className='user-pagination-icon' onClick={handlePreviousPage}  disabled ={currentPage === 0}/>
+                    <p className='user-pagination-count'>{currentPage + 1} of {totalPages}</p>
+                    <IoChevronForwardSharp className='user-pagination-icon' onClick={handleNextPage} disabled = {currentPage >= totalPages -1} />
                 </div>
             </div>
         </div>
