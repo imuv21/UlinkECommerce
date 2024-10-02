@@ -12,7 +12,7 @@ export const fetchExchangeRates = createAsyncThunk(
 const currencySlice = createSlice({
   name: 'currency',
   initialState: {
-    selectedCurrency: '',
+    selectedCurrency: 'INR',
     exchangeRates: {},
   },
   reducers: {

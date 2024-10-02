@@ -1,26 +1,21 @@
 
 import './style.css';
+import axios from 'axios';
 import React, { useState, useEffect, Fragment, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import ListIcon from '@mui/icons-material/List';
-import SearchIcon from '@mui/icons-material/Search';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import Drawer from '@mui/material/Drawer';
-import axios from 'axios';
+import { toast } from 'react-hot-toast';
+
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchExchangeRates, setSelectedCurrency } from '../../Redux/currencySlice';
 import { fetchAddresses } from '../../Redux/addressSlice';
 import { setSelectedAddress } from '../../Redux/selectedAddress';
-import { fetchExchangeRates, setSelectedCurrency } from '../../Redux/currencySlice';
 import { logout } from '../../Redux/AuthReducer';
-import { urls } from '../Schemas/images';
+
 import { supOptions, subOptions, miniSubOptions } from '../Schemas/cate';
-import { toast } from 'react-hot-toast';
+import { urls } from '../Schemas/images';
 import currencySymbols from '../Schemas/currencySymbols';
 import countryFlags from '../Schemas/countryFlags';
 import countryNames from '../Schemas/countryNames';
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 import HomeIcon from '@mui/icons-material/Home';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
@@ -38,6 +33,13 @@ import DepartureBoardIcon from '@mui/icons-material/DepartureBoard';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ListIcon from '@mui/icons-material/List';
+import SearchIcon from '@mui/icons-material/Search';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Drawer from '@mui/material/Drawer';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Header = () => {
 
