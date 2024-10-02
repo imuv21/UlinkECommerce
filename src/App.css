@@ -359,14 +359,14 @@ button:focus {
 /* home styling */
 /* home popup  */
 
-.homepopup{
+.homepopup {
   position: fixed;
   bottom: 20px;
   right: 20px;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   z-index: 10;
   display: flex;
   align-items: center;
@@ -374,7 +374,8 @@ button:focus {
   flex-direction: column;
   gap: 10px;
 }
-.homepopup-btn{
+
+.homepopup-btn {
   background-color: red;
   color: white;
 }
@@ -4329,6 +4330,7 @@ button:focus {
   transition: opacity 0.3s, transform 0.3s;
   z-index: 2;
 }
+
 .admin-account {
   padding: 20px 12px 10px 12px;
   width: 230px;
@@ -4336,6 +4338,7 @@ button:focus {
   right: 20px;
   height: fit-content;
 }
+
 .admin-popupbox {
   display: flex;
   flex-direction: column;
@@ -4346,6 +4349,7 @@ button:focus {
   padding-bottom: 10px;
   border-bottom: 1px solid rgb(200, 200, 200);
 }
+
 .admin-username {
   font-size: 13px;
   font-weight: bolder;
@@ -4424,10 +4428,11 @@ button:focus {
 
 
 /* buyer and seller page  */
-.address-top{
+.address-top {
   padding-top: 20px;
 }
-.address-list-container{
+
+.address-list-container {
 
   width: 100%;
   height: auto;
@@ -4437,26 +4442,31 @@ button:focus {
   background-color: #f0f1f4;
   padding: 5px 10px 10px 10px;
 }
-.address-flex{
+
+.address-flex {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 10px;
   padding-top: 10px;
 }
-.add-result{
+
+.add-result {
   padding-top: 5px;
 }
-.rang{
+
+.rang {
   color: #007bff;
 }
-.address-flex-btn{
- border: none;
- outline: none;
- font-size: 12px;
- background-color: #007bff;
- color: #fff;
- font-weight: 600;
+
+.address-flex-btn {
+  border: none;
+  outline: none;
+  font-size: 12px;
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 600;
 }
+
 .buyer-list-container {
   background-color: var(--adminBG);
   background-image: linear-gradient(180deg, var(--adminBG) 0%, var(--adminpage) 10%);
@@ -4565,7 +4575,6 @@ button:focus {
 /* order page */
 .adminpage {
   width: 100%;
-  height: 100vh;
   padding: 50px 20px;
   gap: 50px;
   display: flex;
@@ -4648,8 +4657,6 @@ button:focus {
   margin-bottom: 20px;
 }
 
-
-
 .admin-order-title {
   width: 100%;
   display: flex;
@@ -4670,22 +4677,28 @@ button:focus {
   align-items: center;
   justify-content: start;
 }
-.second-last-box-title, .second-last-box-list {
+
+.second-last-box-title,
+.second-last-box-list {
   width: 150px;
 }
+
 .last-box-title {
   width: 150px;
 }
-.last-box-list{
+
+.last-box-list {
   width: 150px;
   gap: 10px;
   justify-content: start;
 }
+
 .order-list-box .MuiSvgIcon-root {
   width: 20px;
   height: 20px;
   filter: drop-shadow(1px 1px 1px rgb(81, 81, 81));
 }
+
 .last-box-list div {
   display: flex;
   align-items: center;
@@ -4695,16 +4708,89 @@ button:focus {
   cursor: pointer;
 }
 
-.divshake1{
+.divshake1 {
   background-color: rgb(255, 255, 159);
 }
-.divshake2{
+
+.divshake2 {
   background-color: rgb(164, 255, 159);
 }
-.divshake3{
+
+.divshake3 {
   background-color: rgb(255, 188, 159);
 }
 
+
+
+/* admin order details page  */
+.heading6{
+  font-size: 22px;
+  font-weight: 600;
+}
+.order-container {
+  width: 100%;
+  padding: 50px 20px;
+  gap: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: column;
+  background-color: var(--adminBG);
+  background-image: linear-gradient(180deg, var(--adminBG) 0%, var(--adminpage) 10%);
+}
+.order-container h2{
+  margin-bottom: 10px;
+}
+.order-container p {
+  font-size: 13px;
+  color: gray;
+}
+.order-container strong {
+  font-weight: 600;
+}
+
+.order-summary,
+.address-section,
+.order-items-section {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  padding: 20px;
+  background-color: var(--CodeThree);
+  border-radius: var(--br2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-items-section .order-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  gap: 20px;
+  background-color: #f5f5f5;
+  border-radius: var(--br2);
+  border: 1px solid rgb(226, 226, 226);
+}
+
+.order-item .item-details{
+  width: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.order-item .item-image {
+  width: 150px;
+  height: auto;
+  border-radius: var(--br2);
+  object-fit: cover;
+}
 
 
 

@@ -1,20 +1,23 @@
-import React, { Fragment, useState, useEffect, useRef, useCallback } from 'react';
+import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { allOrdersTwo } from '../../Redux/OrderAdminSlice';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Orders = () => {
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { id } = useParams();
     const { allOrders, allLoading, allError, pagination, sort } = useSelector((state) => state.orderAdmin);
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(10);
+
+    const seeOrderDetails = (orderId) => {
+        navigate(`/admin-dashboard/admin-order-details/${orderId}`);
+    }
 
     const formattedDateAndTime = (dateAndTimeString) => {
         const dateObject = new Date(dateAndTimeString);
@@ -88,7 +91,6 @@ const Orders = () => {
                     </div>
 
                     <p className="textBig fontGray wh">Showing {pagination.numberOfElements} of {pagination.totalItems} orders</p>
-
                     <div className="admin-order-title order-title-padding">
                         <div className="order-title-box second-last-box-title">
                             <div className="descrip2">Order ID</div>
@@ -119,7 +121,7 @@ const Orders = () => {
                     {allLoading ? (
                         <p>Loading...</p>
                     ) : allError ? (
-                        <p>Error: {`Unable to fetch data`}</p>
+                        <p>Error fetching orders</p>
                     ) : (
                         allOrders && Object.values(allOrders).map((order) => (
                             <div className="admin-order-title" key={order.orderId}>
@@ -145,8 +147,7 @@ const Orders = () => {
                                     <div className="descrip">{order?.orderItems?.length}</div>
                                 </div>
                                 <div className="order-list-box last-box-list">
-                                    <div className='divshake1'><VisibilityIcon style={{ color: 'rgb(233, 218, 0)' }} /></div>
-                                    {/* <div className='divshake2'><BorderColorIcon style={{ color: 'rgb(12, 233, 0)' }} /></div> */}
+                                    <div className='divshake1' onClick={() => {seeOrderDetails(order.orderId)}}><VisibilityIcon style={{ color: 'rgb(233, 218, 0)' }} /></div>
                                     <div className='divshake3'><DeleteIcon style={{ color: 'rgb(250, 47, 47)' }} /></div>
                                 </div>
                             </div>
@@ -154,7 +155,7 @@ const Orders = () => {
                     )}
 
                     {(allOrders && allOrders.length > 0) &&
-                        (<div className="pagination" style={{marginTop: '20px'}}>
+                        (<div className="pagination" style={{ marginTop: '20px' }}>
 
                             <div className="flex wh" style={{ gap: '10px' }}>
                                 <button className='pagination-btn' onClick={() => handlePageChange(0)} disabled={pagination.isFirst}>
@@ -188,7 +189,6 @@ const Orders = () => {
             </div>
         </Fragment>
     )
-
 };
 
 export default Orders;

@@ -162,10 +162,10 @@ const OrderDetails = () => {
 
                     <div className="orderDetailSub">
                         <div className="heading2">Buyer Name : {buyer}</div>
-                        <div className="heading2">Subtotal : {Number(orderDetails.totalSellPrice).toFixed(2)}</div>
-                        <div className="heading2">Total Tax : {calculateTotlTax()}</div>
-                        <div className='heading2'>Total Price : {orderDetails.currencySymbol} {Number(orderDetails.totalPrice).toFixed(2)} {orderDetails.currency}</div>
                         <div className='heading2'>Time & Date : {formattedDateAndTime(orderDetails.orderDate) || 'N/A'}</div>
+                        <div className="heading2">Subtotal : {orderDetails.currencySymbol} {Number(orderDetails.totalSellPrice).toFixed(2)} {orderDetails.currency}</div>
+                        <div className="heading2">Total Tax : {orderDetails.currencySymbol} {calculateTotlTax()} {orderDetails.currency}</div>
+                        <div className='heading2'>Total Price : {orderDetails.currencySymbol} {Number(orderDetails.totalPrice).toFixed(2)} {orderDetails.currency}</div>
                         <div className="descrip">Thank you for buying from Ulinkit.com</div>
                     </div>
 

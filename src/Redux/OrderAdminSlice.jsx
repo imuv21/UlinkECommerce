@@ -4,7 +4,6 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 
 const initialState = {
-
     loading: false,
     orders: [],
     error: null,
@@ -27,7 +26,11 @@ const initialState = {
         sorted: false,
         unsorted: true,
         empty: true,
-    }
+    },
+
+    orderDetailsData: null,
+    detaiLoading: false,
+    detailError: null,
 };
 
 export const allOrders = createAsyncThunk(
@@ -52,7 +55,7 @@ export const allOrders = createAsyncThunk(
 
 export const allOrdersTwo = createAsyncThunk(
     'orderAdmin/allOrdersTwo',
-    async ({id, page, size}, { getState, rejectWithValue }) => {
+    async ({ id, page, size }, { getState, rejectWithValue }) => {
         try {
             const { auth } = getState();
             const token = auth.token;
@@ -61,6 +64,26 @@ export const allOrdersTwo = createAsyncThunk(
             };
             const response = await axios.get(
                 `${BASE_URL}/admin/get-user-orders?id=${id}&page=${page}&size=${size}`,
+                { headers }
+            );
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response?.data || 'Error occurred');
+        }
+    }
+);
+
+export const orderDetailSlice = createAsyncThunk(
+    'orderAdmin/orderDetailSlice',
+    async (orderId, { getState, rejectWithValue }) => {
+        try {
+            const { auth } = getState();
+            const token = auth.token;
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+            const response = await axios.get(
+                `${BASE_URL}/admin/get-order-details?orderId=${orderId}`,
                 { headers }
             );
             return response.data;
@@ -83,13 +106,12 @@ const OrderAdminSlice = createSlice({
             .addCase(allOrders.fulfilled, (state, action) => {
                 state.loading = false;
                 state.error = null;
-                state.orders = action.payload.data.BUYER; 
+                state.orders = action.payload.data.BUYER;
             })
             .addCase(allOrders.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             })
-
             .addCase(allOrdersTwo.pending, (state) => {
                 state.allLoading = true;
                 state.allError = null;
@@ -115,6 +137,19 @@ const OrderAdminSlice = createSlice({
             .addCase(allOrdersTwo.rejected, (state, action) => {
                 state.allLoading = false;
                 state.allError = action.payload;
+            })
+            .addCase(orderDetailSlice.pending, (state) => {
+                state.detaiLoading = true;
+                state.detailError = null;
+            })
+            .addCase(orderDetailSlice.fulfilled, (state, action) => {
+                state.detaiLoading = false;
+                state.detailError = null;
+                state.orderDetailsData = action.payload.data;
+            })
+            .addCase(orderDetailSlice.rejected, (state, action) => {
+                state.detaiLoading = false;
+                state.detailError = action.payload;
             });
     },
 });

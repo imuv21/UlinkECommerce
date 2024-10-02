@@ -8,7 +8,6 @@ import Loader from './components/Loader/Loader';
 import Layout from './components/Layout';
 
 
-
 //buyer dashboard
 const BuyerDashboard = lazy(() => import('./pages/BuyerDashboard/BuyerDashboard'));
 const BuyerMessage = lazy(() => import('./pages/BuyerDashboard/BuyerMassage/BuyerMessage'));
@@ -88,6 +87,7 @@ const PolicyComponent = lazy(() => import('./pages/PolicyComponent'));
 const FAQPage = lazy(() => import('./pages/FAQ/FAQPage'));
 const GoogleCallback = lazy(() => import('./pages/GoogleCallback'));
 
+
 //Admin
 const AdminLayout = lazy(() => import('./admin/adminDashboard/AdminLayout'));
 const AdminLogin = lazy(() => import('./admin/AdminLogin'));
@@ -98,6 +98,8 @@ const BuyerList = lazy(() => import('./admin/BuyerList'));
 const SellerList = lazy(() => import('./admin/SellerList'));
 const AdminWarehouse = lazy(() => import('./admin/AdminWarehouse'));
 const BuyerDetail = lazy(() => import('./admin/BuyerDetail'));
+const AdminOrderDetails = lazy(() => import('./admin/Orders/AdminOrderDetails'));
+
 
 //Other
 const Protector = lazy(() => import('./components/Protector'));
@@ -153,6 +155,7 @@ function App() {
             <Route path="/admin-dashboard" element={<AdminLayout />}>
               <Route path="admin-order" element={<AdLayout><AdminOrder /></AdLayout>} />
               <Route path="all-orders/:id" element={<AdLayout><Orders /></AdLayout>} />
+              <Route path="admin-order-details/:orderId" element={<AdLayout><AdminOrderDetails /></AdLayout>} />
               <Route path="buyer-list" element={<AdLayout><BuyerList /></AdLayout>} />
               <Route path="seller-list" element={<AdLayout><SellerList /></AdLayout>} />
               <Route path="warehouse" element={<AdLayout><AdminWarehouse /></AdLayout>} />
