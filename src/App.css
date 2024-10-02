@@ -358,25 +358,31 @@ button:focus {
 
 /* home styling */
 /* home popup  */
-
 .homepopup {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: white;
-  padding: 20px;
+  bottom: 5px;
+  right: 10px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 10px;
 }
-
-.homepopup-btn {
-  background-color: red;
+.homepopup img{
+  width: 400px;
+  height: auto;
+  border-radius: 10px;
+}
+.popupoverlay{
+  position: relative;
+}
+.homepopup-btn{
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+}
+.homepopup-btn .MuiSvgIcon-root {
+  width: 20px;
+  height: 20px;
   color: white;
 }
 
