@@ -2121,14 +2121,12 @@ button:focus {
 
 /* infinite slider styling */
 .slider-inf {
-  height: 200px;
   margin: auto;
   position: relative;
   width: 100%;
   display: grid;
   place-items: center;
   overflow: hidden;
-  margin-bottom: 0px;
 }
 
 .slide_track-inf {

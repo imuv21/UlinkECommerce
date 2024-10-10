@@ -6,9 +6,9 @@ const urls = [
 ];
 
 const slider = [
-    "https://res.cloudinary.com/dey1tujp8/image/upload/v1718610472/newtruckbanner1_wnf47s.png",
-    "https://res.cloudinary.com/dey1tujp8/image/upload/v1716460602/Ulinkit/1_zpybcf.png",
-    "https://res.cloudinary.com/dey1tujp8/image/upload/v1716460602/Ulinkit/6_nurht6.jpg",
+    "https://res.cloudinary.com/dey1tujp8/image/upload/v1728540281/Ulinkit/Orange_Modern_Electronic_Store_Twitter_Header_ng9lg7.png",
+    "https://res.cloudinary.com/dey1tujp8/image/upload/v1728540281/Ulinkit/Kitchen_Ware_gaebxv.png",
+    "https://res.cloudinary.com/dey1tujp8/image/upload/v1728540281/Ulinkit/Grocery_Delivery_Facebook_Ad_1440_x_360_px_joro0n.png",
     "https://res.cloudinary.com/dey1tujp8/image/upload/v1716460602/Ulinkit/2_kn7cek.png",
     "https://res.cloudinary.com/dey1tujp8/image/upload/v1716460604/Ulinkit/ACCESSIORIES_FASHION_qok7ov.png",
     "https://res.cloudinary.com/dey1tujp8/image/upload/v1716460605/Ulinkit/banner_2_grocery_zgiorl.png",
