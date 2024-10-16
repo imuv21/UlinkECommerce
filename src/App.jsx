@@ -86,6 +86,7 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const PolicyComponent = lazy(() => import('./pages/PolicyComponent'));
 const FAQPage = lazy(() => import('./pages/FAQ/FAQPage'));
 const GoogleCallback = lazy(() => import('./pages/GoogleCallback'));
+const ContactUs = lazy(() => import('./pages/ContactUs'));
 
 
 //Admin
@@ -132,6 +133,7 @@ function App() {
           <Route path='/commission-structure' element={<Layout><CommissionStructure /></Layout>} />
           <Route path='/faq' element={<Layout><FAQPage /></Layout>} />
           <Route path="/rfqmarketplace" element={<Layout><Rfqmarketplace /></Layout>} />
+          <Route path='/contact-us' element={<Layout><ContactUs /></Layout>} />
 
           {/*Without authentication */}
           <Route element={<Protector isAuthenticated={!isAuthenticated} redirect='/' />}>

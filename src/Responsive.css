@@ -717,6 +717,10 @@
 
 @media screen and (max-width: 440px) {
 
+    .contactusgrid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+
     /* cart page */
     .pminput {
         width: 20px;

@@ -57,62 +57,57 @@ const Footer = () => {
 
 
   return (
-
     <Fragment>
       <div className="supContFooter">
         <article className="footer-section">
           <section className="footer">
-            <h1 className="footer-title">By On Ulinkit</h1>
+            <h1 className="footer-title">Buy On Ulinkit</h1>
             <div className="item-list">
-              <Link className="itemLink">Source of Ulinkit</Link>
-              <Link className="itemLink">All Category</Link>
-              <Link className="itemLink">All Brands</Link>
-              <Link className="itemLink">Product</Link>
+              <Link to="/" className="itemLink">Source on Ulinkit</Link>
+              <Link to="/" className="itemLink">Enterprise</Link>
+              <Link to="/" className="itemLink">All Categories</Link>
+              <Link to="/rfqmarketplace" className="itemLink">RFQ Marketplace</Link>
             </div>
           </section>
           <section className="footer">
             <h1 className="footer-title">Sell on Ulinkit</h1>
             <div className="item-list">
-              <Link className="itemLink">Start selling</Link>
-              <Link className="itemLink">Webinar & EBooks</Link>
-              <Link className="itemLink">Ulink Logistics</Link>
-              <Link className="itemLink">Product listing policy</Link>
+              <Link to="/" className="itemLink">Start Selling</Link>
+              <Link to="/" className="itemLink">Webinar & E-Books</Link>
+              <Link to="/" className="itemLink">Ulink Logistics</Link>
+              <Link to="/" className="itemLink">Product Listing Policy</Link>
             </div>
           </section>
           <section className="footer">
             <h1 className="footer-title">About Ulinkit</h1>
             <div className="item-list">
-              <Link className="itemLink">About us</Link>
-              <Link className="itemLink">Press</Link>
-              <Link className="itemLink">Careers</Link>
-              <Link className="itemLink">Blog</Link>
+              <Link to="/" className="itemLink">About Us</Link>
+              <Link to="/" className="itemLink">Press</Link>
+              <Link to="/" className="itemLink">Careers</Link>
+              <Link to="/" className="itemLink">Blog</Link>
             </div>
           </section>
           <section className="footer">
             <h1 className="footer-title">Help & Contact</h1>
             <div className="item-list">
-              <Link className="itemLink">Help</Link>
-              <Link className="itemLink">Contact us</Link>
-              <Link to="/faq" className="itemLink">FAQs</Link>
-              <Link to="/terms-and-conditions" className="itemLink">Terms and Conditions</Link>
+              <Link to="/faq" className="itemLink">Help</Link>
+              <Link to="/contact-us" className="itemLink">Contact Us</Link>
+              <Link to="/commission-structure" className="itemLink">Commission Structure</Link>
+              <Link to="/guidelines" className="itemLink">Guidelines</Link>
             </div>
           </section>
           <section className="footer">
             <h1 className="footer-title">Ulink Services</h1>
             <div className="item-list">
-              <Link className="itemLink">Buy-back Program</Link>
-              <Link className="itemLink">Terms and Conditions</Link>
-              <Link className="itemLink">Return and refund policy</Link>
-              <Link className="itemLink">Payment Method</Link>
+              <Link to="/" className="itemLink">Payment Methods</Link>
+              <Link to="/" className="itemLink">Buy Back Program</Link>
             </div>
           </section>
           <section className="footer">
             <h1 className="footer-title">Procurement</h1>
             <div className="item-list">
-              <Link className="itemLink">Enterprises</Link>
-              <Link className="itemLink">Terms and Conditions</Link>
-              <Link className="itemLink">Return and refund policy</Link>
-              <Link className="itemLink">Payment Method</Link>
+              <Link to="/" className="itemLink">Payment Methods</Link>
+              <Link to="/" className="itemLink">Buy Back Program</Link>
             </div>
           </section>
         </article>
