@@ -104,6 +104,16 @@
     .filteredProducts {
         grid-template-columns: repeat(3, 1fr);
     }
+
+    .sourceBanner {
+        flex-direction: column-reverse;
+        padding: 20px 100px;
+        gap: 20px;
+    }
+
+    .sourceImg img {
+        margin-top: 0px;
+    }
 }
 
 @media screen and (max-width: 900px) {
@@ -123,6 +133,35 @@
 }
 
 @media screen and (max-width: 780px) {
+    .valueimages {
+        gap: 5px;
+    }
+
+    .sourceBanner {
+        flex-direction: column-reverse;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .sourcehow {
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .sourcelook {
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .valuediv {
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .bankdiv {
+        gap: 20px;
+        padding: 20px;
+    }
 
     /* cart page */
     .cart_cont {
@@ -718,6 +757,10 @@
 @media screen and (max-width: 440px) {
 
     .contactusgrid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+
+    .valuegrid {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
 

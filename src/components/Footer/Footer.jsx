@@ -63,9 +63,9 @@ const Footer = () => {
           <section className="footer">
             <h1 className="footer-title">Buy On Ulinkit</h1>
             <div className="item-list">
-              <Link to="/" className="itemLink">Source on Ulinkit</Link>
-              <Link to="/" className="itemLink">Enterprise</Link>
-              <Link to="/" className="itemLink">All Categories</Link>
+              <Link to="/source-on-ulinkit" className="itemLink">Source on Ulinkit</Link>
+              <Link to="/enterprise" className="itemLink">Enterprise</Link>
+              <Link to="/all-categories" className="itemLink">All Categories</Link>
               <Link to="/rfqmarketplace" className="itemLink">RFQ Marketplace</Link>
             </div>
           </section>
@@ -99,7 +99,7 @@ const Footer = () => {
           <section className="footer">
             <h1 className="footer-title">Ulink Services</h1>
             <div className="item-list">
-              <Link to="/" className="itemLink">Payment Methods</Link>
+              <Link to="/payment-method" className="itemLink">Payment Methods</Link>
               <Link to="/" className="itemLink">Buy Back Program</Link>
             </div>
           </section>

@@ -4833,3 +4833,230 @@ button:focus {
   background: linear-gradient(145deg, #e6e6e6, #ffffff);
   box-shadow: 7px 7px 14px #dbdbdb, -7px -7px 14px #ffffff;
 }
+
+/* source on ulinkit */
+.sourceBanner {
+  width: 100%;
+  padding: 10px 100px;
+  gap: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sourceText {
+  width: 100%;
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.sourceTextTwo {
+  width: 100%;
+  gap: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.sourceTextBox {
+  width: 100%;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.sourceImg {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sourceImg img {
+  width: 100%;
+  max-width: 500px;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+  margin-top: 30px;
+  color: #ededed;
+}
+
+.sourcehow {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px 100px 50px 100px;
+  gap: 30px;
+}
+
+.sourcegrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 20px;
+}
+
+.sourcegriditem {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  gap: 10px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #e6e6e6, #ffffff);
+  box-shadow: 7px 7px 14px #dbdbdb, -7px -7px 14px #ffffff;
+}
+
+.sourceNum {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--CodeOne);
+  color: white;
+  font-size: 40px;
+  font-weight: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sourcelook {
+  background: #f0f0f0;
+  padding: 40px 100px;
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.lookgrid{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 20px;
+}
+.lookitem {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  gap: 10px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #e6e6e6, #ffffff);
+  box-shadow: 7px 7px 14px #dbdbdb, -7px -7px 14px #ffffff;
+}
+.looknum {
+  color: var(--CodeOne);
+  font-size: 40px;
+  font-weight: 1000;
+}
+
+.valueAdded {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.valueAdded img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+.valuediv {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px 100px;
+}
+.valueimages {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.valueimages img{
+  width: 100%;
+  height: auto;
+}
+.valuegrid{
+  width: 100%;
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+.valuegriditem {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 100%;
+  padding: 20px;
+  gap: 10px;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #e6e6e6, #ffffff);
+  box-shadow: 7px 7px 14px #dbdbdb, -7px -7px 14px #ffffff;
+}
+.valueicon .MuiSvgIcon-root{
+  width: 30px;
+  height: 30px;
+  color: #003953;
+}
+.vlauetext {
+  width: 100%;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+.bankdiv{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px 100px;
+}
+.bankgrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+.bankgriditem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 10px;
+}
+.bankgriditem img{
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+}

@@ -8,6 +8,7 @@ import Loader from './components/Loader/Loader';
 import Layout from './components/Layout';
 
 
+
 //buyer dashboard
 const BuyerDashboard = lazy(() => import('./pages/BuyerDashboard/BuyerDashboard'));
 const BuyerMessage = lazy(() => import('./pages/BuyerDashboard/BuyerMassage/BuyerMessage'));
@@ -87,6 +88,10 @@ const PolicyComponent = lazy(() => import('./pages/PolicyComponent'));
 const FAQPage = lazy(() => import('./pages/FAQ/FAQPage'));
 const GoogleCallback = lazy(() => import('./pages/GoogleCallback'));
 const ContactUs = lazy(() => import('./pages/ContactUs'));
+const Source = lazy(() => import('./pages/Source'));
+const PaymentMethod = lazy(() => import('./pages/PaymentMethod'));
+const Enterprise = lazy(() => import('./pages/Enterprise'));
+const AllCat = lazy(() => import('./pages/AllCat'));
 
 
 //Admin
@@ -134,6 +139,11 @@ function App() {
           <Route path='/faq' element={<Layout><FAQPage /></Layout>} />
           <Route path="/rfqmarketplace" element={<Layout><Rfqmarketplace /></Layout>} />
           <Route path='/contact-us' element={<Layout><ContactUs /></Layout>} />
+          <Route path='/source-on-ulinkit' element={<Layout><Source /></Layout>} />
+          <Route path='/payment-method' element={<Layout><PaymentMethod /></Layout>} />
+          <Route path='/enterprise' element={<Layout><Enterprise /></Layout>} />
+          <Route path='/all-categories' element={<Layout><AllCat /></Layout>} />
+
 
           {/*Without authentication */}
           <Route element={<Protector isAuthenticated={!isAuthenticated} redirect='/' />}>
