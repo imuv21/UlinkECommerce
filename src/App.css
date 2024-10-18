@@ -4939,12 +4939,14 @@ button:focus {
   align-items: center;
   justify-content: center;
 }
-.lookgrid{
+
+.lookgrid {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   gap: 20px;
 }
+
 .lookitem {
   display: flex;
   flex-direction: column;
@@ -4957,6 +4959,7 @@ button:focus {
   background: linear-gradient(145deg, #e6e6e6, #ffffff);
   box-shadow: 7px 7px 14px #dbdbdb, -7px -7px 14px #ffffff;
 }
+
 .looknum {
   color: var(--CodeOne);
   font-size: 40px;
@@ -4971,11 +4974,13 @@ button:focus {
   align-items: center;
   justify-content: center;
 }
+
 .valueAdded img {
   width: 100%;
   height: 400px;
   object-fit: cover;
 }
+
 .valuediv {
   width: 100%;
   display: flex;
@@ -4985,6 +4990,7 @@ button:focus {
   gap: 30px;
   padding: 40px 100px;
 }
+
 .valueimages {
   width: 100%;
   display: flex;
@@ -4993,17 +4999,20 @@ button:focus {
   justify-content: center;
   gap: 20px;
 }
-.valueimages img{
+
+.valueimages img {
   width: 100%;
   height: auto;
 }
-.valuegrid{
+
+.valuegrid {
   width: 100%;
   max-width: 1000px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 20px;
 }
+
 .valuegriditem {
   display: flex;
   flex-direction: column;
@@ -5016,11 +5025,13 @@ button:focus {
   background: linear-gradient(145deg, #e6e6e6, #ffffff);
   box-shadow: 7px 7px 14px #dbdbdb, -7px -7px 14px #ffffff;
 }
-.valueicon .MuiSvgIcon-root{
+
+.valueicon .MuiSvgIcon-root {
   width: 30px;
   height: 30px;
   color: #003953;
 }
+
 .vlauetext {
   width: 100%;
   gap: 10px;
@@ -5029,7 +5040,8 @@ button:focus {
   align-items: start;
   justify-content: center;
 }
-.bankdiv{
+
+.bankdiv {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -5038,12 +5050,14 @@ button:focus {
   gap: 30px;
   padding: 40px 100px;
 }
+
 .bankgrid {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
 }
+
 .bankgriditem {
   display: flex;
   flex-direction: column;
@@ -5054,9 +5068,159 @@ button:focus {
   gap: 10px;
   border-radius: 10px;
 }
-.bankgriditem img{
+
+.bankgriditem img {
   width: 100%;
   height: auto;
   aspect-ratio: 4/3;
   object-fit: contain;
+}
+
+
+/* all cat */
+.allcatcont {
+  width: 100%;
+  padding: 40px 100px;
+  gap: 10px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+
+.allcat {
+  width: 100%;
+  min-width: 70px;
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.suballcatcont {
+  width: 100%;
+  min-width: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.catcoldiv {
+  width: 100%;
+  gap: 20px;
+  display: flex;
+  align-content: start;
+  justify-content: start;
+  flex-direction: column;
+}
+.catcoldiv .heading3 {
+  margin-top: 5px;
+}
+
+.catcollist {
+  width: 100%;
+  gap: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.indilist {
+  width: 100%;
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  cursor: pointer;
+}
+
+.indilist .MuiSvgIcon-root {
+  width: 20px;
+  height: 20px;
+  color: #003953;
+  transition: var(--trans);
+}
+
+.indilist .heading2 {
+  color: #003953;
+  transition: var(--trans);
+}
+
+.nowActive .heading2 {
+  color: var(--CodeOne) !important;
+}
+.nowActive .MuiSvgIcon-root {
+  color: var(--CodeOne) !important;
+}
+
+/* all cat accordion panel  */
+.allcat-accordion {
+  width: 100%;
+}
+
+.allcat-accordion-header {
+  background-color: #f7f7f7;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  transition: var(--trans);
+}
+.allcat-accordion-header span .MuiSvgIcon-root {
+  color: #003953;
+}
+.allcat-accordion-header .heading2 {
+  font-size: 14px;
+  color: #003953;
+}
+
+.allcat-accordion-header:hover {
+  background-color: #e8e8e8;
+}
+
+.allcat-accordion-content {
+  overflow: hidden;
+  max-height: 0px;
+  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+}
+
+.allcat-accordion-content.open {
+  max-height: 500px;
+  padding: 10px;
+}
+
+.allcat-accordion-flex {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: start;
+  gap: 5px;
+  padding: 5px 0px;
+}
+
+.allcat-accordion-flex-item {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  width: 150px;
+  padding: 5px;
+  gap: 10px;
+  border: 1px solid #bdbdbd;
+  cursor: pointer;
+}
+.allcat-accordion-flex-item .descrip2 {
+  font-size: 12px;
+  transition: var(--trans);
+}
+.allcat-accordion-flex-item .descrip2:hover {
+  color: rgb(0, 123, 255);
+}
+.allcat-accordion-flex-item img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
 }

@@ -25,7 +25,7 @@ const miniSubOptions = {
   ComputersAndAccessories: ["ComputerAndLaptopComponents", "ComputerAccessories",  "KeyboardsAndKepads",  "Monitors", "Mouse", "NetworkAndSecurity", "PosSystems", "Softwares", 'StorageDevice'],
   ElectricalAndElectronicAccessories: ["Adapters", "CablesAndConnectors"],
   GamingAndConsoles: ["GamingAccessories", "GamingConsoles", "GamingTitles"],
-  //problem 1
+
   MobilePhonesAndTablets: ["ChargersAndBatteries", "MobilePhoneAndTabletAccessories", "MobilePhones"],
   MusicalInstruments: ["KeyboardInstruments", "PercussionInstruments", 'StringedInstruments', "WindInstruments"],
   ProjectorsAndAccessories: ["ProjectorAccessories", "Projectors"],
@@ -79,12 +79,12 @@ const miniSubOptions = {
   KitchenAndDining: ["Bakeware", "CoffeeAndTeaTools", "Cookware", "Dinnerware", "Drinkware", "KitchenKnivesAndAccessories", "KitchenToolsAndUtensils", "Tableware"],
 
   Printers3D: ["Printers3D"],
-  //problem 2
+  
   AgriculturalMachineryEquipment: ["AgriculturalMachineryParts", "AgriculturalSprayer", "AnimalAndPoultryHusbandrEquipment", "AquacultureMachineAerators", "Balers", "BiomassBriquetteMachines", "BiomassDryers", "CompostMakingMachines", "Cultivators", "EggIncubators", "FarmIrrigationSystem", "FarmTrailer", "FeedProcessingMachines", "FertilizerSpreaders", "ForestryMachinery", "Harvesters", "IndoorFarmingAndHydroponicsMachines", "IrrigationEquipment", "MilkingMachines", "OilPressers", "OtherAgriculturalMachineryAndEquipments", "OtherFarmMachines", "SeedProcessingMachines", "Seeders", "Shellers", "Silos", "SlaughteringEquipment", "TowableBachoe", "Tractors"],
   ApparelAndTextileMachinery: ["ApparelAndTextileMachineryParts", "ApparelMachinery", "CapMakingMachines", "HomeTextileProduct", "IroningAndWashingEquipments", "LeatherProductionMachinery", "ShoeMakingMachines", "TextileMachinery"],
   ChemicalAndPharmaceuticalMachinery: ["ChemicalMachineryAndEquipment", "CosmeticsProductionEquipment", "Crystalizer", "PharmaceuticalMachinery"],
   CleaningAndFiltrationMachinery: ["AirCleaningEquipment", "CleaningEquipmentParts", "CornerCleaningMachines", "DishwashingEquipments", "FiltrationEquipment"],
-   //problem 3
+
   EngineeringAndConstructionMachinery: ["AbrasiveMachines", "BuildingMaterialMachinery", "ConcreteMachinery", "ConstructionLifter", "ConstructionMachinery", "Cranes", "CuttingMachines", "DrillingMachines", "EarthMovingMachines", "ElectronicsProductionsMachinery", "GaugesIndicatorsAndMeter", "MortarSprayMachines", "MunicipalMachinery", "OtherConstructionMachinery", "PileDriver", "PipeJackingMachines", "PolishingMachines", "Rammers", "RenderingMachines", "RoadMachinery", "ScientificLabEquipment"],
   FoodAndBeverageMachinery: [ "BakingEquipment", "BeanProductProcessingMachinery", "BeverageProcessingMachines", "CoffeeMachine", "DairyProcessingMachine",  "FoodProcessingMachines", "FoodSterlizer", "FruitAndVegetableProcessingMachines", "Fryer", "GrainProcessingMachines", "GrainProductMakingMachines", "HoneyProcessingMachines", "KitchenMachines", "MeatProcessingMachine", "MeatProductionMakingMachines", "NutsProcessingMachines", "OtherFoodProcessing", "Pasteurizer", "PetFoodProcessingMachines", "SeasoningProcessing", "SnackMacine"],
   PackagingMachine: ["AuxiliaryPackagingMachines", "BlisterPackahingMachines", "BoxingMachine", "CappingMachines", "CoatingMachines", "EmbossingMachines", "FillingMachines", "GluingMachines", "LabelingMachines", "LaminatingMachines", "MultiFunctionPackagingMachines", "OtherPackaginMachines", "PackagingFormingMachines", "PackagingLine", "PackagingMachinery", "PackagingMateialMachines", "SealingMachines", "VacuumPackagingMachines", "WrappingMachines"],
@@ -184,7 +184,6 @@ const microSubOptions = {
   ChargersAndBatteries: ["CarChargers", "ChargingCables", "MobilePhonesAndTablet", "PowerBanks", "WallChargers", "WirelessChargers"],
   MobilePhoneAndTabletAccessories: ["ArmBands", "CoversAndCases", "FlashesAndLights", "GripsAndHolders", "ItemFindersAndAccessories", "LanyardsAndWristStraps", "LensAccessories", "LightsAndFlashes", "MicroSdCards", "MobileParts", "MobilePhonesControl", "MountsAndStands", "ScreenProtectors", "SelfieSticks", "StylusPensAndCovers"],
   MobilePhones: ["CellPhones", "SmartPhones"],
-  //problem 1
   TabletsAndEBooksReaders: ["EbookReaders", "Tablets"],
 
 
@@ -503,15 +502,13 @@ const microSubOptions = {
   OtherAgriculturalMachineryAndEquipments: ["OtherAgriculturalMachineryAndEquipments"],
   OtherFarmMachines: ["OtherFarmMachines"],
   SeedProcessingMachines: ["SeedProcessingMachines"],
-  //problem 2
+
   Seeders: ["Seeders"],
   Shellers: ["Shellers"],
   Silos: ["Silos"],
   SlaughteringEquipment: ["SlaughteringEquipment"],
   TowableBachoe: ["TowableBachoe"],
   Tractors: ["Tractors"],
-
-
 
   ApparelAndTextileMachineryParts: ["ApparelMachineParts", "CapMakingMachineParts", "GloveMakingMachine", "HometextileProduct", "LeatherProductionMachineParts", "ShoemakingMachineParts", "SockKnittingMachine", "TextileMachineParts"],
   ApparelMachinery: ["ButtonMakingMachines", "ButtonholeMachines", "EmbroideryMachines", "IndustrialGarmentPressMachine", "IndustrialGarmentSteamers", "LaceMachines", "OtherApparelMachine", "Overlockers", "RhinestoneMachines", "SewingMachines", "ZipperMakingMachines"],
@@ -554,7 +551,6 @@ const microSubOptions = {
   Rammers: ["Rammers"],
   RenderingMachines: ["RenderingMachines"],
   RoadMachinery: ["AsphaltMixers", "ConcreteCutter", "ConcreteGrinder", "ConcreteSacrifier", "MotorGraders", "Pavers", "PowerTowel", "RoaMarkingMachines", "RoadGroovingMachines", "RoadRoller", "RoadSealingMachines"],
-  //problem 3
   ScientificLabEquipment: ["ScientificLabEquipment"],
 
 

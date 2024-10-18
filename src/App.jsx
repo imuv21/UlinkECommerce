@@ -90,7 +90,6 @@ const GoogleCallback = lazy(() => import('./pages/GoogleCallback'));
 const ContactUs = lazy(() => import('./pages/ContactUs'));
 const Source = lazy(() => import('./pages/Source'));
 const PaymentMethod = lazy(() => import('./pages/PaymentMethod'));
-const Enterprise = lazy(() => import('./pages/Enterprise'));
 const AllCat = lazy(() => import('./pages/AllCat'));
 
 
@@ -141,7 +140,6 @@ function App() {
           <Route path='/contact-us' element={<Layout><ContactUs /></Layout>} />
           <Route path='/source-on-ulinkit' element={<Layout><Source /></Layout>} />
           <Route path='/payment-method' element={<Layout><PaymentMethod /></Layout>} />
-          <Route path='/enterprise' element={<Layout><Enterprise /></Layout>} />
           <Route path='/all-categories' element={<Layout><AllCat /></Layout>} />
 
 
