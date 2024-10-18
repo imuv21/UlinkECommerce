@@ -5188,7 +5188,7 @@ button:focus {
 
 .allcat-accordion-content.open {
   max-height: 350px;
-  padding: 10px;
+  padding: 5px;
 }
 
 .allcat-accordion-flex {
