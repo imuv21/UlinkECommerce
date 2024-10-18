@@ -567,7 +567,20 @@
 
 @media screen and (max-width: 500px) {
 
+    .homepopup {
+        position: fixed;
+        bottom: 15px;
+        right: 15px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+    }
 
+    .homepopup img {
+        width: 300px;
+        height: auto;
+        border-radius: 10px;
+    }
 
     .card {
         gap: 10px;
@@ -700,6 +713,7 @@
 }
 
 @media(min-width: 400px) and (max-width: 500px) {
+
     .img-aspect {
         width: 80px;
         /*  check the condition here */
